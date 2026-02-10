@@ -1,0 +1,134 @@
+<!-- ARQUIVO: paginas/imagens.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Imagens | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<iframe src="../menu.html" class="menu-frame"></iframe>
+
+<main>
+  <h1>🎨 Prompts de Imagens</h1>
+  <div id="lista"></div>
+</main>
+
+<script>
+const categoriaAtual = "Imagens";
+const lista = document.getElementById("lista");
+
+/* ===== PROMPTS PADRÃO (FORÇAR INSERÇÃO SE NÃO EXISTIREM) ===== */
+function inserirPromptsPadrao() {
+  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  const titulosExistentes = prompts
+    .filter(p => p.categoria === "Imagens")
+    .map(p => p.titulo);
+
+  const novos = [
+    {
+      id: Date.now() + 100,
+      titulo: "Cidade Futurista Brasileira",
+      categoria: "Imagens",
+      conteudo: "Uma cidade futurista inspirada no Brasil, de noite, com prédios de arquitetura moderna misturada a elementos tropicais, luzes neon azuis e roxas, céu roxo escuro com estrelas visíveis, estilo cyberpunk suave, detalhes arquitetônicos e reflexos na água, ilustração digital, resolução 4K.",
+      favorito: false
+    },
+    {
+      id: Date.now() + 101,
+      titulo: "Personagem Retrô Anos 90",
+      categoria: "Imagens",
+      conteudo: "Um personagem de jogo estilo retrô anos 90, homem jovem loiro, camisa preta e óculos escuros, postura confiante, fundo com efeitos de pixeis e gradientes coloridos, traços limpos, ilustração 2D estilizada, paleta de cores vibrante, resolução alta.",
+      favorito: false
+    },
+    {
+      id: Date.now() + 102,
+      titulo: "Logo Gamer Profissional",
+      categoria: "Imagens",
+      conteudo: "Logo de canal gamer em forma de escudo, com centro colorido em degradê roxo e laranja, ao redor textura metálica prateada, no centro ícone de um monitor com grade de pixels, estilo moderno e profissional, fundo escuro, alta definição, pronto para usar em banner de YouTube e miniatura.",
+      favorito: false
+    }
+  ];
+
+  novos.forEach(p => {
+    if (!titulosExistentes.includes(p.titulo)) {
+      prompts.push(p);
+    }
+  });
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+}
+
+/* ===== CARREGAR PROMPTS ===== */
+function carregarPrompts() {
+  lista.innerHTML = "";
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  prompts
+    .filter(p => p.categoria === categoriaAtual)
+    .forEach(p => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <h3>${p.titulo}</h3>
+        <p class="texto">${p.conteudo}</p>
+
+        <div class="acoes">
+          <button data-id="${p.id}" class="copiar">📋 Copiar</button>
+          <button data-id="${p.id}" class="editar">✏️ Editar</button>
+          <button data-id="${p.id}" class="apagar">🗑️ Apagar</button>
+          <button data-id="${p.id}" class="favoritar">
+            ${p.favorito ? "❤️" : "🤍"}
+          </button>
+        </div>
+      `;
+      lista.appendChild(card);
+    });
+}
+
+/* ===== AÇÕES ===== */
+lista.addEventListener("click", e => {
+  const id = Number(e.target.dataset.id);
+  if (!id) return;
+
+  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+  const prompt = prompts.find(p => p.id === id);
+
+  if (e.target.classList.contains("copiar")) {
+    navigator.clipboard.writeText(prompt.conteudo);
+    e.target.innerText = "✅ Copiado";
+    setTimeout(() => e.target.innerText = "📋 Copiar", 1200);
+  }
+
+  if (e.target.classList.contains("editar")) {
+    const novoTitulo = window.prompt("Editar título:", prompt.titulo);
+    const novoConteudo = window.prompt("Editar conteúdo:", prompt.conteudo);
+    if (novoTitulo && novoConteudo) {
+      prompt.titulo = novoTitulo;
+      prompt.conteudo = novoConteudo;
+    }
+  }
+
+  if (e.target.classList.contains("apagar")) {
+    prompts = prompts.filter(p => p.id !== id);
+  }
+
+  if (e.target.classList.contains("favoritar")) {
+    prompt.favorito = !prompt.favorito;
+  }
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  carregarPrompts();
+});
+
+/* ===== INIT ===== */
+inserirPromptsPadrao();
+carregarPrompts();
+</script>
+
+</body>
+</html>

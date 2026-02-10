@@ -1,0 +1,230 @@
+<!-- ARQUIVO: index.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .hero {
+      max-width: 900px;
+      margin: 40px auto;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 18px;
+      opacity: 0.85;
+      margin-bottom: 40px;
+    }
+    .generator-card {
+      background: linear-gradient(180deg, #1f1f26, #17171c);
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      text-align: left;
+    }
+    .field {
+      margin-bottom: 20px;
+    }
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .field textarea,
+    .field input {
+      width: 100%;
+      padding: 14px;
+      background: #050507;
+      color: #fff;
+      border: 1px solid #2b2b30;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    .field textarea {
+      min-height: 120px;
+    }
+    .counter {
+      text-align: right;
+      font-size: 12px;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn.secondary {
+      background: #2a2a30;
+    }
+    .resultado {
+      margin-top: 30px;
+      display: none;
+    }
+    .copiado {
+      background: #16a34a !important;
+    }
+  </style>
+</head>
+
+<body>
+
+<iframe src="menu.html" class="menu-frame"></iframe>
+
+<main>
+  <section class="hero">
+    <h1>Gerador de Prompts para ChatGPT</h1>
+    <p>Crie prompts profissionais, claros e sob medida</p>
+
+    <div class="generator-card">
+
+      <div class="field">
+        <label>Tópico</label>
+        <textarea id="topico" maxlength="500" placeholder="Ex: Criação de conteúdo para Instagram sobre imóveis de alto padrão"></textarea>
+        <div class="counter" id="countTopico">0 / 500</div>
+      </div>
+
+      <div class="field">
+        <label>Objetivo</label>
+        <input id="objetivo" placeholder="Ex: Gerar ideias persuasivas para atrair clientes">
+      </div>
+
+      <div class="field">
+        <label>Persona da IA (opcional)</label>
+        <input id="persona" placeholder="Ex: Advogado imobiliário experiente, especialista em contratos">
+      </div>
+
+      <div class="field">
+        <label>Nível de Detalhe</label>
+        <select id="nivel">
+          <option value="basico">Básico</option>
+          <option value="detalhado">Detalhado</option>
+          <option value="avancado">Avançado</option>
+          <option value="extremo">Extremamente detalhado</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Palavras negativas (opcional)</label>
+        <input id="negativas" placeholder="Ex: sem emojis, sem textos longos, não usar termos técnicos">
+      </div>
+
+      <button class="btn" onclick="gerarPrompt()">⚡ Gerar Prompt</button>
+      <button class="btn secondary" onclick="limparFormulario()">🧹 Limpar / Novo Prompt</button>
+
+      <div class="resultado" id="resultado">
+        <div class="field">
+          <label>Prompt Gerado</label>
+          <textarea id="promptFinal"></textarea>
+        </div>
+        <button id="btnCopiar" class="btn" onclick="copiarPrompt()">📋 Copiar Prompt</button>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<script>
+const topico = document.getElementById("topico");
+const countTopico = document.getElementById("countTopico");
+
+topico.addEventListener("input", () => {
+  countTopico.innerText = topico.value.length + " / 500";
+});
+
+function gerarPrompt() {
+  const t = topico.value.trim();
+  const o = document.getElementById("objetivo").value.trim();
+  const persona = document.getElementById("persona").value.trim();
+  const n = document.getElementById("nivel").value;
+  const neg = document.getElementById("negativas").value.trim();
+
+  if (!t || !o) {
+    alert("Preencha o tópico e o objetivo.");
+    return;
+  }
+
+  const niveis = {
+    basico: "Responda de forma simples, direta e objetiva.",
+    detalhado: "Responda de forma detalhada, com explicações claras e exemplos.",
+    avancado: "Responda de forma aprofundada, estruturada, com boas práticas e exemplos.",
+    extremo: "Responda de forma extremamente detalhada, passo a passo, com alto nível de clareza."
+  };
+
+  let prompt = "";
+
+  if (persona) {
+    prompt += `Você é ${persona}.\n\n`;
+  } else {
+    prompt += `Você é um especialista no assunto.\n\n`;
+  }
+
+  prompt += `
+TÓPICO:
+${t}
+
+OBJETIVO:
+${o}
+
+NÍVEL DE DETALHE:
+${niveis[n]}
+`;
+
+  if (neg) {
+    prompt += `
+RESTRIÇÕES (O QUE NÃO FAZER):
+${neg}
+`;
+  }
+
+  prompt += `
+INSTRUÇÕES FINAIS:
+Seja claro, organizado, prático e profissional.
+`.trim();
+
+  document.getElementById("promptFinal").value = prompt;
+  document.getElementById("resultado").style.display = "block";
+  document.getElementById("resultado").scrollIntoView({ behavior: "smooth" });
+}
+
+function copiarPrompt() {
+  const btn = document.getElementById("btnCopiar");
+  navigator.clipboard.writeText(document.getElementById("promptFinal").value);
+  btn.innerText = "✅ Copiado!";
+  btn.classList.add("copiado");
+
+  setTimeout(() => {
+    btn.innerText = "📋 Copiar Prompt";
+    btn.classList.remove("copiado");
+  }, 1500);
+}
+
+function limparFormulario() {
+  topico.value = "";
+  document.getElementById("objetivo").value = "";
+  document.getElementById("persona").value = "";
+  document.getElementById("negativas").value = "";
+  document.getElementById("promptFinal").value = "";
+  document.getElementById("resultado").style.display = "none";
+  countTopico.innerText = "0 / 500";
+}
+</script>
+
+</body>
+</html>

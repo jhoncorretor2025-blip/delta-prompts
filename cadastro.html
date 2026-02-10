@@ -1,0 +1,124 @@
+<!-- ARQUIVO: cadastro.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Novo Prompt | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .top-actions {
+      margin-bottom: 20px;
+    }
+
+    .top-actions a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #16a34a;
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      font-weight: bold;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 9999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+<iframe src="menu.html" class="menu-frame"></iframe>
+
+<main>
+  <div class="top-actions">
+    <a href="index.html">⬅️ Voltar</a>
+  </div>
+
+  <h1>➕ Novo Prompt</h1>
+
+  <div class="form-card">
+    <input id="titulo" type="text" placeholder="Título do prompt">
+
+    <select id="categoria">
+      <option value="Estudo">Estudo</option>
+      <option value="Trabalho">Trabalho</option>
+      <option value="Saúde">Saúde</option>
+      <option value="Imagens">Imagens</option>
+      <option value="Outros">Outros</option>
+    </select>
+
+    <textarea id="conteudo" placeholder="Digite o prompt aqui..."></textarea>
+
+    <button onclick="salvarPrompt()">Salvar Prompt</button>
+  </div>
+</main>
+
+<div id="toast" class="toast">✅ Prompt salvo com sucesso!</div>
+
+<script>
+function salvarPrompt() {
+  const titulo = document.getElementById("titulo").value.trim();
+  const categoria = document.getElementById("categoria").value;
+  const conteudo = document.getElementById("conteudo").value.trim();
+
+  if (!titulo || !conteudo) {
+    mostrarToast("⚠️ Preencha título e conteúdo", "#dc2626");
+    return;
+  }
+
+  const prompt = {
+    id: Date.now(),
+    titulo,
+    categoria,
+    conteudo,
+    favorito: false
+  };
+
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+  prompts.push(prompt);
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+
+  document.getElementById("titulo").value = "";
+  document.getElementById("conteudo").value = "";
+
+  mostrarToast("✅ Prompt salvo com sucesso!", "#16a34a");
+
+  setTimeout(() => {
+    window.location.href = `paginas/${categoria.toLowerCase()}.html`;
+  }, 1200);
+}
+
+function mostrarToast(texto, cor) {
+  const toast = document.getElementById("toast");
+  toast.innerText = texto;
+  toast.style.background = cor;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2000);
+}
+</script>
+
+</body>
+</html>

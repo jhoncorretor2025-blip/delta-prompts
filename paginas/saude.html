@@ -1,0 +1,103 @@
+<!-- ARQUIVO: paginas/saude.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Saúde | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+<iframe src="../menu.html" class="menu-frame"></iframe>
+
+<main>
+  <h1>🧠 Prompts de Saúde</h1>
+  <div id="lista"></div>
+</main>
+
+<script>
+const categoriaAtual = "Saúde";
+const lista = document.getElementById("lista");
+
+function inserirPromptsPadrao() {
+  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+  const existe = prompts.some(p => p.seed && p.categoria === categoriaAtual);
+  if (existe) return;
+
+  prompts.push(
+    {
+      id: Date.now()+301,
+      titulo: "Rotina de Autocuidado",
+      categoria: categoriaAtual,
+      conteudo: "Crie uma rotina diária de autocuidado físico e mental, simples e prática, adaptada ao contexto abaixo.",
+      favorito: false,
+      seed: true
+    },
+    {
+      id: Date.now()+302,
+      titulo: "Gestão da Ansiedade",
+      categoria: categoriaAtual,
+      conteudo: "Explique técnicas simples e eficazes para reduzir ansiedade, com orientações práticas e linguagem acessível.",
+      favorito: false,
+      seed: true
+    },
+    {
+      id: Date.now()+303,
+      titulo: "Hábitos Saudáveis",
+      categoria: categoriaAtual,
+      conteudo: "Sugira hábitos saudáveis para melhorar energia, foco e bem-estar no dia a dia.",
+      favorito: false,
+      seed: true
+    }
+  );
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+}
+
+function carregar() {
+  lista.innerHTML = "";
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  prompts.filter(p => p.categoria === categoriaAtual).forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${p.titulo}</h3>
+      <p>${p.conteudo}</p>
+      <div class="acoes">
+        <button data-id="${p.id}" class="copiar">📋 Copiar</button>
+        <button data-id="${p.id}" class="editar">✏️ Editar</button>
+        <button data-id="${p.id}" class="apagar">🗑️ Apagar</button>
+        <button data-id="${p.id}" class="favoritar">${p.favorito ? "❤️" : "🤍"}</button>
+      </div>
+    `;
+    lista.appendChild(card);
+  });
+}
+
+lista.addEventListener("click", e => {
+  const id = Number(e.target.dataset.id);
+  if (!id) return;
+
+  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+  const p = prompts.find(x => x.id === id);
+
+  if (e.target.classList.contains("copiar")) navigator.clipboard.writeText(p.conteudo);
+  if (e.target.classList.contains("editar")) {
+    const t = prompt("Editar título:", p.titulo);
+    const c = prompt("Editar conteúdo:", p.conteudo);
+    if (t && c) { p.titulo = t; p.conteudo = c; }
+  }
+  if (e.target.classList.contains("apagar")) prompts = prompts.filter(x => x.id !== id);
+  if (e.target.classList.contains("favoritar")) p.favorito = !p.favorito;
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  carregar();
+});
+
+inserirPromptsPadrao();
+carregar();
+</script>
+</body>
+</html>

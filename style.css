@@ -1,0 +1,182 @@
+/* ARQUIVO: style.css */
+:root {
+  --bg: #0b0b0f;
+  --menu: #121216;
+  --card: #1f1f24;
+  --text: #f4f4f5;
+  --accent: #3b82f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #14141a, #050507);
+  color: var(--text);
+}
+
+/* ================= MENU (IFRAME) ================= */
+.menu-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100vh;
+  border: none;
+  z-index: 100;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #141418, #0e0e12);
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin: 0 0 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  text-decoration: none;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.sidebar a:hover {
+  background: var(--card);
+  transform: translateX(4px);
+}
+
+.sidebar hr {
+  border: none;
+  border-top: 1px solid #2a2a2f;
+  margin: 16px 0;
+}
+
+/* ================= CONTEÚDO ================= */
+main {
+  margin-left: 220px;
+  padding: 40px;
+  min-height: 100vh;
+}
+
+/* ================= CARD ================= */
+.card {
+  background: linear-gradient(180deg, #1f1f26, #17171c);
+  padding: 22px;
+  border-radius: 14px;
+  margin-top: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+/* ================= FORM ================= */
+.form-card {
+  background: linear-gradient(180deg, #1f1f26, #17171c);
+  padding: 25px;
+  border-radius: 16px;
+  max-width: 760px;
+  margin-top: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+}
+
+.form-card input,
+.form-card select,
+.form-card textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 14px;
+  background: #050507;
+  color: #ffffff;
+  border: 1px solid #2b2b30;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.form-card textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.form-card button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.form-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59,130,246,0.45);
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .menu-frame {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .form-card {
+    max-width: 100%;
+  }
+}
+/* ADICIONAR AO style.css (FINAL DO ARQUIVO) */
+.acoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.acoes button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #2a2a30;
+  color: #fff;
+  cursor: pointer;
+}
+
+.acoes button:hover {
+  background: #3b82f6;
+}

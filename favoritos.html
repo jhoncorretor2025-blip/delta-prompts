@@ -1,0 +1,92 @@
+<!-- ARQUIVO: favoritos.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Favoritos | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<iframe src="menu.html" class="menu-frame"></iframe>
+
+<main>
+  <h1>❤️ Prompts Favoritos</h1>
+  <p>Aqui ficam todos os prompts que você marcou como favorito.</p>
+
+  <div id="lista"></div>
+</main>
+
+<script>
+const lista = document.getElementById("lista");
+
+function carregarFavoritos() {
+  lista.innerHTML = "";
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  const favoritos = prompts.filter(p => p.favorito);
+
+  if (favoritos.length === 0) {
+    lista.innerHTML = `
+      <div class="card">
+        <p>⚠️ Nenhum prompt favorito ainda.</p>
+        <p>Marque um ❤️ nas outras páginas para ele aparecer aqui.</p>
+      </div>
+    `;
+    return;
+  }
+
+  favoritos.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <h3>${p.titulo}</h3>
+      <p>${p.conteudo}</p>
+
+      <div class="acoes">
+        <button data-id="${p.id}" class="copiar">📋 Copiar</button>
+        <button data-id="${p.id}" class="editar">✏️ Editar</button>
+        <button data-id="${p.id}" class="remover">❌ Remover</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+lista.addEventListener("click", e => {
+  const id = Number(e.target.dataset.id);
+  if (!id) return;
+
+  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+  const prompt = prompts.find(p => p.id === id);
+
+  if (e.target.classList.contains("copiar")) {
+    navigator.clipboard.writeText(prompt.conteudo);
+  }
+
+  if (e.target.classList.contains("editar")) {
+    const novoTitulo = prompt("Editar título:", prompt.titulo);
+    const novoConteudo = prompt("Editar conteúdo:", prompt.conteudo);
+    if (novoTitulo && novoConteudo) {
+      prompt.titulo = novoTitulo;
+      prompt.conteudo = novoConteudo;
+    }
+  }
+
+  if (e.target.classList.contains("remover")) {
+    prompt.favorito = false;
+  }
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  carregarFavoritos();
+});
+
+carregarFavoritos();
+</script>
+
+</body>
+</html>
