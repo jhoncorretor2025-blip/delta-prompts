@@ -281,5 +281,16 @@ main {
 }
 
 main {
-  margin-left: 220px;
+  margin-left: 220px; /* ou 0, se não usar menu lateral */
+  padding: 40px;
+  min-height: 100vh;
+  overflow: visible; /* 🔥 ESSENCIAL */
+}
+
+.destaque {
+  margin-top: 60px;
+  margin-bottom: 80px; /* 🔥 isso faz aparecer */
+}
+.card.destaque {
+  background: linear-gradient(180deg, #1f1f26, #17171c);
 }
