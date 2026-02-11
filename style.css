@@ -180,3 +180,106 @@ main {
 .acoes button:hover {
   background: #3b82f6;
 }
+/* ===== HOME ===== */
+
+.container-central {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* HERO */
+.hero {
+  margin-top: 40px;
+  max-width: 720px;
+}
+
+.badge {
+  display: inline-block;
+  background: #1f2937;
+  color: #93c5fd;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin: 10px 0;
+}
+
+.hero h2 {
+  font-size: 26px;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
+
+.hero-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e5e7eb;
+}
+
+/* CARDS */
+.cards-home {
+  display: flex;
+  gap: 20px;
+  margin: 50px 0;
+}
+
+.benefit-card {
+  background: linear-gradient(180deg, #1f1f26, #17171c);
+  padding: 20px;
+  border-radius: 14px;
+  flex: 1;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.benefit-card h3 {
+  margin-top: 0;
+}
+
+/* CTA */
+.cta-area {
+  margin: 30px 0;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 14px 26px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59,130,246,0.45);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .cards-home {
+    flex-direction: column;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+}
+#menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100vh;
+  z-index: 100;
+}
+
+main {
+  margin-left: 220px;
+}
