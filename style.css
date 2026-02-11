@@ -1,4 +1,8 @@
-/* ARQUIVO: style.css */
+/* ===================================================
+   DELTA PROMPTS - CSS GLOBAL PADRONIZADO
+   Menu via JS (menu-loader.js)
+=================================================== */
+
 :root {
   --bg: #0b0b0f;
   --menu: #121216;
@@ -18,21 +22,22 @@ body {
   color: var(--text);
 }
 
-/* ================= MENU (IFRAME) ================= */
-.menu-frame {
+/* ===================================================
+   MENU LATERAL (PADRÃO VIA JS)
+=================================================== */
+
+#menu {
   position: fixed;
   top: 0;
   left: 0;
   width: 220px;
   height: 100vh;
-  border: none;
   z-index: 100;
 }
 
-/* ================= SIDEBAR ================= */
 .sidebar {
   width: 220px;
-  min-height: 100vh;
+  height: 100vh;
   background: linear-gradient(180deg, #141418, #0e0e12);
   padding: 20px;
 }
@@ -66,14 +71,21 @@ body {
   margin: 16px 0;
 }
 
-/* ================= CONTEÚDO ================= */
+/* ===================================================
+   CONTEÚDO PRINCIPAL
+=================================================== */
+
 main {
   margin-left: 220px;
   padding: 40px;
   min-height: 100vh;
+  overflow: visible;
 }
 
-/* ================= CARD ================= */
+/* ===================================================
+   CARDS GERAIS
+=================================================== */
+
 .card {
   background: linear-gradient(180deg, #1f1f26, #17171c);
   padding: 22px;
@@ -86,7 +98,10 @@ main {
   margin-top: 0;
 }
 
-/* ================= FORM ================= */
+/* ===================================================
+   FORMULÁRIOS
+=================================================== */
+
 .form-card {
   background: linear-gradient(180deg, #1f1f26, #17171c);
   padding: 25px;
@@ -139,55 +154,15 @@ main {
   box-shadow: 0 6px 20px rgba(59,130,246,0.45);
 }
 
-/* ================= MOBILE ================= */
-@media (max-width: 768px) {
-  .menu-frame {
-    position: relative;
-    width: 100%;
-    height: auto;
-  }
-
-  main {
-    margin-left: 0;
-    padding: 20px;
-  }
-
-  .sidebar {
-    width: 100%;
-    min-height: auto;
-  }
-
-  .form-card {
-    max-width: 100%;
-  }
-}
-/* ADICIONAR AO style.css (FINAL DO ARQUIVO) */
-.acoes {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.acoes button {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  background: #2a2a30;
-  color: #fff;
-  cursor: pointer;
-}
-
-.acoes button:hover {
-  background: #3b82f6;
-}
-/* ===== HOME ===== */
+/* ===================================================
+   HOME
+=================================================== */
 
 .container-central {
   max-width: 1100px;
   margin: 0 auto;
 }
 
-/* HERO */
 .hero {
   margin-top: 40px;
   max-width: 720px;
@@ -221,7 +196,6 @@ main {
   color: #e5e7eb;
 }
 
-/* CARDS */
 .cards-home {
   display: flex;
   gap: 20px;
@@ -236,11 +210,6 @@ main {
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
-.benefit-card h3 {
-  margin-top: 0;
-}
-
-/* CTA */
 .cta-area {
   margin: 30px 0;
 }
@@ -261,8 +230,56 @@ main {
   box-shadow: 0 6px 20px rgba(59,130,246,0.45);
 }
 
-/* MOBILE */
+.destaque {
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+
+/* ===================================================
+   BOTÕES SECUNDÁRIOS
+=================================================== */
+
+.acoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.acoes button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #2a2a30;
+  color: #fff;
+  cursor: pointer;
+}
+
+.acoes button:hover {
+  background: var(--accent);
+}
+
+/* ===================================================
+   RESPONSIVO
+=================================================== */
+
 @media (max-width: 768px) {
+
+  #menu {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  main {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+
   .cards-home {
     flex-direction: column;
   }
@@ -270,27 +287,4 @@ main {
   .hero h1 {
     font-size: 36px;
   }
-}
-#menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 220px;
-  height: 100vh;
-  z-index: 100;
-}
-
-main {
-  margin-left: 220px; /* ou 0, se não usar menu lateral */
-  padding: 40px;
-  min-height: 100vh;
-  overflow: visible; /* 🔥 ESSENCIAL */
-}
-
-.destaque {
-  margin-top: 60px;
-  margin-bottom: 80px; /* 🔥 isso faz aparecer */
-}
-.card.destaque {
-  background: linear-gradient(180deg, #1f1f26, #17171c);
 }
