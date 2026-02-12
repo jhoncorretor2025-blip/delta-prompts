@@ -12,139 +12,169 @@
 <div id="menu"></div>
 <script src="../menu-loader.js"></script>
 
-
 <main>
-  <h1>📚 Prompts de Estudo</h1>
-  <p style="color:#6b7280; margin-top:-10px;">
-    Ferramentas para aprendizado inteligente e produtividade acadêmica.
-  </p>
 
-  <div id="lista"></div>
+  <h1>📚 Prompts para Estudo</h1>
+  <p>Ferramentas para aprender mais rápido, memorizar melhor e organizar seu conhecimento.</p>
+
+  <!-- ===================== -->
+  <!-- APRENDIZADO -->
+  <!-- ===================== -->
+
+  <h2 style="margin-top:40px;">🧠 APRENDIZADO EFICIENTE</h2>
+
+  <div class="card">
+    <h3>1️⃣ Explicação Simplificada</h3>
+    <p>
+      Explique o tema abaixo de forma simples, didática e clara,
+      usando exemplos práticos e linguagem acessível.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ Aula Resumida Estratégica</h3>
+    <p>
+      Resuma o conteúdo abaixo destacando os pontos principais,
+      conceitos essenciais e o que realmente preciso entender.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ Explicação Nível Avançado</h3>
+    <p>
+      Explique o tema abaixo em nível mais profundo,
+      incluindo fundamentos teóricos, aplicações práticas
+      e conexões com outros assuntos relacionados.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <!-- ===================== -->
+  <!-- MEMORIZAÇÃO -->
+  <!-- ===================== -->
+
+  <h2 style="margin-top:60px;">📝 MEMORIZAÇÃO & REVISÃO</h2>
+
+  <div class="card">
+    <h3>4️⃣ Criação de Flashcards</h3>
+    <p>
+      Transforme o conteúdo abaixo em flashcards com pergunta e resposta
+      para facilitar memorização ativa.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>5️⃣ Plano de Revisão Inteligente</h3>
+    <p>
+      Crie um plano de revisão para o tema abaixo,
+      considerando repetição espaçada e organização estratégica.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <!-- ===================== -->
+  <!-- PRODUTIVIDADE -->
+  <!-- ===================== -->
+
+  <h2 style="margin-top:60px;">⏳ PRODUTIVIDADE ACADÊMICA</h2>
+
+  <div class="card">
+    <h3>6️⃣ Plano de Estudos Personalizado</h3>
+    <p>
+      Monte um plano de estudos personalizado para o objetivo abaixo,
+      dividindo em etapas, metas semanais e prioridades.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>7️⃣ Técnica Pomodoro Estratégica</h3>
+    <p>
+      Organize minha sessão de estudos usando técnica Pomodoro,
+      incluindo intervalos, metas por bloco e foco específico.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
 </main>
 
 <script>
-const categoriaAtual = "Estudo";
-const lista = document.getElementById("lista");
-
-function inserirPromptsPadrao() {
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  const titulosExistentes = prompts
-    .filter(p => p.categoria === categoriaAtual)
-    .map(p => p.titulo);
-
-  const novos = [
-    {
-      id: Date.now() + 1,
-      titulo: "Resumo Simplificado",
-      categoria: categoriaAtual,
-      conteudo: "Explique o conteúdo abaixo de forma simples, didática e com exemplos práticos para facilitar o entendimento.",
-      favorito: false
-    },
-    {
-      id: Date.now() + 2,
-      titulo: "Perguntas para Revisão",
-      categoria: categoriaAtual,
-      conteudo: "Transforme o conteúdo abaixo em perguntas e respostas estratégicas para facilitar revisão e memorização.",
-      favorito: false
-    },
-    {
-      id: Date.now() + 3,
-      titulo: "Plano de Estudo Estratégico",
-      categoria: categoriaAtual,
-      conteudo: "Crie um plano de estudo organizado com metas diárias, revisão semanal e foco em retenção de conhecimento.",
-      favorito: false
-    },
-    {
-      id: Date.now() + 4,
-      titulo: "Mapa Mental Estruturado",
-      categoria: categoriaAtual,
-      conteudo: "Organize o conteúdo abaixo em formato de mapa mental estruturado, com tópicos principais e subtópicos claros.",
-      favorito: false
-    }
-  ];
-
-  novos.forEach(p => {
-    if (!titulosExistentes.includes(p.titulo)) {
-      prompts.push(p);
-    }
-  });
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+function copiarTexto(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
 }
 
-function carregarPrompts() {
-  lista.innerHTML = "";
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  const filtrados = prompts.filter(p => p.categoria === categoriaAtual);
-
-  if (filtrados.length === 0) {
-    lista.innerHTML = `
-      <div class="card">
-        <p>Nenhum prompt encontrado nesta categoria.</p>
-      </div>
-    `;
-    return;
-  }
-
-  filtrados.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${p.titulo}</h3>
-      <p>${p.conteudo}</p>
-
-      <div class="acoes">
-        <button data-id="${p.id}" class="copiar">📋 Copiar</button>
-        <button data-id="${p.id}" class="editar">✏️ Editar</button>
-        <button data-id="${p.id}" class="apagar">🗑️ Apagar</button>
-        <button data-id="${p.id}" class="favoritar">
-          ${p.favorito ? "❤️" : "🤍"}
-        </button>
-      </div>
-    `;
-
-    lista.appendChild(card);
-  });
+function usarChatGPT(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
 }
 
-lista.addEventListener("click", e => {
-  const id = Number(e.target.dataset.id);
-  if (!id) return;
+function usarGemini(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+  alert("Prompt copiado! Cole no Gemini.");
+}
 
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const p = prompts.find(x => x.id === id);
+function favoritar(botao) {
+  const card = botao.closest(".card");
+  const titulo = card.querySelector("h3").innerText;
+  const texto = card.querySelector("p").innerText;
 
-  if (e.target.classList.contains("copiar")) {
-    navigator.clipboard.writeText(p.conteudo);
+  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+  const jaExiste = favoritos.find(f => f.titulo === titulo);
+
+  if (jaExiste) {
+    favoritos = favoritos.filter(f => f.titulo !== titulo);
+    botao.innerText = "🤍";
+  } else {
+    favoritos.push({ titulo, texto });
+    botao.innerText = "❤️";
   }
 
-  if (e.target.classList.contains("editar")) {
-    const novoTitulo = window.prompt("Editar título:", p.titulo);
-    const novoConteudo = window.prompt("Editar conteúdo:", p.conteudo);
-
-    if (novoTitulo && novoConteudo) {
-      p.titulo = novoTitulo;
-      p.conteudo = novoConteudo;
-    }
-  }
-
-  if (e.target.classList.contains("apagar")) {
-    prompts = prompts.filter(x => x.id !== id);
-  }
-
-  if (e.target.classList.contains("favoritar")) {
-    p.favorito = !p.favorito;
-  }
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  carregarPrompts();
-});
-
-inserirPromptsPadrao();
-carregarPrompts();
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+}
 </script>
 
 </body>
