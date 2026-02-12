@@ -30,6 +30,12 @@
       Exagere levemente traços marcantes como olhos e sorriso, com acabamento
       ilustrado profissional e cores vibrantes.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <div class="card">
@@ -38,6 +44,12 @@
       Melhore a qualidade desta imagem aumentando nitidez, corrigindo iluminação,
       ajustando contraste e removendo pequenas imperfeições, mantendo aparência natural.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <div class="card">
@@ -46,6 +58,12 @@
       Converta esta foto em um retrato de estúdio profissional com fundo neutro,
       iluminação suave frontal e pele com textura natural realista.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <!-- ========================= -->
@@ -57,10 +75,17 @@
   <div class="card">
     <h3>4️⃣ Editorial Dramático 4K</h3>
     <p>
-      Recrie esta foto como um retrato editorial dramático em 4K, com iluminação lateral estilo Rembrandt,
-      fundo escuro sofisticado, profundidade de campo reduzida e textura realista de lente profissional.
-      Preserve identidade facial com máxima fidelidade e nitidez de pele natural.
+      Recrie esta foto como um retrato editorial dramático em 4K, com iluminação
+      lateral estilo Rembrandt, fundo escuro sofisticado, profundidade de campo
+      reduzida e textura realista de lente profissional. Preserve identidade facial
+      com máxima fidelidade e nitidez de pele natural.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <div class="card">
@@ -68,8 +93,15 @@
     <p>
       Converta esta imagem em um frame de filme com correção de cor teal & orange,
       iluminação de contraluz suave, partículas sutis no ar e leve desfoque de fundo.
-      A pele deve manter textura realista, proporções naturais e transição suave no pescoço e ombros.
+      A pele deve manter textura realista, proporções naturais e transição suave
+      no pescoço e ombros.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <div class="card">
@@ -77,12 +109,43 @@
     <p>
       Transforme esta foto em uma obra de arte contemporânea com iluminação dramática,
       contraste profundo, fundo minimalista escuro e detalhes refinados de sombra.
-      Manter proporções naturais entre cabeça e corpo, alinhamento realista do pescoço
-      e acabamento hiper-realista.
+      Manter proporções naturais entre cabeça e corpo, alinhamento realista do
+      pescoço e acabamento hiper-realista.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
 </main>
+
+<script>
+function copiarTexto(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
+}
+
+function editarTexto(botao) {
+  const card = botao.closest(".card");
+  const paragrafo = card.querySelector("p");
+  const novoTexto = prompt("Editar prompt:", paragrafo.innerText);
+  if (novoTexto) paragrafo.innerText = novoTexto;
+}
+
+function apagarCard(botao) {
+  if (confirm("Deseja apagar este prompt?")) {
+    botao.closest(".card").remove();
+  }
+}
+
+function favoritar(botao) {
+  botao.innerText = botao.innerText === "🤍" ? "❤️" : "🤍";
+}
+</script>
 
 </body>
 </html>
