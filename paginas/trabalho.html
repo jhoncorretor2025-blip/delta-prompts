@@ -9,110 +9,86 @@
 
 <body>
 
-<!-- MENU CORRETO -->
 <div id="menu"></div>
 <script src="../menu-loader.js"></script>
 
-
 <main>
-  <h1>💼 Prompts de Trabalho</h1>
-  <div id="lista"></div>
+
+  <h1>💼 Prompts para Trabalho</h1>
+  <p>Prompts focados em produtividade e desempenho profissional.</p>
+
+  <div class="card" id="prompt1">
+    <h3>1️⃣ Organização de Rotina Profissional</h3>
+    <p>
+      Organize minha rotina de trabalho considerando prioridades,
+      tarefas urgentes e atividades estratégicas.
+      Crie um plano simples e eficiente para melhorar produtividade.
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="compartilharPrompt('prompt1')">🔗 Compartilhar</button>
+      <button onclick="usarChatGPT(this)">🧠 Usar no ChatGPT</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <div class="card" id="prompt2">
+    <h3>2️⃣ Planejamento Estratégico</h3>
+    <p>
+      Desenvolva um plano estratégico para melhorar meus resultados profissionais,
+      considerando metas de curto, médio e longo prazo,
+      oportunidades e possíveis riscos.
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="compartilharPrompt('prompt2')">🔗 Compartilhar</button>
+      <button onclick="usarChatGPT(this)">🧠 Usar no ChatGPT</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
 </main>
 
 <script>
-const categoriaAtual = "Trabalho";
-const lista = document.getElementById("lista");
-
-function inserirPromptsPadrao() {
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const existe = prompts.some(p => p.seed && p.categoria === categoriaAtual);
-  if (existe) return;
-
-  prompts.push(
-    {
-      id: Date.now()+201,
-      titulo: "E-mail Profissional",
-      categoria: categoriaAtual,
-      conteudo: "Crie um e-mail profissional, claro e objetivo, com tom respeitoso, focado em resolver o assunto abaixo de forma eficiente.",
-      favorito: false,
-      seed: true
-    },
-    {
-      id: Date.now()+202,
-      titulo: "Planejamento de Tarefas",
-      categoria: categoriaAtual,
-      conteudo: "Crie um plano de tarefas organizado, com prioridades, prazos e sugestões de produtividade para o objetivo descrito abaixo.",
-      favorito: false,
-      seed: true
-    },
-    {
-      id: Date.now()+203,
-      titulo: "Texto de Vendas",
-      categoria: categoriaAtual,
-      conteudo: "Escreva um texto de vendas persuasivo, claro e ético, destacando benefícios, diferenciais e chamada para ação.",
-      favorito: false,
-      seed: true
-    }
-  );
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+function copiarTexto(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
 }
 
-function carregar() {
-  lista.innerHTML = "";
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  prompts.filter(p => p.categoria === categoriaAtual).forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h3>${p.titulo}</h3>
-      <p>${p.conteudo}</p>
-      <div class="acoes">
-        <button data-id="${p.id}" class="copiar">📋 Copiar</button>
-        <button data-id="${p.id}" class="editar">✏️ Editar</button>
-        <button data-id="${p.id}" class="apagar">🗑️ Apagar</button>
-        <button data-id="${p.id}" class="favoritar">${p.favorito ? "❤️" : "🤍"}</button>
-      </div>
-    `;
-    lista.appendChild(card);
-  });
+function compartilharPrompt(id) {
+  const url = window.location.origin + window.location.pathname + "#" + id;
+  navigator.clipboard.writeText(url);
+  alert("Link do prompt copiado!");
 }
 
-lista.addEventListener("click", e => {
-  const id = Number(e.target.dataset.id);
-  if (!id) return;
+function usarChatGPT(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
+}
 
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const p = prompts.find(x => x.id === id);
+function favoritar(botao) {
+  const card = botao.closest(".card");
+  const titulo = card.querySelector("h3").innerText;
+  const texto = card.querySelector("p").innerText;
 
-  if (e.target.classList.contains("copiar")) {
-    navigator.clipboard.writeText(p.conteudo);
+  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+  const jaExiste = favoritos.find(f => f.titulo === titulo);
+
+  if (jaExiste) {
+    favoritos = favoritos.filter(f => f.titulo !== titulo);
+    botao.innerText = "🤍";
+  } else {
+    favoritos.push({ titulo, texto });
+    botao.innerText = "❤️";
   }
 
-  if (e.target.classList.contains("editar")) {
-    const t = window.prompt("Editar título:", p.titulo);
-    const c = window.prompt("Editar conteúdo:", p.conteudo);
-    if (t && c) { 
-      p.titulo = t; 
-      p.conteudo = c; 
-    }
-  }
-
-  if (e.target.classList.contains("apagar")) {
-    prompts = prompts.filter(x => x.id !== id);
-  }
-
-  if (e.target.classList.contains("favoritar")) {
-    p.favorito = !p.favorito;
-  }
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  carregar();
-});
-
-inserirPromptsPadrao();
-carregar();
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+}
 </script>
 
 </body>
