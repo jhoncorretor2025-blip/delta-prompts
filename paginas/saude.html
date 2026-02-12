@@ -1,4 +1,3 @@
-<!-- ARQUIVO: paginas/saude.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,10 +8,16 @@
 </head>
 
 <body>
-<iframe src="../menu.html" class="menu-frame"></iframe>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
 
 <main>
   <h1>🧠 Prompts de Saúde</h1>
+  <p style="color:#6b7280; margin-top:-10px;">
+    Organização mental, autocuidado e equilíbrio emocional.
+  </p>
+
   <div id="lista"></div>
 </main>
 
@@ -22,35 +27,47 @@ const lista = document.getElementById("lista");
 
 function inserirPromptsPadrao() {
   let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const existe = prompts.some(p => p.seed && p.categoria === categoriaAtual);
-  if (existe) return;
 
-  prompts.push(
+  const titulosExistentes = prompts
+    .filter(p => p.categoria === categoriaAtual)
+    .map(p => p.titulo);
+
+  const novos = [
     {
       id: Date.now()+301,
       titulo: "Rotina de Autocuidado",
       categoria: categoriaAtual,
-      conteudo: "Crie uma rotina diária de autocuidado físico e mental, simples e prática, adaptada ao contexto abaixo.",
-      favorito: false,
-      seed: true
+      conteudo: "Crie uma rotina diária simples de autocuidado físico e mental baseada na realidade descrita abaixo.",
+      favorito: false
     },
     {
       id: Date.now()+302,
-      titulo: "Gestão da Ansiedade",
+      titulo: "Plano Anti-Ansiedade",
       categoria: categoriaAtual,
-      conteudo: "Explique técnicas simples e eficazes para reduzir ansiedade, com orientações práticas e linguagem acessível.",
-      favorito: false,
-      seed: true
+      conteudo: "Explique estratégias práticas para reduzir ansiedade, com técnicas aplicáveis no dia a dia.",
+      favorito: false
     },
     {
       id: Date.now()+303,
-      titulo: "Hábitos Saudáveis",
+      titulo: "Melhorar Foco e Energia",
       categoria: categoriaAtual,
-      conteudo: "Sugira hábitos saudáveis para melhorar energia, foco e bem-estar no dia a dia.",
-      favorito: false,
-      seed: true
+      conteudo: "Sugira hábitos e ajustes práticos para melhorar foco, produtividade e energia ao longo do dia.",
+      favorito: false
+    },
+    {
+      id: Date.now()+304,
+      titulo: "Plano de Sono Ideal",
+      categoria: categoriaAtual,
+      conteudo: "Crie um plano para melhorar qualidade do sono com orientações simples e aplicáveis.",
+      favorito: false
     }
-  );
+  ];
+
+  novos.forEach(p => {
+    if (!titulosExistentes.includes(p.titulo)) {
+      prompts.push(p);
+    }
+  });
 
   localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
 }
@@ -83,14 +100,23 @@ lista.addEventListener("click", e => {
   let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
   const p = prompts.find(x => x.id === id);
 
-  if (e.target.classList.contains("copiar")) navigator.clipboard.writeText(p.conteudo);
+  if (e.target.classList.contains("copiar")) {
+    navigator.clipboard.writeText(p.conteudo);
+  }
+
   if (e.target.classList.contains("editar")) {
-    const t = prompt("Editar título:", p.titulo);
-    const c = prompt("Editar conteúdo:", p.conteudo);
+    const t = window.prompt("Editar título:", p.titulo);
+    const c = window.prompt("Editar conteúdo:", p.conteudo);
     if (t && c) { p.titulo = t; p.conteudo = c; }
   }
-  if (e.target.classList.contains("apagar")) prompts = prompts.filter(x => x.id !== id);
-  if (e.target.classList.contains("favoritar")) p.favorito = !p.favorito;
+
+  if (e.target.classList.contains("apagar")) {
+    prompts = prompts.filter(x => x.id !== id);
+  }
+
+  if (e.target.classList.contains("favoritar")) {
+    p.favorito = !p.favorito;
+  }
 
   localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
   carregar();
@@ -99,5 +125,6 @@ lista.addEventListener("click", e => {
 inserirPromptsPadrao();
 carregar();
 </script>
+
 </body>
 </html>

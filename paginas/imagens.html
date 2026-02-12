@@ -1,4 +1,3 @@
-<!-- ARQUIVO: paginas/imagens.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -10,10 +9,15 @@
 
 <body>
 
-<iframe src="../menu.html" class="menu-frame"></iframe>
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
 
 <main>
-  <h1>🎨 Prompts de Imagens</h1>
+  <h1>🎨 Edição de Fotos</h1>
+  <p style="color:#6b7280; margin-top:-10px;">
+    Prompts criativos para transformar e estilizar suas fotos.
+  </p>
+
   <div id="lista"></div>
 </main>
 
@@ -21,34 +25,58 @@
 const categoriaAtual = "Imagens";
 const lista = document.getElementById("lista");
 
-/* ===== PROMPTS PADRÃO (FORÇAR INSERÇÃO SE NÃO EXISTIREM) ===== */
+function limparPromptsAntigos() {
+  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  const removerTitulos = [
+    "Cidade Futurista Brasileira",
+    "Personagem Retrô Anos 90",
+    "Logo Gamer Profissional",
+    "Melhorar Qualidade da Foto",
+    "Correção de Iluminação"
+  ];
+
+  prompts = prompts.filter(p => 
+    !(p.categoria === categoriaAtual && removerTitulos.includes(p.titulo))
+  );
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+}
+
 function inserirPromptsPadrao() {
   let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
 
   const titulosExistentes = prompts
-    .filter(p => p.categoria === "Imagens")
+    .filter(p => p.categoria === categoriaAtual)
     .map(p => p.titulo);
 
   const novos = [
     {
-      id: Date.now() + 100,
-      titulo: "Cidade Futurista Brasileira",
-      categoria: "Imagens",
-      conteudo: "Uma cidade futurista inspirada no Brasil, de noite, com prédios de arquitetura moderna misturada a elementos tropicais, luzes neon azuis e roxas, céu roxo escuro com estrelas visíveis, estilo cyberpunk suave, detalhes arquitetônicos e reflexos na água, ilustração digital, resolução 4K.",
+      id: Date.now() + 200,
+      titulo: "Caricatura Profissional",
+      categoria: categoriaAtual,
+      conteudo: "Transforme esta foto em uma caricatura artística mantendo identidade e traços marcantes. Exagere expressões de forma divertida e equilibrada.",
       favorito: false
     },
     {
-      id: Date.now() + 101,
-      titulo: "Personagem Retrô Anos 90",
-      categoria: "Imagens",
-      conteudo: "Um personagem de jogo estilo retrô anos 90, homem jovem loiro, camisa preta e óculos escuros, postura confiante, fundo com efeitos de pixeis e gradientes coloridos, traços limpos, ilustração 2D estilizada, paleta de cores vibrante, resolução alta.",
+      id: Date.now() + 201,
+      titulo: "Estilo Pintura Digital",
+      categoria: categoriaAtual,
+      conteudo: "Transforme esta foto em uma pintura digital artística com textura de pincel e acabamento profissional, mantendo reconhecimento facial.",
       favorito: false
     },
     {
-      id: Date.now() + 102,
-      titulo: "Logo Gamer Profissional",
-      categoria: "Imagens",
-      conteudo: "Logo de canal gamer em forma de escudo, com centro colorido em degradê roxo e laranja, ao redor textura metálica prateada, no centro ícone de um monitor com grade de pixels, estilo moderno e profissional, fundo escuro, alta definição, pronto para usar em banner de YouTube e miniatura.",
+      id: Date.now() + 202,
+      titulo: "Avatar Estilizado",
+      categoria: categoriaAtual,
+      conteudo: "Crie um avatar estilizado baseado nesta foto, com visual moderno e detalhes refinados, mantendo características principais do rosto.",
+      favorito: false
+    },
+    {
+      id: Date.now() + 203,
+      titulo: "Retrato Cinematográfico",
+      categoria: categoriaAtual,
+      conteudo: "Aplique um efeito cinematográfico com ajuste de cores, contraste e profundidade, deixando a foto com aparência profissional.",
       favorito: false
     }
   ];
@@ -62,70 +90,62 @@ function inserirPromptsPadrao() {
   localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
 }
 
-/* ===== CARREGAR PROMPTS ===== */
 function carregarPrompts() {
   lista.innerHTML = "";
   const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
 
-  prompts
-    .filter(p => p.categoria === categoriaAtual)
-    .forEach(p => {
-      const card = document.createElement("div");
-      card.className = "card";
+  prompts.filter(p => p.categoria === categoriaAtual).forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
 
-      card.innerHTML = `
-        <h3>${p.titulo}</h3>
-        <p class="texto">${p.conteudo}</p>
+    card.innerHTML = `
+      <h3>${p.titulo}</h3>
+      <p>${p.conteudo}</p>
 
-        <div class="acoes">
-          <button data-id="${p.id}" class="copiar">📋 Copiar</button>
-          <button data-id="${p.id}" class="editar">✏️ Editar</button>
-          <button data-id="${p.id}" class="apagar">🗑️ Apagar</button>
-          <button data-id="${p.id}" class="favoritar">
-            ${p.favorito ? "❤️" : "🤍"}
-          </button>
-        </div>
-      `;
-      lista.appendChild(card);
-    });
+      <div class="acoes">
+        <button data-id="${p.id}" class="copiar">📋 Copiar</button>
+        <button data-id="${p.id}" class="editar">✏️ Editar</button>
+        <button data-id="${p.id}" class="apagar">🗑️ Apagar</button>
+        <button data-id="${p.id}" class="favoritar">
+          ${p.favorito ? "❤️" : "🤍"}
+        </button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
 }
 
-/* ===== AÇÕES ===== */
 lista.addEventListener("click", e => {
   const id = Number(e.target.dataset.id);
   if (!id) return;
 
   let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const prompt = prompts.find(p => p.id === id);
+  const p = prompts.find(x => x.id === id);
 
   if (e.target.classList.contains("copiar")) {
-    navigator.clipboard.writeText(prompt.conteudo);
-    e.target.innerText = "✅ Copiado";
-    setTimeout(() => e.target.innerText = "📋 Copiar", 1200);
+    navigator.clipboard.writeText(p.conteudo);
   }
 
   if (e.target.classList.contains("editar")) {
-    const novoTitulo = window.prompt("Editar título:", prompt.titulo);
-    const novoConteudo = window.prompt("Editar conteúdo:", prompt.conteudo);
-    if (novoTitulo && novoConteudo) {
-      prompt.titulo = novoTitulo;
-      prompt.conteudo = novoConteudo;
-    }
+    const t = window.prompt("Editar título:", p.titulo);
+    const c = window.prompt("Editar conteúdo:", p.conteudo);
+    if (t && c) { p.titulo = t; p.conteudo = c; }
   }
 
   if (e.target.classList.contains("apagar")) {
-    prompts = prompts.filter(p => p.id !== id);
+    prompts = prompts.filter(x => x.id !== id);
   }
 
   if (e.target.classList.contains("favoritar")) {
-    prompt.favorito = !prompt.favorito;
+    p.favorito = !p.favorito;
   }
 
   localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
   carregarPrompts();
 });
 
-/* ===== INIT ===== */
+limparPromptsAntigos();
 inserirPromptsPadrao();
 carregarPrompts();
 </script>

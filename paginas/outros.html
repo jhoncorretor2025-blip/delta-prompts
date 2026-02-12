@@ -1,4 +1,3 @@
-<!-- ARQUIVO: paginas/outros.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,10 +8,16 @@
 </head>
 
 <body>
-<iframe src="../menu.html" class="menu-frame"></iframe>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
 
 <main>
   <h1>🧩 Outros Prompts</h1>
+  <p style="color:#6b7280; margin-top:-10px;">
+    Ideias criativas e soluções inteligentes.
+  </p>
+
   <div id="lista"></div>
 </main>
 
@@ -22,35 +27,47 @@ const lista = document.getElementById("lista");
 
 function inserirPromptsPadrao() {
   let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const existe = prompts.some(p => p.seed && p.categoria === categoriaAtual);
-  if (existe) return;
 
-  prompts.push(
+  const titulosExistentes = prompts
+    .filter(p => p.categoria === categoriaAtual)
+    .map(p => p.titulo);
+
+  const novos = [
     {
       id: Date.now()+401,
-      titulo: "Ideias Criativas",
+      titulo: "Brainstorm Criativo",
       categoria: categoriaAtual,
-      conteudo: "Gere ideias criativas e fora do comum para o tema abaixo.",
-      favorito: false,
-      seed: true
+      conteudo: "Gere ideias criativas e fora do comum para o tema informado abaixo.",
+      favorito: false
     },
     {
       id: Date.now()+402,
-      titulo: "Resolução de Problemas",
+      titulo: "Solução Estratégica",
       categoria: categoriaAtual,
-      conteudo: "Analise o problema abaixo e proponha soluções práticas e inteligentes.",
-      favorito: false,
-      seed: true
+      conteudo: "Analise o problema descrito abaixo e proponha soluções práticas e inteligentes.",
+      favorito: false
     },
     {
       id: Date.now()+403,
-      titulo: "Brainstorm Rápido",
+      titulo: "Organizar Ideias",
       categoria: categoriaAtual,
-      conteudo: "Faça um brainstorm rápido com várias sugestões objetivas sobre o tema informado.",
-      favorito: false,
-      seed: true
+      conteudo: "Organize as ideias abaixo em formato estruturado e estratégico.",
+      favorito: false
+    },
+    {
+      id: Date.now()+404,
+      titulo: "Tomada de Decisão",
+      categoria: categoriaAtual,
+      conteudo: "Analise prós e contras da situação abaixo e ajude na tomada de decisão racional.",
+      favorito: false
     }
-  );
+  ];
+
+  novos.forEach(p => {
+    if (!titulosExistentes.includes(p.titulo)) {
+      prompts.push(p);
+    }
+  });
 
   localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
 }
@@ -83,14 +100,23 @@ lista.addEventListener("click", e => {
   let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
   const p = prompts.find(x => x.id === id);
 
-  if (e.target.classList.contains("copiar")) navigator.clipboard.writeText(p.conteudo);
+  if (e.target.classList.contains("copiar")) {
+    navigator.clipboard.writeText(p.conteudo);
+  }
+
   if (e.target.classList.contains("editar")) {
-    const t = prompt("Editar título:", p.titulo);
-    const c = prompt("Editar conteúdo:", p.conteudo);
+    const t = window.prompt("Editar título:", p.titulo);
+    const c = window.prompt("Editar conteúdo:", p.conteudo);
     if (t && c) { p.titulo = t; p.conteudo = c; }
   }
-  if (e.target.classList.contains("apagar")) prompts = prompts.filter(x => x.id !== id);
-  if (e.target.classList.contains("favoritar")) p.favorito = !p.favorito;
+
+  if (e.target.classList.contains("apagar")) {
+    prompts = prompts.filter(x => x.id !== id);
+  }
+
+  if (e.target.classList.contains("favoritar")) {
+    p.favorito = !p.favorito;
+  }
 
   localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
   carregar();
@@ -99,5 +125,6 @@ lista.addEventListener("click", e => {
 inserirPromptsPadrao();
 carregar();
 </script>
+
 </body>
 </html>
