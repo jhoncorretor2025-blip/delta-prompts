@@ -15,36 +15,80 @@
 <main>
 
   <h1>💼 Prompts para Trabalho</h1>
-  <p>Prompts focados em produtividade e desempenho profissional.</p>
+  <p>Ferramentas estratégicas para produtividade e crescimento profissional.</p>
 
-  <div class="card" id="prompt1">
+  <!-- PROMPT 1 -->
+  <div class="card">
     <h3>1️⃣ Organização de Rotina Profissional</h3>
     <p>
       Organize minha rotina de trabalho considerando prioridades,
       tarefas urgentes e atividades estratégicas.
-      Crie um plano simples e eficiente para melhorar produtividade.
+      Crie um plano simples e eficiente para aumentar produtividade.
     </p>
-
     <div class="acoes">
       <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="compartilharPrompt('prompt1')">🔗 Compartilhar</button>
-      <button onclick="usarChatGPT(this)">🧠 Usar no ChatGPT</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
       <button onclick="favoritar(this)">🤍</button>
     </div>
   </div>
 
-  <div class="card" id="prompt2">
-    <h3>2️⃣ Planejamento Estratégico</h3>
+  <!-- PROMPT 2 -->
+  <div class="card">
+    <h3>2️⃣ Planejamento Estratégico Profissional</h3>
     <p>
       Desenvolva um plano estratégico para melhorar meus resultados profissionais,
-      considerando metas de curto, médio e longo prazo,
-      oportunidades e possíveis riscos.
+      definindo metas claras, oportunidades e plano de execução.
     </p>
-
     <div class="acoes">
       <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="compartilharPrompt('prompt2')">🔗 Compartilhar</button>
-      <button onclick="usarChatGPT(this)">🧠 Usar no ChatGPT</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <!-- PROMPT 3 -->
+  <div class="card">
+    <h3>3️⃣ Comunicação Profissional Persuasiva</h3>
+    <p>
+      Reescreva minha mensagem profissional tornando-a mais clara,
+      objetiva e persuasiva, mantendo tom estratégico.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <!-- PROMPT 4 -->
+  <div class="card">
+    <h3>4️⃣ Análise de Mercado Simplificada</h3>
+    <p>
+      Faça uma análise básica de mercado destacando oportunidades,
+      diferenciais competitivos e possíveis ameaças.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <!-- PROMPT 5 -->
+  <div class="card">
+    <h3>5️⃣ Otimização de Processos</h3>
+    <p>
+      Analise meus processos atuais e sugira melhorias práticas
+      para aumentar eficiência e produtividade.
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
       <button onclick="favoritar(this)">🤍</button>
     </div>
   </div>
@@ -58,16 +102,17 @@ function copiarTexto(botao) {
   alert("Prompt copiado!");
 }
 
-function compartilharPrompt(id) {
-  const url = window.location.origin + window.location.pathname + "#" + id;
-  navigator.clipboard.writeText(url);
-  alert("Link do prompt copiado!");
-}
-
 function usarChatGPT(botao) {
   const texto = botao.closest(".card").querySelector("p").innerText;
   const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
   window.open(url, "_blank");
+}
+
+function usarGemini(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+  alert("Prompt copiado! Cole no Gemini.");
 }
 
 function favoritar(botao) {
