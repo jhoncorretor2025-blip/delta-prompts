@@ -27,41 +27,47 @@
     <h3>1️⃣ Campanha Direta de Conversão</h3>
     <p>
       Crie uma campanha de vendas altamente persuasiva para [produto/serviço] com foco
-      em conversão imediata. Estruture com:
-      headline impactante,
-      identificação clara do problema,
-      promessa específica de resultado,
-      3 benefícios objetivos,
-      prova social estratégica
-      e CTA direto para WhatsApp.
-      Linguagem forte, clara e orientada para ação.
+      em conversão imediata. Estruture com: headline impactante, identificação clara do problema,
+      promessa específica de resultado, 3 benefícios objetivos, prova social estratégica
+      e CTA direto para WhatsApp. Linguagem forte, clara e orientada para ação.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <div class="card">
     <h3>2️⃣ Campanha Storytelling Persuasivo</h3>
     <p>
       Desenvolva uma campanha envolvente para [produto/serviço] usando storytelling.
-      Comece com uma situação real do público-alvo,
-      apresente o conflito,
-      introduza a solução como virada de chave,
-      e finalize com transformação clara.
+      Comece com uma situação real do público-alvo, apresente o conflito,
+      introduza a solução como virada de chave e finalize com transformação clara.
       Inclua CTA estratégico incentivando conversa imediata no WhatsApp.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <div class="card">
     <h3>3️⃣ Campanha Escassez + Urgência</h3>
     <p>
       Crie campanha promocional para [produto/serviço] focada em urgência e escassez.
-      Estruture com:
-      oferta limitada,
-      bônus exclusivo,
-      prazo definido,
-      reforço de autoridade,
-      e chamada final intensa para ação imediata.
-      Tom convincente e direto ao ponto.
+      Estruture com: oferta limitada, bônus exclusivo, prazo definido,
+      reforço de autoridade e chamada final intensa para ação imediata.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <!-- ============================ -->
@@ -74,40 +80,74 @@
     <h3>4️⃣ Criativo Impacto Visual</h3>
     <p>
       Crie arte para Instagram (1080x1080) promovendo [produto/serviço],
-      com headline forte no topo,
-      destaque visual para o principal benefício,
+      com headline forte no topo, destaque visual para o principal benefício,
       botão visual simulando “Fale no WhatsApp”,
-      fundo moderno com cores contrastantes
-      e hierarquia visual clara para conversão.
+      fundo moderno com cores contrastantes e hierarquia visual clara.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <div class="card">
     <h3>5️⃣ Story Vertical Persuasivo</h3>
     <p>
-      Desenvolva imagem para Instagram Stories (1080x1920) com layout estratégico dividido em:
-      dor do cliente na parte superior,
-      solução clara no centro,
-      oferta irresistível na parte inferior.
-      Incluir selo visual “Oferta Limitada”
-      e espaço para link ou QR Code.
-      Visual limpo e foco em conversão.
+      Desenvolva imagem para Instagram Stories (1080x1920) com layout dividido em:
+      dor do cliente na parte superior, solução no centro e oferta na parte inferior.
+      Incluir selo visual “Oferta Limitada” e espaço para link ou QR Code.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <div class="card">
     <h3>6️⃣ Criativo Autoridade Premium</h3>
     <p>
       Gere arte promocional com estética premium e minimalista para [produto/serviço],
-      usando fundo sofisticado,
-      tipografia elegante,
-      destaque para prova social (ex: número de clientes atendidos),
-      design limpo com foco em credibilidade,
-      alto valor percebido e posicionamento de autoridade.
+      usando fundo sofisticado, tipografia elegante e destaque para prova social.
+      Design limpo com foco em credibilidade e alto valor percebido.
     </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
 </main>
+
+<script>
+function copiarTexto(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
+}
+
+function editarTexto(botao) {
+  const card = botao.closest(".card");
+  const paragrafo = card.querySelector("p");
+  const novoTexto = prompt("Editar prompt:", paragrafo.innerText);
+  if (novoTexto) paragrafo.innerText = novoTexto;
+}
+
+function apagarCard(botao) {
+  if (confirm("Deseja apagar este prompt?")) {
+    botao.closest(".card").remove();
+  }
+}
+
+function favoritar(botao) {
+  botao.innerText = botao.innerText === "🤍" ? "❤️" : "🤍";
+}
+</script>
 
 </body>
 </html>
