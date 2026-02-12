@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Análise & Diagnóstico | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+  <h1>📊 Análise & Diagnóstico Estratégico</h1>
+  <p>
+    Antes de tomar decisões, é preciso analisar.  
+    Use estes prompts para diagnosticar situações, identificar falhas,
+    entender oportunidades e agir com base em dados e lógica.
+  </p>
+
+  <!-- ============================ -->
+  <!-- PROMPTS DE ANÁLISE -->
+  <!-- ============================ -->
+
+  <div class="card">
+    <h3>🔍 Análise Completa de Texto</h3>
+    <p>
+      Analise o texto abaixo identificando clareza, coerência, pontos fortes,
+      pontos fracos, possíveis melhorias e sugestões práticas para aprimorar.
+      Seja objetivo e estratégico.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📈 Diagnóstico Profissional Estratégico</h3>
+    <p>
+      Faça uma análise estratégica do meu posicionamento profissional.
+      Identifique diferenciais, fraquezas, oportunidades de crescimento
+      e riscos competitivos. Estruture em análise SWOT.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⚖ Avaliação de Decisão</h3>
+    <p>
+      Analise a situação descrita abaixo apresentando prós, contras,
+      riscos envolvidos, impacto de curto e longo prazo
+      e recomendação racional baseada em estratégia.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📊 Análise de Concorrência</h3>
+    <p>
+      Analise meus principais concorrentes considerando posicionamento,
+      diferenciação, comunicação, preços e percepção de valor.
+      Apresente oportunidades estratégicas para me destacar.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🧠 Diagnóstico de Comunicação</h3>
+    <p>
+      Avalie minha comunicação considerando clareza, objetividade,
+      persuasão e impacto emocional. Identifique pontos de melhoria
+      e sugira ajustes práticos.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function copiarTexto(botao) {
+  const texto = botao.parentElement.previousElementSibling.innerText;
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
+}
+
+function usarChatGPT(botao) {
+  const texto = botao.parentElement.previousElementSibling.innerText;
+  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
+}
+
+function usarGemini(botao) {
+  const texto = botao.parentElement.previousElementSibling.innerText;
+  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+}
+
+function favoritar(botao) {
+  botao.innerText = "💖";
+}
+</script>
+
+</body>
+</html>
