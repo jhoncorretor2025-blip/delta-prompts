@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Planejamento & Estratégia | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+  <h1>🧠 Planejamento & Estratégia</h1>
+  <p>Prompts para organizar metas, estruturar planos e tomar decisões com visão de longo prazo.</p>
+
+  <div class="card">
+    <h3>1️⃣ Planejamento Estratégico Completo</h3>
+    <p>
+      Atue como um estrategista experiente e me ajude a criar um plano estratégico detalhado para [objetivo]. 
+      Estruture com: cenário atual, oportunidades, riscos, diferenciais competitivos, metas claras e plano de execução.
+    </p>
+    <div class="buttons">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ Plano de Ação 30 Dias</h3>
+    <p>
+      Crie um plano de ação prático para os próximos 30 dias visando [objetivo específico]. 
+      Organize em etapas semanais com metas claras, prioridades e indicadores de progresso.
+    </p>
+    <div class="buttons">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ Mapa de Metas e Prioridades</h3>
+    <p>
+      Organize minhas metas descritas abaixo em ordem de prioridade, separando curto, médio e longo prazo.
+      Identifique possíveis conflitos e sugira sequência ideal de execução.
+    </p>
+    <div class="buttons">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>4️⃣ Avaliação de Decisão Importante</h3>
+    <p>
+      Analise a decisão descrita abaixo considerando riscos, benefícios, impacto financeiro,
+      impacto emocional e consequências no longo prazo. Apresente recomendação lógica e estratégica.
+    </p>
+    <div class="buttons">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function copiarTexto(botao) {
+  const texto = botao.parentElement.previousElementSibling.innerText;
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
+}
+
+function usarChatGPT(botao) {
+  const texto = botao.parentElement.previousElementSibling.innerText;
+  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
+}
+
+function usarGemini(botao) {
+  const texto = botao.parentElement.previousElementSibling.innerText;
+  const url = "https://gemini.google.com/app?q=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
+}
+
+function favoritar(botao) {
+  alert("Função favoritos pode ser conectada ao localStorage depois.");
+}
+</script>
+
+</body>
+</html>
