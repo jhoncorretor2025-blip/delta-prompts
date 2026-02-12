@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Outros | Delta Prompts</title>
+  <title>Outros Prompts | Delta Prompts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
 </head>
@@ -12,120 +12,106 @@
 <div id="menu"></div>
 <script src="../menu-loader.js"></script>
 
-
 <main>
-  <h1>🧩 Outros Prompts</h1>
-  <p style="color:#6b7280; margin-top:-10px;">
-    Ideias criativas e soluções inteligentes.
-  </p>
 
-  <div id="lista"></div>
+  <h1>🧠 OUTROS PROMPTS</h1>
+  <p>Ferramentas mentais organizadas por função estratégica.</p>
+
+  <!-- ================================= -->
+  <!-- 1️⃣ CRIATIVIDADE & EXPANSÃO -->
+  <!-- ================================= -->
+
+  <h2 style="margin-top:40px;">💡 1️⃣ CRIATIVIDADE & EXPANSÃO DE IDEIAS</h2>
+  <p><strong>Função mental:</strong> gerar possibilidades e ampliar visão.</p>
+
+  <div class="card">
+    <h3>🔹 Brainstorm Rápido</h3>
+    <p>
+      Gere uma lista com ideias objetivas e diretas sobre o tema informado.
+      Respostas curtas, variadas e práticas. Foco em quantidade e diversidade.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🔹 Brainstorm Criativo Profundo</h3>
+    <p>
+      Desenvolva ideias originais e fora do comum sobre o tema abaixo.
+      Explore ângulos inesperados, tendências modernas, abordagens disruptivas
+      e conexões criativas pouco óbvias.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🔹 Exploração Estratégica de Ideias</h3>
+    <p>
+      Analise o tema informado e desenvolva ideias com potencial estratégico,
+      destacando oportunidades, diferenciação competitiva e aplicações práticas
+      que possam gerar vantagem real.
+    </p>
+  </div>
+
+  <!-- ================================= -->
+  <!-- 2️⃣ ANÁLISE & RESOLUÇÃO -->
+  <!-- ================================= -->
+
+  <h2 style="margin-top:60px;">🛠 2️⃣ ANÁLISE & RESOLUÇÃO DE PROBLEMAS</h2>
+  <p><strong>Função mental:</strong> organizar, avaliar e decidir com clareza.</p>
+
+  <div class="card">
+    <h3>🔹 Resolução Prática</h3>
+    <p>
+      Analise o problema descrito abaixo e proponha soluções objetivas,
+      viáveis e de aplicação imediata. Priorize simplicidade,
+      eficiência e execução rápida.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🔹 Solução Estratégica</h3>
+    <p>
+      Avalie o problema considerando cenário atual, riscos, oportunidades
+      e impactos futuros. Proponha soluções estruturadas com visão
+      de médio e longo prazo.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🔹 Tomada de Decisão Racional</h3>
+    <p>
+      Analise prós e contras da situação descrita abaixo,
+      identifique riscos e benefícios,
+      compare cenários possíveis
+      e apresente recomendação fundamentada em lógica e estratégia.
+    </p>
+  </div>
+
+  <!-- ================================= -->
+  <!-- 3️⃣ ORGANIZAÇÃO & CLAREZA -->
+  <!-- ================================= -->
+
+  <h2 style="margin-top:60px;">📊 3️⃣ ORGANIZAÇÃO & CLAREZA</h2>
+  <p><strong>Função mental:</strong> estruturar pensamento e transformar caos em plano.</p>
+
+  <div class="card">
+    <h3>🔹 Organizar Ideias</h3>
+    <p>
+      Estruture as informações abaixo em formato organizado,
+      com tópicos claros, prioridades definidas
+      e plano de ação resumido.
+      Transforme conteúdo confuso em estrutura lógica.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🔹 Planejamento Estruturado</h3>
+    <p>
+      Organize o tema informado em etapas práticas,
+      definindo objetivos, recursos necessários,
+      possíveis obstáculos e cronograma básico.
+    </p>
+  </div>
+
 </main>
-
-<script>
-const categoriaAtual = "Outros";
-const lista = document.getElementById("lista");
-
-function inserirPromptsPadrao() {
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  const titulosExistentes = prompts
-    .filter(p => p.categoria === categoriaAtual)
-    .map(p => p.titulo);
-
-  const novos = [
-    {
-      id: Date.now()+401,
-      titulo: "Brainstorm Criativo",
-      categoria: categoriaAtual,
-      conteudo: "Gere ideias criativas e fora do comum para o tema informado abaixo.",
-      favorito: false
-    },
-    {
-      id: Date.now()+402,
-      titulo: "Solução Estratégica",
-      categoria: categoriaAtual,
-      conteudo: "Analise o problema descrito abaixo e proponha soluções práticas e inteligentes.",
-      favorito: false
-    },
-    {
-      id: Date.now()+403,
-      titulo: "Organizar Ideias",
-      categoria: categoriaAtual,
-      conteudo: "Organize as ideias abaixo em formato estruturado e estratégico.",
-      favorito: false
-    },
-    {
-      id: Date.now()+404,
-      titulo: "Tomada de Decisão",
-      categoria: categoriaAtual,
-      conteudo: "Analise prós e contras da situação abaixo e ajude na tomada de decisão racional.",
-      favorito: false
-    }
-  ];
-
-  novos.forEach(p => {
-    if (!titulosExistentes.includes(p.titulo)) {
-      prompts.push(p);
-    }
-  });
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-}
-
-function carregar() {
-  lista.innerHTML = "";
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  prompts.filter(p => p.categoria === categoriaAtual).forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h3>${p.titulo}</h3>
-      <p>${p.conteudo}</p>
-      <div class="acoes">
-        <button data-id="${p.id}" class="copiar">📋 Copiar</button>
-        <button data-id="${p.id}" class="editar">✏️ Editar</button>
-        <button data-id="${p.id}" class="apagar">🗑️ Apagar</button>
-        <button data-id="${p.id}" class="favoritar">${p.favorito ? "❤️" : "🤍"}</button>
-      </div>
-    `;
-    lista.appendChild(card);
-  });
-}
-
-lista.addEventListener("click", e => {
-  const id = Number(e.target.dataset.id);
-  if (!id) return;
-
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const p = prompts.find(x => x.id === id);
-
-  if (e.target.classList.contains("copiar")) {
-    navigator.clipboard.writeText(p.conteudo);
-  }
-
-  if (e.target.classList.contains("editar")) {
-    const t = window.prompt("Editar título:", p.titulo);
-    const c = window.prompt("Editar conteúdo:", p.conteudo);
-    if (t && c) { p.titulo = t; p.conteudo = c; }
-  }
-
-  if (e.target.classList.contains("apagar")) {
-    prompts = prompts.filter(x => x.id !== id);
-  }
-
-  if (e.target.classList.contains("favoritar")) {
-    p.favorito = !p.favorito;
-  }
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  carregar();
-});
-
-inserirPromptsPadrao();
-carregar();
-</script>
 
 </body>
 </html>
