@@ -1,0 +1,21 @@
+.hero {
+  padding: 70px 20px 40px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+
+.subtitulo {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.cta-principal {
+  padding: 14px 34px;
+  font-size: 16px;
+}
