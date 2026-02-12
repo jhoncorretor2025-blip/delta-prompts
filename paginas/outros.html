@@ -17,101 +17,94 @@
   <h1>🧠 OUTROS PROMPTS</h1>
   <p>Ferramentas mentais organizadas por função estratégica.</p>
 
-  <!-- ================================= -->
-  <!-- 1️⃣ CRIATIVIDADE & EXPANSÃO -->
-  <!-- ================================= -->
+  <!-- =============================== -->
+  <!-- CRIATIVIDADE -->
+  <!-- =============================== -->
 
   <h2 style="margin-top:40px;">💡 1️⃣ CRIATIVIDADE & EXPANSÃO DE IDEIAS</h2>
-  <p><strong>Função mental:</strong> gerar possibilidades e ampliar visão.</p>
 
   <div class="card">
     <h3>🔹 Brainstorm Rápido</h3>
-    <p>
-      Gere uma lista com ideias objetivas e diretas sobre o tema informado.
-      Respostas curtas, variadas e práticas. Foco em quantidade e diversidade.
-    </p>
+    <p>Gere uma lista com ideias objetivas e diretas sobre o tema informado. Respostas curtas, variadas e práticas.</p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
   <div class="card">
     <h3>🔹 Brainstorm Criativo Profundo</h3>
-    <p>
-      Desenvolva ideias originais e fora do comum sobre o tema abaixo.
-      Explore ângulos inesperados, tendências modernas, abordagens disruptivas
-      e conexões criativas pouco óbvias.
-    </p>
+    <p>Desenvolva ideias originais e fora do comum explorando ângulos inesperados e abordagens inovadoras.</p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>🔹 Exploração Estratégica de Ideias</h3>
-    <p>
-      Analise o tema informado e desenvolva ideias com potencial estratégico,
-      destacando oportunidades, diferenciação competitiva e aplicações práticas
-      que possam gerar vantagem real.
-    </p>
-  </div>
+  <!-- =============================== -->
+  <!-- ANÁLISE -->
+  <!-- =============================== -->
 
-  <!-- ================================= -->
-  <!-- 2️⃣ ANÁLISE & RESOLUÇÃO -->
-  <!-- ================================= -->
-
-  <h2 style="margin-top:60px;">🛠 2️⃣ ANÁLISE & RESOLUÇÃO DE PROBLEMAS</h2>
-  <p><strong>Função mental:</strong> organizar, avaliar e decidir com clareza.</p>
+  <h2 style="margin-top:60px;">🛠 2️⃣ ANÁLISE & RESOLUÇÃO</h2>
 
   <div class="card">
     <h3>🔹 Resolução Prática</h3>
-    <p>
-      Analise o problema descrito abaixo e proponha soluções objetivas,
-      viáveis e de aplicação imediata. Priorize simplicidade,
-      eficiência e execução rápida.
-    </p>
+    <p>Analise o problema descrito abaixo e proponha soluções objetivas e viáveis de aplicação imediata.</p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>🔹 Solução Estratégica</h3>
-    <p>
-      Avalie o problema considerando cenário atual, riscos, oportunidades
-      e impactos futuros. Proponha soluções estruturadas com visão
-      de médio e longo prazo.
-    </p>
-  </div>
-
-  <div class="card">
-    <h3>🔹 Tomada de Decisão Racional</h3>
-    <p>
-      Analise prós e contras da situação descrita abaixo,
-      identifique riscos e benefícios,
-      compare cenários possíveis
-      e apresente recomendação fundamentada em lógica e estratégia.
-    </p>
-  </div>
-
-  <!-- ================================= -->
-  <!-- 3️⃣ ORGANIZAÇÃO & CLAREZA -->
-  <!-- ================================= -->
+  <!-- =============================== -->
+  <!-- ORGANIZAÇÃO -->
+  <!-- =============================== -->
 
   <h2 style="margin-top:60px;">📊 3️⃣ ORGANIZAÇÃO & CLAREZA</h2>
-  <p><strong>Função mental:</strong> estruturar pensamento e transformar caos em plano.</p>
 
   <div class="card">
     <h3>🔹 Organizar Ideias</h3>
-    <p>
-      Estruture as informações abaixo em formato organizado,
-      com tópicos claros, prioridades definidas
-      e plano de ação resumido.
-      Transforme conteúdo confuso em estrutura lógica.
-    </p>
-  </div>
-
-  <div class="card">
-    <h3>🔹 Planejamento Estruturado</h3>
-    <p>
-      Organize o tema informado em etapas práticas,
-      definindo objetivos, recursos necessários,
-      possíveis obstáculos e cronograma básico.
-    </p>
+    <p>Estruture as informações abaixo em formato organizado com prioridades claras e plano de ação resumido.</p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="editarTexto(this)">✏️ Editar</button>
+      <button onclick="apagarCard(this)">🗑️ Apagar</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
   </div>
 
 </main>
+
+<script>
+function copiarTexto(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
+}
+
+function editarTexto(botao) {
+  const card = botao.closest(".card");
+  const paragrafo = card.querySelector("p");
+  const novoTexto = prompt("Editar prompt:", paragrafo.innerText);
+  if (novoTexto) paragrafo.innerText = novoTexto;
+}
+
+function apagarCard(botao) {
+  if (confirm("Deseja apagar este prompt?")) {
+    botao.closest(".card").remove();
+  }
+}
+
+function favoritar(botao) {
+  botao.innerText = botao.innerText === "🤍" ? "❤️" : "🤍";
+}
+</script>
 
 </body>
 </html>
