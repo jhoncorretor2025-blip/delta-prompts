@@ -247,3 +247,48 @@ textarea {
     font-size: 30px;
   }
 }
+
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.hero h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.subtitulo {
+  font-size: 18px;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  color: #555;
+}
+
+.cta-principal {
+  display: inline-block;
+  padding: 16px 34px;
+  background: #111;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.cta-principal:hover {
+  background: #333;
+  transform: scale(1.05);
+}
+
+.beneficios {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 18px;
+}
+
+.beneficio {
+  margin: 15px 0;
+}
+
