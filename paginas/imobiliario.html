@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Imobiliário | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+  <h1>🏠 Prompts para o Mercado Imobiliário</h1>
+  <p>Ferramentas estratégicas para locação, vendas, negociação e comunicação profissional.</p>
+
+  <!-- ===================== -->
+  <!-- JURÍDICO -->
+  <!-- ===================== -->
+
+  <h2 style="margin-top:40px;">⚖️ JURÍDICO IMOBILIÁRIO</h2>
+
+  <div class="card">
+    <h3>1️⃣ Advogado Imobiliário Especialista</h3>
+    <p>
+      Atue como advogado imobiliário com mais de 20 anos de experiência
+      em locações e vendas. Analise o caso abaixo considerando riscos jurídicos,
+      responsabilidades das partes, possíveis falhas contratuais
+      e orientações estratégicas para proteger meus interesses.
+      Meu caso é: [cole aqui seu caso].
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <!-- ===================== -->
+  <!-- COMUNICAÇÃO -->
+  <!-- ===================== -->
+
+  <h2 style="margin-top:60px;">✍️ COMUNICAÇÃO PROFISSIONAL</h2>
+
+  <div class="card">
+    <h3>2️⃣ Melhorar Escrita Formal</h3>
+    <p>
+      Reescreva o texto abaixo tornando-o mais formal,
+      claro, educado e profissional,
+      mantendo objetividade e postura adequada
+      para comunicação imobiliária.
+      Texto: [cole aqui].
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <!-- ===================== -->
+  <!-- ANÁLISE DE TEXTO -->
+  <!-- ===================== -->
+
+  <h2 style="margin-top:60px;">🔎 ANÁLISE & REVISÃO</h2>
+
+  <div class="card">
+    <h3>3️⃣ Avaliação Crítica do Texto</h3>
+    <p>
+      Analise o texto abaixo e identifique pelo menos 5 pontos que podem
+      estar fracos, incompletos ou mal estruturados.
+      Questione o que está faltando,
+      sugira melhorias estratégicas
+      e indique ajustes para fortalecer a mensagem.
+      Texto: [cole aqui].
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <!-- ===================== -->
+  <!-- ESTRATÉGIA COMERCIAL -->
+  <!-- ===================== -->
+
+  <h2 style="margin-top:60px;">📈 ESTRATÉGIA & VENDAS</h2>
+
+  <div class="card">
+    <h3>4️⃣ Estratégia de Venda de Imóvel</h3>
+    <p>
+      Desenvolva uma estratégia de venda para o imóvel descrito abaixo,
+      considerando público ideal, diferenciais competitivos,
+      objeções comuns e abordagem de negociação.
+      Imóvel: [descreva aqui].
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>5️⃣ Análise de Risco na Locação</h3>
+    <p>
+      Analise a situação de locação descrita abaixo,
+      identifique riscos jurídicos e financeiros,
+      possíveis problemas contratuais
+      e estratégias preventivas.
+      Caso: [descreva aqui].
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>6️⃣ Negociação Estratégica com Cliente</h3>
+    <p>
+      Simule uma negociação imobiliária profissional,
+      considerando objeções do cliente,
+      argumentos de valor
+      e técnicas para conduzir ao fechamento.
+      Situação: [descreva aqui].
+    </p>
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">🤍</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function copiarTexto(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
+}
+
+function usarChatGPT(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
+}
+
+function usarGemini(botao) {
+  const texto = botao.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+  alert("Prompt copiado! Cole no Gemini.");
+}
+
+function favoritar(botao) {
+  const card = botao.closest(".card");
+  const titulo = card.querySelector("h3").innerText;
+  const texto = card.querySelector("p").innerText;
+
+  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+  const jaExiste = favoritos.find(f => f.titulo === titulo);
+
+  if (jaExiste) {
+    favoritos = favoritos.filter(f => f.titulo !== titulo);
+    botao.innerText = "🤍";
+  } else {
+    favoritos.push({ titulo, texto });
+    botao.innerText = "❤️";
+  }
+
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+}
+</script>
+
+</body>
+</html>
