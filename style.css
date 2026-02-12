@@ -147,3 +147,34 @@ main {
   padding: 15px;
   font-size: 14px;
 }
+
+/* ============================= */
+/* GALERIA - SOMENTE IMAGENS */
+/* ============================= */
+
+.pagina-imagens .galeria-imagens {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.pagina-imagens .img-card {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  width: 300px;
+}
+
+.pagina-imagens .img-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.pagina-imagens .img-card p {
+  padding: 15px;
+  font-size: 14px;
+}
+
