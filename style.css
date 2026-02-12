@@ -153,3 +153,17 @@ main {
   font-size: 14px;
   text-align: center;
 }
+.menu-title {
+  margin: 15px 0 5px;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #777;
+  letter-spacing: 1px;
+}
+
+.sidebar hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 15px 0;
+}
+
