@@ -13,118 +13,101 @@
 <script src="../menu-loader.js"></script>
 
 <main>
-  <h1>📢 Prompts de Marketing</h1>
-  <p style="color:#6b7280; margin-top:-10px;">
-    Estratégias práticas para vender mais usando Instagram e WhatsApp.
-  </p>
 
-  <div id="lista"></div>
+  <h1>📢 Prompts de Marketing Estratégico</h1>
+  <p>Prompts focados em conversão, autoridade e fechamento de vendas.</p>
+
+  <!-- ============================ -->
+  <!-- PROMPTS – CAMPANHAS TEXTO -->
+  <!-- ============================ -->
+
+  <h2 style="margin-top:40px;">📝 🔹 PROMPTS – CAMPANHAS (TEXTO)</h2>
+
+  <div class="card">
+    <h3>1️⃣ Campanha Direta de Conversão</h3>
+    <p>
+      Crie uma campanha de vendas altamente persuasiva para [produto/serviço] com foco
+      em conversão imediata. Estruture com:
+      headline impactante,
+      identificação clara do problema,
+      promessa específica de resultado,
+      3 benefícios objetivos,
+      prova social estratégica
+      e CTA direto para WhatsApp.
+      Linguagem forte, clara e orientada para ação.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ Campanha Storytelling Persuasivo</h3>
+    <p>
+      Desenvolva uma campanha envolvente para [produto/serviço] usando storytelling.
+      Comece com uma situação real do público-alvo,
+      apresente o conflito,
+      introduza a solução como virada de chave,
+      e finalize com transformação clara.
+      Inclua CTA estratégico incentivando conversa imediata no WhatsApp.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ Campanha Escassez + Urgência</h3>
+    <p>
+      Crie campanha promocional para [produto/serviço] focada em urgência e escassez.
+      Estruture com:
+      oferta limitada,
+      bônus exclusivo,
+      prazo definido,
+      reforço de autoridade,
+      e chamada final intensa para ação imediata.
+      Tom convincente e direto ao ponto.
+    </p>
+  </div>
+
+  <!-- ============================ -->
+  <!-- PROMPTS – CAMPANHAS IMAGEM -->
+  <!-- ============================ -->
+
+  <h2 style="margin-top:60px;">🖼 🔥 PROMPTS – CAMPANHAS (IMAGEM)</h2>
+
+  <div class="card">
+    <h3>4️⃣ Criativo Impacto Visual</h3>
+    <p>
+      Crie arte para Instagram (1080x1080) promovendo [produto/serviço],
+      com headline forte no topo,
+      destaque visual para o principal benefício,
+      botão visual simulando “Fale no WhatsApp”,
+      fundo moderno com cores contrastantes
+      e hierarquia visual clara para conversão.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>5️⃣ Story Vertical Persuasivo</h3>
+    <p>
+      Desenvolva imagem para Instagram Stories (1080x1920) com layout estratégico dividido em:
+      dor do cliente na parte superior,
+      solução clara no centro,
+      oferta irresistível na parte inferior.
+      Incluir selo visual “Oferta Limitada”
+      e espaço para link ou QR Code.
+      Visual limpo e foco em conversão.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>6️⃣ Criativo Autoridade Premium</h3>
+    <p>
+      Gere arte promocional com estética premium e minimalista para [produto/serviço],
+      usando fundo sofisticado,
+      tipografia elegante,
+      destaque para prova social (ex: número de clientes atendidos),
+      design limpo com foco em credibilidade,
+      alto valor percebido e posicionamento de autoridade.
+    </p>
+  </div>
+
 </main>
-
-<script>
-const categoriaAtual = "Marketing";
-const lista = document.getElementById("lista");
-
-function inserirPromptsPadrao() {
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  const titulosExistentes = prompts
-    .filter(p => p.categoria === categoriaAtual)
-    .map(p => p.titulo);
-
-  const novos = [
-    {
-      id: Date.now() + 500,
-      titulo: "Folder Stories + Mensagens WhatsApp",
-      categoria: categoriaAtual,
-      conteudo: "Crie um folder simples para Instagram Stories (1080x1920px) para vender [seu produto]. Inclua: título chamativo, 3 benefícios, preço promocional, WhatsApp para contato e QR code. Depois, faça 3 mensagens curtas de WhatsApp para enviar após Stories: gancho + oferta + urgência.",
-      favorito: false
-    },
-    {
-      id: Date.now() + 501,
-      titulo: "Campanha Orgânica 5 Dias",
-      categoria: categoriaAtual,
-      conteudo: "Monte campanha orgânica de 5 dias no Instagram para [produto/serviço]. Para cada dia: 1 imagem ou reel simples (descreva layout), legenda persuasiva com CTA para WhatsApp, e 1 story complementar com enquete. Foque em aquecer leads e fechar vendas via mensagens diretas.",
-      favorito: false
-    },
-    {
-      id: Date.now() + 502,
-      titulo: "Folder Promocional + Follow-up",
-      categoria: categoriaAtual,
-      conteudo: "Desenvolva folder promocional para feed e stories Instagram (quadrado e vertical) de [produto]. Detalhes: fundo atrativo, headline forte, bullet points de benefícios, depoimento estratégico, preço com desconto por 24h e link WhatsApp. Adicione sequência de 4 mensagens WhatsApp para follow-up automático após visualização.",
-      favorito: false
-    }
-  ];
-
-  novos.forEach(p => {
-    if (!titulosExistentes.includes(p.titulo)) {
-      prompts.push(p);
-    }
-  });
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-}
-
-function carregarPrompts() {
-  lista.innerHTML = "";
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  const filtrados = prompts.filter(p => p.categoria === categoriaAtual);
-
-  filtrados.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${p.titulo}</h3>
-      <p>${p.conteudo}</p>
-
-      <div class="acoes">
-        <button data-id="${p.id}" class="copiar">📋 Copiar</button>
-        <button data-id="${p.id}" class="editar">✏️ Editar</button>
-        <button data-id="${p.id}" class="apagar">🗑️ Apagar</button>
-        <button data-id="${p.id}" class="favoritar">
-          ${p.favorito ? "❤️" : "🤍"}
-        </button>
-      </div>
-    `;
-
-    lista.appendChild(card);
-  });
-}
-
-lista.addEventListener("click", e => {
-  const id = Number(e.target.dataset.id);
-  if (!id) return;
-
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const p = prompts.find(x => x.id === id);
-
-  if (e.target.classList.contains("copiar")) {
-    navigator.clipboard.writeText(p.conteudo);
-  }
-
-  if (e.target.classList.contains("editar")) {
-    const t = window.prompt("Editar título:", p.titulo);
-    const c = window.prompt("Editar conteúdo:", p.conteudo);
-    if (t && c) { p.titulo = t; p.conteudo = c; }
-  }
-
-  if (e.target.classList.contains("apagar")) {
-    prompts = prompts.filter(x => x.id !== id);
-  }
-
-  if (e.target.classList.contains("favoritar")) {
-    p.favorito = !p.favorito;
-  }
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  carregarPrompts();
-});
-
-inserirPromptsPadrao();
-carregarPrompts();
-</script>
 
 </body>
 </html>
