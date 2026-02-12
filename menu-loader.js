@@ -7,7 +7,6 @@ fetch(basePath + "menu.html")
   .then(html => {
     document.getElementById("menu").innerHTML = html;
 
-    // Corrige os links automaticamente
     document.querySelectorAll("#menu a").forEach(link => {
       const href = link.getAttribute("href");
       if (!href.startsWith("http")) {
