@@ -4,46 +4,64 @@
   <meta charset="UTF-8">
   <title>Favoritos | Delta Prompts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div id="menu"></div>
-<script src="menu-loader.js"></script>
+  <div id="menu"></div>
+  <script src="menu-loader.js"></script>
 
-<main>
+  <main>
+    <h1>❤️ Meus Prompts Favoritos</h1>
+    <p>
+      Aqui ficam armazenados os prompts que você marcou como favoritos.
+      Use este espaço para salvar seus comandos mais eficientes.
+    </p>
 
-  <h1>❤️ Meus Prompts Favoritos</h1>
-  <p>
-    Aqui ficam armazenados os prompts que você marcou como favoritos.
-    Use este espaço para salvar seus comandos mais eficientes e reutilizar sempre que precisar.
-  </p>
+    <div id="lista"></div>
+  </main>
 
-  <section style="margin-top:40px;">
+  <script>
+    const lista = document.getElementById("lista");
 
-    <div class="card">
-      <h3>⭐ Nenhum favorito ainda</h3>
-      <p>
-        Você ainda não adicionou nenhum prompt aos favoritos.
-        Quando clicar no ícone ❤️ em qualquer prompt, ele aparecerá aqui automaticamente.
-      </p>
-    </div>
+    function carregarFavoritos() {
+      lista.innerHTML = "";
 
-  </section>
+      const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+      const favoritos = prompts.filter(p => p.favorito);
 
-  <section style="margin-top:50px;">
-    <h2>💡 Como usar seus favoritos</h2>
-    <ul style="margin-top:15px; line-height:1.8;">
-      <li>✔️ Salve prompts que você usa com frequência</li>
-      <li>✔️ Crie sua própria biblioteca personalizada</li>
-      <li>✔️ Reaproveite comandos sem precisar procurar novamente</li>
-      <li>✔️ Aumente sua produtividade usando seus melhores prompts</li>
-    </ul>
-  </section>
+      if (favoritos.length === 0) {
+        lista.innerHTML = `
+          <div class="card">
+            <h3>⭐ Nenhum favorito ainda</h3>
+            <p>Marque um ❤️ em qualquer prompt para ele aparecer aqui automaticamente.</p>
+          </div>
+        `;
+        return;
+      }
 
-</main>
+      favoritos.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <h3>${p.titulo}</h3>
+          <p>${p.conteudo}</p>
+
+          <div class="acoes">
+            <button onclick="navigator.clipboard.writeText('${p.conteudo.replace(/'/g, "\\'")}')">
+              📋 Copiar
+            </button>
+          </div>
+        `;
+
+        lista.appendChild(card);
+      });
+    }
+
+    carregarFavoritos();
+  </script>
 
 </body>
 </html>
-
