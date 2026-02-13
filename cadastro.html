@@ -1,4 +1,3 @@
-<!-- ARQUIVO: cadastro.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,124 +5,70 @@
   <title>Novo Prompt | Delta Prompts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    .top-actions {
-      margin-bottom: 20px;
-    }
-
-    .top-actions a {
-      color: #3b82f6;
-      text-decoration: none;
-      font-weight: bold;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* ===== TOAST ===== */
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: #16a34a;
-      color: #fff;
-      padding: 14px 20px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      font-weight: bold;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s ease;
-      z-index: 9999;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
 </head>
 
 <body>
 
-<div id="menu"></div>
-<script src="menu-loader.js"></script>
+  <div id="menu"></div>
+  <script src="menu-loader.js"></script>
 
+  <main>
+    <h1>➕ Novo Prompt</h1>
 
+    <div class="card">
+      <input 
+        id="titulo" 
+        type="text" 
+        placeholder="Título do prompt"
+      >
 
-<main>
-  <div class="top-actions">
-    <a href="index.html">⬅️ Voltar</a>
-  </div>
+      <select id="categoria">
+        <option value="estudo">Estudo</option>
+        <option value="saude">Saúde</option>
+        <option value="imagens">Imagens</option>
+        <option value="outros">Outros</option>
+        <option value="trabalho">Trabalho</option>
+        <option value="imobiliario">Imobiliário</option>
+        <option value="marketing">Marketing</option>
+      </select>
 
-  <h1>➕ Novo Prompt</h1>
+      <textarea 
+        id="conteudo" 
+        placeholder="Digite o prompt aqui..."
+      ></textarea>
 
-  <div class="form-card">
-    <input id="titulo" type="text" placeholder="Título do prompt">
+      <div class="acoes">
+        <button onclick="salvarPrompt()">💾 Salvar Prompt</button>
+      </div>
+    </div>
+  </main>
 
-    <select id="categoria">
-      <option value="Estudo">Estudo</option>
-      <option value="Trabalho">Trabalho</option>
-      <option value="Saúde">Saúde</option>
-      <option value="Imagens">Imagens</option>
-      <option value="Outros">Outros</option>
-    </select>
+  <script>
+    function salvarPrompt() {
+      const titulo = document.getElementById("titulo").value.trim();
+      const categoria = document.getElementById("categoria").value;
+      const conteudo = document.getElementById("conteudo").value.trim();
 
-    <textarea id="conteudo" placeholder="Digite o prompt aqui..."></textarea>
+      if (!titulo || !conteudo) {
+        alert("Preencha o título e o conteúdo.");
+        return;
+      }
 
-    <button onclick="salvarPrompt()">Salvar Prompt</button>
-  </div>
-</main>
+      const prompt = {
+        id: Date.now(),
+        titulo,
+        categoria,
+        conteudo,
+        favorito: false
+      };
 
-<div id="toast" class="toast">✅ Prompt salvo com sucesso!</div>
+      const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+      prompts.push(prompt);
+      localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
 
-<script>
-function salvarPrompt() {
-  const titulo = document.getElementById("titulo").value.trim();
-  const categoria = document.getElementById("categoria").value;
-  const conteudo = document.getElementById("conteudo").value.trim();
-
-  if (!titulo || !conteudo) {
-    mostrarToast("⚠️ Preencha título e conteúdo", "#dc2626");
-    return;
-  }
-
-  const prompt = {
-    id: Date.now(),
-    titulo,
-    categoria,
-    conteudo,
-    favorito: false
-  };
-
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  prompts.push(prompt);
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-
-  document.getElementById("titulo").value = "";
-  document.getElementById("conteudo").value = "";
-
-  mostrarToast("✅ Prompt salvo com sucesso!", "#16a34a");
-
-  setTimeout(() => {
-    window.location.href = `paginas/${categoria.toLowerCase()}.html`;
-  }, 1200);
-}
-
-function mostrarToast(texto, cor) {
-  const toast = document.getElementById("toast");
-  toast.innerText = texto;
-  toast.style.background = cor;
-  toast.classList.add("show");
-
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2000);
-}
-</script>
-<script src="menu-loader.js"></cript>
+      window.location.href = `/delta-prompts/paginas/${categoria}.html`;
+    }
+  </script>
 
 </body>
 </html>
-
