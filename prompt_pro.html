@@ -1,9 +1,8 @@
-<!-- ARQUIVO: index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Delta Prompts</title>
+  <title>Gerador Pro | Delta Prompts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 
@@ -13,104 +12,145 @@
       margin: 40px auto;
       text-align: center;
     }
+
     .hero h1 {
-      font-size: 42px;
+      font-size: 36px;
       font-weight: 800;
       margin-bottom: 10px;
     }
+
     .hero p {
-      font-size: 18px;
-      opacity: 0.85;
-      margin-bottom: 40px;
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 35px;
     }
+
     .generator-card {
-      background: linear-gradient(180deg, #1f1f26, #17171c);
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      border: 1px solid #e5e5e5;
       text-align: left;
     }
+
     .field {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
+
     .field label {
       display: block;
       margin-bottom: 8px;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 14px;
+      color: #444;
     }
+
     .field textarea,
-    .field input {
+    .field input,
+    .field select {
       width: 100%;
       padding: 14px;
-      background: #050507;
-      color: #fff;
-      border: 1px solid #2b2b30;
+      border: 1px solid #ddd;
       border-radius: 10px;
       font-size: 14px;
+      font-family: inherit;
+      transition: 0.2s;
     }
+
+    .field textarea:focus,
+    .field input:focus,
+    .field select:focus {
+      outline: none;
+      border-color: #5b5ce2;
+      box-shadow: 0 0 0 3px rgba(91,92,226,0.15);
+    }
+
     .field textarea {
-      min-height: 120px;
+      min-height: 130px;
+      resize: vertical;
     }
+
     .counter {
       text-align: right;
       font-size: 12px;
-      opacity: 0.6;
+      color: #888;
       margin-top: 4px;
     }
-    .btn {
+
+    .btn-primary {
       width: 100%;
-      padding: 16px;
+      padding: 15px;
       border: none;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #5b5ce2, #4a4be0);
+      color: white;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 8px;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
       cursor: pointer;
       margin-top: 10px;
+      font-weight: 500;
     }
-    .btn.secondary {
-      background: #2a2a30;
-    }
+
     .resultado {
       margin-top: 30px;
       display: none;
     }
+
+    .resultado textarea {
+      background: #f4f6fb;
+    }
+
     .copiado {
       background: #16a34a !important;
     }
   </style>
 </head>
 
-
 <body>
-
 
 <div id="menu"></div>
 <script src="menu-loader.js"></script>
 
 <main>
   <section class="hero">
-    <h1>Gerador de Prompts para ChatGPT</h1>
-    <p>Crie prompts profissionais, claros e sob medida</p>
+    <h1>⚡ Gerador de Prompts Profissionais</h1>
+    <p>Crie prompts estruturados, claros e estratégicos em segundos</p>
 
     <div class="generator-card">
 
       <div class="field">
         <label>Tópico</label>
-        <textarea id="topico" maxlength="500" placeholder="Ex: Criação de conteúdo para Instagram sobre imóveis de alto padrão"></textarea>
+        <textarea id="topico" maxlength="500"
+          placeholder="Ex: Criação de conteúdo para Instagram sobre imóveis de alto padrão"></textarea>
         <div class="counter" id="countTopico">0 / 500</div>
       </div>
 
       <div class="field">
         <label>Objetivo</label>
-        <input id="objetivo" placeholder="Ex: Gerar ideias persuasivas para atrair clientes">
+        <input id="objetivo"
+          placeholder="Ex: Gerar ideias persuasivas para atrair clientes">
       </div>
 
       <div class="field">
         <label>Persona da IA (opcional)</label>
-        <input id="persona" placeholder="Ex: Advogado imobiliário experiente, especialista em contratos">
+        <input id="persona"
+          placeholder="Ex: Advogado imobiliário experiente, especialista em contratos">
       </div>
 
       <div class="field">
@@ -124,19 +164,20 @@
       </div>
 
       <div class="field">
-        <label>Palavras negativas (opcional)</label>
-        <input id="negativas" placeholder="Ex: sem emojis, sem textos longos, não usar termos técnicos">
+        <label>Restrições (opcional)</label>
+        <input id="negativas"
+          placeholder="Ex: sem emojis, sem textos longos, não usar termos técnicos">
       </div>
 
-      <button class="btn" onclick="gerarPrompt()">⚡ Gerar Prompt</button>
-      <button class="btn secondary" onclick="limparFormulario()">🧹 Limpar / Novo Prompt</button>
+      <button class="btn-primary" onclick="gerarPrompt()">🚀 Gerar Prompt</button>
+      <button class="btn-secondary" onclick="limparFormulario()">🧹 Limpar</button>
 
       <div class="resultado" id="resultado">
         <div class="field">
           <label>Prompt Gerado</label>
           <textarea id="promptFinal"></textarea>
         </div>
-        <button id="btnCopiar" class="btn" onclick="copiarPrompt()">📋 Copiar Prompt</button>
+        <button id="btnCopiar" class="btn-primary" onclick="copiarPrompt()">📋 Copiar Prompt</button>
       </div>
 
     </div>
@@ -172,34 +213,17 @@ function gerarPrompt() {
 
   let prompt = "";
 
-  if (persona) {
-    prompt += `Você é ${persona}.\n\n`;
-  } else {
-    prompt += `Você é um especialista no assunto.\n\n`;
-  }
+  prompt += persona
+    ? `Você é ${persona}.\n\n`
+    : `Você é um especialista no assunto.\n\n`;
 
-  prompt += `
-TÓPICO:
-${t}
-
-OBJETIVO:
-${o}
-
-NÍVEL DE DETALHE:
-${niveis[n]}
-`;
+  prompt += `TÓPICO:\n${t}\n\nOBJETIVO:\n${o}\n\nNÍVEL DE DETALHE:\n${niveis[n]}\n`;
 
   if (neg) {
-    prompt += `
-RESTRIÇÕES (O QUE NÃO FAZER):
-${neg}
-`;
+    prompt += `\nRESTRIÇÕES:\n${neg}\n`;
   }
 
-  prompt += `
-INSTRUÇÕES FINAIS:
-Seja claro, organizado, prático e profissional.
-`.trim();
+  prompt += `\nINSTRUÇÕES FINAIS:\nSeja claro, organizado, prático e profissional.`;
 
   document.getElementById("promptFinal").value = prompt;
   document.getElementById("resultado").style.display = "block";
