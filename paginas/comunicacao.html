@@ -2,38 +2,152 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Comunicação & Persuasão | Delta Prompts</title>
+  <title>Comunicação | Delta Prompts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
 
+<button class="menu-toggle" onclick="toggleMenu()">☰</button>
 <div id="menu"></div>
 <script src="../menu-loader.js"></script>
 
 <main>
 
-  <h1>💬 Comunicação & Persuasão</h1>
-  <p>
-    Aprimore sua comunicação profissional com prompts focados em clareza,
-    autoridade, persuasão e impacto estratégico.
-    Ideal para vendas, negociações, mensagens formais e posicionamento profissional.
-  </p>
-
-  <!-- ============================ -->
-  <!-- PROMPTS DE COMUNICAÇÃO -->
-  <!-- ============================ -->
-
-  <div class="card">
-    <h3>✍ Melhorar Texto Profissional</h3>
-    <p>
-      Reescreva o texto abaixo tornando-o mais claro, organizado,
-      profissional e educado, mantendo o objetivo original da mensagem.
+  <section class="hero">
+    <h1>💬 Prompts de Comunicação</h1>
+    <p class="subtitulo">
+      Comunicação profissional, persuasiva e estratégica para negócios e relacionamentos.
     </p>
+  </section>
 
-    <div class="botoes">
+  <!-- Prompt 1 -->
+  <div class="card">
+    <h3>🎯 Comunicação Persuasiva</h3>
+    <p>Melhore qualquer texto tornando-o mais convincente e estratégico.</p>
+
+    <pre>
+Atue como especialista em comunicação persuasiva com foco em clareza e influência ética.
+
+Reescreva o texto abaixo deixando-o mais convincente, organizado e estratégico, sem parecer forçado ou exagerado.
+
+Texto:
+[cole aqui]
+    </pre>
+
+    <div class="acoes">
       <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <!-- Prompt 2 -->
+  <div class="card">
+    <h3>💼 Mensagem Profissional</h3>
+    <p>Transforme mensagens comuns em comunicações profissionais.</p>
+
+    <pre>
+Reescreva a mensagem abaixo tornando-a mais profissional, clara e objetiva, mantendo cordialidade e firmeza.
+
+Mensagem:
+[cole aqui]
+    </pre>
+
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+    </div>
+  </div>
+
+  <!-- Prompt 3 -->
+  <div class="card">
+    <h3>🧠 Comunicação Assertiva</h3>
+    <p>Comunique-se com firmeza sem ser agressivo.</p>
+
+    <pre>
+Transforme a mensagem abaixo em uma comunicação assertiva, direta e respeitosa.
+Elimine qualquer tom agressivo ou passivo demais.
+
+Mensagem:
+[cole aqui]
+    </pre>
+
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+    </div>
+  </div>
+
+  <!-- Prompt 4 -->
+  <div class="card">
+    <h3>🤝 Responder Cliente Difícil</h3>
+    <p>Crie respostas profissionais e estratégicas em situações delicadas.</p>
+
+    <pre>
+Atue como especialista em atendimento ao cliente.
+
+Crie uma resposta profissional, empática e estratégica para a seguinte situação:
+
+[descreva a situação]
+    </pre>
+
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+    </div>
+  </div>
+
+  <!-- Prompt 5 -->
+  <div class="card">
+    <h3>📨 Follow-up Elegante</h3>
+    <p>Retome contato com clientes sem parecer insistente.</p>
+
+    <pre>
+Crie uma mensagem de acompanhamento (follow-up) educada e estratégica para retomar contato com um cliente que não respondeu.
+
+Contexto:
+[descreva]
+    </pre>
+
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+    </div>
+  </div>
+
+  <!-- Prompt 6 -->
+  <div class="card">
+    <h3>📚 Explicar de Forma Simples</h3>
+    <p>Explique assuntos complexos com clareza.</p>
+
+    <pre>
+Explique o tema abaixo de forma simples, didática e fácil de entender, como se estivesse explicando para alguém sem conhecimento técnico.
+
+Tema:
+[tema]
+    </pre>
+
+    <div class="acoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function copiarTexto(botao) {
+  const texto = botao.parentElement.parentElement.querySelector("pre").innerText;
+  navigator.clipboard.writeText(texto);
+
+  botao.innerText = "✅ Copiado!";
+  setTimeout(() => {
+    botao.innerText = "📋 Copiar";
+  }, 1500);
+
+  if (window.gtag) {
+    gtag('event', 'clique_botao', {
+      botao: 'copiar_comunicacao',
+      pagina: window.location.pathname
+    });
+  }
+}
+</script>
+
+</body>
+</html>
