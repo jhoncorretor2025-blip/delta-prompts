@@ -9,59 +9,60 @@
 
 <body>
 
-  <div id="menu"></div>
-  <script src="menu-loader.js"></script>
+<button class="menu-toggle" onclick="toggleMenu()">☰</button>
+<div id="menu"></div>
+<script src="menu-loader.js"></script>
 
-  <main>
+<main>
+
+  <section class="hero">
     <h1>❤️ Meus Prompts Favoritos</h1>
-    <p>
+    <p class="subtitulo">
       Aqui ficam armazenados os prompts que você marcou como favoritos.
-      Use este espaço para salvar seus comandos mais eficientes.
     </p>
+  </section>
 
-    <div id="lista"></div>
-  </main>
+  <div id="lista-favoritos"></div>
 
-  <script>
-    const lista = document.getElementById("lista");
+</main>
 
-    function carregarFavoritos() {
-      lista.innerHTML = "";
+<script>
+document.addEventListener("DOMContentLoaded", function(){
 
-      const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-      const favoritos = prompts.filter(p => p.favorito);
+  const container = document.getElementById("lista-favoritos");
+  const favoritos = JSON.parse(localStorage.getItem("deltaFavoritos") || "[]");
 
-      if (favoritos.length === 0) {
-        lista.innerHTML = `
-          <div class="card">
-            <h3>⭐ Nenhum favorito ainda</h3>
-            <p>Marque um ❤️ em qualquer prompt para ele aparecer aqui automaticamente.</p>
-          </div>
-        `;
-        return;
-      }
+  if (favoritos.length === 0) {
+    container.innerHTML = `
+      <div class="card">
+        <h3>⭐ Nenhum favorito ainda</h3>
+        <p>Você ainda não adicionou nenhum prompt aos favoritos.</p>
+      </div>
+    `;
+    return;
+  }
 
-      favoritos.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "card";
+  favoritos.forEach(function(f){
 
-        card.innerHTML = `
-          <h3>${p.titulo}</h3>
-          <p>${p.conteudo}</p>
+    const card = document.createElement("div");
+    card.className = "card";
 
-          <div class="acoes">
-            <button onclick="navigator.clipboard.writeText('${p.conteudo.replace(/'/g, "\\'")}')">
-              📋 Copiar
-            </button>
-          </div>
-        `;
+    card.innerHTML = `
+      <h3>${f.titulo}</h3>
+      <pre>${f.texto}</pre>
+      <div class="acoes">
+        <button onclick="navigator.clipboard.writeText(\`${f.texto}\`)">
+          📋 Copiar
+        </button>
+      </div>
+    `;
 
-        lista.appendChild(card);
-      });
-    }
+    container.appendChild(card);
 
-    carregarFavoritos();
-  </script>
+  });
+
+});
+</script>
 
 </body>
 </html>
