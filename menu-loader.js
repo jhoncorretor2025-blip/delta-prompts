@@ -99,3 +99,103 @@
   gtag('config', GA_ID);
 
 })();
+
+// ===== FAVORITOS: persistência & UI (colocar no menu-loader.js) =====
+(function(){
+  const STORAGE_KEY = "deltaFavoritos";
+
+  // ler favoritos
+  window.getFavoritos = function(){
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    } catch(e) {
+      console.error("Favoritos: parse error", e);
+      return [];
+    }
+  };
+
+  // salvar array de favoritos
+  window.saveFavoritos = function(list){
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    } catch(e){
+      console.error("Favoritos: save error", e);
+    }
+  };
+
+  // checa se id já é favorito
+  window.isFavorito = function(id){
+    return getFavoritos().some(f => f.id === id);
+  };
+
+  // toggle favorito: adiciona/remova pelo objeto {id,titulo,texto,categoria}
+  window.toggleFavorito = function(item){
+    const list = getFavoritos();
+    const exists = list.findIndex(f => f.id === item.id);
+    if (exists === -1) {
+      // adiciona
+      list.unshift({
+        id: item.id,
+        titulo: item.titulo || "",
+        texto: item.texto || "",
+        categoria: item.categoria || "",
+        createdAt: Date.now()
+      });
+      saveFavoritos(list);
+      // analytics
+      if (window.gtag) gtag('event','clique_botao',{ botao:'favoritar', pagina: window.location.pathname, item_id: item.id });
+      return true; // agora é favorito
+    } else {
+      // remove
+      list.splice(exists,1);
+      saveFavoritos(list);
+      if (window.gtag) gtag('event','clique_botao',{ botao:'desfavoritar', pagina: window.location.pathname, item_id: item.id });
+      return false; // removido
+    }
+  };
+
+  // atualiza aparência do botão (adiciona classe .favorito)
+  window.updateFavButtonUI = function(button){
+    const id = button.dataset.id;
+    if (!id) return;
+    if (isFavorito(id)) {
+      button.classList.add("favorito");
+      button.innerText = "❤️";
+      button.title = "Remover dos favoritos";
+    } else {
+      button.classList.remove("favorito");
+      button.innerText = "🤍";
+      button.title = "Adicionar aos favoritos";
+    }
+  };
+
+  // renderiza (inicializa) todos botões favoritar da página
+  window.initFavButtons = function(root = document){
+    root.querySelectorAll(".fav-btn").forEach(btn => updateFavButtonUI(btn));
+  };
+
+  // Event delegation: responde a cliques em botões .fav-btn
+  document.addEventListener("click", function(e){
+    const btn = e.target.closest && e.target.closest(".fav-btn");
+    if (!btn) return;
+    // ler os dados do card via data-attrs
+    const id = btn.dataset.id || String(Math.random()).slice(2,10);
+    const titulo = btn.dataset.titulo || btn.dataset.title || document.title || "Prompt";
+    const texto = btn.dataset.texto || btn.dataset.content || "";
+    const categoria = btn.dataset.categoria || "";
+
+    const becameFav = toggleFavorito({ id, titulo, texto, categoria });
+    updateFavButtonUI(btn);
+
+    // feedback visual rápido
+    btn.classList.add("pulse");
+    setTimeout(()=>btn.classList.remove("pulse"),500);
+  });
+
+  // inicializa quando DOM estiver pronto (se necessário)
+  document.addEventListener("DOMContentLoaded", function(){
+    initFavButtons();
+  });
+
+})();
+
