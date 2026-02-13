@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Redes Sociais | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+  <h1>📱 Prompts para Redes Sociais</h1>
+  <p>
+    Use estes prompts para criar conteúdos estratégicos para WhatsApp e Instagram.
+    Todos seguem a regra de gerar 3 versões diferentes.
+  </p>
+
+  <!-- ========================= -->
+  <!-- STATUS WHATSAPP -->
+  <!-- ========================= -->
+
+  <div class="card">
+    <h3>🟢 Status WhatsApp Motivacional</h3>
+    <p>
+Crie uma mensagem motivacional para status do WhatsApp.
+
+Tema:
+[Escreva o tema]
+
+Regras:
+- Entre 300 e 700 caracteres
+- Tom inspirador, mas realista
+- Linguagem simples
+- Pode usar até 3 emojis
+- Finalizar com uma frase forte
+- Gere 3 versões diferentes, variando abordagem
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- STATUS INSTAGRAM -->
+  <!-- ========================= -->
+
+  <div class="card">
+    <h3>🟣 Status Instagram Curto</h3>
+    <p>
+Crie uma frase curta para status do Instagram.
+
+Tema:
+[Escreva o tema]
+
+Regras:
+- Máximo 120 caracteres
+- Frase direta
+- Linguagem moderna
+- Até 1 emoji
+- Impacto imediato
+- Gere 3 versões diferentes
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- ENQUETE -->
+  <!-- ========================= -->
+
+  <div class="card">
+    <h3>🔥 Enquete para Story</h3>
+    <p>
+Crie uma pergunta estratégica para usar como enquete nos Stories.
+
+Tema:
+[Escreva o tema]
+
+Regras:
+- Pergunta curta
+- Duas opções simples de resposta
+- Linguagem natural
+- Deve gerar identificação
+- Gere 3 versões diferentes
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- POSICIONAMENTO -->
+  <!-- ========================= -->
+
+  <div class="card">
+    <h3>💬 Posicionamento Pessoal</h3>
+    <p>
+Crie um texto curto de posicionamento pessoal.
+
+Tema:
+[Escreva o tema]
+
+Regras:
+- Máximo 5 linhas
+- Tom firme, mas equilibrado
+- Linguagem autêntica
+- Sem exagero
+- Finalizar com uma frase de identidade
+- Gere 3 versões diferentes
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+</main>
+
+
+<script>
+
+function copiarPrompt(btn) {
+  const texto = btn.closest(".card").querySelector("p").innerText;
+  navigator.clipboard.writeText(texto);
+  btn.innerText = "✅ Copiado!";
+  setTimeout(() => btn.innerText = "📋 Copiar", 1500);
+}
+
+function abrirChatGPT(btn) {
+  const texto = btn.closest(".card").querySelector("p").innerText;
+  const url = "https://chat.openai.com/";
+  navigator.clipboard.writeText(texto);
+  window.open(url, "_blank");
+}
+
+function abrirGemini(btn) {
+  const texto = btn.closest(".card").querySelector("p").innerText;
+  const url = "https://gemini.google.com/";
+  navigator.clipboard.writeText(texto);
+  window.open(url, "_blank");
+}
+
+function favoritar(btn) {
+  const card = btn.closest(".card");
+  const titulo = card.querySelector("h3").innerText;
+  const texto = card.querySelector("p").innerText;
+
+  let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+
+  favoritos.push({ titulo, texto });
+
+  localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+
+  btn.innerText = "💖";
+  setTimeout(() => btn.innerText = "❤️", 1500);
+}
+
+</script>
+
+</body>
+</html>
