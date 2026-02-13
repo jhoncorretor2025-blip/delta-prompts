@@ -217,3 +217,70 @@ main {
     padding: 20px;
   }
 }
+
+/* ===== Menu hamburger / Mobile ===== */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  background: #5b5ce2;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 18px;
+  z-index: 1200;
+  cursor: pointer;
+}
+
+/* ao abrir, bloqueia o scroll do body */
+html.menu-open, body.menu-open {
+  overflow: hidden;
+}
+
+/* mobile behavior */
+@media (max-width: 900px) {
+
+  .menu-toggle { display: block; }
+
+  /* menu inicia escondido fora da tela à esquerda */
+  #menu .sidebar {
+    position: fixed;
+    left: -280px;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--menu, #fff);
+    padding: 24px;
+    transition: left 260ms cubic-bezier(.2,.9,.3,1);
+    z-index: 1100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
+
+  /* quando ativo — traz pra tela */
+  #menu .sidebar.active {
+    left: 0;
+  }
+
+  /* conteúdo principal precisa de padding menor no mobile */
+  main {
+    padding: 18px;
+  }
+
+  /* opcional: overlay quando menu aberto */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.32);
+    z-index: 1050;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+  }
+  .menu-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
