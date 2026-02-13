@@ -2,47 +2,85 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Favoritos | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+  <title>Menu - Delta Prompts</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: #f4f4f4;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #333;
+      padding: 8px 0;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 15px 0;
+    }
+
+    strong {
+      font-size: 0.85em;
+      color: #666;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="menu"></div>
-<script src="../menu-loader.js"></script>
+<nav class="sidebar">
+  <h2>Delta Prompts</h2>
 
-<main>
+  <a href="index.html">🏠 Início</a>
+  <a href="novo-prompt.html">➕ Novo Prompt</a>
+  <a href="gerador-pro.html">⚡ Gerador Pro</a>
 
-  <h1>❤️ Meus Prompts Favoritos</h1>
-  <p>
-    Aqui ficam armazenados os prompts que você marcou como favoritos.
-    Use este espaço para salvar seus comandos mais eficientes e reutilizar sempre que precisar.
-  </p>
+  <hr>
 
-  <section style="margin-top:40px;">
+  <strong>Pessoal</strong>
+  <a href="paginas/estudo.html">📚 Estudo</a>
+  <a href="paginas/saude.html">🧠 Saúde</a>
+  <a href="paginas/imagens.html">🎨 Imagens</a>
+  <a href="paginas/outros.html">🧩 Outros</a>
 
-    <div class="card">
-      <h3>⭐ Nenhum favorito ainda</h3>
-      <p>
-        Você ainda não adicionou nenhum prompt aos favoritos.
-        Quando clicar no ícone ❤️ em qualquer prompt, ele aparecerá aqui automaticamente.
-      </p>
-    </div>
+  <hr>
 
-  </section>
+  <strong>Trabalho</strong>
+  <a href="paginas/trabalho.html">💼 Trabalho</a>
+  <a href="paginas/imobiliario.html">🏠 Imobiliário</a>
+  <a href="paginas/marketing.html">📢 Marketing</a>
 
-  <section style="margin-top:50px;">
-    <h2>💡 Como usar seus favoritos</h2>
-    <ul style="margin-top:15px; line-height:1.8;">
-      <li>✔️ Salve prompts que você usa com frequência</li>
-      <li>✔️ Crie sua própria biblioteca personalizada</li>
-      <li>✔️ Reaproveite comandos sem precisar procurar novamente</li>
-      <li>✔️ Aumente sua produtividade usando seus melhores prompts</li>
-    </ul>
-  </section>
+  <hr>
 
-</main>
+  <a href="biblioteca.html">📦 Biblioteca</a>
+  <a href="favoritos.html">❤️ Favoritos</a>
+</nav>
 
 </body>
 </html>
