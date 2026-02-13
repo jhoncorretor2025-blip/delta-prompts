@@ -1,8 +1,4 @@
-const path = window.location.pathname.includes("/paginas/")
-  ? "../menu.html"
-  : "menu.html";
-
-fetch(path)
+fetch("/delta-prompts/menu.html")
   .then(res => res.text())
   .then(html => {
     document.getElementById("menu").innerHTML = html;
