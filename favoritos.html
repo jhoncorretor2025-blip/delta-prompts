@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Favoritos | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Pequenos ajustes locais só para garantir visual consistente */
+    .acoes { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+    .acoes .btn { padding:8px 12px; border-radius:8px; border:none; cursor:pointer; background:#5b5ce2; color:#fff; }
+    .acoes .btn.ghost { background:#2a2a30; }
+    .card { background:#fff; padding:22px; border-radius:14px; margin-bottom:20px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
+    .prompt-text { white-space:pre-wrap; margin-top:8px; color:#333; }
+    .fav-remove { background:#fff; color:#d33; border:1px solid #f0c; padding:6px 10px; border-radius:8px; }
+  </style>
 </head>
-
 <body>
 
 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
@@ -14,54 +22,172 @@
 <script src="menu-loader.js"></script>
 
 <main>
-
   <section class="hero">
     <h1>❤️ Meus Prompts Favoritos</h1>
-    <p class="subtitulo">
-      Aqui ficam armazenados os prompts que você marcou como favoritos.
-    </p>
+    <p class="subtitulo">Aqui ficam os prompts que você salvou para usar quando quiser.</p>
   </section>
 
   <div id="lista-favoritos"></div>
-
 </main>
 
 <script>
+/* Favoritos - renderização da página de favoritos */
 document.addEventListener("DOMContentLoaded", function(){
 
   const container = document.getElementById("lista-favoritos");
+
+  // Função de escape para evitar injeção HTML
+  function escapeHtml(s){
+    if (!s) return "";
+    return String(s)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#39;");
+  }
+
   const favoritos = JSON.parse(localStorage.getItem("deltaFavoritos") || "[]");
+
+  if (!container) return;
+  container.innerHTML = "";
 
   if (favoritos.length === 0) {
     container.innerHTML = `
       <div class="card">
         <h3>⭐ Nenhum favorito ainda</h3>
-        <p>Você ainda não adicionou nenhum prompt aos favoritos.</p>
+        <p>Você ainda não adicionou prompts aos favoritos. Vá a qualquer card e clique no coração para salvar.</p>
       </div>
     `;
     return;
   }
 
   favoritos.forEach(function(f){
-
     const card = document.createElement("div");
     card.className = "card";
 
+    // título e prompt (escapados)
     card.innerHTML = `
-      <h3>${f.titulo}</h3>
-      <pre>${f.texto}</pre>
-      <div class="acoes">
-        <button onclick="navigator.clipboard.writeText(\`${f.texto}\`)">
-          📋 Copiar
-        </button>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="margin:0">${escapeHtml(f.titulo || "Prompt")}</h3>
+        <small style="color:#777">${f.categoria ? escapeHtml(f.categoria) : ''}</small>
       </div>
+      <pre class="prompt-text">${escapeHtml(f.texto || "")}</pre>
+      <div class="acoes"></div>
     `;
+
+    const areaAcoes = card.querySelector(".acoes");
+
+    // botão Copiar
+    const copyBtn = document.createElement("button");
+    copyBtn.className = "btn";
+    copyBtn.type = "button";
+    copyBtn.innerText = "📋 Copiar";
+    copyBtn.addEventListener("click", function(){
+      const text = f.texto || "";
+      navigator.clipboard.writeText(text).then(() => {
+        copyBtn.innerText = "✅ Copiado!";
+        setTimeout(()=> copyBtn.innerText = "📋 Copiar", 1400);
+      });
+      // analytics
+      if (window.gtag) {
+        gtag('event','clique_botao',{ botao:'copiar_favorito', pagina: window.location.pathname, item_id: f.id || "" });
+      }
+    });
+    copyBtn.title = "Copiar prompt";
+
+    // botão ChatGPT
+    const chatBtn = document.createElement("button");
+    chatBtn.className = "btn";
+    chatBtn.type = "button";
+    chatBtn.innerText = "🤖 ChatGPT";
+    chatBtn.addEventListener("click", function(){
+      const q = encodeURIComponent(f.texto || "");
+      // abre novo tab com query (pode precisar de login)
+      window.open(`https://chat.openai.com/?q=${q}`, "_blank");
+      if (window.gtag) {
+        gtag('event','clique_botao',{ botao:'chatgpt_favorito', pagina: window.location.pathname, item_id: f.id || "" });
+      }
+    });
+    chatBtn.title = "Abrir no ChatGPT (pode pedir login)";
+
+    // botão Gemini
+    const gemBtn = document.createElement("button");
+    gemBtn.className = "btn ghost";
+    gemBtn.type = "button";
+    gemBtn.innerText = "✨ Gemini";
+    gemBtn.addEventListener("click", function(){
+      const q = encodeURIComponent(f.texto || "");
+      window.open(`https://gemini.google.com/app?prompt=${q}`, "_blank");
+      if (window.gtag) {
+        gtag('event','clique_botao',{ botao:'gemini_favorito', pagina: window.location.pathname, item_id: f.id || "" });
+      }
+    });
+    gemBtn.title = "Abrir no Gemini (pode pedir login)";
+
+    // botão remover do favoritos (coração / desfavoritar)
+    const remBtn = document.createElement("button");
+    remBtn.className = "fav-remove";
+    remBtn.type = "button";
+    remBtn.innerText = "Remover ❤️";
+    remBtn.title = "Remover dos favoritos";
+    remBtn.addEventListener("click", function(){
+      // se houver função global toggleFavorito (no menu-loader.js) usa ela,
+      // caso contrário remove localmente do localStorage
+      let removed = false;
+      if (typeof toggleFavorito === "function") {
+        // toggleFavorito retorna true/false conforme implementamos antes
+        try {
+          toggleFavorito({ id: f.id, titulo: f.titulo, texto: f.texto, categoria: f.categoria });
+          removed = true;
+        } catch(e){
+          console.warn("toggleFavorito erro:", e);
+        }
+      }
+      if (!removed) {
+        // fallback: remover manualmente da chave deltaFavoritos
+        try {
+          const arr = JSON.parse(localStorage.getItem("deltaFavoritos") || "[]");
+          const idx = arr.findIndex(x => x.id === f.id);
+          if (idx !== -1) {
+            arr.splice(idx,1);
+            localStorage.setItem("deltaFavoritos", JSON.stringify(arr));
+            removed = true;
+          } else {
+            // tentar por título/texto se id não estiver definido
+            const idx2 = arr.findIndex(x => (x.titulo===f.titulo && x.texto===f.texto));
+            if (idx2 !== -1) { arr.splice(idx2,1); localStorage.setItem("deltaFavoritos", JSON.stringify(arr)); removed = true; }
+          }
+        } catch(e){}
+      }
+
+      if (removed) {
+        // animação e remoção do DOM
+        card.style.transition = "all 0.3s ease";
+        card.style.opacity = "0";
+        card.style.transform = "translateY(8px)";
+        setTimeout(()=> card.remove(), 320);
+
+        if (window.gtag) {
+          gtag('event','clique_botao',{ botao:'remover_favorito', pagina: window.location.pathname, item_id: f.id || "" });
+        }
+      } else {
+        // se não removeu, apenas remove do DOM por segurança
+        card.remove();
+      }
+    });
+
+    // append buttons
+    areaAcoes.appendChild(copyBtn);
+    areaAcoes.appendChild(chatBtn);
+    areaAcoes.appendChild(gemBtn);
+    areaAcoes.appendChild(remBtn);
 
     container.appendChild(card);
 
-  });
+  }); // end foreach
 
-});
+}); // DOMContentLoaded
 </script>
 
 </body>
