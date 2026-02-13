@@ -3,3 +3,7 @@ fetch("/delta-prompts/menu.html")
   .then(html => {
     document.getElementById("menu").innerHTML = html;
   });
+
+function toggleMenu() {
+  document.getElementById("menu").classList.toggle("active");
+}
