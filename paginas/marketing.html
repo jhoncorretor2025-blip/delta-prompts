@@ -1,10 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Marketing | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<title>Marketing | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+
+/* Campo Quando usar menor e elegante */
+.quando-usar {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Separação de blocos */
+.bloco-secao {
+  margin-top: 60px;
+}
+
+.subnivel {
+  margin-top: 40px;
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+/* Card padrão */
+.card {
+  margin: 22px 0;
+  padding: 24px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(11,22,50,0.05);
+}
+
+.prompt-text {
+  margin: 12px 0 16px;
+  line-height: 1.6;
+}
+
+/* Botões */
+.acoes button {
+  padding:8px 12px;
+  border-radius:8px;
+  border:none;
+  color:#fff;
+  cursor:pointer;
+  margin-right:8px;
+}
+
+.copy { background:#6f6fe0; }
+.chat { background:#4b6bff; }
+.gemini { background:#ffb86b; color:#2b2b2b; }
+.fav { background:#ff6b9f; }
+
+</style>
 </head>
 
 <body>
@@ -14,189 +66,203 @@
 
 <main>
 
-  <h1>📢 Prompts de Marketing Estratégico</h1>
+<h1>📢 Prompts de Marketing Estratégico</h1>
 
-  <p style="margin-bottom:40px; max-width:800px;">
-    Aqui você encontra prompts voltados para conversão, posicionamento
-    e geração de vendas. Ideal para empreendedores, corretores,
-    prestadores de serviço e profissionais que desejam vender mais
-    com comunicação estratégica.
-    Ao utilizar estes prompts, você será capaz de estruturar campanhas,
-    criar criativos persuasivos e conduzir leads até o fechamento.
-  </p>
+<p style="max-width:800px;">
+Prompts voltados para conversão, posicionamento e geração de vendas.
+Ideal para empreendedores, corretores e profissionais que desejam vender mais com comunicação estratégica.
+</p>
 
-  <!-- ============================ -->
-  <!-- OBJETIVO DA PÁGINA -->
-  <!-- ============================ -->
+<br>
 
-  <h2>🎯 Objetivo</h2>
-  <p style="margin-bottom:40px; max-width:800px;">
-    Transformar ideias em campanhas organizadas,
-    aumentar conversão e estruturar mensagens que realmente geram ação.
-  </p>
+<h2>🎯 Objetivo</h2>
+<p style="max-width:800px;">
+Transformar ideias em campanhas estruturadas, aumentar conversão
+e criar mensagens que realmente geram ação.
+</p>
 
-  <!-- ============================ -->
-  <!-- CAMPANHAS TEXTO -->
-  <!-- ============================ -->
+<!-- ================================================== -->
+<!-- TEXTO -->
+<!-- ================================================== -->
 
-  <h2>📝 Campanhas de Texto (Copy Persuasiva)</h2>
+<div class="bloco-secao">
+<h2>📝 Campanhas de Texto</h2>
 
-  <div class="card">
-    <h3>1️⃣ Campanha Direta de Conversão</h3>
-    <p>
-      Crie uma campanha de vendas altamente persuasiva para [produto/serviço]
-      com foco em conversão imediata. Estruture com:
-      headline impactante,
-      identificação clara do problema,
-      promessa específica de resultado,
-      3 benefícios objetivos,
-      prova social estratégica
-      e CTA direto para WhatsApp.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<!-- BÁSICO -->
+<h3 class="subnivel">🟢 Básico</h3>
 
-  <div class="card">
-    <h3>2️⃣ Campanha Storytelling Persuasivo</h3>
-    <p>
-      Desenvolva uma campanha usando storytelling.
-      Comece com uma situação real do público-alvo,
-      apresente o conflito,
-      introduza a solução como virada de chave
-      e finalize com transformação clara e CTA estratégico.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<div class="card">
+<h3>🚀 Oferta Direta Simples</h3>
+<p class="quando-usar">💡 Quando usar: Para vender algo específico com chamada clara.</p>
+<p class="prompt-text">
+Crie uma oferta simples e direta para [produto/serviço],
+com headline clara, benefício principal,
+prova rápida e CTA direto para WhatsApp.
+</p>
+<div class="acoes">
+<button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+<button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+<button class="fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
 
-  <div class="card">
-    <h3>3️⃣ Campanha Escassez + Urgência</h3>
-    <p>
-      Crie campanha promocional focada em urgência e escassez.
-      Estruture com:
-      oferta limitada,
-      bônus exclusivo,
-      prazo definido,
-      reforço de autoridade
-      e chamada forte para ação imediata.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<!-- INTERMEDIÁRIO -->
+<h3 class="subnivel">🟡 Intermediário</h3>
 
-  <!-- ============================ -->
-  <!-- CAMPANHAS IMAGEM -->
-  <!-- ============================ -->
+<div class="card">
+<h3>📖 Storytelling de Conversão</h3>
+<p class="quando-usar">💡 Quando usar: Para criar conexão emocional antes da oferta.</p>
+<p class="prompt-text">
+Desenvolva uma campanha usando storytelling.
+Apresente o problema do público,
+mostre o conflito,
+introduza a solução como virada de chave
+e finalize com transformação clara e CTA.
+</p>
+<div class="acoes">
+<button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+<button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+<button class="fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
 
-  <h2 style="margin-top:60px;">🖼 Campanhas Visuais (Criativos para Instagram)</h2>
+<!-- AVANÇADO -->
+<h3 class="subnivel">🔴 Avançado</h3>
 
-  <div class="card">
-    <h3>4️⃣ Criativo Impacto Visual</h3>
-    <p>
-      Crie arte para Instagram (1080x1080) promovendo [produto/serviço],
-      com headline forte no topo,
-      destaque visual para o principal benefício,
-      botão visual simulando “Fale no WhatsApp”
-      e hierarquia visual clara para conversão.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<div class="card">
+<h3>🧠 Copy com Gatilhos Mentais</h3>
+<p class="quando-usar">💡 Quando usar: Para campanhas de alto impacto e lançamento.</p>
+<p class="prompt-text">
+Crie uma campanha estruturada com:
+headline forte,
+gatilho de autoridade,
+prova social estratégica,
+escassez real,
+bônus exclusivo,
+garantia clara
+e CTA urgente.
+</p>
+<div class="acoes">
+<button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+<button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+<button class="fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
 
-  <div class="card">
-    <h3>5️⃣ Story Vertical Persuasivo</h3>
-    <p>
-      Desenvolva imagem para Instagram Stories (1080x1920)
-      dividindo o layout em:
-      dor do cliente,
-      solução clara
-      e oferta irresistível.
-      Incluir selo visual “Oferta Limitada”
-      e espaço para link ou QR Code.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+</div>
 
-  <div class="card">
-    <h3>6️⃣ Criativo Autoridade Premium</h3>
-    <p>
-      Gere arte promocional com estética premium e minimalista,
-      usando fundo sofisticado,
-      tipografia elegante,
-      destaque para prova social
-      e posicionamento de alto valor percebido.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<!-- ================================================== -->
+<!-- IMAGEM -->
+<!-- ================================================== -->
+
+<div class="bloco-secao">
+<h2>🖼 Campanhas Visuais</h2>
+
+<!-- BÁSICO -->
+<h3 class="subnivel">🟢 Básico</h3>
+
+<div class="card">
+<h3>📸 Criativo Instagram 1080x1080</h3>
+<p class="quando-usar">💡 Quando usar: Para promoção rápida no feed.</p>
+<p class="prompt-text">
+Crie arte 1080x1080 para Instagram promovendo [produto/serviço],
+headline no topo,
+benefício central em destaque
+e botão visual simulando “Fale Agora”.
+</p>
+<div class="acoes">
+<button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+<button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+<button class="fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- INTERMEDIÁRIO -->
+<h3 class="subnivel">🟡 Intermediário</h3>
+
+<div class="card">
+<h3>📱 Story Vertical Persuasivo</h3>
+<p class="quando-usar">💡 Quando usar: Para campanhas de urgência nos Stories.</p>
+<p class="prompt-text">
+Desenvolva imagem 1080x1920 dividida em:
+dor do cliente,
+solução clara,
+oferta irresistível
+e selo visual “Oferta Limitada”.
+</p>
+<div class="acoes">
+<button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+<button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+<button class="fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- AVANÇADO -->
+<h3 class="subnivel">🔴 Avançado</h3>
+
+<div class="card">
+<h3>💎 Criativo Premium Autoridade</h3>
+<p class="quando-usar">💡 Quando usar: Para posicionamento de alto valor.</p>
+<p class="prompt-text">
+Gere arte promocional minimalista premium,
+fundo sofisticado,
+tipografia elegante,
+prova social destacada
+e estética de marca de alto padrão.
+</p>
+<div class="acoes">
+<button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+<button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+<button class="fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+</div>
 
 </main>
 
 <script>
-function copiarTexto(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
+
+function pegarTexto(btn){
+  return btn.closest(".card").querySelector(".prompt-text").innerText.trim();
+}
+
+function copiarPrompt(btn){
+  const texto = pegarTexto(btn);
   navigator.clipboard.writeText(texto);
-  alert("Prompt copiado!");
 }
 
-function usarChatGPT(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
-  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
-}
-
-function usarGemini(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
+function abrirChatGPT(btn){
+  const texto = pegarTexto(btn);
   navigator.clipboard.writeText(texto);
-  window.open("https://gemini.google.com/app", "_blank");
-  alert("Prompt copiado! Cole no Gemini.");
+  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
 }
 
-function favoritar(botao) {
-  const card = botao.closest(".card");
+function abrirGemini(btn){
+  const texto = pegarTexto(btn);
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/?q=" + encodeURIComponent(texto), "_blank");
+}
+
+function favoritar(btn){
+  const card = btn.closest(".card");
   const titulo = card.querySelector("h3").innerText;
-  const texto = card.querySelector("p").innerText;
+  const texto = pegarTexto(btn);
 
-  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+  let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
 
-  const jaExiste = favoritos.find(f => f.titulo === titulo);
-
-  if (jaExiste) {
-    favoritos = favoritos.filter(f => f.titulo !== titulo);
-    botao.innerText = "🤍";
-  } else {
+  if (!favoritos.some(f => f.texto === texto)) {
     favoritos.push({ titulo, texto });
-    botao.innerText = "❤️";
+    localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
   }
-
-  localStorage.setItem("favoritos", JSON.stringify(favoritos));
 }
+
 </script>
 
 </body>
