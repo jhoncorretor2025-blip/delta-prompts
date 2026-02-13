@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Imagens | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<title>Imagens | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
 
-  <style>
-    .trend-final {
-      margin-top: 60px;
-      text-align: center;
-    }
+<style>
+.trend-final {
+  margin-top: 60px;
+  text-align: center;
+}
 
-    .trend-btn-grande {
-      display: inline-block;
-      padding: 20px 50px;
-      font-size: 22px;
-      font-weight: bold;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #ff512f, #dd2476);
-      color: white;
-      text-decoration: none;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-      transition: 0.3s ease;
-    }
+.trend-btn-grande {
+  display: inline-block;
+  padding: 22px 55px;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  transition: 0.3s ease;
+}
 
-    .trend-btn-grande:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 45px rgba(0,0,0,0.3);
-    }
-  </style>
+.trend-btn-grande:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+}
+
+.quando-usar {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+}
+</style>
+
 </head>
 
 <body>
@@ -40,16 +47,17 @@
 <main>
 
 <h1>🎨 Prompts para Imagens</h1>
-<p>Crie imagens profissionais e virais usando IA.</p>
+<p>Crie imagens profissionais, virais e estratégicas usando IA.</p>
 
-<!-- ============================= -->
-<!-- 6 PROMPTS -->
-<!-- ============================= -->
+<!-- =========================== -->
+<!-- 1 -->
+<!-- =========================== -->
 
 <div class="card">
-<h3>📸 Foto Profissional</h3>
+<h3>📸 Foto Profissional Estética</h3>
+<p class="quando-usar">💡 Quando usar: Ideal para atualizar perfil profissional, LinkedIn ou redes sociais.</p>
 <p class="prompt-text">
-Gere uma foto profissional em alta definição, retrato moderno, iluminação suave de estúdio, fundo neutro desfocado, roupa social elegante, expressão confiante.
+Gere uma foto profissional em alta definição, estilo retrato moderno, iluminação suave de estúdio, fundo neutro levemente desfocado, expressão confiante e natural, roupa social elegante, cores neutras e sofisticadas, enquadramento centralizado, aspecto limpo e minimalista.
 </p>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -59,10 +67,15 @@ Gere uma foto profissional em alta definição, retrato moderno, iluminação su
 </div>
 </div>
 
+<!-- =========================== -->
+<!-- 2 -->
+<!-- =========================== -->
+
 <div class="card">
-<h3>🦸 Profissão Super-Herói</h3>
+<h3>🦸 Versão Super-Herói Profissional</h3>
+<p class="quando-usar">💡 Quando usar: Para criar autoridade e impacto visual forte nas redes.</p>
 <p class="prompt-text">
-Transforme uma pessoa da profissão de [SUA PROFISSÃO] em super-herói, uniforme inspirado na área, cidade ao fundo ao anoitecer, luz dramática.
+Transforme uma pessoa na profissão de [SUA PROFISSÃO] em um super-herói moderno, uniforme inspirado na área, símbolo no peito representando a profissão, cidade ao fundo ao anoitecer, iluminação dramática, estilo pôster de filme, cores fortes e contrastadas, atmosfera épica.
 </p>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -72,10 +85,15 @@ Transforme uma pessoa da profissão de [SUA PROFISSÃO] em super-herói, uniform
 </div>
 </div>
 
+<!-- =========================== -->
+<!-- 3 -->
+<!-- =========================== -->
+
 <div class="card">
-<h3>📈 Antes e Depois</h3>
+<h3>📈 Antes e Depois da Carreira</h3>
+<p class="quando-usar">💡 Quando usar: Para mostrar evolução profissional e inspirar seguidores.</p>
 <p class="prompt-text">
-Gere duas imagens lado a lado mostrando evolução da carreira de [SUA PROFISSÃO].
+Gere duas imagens lado a lado: à esquerda, a pessoa no início da carreira de [SUA PROFISSÃO], ambiente simples; à direita, anos depois, bem-sucedida, roupa elegante, escritório moderno ao fundo, cores vibrantes e luz entrando pela janela simbolizando evolução.
 </p>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -85,10 +103,15 @@ Gere duas imagens lado a lado mostrando evolução da carreira de [SUA PROFISSÃ
 </div>
 </div>
 
+<!-- =========================== -->
+<!-- 4 -->
+<!-- =========================== -->
+
 <div class="card">
-<h3>🎨 Caricatura Moderna</h3>
+<h3>🎨 Caricatura Moderna da Profissão</h3>
+<p class="quando-usar">💡 Quando usar: Para criar conteúdo leve e divertido no Instagram.</p>
 <p class="prompt-text">
-Crie caricatura moderna ilustrada da profissão de [SUA PROFISSÃO], cores vivas e fundo representando ambiente de trabalho.
+Crie uma caricatura em alta definição da profissão de [SUA PROFISSÃO], estilo ilustrado moderno, traços suaves, cores vivas, fundo simples com elementos do ambiente de trabalho, luz suave, sorriso confiante.
 </p>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -98,10 +121,15 @@ Crie caricatura moderna ilustrada da profissão de [SUA PROFISSÃO], cores vivas
 </div>
 </div>
 
+<!-- =========================== -->
+<!-- 5 -->
+<!-- =========================== -->
+
 <div class="card">
-<h3>🧩 Desenho 3D</h3>
+<h3>🧩 Desenho Animado 3D Profissional</h3>
+<p class="quando-usar">💡 Quando usar: Para criar avatar digital ou identidade visual criativa.</p>
 <p class="prompt-text">
-Crie personagem estilo desenho animado 3D representando [SUA PROFISSÃO], cenário com objetos da profissão.
+Crie um personagem em estilo desenho animado 3D representando a profissão de [SUA PROFISSÃO], cabeça levemente maior, expressão sorridente, cores fortes, cenário com objetos da profissão espalhados, iluminação alegre estilo filme de animação.
 </p>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -111,10 +139,15 @@ Crie personagem estilo desenho animado 3D representando [SUA PROFISSÃO], cenár
 </div>
 </div>
 
+<!-- =========================== -->
+<!-- 6 -->
+<!-- =========================== -->
+
 <div class="card">
-<h3>💼 Perfil LinkedIn</h3>
+<h3>⚖️ Hobby + Profissão</h3>
+<p class="quando-usar">💡 Quando usar: Para mostrar equilíbrio entre trabalho e vida pessoal.</p>
 <p class="prompt-text">
-Gere foto de perfil profissional estilo LinkedIn, iluminação suave, fundo neutro desfocado.
+Crie uma ilustração onde a pessoa aparece exercendo sua profissão de [SUA PROFISSÃO] ao mesmo tempo em que mostra seu hobby favorito, cenário dividido sutilmente em duas partes que se misturam, cores vibrantes, estilo semi-realista, sensação de equilíbrio.
 </p>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -124,9 +157,7 @@ Gere foto de perfil profissional estilo LinkedIn, iluminação suave, fundo neut
 </div>
 </div>
 
-<!-- ============================= -->
-<!-- BOTÃO GRANDE FINAL -->
-<!-- ============================= -->
+<!-- BOTÃO FINAL -->
 
 <div class="trend-final">
   <a href="/delta-prompts/paginas/trend.html" class="trend-btn-grande">
@@ -137,45 +168,34 @@ Gere foto de perfil profissional estilo LinkedIn, iluminação suave, fundo neut
 </main>
 
 <script>
-
-function pegarTexto(btn) {
+function pegarTexto(btn){
   return btn.closest(".card").querySelector(".prompt-text").innerText.trim();
 }
 
-function copiarPrompt(btn) {
-  const texto = pegarTexto(btn);
-  navigator.clipboard.writeText(texto).then(() => {
-    btn.innerText = "✅ Copiado!";
-    setTimeout(() => btn.innerText = "📋 Copiar", 1500);
-  });
-}
-
-function abrirChatGPT(btn) {
+function copiarPrompt(btn){
   const texto = pegarTexto(btn);
   navigator.clipboard.writeText(texto);
+}
+
+function abrirChatGPT(btn){
+  const texto = pegarTexto(btn);
   window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
 }
 
-function abrirGemini(btn) {
+function abrirGemini(btn){
   const texto = pegarTexto(btn);
-  navigator.clipboard.writeText(texto);
   window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
 }
 
-function favoritar(btn) {
+function favoritar(btn){
   const card = btn.closest(".card");
   const titulo = card.querySelector("h3").innerText;
   const texto = pegarTexto(btn);
 
   let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
-  favoritos.push({ titulo, texto });
-
+  favoritos.push({titulo, texto});
   localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
-
-  btn.innerText = "💖";
-  setTimeout(() => btn.innerText = "❤️", 1500);
 }
-
 </script>
 
 </body>
