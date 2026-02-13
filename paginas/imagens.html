@@ -5,6 +5,31 @@
   <title>Imagens | Delta Prompts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .trend-final {
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    .trend-btn-grande {
+      display: inline-block;
+      padding: 20px 50px;
+      font-size: 22px;
+      font-weight: bold;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ff512f, #dd2476);
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      transition: 0.3s ease;
+    }
+
+    .trend-btn-grande:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+    }
+  </style>
 </head>
 
 <body>
@@ -15,27 +40,82 @@
 <main>
 
 <h1>🎨 Prompts para Imagens</h1>
-<p>
-Prompts estratégicos para criar imagens criativas, profissionais e virais.
-Todos prontos para usar em IA de imagem.
-</p>
+<p>Crie imagens profissionais e virais usando IA.</p>
 
 <!-- ============================= -->
-<!-- IMAGEM PROFISSIONAL -->
+<!-- 6 PROMPTS -->
 <!-- ============================= -->
 
 <div class="card">
-<h3>📸 Foto Profissional Estética</h3>
-
-<p><strong>Quando usar:</strong>  
-💡 Ideal para atualizar perfil profissional ou redes sociais.</p>
-
+<h3>📸 Foto Profissional</h3>
 <p class="prompt-text">
-Gere uma foto profissional em alta definição, estilo retrato moderno, iluminação suave de estúdio, fundo neutro levemente desfocado, expressão confiante e natural, roupa social elegante, cores neutras e sofisticadas, enquadramento centralizado, aspecto limpo e minimalista.
-
-Acesse aqui para fazer sua trend.
+Gere uma foto profissional em alta definição, retrato moderno, iluminação suave de estúdio, fundo neutro desfocado, roupa social elegante, expressão confiante.
 </p>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
 
+<div class="card">
+<h3>🦸 Profissão Super-Herói</h3>
+<p class="prompt-text">
+Transforme uma pessoa da profissão de [SUA PROFISSÃO] em super-herói, uniforme inspirado na área, cidade ao fundo ao anoitecer, luz dramática.
+</p>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<div class="card">
+<h3>📈 Antes e Depois</h3>
+<p class="prompt-text">
+Gere duas imagens lado a lado mostrando evolução da carreira de [SUA PROFISSÃO].
+</p>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<div class="card">
+<h3>🎨 Caricatura Moderna</h3>
+<p class="prompt-text">
+Crie caricatura moderna ilustrada da profissão de [SUA PROFISSÃO], cores vivas e fundo representando ambiente de trabalho.
+</p>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<div class="card">
+<h3>🧩 Desenho 3D</h3>
+<p class="prompt-text">
+Crie personagem estilo desenho animado 3D representando [SUA PROFISSÃO], cenário com objetos da profissão.
+</p>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<div class="card">
+<h3>💼 Perfil LinkedIn</h3>
+<p class="prompt-text">
+Gere foto de perfil profissional estilo LinkedIn, iluminação suave, fundo neutro desfocado.
+</p>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
 <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
@@ -45,51 +125,13 @@ Acesse aqui para fazer sua trend.
 </div>
 
 <!-- ============================= -->
-<!-- VERSÃO SUPER-HERÓI -->
+<!-- BOTÃO GRANDE FINAL -->
 <!-- ============================= -->
 
-<div class="card">
-<h3>🦸 Versão Super-Herói Profissional</h3>
-
-<p><strong>Quando usar:</strong>  
-💡 Para criar imagem de autoridade com impacto visual forte.</p>
-
-<p class="prompt-text">
-Transforme uma pessoa na profissão de [SUA PROFISSÃO] em um super-herói moderno, uniforme inspirado na profissão, símbolo no peito representando a área de atuação, cidade ao fundo ao anoitecer, iluminação dramática, estilo pôster de filme, cores fortes e contrastadas, atmosfera épica.
-
-Acesse aqui para fazer sua trend.
-</p>
-
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">❤️</button>
-</div>
-</div>
-
-<!-- ============================= -->
-<!-- ANTES E DEPOIS -->
-<!-- ============================= -->
-
-<div class="card">
-<h3>📈 Antes e Depois da Carreira</h3>
-
-<p><strong>Quando usar:</strong>  
-💡 Para mostrar evolução e crescimento profissional.</p>
-
-<p class="prompt-text">
-Gere duas imagens lado a lado: à esquerda, pessoa no início da carreira de [SUA PROFISSÃO], roupa simples, ambiente modesto; à direita, mesma pessoa anos depois, bem-sucedida, roupa elegante, escritório moderno ao fundo, iluminação natural entrando pela janela, cores vibrantes, estilo motivacional.
-
-Acesse aqui para fazer sua trend.
-</p>
-
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">❤️</button>
-</div>
+<div class="trend-final">
+  <a href="/delta-prompts/paginas/trend.html" class="trend-btn-grande">
+    🔥 FAÇA SUA TREND AGORA
+  </a>
 </div>
 
 </main>
@@ -110,16 +152,14 @@ function copiarPrompt(btn) {
 
 function abrirChatGPT(btn) {
   const texto = pegarTexto(btn);
-  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
   navigator.clipboard.writeText(texto);
-  window.open(url, "_blank");
+  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
 }
 
 function abrirGemini(btn) {
   const texto = pegarTexto(btn);
-  const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
   navigator.clipboard.writeText(texto);
-  window.open(url, "_blank");
+  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
 }
 
 function favoritar(btn) {
