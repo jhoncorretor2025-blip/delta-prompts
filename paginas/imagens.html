@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="../style.css">
 
 <style>
+/* regras locais para esta página */
 .trend-final {
   margin-top: 60px;
   text-align: center;
@@ -30,11 +31,66 @@
   box-shadow: 0 20px 45px rgba(0,0,0,0.3);
 }
 
+/* quando-usar mais discreto */
 .quando-usar {
   font-weight: 600;
   margin-bottom: 8px;
-  color: #444;
+  color: #555;
+  font-size: 0.95rem; /* menor e discreto */
 }
+
+/* categorias */
+.categories {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin: 18px 0 8px;
+}
+.cat-btn {
+  padding:8px 12px;
+  background:#f0f3ff;
+  color:#222;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:600;
+  border:1px solid rgba(91,92,226,0.12);
+  box-shadow: 0 6px 18px rgba(91,92,226,0.04);
+}
+.cat-btn:hover { transform: translateY(-3px); }
+
+/* botões de ação */
+.acoes button {
+  padding:8px 12px;
+  border-radius:8px;
+  border:none;
+  color:#fff;
+  cursor:pointer;
+  margin-right:8px;
+}
+.acoes button.copy { background:#6f6fe0; }
+.acoes button.chat { background:#4b6bff; }
+.acoes button.gemini { background:#ffb86b; color:#2b2b2b; }
+.acoes button.fav { background:#ff6b9f; }
+
+/* card */
+.card {
+  margin: 22px 0;
+  padding: 22px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(11,22,50,0.04);
+}
+.prompt-text { white-space: pre-line; color:#2b2b2b; margin:12px 0 16px; line-height:1.55; }
+
+/* filtro: botão ativo */
+.cat-btn.active {
+  background: linear-gradient(135deg,#eef0ff,#e6e7ff);
+  box-shadow: 0 10px 30px rgba(91,92,226,0.06);
+  transform: translateY(-2px);
+}
+
+/* esconder */
+.hidden { display:none !important; }
 </style>
 
 </head>
@@ -64,118 +120,139 @@ melhorem sua presença digital e gerem percepção de valor profissional.
 Com esses prompts, você cria identidade visual forte sem depender de designer.
 </p>
 
-<br><br>
+<!-- CATEGORIAS -->
+<div class="categories" aria-label="Categorias de imagens">
+  <button class="cat-btn" data-filter="all">Todos</button>
+  <button class="cat-btn" data-filter="branding">🏷️ Branding</button>
+  <button class="cat-btn" data-filter="social">📱 Social</button>
+  <button class="cat-btn" data-filter="perfil">👤 Perfil Profissional</button>
+  <button class="cat-btn" data-filter="marketing">📈 Marketing</button>
+  <button class="cat-btn" data-filter="fun">🎉 Fun Fun</button>
+</div>
+
+<br>
 
 <!-- =========================== -->
 <!-- 1 -->
+<!-- Brand / Perfil -->
 <!-- =========================== -->
+<div class="card" data-category="perfil branding" id="card-1">
+  <h3>📸 Foto Profissional Estética</h3>
+  <p class="quando-usar">💡 Quando usar: Ideal para atualizar perfil profissional, LinkedIn ou redes sociais.</p>
 
-<div class="card">
-<h3>📸 Foto Profissional Estética</h3>
-<p class="quando-usar">💡 Quando usar: Ideal para atualizar perfil profissional, LinkedIn ou redes sociais.</p>
-<p class="prompt-text">
+  <p class="prompt-text">
 Gere uma foto profissional em alta definição, estilo retrato moderno, iluminação suave de estúdio, fundo neutro levemente desfocado, expressão confiante e natural, roupa social elegante, cores neutras e sofisticadas, enquadramento centralizado, aspecto limpo e minimalista.
-</p>
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">❤️</button>
-</div>
+  </p>
+
+  <div class="acoes">
+    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+    <button class="fav" onclick="favoritar(this)">❤️</button>
+  </div>
 </div>
 
 <!-- =========================== -->
 <!-- 2 -->
+<!-- Branding / Marketing -->
 <!-- =========================== -->
+<div class="card" data-category="branding marketing" id="card-2">
+  <h3>🦸 Versão Super-Herói Profissional</h3>
+  <p class="quando-usar">💡 Quando usar: Para criar autoridade e impacto visual forte nas redes.</p>
 
-<div class="card">
-<h3>🦸 Versão Super-Herói Profissional</h3>
-<p class="quando-usar">💡 Quando usar: Para criar autoridade e impacto visual forte nas redes.</p>
-<p class="prompt-text">
+  <p class="prompt-text">
 Transforme uma pessoa na profissão de [SUA PROFISSÃO] em um super-herói moderno, uniforme inspirado na área, símbolo no peito representando a profissão, cidade ao fundo ao anoitecer, iluminação dramática, estilo pôster de filme, cores fortes e contrastadas, atmosfera épica.
-</p>
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">❤️</button>
-</div>
+  </p>
+
+  <div class="acoes">
+    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+    <button class="fav" onclick="favoritar(this)">❤️</button>
+  </div>
 </div>
 
 <!-- =========================== -->
 <!-- 3 -->
+<!-- Social / Fun -->
 <!-- =========================== -->
+<div class="card" data-category="social fun" id="card-3">
+  <h3>📈 Antes e Depois da Carreira</h3>
+  <p class="quando-usar">💡 Quando usar: Para mostrar evolução profissional e inspirar seguidores.</p>
 
-<div class="card">
-<h3>📈 Antes e Depois da Carreira</h3>
-<p class="quando-usar">💡 Quando usar: Para mostrar evolução profissional e inspirar seguidores.</p>
-<p class="prompt-text">
+  <p class="prompt-text">
 Gere duas imagens lado a lado: à esquerda, a pessoa no início da carreira de [SUA PROFISSÃO], ambiente simples; à direita, anos depois, bem-sucedida, roupa elegante, escritório moderno ao fundo, cores vibrantes e luz entrando pela janela simbolizando evolução.
-</p>
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">❤️</button>
-</div>
+  </p>
+
+  <div class="acoes">
+    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+    <button class="fav" onclick="favoritar(this)">❤️</button>
+  </div>
 </div>
 
 <!-- =========================== -->
 <!-- 4 -->
+<!-- Fun / Social -->
 <!-- =========================== -->
+<div class="card" data-category="fun social" id="card-4">
+  <h3>🎨 Caricatura Moderna da Profissão</h3>
+  <p class="quando-usar">💡 Quando usar: Para criar conteúdo leve e divertido no Instagram.</p>
 
-<div class="card">
-<h3>🎨 Caricatura Moderna da Profissão</h3>
-<p class="quando-usar">💡 Quando usar: Para criar conteúdo leve e divertido no Instagram.</p>
-<p class="prompt-text">
+  <p class="prompt-text">
 Crie uma caricatura em alta definição da profissão de [SUA PROFISSÃO], estilo ilustrado moderno, traços suaves, cores vivas, fundo simples com elementos do ambiente de trabalho, luz suave, sorriso confiante.
-</p>
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">❤️</button>
-</div>
+  </p>
+
+  <div class="acoes">
+    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+    <button class="fav" onclick="favoritar(this)">❤️</button>
+  </div>
 </div>
 
 <!-- =========================== -->
 <!-- 5 -->
+<!-- Fun / Perfil -->
 <!-- =========================== -->
+<div class="card" data-category="fun perfil" id="card-5">
+  <h3>🧩 Desenho Animado 3D Profissional</h3>
+  <p class="quando-usar">💡 Quando usar: Para criar avatar digital ou identidade visual criativa.</p>
 
-<div class="card">
-<h3>🧩 Desenho Animado 3D Profissional</h3>
-<p class="quando-usar">💡 Quando usar: Para criar avatar digital ou identidade visual criativa.</p>
-<p class="prompt-text">
+  <p class="prompt-text">
 Crie um personagem em estilo desenho animado 3D representando a profissão de [SUA PROFISSÃO], cabeça levemente maior, expressão sorridente, cores fortes, cenário com objetos da profissão espalhados, iluminação alegre estilo filme de animação.
-</p>
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">❤️</button>
-</div>
+  </p>
+
+  <div class="acoes">
+    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+    <button class="fav" onclick="favoritar(this)">❤️</button>
+  </div>
 </div>
 
 <!-- =========================== -->
 <!-- 6 -->
+<!-- Marketing / Hobby -->
 <!-- =========================== -->
+<div class="card" data-category="marketing fun" id="card-6">
+  <h3>⚖️ Hobby + Profissão</h3>
+  <p class="quando-usar">💡 Quando usar: Para mostrar equilíbrio entre trabalho e vida pessoal.</p>
 
-<div class="card">
-<h3>⚖️ Hobby + Profissão</h3>
-<p class="quando-usar">💡 Quando usar: Para mostrar equilíbrio entre trabalho e vida pessoal.</p>
-<p class="prompt-text">
+  <p class="prompt-text">
 Crie uma ilustração onde a pessoa aparece exercendo sua profissão de [SUA PROFISSÃO] ao mesmo tempo em que mostra seu hobby favorito, cenário dividido sutilmente em duas partes que se misturam, cores vibrantes, estilo semi-realista, sensação de equilíbrio.
-</p>
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">❤️</button>
-</div>
+  </p>
+
+  <div class="acoes">
+    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
+    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
+    <button class="fav" onclick="favoritar(this)">❤️</button>
+  </div>
 </div>
 
 <!-- BOTÃO FINAL -->
-
 <div class="trend-final">
   <a href="/delta-prompts/paginas/trend.html" class="trend-btn-grande">
     🔥 FAÇA SUA TREND AGORA
@@ -185,36 +262,101 @@ Crie uma ilustração onde a pessoa aparece exercendo sua profissão de [SUA PRO
 </main>
 
 <script>
+/* ------------ filtro de categorias ------------- */
+const catButtons = document.querySelectorAll('.cat-btn');
+catButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const filter = btn.getAttribute('data-filter');
+    // marcar ativo
+    catButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const cards = document.querySelectorAll('.card');
+    if(filter === 'all'){
+      cards.forEach(c=>c.classList.remove('hidden'));
+      return;
+    }
+    cards.forEach(c=>{
+      const cats = c.getAttribute('data-category') || '';
+      // corresponde se cat está contido (ex: 'perfil branding')
+      if(cats.split(' ').includes(filter)){
+        c.classList.remove('hidden');
+      } else {
+        c.classList.add('hidden');
+      }
+    });
+  });
+});
+// ativa 'Todos' por padrão
+document.querySelector('.cat-btn[data-filter="all"]').classList.add('active');
+
+/* ------------ helpers de prompt ------------- */
 function pegarTexto(btn){
-  return btn.closest(".card").querySelector(".prompt-text").innerText.trim();
+  const card = btn.closest('.card');
+  if(!card) return '';
+  const el = card.querySelector('.prompt-text');
+  return el ? el.innerText.trim() : '';
 }
 
 function copiarPrompt(btn){
   const texto = pegarTexto(btn);
-  navigator.clipboard.writeText(texto);
+  if(!texto) return;
+  navigator.clipboard.writeText(texto).then(()=>{
+    const original = btn.innerText;
+    btn.innerText = '✅ Copiado';
+    setTimeout(()=> btn.innerText = original, 1400);
+  });
 }
 
+/* Abre ChatGPT com prefill via ?q=  (funciona para abrir chat.openai.com com query) */
 function abrirChatGPT(btn){
   const texto = pegarTexto(btn);
-  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
+  if(!texto) return;
+  navigator.clipboard.writeText(texto);
+  const url = 'https://chat.openai.com/?q=' + encodeURIComponent(texto);
+  window.open(url, '_blank');
 }
 
+/* Gemini: copia para clipboard e tenta abrir com query (melhor esforço).
+   Observação: o Gemini não garante prefill por URL público, então damos fallback para home. */
 function abrirGemini(btn){
   const texto = pegarTexto(btn);
-  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+  if(!texto) return;
+  navigator.clipboard.writeText(texto).then(()=>{
+    // tentativa de abrir com parâmetro q
+    const tryUrl = 'https://gemini.google.com/?q=' + encodeURIComponent(texto);
+    window.open(tryUrl, '_blank');
+    // fallback: abrir home se o primeiro não funcionar em alguns navegadores
+    setTimeout(()=> window.open('https://gemini.google.com/', '_blank'), 500);
+    // aviso rápido pro usuário
+    const original = btn.innerText;
+    btn.innerText = '📋 Copiado → Cole no Gemini';
+    setTimeout(()=> btn.innerText = original, 2000);
+  });
 }
 
+/* Favoritar com prevenção de duplicados */
 function favoritar(btn){
-  const card = btn.closest(".card");
-  const titulo = card.querySelector("h3").innerText;
+  const card = btn.closest('.card');
+  if(!card) return;
+  const titulo = (card.querySelector('h3') || {innerText:'Prompt'}).innerText.trim();
   const texto = pegarTexto(btn);
-
-  let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
-  favoritos.push({titulo, texto});
-  localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+  if(!texto) return;
+  let favoritos = JSON.parse(localStorage.getItem('deltaFavoritos') || '[]');
+  // se já existe (mesmo texto), não duplicar
+  if(favoritos.some(f=> f.texto === texto)) {
+    const orig = btn.innerText;
+    btn.innerText = '⭐ Já';
+    setTimeout(()=> btn.innerText = orig, 1000);
+    return;
+  }
+  favoritos.push({ titulo, texto, added: new Date().toISOString() });
+  localStorage.setItem('deltaFavoritos', JSON.stringify(favoritos));
+  const orig = btn.innerText;
+  btn.innerText = '💖';
+  setTimeout(()=> btn.innerText = orig, 1200);
 }
 </script>
 
 </body>
 </html>
-
