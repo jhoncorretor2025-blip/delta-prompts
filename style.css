@@ -1,228 +1,484 @@
 /* ========================= */
+
 /* RESET */
+
 /* ========================= */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+{
+
+margin: 0;
+
+padding: 0;
+
+box-sizing: border-box;
+
+
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  background: #f4f6fb;
-  color: #1e1e1e;
-  display: flex;
+
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+
+background: #f4f6fb;
+
+color: #1e1e1e;
+
+display: flex;
+
 }
 
 /* ========================= */
-/* MENU LATERAL (DESKTOP) */
+
+/* MENU LATERAL */
+
 /* ========================= */
 
 #menu {
-  width: 240px;
-  background: #ffffff;
-  min-height: 100vh;
-  padding: 25px 20px;
-  border-right: 1px solid #e5e5e5;
+
+width: 240px;
+
+background: #ffffff;
+
+min-height: 100vh;
+
+padding: 25px 20px;
+
+border-right: 1px solid #e5e5e5;
+
 }
 
 #menu h2 {
-  margin-bottom: 25px;
-  color: #5b5ce2;
+
+margin-bottom: 25px;
+
+color: #5b5ce2;
+
 }
 
 #menu a {
-  display: block;
-  text-decoration: none;
-  color: #333;
-  padding: 10px 0;
-  font-size: 15px;
-  transition: 0.2s;
+
+display: block;
+
+text-decoration: none;
+
+color: #333;
+
+padding: 10px 0;
+
+font-size: 15px;
+
+transition: 0.2s;
+
 }
 
 #menu a:hover {
-  color: #5b5ce2;
+
+color: #5b5ce2;
+
 }
 
 .menu-title {
-  margin: 20px 0 8px;
-  font-size: 13px;
-  text-transform: uppercase;
-  color: #777;
-  letter-spacing: 1px;
+
+margin: 20px 0 8px;
+
+font-size: 13px;
+
+text-transform: uppercase;
+
+color: #777;
+
+letter-spacing: 1px;
+
 }
 
 #menu hr {
-  border: none;
-  border-top: 1px solid #e0e0e0;
-  margin: 15px 0;
+
+border: none;
+
+border-top: 1px solid #e0e0e0;
+
+margin: 15px 0;
+
 }
 
 /* ========================= */
+
 /* CONTEÚDO PRINCIPAL */
+
 /* ========================= */
 
 main {
-  flex: 1;
-  padding: 60px;
-  max-width: 1100px;
+
+flex: 1;
+
+padding: 60px;
+
+max-width: 1100px;
+
 }
 
 /* ========================= */
-/* CARDS */
+
+/* CARDS PADRÃO */
+
 /* ========================= */
 
 .card {
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 14px;
-  margin-bottom: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+
+background: #ffffff;
+
+padding: 25px;
+
+border-radius: 14px;
+
+margin-bottom: 25px;
+
+box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+
 }
 
 .card h3 {
-  margin-bottom: 15px;
+
+margin-bottom: 15px;
+
 }
 
 .card p {
-  margin-bottom: 15px;
-  line-height: 1.6;
+
+margin-bottom: 15px;
+
+line-height: 1.6;
+
 }
 
 /* ========================= */
-/* BOTÕES */
+
+/* BOTÕES PADRÃO */
+
 /* ========================= */
 
 .acoes {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+
+display: flex;
+
+gap: 10px;
+
+flex-wrap: wrap;
+
 }
 
 .acoes button {
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: none;
-  background: #5b5ce2;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.2s;
+
+padding: 8px 14px;
+
+border-radius: 8px;
+
+border: none;
+
+background: #5b5ce2;
+
+color: white;
+
+cursor: pointer;
+
+font-size: 14px;
+
+transition: 0.2s;
+
 }
 
 .acoes button:hover {
-  opacity: 0.85;
+
+opacity: 0.85;
+
 }
 
 /* ========================= */
-/* GALERIA */
+
+/* GALERIA DE IMAGENS */
+
 /* ========================= */
 
 .galeria-imagens {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-  margin-top: 25px;
+
+display: grid;
+
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+gap: 25px;
+
+margin-top: 25px;
+
 }
 
 .img-card {
-  background: #ffffff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
+
+background: #ffffff;
+
+border-radius: 16px;
+
+overflow: hidden;
+
+box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+
+transition: transform 0.2s ease;
+
 }
 
 .img-card:hover {
-  transform: translateY(-5px);
+
+transform: translateY(-5px);
+
 }
 
 .img-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  display: block;
+
+width: 100%;
+
+height: 220px;
+
+object-fit: cover;
+
+display: block;
+
 }
 
 .img-card p {
-  padding: 15px;
-  font-size: 14px;
-  text-align: center;
+
+padding: 15px;
+
+font-size: 14px;
+
+text-align: center;
+
 }
 
 /* ========================= */
-/* MENU HAMBURGER */
-/* ========================= */
 
-.menu-toggle {
-  display: none;
-  position: fixed;
-  top: 14px;
-  left: 14px;
-  background: #5b5ce2;
-  color: white;
-  border: none;
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-size: 18px;
-  z-index: 1200;
-  cursor: pointer;
-}
+/* RESPONSIVO */
 
-/* ========================= */
-/* MOBILE */
 /* ========================= */
 
 @media (max-width: 900px) {
 
-  body {
-    flex-direction: column;
-  }
+body {
 
-  /* Botão aparece */
-  .menu-toggle {
-    display: block;
-  }
+flex-direction: column;
 
-  /* Menu vira drawer */
-  #menu {
-    position: fixed;
-    top: 0;
-    left: -260px;
-    width: 240px;
-    height: 100vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    background: #ffffff;
-    padding: 25px 20px;
-    transition: left 0.3s ease;
-    z-index: 1100;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  }
+}
 
-  #menu.active {
-    left: 0;
-  }
+#menu {
 
-  main {
-    padding: 20px;
-  }
+width: 100%;
 
-  /* Overlay */
-  .menu-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.32);
-    z-index: 1050;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 220ms ease;
-  }
+min-height: auto;
 
-  .menu-overlay.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
+border-right: none;
+
+border-bottom: 1px solid #e5e5e5;
+
+}
+
+main {
+
+padding: 30px;
+
+}
+
+}
+
+.menu-toggle {
+
+display: none;
+
+position: fixed;
+
+top: 15px;
+
+left: 15px;
+
+background: #5b5ce2;
+
+color: white;
+
+border: none;
+
+padding: 10px 14px;
+
+border-radius: 8px;
+
+font-size: 18px;
+
+z-index: 1000;
+
+cursor: pointer;
+
+}
+
+@media (max-width: 900px) {
+
+#menu {
+
+position: fixed;
+
+left: -260px;
+
+top: 0;
+
+height: 100vh;
+
+width: 240px;
+
+background: #ffffff;
+
+transition: 0.3s ease;
+
+z-index: 999;
+
+}
+
+#menu.active {
+
+left: 0;
+
+}
+
+body {
+
+flex-direction: column;
+
+}
+
+.menu-toggle {
+
+display: block;
+
+}
+
+main {
+
+padding: 20px;
+
+}
+
+}
+
+/* ===== Menu hamburger / Mobile ===== */
+
+.menu-toggle {
+
+display: none;
+
+position: fixed;
+
+top: 14px;
+
+left: 14px;
+
+background: #5b5ce2;
+
+color: white;
+
+border: none;
+
+padding: 10px 12px;
+
+border-radius: 10px;
+
+font-size: 18px;
+
+z-index: 1200;
+
+cursor: pointer;
+
+}
+
+/* ao abrir, bloqueia o scroll do body */
+
+html.menu-open, body.menu-open {
+
+overflow: hidden;
+
+}
+
+/* mobile behavior */
+
+@media (max-width: 900px) {
+
+.menu-toggle { display: block; }
+
+/* menu inicia escondido fora da tela à esquerda */
+
+#menu .sidebar {
+
+position: fixed;
+
+left: -280px;
+
+top: 0;
+
+width: 260px;
+
+height: 100vh;
+
+overflow-y: auto;
+
+-webkit-overflow-scrolling: touch;
+
+background: var(--menu, #fff);
+
+padding: 24px;
+
+transition: left 260ms cubic-bezier(.2,.9,.3,1);
+
+z-index: 1100;
+
+box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+}
+
+/* quando ativo — traz pra tela */
+
+#menu .sidebar.active {
+
+left: 0;
+
+}
+
+/* conteúdo principal precisa de padding menor no mobile */
+
+main {
+
+padding: 18px;
+
+}
+
+/* opcional: overlay quando menu aberto */
+
+.menu-overlay {
+
+position: fixed;
+
+inset: 0;
+
+background: rgba(0,0,0,0.32);
+
+z-index: 1050;
+
+opacity: 0;
+
+pointer-events: none;
+
+transition: opacity 220ms ease;
+
+}
+
+.menu-overlay.visible {
+
+opacity: 1;
+
+pointer-events: auto;
+
+}
 
 }
