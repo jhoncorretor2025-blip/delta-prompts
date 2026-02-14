@@ -1,46 +1,122 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Outros | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<title>Outros | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
 
-  <style>
-    .search-bar {
-      display:flex;
-      gap:10px;
-      align-items:center;
-      margin-bottom:20px;
-      max-width:900px;
-    }
+<style>
+/* ===== HERO ===== */
+.hero-outros {
+  margin-bottom:20px;
+}
+.hero-outros h1 { margin-bottom:8px; }
+.hero-outros p { max-width:900px; opacity:0.9; }
 
-    .search-input {
-      flex:1;
-      padding:12px 14px;
-      border-radius:10px;
-      border:1px solid #e6e6ee;
-      background:#fff;
-      font-size:15px;
-    }
+/* ===== BUSCA + CONTADOR + FILTRO ===== */
+.search-area {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:22px 0;
+  align-items:center;
+}
+.search-input {
+  flex:1;
+  min-width:220px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #e6e6ee;
+  background:#fff;
+  font-size:15px;
+}
+.result-count {
+  min-width:120px;
+  text-align:right;
+  font-weight:600;
+  color:#444;
+  font-size:14px;
+}
+.filters {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.filter-btn {
+  padding:8px 14px;
+  border-radius:20px;
+  border:1px solid #e6e6ee;
+  background:white;
+  cursor:pointer;
+  font-size:14px;
+  transition:0.18s;
+}
+.filter-btn:hover { transform:translateY(-2px); }
+.filter-btn.active {
+  background:#5b5ce2;
+  color:white;
+  border-color:#5b5ce2;
+}
 
-    .search-count {
-      font-size:14px;
-      color:#666;
-      min-width:120px;
-      text-align:right;
-    }
+/* ===== CARTÕES PREMIUM ===== */
+.card {
+  background:linear-gradient(145deg,#ffffff,#f7f8ff);
+  border-radius:14px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.04);
+  transition:0.18s ease;
+}
+.card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 18px 35px rgba(0,0,0,0.07);
+}
+.categoria-badge {
+  font-size:12px;
+  font-weight:700;
+  background:#eef0ff;
+  color:#5b5ce2;
+  padding:6px 10px;
+  border-radius:12px;
+  display:inline-block;
+  margin-bottom:10px;
+}
+.quando-usar {
+  font-weight:700;
+  margin:8px 0;
+  color:#444;
+}
+.prompt-text { line-height:1.6; color:#222; }
 
-    .quando-usar {
-      font-weight:600;
-      margin-bottom:8px;
-      color:#444;
-    }
+/* ===== AÇÕES ===== */
+.acoes {
+  margin-top:14px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.acoes button {
+  padding:8px 12px;
+  border-radius:10px;
+  border:none;
+  background:#5b5ce2;
+  color:white;
+  cursor:pointer;
+  font-size:14px;
+}
+.acoes button.ghost {
+  background:#fff;
+  color:#333;
+  border:1px solid #e6e6ee;
+}
 
-    .prompt-text {
-      line-height:1.6;
-    }
-  </style>
+/* ===== RESPONSIVO ===== */
+@media (max-width:800px){
+  .search-area { flex-direction:column; align-items:stretch; }
+  .result-count { text-align:left; }
+}
+</style>
 </head>
 
 <body>
@@ -50,40 +126,99 @@
 
 <main>
 
-<h1>🧩 Prompts Diversos & Criativos</h1>
-
-<p style="max-width:900px; margin-bottom:20px;">
-Aqui você encontra prompts versáteis para criatividade, produtividade,
-organização, reflexões, ideias diferentes e tudo que não se encaixa
-nas categorias principais.
-</p>
+<section class="hero-outros">
+  <h1>🧩 Prompts Criativos & Estratégicos</h1>
+  <p>
+    Laboratório de ideias. Aqui ficam prompts versáteis para criatividade,
+    organização mental, produtividade e planejamento estratégico.
+  </p>
+</section>
 
 <h2>🎯 Objetivo</h2>
-
-<p style="max-width:900px; margin-bottom:30px;">
-Estimular criatividade, clareza mental e geração de ideias.
-Essa área é seu laboratório estratégico.
+<p style="max-width:900px; margin-bottom:18px;">
+  Estimular clareza, criatividade e ação prática — sua oficina mental para transformar ideias em resultados.
 </p>
 
-<!-- BUSCADOR -->
-
-<div class="search-bar">
-  <input id="searchInput" class="search-input"
-         placeholder="Buscar prompt (ex: produtividade, reflexão, meta, organização...)">
-  <div id="searchCount" class="search-count"></div>
+<!-- BUSCA + CONTADOR + FILTROS -->
+<div class="search-area">
+  <input id="searchInput" class="search-input" placeholder="Buscar prompt (ex: foco, meta, brainstorm...)">
+  <div class="result-count" id="resultCount">Resultados: 0</div>
+  <div class="filters" style="margin-left:auto;">
+    <button class="filter-btn active" onclick="filtrarCategoria('todos', this)">Todos</button>
+    <button class="filter-btn" onclick="filtrarCategoria('mentalidade', this)">🧠 Mentalidade</button>
+    <button class="filter-btn" onclick="filtrarCategoria('produtividade', this)">🚀 Produtividade</button>
+    <button class="filter-btn" onclick="filtrarCategoria('criatividade', this)">💡 Criatividade</button>
+    <button class="filter-btn" onclick="filtrarCategoria('planejamento', this)">📅 Planejamento</button>
+  </div>
 </div>
 
-<!-- PROMPTS -->
-
+<!-- CONTAINER DE PROMPTS -->
 <div id="promptsContainer">
 
-  <div class="card" data-title="Organização Semanal" data-text="planejamento semanal metas organização rotina produtividade">
-    <h3>📅 Organização Semanal</h3>
-    <p class="quando-usar">💡 Quando usar: Para organizar metas e rotina da semana.</p>
+  <!-- Reflexão de Crescimento (já existente) -->
+  <div class="card" data-cat="mentalidade">
+    <span class="categoria-badge">🧠 Mentalidade</span>
+    <h3>Reflexão de Crescimento</h3>
+    <p class="quando-usar">💡 Quando usar: Para textos profundos ou status reflexivos.</p>
+    <p class="prompt-text">Crie um texto reflexivo sobre responsabilidade pessoal, crescimento emocional e evolução mental. Use linguagem simples e impactante.</p>
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <!-- Plano de Execução / Organização Diária -->
+  <div class="card" data-cat="produtividade">
+    <span class="categoria-badge">🚀 Produtividade</span>
+    <h3>Plano de Execução Diária</h3>
+    <p class="quando-usar">💡 Quando usar: Para organizar seu dia com foco.</p>
+    <p class="prompt-text">Crie um plano diário dividido em: tarefas prioritárias, tarefas secundárias, tempo estimado e revisão final do dia.</p>
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <!-- Brainstorm 20 Ideias -->
+  <div class="card" data-cat="criatividade">
+    <span class="categoria-badge">💡 Criatividade</span>
+    <h3>Brainstorm 20 Ideias</h3>
+    <p class="quando-usar">💡 Quando usar: Para gerar ideias fora do padrão.</p>
+    <p class="prompt-text">Gere 20 ideias criativas e não óbvias sobre [TEMA], explorando perspectivas diferentes e soluções inovadoras.</p>
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <!-- Mapa de Metas Estratégicas (já existente) -->
+  <div class="card" data-cat="planejamento">
+    <span class="categoria-badge">📅 Planejamento</span>
+    <h3>Mapa de Metas Estratégicas</h3>
+    <p class="quando-usar">💡 Quando usar: Para definir metas mensais ou anuais.</p>
+    <p class="prompt-text">Monte metas divididas em curto, médio e longo prazo, com plano de ação resumido para cada uma.</p>
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <!-- ==== NOVOS: Organização Semanal ==== -->
+  <div class="card" data-cat="produtividade">
+    <span class="categoria-badge">🚀 Produtividade</span>
+    <h3>Organização Semanal</h3>
+    <p class="quando-usar">💡 Quando usar: Para planejar a semana e manter consistência.</p>
     <p class="prompt-text">
-      Crie um planejamento semanal estratégico com foco em produtividade,
-      metas claras, divisão por prioridade (alta, média, baixa),
-      tempo estimado e revisão no final da semana.
+      Crie um plano semanal dividido por dias (segunda a domingo) com 3 prioridades por dia,
+      blocos de tempo para trabalho profundo, slots para reuniões e revisão semanal com métricas simples para acompanhar progresso.
     </p>
     <div class="acoes">
       <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -93,13 +228,14 @@ Essa área é seu laboratório estratégico.
     </div>
   </div>
 
-  <div class="card" data-title="Reflexão Profunda" data-text="reflexão autoconhecimento pensamento evolução mentalidade">
-    <h3>🧠 Reflexão Profunda</h3>
-    <p class="quando-usar">💡 Quando usar: Para gerar textos reflexivos ou status impactantes.</p>
+  <!-- ==== NOVOS: Reflexão Profunda ==== -->
+  <div class="card" data-cat="mentalidade">
+    <span class="categoria-badge">🧠 Mentalidade</span>
+    <h3>Reflexão Profunda</h3>
+    <p class="quando-usar">💡 Quando usar: Para journaling, posts íntimos ou roteiros de vídeo reflexivo.</p>
     <p class="prompt-text">
-      Crie um texto reflexivo sobre evolução pessoal,
-      responsabilidade emocional e crescimento interno.
-      Linguagem profunda, mas simples e impactante.
+      Escreva uma reflexão profunda guiada com 6 perguntas poderosas sobre valores, medos, aprendizados recentes,
+      decisões importantes e próximos passos. Entregue em formato de texto pronto para publicar ou usar como roteiro de vídeo.
     </p>
     <div class="acoes">
       <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -109,13 +245,13 @@ Essa área é seu laboratório estratégico.
     </div>
   </div>
 
-  <div class="card" data-title="Lista de Metas" data-text="metas objetivos planejamento crescimento foco disciplina">
-    <h3>🚀 Lista de Metas Estratégicas</h3>
-    <p class="quando-usar">💡 Quando usar: Para estruturar metas mensais ou anuais.</p>
+  <!-- ==== NOVOS: Lista de Metas Estratégicas (detalhada) ==== -->
+  <div class="card" data-cat="planejamento">
+    <span class="categoria-badge">📅 Planejamento</span>
+    <h3>Lista de Metas Estratégicas (detalhada)</h3>
+    <p class="quando-usar">💡 Quando usar: Para planejamento trimestral/semestre/ano.</p>
     <p class="prompt-text">
-      Monte uma lista de metas divididas em:
-      curto prazo, médio prazo e longo prazo,
-      com plano de ação resumido para cada meta.
+      Crie uma lista de 8 metas estratégicas para [PERÍODO], para cada meta inclua: objetivo claro, indicador de sucesso (KPI), prazo, recursos necessários e primeiro passo prático.
     </p>
     <div class="acoes">
       <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -125,12 +261,14 @@ Essa área é seu laboratório estratégico.
     </div>
   </div>
 
-  <div class="card" data-title="Brainstorm Criativo" data-text="ideias criativas inovação pensar diferente solução alternativa">
-    <h3>💡 Brainstorm Criativo</h3>
-    <p class="quando-usar">💡 Quando usar: Para gerar ideias novas fora do padrão.</p>
+  <!-- ==== NOVOS: Brainstorm Criativo (modelo com variações) ==== -->
+  <div class="card" data-cat="criatividade">
+    <span class="categoria-badge">💡 Criatividade</span>
+    <h3>Brainstorm Criativo (modelo)</h3>
+    <p class="quando-usar">💡 Quando usar: Para conteúdo, campanhas ou produtos novos.</p>
     <p class="prompt-text">
-      Gere 20 ideias criativas e fora do óbvio sobre [TEMA],
-      explorando ângulos inesperados e soluções alternativas.
+      Gere 12 ideias divididas em 3 categorias (engajamento, conversão, branding).
+      Para cada ideia, forneça: título curto, descrição de 1 linha e um formato sugerido (imagem, short, carrossel, vídeo).
     </p>
     <div class="acoes">
       <button onclick="copiarPrompt(this)">📋 Copiar</button>
@@ -141,64 +279,103 @@ Essa área é seu laboratório estratégico.
   </div>
 
 </div>
+<!-- /promptsContainer -->
 
 </main>
 
 <script>
-
+/* util */
 function pegarTexto(btn){
   return btn.closest(".card").querySelector(".prompt-text").innerText.trim();
 }
-
 function copiarPrompt(btn){
   const texto = pegarTexto(btn);
-  navigator.clipboard.writeText(texto);
+  navigator.clipboard.writeText(texto).then(()=> {
+    btn.innerText = "✅ Copiado!";
+    setTimeout(()=> btn.innerText = "📋 Copiar", 1400);
+  });
 }
-
 function abrirChatGPT(btn){
   const texto = pegarTexto(btn);
+  // copia e abre
+  navigator.clipboard.writeText(texto);
   window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
 }
-
 function abrirGemini(btn){
   const texto = pegarTexto(btn);
   navigator.clipboard.writeText(texto);
+  // open gemini app with the user having text ready to paste
   window.open("https://gemini.google.com/app", "_blank");
 }
-
 function favoritar(btn){
   const card = btn.closest(".card");
   const titulo = card.querySelector("h3").innerText;
   const texto = pegarTexto(btn);
-
   let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
-  favoritos.push({titulo, texto});
-  localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+  // evita duplicata
+  if (!favoritos.find(f=> f.titulo === titulo)) {
+    favoritos.push({ titulo, texto });
+    localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+    btn.innerText = "💖";
+    setTimeout(()=> btn.innerText = "❤️", 900);
+  } else {
+    // remove se já existe (toggle)
+    favoritos = favoritos.filter(f=> f.titulo !== titulo);
+    localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+    btn.innerText = "🤍";
+    setTimeout(()=> btn.innerText = "❤️", 900);
+  }
 }
 
-/* BUSCADOR */
+/* BUSCA + CONTADOR */
+const searchInput = document.getElementById("searchInput");
+const resultCount = document.getElementById("resultCount");
 
-const input = document.getElementById("searchInput");
-const cards = document.querySelectorAll("#promptsContainer .card");
-const count = document.getElementById("searchCount");
+function atualizarContador() {
+  const cards = Array.from(document.querySelectorAll(".card"));
+  const visiveis = cards.filter(c => c.style.display !== "none");
+  resultCount.innerText = `Resultados: ${visiveis.length}`;
+}
 
-function atualizarBusca(){
-  const termo = input.value.toLowerCase();
-  let visiveis = 0;
-
-  cards.forEach(card => {
+/* pesquisa por termo */
+searchInput.addEventListener("input", function(){
+  const termo = this.value.trim().toLowerCase();
+  document.querySelectorAll(".card").forEach(card=>{
     const texto = card.innerText.toLowerCase();
-    const mostrar = texto.includes(termo);
-    card.style.display = mostrar ? "block" : "none";
-    if(mostrar) visiveis++;
+    card.style.display = texto.includes(termo) ? "block" : "none";
   });
+  // reseta filtros visuais (mantém o botão ativo mas não altera categorias internas)
+  document.querySelectorAll(".filter-btn").forEach(b=>{
+    // mantém estado visual do active, não alteramos
+  });
+  atualizarContador();
+});
 
-  count.innerText = visiveis + " resultados";
+/* FILTRO POR CATEGORIA */
+function filtrarCategoria(cat, btn){
+  // marcar botão ativo
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+
+  // filtra
+  document.querySelectorAll(".card").forEach(card=>{
+    if (cat === "todos" ) {
+      card.style.display = "block";
+    } else {
+      card.style.display = (card.dataset.cat === cat) ? "block" : "none";
+    }
+  });
+  // limpa busca (mantém termo simples)
+  searchInput.value = "";
+  atualizarContador();
 }
 
-input.addEventListener("input", atualizarBusca);
-atualizarBusca();
-
+/* inicialização */
+document.addEventListener("DOMContentLoaded", ()=> {
+  // mostra todos inicialmente
+  document.querySelectorAll(".card").forEach(c => c.style.display = "block");
+  atualizarContador();
+});
 </script>
 
 </body>
