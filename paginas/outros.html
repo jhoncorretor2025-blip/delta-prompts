@@ -5,6 +5,42 @@
   <title>Outros | Delta Prompts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .search-bar {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-bottom:20px;
+      max-width:900px;
+    }
+
+    .search-input {
+      flex:1;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #e6e6ee;
+      background:#fff;
+      font-size:15px;
+    }
+
+    .search-count {
+      font-size:14px;
+      color:#666;
+      min-width:120px;
+      text-align:right;
+    }
+
+    .quando-usar {
+      font-weight:600;
+      margin-bottom:8px;
+      color:#444;
+    }
+
+    .prompt-text {
+      line-height:1.6;
+    }
+  </style>
 </head>
 
 <body>
@@ -14,196 +50,155 @@
 
 <main>
 
-  <h1>🧠 Outros Prompts Estratégicos</h1>
-  <p>Ferramentas mentais para criar, resolver e organizar ideias com clareza.</p>
+<h1>🧩 Prompts Diversos & Criativos</h1>
 
-  <!-- ===================== -->
-  <!-- CRIATIVIDADE -->
-  <!-- ===================== -->
+<p style="max-width:900px; margin-bottom:20px;">
+Aqui você encontra prompts versáteis para criatividade, produtividade,
+organização, reflexões, ideias diferentes e tudo que não se encaixa
+nas categorias principais.
+</p>
 
-  <h2 style="margin-top:40px;">💡 CRIATIVIDADE & EXPANSÃO</h2>
+<h2>🎯 Objetivo</h2>
 
-  <div class="card">
-    <h3>1️⃣ Brainstorm Rápido</h3>
-    <p>
-      Gere uma lista com ideias objetivas, variadas e práticas sobre o tema informado.
-      Respostas curtas, criativas e aplicáveis imediatamente.
+<p style="max-width:900px; margin-bottom:30px;">
+Estimular criatividade, clareza mental e geração de ideias.
+Essa área é seu laboratório estratégico.
+</p>
+
+<!-- BUSCADOR -->
+
+<div class="search-bar">
+  <input id="searchInput" class="search-input"
+         placeholder="Buscar prompt (ex: produtividade, reflexão, meta, organização...)">
+  <div id="searchCount" class="search-count"></div>
+</div>
+
+<!-- PROMPTS -->
+
+<div id="promptsContainer">
+
+  <div class="card" data-title="Organização Semanal" data-text="planejamento semanal metas organização rotina produtividade">
+    <h3>📅 Organização Semanal</h3>
+    <p class="quando-usar">💡 Quando usar: Para organizar metas e rotina da semana.</p>
+    <p class="prompt-text">
+      Crie um planejamento semanal estratégico com foco em produtividade,
+      metas claras, divisão por prioridade (alta, média, baixa),
+      tempo estimado e revisão no final da semana.
     </p>
     <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
     </div>
   </div>
 
-  <div class="card">
-    <h3>2️⃣ Brainstorm Criativo Profundo</h3>
-    <p>
-      Desenvolva ideias originais e fora do comum sobre o tema abaixo.
-      Explore tendências modernas, inovação e ângulos diferenciados.
+  <div class="card" data-title="Reflexão Profunda" data-text="reflexão autoconhecimento pensamento evolução mentalidade">
+    <h3>🧠 Reflexão Profunda</h3>
+    <p class="quando-usar">💡 Quando usar: Para gerar textos reflexivos ou status impactantes.</p>
+    <p class="prompt-text">
+      Crie um texto reflexivo sobre evolução pessoal,
+      responsabilidade emocional e crescimento interno.
+      Linguagem profunda, mas simples e impactante.
     </p>
     <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
     </div>
   </div>
 
-  <div class="card">
-    <h3>3️⃣ Exploração Estratégica</h3>
-    <p>
-      Analise o tema informado e desenvolva ideias com potencial estratégico,
-      destacando oportunidades, diferenciação e aplicação prática.
+  <div class="card" data-title="Lista de Metas" data-text="metas objetivos planejamento crescimento foco disciplina">
+    <h3>🚀 Lista de Metas Estratégicas</h3>
+    <p class="quando-usar">💡 Quando usar: Para estruturar metas mensais ou anuais.</p>
+    <p class="prompt-text">
+      Monte uma lista de metas divididas em:
+      curto prazo, médio prazo e longo prazo,
+      com plano de ação resumido para cada meta.
     </p>
     <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
     </div>
   </div>
 
-  <!-- ===================== -->
-  <!-- RESOLUÇÃO -->
-  <!-- ===================== -->
-
-  <h2 style="margin-top:60px;">🛠 ANÁLISE & RESOLUÇÃO</h2>
-
-  <div class="card">
-    <h3>4️⃣ Resolução Prática</h3>
-    <p>
-      Analise o problema descrito abaixo e proponha soluções objetivas,
-      viáveis e de aplicação imediata.
+  <div class="card" data-title="Brainstorm Criativo" data-text="ideias criativas inovação pensar diferente solução alternativa">
+    <h3>💡 Brainstorm Criativo</h3>
+    <p class="quando-usar">💡 Quando usar: Para gerar ideias novas fora do padrão.</p>
+    <p class="prompt-text">
+      Gere 20 ideias criativas e fora do óbvio sobre [TEMA],
+      explorando ângulos inesperados e soluções alternativas.
     </p>
     <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
     </div>
   </div>
 
-  <div class="card">
-    <h3>5️⃣ Solução Estratégica Avançada</h3>
-    <p>
-      Avalie o problema considerando cenário, riscos, oportunidades
-      e proponha soluções estruturadas com visão de médio e longo prazo.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>6️⃣ Tomada de Decisão Estratégica</h3>
-    <p>
-      Analise prós e contras da situação descrita,
-      identifique riscos e benefícios
-      e apresente recomendação racional baseada em lógica.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
-
-  <!-- ===================== -->
-  <!-- ORGANIZAÇÃO -->
-  <!-- ===================== -->
-
-  <h2 style="margin-top:60px;">📊 ORGANIZAÇÃO & CLAREZA</h2>
-
-  <div class="card">
-    <h3>7️⃣ Organizar Ideias</h3>
-    <p>
-      Estruture as informações abaixo em formato organizado,
-      com tópicos claros, prioridades definidas
-      e plano de ação resumido.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>8️⃣ Plano de Ação Simplificado</h3>
-    <p>
-      Transforme a situação descrita em um plano de ação prático,
-      dividido em etapas claras e executáveis.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>9️⃣ Simplificação Inteligente</h3>
-    <p>
-      Explique o tema abaixo de forma simples,
-      didática e objetiva, usando exemplos práticos.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+</div>
 
 </main>
 
 <script>
-function copiarTexto(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
+
+function pegarTexto(btn){
+  return btn.closest(".card").querySelector(".prompt-text").innerText.trim();
+}
+
+function copiarPrompt(btn){
+  const texto = pegarTexto(btn);
   navigator.clipboard.writeText(texto);
-  alert("Prompt copiado!");
 }
 
-function usarChatGPT(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
-  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
+function abrirChatGPT(btn){
+  const texto = pegarTexto(btn);
+  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
 }
 
-function usarGemini(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
+function abrirGemini(btn){
+  const texto = pegarTexto(btn);
   navigator.clipboard.writeText(texto);
   window.open("https://gemini.google.com/app", "_blank");
-  alert("Prompt copiado! Cole no Gemini.");
 }
 
-function favoritar(botao) {
-  const card = botao.closest(".card");
+function favoritar(btn){
+  const card = btn.closest(".card");
   const titulo = card.querySelector("h3").innerText;
-  const texto = card.querySelector("p").innerText;
+  const texto = pegarTexto(btn);
 
-  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-  const jaExiste = favoritos.find(f => f.titulo === titulo);
-
-  if (jaExiste) {
-    favoritos = favoritos.filter(f => f.titulo !== titulo);
-    botao.innerText = "🤍";
-  } else {
-    favoritos.push({ titulo, texto });
-    botao.innerText = "❤️";
-  }
-
-  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+  favoritos.push({titulo, texto});
+  localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
 }
+
+/* BUSCADOR */
+
+const input = document.getElementById("searchInput");
+const cards = document.querySelectorAll("#promptsContainer .card");
+const count = document.getElementById("searchCount");
+
+function atualizarBusca(){
+  const termo = input.value.toLowerCase();
+  let visiveis = 0;
+
+  cards.forEach(card => {
+    const texto = card.innerText.toLowerCase();
+    const mostrar = texto.includes(termo);
+    card.style.display = mostrar ? "block" : "none";
+    if(mostrar) visiveis++;
+  });
+
+  count.innerText = visiveis + " resultados";
+}
+
+input.addEventListener("input", atualizarBusca);
+atualizarBusca();
+
 </script>
 
 </body>
