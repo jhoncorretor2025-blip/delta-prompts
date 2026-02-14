@@ -7,92 +7,119 @@
 <link rel="stylesheet" href="../style.css">
 
 <style>
-/* regras locais para esta página */
-.trend-final {
-  margin-top: 60px;
-  text-align: center;
+
+/* HERO */
+.hero-imagens{
+  margin-bottom:30px;
+}
+.hero-imagens p{
+  max-width:900px;
+  opacity:0.9;
 }
 
-.trend-btn-grande {
-  display: inline-block;
-  padding: 22px 55px;
-  font-size: 22px;
-  font-weight: bold;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #ff512f, #dd2476);
-  color: white;
-  text-decoration: none;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-  transition: 0.3s ease;
-}
-
-.trend-btn-grande:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.3);
-}
-
-/* quando-usar mais discreto */
-.quando-usar {
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #555;
-  font-size: 0.95rem; /* menor e discreto */
-}
-
-/* categorias */
-.categories {
+/* BUSCA + FILTRO */
+.search-area{
   display:flex;
-  gap:10px;
   flex-wrap:wrap;
-  margin: 18px 0 8px;
+  gap:12px;
+  margin:25px 0;
+  align-items:center;
 }
-.cat-btn {
-  padding:8px 12px;
-  background:#f0f3ff;
-  color:#222;
-  border-radius:10px;
-  text-decoration:none;
+.search-input{
+  flex:1;
+  min-width:220px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #e6e6ee;
+}
+.result-count{
   font-weight:600;
-  border:1px solid rgba(91,92,226,0.12);
-  box-shadow: 0 6px 18px rgba(91,92,226,0.04);
+  font-size:14px;
+  min-width:120px;
 }
-.cat-btn:hover { transform: translateY(-3px); }
+.filter-btn{
+  padding:8px 14px;
+  border-radius:20px;
+  border:1px solid #e6e6ee;
+  background:white;
+  cursor:pointer;
+  font-size:14px;
+}
+.filter-btn.active{
+  background:#5b5ce2;
+  color:white;
+  border-color:#5b5ce2;
+}
 
-/* botões de ação */
-.acoes button {
-  padding:8px 12px;
+/* CARD */
+.card{
+  background:linear-gradient(145deg,#ffffff,#f7f8ff);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+  transition:0.2s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 35px rgba(0,0,0,0.08);
+}
+
+.badge{
+  font-size:12px;
+  font-weight:600;
+  background:#eef0ff;
+  color:#5b5ce2;
+  padding:5px 10px;
+  border-radius:12px;
+  display:inline-block;
+  margin-bottom:10px;
+}
+
+.quando-usar{
+  font-weight:600;
+  margin:8px 0;
+}
+
+.prompt-text{
+  line-height:1.6;
+}
+
+.acoes{
+  margin-top:15px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.acoes button{
+  padding:8px 14px;
   border-radius:8px;
   border:none;
-  color:#fff;
+  background:#5b5ce2;
+  color:white;
   cursor:pointer;
-  margin-right:8px;
-}
-.acoes button.copy { background:#6f6fe0; }
-.acoes button.chat { background:#4b6bff; }
-.acoes button.gemini { background:#ffb86b; color:#2b2b2b; }
-.acoes button.fav { background:#ff6b9f; }
-
-/* card */
-.card {
-  margin: 22px 0;
-  padding: 22px;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 8px 24px rgba(11,22,50,0.04);
-}
-.prompt-text { white-space: pre-line; color:#2b2b2b; margin:12px 0 16px; line-height:1.55; }
-
-/* filtro: botão ativo */
-.cat-btn.active {
-  background: linear-gradient(135deg,#eef0ff,#e6e7ff);
-  box-shadow: 0 10px 30px rgba(91,92,226,0.06);
-  transform: translateY(-2px);
 }
 
-/* esconder */
-.hidden { display:none !important; }
+.trend-final{
+  margin-top:60px;
+  text-align:center;
+}
+
+.trend-btn{
+  display:inline-block;
+  padding:18px 40px;
+  background:linear-gradient(135deg,#ff416c,#ff4b2b);
+  color:white;
+  font-weight:bold;
+  border-radius:14px;
+  text-decoration:none;
+  transition:0.3s;
+}
+.trend-btn:hover{
+  transform:translateY(-4px);
+}
+
 </style>
-
 </head>
 
 <body>
@@ -102,260 +129,173 @@
 
 <main>
 
+<section class="hero-imagens">
 <h1>🎨 Prompts para Imagens Estratégicas</h1>
-
 <p>
-Aqui você encontra prompts prontos para criar imagens profissionais,
-criativas e virais usando Inteligência Artificial. Ideal para redes
-sociais, posicionamento de marca pessoal e fortalecimento da sua autoridade visual.
+Crie imagens profissionais, criativas e virais usando IA.
+Fortaleça sua marca, gere autoridade e aumente engajamento.
 </p>
-
-<br>
+</section>
 
 <h2>🎯 Objetivo</h2>
-
 <p>
-Transformar ideias em imagens impactantes que aumentem engajamento,
-melhorem sua presença digital e gerem percepção de valor profissional.
-Com esses prompts, você cria identidade visual forte sem depender de designer.
+Transformar ideias em imagens impactantes que aumentam percepção de valor.
 </p>
 
-<!-- CATEGORIAS -->
-<div class="categories" aria-label="Categorias de imagens">
-  <button class="cat-btn" data-filter="all">Todos</button>
-  <button class="cat-btn" data-filter="branding">🏷️ Branding</button>
-  <button class="cat-btn" data-filter="social">📱 Social</button>
-  <button class="cat-btn" data-filter="perfil">👤 Perfil Profissional</button>
-  <button class="cat-btn" data-filter="marketing">📈 Marketing</button>
-  <button class="cat-btn" data-filter="fun">🎉 Fun Fun</button>
+<!-- BUSCA -->
+
+<div class="search-area">
+<input id="searchInput" class="search-input" placeholder="Buscar prompt...">
+<div id="resultCount" class="result-count"></div>
+
+<button class="filter-btn active" onclick="filtrar('todos',this)">Todos</button>
+<button class="filter-btn" onclick="filtrar('perfil',this)">🧑‍💼 Perfil</button>
+<button class="filter-btn" onclick="filtrar('marketing',this)">📢 Marketing</button>
+<button class="filter-btn" onclick="filtrar('branding',this)">🎨 Branding</button>
+<button class="filter-btn" onclick="filtrar('social',this)">🚀 Social</button>
+<button class="filter-btn" onclick="filtrar('fun',this)">🎉 Fun</button>
 </div>
 
-<br>
+<div id="cards">
 
-<!-- =========================== -->
-<!-- 1 -->
-<!-- Brand / Perfil -->
-<!-- =========================== -->
-<div class="card" data-category="perfil branding" id="card-1">
-  <h3>📸 Foto Profissional Estética</h3>
-  <p class="quando-usar">💡 Quando usar: Ideal para atualizar perfil profissional, LinkedIn ou redes sociais.</p>
-
-  <p class="prompt-text">
-Gere uma foto profissional em alta definição, estilo retrato moderno, iluminação suave de estúdio, fundo neutro levemente desfocado, expressão confiante e natural, roupa social elegante, cores neutras e sofisticadas, enquadramento centralizado, aspecto limpo e minimalista.
-  </p>
-
-  <div class="acoes">
-    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
-    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
-    <button class="fav" onclick="favoritar(this)">❤️</button>
-  </div>
+<!-- FOTO PROFISSIONAL -->
+<div class="card" data-cat="perfil">
+<span class="badge">🧑‍💼 Perfil</span>
+<h3>Foto Profissional Estética</h3>
+<p class="quando-usar">💡 Atualizar LinkedIn ou perfil.</p>
+<p class="prompt-text">
+Gere uma foto profissional em alta definição, estilo retrato moderno,
+iluminação suave de estúdio, fundo neutro desfocado, roupa social elegante.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋</button>
+<button onclick="chat(this)">🤖</button>
+<button onclick="gemini(this)">✨</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
 </div>
 
-<!-- =========================== -->
-<!-- 2 -->
-<!-- Branding / Marketing -->
-<!-- =========================== -->
-<div class="card" data-category="branding marketing" id="card-2">
-  <h3>🦸 Versão Super-Herói Profissional</h3>
-  <p class="quando-usar">💡 Quando usar: Para criar autoridade e impacto visual forte nas redes.</p>
-
-  <p class="prompt-text">
-Transforme uma pessoa na profissão de [SUA PROFISSÃO] em um super-herói moderno, uniforme inspirado na área, símbolo no peito representando a profissão, cidade ao fundo ao anoitecer, iluminação dramática, estilo pôster de filme, cores fortes e contrastadas, atmosfera épica.
-  </p>
-
-  <div class="acoes">
-    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
-    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
-    <button class="fav" onclick="favoritar(this)">❤️</button>
-  </div>
+<!-- SUPER HEROI -->
+<div class="card" data-cat="branding">
+<span class="badge">🎨 Branding</span>
+<h3>Versão Super-Herói Profissional</h3>
+<p class="quando-usar">💡 Autoridade visual forte.</p>
+<p class="prompt-text">
+Transforme uma pessoa na profissão de [SUA PROFISSÃO]
+em super-herói moderno, iluminação dramática, cidade ao fundo.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋</button>
+<button onclick="chat(this)">🤖</button>
+<button onclick="gemini(this)">✨</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
 </div>
 
-<!-- =========================== -->
-<!-- 3 -->
-<!-- Social / Fun -->
-<!-- =========================== -->
-<div class="card" data-category="social fun" id="card-3">
-  <h3>📈 Antes e Depois da Carreira</h3>
-  <p class="quando-usar">💡 Quando usar: Para mostrar evolução profissional e inspirar seguidores.</p>
-
-  <p class="prompt-text">
-Gere duas imagens lado a lado: à esquerda, a pessoa no início da carreira de [SUA PROFISSÃO], ambiente simples; à direita, anos depois, bem-sucedida, roupa elegante, escritório moderno ao fundo, cores vibrantes e luz entrando pela janela simbolizando evolução.
-  </p>
-
-  <div class="acoes">
-    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
-    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
-    <button class="fav" onclick="favoritar(this)">❤️</button>
-  </div>
+<!-- BANNER -->
+<div class="card" data-cat="marketing">
+<span class="badge">📢 Marketing</span>
+<h3>Banner Promocional Moderno</h3>
+<p class="quando-usar">💡 Divulgação de oferta.</p>
+<p class="prompt-text">
+Crie banner promocional moderno (1080x1080),
+headline impactante, destaque visual e botão chamativo.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋</button>
+<button onclick="chat(this)">🤖</button>
+<button onclick="gemini(this)">✨</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
 </div>
 
-<!-- =========================== -->
-<!-- 4 -->
-<!-- Fun / Social -->
-<!-- =========================== -->
-<div class="card" data-category="fun social" id="card-4">
-  <h3>🎨 Caricatura Moderna da Profissão</h3>
-  <p class="quando-usar">💡 Quando usar: Para criar conteúdo leve e divertido no Instagram.</p>
-
-  <p class="prompt-text">
-Crie uma caricatura em alta definição da profissão de [SUA PROFISSÃO], estilo ilustrado moderno, traços suaves, cores vivas, fundo simples com elementos do ambiente de trabalho, luz suave, sorriso confiante.
-  </p>
-
-  <div class="acoes">
-    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
-    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
-    <button class="fav" onclick="favoritar(this)">❤️</button>
-  </div>
+<!-- CARICATURA -->
+<div class="card" data-cat="fun">
+<span class="badge">🎉 Fun</span>
+<h3>Caricatura Moderna</h3>
+<p class="quando-usar">💡 Conteúdo leve e divertido.</p>
+<p class="prompt-text">
+Crie caricatura em alta definição da profissão de [SUA PROFISSÃO],
+cores vibrantes, fundo simples e traços modernos.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋</button>
+<button onclick="chat(this)">🤖</button>
+<button onclick="gemini(this)">✨</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
 </div>
 
-<!-- =========================== -->
-<!-- 5 -->
-<!-- Fun / Perfil -->
-<!-- =========================== -->
-<div class="card" data-category="fun perfil" id="card-5">
-  <h3>🧩 Desenho Animado 3D Profissional</h3>
-  <p class="quando-usar">💡 Quando usar: Para criar avatar digital ou identidade visual criativa.</p>
-
-  <p class="prompt-text">
-Crie um personagem em estilo desenho animado 3D representando a profissão de [SUA PROFISSÃO], cabeça levemente maior, expressão sorridente, cores fortes, cenário com objetos da profissão espalhados, iluminação alegre estilo filme de animação.
-  </p>
-
-  <div class="acoes">
-    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
-    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
-    <button class="fav" onclick="favoritar(this)">❤️</button>
-  </div>
 </div>
 
-<!-- =========================== -->
-<!-- 6 -->
-<!-- Marketing / Hobby -->
-<!-- =========================== -->
-<div class="card" data-category="marketing fun" id="card-6">
-  <h3>⚖️ Hobby + Profissão</h3>
-  <p class="quando-usar">💡 Quando usar: Para mostrar equilíbrio entre trabalho e vida pessoal.</p>
+<!-- BOTÃO TREND -->
 
-  <p class="prompt-text">
-Crie uma ilustração onde a pessoa aparece exercendo sua profissão de [SUA PROFISSÃO] ao mesmo tempo em que mostra seu hobby favorito, cenário dividido sutilmente em duas partes que se misturam, cores vibrantes, estilo semi-realista, sensação de equilíbrio.
-  </p>
-
-  <div class="acoes">
-    <button class="copy" onclick="copiarPrompt(this)">📋 Copiar</button>
-    <button class="chat" onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-    <button class="gemini" onclick="abrirGemini(this)">✨ Gemini</button>
-    <button class="fav" onclick="favoritar(this)">❤️</button>
-  </div>
-</div>
-
-<!-- BOTÃO FINAL -->
 <div class="trend-final">
-  <a href="/delta-prompts/paginas/trend.html" class="trend-btn-grande">
-    🔥 FAÇA SUA TREND AGORA
-  </a>
+<a href="/delta-prompts/paginas/trend.html" class="trend-btn">
+🔥 FAÇA SUA TREND AGORA
+</a>
 </div>
 
 </main>
 
 <script>
-/* ------------ filtro de categorias ------------- */
-const catButtons = document.querySelectorAll('.cat-btn');
-catButtons.forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const filter = btn.getAttribute('data-filter');
-    // marcar ativo
-    catButtons.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
 
-    const cards = document.querySelectorAll('.card');
-    if(filter === 'all'){
-      cards.forEach(c=>c.classList.remove('hidden'));
-      return;
-    }
-    cards.forEach(c=>{
-      const cats = c.getAttribute('data-category') || '';
-      // corresponde se cat está contido (ex: 'perfil branding')
-      if(cats.split(' ').includes(filter)){
-        c.classList.remove('hidden');
-      } else {
-        c.classList.add('hidden');
-      }
-    });
-  });
-});
-// ativa 'Todos' por padrão
-document.querySelector('.cat-btn[data-filter="all"]').classList.add('active');
-
-/* ------------ helpers de prompt ------------- */
 function pegarTexto(btn){
-  const card = btn.closest('.card');
-  if(!card) return '';
-  const el = card.querySelector('.prompt-text');
-  return el ? el.innerText.trim() : '';
+return btn.closest(".card").querySelector(".prompt-text").innerText;
 }
 
-function copiarPrompt(btn){
-  const texto = pegarTexto(btn);
-  if(!texto) return;
-  navigator.clipboard.writeText(texto).then(()=>{
-    const original = btn.innerText;
-    btn.innerText = '✅ Copiado';
-    setTimeout(()=> btn.innerText = original, 1400);
-  });
+function copiar(btn){
+navigator.clipboard.writeText(pegarTexto(btn));
 }
 
-/* Abre ChatGPT com prefill via ?q=  (funciona para abrir chat.openai.com com query) */
-function abrirChatGPT(btn){
-  const texto = pegarTexto(btn);
-  if(!texto) return;
-  navigator.clipboard.writeText(texto);
-  const url = 'https://chat.openai.com/?q=' + encodeURIComponent(texto);
-  window.open(url, '_blank');
+function chat(btn){
+let t=pegarTexto(btn);
+window.open("https://chat.openai.com/?q="+encodeURIComponent(t),"_blank");
 }
 
-/* Gemini: copia para clipboard e tenta abrir com query (melhor esforço).
-   Observação: o Gemini não garante prefill por URL público, então damos fallback para home. */
-function abrirGemini(btn){
-  const texto = pegarTexto(btn);
-  if(!texto) return;
-  navigator.clipboard.writeText(texto).then(()=>{
-    // tentativa de abrir com parâmetro q
-    const tryUrl = 'https://gemini.google.com/?q=' + encodeURIComponent(texto);
-    window.open(tryUrl, '_blank');
-    // fallback: abrir home se o primeiro não funcionar em alguns navegadores
-    setTimeout(()=> window.open('https://gemini.google.com/', '_blank'), 500);
-    // aviso rápido pro usuário
-    const original = btn.innerText;
-    btn.innerText = '📋 Copiado → Cole no Gemini';
-    setTimeout(()=> btn.innerText = original, 2000);
-  });
+function gemini(btn){
+let t=pegarTexto(btn);
+navigator.clipboard.writeText(t);
+window.open("https://gemini.google.com/app","_blank");
 }
 
-/* Favoritar com prevenção de duplicados */
 function favoritar(btn){
-  const card = btn.closest('.card');
-  if(!card) return;
-  const titulo = (card.querySelector('h3') || {innerText:'Prompt'}).innerText.trim();
-  const texto = pegarTexto(btn);
-  if(!texto) return;
-  let favoritos = JSON.parse(localStorage.getItem('deltaFavoritos') || '[]');
-  // se já existe (mesmo texto), não duplicar
-  if(favoritos.some(f=> f.texto === texto)) {
-    const orig = btn.innerText;
-    btn.innerText = '⭐ Já';
-    setTimeout(()=> btn.innerText = orig, 1000);
-    return;
-  }
-  favoritos.push({ titulo, texto, added: new Date().toISOString() });
-  localStorage.setItem('deltaFavoritos', JSON.stringify(favoritos));
-  const orig = btn.innerText;
-  btn.innerText = '💖';
-  setTimeout(()=> btn.innerText = orig, 1200);
+let card=btn.closest(".card");
+let titulo=card.querySelector("h3").innerText;
+let texto=pegarTexto(btn);
+let fav=JSON.parse(localStorage.getItem("deltaFavoritos"))||[];
+fav.push({titulo,texto});
+localStorage.setItem("deltaFavoritos",JSON.stringify(fav));
 }
+
+function atualizar(){
+let termo=document.getElementById("searchInput").value.toLowerCase();
+let cards=document.querySelectorAll(".card");
+let count=0;
+cards.forEach(c=>{
+if(c.innerText.toLowerCase().includes(termo)){
+c.style.display="block";count++;
+}else{c.style.display="none";}
+});
+document.getElementById("resultCount").innerText="Resultados: "+count;
+}
+
+document.getElementById("searchInput").addEventListener("input",atualizar);
+atualizar();
+
+function filtrar(cat,btn){
+document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+let cards=document.querySelectorAll(".card");
+let count=0;
+cards.forEach(c=>{
+if(cat==="todos"||c.dataset.cat===cat){
+c.style.display="block";count++;
+}else{c.style.display="none";}
+});
+document.getElementById("resultCount").innerText="Resultados: "+count;
+}
+
 </script>
 
 </body>
