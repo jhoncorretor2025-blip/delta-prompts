@@ -7,7 +7,12 @@
 <link rel="stylesheet" href="../style.css">
 
 <style>
-.hero-imagens{ margin-bottom:30px; }
+
+/* ===== HERO ===== */
+.hero-imagens{margin-bottom:30px;}
+.hero-imagens p{max-width:900px;opacity:0.9}
+
+/* ===== BUSCA + FILTRO ===== */
 .search-area{
 display:flex;
 flex-wrap:wrap;
@@ -15,6 +20,7 @@ gap:12px;
 margin:25px 0;
 align-items:center;
 }
+
 .search-input{
 flex:1;
 min-width:220px;
@@ -22,10 +28,13 @@ padding:12px;
 border-radius:12px;
 border:1px solid #e6e6ee;
 }
+
 .result-count{
 font-weight:600;
 font-size:14px;
+min-width:120px;
 }
+
 .filter-btn{
 padding:8px 14px;
 border-radius:20px;
@@ -34,11 +43,14 @@ background:white;
 cursor:pointer;
 font-size:14px;
 }
+
 .filter-btn.active{
 background:#5b5ce2;
 color:white;
 border-color:#5b5ce2;
 }
+
+/* ===== CARD ===== */
 .card{
 background:linear-gradient(145deg,#ffffff,#f7f8ff);
 border-radius:16px;
@@ -47,10 +59,12 @@ margin-bottom:20px;
 box-shadow:0 8px 25px rgba(0,0,0,0.05);
 transition:0.2s;
 }
+
 .card:hover{
 transform:translateY(-4px);
 box-shadow:0 15px 35px rgba(0,0,0,0.08);
 }
+
 .badge{
 font-size:12px;
 font-weight:600;
@@ -61,17 +75,48 @@ border-radius:12px;
 display:inline-block;
 margin-bottom:10px;
 }
-.quando-usar{ font-weight:600; margin:8px 0; }
-.prompt-text{ line-height:1.6; }
-.acoes{ margin-top:15px; display:flex; gap:8px; flex-wrap:wrap; }
+
+.quando-usar{font-weight:600;margin:8px 0;}
+.prompt-text{line-height:1.6;}
+
+/* ===== BOTÕES COLORIDOS ===== */
+.acoes{margin-top:15px;display:flex;gap:8px;flex-wrap:wrap;}
+
+.btn-copy{background:#f1f1f5;color:#333;}
+.btn-chatgpt{background:#10a37f;color:white;}
+.btn-gemini{background:#6f42c1;color:white;}
+.btn-fav{background:#e63946;color:white;}
+
 .acoes button{
 padding:8px 14px;
 border-radius:8px;
 border:none;
-background:#5b5ce2;
-color:white;
 cursor:pointer;
+font-size:14px;
 }
+
+/* ===== BOTÃO FINAL TREND ===== */
+.trend-final{
+margin-top:60px;
+text-align:center;
+}
+
+.trend-btn{
+display:inline-block;
+padding:20px 50px;
+background:linear-gradient(135deg,#ff416c,#ff4b2b);
+color:white;
+font-size:18px;
+font-weight:bold;
+border-radius:14px;
+text-decoration:none;
+transition:0.3s;
+}
+
+.trend-btn:hover{
+transform:translateY(-4px);
+}
+
 </style>
 </head>
 
@@ -84,17 +129,13 @@ cursor:pointer;
 
 <section class="hero-imagens">
 <h1>📸 Transformação de Imagem Pessoal</h1>
-<p>
-Prompts para melhorar, transformar ou estilizar sua própria foto.
-Ideal para LinkedIn, redes sociais ou identidade visual pessoal.
-</p>
+<p>Prompts para melhorar e transformar sua própria foto com IA.</p>
 </section>
 
 <h2>🎯 Objetivo</h2>
-<p>
-Elevar sua presença visual com versões profissionais,
-artísticas e impactantes da sua própria imagem.
-</p>
+<p>Elevar sua presença visual para LinkedIn, redes sociais ou identidade pessoal.</p>
+
+<!-- BUSCA -->
 
 <div class="search-area">
 <input id="searchInput" class="search-input" placeholder="Buscar estilo...">
@@ -110,156 +151,153 @@ artísticas e impactantes da sua própria imagem.
 
 <div id="cards">
 
-<!-- PERFIL PROFISSIONAL -->
+<!-- ================= PERFIL (3) ================= -->
+
 <div class="card" data-cat="perfil">
-<span class="badge">🧑‍💼 Perfil Profissional</span>
+<span class="badge">🧑‍💼 Perfil</span>
 <h3>Retrato LinkedIn Premium</h3>
-<p class="quando-usar">💡 Para atualizar perfil profissional.</p>
-<p class="prompt-text">
-Transforme esta foto em um retrato profissional estilo LinkedIn,
-iluminação de estúdio suave, fundo neutro desfocado,
-roupa social moderna e expressão confiante.
-</p>
+<p class="quando-usar">💡 Atualizar LinkedIn.</p>
+<p class="prompt-text">Transforme esta foto em retrato profissional estilo LinkedIn, iluminação suave, fundo neutro desfocado e roupa social moderna.</p>
 <div class="acoes">
-<button onclick="copiar(this)">📋</button>
-<button onclick="chat(this)">🤖</button>
-<button onclick="gemini(this)">✨</button>
-<button onclick="favoritar(this)">❤️</button>
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chatgpt" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️ Favoritar</button>
 </div>
 </div>
 
 <div class="card" data-cat="perfil">
-<span class="badge">🧑‍💼 Perfil Profissional</span>
+<span class="badge">🧑‍💼 Perfil</span>
 <h3>Foto Executiva Corporativa</h3>
-<p class="quando-usar">💡 Para imagem de autoridade.</p>
-<p class="prompt-text">
-Aprimore esta imagem com aparência executiva,
-terno elegante, iluminação refinada,
-fundo corporativo sofisticado.
-</p>
+<p class="quando-usar">💡 Imagem de autoridade.</p>
+<p class="prompt-text">Aprimore esta imagem com visual executivo, terno elegante e fundo corporativo sofisticado.</p>
 <div class="acoes">
-<button onclick="copiar(this)">📋</button>
-<button onclick="chat(this)">🤖</button>
-<button onclick="gemini(this)">✨</button>
-<button onclick="favoritar(this)">❤️</button>
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chatgpt" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️ Favoritar</button>
 </div>
 </div>
 
-<!-- ARTISTICO -->
+<div class="card" data-cat="perfil">
+<span class="badge">🧑‍💼 Perfil</span>
+<h3>Retrato Natural Iluminado</h3>
+<p class="quando-usar">💡 Perfil mais leve e acessível.</p>
+<p class="prompt-text">Melhore esta foto mantendo naturalidade, iluminação suave e fundo elegante minimalista.</p>
+<div class="acoes">
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chatgpt" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️ Favoritar</button>
+</div>
+</div>
+
+<!-- ================= ARTISTICO (3) ================= -->
+
 <div class="card" data-cat="artistico">
-<span class="badge">🎨 Estilo Artístico</span>
+<span class="badge">🎨 Artístico</span>
 <h3>Versão Desenho Animado 3D</h3>
-<p class="quando-usar">💡 Para avatar digital moderno.</p>
-<p class="prompt-text">
-Transforme esta foto em personagem estilo animação 3D,
-cores vibrantes, expressão amigável,
-estética de filme animado.
-</p>
+<p class="quando-usar">💡 Avatar digital moderno.</p>
+<p class="prompt-text">Transforme esta foto em personagem estilo animação 3D com cores vibrantes e traços suaves.</p>
 <div class="acoes">
-<button onclick="copiar(this)">📋</button>
-<button onclick="chat(this)">🤖</button>
-<button onclick="gemini(this)">✨</button>
-<button onclick="favoritar(this)">❤️</button>
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chatgpt" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️ Favoritar</button>
 </div>
 </div>
 
 <div class="card" data-cat="artistico">
-<span class="badge">🎨 Estilo Artístico</span>
-<h3>Retrato Pintura Digital</h3>
-<p class="quando-usar">💡 Para perfil diferenciado.</p>
-<p class="prompt-text">
-Converta esta foto em pintura digital realista,
-textura suave de pincel,
-iluminação artística dramática.
-</p>
+<span class="badge">🎨 Artístico</span>
+<h3>Pintura Digital Realista</h3>
+<p class="quando-usar">💡 Perfil diferenciado.</p>
+<p class="prompt-text">Converta esta foto em pintura digital realista com iluminação dramática e textura artística.</p>
 <div class="acoes">
-<button onclick="copiar(this)">📋</button>
-<button onclick="chat(this)">🤖</button>
-<button onclick="gemini(this)">✨</button>
-<button onclick="favoritar(this)">❤️</button>
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chatgpt" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️ Favoritar</button>
 </div>
 </div>
 
-<!-- PODER -->
+<div class="card" data-cat="artistico">
+<span class="badge">🎨 Artístico</span>
+<h3>Ilustração Minimalista</h3>
+<p class="quando-usar">💡 Foto estilizada simples.</p>
+<p class="prompt-text">Transforme esta imagem em ilustração minimalista com traços limpos e fundo claro.</p>
+<div class="acoes">
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chatgpt" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️ Favoritar</button>
+</div>
+</div>
+
+<!-- ================= PODER (3) ================= -->
+
 <div class="card" data-cat="poder">
-<span class="badge">🦸 Versão Poderosa</span>
+<span class="badge">🦸 Poder</span>
 <h3>Versão Líder Inspirador</h3>
-<p class="quando-usar">💡 Para transmitir autoridade.</p>
-<p class="prompt-text">
-Transforme esta foto em versão de líder inspirador,
-postura firme, olhar determinado,
-fundo urbano moderno ao entardecer.
-</p>
+<p class="quando-usar">💡 Autoridade e presença.</p>
+<p class="prompt-text">Transforme esta foto em líder inspirador com postura firme e cenário urbano moderno.</p>
 <div class="acoes">
-<button onclick="copiar(this)">📋</button>
-<button onclick="chat(this)">🤖</button>
-<button onclick="gemini(this)">✨</button>
-<button onclick="favoritar(this)">❤️</button>
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chatgpt" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️ Favoritar</button>
 </div>
 </div>
 
 <div class="card" data-cat="poder">
-<span class="badge">🦸 Versão Poderosa</span>
-<h3>Estilo Cinematográfico Dramático</h3>
-<p class="quando-usar">💡 Para impacto visual forte.</p>
-<p class="prompt-text">
-Aplique estilo cinematográfico dramático,
-luz lateral intensa,
-contraste alto e atmosfera épica.
-</p>
+<span class="badge">🦸 Poder</span>
+<h3>Estilo Cinematográfico</h3>
+<p class="quando-usar">💡 Impacto visual forte.</p>
+<p class="prompt-text">Aplique estilo cinematográfico dramático com luz lateral intensa e contraste alto.</p>
 <div class="acoes">
-<button onclick="copiar(this)">📋</button>
-<button onclick="chat(this)">🤖</button>
-<button onclick="gemini(this)">✨</button>
-<button onclick="favoritar(this)">❤️</button>
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chatgpt" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️ Favoritar</button>
 </div>
 </div>
 
-<!-- EXPRESSÃO -->
-<div class="card" data-cat="expressao">
-<span class="badge">🧠 Expressão & Personalidade</span>
-<h3>Versão Carismática Natural</h3>
-<p class="quando-usar">💡 Para redes sociais pessoais.</p>
-<p class="prompt-text">
-Melhore esta foto mantendo naturalidade,
-sorriso leve, iluminação suave
-e fundo desfocado agradável.
-</p>
+<div class="card" data-cat="poder">
+<span class="badge">🦸 Poder</span>
+<h3>Executivo de Alto Padrão</h3>
+<p class="quando-usar">💡 Visual premium.</p>
+<p class="prompt-text">Transforme esta imagem em executivo de alto padrão com fundo luxuoso e iluminação sofisticada.</p>
 <div class="acoes">
-<button onclick="copiar(this)">📋</button>
-<button onclick="chat(this)">🤖</button>
-<button onclick="gemini(this)">✨</button>
-<button onclick="favoritar(this)">❤️</button>
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chatgpt" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️ Favoritar</button>
 </div>
 </div>
 
-<!-- CENARIO -->
-<div class="card" data-cat="cenario">
-<span class="badge">🌆 Cenário</span>
-<h3>Retrato em Escritório Moderno</h3>
-<p class="quando-usar">💡 Para contexto profissional.</p>
-<p class="prompt-text">
-Coloque esta pessoa em ambiente de escritório moderno,
-iluminação natural entrando pela janela,
-ambiente sofisticado e elegante.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋</button>
-<button onclick="chat(this)">🤖</button>
-<button onclick="gemini(this)">✨</button>
-<button onclick="favoritar(this)">❤️</button>
-</div>
 </div>
 
+<!-- BOTÃO TREND MANTIDO -->
+<div class="trend-final">
+<a href="/delta-prompts/paginas/trend.html" class="trend-btn">
+🔥 FAÇA SUA TREND AGORA
+</a>
 </div>
 
 </main>
 
 <script>
+
 function pegarTexto(btn){return btn.closest(".card").querySelector(".prompt-text").innerText;}
+
 function copiar(btn){navigator.clipboard.writeText(pegarTexto(btn));}
+
 function chat(btn){window.open("https://chat.openai.com/?q="+encodeURIComponent(pegarTexto(btn)),"_blank");}
-function gemini(btn){navigator.clipboard.writeText(pegarTexto(btn));window.open("https://gemini.google.com/app","_blank");}
+
+function gemini(btn){
+navigator.clipboard.writeText(pegarTexto(btn));
+window.open("https://gemini.google.com/app","_blank");
+}
+
 function favoritar(btn){
 let card=btn.closest(".card");
 let titulo=card.querySelector("h3").innerText;
@@ -268,6 +306,7 @@ let fav=JSON.parse(localStorage.getItem("deltaFavoritos"))||[];
 fav.push({titulo,texto});
 localStorage.setItem("deltaFavoritos",JSON.stringify(fav));
 }
+
 function atualizar(){
 let termo=document.getElementById("searchInput").value.toLowerCase();
 let cards=document.querySelectorAll(".card");
@@ -278,8 +317,10 @@ else{c.style.display="none";}
 });
 document.getElementById("resultCount").innerText="Resultados: "+count;
 }
+
 document.getElementById("searchInput").addEventListener("input",atualizar);
 atualizar();
+
 function filtrar(cat,btn){
 document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
 btn.classList.add("active");
@@ -291,6 +332,7 @@ else{c.style.display="none";}
 });
 document.getElementById("resultCount").innerText="Resultados: "+count;
 }
+
 </script>
 
 </body>
