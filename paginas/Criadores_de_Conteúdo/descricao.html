@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Descrição de Vídeo | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../../menu-loader.js"></script>
+
+<main>
+
+<h1>📝 Prompts para Descrição de Vídeo Otimizada</h1>
+
+<p style="max-width:800px; margin-bottom:40px;">
+Aqui você encontra prompts estratégicos para criar descrições envolventes,
+otimizadas para SEO e conversão. Ideal para YouTube, Reels,
+vídeos educativos e conteúdos de venda.
+</p>
+
+<h2>🎯 Objetivo</h2>
+
+<p style="max-width:800px; margin-bottom:50px;">
+Aumentar retenção, melhorar posicionamento no YouTube
+e transformar visualizações em inscritos, leads ou vendas.
+Uma boa descrição ajuda o algoritmo a entender seu conteúdo.
+</p>
+
+<!-- ===================== -->
+<!-- 1 SEO Completa -->
+<!-- ===================== -->
+
+<div class="card">
+<h3>🔎 Descrição Otimizada para SEO</h3>
+
+<p><strong>💡 Quando usar:</strong> Para vídeos educativos e conteúdos pesquisáveis.</p>
+
+<p class="prompt-text">
+Crie uma descrição otimizada para YouTube sobre [TEMA],
+incluindo palavra-chave principal logo no primeiro parágrafo,
+resumo claro do conteúdo,
+3 tópicos abordados no vídeo,
+chamada para inscrição,
+lista de hashtags estratégicas
+e palavras-chave secundárias integradas naturalmente.
+</p>
+
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- ===================== -->
+<!-- 2 Storytelling -->
+<!-- ===================== -->
+
+<div class="card">
+<h3>📖 Descrição com Storytelling</h3>
+
+<p><strong>💡 Quando usar:</strong> Para vídeos emocionais ou de transformação.</p>
+
+<p class="prompt-text">
+Crie uma descrição envolvente para vídeo sobre [TEMA],
+começando com uma pergunta forte,
+apresentando o problema,
+mostrando a transformação apresentada no vídeo
+e finalizando com CTA para comentário e compartilhamento.
+Use linguagem natural e persuasiva.
+</p>
+
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- ===================== -->
+<!-- 3 Venda -->
+<!-- ===================== -->
+
+<div class="card">
+<h3>💰 Descrição para Vídeo de Venda</h3>
+
+<p><strong>💡 Quando usar:</strong> Para lançamentos, ofertas ou captação de leads.</p>
+
+<p class="prompt-text">
+Crie uma descrição persuasiva para vídeo de venda sobre [PRODUTO/SERVIÇO],
+incluindo promessa clara,
+benefícios objetivos,
+prova social,
+bônus exclusivo,
+urgência real
+e CTA direto para WhatsApp ou página de compra.
+</p>
+
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- ===================== -->
+<!-- 4 Shorts -->
+<!-- ===================== -->
+
+<div class="card">
+<h3>⚡ Descrição para Shorts / Reels</h3>
+
+<p><strong>💡 Quando usar:</strong> Para vídeos curtos com foco em alcance.</p>
+
+<p class="prompt-text">
+Crie uma descrição curta e estratégica para vídeo curto sobre [TEMA],
+com frase de impacto,
+convite para seguir o perfil,
+hashtag principal
+e chamada rápida para ação.
+Objetivo: gerar compartilhamento.
+</p>
+
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- ===================== -->
+<!-- BOTÃO PRÓXIMO PASSO -->
+<!-- ===================== -->
+
+<div style="margin-top:70px; text-align:center;">
+  <a href="titulos.html"
+     style="display:inline-block;
+            padding:20px 50px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color:white;
+            font-size:20px;
+            font-weight:bold;
+            border-radius:14px;
+            text-decoration:none;
+            box-shadow:0 12px 30px rgba(0,0,0,0.2);
+            transition:0.3s;">
+    🚀 Próximo: Criar Títulos Magnéticos
+  </a>
+</div>
+
+</main>
+
+<script>
+function pegarTexto(btn){
+  return btn.closest(".card").querySelector(".prompt-text").innerText.trim();
+}
+
+function copiarPrompt(btn){
+  const texto = pegarTexto(btn);
+  navigator.clipboard.writeText(texto);
+}
+
+function abrirChatGPT(btn){
+  const texto = pegarTexto(btn);
+  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
+}
+
+function abrirGemini(btn){
+  const texto = pegarTexto(btn);
+  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+}
+
+function favoritar(btn){
+  const card = btn.closest(".card");
+  const titulo = card.querySelector("h3").innerText;
+  const texto = pegarTexto(btn);
+
+  let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+  favoritos.push({titulo, texto});
+  localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+}
+</script>
+
+</body>
+</html>
