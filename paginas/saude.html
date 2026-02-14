@@ -5,125 +5,278 @@
   <title>Saúde | Delta Prompts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    /* Pequenas regras locais para o buscador e layout da página */
+    .search-bar {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-bottom:20px;
+      max-width:900px;
+    }
+    .search-input {
+      flex:1;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #e6e6ee;
+      background:#fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+      font-size:15px;
+    }
+    .search-count {
+      font-size:14px;
+      color:#666;
+      min-width:120px;
+      text-align:right;
+    }
+    .no-results {
+      padding:18px;
+      border-radius:12px;
+      background:#fff6f6;
+      border:1px solid #ffd6d6;
+      color:#7a1a1a;
+      margin-bottom:20px;
+    }
+    /* small tweaks to keep cards consistent */
+    .quando-usar { font-weight:600; color:#333; margin-bottom:8px; }
+    .prompt-text { line-height:1.6; color:#333; }
+    /* keep a little spacing for the top hero */
+    .hero { max-width:920px; margin-bottom:18px; }
+  </style>
 </head>
-
 <body>
 
 <div id="menu"></div>
 <script src="../menu-loader.js"></script>
 
 <main>
-  <h1>🧠 Prompts de Saúde</h1>
-  <p style="color:#6b7280; margin-top:-10px;">
-    Organização mental, autocuidado e equilíbrio emocional.
-  </p>
 
-  <div id="lista"></div>
+  <section class="hero">
+    <h1>🩺 Prompts de Saúde & Bem-estar</h1>
+    <p>
+      Prompts para conteúdo de saúde, autocuidado, psicoeducação, rotinas e materiais
+      informativos prontos para usar em posts, status, vídeos e atendimentos.
+      Use o buscador abaixo para encontrar rapidamente um prompt.
+    </p>
+  </section>
+
+  <!-- BUSCADOR -->
+  <div class="search-bar" role="search" aria-label="Buscador de prompts">
+    <input id="searchInput" class="search-input" placeholder="Buscar prompts por título ou conteúdo (ex: ansiedade, rotina, respiração)..." />
+    <div class="search-count" id="searchCount">—</div>
+  </div>
+
+  <div id="noResults" class="no-results" style="display:none;">
+    Nenhum prompt encontrado. Tente outra palavra-chave.
+  </div>
+
+  <!-- LISTA DE PROMPTS -->
+  <!-- Cada .card tem data-title e data-text para facilitar a busca -->
+  <div id="promptsContainer">
+
+    <div class="card" data-title="Rotina de Autocuidado" data-text="rotina diária autocuidado físico mental sono alimentação prática simples adaptada">
+      <h3>🛁 Rotina de Autocuidado</h3>
+      <p class="quando-usar">💡 Quando usar: Para ajudar seguidores a montar uma rotina diária de bem-estar.</p>
+      <p class="prompt-text">
+        Crie uma rotina diária de autocuidado físico e mental, simples e prática, adaptada ao contexto: trabalho ativo durante o dia, 30–45 minutos disponíveis, foco em sono, movimento leve, hidratação e pausa mindfulness. Liste ações, duração e dicas de adaptação.
+      </p>
+      <div class="acoes">
+        <button onclick="copiarPrompt(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+        <button onclick="abrirGemini(this)">✨ Gemini</button>
+        <button onclick="toggleFavorito(this)">🤍</button>
+      </div>
+    </div>
+
+    <div class="card" data-title="Gestão da Ansiedade" data-text="ansiedade técnicas respiração grounding exercícios rápidos 3 passos redução">
+      <h3>🧘 Gestão da Ansiedade</h3>
+      <p class="quando-usar">💡 Quando usar: Para posts ou scripts que ensinam técnicas rápidas de regulação.</p>
+      <p class="prompt-text">
+        Explique técnicas simples e eficazes para reduzir ansiedade em 5 minutos: respiração 4-4-4, grounding em 5 passos, e um mini exercício cognitivo para redirecionar pensamentos. Forneça instruções práticas e linguagem acessível.
+      </p>
+      <div class="acoes">
+        <button onclick="copiarPrompt(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+        <button onclick="abrirGemini(this)">✨ Gemini</button>
+        <button onclick="toggleFavorito(this)">🤍</button>
+      </div>
+    </div>
+
+    <div class="card" data-title="Mindfulness Rápido" data-text="meditação curta mindfulness 3 minutos ancoragem atenção plena pausa no trabalho">
+      <h3>🕊 Mindfulness Rápido (3 min)</h3>
+      <p class="quando-usar">💡 Quando usar: Para stories, status ou pausas rápidas entre tarefas.</p>
+      <p class="prompt-text">
+        Forneça uma meditação guiada de 3 minutos para usar como pausa no trabalho: ancoragem na respiração, escaneamento corporal rápido e retorno com intenção. Texto em primeira pessoa, tom acolhedor e orientações para voz calma.
+      </p>
+      <div class="acoes">
+        <button onclick="copiarPrompt(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+        <button onclick="abrirGemini(this)">✨ Gemini</button>
+        <button onclick="toggleFavorito(this)">🤍</button>
+      </div>
+    </div>
+
+    <div class="card" data-title="Rotina de Sono" data-text="sono higiene sono dormir melhor rotina noite dicas reduzir tela relaxamento ambiente escuro">
+      <h3>🌙 Rotina para Dormir Melhor</h3>
+      <p class="quando-usar">💡 Quando usar: Para posts sobre qualidade do sono e dicas práticas.</p>
+      <p class="prompt-text">
+        Crie um guia prático com passos para melhorar a higiene do sono: desligar telas 60 minutos antes, ritual de relaxamento de 15 minutos, temperatura ideal, exercícios respiratórios e dicas para lidar com insônia leve.
+      </p>
+      <div class="acoes">
+        <button onclick="copiarPrompt(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+        <button onclick="abrirGemini(this)">✨ Gemini</button>
+        <button onclick="toggleFavorito(this)">🤍</button>
+      </div>
+    </div>
+
+    <div class="card" data-title="Alimentação Consciente" data-text="alimentacao consciente mindful eating dicas refeicoes saciedade mastigar atenção saborear">
+      <h3>🥗 Alimentação Consciente</h3>
+      <p class="quando-usar">💡 Quando usar: Para publicações que promovem hábitos alimentares saudáveis e presença.</p>
+      <p class="prompt-text">
+        Explique práticas de alimentação consciente em 5 passos: identificar fome real, desacelerar refeição, mastigar conscientemente, notar sabores e sinais de saciedade. Inclua exemplos práticos para aplicar no dia a dia.
+      </p>
+      <div class="acoes">
+        <button onclick="copiarPrompt(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+        <button onclick="abrirGemini(this)">✨ Gemini</button>
+        <button onclick="toggleFavorito(this)">🤍</button>
+      </div>
+    </div>
+
+    <div class="card" data-title="Exercício em Casa" data-text="treino rapido em casa 10 minutos sem equipamento circuito alongamento aquecimento">
+      <h3>🏃 Exercício Rápido em Casa (10 min)</h3>
+      <p class="quando-usar">💡 Quando usar: Para incentivar movimento diário em público ou seguidores.</p>
+      <p class="prompt-text">
+        Crie um circuito de 10 minutos sem equipamento para fazer em casa: aquecimento 2 min, 3 blocos de 2 min (ex: agachamento, prancha, polichinelos), e alongamento final. Adapte para diferentes níveis.
+      </p>
+      <div class="acoes">
+        <button onclick="copiarPrompt(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+        <button onclick="abrirGemini(this)">✨ Gemini</button>
+        <button onclick="toggleFavorito(this)">🤍</button>
+      </div>
+    </div>
+
+  </div> <!-- /promptsContainer -->
+
+  <!-- botão para explorar favoritos -->
+  <div style="margin-top:30px; max-width:920px;">
+    <a href="/delta-prompts/paginas/favoritos.html"
+       style="display:inline-block;padding:12px 20px;background:#5b5ce2;color:white;border-radius:12px;text-decoration:none;box-shadow:0 8px 20px rgba(91,92,226,0.15);">
+      💖 Ver Favoritos
+    </a>
+  </div>
+
 </main>
 
 <script>
-const categoriaAtual = "Saúde";
-const lista = document.getElementById("lista");
+/* -------------------------
+   FUNÇÕES GERAIS (copy/chat/gemini/fav)
+   ------------------------- */
 
-function inserirPromptsPadrao() {
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  const titulosExistentes = prompts
-    .filter(p => p.categoria === categoriaAtual)
-    .map(p => p.titulo);
-
-  const novos = [
-    {
-      id: Date.now()+301,
-      titulo: "Rotina de Autocuidado",
-      categoria: categoriaAtual,
-      conteudo: "Crie uma rotina diária simples de autocuidado físico e mental baseada na realidade descrita abaixo.",
-      favorito: false
-    },
-    {
-      id: Date.now()+302,
-      titulo: "Plano Anti-Ansiedade",
-      categoria: categoriaAtual,
-      conteudo: "Explique estratégias práticas para reduzir ansiedade, com técnicas aplicáveis no dia a dia.",
-      favorito: false
-    },
-    {
-      id: Date.now()+303,
-      titulo: "Melhorar Foco e Energia",
-      categoria: categoriaAtual,
-      conteudo: "Sugira hábitos e ajustes práticos para melhorar foco, produtividade e energia ao longo do dia.",
-      favorito: false
-    },
-    {
-      id: Date.now()+304,
-      titulo: "Plano de Sono Ideal",
-      categoria: categoriaAtual,
-      conteudo: "Crie um plano para melhorar qualidade do sono com orientações simples e aplicáveis.",
-      favorito: false
-    }
-  ];
-
-  novos.forEach(p => {
-    if (!titulosExistentes.includes(p.titulo)) {
-      prompts.push(p);
-    }
-  });
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+function pegarTextoDoCard(btn) {
+  const card = btn.closest('.card');
+  return {
+    titulo: card.getAttribute('data-title') || card.querySelector('h3').innerText,
+    texto: (card.querySelector('.prompt-text') || {innerText: ''}).innerText.trim()
+  };
 }
 
-function carregar() {
-  lista.innerHTML = "";
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  prompts.filter(p => p.categoria === categoriaAtual).forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h3>${p.titulo}</h3>
-      <p>${p.conteudo}</p>
-      <div class="acoes">
-        <button data-id="${p.id}" class="copiar">📋 Copiar</button>
-        <button data-id="${p.id}" class="editar">✏️ Editar</button>
-        <button data-id="${p.id}" class="apagar">🗑️ Apagar</button>
-        <button data-id="${p.id}" class="favoritar">${p.favorito ? "❤️" : "🤍"}</button>
-      </div>
-    `;
-    lista.appendChild(card);
+function copiarPrompt(btn) {
+  const { texto } = pegarTextoDoCard(btn);
+  navigator.clipboard.writeText(texto).then(() => {
+    const original = btn.innerText;
+    btn.innerText = '✅ Copiado';
+    setTimeout(() => btn.innerText = original, 1400);
   });
 }
 
-lista.addEventListener("click", e => {
-  const id = Number(e.target.dataset.id);
-  if (!id) return;
+function abrirChatGPT(btn) {
+  const { texto } = pegarTextoDoCard(btn);
+  // copia e abre o ChatGPT com query (funciona como atalho)
+  navigator.clipboard.writeText(texto);
+  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
+}
 
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const p = prompts.find(x => x.id === id);
+function abrirGemini(btn) {
+  const { texto } = pegarTextoDoCard(btn);
+  // copiamos e tentamos abrir com prompt param — dependendo do serviço, pode pedir colar manualmente
+  navigator.clipboard.writeText(texto);
+  // Tentar abrir com parâmetro (se o endpoint aceitar)
+  const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
+}
 
-  if (e.target.classList.contains("copiar")) {
-    navigator.clipboard.writeText(p.conteudo);
+function toggleFavorito(btn) {
+  const { titulo, texto } = pegarTextoDoCard(btn);
+  let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+  const existe = favoritos.find(f => f.titulo === titulo);
+  if (existe) {
+    favoritos = favoritos.filter(f => f.titulo !== titulo);
+    btn.innerText = '🤍';
+  } else {
+    favoritos.push({ titulo, texto });
+    btn.innerText = '❤️';
   }
+  localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+}
 
-  if (e.target.classList.contains("editar")) {
-    const t = window.prompt("Editar título:", p.titulo);
-    const c = window.prompt("Editar conteúdo:", p.conteudo);
-    if (t && c) { p.titulo = t; p.conteudo = c; }
-  }
+/* -------------------------
+   BUSCADOR
+   ------------------------- */
 
-  if (e.target.classList.contains("apagar")) {
-    prompts = prompts.filter(x => x.id !== id);
-  }
+const input = document.getElementById('searchInput');
+const container = document.getElementById('promptsContainer');
+const cards = Array.from(container.querySelectorAll('.card'));
+const searchCount = document.getElementById('searchCount');
+const noResults = document.getElementById('noResults');
 
-  if (e.target.classList.contains("favoritar")) {
-    p.favorito = !p.favorito;
-  }
+function atualizarContador(n) {
+  searchCount.innerText = n + (n === 1 ? ' resultado' : ' resultados');
+}
 
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  carregar();
+function filtrarPrompts() {
+  const q = input.value.trim().toLowerCase();
+  let visiveis = 0;
+  cards.forEach(card => {
+    const title = (card.getAttribute('data-title') || '').toLowerCase();
+    const text = (card.getAttribute('data-text') || card.innerText || '').toLowerCase();
+    const match = q === '' || title.includes(q) || text.includes(q);
+    card.style.display = match ? 'block' : 'none';
+    if (match) visiveis++;
+  });
+  atualizarContador(visiveis);
+  noResults.style.display = visiveis ? 'none' : 'block';
+}
+
+// inicia contador ao carregar
+document.addEventListener('DOMContentLoaded', () => {
+  filtrarPrompts();
+  // marcar corações para itens já favoritados
+  const favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+  cards.forEach(card => {
+    const titulo = card.getAttribute('data-title') || card.querySelector('h3').innerText;
+    const btn = card.querySelector('.acoes button:last-child');
+    if (favoritos.find(f => f.titulo === titulo)) {
+      if (btn) btn.innerText = '❤️';
+    }
+  });
 });
 
-inserirPromptsPadrao();
-carregar();
+input.addEventListener('input', filtrarPrompts);
+
+/* Optional: permitir 'Enter' abrir o primeiro resultado no ChatGPT */
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const primeiro = cards.find(c => c.style.display !== 'none');
+    if (primeiro) {
+      const btn = primeiro.querySelector('.acoes button[onclick^="abrirChatGPT"], .acoes button:nth-child(2)');
+      if (btn) abrirChatGPT(btn);
+    }
+  }
+});
 </script>
 
 </body>
