@@ -1,10 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Estudo | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<title>Estudo | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.search-box{
+  display:flex;
+  gap:10px;
+  margin:30px 0;
+}
+
+.search-box input{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+
+.resultado{
+  font-weight:bold;
+  color:#5b5ce2;
+}
+
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+  margin-bottom:25px;
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.quando-usar{
+  font-weight:600;
+  color:#555;
+  margin-bottom:10px;
+}
+
+.acoes{
+  margin-top:15px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.acoes button{
+  padding:8px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+  color:white;
+}
+
+.btn-copy{ background:#5b5ce2; }
+.btn-chat{ background:#10a37f; }
+.btn-gemini{ background:#4285f4; }
+.btn-fav{ background:#ff4b6e; }
+
+.categoria{
+  margin-top:50px;
+  margin-bottom:20px;
+  font-size:20px;
+  font-weight:bold;
+}
+</style>
 </head>
 
 <body>
@@ -14,138 +80,175 @@
 
 <main>
 
-  <h1>📚 Prompts de Estudo</h1>
+<h1>📚 Prompts para Estudo Estratégico</h1>
 
-  <p style="margin-bottom:40px; max-width:800px;">
-    Aqui você encontra ferramentas para aprender mais rápido, organizar conteúdos
-    e transformar informação em conhecimento prático. Ideal para estudantes,
-    profissionais em atualização e qualquer pessoa que deseja estudar com método.
-    Ao final, você será capaz de compreender melhor os conteúdos,
-    aplicar o que aprendeu e revisar de forma estratégica.
-  </p>
+<p>
+Aqui você encontra prompts para aprender mais rápido, organizar estudos,
+criar resumos inteligentes e aprofundar conhecimento com método.
+</p>
 
-  <!-- ===================== -->
-  <!-- OBJETIVOS -->
-  <!-- ===================== -->
+<h2>🎯 Objetivo</h2>
+<p>
+Transformar qualquer tema em aprendizado estruturado,
+claro e aplicável no mundo real.
+</p>
 
-  <h2>🎯 Objetivos de Estudo</h2>
-
-  <div class="card">
-    <h3>Resumo Simplificado</h3>
-    <p>
-      Explique o conteúdo abaixo de forma simples, didática e com exemplos
-      práticos para facilitar o entendimento.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
+<div class="search-box">
+  <input type="text" id="busca" placeholder="Buscar prompt de estudo...">
+  <div class="resultado">
+    Total: <span id="contador">6</span>
   </div>
+</div>
 
-  <!-- ===================== -->
-  <!-- CONCEITOS PRINCIPAIS -->
-  <!-- ===================== -->
+<!-- ================= BÁSICO ================= -->
 
-  <h2>🧠 Conceitos Principais</h2>
+<div class="categoria">🟢 Básico</div>
 
-  <div class="card">
-    <h3>Mapa Mental do Conteúdo</h3>
-    <p>
-      Organize o conteúdo abaixo em formato de mapa mental,
-      destacando conceitos centrais, conexões e hierarquia lógica.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<div class="card">
+<h3>Resumo Simplificado</h3>
+<p class="quando-usar">💡 Quando usar: Para entender rapidamente um assunto novo.</p>
+<p class="prompt-text">
+Explique o tema [TEMA] de forma simples,
+como se estivesse ensinando para um iniciante,
+usando exemplos práticos e linguagem clara.
+</p>
+<div class="acoes">
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chat" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
 
-  <!-- ===================== -->
-  <!-- EXEMPLOS PRÁTICOS -->
-  <!-- ===================== -->
+<div class="card">
+<h3>Mapa Mental Estruturado</h3>
+<p class="quando-usar">💡 Quando usar: Para organizar ideias visualmente.</p>
+<p class="prompt-text">
+Crie um mapa mental organizado sobre [TEMA],
+separando em tópicos principais e subtópicos.
+</p>
+<div class="acoes">
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chat" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
 
-  <h2>💡 Exemplos Práticos</h2>
+<!-- ================= INTERMEDIÁRIO ================= -->
 
-  <div class="card">
-    <h3>Aplicação na Vida Real</h3>
-    <p>
-      Explique o conteúdo abaixo trazendo exemplos reais,
-      situações práticas e aplicações no cotidiano ou no mercado.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<div class="categoria">🟡 Intermediário</div>
 
-  <!-- ===================== -->
-  <!-- EXERCÍCIOS -->
-  <!-- ===================== -->
+<div class="card">
+<h3>Plano de Estudo Personalizado</h3>
+<p class="quando-usar">💡 Quando usar: Para criar rotina organizada de aprendizado.</p>
+<p class="prompt-text">
+Crie um plano de estudo semanal para aprender [TEMA],
+dividindo em teoria, prática e revisão.
+</p>
+<div class="acoes">
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chat" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
 
-  <h2>📝 Exercícios e Aplicação</h2>
+<div class="card">
+<h3>Explicação Técnica Detalhada</h3>
+<p class="quando-usar">💡 Quando usar: Para aprofundar entendimento.</p>
+<p class="prompt-text">
+Explique o tema [TEMA] de forma técnica,
+incluindo conceitos fundamentais,
+exemplos reais e aplicações práticas.
+</p>
+<div class="acoes">
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chat" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
 
-  <div class="card">
-    <h3>Criação de Exercícios</h3>
-    <p>
-      Crie 5 perguntas ou exercícios sobre o conteúdo abaixo,
-      com nível progressivo de dificuldade e respostas explicadas.
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<!-- ================= AVANÇADO ================= -->
+
+<div class="categoria">🔴 Avançado</div>
+
+<div class="card">
+<h3>Análise Crítica Profunda</h3>
+<p class="quando-usar">💡 Quando usar: Para desenvolver pensamento crítico.</p>
+<p class="prompt-text">
+Faça uma análise crítica sobre [TEMA],
+apresentando diferentes perspectivas,
+argumentos contrários e conclusões fundamentadas.
+</p>
+<div class="acoes">
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chat" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<div class="card">
+<h3>Simulação de Debate</h3>
+<p class="quando-usar">💡 Quando usar: Para testar domínio do assunto.</p>
+<p class="prompt-text">
+Simule um debate entre dois especialistas sobre [TEMA],
+apresentando argumentos técnicos,
+refutações e conclusão estratégica.
+</p>
+<div class="acoes">
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chat" onclick="chat(this)">🤖 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">✨ Gemini</button>
+<button class="btn-fav" onclick="favoritar(this)">❤️</button>
+</div>
+</div>
 
 </main>
 
 <script>
-function copiarTexto(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
-  navigator.clipboard.writeText(texto);
-  alert("Prompt copiado!");
+function pegarTexto(btn){
+  return btn.closest(".card").querySelector(".prompt-text").innerText;
 }
-
-function usarChatGPT(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
-  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
+function copiar(btn){
+  navigator.clipboard.writeText(pegarTexto(btn));
 }
-
-function usarGemini(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
-  navigator.clipboard.writeText(texto);
-  window.open("https://gemini.google.com/app", "_blank");
-  alert("Prompt copiado! Cole no Gemini.");
+function chat(btn){
+  const texto = pegarTexto(btn);
+  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto),"_blank");
 }
-
-function favoritar(botao) {
-  const card = botao.closest(".card");
+function gemini(btn){
+  const texto = pegarTexto(btn);
+  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto),"_blank");
+}
+function favoritar(btn){
+  const card = btn.closest(".card");
   const titulo = card.querySelector("h3").innerText;
-  const texto = card.querySelector("p").innerText;
-
-  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-  const jaExiste = favoritos.find(f => f.titulo === titulo);
-
-  if (jaExiste) {
-    favoritos = favoritos.filter(f => f.titulo !== titulo);
-    botao.innerText = "🤍";
-  } else {
-    favoritos.push({ titulo, texto });
-    botao.innerText = "❤️";
-  }
-
-  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  const texto = pegarTexto(btn);
+  let fav = JSON.parse(localStorage.getItem("deltaFavoritos"))||[];
+  fav.push({titulo,texto});
+  localStorage.setItem("deltaFavoritos",JSON.stringify(fav));
 }
+
+document.getElementById("busca").addEventListener("input",function(){
+  const termo=this.value.toLowerCase();
+  const cards=document.querySelectorAll(".card");
+  let total=0;
+  cards.forEach(card=>{
+    const texto=card.innerText.toLowerCase();
+    if(texto.includes(termo)){
+      card.style.display="block";
+      total++;
+    }else{
+      card.style.display="none";
+    }
+  });
+  document.getElementById("contador").innerText=total;
+});
 </script>
 
 </body>
 </html>
+  
