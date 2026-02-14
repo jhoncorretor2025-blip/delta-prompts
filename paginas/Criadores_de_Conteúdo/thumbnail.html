@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Thumbnail | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../../menu-loader.js"></script>
+
+<main>
+
+<h1>🖼️ Prompts para Thumbnails Estratégicas</h1>
+
+<p style="max-width:800px; margin-bottom:40px;">
+Aqui você encontra prompts prontos para criar thumbnails altamente chamativas,
+com foco em clique, curiosidade e impacto visual.
+Ideal para YouTube, Reels e vídeos de alto desempenho.
+</p>
+
+<h2>🎯 Objetivo</h2>
+
+<p style="max-width:800px; margin-bottom:50px;">
+Aumentar CTR (taxa de clique), destacar seu vídeo na timeline
+e gerar curiosidade imediata. Uma boa thumbnail pode dobrar seus resultados.
+</p>
+
+<!-- ===================== -->
+<!-- 1 Thumbnail Viral -->
+<!-- ===================== -->
+
+<div class="card">
+<h3>🔥 Thumbnail Estilo Viral</h3>
+
+<p><strong>💡 Quando usar:</strong> Para vídeos com alto potencial de alcance e curiosidade.</p>
+
+<p class="prompt-text">
+Crie uma thumbnail altamente chamativa para YouTube sobre [TEMA],
+com expressão facial intensa, texto grande e impactante com até 4 palavras,
+cores contrastantes (amarelo, vermelho, azul), fundo com profundidade,
+elemento visual principal destacado e foco em curiosidade.
+</p>
+
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- ===================== -->
+<!-- 2 Minimalista -->
+<!-- ===================== -->
+
+<div class="card">
+<h3>🎯 Thumbnail Minimalista Profissional</h3>
+
+<p><strong>💡 Quando usar:</strong> Para posicionamento premium e autoridade.</p>
+
+<p class="prompt-text">
+Crie thumbnail minimalista para YouTube sobre [TEMA],
+fundo limpo com uma única cor forte,
+tipografia elegante,
+elemento visual central destacado,
+uso estratégico de espaço negativo
+e estética sofisticada.
+</p>
+
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- ===================== -->
+<!-- 3 Emocional -->
+<!-- ===================== -->
+
+<div class="card">
+<h3>😱 Thumbnail Foco em Emoção</h3>
+
+<p><strong>💡 Quando usar:</strong> Para vídeos de transformação, polêmica ou revelação.</p>
+
+<p class="prompt-text">
+Crie thumbnail emocional para YouTube sobre [TEMA],
+expressão facial exagerada,
+zoom no rosto,
+elemento visual dramático,
+iluminação contrastada,
+texto curto com promessa forte
+e sensação de urgência.
+</p>
+
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- ===================== -->
+<!-- 4 Educativo -->
+<!-- ===================== -->
+
+<div class="card">
+<h3>📚 Thumbnail Educativa Estratégica</h3>
+
+<p><strong>💡 Quando usar:</strong> Para vídeos explicativos e conteúdos técnicos.</p>
+
+<p class="prompt-text">
+Crie thumbnail educativa para YouTube sobre [TEMA],
+com visual organizado,
+destaque para palavra-chave principal,
+elementos gráficos simples,
+ícones ilustrativos,
+contraste equilibrado
+e sensação de clareza.
+</p>
+
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- ===================== -->
+<!-- 5 Venda -->
+<!-- ===================== -->
+
+<div class="card">
+<h3>💰 Thumbnail de Venda Direta</h3>
+
+<p><strong>💡 Quando usar:</strong> Para vídeos com oferta ou lançamento.</p>
+
+<p class="prompt-text">
+Crie thumbnail persuasiva para vídeo de venda sobre [PRODUTO/SERVIÇO],
+inclua selo visual de oferta,
+destaque para benefício principal,
+cores vibrantes,
+elemento chamativo de urgência
+e composição focada em conversão.
+</p>
+
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+<button onclick="abrirGemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">❤️</button>
+</div>
+</div>
+
+<!-- BOTÃO FINAL -->
+
+<div style="margin-top:70px; text-align:center;">
+  <a href="descricao.html"
+     style="display:inline-block;
+            padding:20px 50px;
+            background: linear-gradient(135deg, #5b5ce2, #7a7bff);
+            color:white;
+            font-size:20px;
+            font-weight:bold;
+            border-radius:14px;
+            text-decoration:none;
+            box-shadow:0 12px 30px rgba(0,0,0,0.2);
+            transition:0.3s;">
+    📝 Criar Descrição Otimizada
+  </a>
+</div>
+
+</main>
+
+<script>
+function pegarTexto(btn){
+  return btn.closest(".card").querySelector(".prompt-text").innerText.trim();
+}
+
+function copiarPrompt(btn){
+  const texto = pegarTexto(btn);
+  navigator.clipboard.writeText(texto);
+}
+
+function abrirChatGPT(btn){
+  const texto = pegarTexto(btn);
+  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
+}
+
+function abrirGemini(btn){
+  const texto = pegarTexto(btn);
+  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+}
+
+function favoritar(btn){
+  const card = btn.closest(".card");
+  const titulo = card.querySelector("h3").innerText;
+  const texto = pegarTexto(btn);
+
+  let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+  favoritos.push({titulo, texto});
+  localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+}
+</script>
+
+</body>
+</html>
