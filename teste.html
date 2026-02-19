@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Marketing | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+  <h1>📢 Marketing Estratégico</h1>
+  <p>
+    Prompts voltados para vendas, posicionamento e criação de campanhas.
+    Cada modelo explica quando usar e por que usar.
+  </p>
+
+  <!-- ========================= -->
+  <!-- 1️⃣ CAMPANHA DIRETA -->
+  <!-- ========================= -->
+
+  <div class="card">
+    <h3>1️⃣ Campanha Direta de Venda</h3>
+
+    <p><strong>Quando usar:</strong>  
+    💡 Use quando quiser vender um produto ou serviço específico com foco imediato em conversão.</p>
+
+    <p><strong>Por que usar:</strong>  
+    Ajuda a criar uma oferta clara, objetiva e persuasiva, com foco em ação rápida.</p>
+
+    <p>
+Você é um especialista em marketing digital focado em conversão.
+
+Crie um texto de campanha direta para vender o seguinte produto ou serviço:
+
+[Descreva o produto ou serviço]
+
+Regras:
+- Linguagem clara e persuasiva
+- Destacar benefício principal
+- Criar senso de urgência
+- Finalizar com chamada para ação
+- Gerar 3 versões diferentes
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <!-- ========================= -->
+  <!-- 2️⃣ STORYTELLING -->
+  <!-- ========================= -->
+
+  <div class="card">
+    <h3>2️⃣ Storytelling de Conexão</h3>
+
+    <p><strong>Quando usar:</strong>  
+    💡 Use quando quiser criar conexão emocional antes de vender.</p>
+
+    <p><strong>Por que usar:</strong>  
+    Histórias geram identificação e aumentam confiança antes da oferta.</p>
+
+    <p>
+Crie um texto em formato de storytelling para promover o seguinte produto ou serviço:
+
+[Descreva o produto ou serviço]
+
+Regras:
+- Começar com uma situação real
+- Desenvolver conflito ou desafio
+- Mostrar transformação
+- Finalizar conectando ao produto
+- Gerar 3 versões diferentes
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <!-- ========================= -->
+  <!-- 3️⃣ CRIATIVO PARA INSTAGRAM -->
+  <!-- ========================= -->
+
+  <div class="card">
+    <h3>3️⃣ Criativo para Instagram</h3>
+
+    <p><strong>Quando usar:</strong>  
+    💡 Use quando quiser criar conteúdo visual com foco em engajamento.</p>
+
+    <p><strong>Por que usar:</strong>  
+    Ajuda a gerar ideias estratégicas para posts que prendem atenção no feed.</p>
+
+    <p>
+Crie 3 ideias de post para Instagram sobre:
+
+[Tema]
+
+Regras:
+- Ideias visuais claras
+- Sugestão de legenda
+- Foco em engajamento
+- Linguagem simples
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+  <!-- ========================= -->
+  <!-- 4️⃣ POSICIONAMENTO -->
+  <!-- ========================= -->
+
+  <div class="card">
+    <h3>4️⃣ Posicionamento de Autoridade</h3>
+
+    <p><strong>Quando usar:</strong>  
+    💡 Use quando quiser fortalecer sua imagem profissional.</p>
+
+    <p><strong>Por que usar:</strong>  
+    Textos posicionados aumentam percepção de autoridade e confiança.</p>
+
+    <p>
+Crie um texto de posicionamento profissional sobre:
+
+[Tema]
+
+Regras:
+- Linguagem firme e clara
+- Mostrar experiência ou visão
+- Evitar exagero
+- Finalizar com frase marcante
+- Gerar 3 versões diferentes
+    </p>
+
+    <div class="acoes">
+      <button onclick="copiarPrompt(this)">📋 Copiar</button>
+      <button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
+      <button onclick="abrirGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function copiarPrompt(btn) {
+  const texto = btn.closest(".card").querySelectorAll("p")[2].innerText;
+  navigator.clipboard.writeText(texto);
+  btn.innerText = "✅ Copiado!";
+  setTimeout(() => btn.innerText = "📋 Copiar", 1500);
+}
+
+function abrirChatGPT(btn) {
+  const texto = btn.closest(".card").querySelectorAll("p")[2].innerText;
+  navigator.clipboard.writeText(texto);
+  window.open("https://chat.openai.com/", "_blank");
+}
+
+function abrirGemini(btn) {
+  const texto = btn.closest(".card").querySelectorAll("p")[2].innerText;
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/", "_blank");
+}
+
+function favoritar(btn) {
+  const card = btn.closest(".card");
+  const titulo = card.querySelector("h3").innerText;
+  const texto = card.querySelectorAll("p")[2].innerText;
+
+  let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+  favoritos.push({ titulo, texto });
+
+  localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+
+  btn.innerText = "💖";
+  setTimeout(() => btn.innerText = "❤️", 1500);
+}
+</script>
+
+</body>
+</html>

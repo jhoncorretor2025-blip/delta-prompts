@@ -1,0 +1,125 @@
+
+</html><!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="menu-loader.js"></script>
+
+<main style="padding:60px 40px; max-width:1200px; margin:auto;">
+
+  <!-- HERO -->
+  <section style="margin-bottom:60px;">
+    <h1 style="font-size:48px; margin-bottom:20px;">
+      🚀 Crie Prompts Profissionais em Segundos
+    </h1>
+
+    <p style="font-size:18px; max-width:700px; margin-bottom:30px;">
+      Transforme suas ideias em resultados com IA 3x mais rápido.
+      Biblioteca estratégica pronta para trabalho, marketing e estudo.
+    </p>
+
+    <a href="paginas/planejamento.html"
+       style="display:inline-block;
+              padding:18px 40px;
+              background: linear-gradient(135deg, #5b5bff, #7a5bff);
+              color:white;
+              font-weight:bold;
+              border-radius:14px;
+              text-decoration:none;
+              box-shadow:0 10px 25px rgba(0,0,0,0.15);
+              transition:0.3s;">
+      ⚡ Começar Agora
+    </a>
+  </section>
+
+  <!-- BUSCA GLOBAL -->
+  <section style="margin-bottom:60px; max-width:700px;">
+    
+    <input 
+      type="text" 
+      id="busca-global"
+      placeholder="🔎 Buscar prompt em toda a biblioteca..."
+      style="width:100%; padding:14px 18px; border-radius:12px; border:1px solid #ddd; font-size:16px;"
+    >
+
+    <p id="contador-global" style="margin-top:10px; font-weight:600;">
+      Total de prompts disponíveis: 0
+    </p>
+
+  </section>
+
+  <!-- CATEGORIAS -->
+  <section style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px;">
+
+    <div class="card">
+      <h3>📚 Estudo</h3>
+      <p>Resumos, explicações estruturadas e perguntas inteligentes.</p>
+      <a href="paginas/estudo.html">Acessar →</a>
+    </div>
+
+    <div class="card">
+      <h3>💼 Profissionais</h3>
+      <p>Prompts estratégicos para corretores, advogados e consultores.</p>
+      <a href="paginas/trabalho.html">Acessar →</a>
+    </div>
+
+    <div class="card">
+      <h3>🎨 Criativos</h3>
+      <p>Imagens, marketing, copy e ideias fora do comum.</p>
+      <a href="paginas/imagens.html">Acessar →</a>
+    </div>
+
+    <div class="card">
+      <h3>📱 Redes Sociais</h3>
+      <p>Posts estratégicos, storytelling e autoridade digital.</p>
+      <a href="paginas/redes-sociais.html">Acessar →</a>
+    </div>
+
+    <div class="card">
+      <h3>🧠 Produtividade</h3>
+      <p>Análises, planejamento e organização estratégica.</p>
+      <a href="paginas/planejamento.html">Acessar →</a>
+    </div>
+
+    <div class="card">
+      <h3>🎬 Criadores de Conteúdo</h3>
+      <p>Planejamento, roteiros, thumbnail, descrição e crescimento.</p>
+      <a href="paginas/criadores_de_conteudo/planejamento.html">Acessar →</a>
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+
+// CONTADOR GLOBAL (ajuste manual se quiser)
+const TOTAL_PROMPTS = 182;
+document.getElementById("contador-global").innerText =
+  "Total de prompts disponíveis: " + TOTAL_PROMPTS;
+
+
+// BUSCA SIMPLES (placeholder)
+document.getElementById("busca-global")
+  .addEventListener("keyup", function(e){
+    console.log("Buscar:", e.target.value);
+  });
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+

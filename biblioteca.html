@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Biblioteca | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="menu-loader.js"></script>
+
+
+<main>
+  <h1>📦 Biblioteca de Prompts</h1>
+  <p>Aqui estão todos os prompts que você cadastrou.</p>
+
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar por título, conteúdo ou categoria..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <div id="lista"></div>
+</main>
+
+<div id="toast" class="toast">📋 Copiado!</div>
+
+<script>
+const lista = document.getElementById("lista");
+const toast = document.getElementById("toast");
+const busca = document.getElementById("busca");
+const contador = document.getElementById("contador");
+
+let prompts = [];
+
+function carregarBiblioteca() {
+  prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+  atualizarContador(prompts);
+  renderizar(prompts);
+}
+
+function atualizarContador(arr) {
+  contador.innerText = `Total: ${arr.length} prompt${arr.length !== 1 ? "s" : ""}`;
+}
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+
+  if (arr.length === 0) {
+    lista.innerHTML = `
+      <div class="card">
+        <p>📭 Nenhum prompt encontrado.</p>
+      </div>
+    `;
+    return;
+  }
+
+  arr.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <h3>${p.titulo}</h3>
+      <div class="meta">📂 ${p.categoria}</div>
+      <p>${p.conteudo}</p>
+
+      <div class="acoes">
+        <button onclick="copiar('${p.id}')">📋 Copiar</button>
+        <button onclick="editar('${p.id}')">✏️ Editar</button>
+        <button onclick="apagar('${p.id}')">🗑️ Apagar</button>
+        <button onclick="favoritar('${p.id}')">
+          ${p.favorito ? "❤️" : "🤍"}
+        </button>
+      </div>
+    `;
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = prompts.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.conteudo.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+
+  atualizarContador(filtrados);
+  renderizar(filtrados);
+}
+
+function copiar(id) {
+  const p = prompts.find(x => x.id == id);
+  navigator.clipboard.writeText(p.conteudo);
+  mostrarToast("📋 Prompt copiado!");
+}
+
+function editar(id) {
+  const p = prompts.find(x => x.id == id);
+  const novoTitulo = prompt("Editar título:", p.titulo);
+  const novoConteudo = prompt("Editar conteúdo:", p.conteudo);
+
+  if (novoTitulo && novoConteudo) {
+    p.titulo = novoTitulo;
+    p.conteudo = novoConteudo;
+    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+    carregarBiblioteca();
+    mostrarToast("✏️ Prompt atualizado");
+  }
+}
+
+function apagar(id) {
+  if (!confirm("Deseja apagar este prompt?")) return;
+  prompts = prompts.filter(x => x.id != id);
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  carregarBiblioteca();
+  mostrarToast("🗑️ Prompt removido");
+}
+
+function favoritar(id) {
+  const p = prompts.find(x => x.id == id);
+  p.favorito = !p.favorito;
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  carregarBiblioteca();
+}
+
+function mostrarToast(msg) {
+  toast.innerText = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 1800);
+}
+
+carregarBiblioteca();
+</script>
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #3b82f6;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.meta {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+</style>
+
+</body>
+</html>
