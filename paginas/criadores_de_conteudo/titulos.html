@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Criar Títulos | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+  <!-- 1. TÍTULO FORTE -->
+  <h1>🎯 Criador Estratégico de Títulos para YouTube</h1>
+
+  <!-- 2. INTRODUÇÃO -->
+  <p>
+    Prompts profissionais para criar títulos com alto CTR, curiosidade e potencial de clique.
+  </p>
+
+  <!-- 3. OBJETIVO -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar criadores a desenvolver títulos magnéticos que aumentem taxa de cliques e alcance orgânico.
+    </p>
+  </section>
+
+  <!-- 4. BUSCA -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar tipo de título..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- 5. CARDS -->
+  <div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const promptsTitulos = [
+
+{
+categoria: "🔥 Curiosidade",
+titulo: "Títulos com Curiosidade Estratégica",
+quando: "Quando quiser aumentar o CTR usando curiosidade.",
+prompt: `Você é especialista em copy para YouTube.
+
+Gere 20 títulos altamente chamativos para o tema: [INSIRA O TEMA].
+
+Regras:
+- Máximo 60 caracteres
+- Use gatilhos de curiosidade
+- Evite títulos genéricos
+- Foque em aumentar CTR
+- Não use clickbait enganoso
+
+Explique rapidamente a lógica estratégica por trás dos melhores 3 títulos.`
+},
+
+{
+categoria: "📊 Alta Performance",
+titulo: "Títulos Baseados em Dados",
+quando: "Quando quiser títulos mais racionais e fortes.",
+prompt: `Atue como estrategista de crescimento no YouTube.
+
+Crie 15 títulos baseados em:
+- Números
+- Resultados
+- Promessas específicas
+- Transformação clara
+
+Tema: [INSIRA O TEMA]
+
+Organize em lista numerada.
+Foque em clareza e impacto.`
+},
+
+{
+categoria: "💥 Impacto",
+titulo: "Títulos com Promessa Forte",
+quando: "Para vídeos com promessa clara e direta.",
+prompt: `Você é especialista em marketing digital.
+
+Crie 15 títulos com promessa forte para o tema: [INSIRA TEMA].
+
+Estratégia:
+- Resultado desejado
+- Tempo ou esforço reduzido
+- Benefício claro
+- Linguagem simples
+
+Evite exageros irreais.`
+},
+
+{
+categoria: "⚡ Polêmico",
+titulo: "Títulos Polêmicos Estratégicos",
+quando: "Para gerar debate e comentários.",
+prompt: `Atue como estrategista de engajamento.
+
+Crie 15 títulos estratégicos para gerar debate sobre: [INSIRA TEMA].
+
+Inclua:
+- Perguntas provocativas
+- Afirmações fortes
+- Quebra de padrão
+
+Foque em engajamento e comentários.`
+},
+
+{
+categoria: "🎯 Nichado",
+titulo: "Títulos Ultra Nichados",
+quando: "Quando quiser falar com público específico.",
+prompt: `Você é especialista em posicionamento de nicho.
+
+Crie 15 títulos ultra específicos para:
+
+Nicho: [INSIRA NICHO]
+Público: [DESCREVA O PÚBLICO]
+
+Os títulos devem:
+- Falar diretamente com o público
+- Mostrar entendimento da dor
+- Ser claros e estratégicos`
+},
+
+{
+categoria: "🚀 Shorts",
+titulo: "Títulos para YouTube Shorts",
+quando: "Para vídeos curtos com impacto rápido.",
+prompt: `Você é especialista em Shorts.
+
+Crie 20 títulos curtos e impactantes para o tema: [INSIRA TEMA].
+
+Regras:
+- Máximo 45 caracteres
+- Diretos e fortes
+- Foco em curiosidade
+- Alta taxa de clique
+
+Organize em lista numerada.`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+  contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+
+  arr.forEach(p => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">${p.categoria}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.prompt}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
+        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsTitulos.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("📋 Prompt copiado!");
+}
+
+function favoritarPrompt(titulo, conteudo) {
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  prompts.push({
+    id: Date.now(),
+    titulo,
+    categoria: "YouTube",
+    conteudo,
+    favorito: true
+  });
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://chat.openai.com/", "_blank");
+}
+
+function abrirGemini(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+}
+
+renderizar(promptsTitulos);
+
+</script>
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-size: 14px;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.meta {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+</style>
+
+</body>
+</html>

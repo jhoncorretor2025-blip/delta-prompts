@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Ideias para YouTube | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+  <!-- 1. TÍTULO FORTE -->
+  <h1>💡 Ideias Estratégicas para YouTube</h1>
+
+  <!-- 2. INTRODUÇÃO CURTA -->
+  <p>
+    Prompts para gerar ideias de vídeos com alto potencial de crescimento, engajamento e monetização.
+  </p>
+
+  <!-- 3. OBJETIVO -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar criadores a gerar ideias inteligentes, estratégicas e com potencial real de alcance no YouTube.
+    </p>
+  </section>
+
+  <!-- 4. BUSCA + CONTADOR -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar ideias..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- 5. CARDS -->
+  <div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const promptsIdeias = [
+
+{
+categoria: "🔥 Viral",
+titulo: "Gerador de Ideias Virais",
+quando: "Quando quiser criar vídeos com alto potencial de alcance.",
+prompt: `Você é especialista em vídeos virais no YouTube.
+
+Gere 20 ideias de vídeos com alto potencial de viralização para o nicho: [INSIRA SEU NICHO].
+
+Inclua:
+- Título chamativo
+- Tipo de vídeo (tutorial, opinião, desafio, análise)
+- Por que tem potencial viral
+- Público ideal
+
+Seja estratégico e baseado em padrões reais de viralização.`
+},
+
+{
+categoria: "📈 Crescimento",
+titulo: "Ideias para Crescer Inscritos",
+quando: "Quando quiser aumentar base de inscritos.",
+prompt: `Atue como estrategista de crescimento no YouTube.
+
+Crie 15 ideias de vídeos focadas em:
+
+- Aumentar inscritos
+- Melhorar retenção
+- Gerar compartilhamento
+
+Para o nicho: [INSIRA SEU NICHO]
+
+Inclua:
+- Título
+- Gancho inicial
+- CTA sugerido
+
+Seja focado em crescimento.`
+},
+
+{
+categoria: "💰 Monetização",
+titulo: "Ideias de Vídeos que Vendem",
+quando: "Quando quiser gerar receita com o canal.",
+prompt: `Você é especialista em monetização no YouTube.
+
+Crie 15 ideias de vídeos que:
+
+- Preparem audiência para compra
+- Eduquem sobre um problema
+- Introduzam solução naturalmente
+
+Para o nicho: [INSIRA SEU NICHO]
+
+Explique o objetivo estratégico de cada vídeo.`
+},
+
+{
+categoria: "🎯 Autoridade",
+titulo: "Ideias para Construir Autoridade",
+quando: "Quando quiser se posicionar como referência.",
+prompt: `Atue como estrategista de posicionamento no YouTube.
+
+Gere 15 ideias de vídeos para:
+
+- Demonstrar conhecimento
+- Quebrar objeções
+- Mostrar bastidores
+- Diferenciar da concorrência
+
+Organize com título e objetivo estratégico.`
+},
+
+{
+categoria: "📊 Tendências",
+titulo: "Ideias Baseadas em Tendências",
+quando: "Quando quiser aproveitar assuntos do momento.",
+prompt: `Você é analista de tendências digitais.
+
+Explique como identificar tendências no YouTube.
+
+Depois gere 10 ideias de vídeos baseadas em tendências para o nicho: [INSIRA SEU NICHO].
+
+Inclua:
+- Por que é tendência
+- Como adaptar ao canal`
+},
+
+{
+categoria: "⚡ Shorts",
+titulo: "Ideias Estratégicas para Shorts",
+quando: "Quando quiser crescer usando vídeos curtos.",
+prompt: `Atue como especialista em YouTube Shorts.
+
+Crie 20 ideias de Shorts para o nicho: [INSIRA SEU NICHO].
+
+Inclua:
+- Gancho forte nos 3 primeiros segundos
+- Tema
+- Objetivo estratégico (atração, retenção ou venda)
+
+Foque em crescimento rápido.`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+  contador.innerText = `Total: ${arr.length} prompt${arr.length !== 1 ? "s" : ""}`;
+
+  arr.forEach(p => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">${p.categoria}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.prompt}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
+        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsIdeias.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("📋 Prompt copiado!");
+}
+
+function favoritarPrompt(titulo, conteudo) {
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  prompts.push({
+    id: Date.now(),
+    titulo,
+    categoria: "YouTube",
+    conteudo,
+    favorito: true
+  });
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://chat.openai.com/", "_blank");
+}
+
+function abrirGemini(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+}
+
+renderizar(promptsIdeias);
+
+</script>
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-size: 14px;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.meta {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Planejamento YouTube | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+  <!-- 1. TÍTULO FORTE -->
+  <h1>🎬 Planejamento Estratégico para YouTube</h1>
+
+  <!-- 2. INTRODUÇÃO CURTA -->
+  <p>
+    Prompts estratégicos para organizar, crescer e monetizar seu canal no YouTube.
+  </p>
+
+  <!-- 3. OBJETIVO -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar criadores a estruturar conteúdo, crescimento, posicionamento e estratégia de monetização no YouTube.
+    </p>
+  </section>
+
+  <!-- 4. BUSCA + CONTADOR -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar prompts de YouTube..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- 5. CARDS -->
+  <div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const promptsPlanejamento = [
+
+{
+categoria: "📅 Organização",
+titulo: "Planejamento Mensal de Conteúdo",
+quando: "Quando quiser organizar os vídeos do mês com estratégia.",
+prompt: `Você é estrategista especialista em crescimento no YouTube.
+
+Crie um planejamento mensal de conteúdo para um canal de YouTube.
+
+Inclua:
+- Nicho do canal
+- Público-alvo
+- Objetivo do mês (crescimento, monetização, autoridade)
+- 12 ideias de vídeos organizadas por semana
+- Tipo de vídeo (educativo, opinião, tutorial, viral)
+- Estratégia de CTA para cada vídeo
+
+Organize em tabela estruturada.
+Seja estratégico e focado em crescimento.`
+},
+
+{
+categoria: "🚀 Crescimento",
+titulo: "Plano Estratégico para Crescer 1.000 Inscritos",
+quando: "Quando quiser acelerar crescimento do canal.",
+prompt: `Atue como consultor especialista em crescimento no YouTube.
+
+Crie um plano estratégico para ganhar 1.000 inscritos em 30 dias.
+
+Inclua:
+- Estratégia de títulos
+- Estratégia de thumbnails
+- Frequência ideal de postagem
+- Tipos de vídeos com maior potencial
+- Estratégia de retenção
+- Estratégia de Shorts
+
+Seja prático e focado em execução.`
+},
+
+{
+categoria: "📊 Métricas",
+titulo: "Análise Estratégica de Canal",
+quando: "Para analisar desempenho e melhorar resultados.",
+prompt: `Atue como especialista em análise de dados do YouTube.
+
+Explique como analisar:
+
+- CTR
+- Retenção de audiência
+- Tempo médio de exibição
+- Taxa de cliques
+- Origem de tráfego
+
+E como otimizar cada métrica.
+
+Organize em tópicos claros e aplicáveis.`
+},
+
+{
+categoria: "💰 Monetização",
+titulo: "Plano de Monetização do Canal",
+quando: "Quando quiser transformar o canal em fonte de renda.",
+prompt: `Você é consultor especialista em monetização digital.
+
+Crie um plano de monetização para um canal de YouTube contendo:
+
+- Google AdSense
+- Produtos próprios
+- Afiliados
+- Parcerias
+- Comunidade paga
+
+Explique quando aplicar cada estratégia e em que fase do canal.`
+},
+
+{
+categoria: "🎥 Posicionamento",
+titulo: "Definição de Posicionamento Estratégico",
+quando: "Quando quiser diferenciar seu canal da concorrência.",
+prompt: `Atue como estrategista de marca para YouTube.
+
+Defina:
+
+- Nicho específico
+- Subnicho
+- Diferencial competitivo
+- Promessa principal do canal
+- Público ideal
+- Tom de comunicação
+
+Organize de forma estratégica e clara.`
+},
+
+{
+categoria: "🔥 Viralização",
+titulo: "Estratégia de Vídeos Virais",
+quando: "Para criar vídeos com alto potencial de alcance.",
+prompt: `Você é especialista em conteúdo viral no YouTube.
+
+Crie uma estratégia para desenvolver vídeos com alto potencial de viralização.
+
+Inclua:
+- Estrutura ideal de roteiro
+- Ganchos iniciais fortes
+- Técnicas de retenção
+- Padrões de viralização
+- Análise de tendências
+
+Seja detalhado e estratégico.`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+  contador.innerText = `Total: ${arr.length} prompt${arr.length !== 1 ? "s" : ""}`;
+
+  arr.forEach(p => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">${p.categoria}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.prompt}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
+        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsPlanejamento.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("📋 Prompt copiado!");
+}
+
+function favoritarPrompt(titulo, conteudo) {
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  prompts.push({
+    id: Date.now(),
+    titulo,
+    categoria: "YouTube",
+    conteudo,
+    favorito: true
+  });
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://chat.openai.com/", "_blank");
+}
+
+function abrirGemini(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+}
+
+renderizar(promptsPlanejamento);
+
+</script>
+
+<style>
+
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-size: 14px;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.meta {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+</style>
+
+</body>
+</html>

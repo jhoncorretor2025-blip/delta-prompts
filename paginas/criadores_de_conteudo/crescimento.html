@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Crescimento no YouTube | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+  <!-- 1. TÍTULO FORTE -->
+  <h1>📈 Estratégias de Crescimento no YouTube</h1>
+
+  <!-- 2. INTRODUÇÃO -->
+  <p>
+    Prompts profissionais para acelerar crescimento orgânico, melhorar retenção e escalar seu canal no YouTube.
+  </p>
+
+  <!-- 3. OBJETIVO -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar criadores a desenvolver estratégias inteligentes para crescer inscritos, aumentar visualizações e melhorar desempenho no algoritmo.
+    </p>
+  </section>
+
+  <!-- 4. BUSCA -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar estratégia..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- 5. CARDS -->
+  <div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const promptsCrescimento = [
+
+{
+categoria: "🚀 Estratégia 30 Dias",
+titulo: "Plano de Crescimento em 30 Dias",
+quando: "Quando quiser acelerar resultados rapidamente.",
+prompt: `Você é estrategista especialista em crescimento no YouTube.
+
+Crie um plano estratégico de 30 dias para um canal no nicho: [INSIRA NICHO].
+
+Inclua:
+- Frequência ideal de postagem
+- Estratégia de Shorts
+- Tipos de vídeos prioritários
+- Estratégia de retenção
+- Meta de inscritos
+- Indicadores para acompanhar
+
+Organize em plano semanal detalhado.`
+},
+
+{
+categoria: "📊 Algoritmo",
+titulo: "Como Crescer com o Algoritmo do YouTube",
+quando: "Para entender como o algoritmo impulsiona vídeos.",
+prompt: `Atue como especialista em algoritmo do YouTube.
+
+Explique:
+- Como funciona o sistema de recomendação
+- O que mais influencia alcance
+- Importância de CTR e retenção
+- Como aumentar distribuição
+
+Depois crie plano prático de aplicação.`
+},
+
+{
+categoria: "🔥 Retenção",
+titulo: "Estratégia para Aumentar Retenção",
+quando: "Quando vídeos têm baixa retenção.",
+prompt: `Você é especialista em retenção de audiência.
+
+Crie um plano estratégico para elevar retenção média acima de 50%.
+
+Inclua:
+- Estrutura ideal de vídeo
+- Ganchos iniciais
+- Quebras de padrão
+- Técnicas psicológicas
+- Erros que reduzem retenção
+
+Seja prático e estratégico.`
+},
+
+{
+categoria: "⚡ Shorts",
+titulo: "Estratégia de Crescimento com Shorts",
+quando: "Quando quiser usar Shorts para escalar rápido.",
+prompt: `Atue como especialista em YouTube Shorts.
+
+Crie uma estratégia de crescimento usando Shorts.
+
+Inclua:
+- Frequência ideal
+- Estrutura de vídeo curto
+- Gancho nos 3 primeiros segundos
+- Conexão Shorts → vídeos longos
+- Meta de crescimento mensal
+
+Organize em plano claro.`
+},
+
+{
+categoria: "🎯 Posicionamento",
+titulo: "Estratégia de Nicho para Crescimento",
+quando: "Quando o canal está genérico demais.",
+prompt: `Você é estrategista de posicionamento digital.
+
+Crie uma estratégia para definir nicho forte e específico.
+
+Inclua:
+- Definição de subnicho
+- Público ideal
+- Diferencial competitivo
+- Tipo de conteúdo principal
+- Como se destacar da concorrência`
+},
+
+{
+categoria: "📈 Escala",
+titulo: "Plano de Escala para 10K Inscritos",
+quando: "Quando quiser estruturar crescimento consistente.",
+prompt: `Atue como consultor estratégico para YouTube.
+
+Crie um plano para levar um canal de:
+- 0 a 1.000 inscritos
+- 1.000 a 5.000 inscritos
+- 5.000 a 10.000 inscritos
+
+Inclua:
+- Foco estratégico de cada fase
+- Tipo de conteúdo ideal
+- Ajustes de posicionamento
+- Métricas importantes`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+  contador.innerText = `Total: ${arr.length} estratégia${arr.length !== 1 ? "s" : ""}`;
+
+  arr.forEach(p => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">${p.categoria}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.prompt}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
+        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsCrescimento.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("📋 Estratégia copiada!");
+}
+
+function favoritarPrompt(titulo, conteudo) {
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  prompts.push({
+    id: Date.now(),
+    titulo,
+    categoria: "YouTube",
+    conteudo,
+    favorito: true
+  });
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://chat.openai.com/", "_blank");
+}
+
+function abrirGemini(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+}
+
+renderizar(promptsCrescimento);
+
+</script>
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-size: 14px;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.meta {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Gerador de Roteiro | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../style.css">
+
+<style>
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  font-size: 38px;
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  color: var(--muted);
+}
+
+/* CARD */
+.roteiro-card {
+  background: linear-gradient(145deg, #ffffff, #f9f9ff);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+  animation: fadeUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+/* AÇÕES */
+.acoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.acoes button {
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 10px;
+}
+
+/* CTA FINAL */
+.cta-final {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.cta-final a {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.cta-final a:hover {
+  transform: translateY(-3px);
+}
+
+/* ANIMAÇÃO */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../../menu-loader.js"></script>
+
+<main>
+
+<div class="page-header">
+  <h1>🎬 Gerador de Roteiro Estratégico</h1>
+  <p>Transforme sua ideia em um roteiro estruturado e persuasivo.</p>
+</div>
+
+<div class="roteiro-card">
+
+  <label>Ideia do conteúdo:</label>
+  <textarea id="ideia" placeholder="Ex: 3 erros que impedem corretores de vender mais..."></textarea>
+
+  <label>Plataforma:</label>
+  <select id="plataforma">
+    <option value="Instagram">Instagram</option>
+    <option value="YouTube">YouTube</option>
+    <option value="TikTok">TikTok</option>
+    <option value="LinkedIn">LinkedIn</option>
+  </select>
+
+  <button onclick="gerarRoteiro()">🚀 Gerar Roteiro</button>
+
+  <div id="resultado" style="display:none; margin-top:20px;">
+    <label>Roteiro Gerado:</label>
+    <textarea id="roteiroFinal"></textarea>
+
+    <div class="acoes">
+      <button onclick="navigator.clipboard.writeText(document.getElementById('roteiroFinal').value)">
+        📋 Copiar
+      </button>
+
+      <button onclick="window.open('https://chat.openai.com/?q=' + encodeURIComponent(document.getElementById('roteiroFinal').value))">
+        🤖 ChatGPT
+      </button>
+
+      <button onclick="window.open('https://gemini.google.com/app?prompt=' + encodeURIComponent(document.getElementById('roteiroFinal').value))">
+        ✨ Gemini
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="cta-final">
+  <a href="prompt.html">⚡ Transformar em Prompt Profissional</a>
+</div>
+
+</main>
+
+<script>
+
+function gerarRoteiro() {
+
+  const ideia = document.getElementById("ideia").value.trim();
+  const plataforma = document.getElementById("plataforma").value;
+
+  if (!ideia) {
+    alert("Digite a ideia.");
+    return;
+  }
+
+  const roteiro = `
+PLATAFORMA: ${plataforma}
+
+1️⃣ HOOK (primeiros 3 segundos)
+Frase forte chamando atenção sobre:
+${ideia}
+
+2️⃣ CONTEXTO
+Explique rapidamente o problema.
+
+3️⃣ DESENVOLVIMENTO
+Apresente os pontos principais ou soluções.
+
+4️⃣ EXEMPLO / PROVA
+Inclua caso real ou simulação prática.
+
+5️⃣ CTA
+Chame para comentar, salvar ou compartilhar.
+
+Tom: estratégico, claro e persuasivo.
+`;
+
+  document.getElementById("roteiroFinal").value = roteiro.trim();
+  document.getElementById("resultado").style.display = "block";
+}
+
+</script>
+
+</body>
+</html>

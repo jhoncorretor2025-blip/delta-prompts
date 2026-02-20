@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Thumbnails Estratégicas | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+  <!-- 1. TÍTULO FORTE -->
+  <h1>🎨 Criação Estratégica de Thumbnails</h1>
+
+  <!-- 2. INTRODUÇÃO -->
+  <p>
+    Prompts profissionais para criar thumbnails que aumentam CTR e chamam atenção no feed do YouTube.
+  </p>
+
+  <!-- 3. OBJETIVO -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar criadores a desenvolver thumbnails visualmente fortes, estratégicas e otimizadas para gerar cliques.
+    </p>
+  </section>
+
+  <!-- 4. BUSCA -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar modelo de thumbnail..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- 5. CARDS -->
+  <div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const promptsThumbnails = [
+
+{
+categoria: "🔥 Alta CTR",
+titulo: "Estrutura de Thumbnail de Alta Conversão",
+quando: "Quando quiser aumentar a taxa de cliques (CTR).",
+prompt: `Você é especialista em design estratégico para YouTube.
+
+Crie um conceito de thumbnail para o vídeo sobre: [INSIRA TEMA]
+
+Inclua:
+- Texto ideal na thumbnail (máx 4 palavras)
+- Emoção facial recomendada
+- Cor de fundo estratégica
+- Elementos visuais principais
+- Contraste ideal
+- Erros a evitar
+
+Explique a lógica psicológica por trás das escolhas.`
+},
+
+{
+categoria: "🎯 Minimalista",
+titulo: "Thumbnail Minimalista Impactante",
+quando: "Para vídeos diretos e fortes.",
+prompt: `Atue como especialista em design minimalista para YouTube.
+
+Crie uma thumbnail minimalista para o tema: [INSIRA TEMA]
+
+Regras:
+- Pouco texto
+- Foco em 1 elemento principal
+- Fundo limpo
+- Alto contraste
+- Clareza mesmo em tela pequena
+
+Explique o conceito estratégico.`
+},
+
+{
+categoria: "💥 Impacto Emocional",
+titulo: "Thumbnail com Emoção Forte",
+quando: "Para vídeos que exploram surpresa, medo ou curiosidade.",
+prompt: `Você é especialista em psicologia visual.
+
+Crie uma thumbnail emocional para o tema: [INSIRA TEMA]
+
+Inclua:
+- Expressão facial ideal
+- Tipo de emoção (choque, medo, surpresa, curiosidade)
+- Palavras-chave visuais
+- Uso de setas, círculos ou destaque
+- Cor dominante
+
+Explique como isso aumenta o CTR.`
+},
+
+{
+categoria: "📊 Educativo",
+titulo: "Thumbnail para Vídeos Educativos",
+quando: "Para conteúdos explicativos e tutoriais.",
+prompt: `Atue como estrategista de thumbnails educativas.
+
+Crie uma thumbnail para vídeo tutorial sobre: [INSIRA TEMA]
+
+Inclua:
+- Texto claro e direto
+- Elemento visual que represente o tema
+- Fundo estratégico
+- Cor que transmita autoridade
+- Evitar excesso de informação
+
+Organize de forma estruturada.`
+},
+
+{
+categoria: "🔥 Competitivo",
+titulo: "Análise de Thumbnail da Concorrência",
+quando: "Para melhorar thumbnails comparando com concorrentes.",
+prompt: `Você é analista estratégico de YouTube.
+
+Explique como analisar thumbnails de concorrentes.
+
+Depois, crie um modelo de thumbnail superior para o tema: [INSIRA TEMA].
+
+Inclua:
+- Diferencial competitivo
+- Melhor contraste
+- Texto mais forte
+- Emoção mais impactante`
+},
+
+{
+categoria: "⚡ Shorts",
+titulo: "Thumbnail Estratégica para Shorts",
+quando: "Para vídeos curtos que precisam chamar atenção instantânea.",
+prompt: `Atue como especialista em YouTube Shorts.
+
+Crie um conceito de thumbnail para Shorts sobre: [INSIRA TEMA].
+
+Inclua:
+- Texto ultra curto
+- Elemento visual dominante
+- Cor forte
+- Foco em impacto rápido
+
+Explique como isso ajuda no scroll do feed.`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+  contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+
+  arr.forEach(p => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">${p.categoria}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.prompt}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
+        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsThumbnails.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("📋 Prompt copiado!");
+}
+
+function favoritarPrompt(titulo, conteudo) {
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  prompts.push({
+    id: Date.now(),
+    titulo,
+    categoria: "YouTube",
+    conteudo,
+    favorito: true
+  });
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://chat.openai.com/", "_blank");
+}
+
+function abrirGemini(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+}
+
+renderizar(promptsThumbnails);
+
+</script>
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-size: 14px;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.meta {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+</style>
+
+</body>
+</html>

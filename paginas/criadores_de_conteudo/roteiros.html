@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Roteiros para YouTube | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+  <!-- 1. TÍTULO FORTE -->
+  <h1>🎬 Roteiros Estratégicos para YouTube</h1>
+
+  <!-- 2. INTRODUÇÃO -->
+  <p>
+    Prompts profissionais para criar roteiros com alta retenção, engajamento e potencial de crescimento.
+  </p>
+
+  <!-- 3. OBJETIVO -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar criadores a estruturar vídeos que prendam a atenção do início ao fim e convertam audiência em inscritos e clientes.
+    </p>
+  </section>
+
+  <!-- 4. BUSCA -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar roteiros..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- 5. CARDS -->
+  <div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const promptsRoteiros = [
+
+{
+categoria: "🔥 Retenção",
+titulo: "Roteiro com Alta Retenção",
+quando: "Para criar vídeos que prendam do início ao fim.",
+prompt: `Você é especialista em retenção no YouTube.
+
+Crie um roteiro para o tema: [INSIRA O TEMA]
+
+Estrutura obrigatória:
+
+1. Gancho inicial forte (até 10 segundos)
+2. Apresentação breve
+3. Desenvolvimento com quebras de padrão
+4. Momentos de curiosidade
+5. CTA estratégico
+6. Final com reforço de promessa
+
+Foque em manter retenção acima de 50%.`
+},
+
+{
+categoria: "📚 Educativo",
+titulo: "Roteiro Tutorial Estruturado",
+quando: "Para vídeos educativos e passo a passo.",
+prompt: `Atue como especialista em vídeos educativos no YouTube.
+
+Crie um roteiro detalhado para o tema: [INSIRA O TEMA]
+
+Inclua:
+- Introdução com promessa clara
+- Explicação didática
+- Exemplos práticos
+- Erros comuns
+- Resumo final
+- CTA
+
+Organize por blocos numerados.`
+},
+
+{
+categoria: "💰 Venda",
+titulo: "Roteiro Estratégico para Vendas",
+quando: "Para vender produtos ou serviços no vídeo.",
+prompt: `Você é copywriter especialista em vendas no YouTube.
+
+Crie um roteiro para vender [INSIRA PRODUTO].
+
+Estrutura:
+
+1. Problema forte
+2. Consequência
+3. História ou prova
+4. Apresentação da solução
+5. Benefícios
+6. Quebra de objeções
+7. CTA claro
+
+Seja persuasivo, mas natural.`
+},
+
+{
+categoria: "⚡ Shorts",
+titulo: "Roteiro para YouTube Shorts",
+quando: "Para vídeos curtos e diretos.",
+prompt: `Você é especialista em Shorts.
+
+Crie um roteiro de até 60 segundos sobre: [INSIRA TEMA]
+
+Inclua:
+- Gancho nos primeiros 3 segundos
+- Desenvolvimento direto
+- Frase impactante final
+- CTA rápido
+
+Foque em retenção e impacto.`
+},
+
+{
+categoria: "🎯 Autoridade",
+titulo: "Roteiro para Construir Autoridade",
+quando: "Para se posicionar como especialista.",
+prompt: `Atue como estrategista de posicionamento.
+
+Crie um roteiro para demonstrar autoridade sobre: [INSIRA TEMA]
+
+Inclua:
+- Contexto
+- Experiência pessoal ou dados
+- Explicação profunda
+- Diferencial competitivo
+- CTA estratégico
+
+Seja estruturado e convincente.`
+},
+
+{
+categoria: "🔥 Polêmico",
+titulo: "Roteiro de Opinião Estratégica",
+quando: "Para vídeos opinativos com alto engajamento.",
+prompt: `Você é especialista em vídeos opinativos.
+
+Crie um roteiro para tema polêmico: [INSIRA TEMA]
+
+Inclua:
+- Introdução impactante
+- Apresentação dos dois lados
+- Sua posição estratégica
+- Argumentos fortes
+- CTA para comentários
+
+Foque em gerar debate e retenção.`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+  contador.innerText = `Total: ${arr.length} roteiro${arr.length !== 1 ? "s" : ""}`;
+
+  arr.forEach(p => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">${p.categoria}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.prompt}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
+        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsRoteiros.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("📋 Roteiro copiado!");
+}
+
+function favoritarPrompt(titulo, conteudo) {
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  prompts.push({
+    id: Date.now(),
+    titulo,
+    categoria: "YouTube",
+    conteudo,
+    favorito: true
+  });
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://chat.openai.com/", "_blank");
+}
+
+function abrirGemini(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+}
+
+renderizar(promptsRoteiros);
+
+</script>
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-size: 14px;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.meta {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+</style>
+
+</body>
+</html>

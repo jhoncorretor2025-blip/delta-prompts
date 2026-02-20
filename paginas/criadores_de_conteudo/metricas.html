@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Métricas YouTube | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+  <!-- 1. TÍTULO FORTE -->
+  <h1>📊 Análise de Métricas do YouTube</h1>
+
+  <!-- 2. INTRODUÇÃO -->
+  <p>
+    Prompts estratégicos para interpretar dados, otimizar desempenho e crescer com base em métricas reais.
+  </p>
+
+  <!-- 3. OBJETIVO -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar criadores a entender e melhorar CTR, retenção, tempo de exibição e distribuição no algoritmo.
+    </p>
+  </section>
+
+  <!-- 4. BUSCA -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar métrica..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- 5. CARDS -->
+  <div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const promptsMetricas = [
+
+{
+categoria: "🔥 CTR",
+titulo: "Análise Estratégica de CTR",
+quando: "Quando seus vídeos têm muitas impressões, mas poucos cliques.",
+prompt: `Você é especialista em otimização de CTR no YouTube.
+
+Analise os seguintes dados:
+
+- Impressões: [INSIRA]
+- CTR atual: [INSIRA]
+- Nicho: [INSIRA]
+
+Explique:
+- Se o CTR está bom ou baixo
+- O que pode estar prejudicando
+- Ajustes em título e thumbnail
+- Meta ideal de CTR para o nicho
+
+Seja estratégico e prático.`
+},
+
+{
+categoria: "📈 Retenção",
+titulo: "Análise de Retenção de Audiência",
+quando: "Quando o público sai cedo do vídeo.",
+prompt: `Atue como especialista em retenção no YouTube.
+
+Analise:
+- Retenção média: [INSIRA %]
+- Duração do vídeo: [INSIRA]
+- Queda principal em qual minuto: [INSIRA]
+
+Explique:
+- Por que pode estar caindo
+- Ajustes no roteiro
+- Melhorias nos primeiros 30 segundos
+- Meta ideal de retenção
+
+Organize em plano de melhoria.`
+},
+
+{
+categoria: "⏱ Tempo de Exibição",
+titulo: "Otimização de Tempo de Exibição",
+quando: "Quando quiser aumentar watch time.",
+prompt: `Você é especialista em watch time.
+
+Explique como aumentar tempo total de exibição do canal.
+
+Inclua:
+- Estratégia de playlists
+- Conexão entre vídeos
+- CTA para próximo vídeo
+- Estrutura ideal de vídeo
+- Estratégia de séries
+
+Crie plano prático de aplicação.`
+},
+
+{
+categoria: "🚀 Distribuição",
+titulo: "Por Que o YouTube Não Está Entregando Meu Vídeo?",
+quando: "Quando o vídeo não recebe impressões.",
+prompt: `Atue como especialista em algoritmo do YouTube.
+
+Explique possíveis motivos para baixa distribuição.
+
+Analise:
+- CTR
+- Retenção
+- Nicho
+- Competitividade
+- Histórico do canal
+
+Depois crie plano estratégico para melhorar distribuição.`
+},
+
+{
+categoria: "📊 Origem de Tráfego",
+titulo: "Análise de Fontes de Tráfego",
+quando: "Para entender de onde vêm as visualizações.",
+prompt: `Você é especialista em análise de tráfego no YouTube.
+
+Explique como interpretar:
+
+- Pesquisa do YouTube
+- Vídeos sugeridos
+- Página inicial
+- Shorts
+- Externo
+
+Depois crie plano para aumentar tráfego da melhor fonte.`
+},
+
+{
+categoria: "🎯 Diagnóstico Completo",
+titulo: "Diagnóstico Estratégico do Canal",
+quando: "Quando quiser análise geral do desempenho.",
+prompt: `Atue como consultor estratégico para YouTube.
+
+Analise os seguintes dados:
+
+- Inscritos atuais: [INSIRA]
+- CTR médio: [INSIRA]
+- Retenção média: [INSIRA]
+- Frequência de postagem: [INSIRA]
+- Nicho: [INSIRA]
+
+Faça:
+
+1. Diagnóstico geral
+2. Pontos fortes
+3. Pontos fracos
+4. Plano de melhoria 30 dias
+5. Meta realista de crescimento
+
+Seja detalhado e estratégico.`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+  contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+
+  arr.forEach(p => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">${p.categoria}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.prompt}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
+        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsMetricas.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("📋 Prompt copiado!");
+}
+
+function favoritarPrompt(titulo, conteudo) {
+  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+  prompts.push({
+    id: Date.now(),
+    titulo,
+    categoria: "YouTube",
+    conteudo,
+    favorito: true
+  });
+
+  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+  alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://chat.openai.com/", "_blank");
+}
+
+function abrirGemini(texto) {
+  navigator.clipboard.writeText(texto);
+  window.open("https://gemini.google.com/app", "_blank");
+}
+
+renderizar(promptsMetricas);
+
+</script>
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-size: 14px;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.meta {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Descrição para YouTube | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+  <!-- 1. TÍTULO FORTE -->
+  <h1>📝 Criação Estratégica de Descrição para YouTube</h1>
+
+  <!-- 2. INTRODUÇÃO -->
+  <p>
+    Prompts profissionais para criar descrições otimizadas para SEO, retenção e conversão no YouTube.
+  </p>
+
+  <!-- 3. OBJETIVO -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar criadores a escrever descrições estratégicas que melhorem ranqueamento, engajamento e monetização.
+    </p>
+  </section>
+
+  <!-- 4. BUSCA -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar modelo de descrição..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- 5. CARDS -->
+  <div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const promptsDescricao = [
+
+{
+categoria: "🔥 SEO",
+titulo: "Descrição Otimizada para SEO",
+quando: "Quando quiser ranquear melhor no YouTube.",
+prompt: `Você é especialista em SEO para YouTube.
+
+Crie uma descrição otimizada para o vídeo sobre: [INSIRA TEMA]
+
+Inclua:
+- Parágrafo inicial com palavras-chave estratégicas
+- Explicação clara do conteúdo
+- Repetição natural de termos relevantes
+- Hashtags estratégicas no final
+- Até 2.000 caracteres
+
+Foque em ranqueamento e clareza.`
+},
+
+{
+categoria: "💰 Conversão",
+titulo: "Descrição Focada em Vendas",
+quando: "Quando o vídeo tem objetivo de vender algo.",
+prompt: `Atue como copywriter especialista em conversão no YouTube.
+
+Crie uma descrição estratégica para vender: [INSIRA PRODUTO].
+
+Inclua:
+- Gancho inicial
+- Benefícios claros
+- Prova ou autoridade
+- Chamada para ação
+- Links organizados
+
+Seja persuasivo, mas natural.`
+},
+
+{
+categoria: "📈 Crescimento",
+titulo: "Descrição para Ganhar Inscritos",
+quando: "Quando quiser aumentar inscritos.",
+prompt: `Você é estrategista de crescimento no YouTube.
+
+Crie uma descrição para vídeo sobre: [INSIRA TEMA]
+
+Inclua:
+- Resumo envolvente
+- Convite estratégico para inscrição
+- Incentivo para comentar
+- Incentivo para assistir outro vídeo
+
+Foque em aumentar inscritos e retenção.`
+},
+
+{
+categoria: "🎯 Autoridade",
+titulo: "Descrição para Construir Autoridade",
+quando: "Para posicionar o canal como referência.",
+prompt: `Atue como especialista em posicionamento digital.
+
+Crie uma descrição estratégica para o vídeo: [INSIRA TEMA]
+
+Inclua:
+- Contextualização do tema
+- Demonstração de expertise
+- Explicação aprofundada
+- Links para conteúdos relacionados
+
+Organize de forma profissional.`
+},
+
+{
+categoria: "⚡ Shorts",
+titulo: "Descrição para YouTube Shorts",
+quando: "Para vídeos curtos que precisam ser diretos.",
+prompt: `Você é especialista em Shorts.
+
+Crie uma descrição curta e estratégica para o vídeo: [INSIRA TEMA]
+
+Inclua:
+- Resumo direto
+- 3 hashtags relevantes
+- Convite para seguir o canal
+
+Seja breve e otimizado.`
+},
+
+{
+categoria: "🔥 Estrutura Completa",
+titulo: "Modelo Completo de Descrição Estratégica",
+quando: "Quando quiser uma descrição estruturada do início ao fim.",
+prompt: `Você é especialista em estratégia de conteúdo para YouTube.
+
+Crie uma descrição completa para o vídeo: [INSIRA TEMA]
+
+Estrutura obrigatória:
+
+1. Parágrafo inicial forte (SEO)
+2. Explicação do que o espectador aprenderá
+3. Lista de tópicos abordados
+4. Chamada para ação
+5. Links organizados
+6. Hashtags finais
+
+Organize em blocos claros e profissionais.`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+  contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+
+  arr.forEach(p => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">${p.categoria}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.prompt}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
+        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsDescricao.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("📋 Prompt copiado!");
+}
+
+function favoritarPrompt(titulo, conteudo) {
+  const prompt
