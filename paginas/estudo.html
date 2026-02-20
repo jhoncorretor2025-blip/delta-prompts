@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Estudo | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<title>Estudo | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+.prompt-text {
+  white-space: pre-wrap;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.tag {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+</style>
 </head>
 
 <body>
@@ -14,185 +53,235 @@
 
 <main>
 
-  <!-- 1️⃣ Título Forte -->
-  <section class="hero">
-    <h1>📚 Prompts para Estudo Inteligente</h1>
-    <p class="hero-text">
-      Use IA para aprender mais rápido, organizar matérias e criar planos de estudo eficientes.
-    </p>
-  </section>
+<h1>📚 Estudo Estratégico</h1>
+<p>
+Prompts para aprender mais rápido, organizar conteúdos e melhorar desempenho acadêmico.
+</p>
 
-  <!-- 2️⃣ Objetivo -->
-  <section class="card">
-    <h3>🎯 Objetivo</h3>
-    <p>
-      Ajudar estudantes a resumir conteúdos, criar planos estratégicos, revisar matérias
-      e aprender de forma estruturada usando IA.
-    </p>
-  </section>
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrarPrompts()">
+  <div class="contador" id="contador"></div>
+</div>
 
-  <!-- 3️⃣ Busca -->
-  <section class="card">
-    <input 
-      type="text" 
-      id="busca" 
-      placeholder="🔎 Buscar prompt..."
-      oninput="filtrar()"
-    >
-    <div id="contador" style="margin-top:10px; font-size:14px; opacity:0.7;"></div>
-  </section>
+<div id="lista">
 
-  <!-- 4️⃣ Cards -->
-  <div id="lista">
+<!-- ======================= -->
+<!-- 🔹 1 SIMPLES -->
+<!-- ======================= -->
+<div class="card">
+<div class="tag">⚡ Simples</div>
+<h3>📝 Resumo Inteligente</h3>
+<p><strong>Quando usar:</strong> Para transformar textos longos em resumos claros.</p>
+<div class="prompt-text">
+Resuma o texto abaixo de forma organizada.
+Destaque conceitos principais, exemplos e palavras-chave.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estudo1"
+data-titulo="Resumo Inteligente"
+data-texto="Resuma o texto abaixo de forma organizada. Destaque conceitos principais, exemplos e palavras-chave."
+data-categoria="estudo">🤍</button>
+</div>
+</div>
 
-    <!-- PROMPT 1 -->
-    <div class="card prompt-card">
-      <div class="tag">📘 Resumo</div>
-      <h3>Resumo Inteligente de Conteúdo</h3>
-      <p><strong>📌 Quando usar:</strong> Para resumir capítulos, PDFs ou textos longos.</p>
-      <div class="prompt-text">
-        Resuma o conteúdo abaixo de forma clara, organizada e didática.
-        Use tópicos, exemplos simples e linguagem fácil para estudo.
-      </div>
+<!-- ======================= -->
+<!-- 🔹 2 SIMPLES -->
+<!-- ======================= -->
+<div class="card">
+<div class="tag">⚡ Simples</div>
+<h3>❓ Perguntas de Revisão</h3>
+<p><strong>Quando usar:</strong> Antes de provas ou testes.</p>
+<div class="prompt-text">
+Crie 10 perguntas sobre o conteúdo abaixo.
+Inclua perguntas conceituais e aplicadas.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estudo2"
+data-titulo="Perguntas de Revisão"
+data-texto="Crie 10 perguntas sobre o conteúdo abaixo. Inclua perguntas conceituais e aplicadas."
+data-categoria="estudo">🤍</button>
+</div>
+</div>
 
-      <div class="acoes">
-        <button onclick="copiar(this)">📋 Copiar</button>
-        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(this)">🔷 Gemini</button>
-      </div>
-    </div>
+<!-- ======================= -->
+<!-- 🔹 COMPLETOS -->
+<!-- ======================= -->
 
-    <!-- PROMPT 2 -->
-    <div class="card prompt-card">
-      <div class="tag">🧠 Revisão</div>
-      <h3>Perguntas para Revisão</h3>
-      <p><strong>📌 Quando usar:</strong> Antes de prova ou revisão geral.</p>
-      <div class="prompt-text">
-        Crie 10 perguntas estratégicas sobre o tema abaixo,
-        variando entre fáceis, médias e difíceis.
-      </div>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📖 Plano de Estudo Estratégico</h3>
+<p><strong>Quando usar:</strong> Para organizar estudos para provas ou concursos.</p>
+<div class="prompt-text">
+Você é especialista em aprendizagem acelerada.
 
-      <div class="acoes">
-        <button onclick="copiar(this)">📋 Copiar</button>
-        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(this)">🔷 Gemini</button>
-      </div>
-    </div>
+Crie um plano de estudo dividido em:
+1. Organização de matérias
+2. Cronograma semanal
+3. Método de revisão
+4. Técnicas de memorização
+5. Simulados e acompanhamento
 
-    <!-- PROMPT 3 -->
-    <div class="card prompt-card">
-      <div class="tag">📅 Planejamento</div>
-      <h3>Plano de Estudo Personalizado</h3>
-      <p><strong>📌 Quando usar:</strong> Para organizar rotina semanal.</p>
-      <div class="prompt-text">
-        Crie um plano de estudo organizado para o tema abaixo,
-        considerando tempo disponível por dia e nível de dificuldade.
-      </div>
+Seja estruturado e prático.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estudo3"
+data-titulo="Plano de Estudo Estratégico"
+data-texto="Você é especialista em aprendizagem acelerada. Crie um plano de estudo dividido em organização, cronograma, revisão e simulados."
+data-categoria="estudo">🤍</button>
+</div>
+</div>
 
-      <div class="acoes">
-        <button onclick="copiar(this)">📋 Copiar</button>
-        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(this)">🔷 Gemini</button>
-      </div>
-    </div>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>🧠 Método Avançado de Memorização</h3>
+<p><strong>Quando usar:</strong> Para conteúdos difíceis ou extensos.</p>
+<div class="prompt-text">
+Você é especialista em neuroaprendizagem.
+Explique como memorizar o conteúdo abaixo usando:
+- Técnica Feynman
+- Mapas mentais
+- Repetição espaçada
+- Aplicação prática
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estudo4"
+data-titulo="Método Avançado de Memorização"
+data-texto="Explique como memorizar usando Feynman, mapas mentais e repetição espaçada."
+data-categoria="estudo">🤍</button>
+</div>
+</div>
 
-    <!-- PROMPT 4 -->
-    <div class="card prompt-card">
-      <div class="tag">📖 Explicação</div>
-      <h3>Explique Como se Eu Tivesse 12 Anos</h3>
-      <p><strong>📌 Quando usar:</strong> Para entender temas difíceis.</p>
-      <div class="prompt-text">
-        Explique o tema abaixo de forma extremamente simples,
-        usando analogias e exemplos práticos.
-      </div>
+<div class="card">
+<div class="tag">🧩 Completo</div>
+<h3>📊 Análise Profunda de Conteúdo</h3>
+<p><strong>Quando usar:</strong> Para entender temas complexos.</p>
+<div class="prompt-text">
+Você é professor especialista.
+Explique o conteúdo abaixo de forma:
+- Didática
+- Com exemplos
+- Comparações práticas
+- Aplicações reais
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estudo5"
+data-titulo="Análise Profunda de Conteúdo"
+data-texto="Explique o conteúdo com exemplos, comparações e aplicações reais."
+data-categoria="estudo">🤍</button>
+</div>
+</div>
 
-      <div class="acoes">
-        <button onclick="copiar(this)">📋 Copiar</button>
-        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(this)">🔷 Gemini</button>
-      </div>
-    </div>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>🎯 Estratégia para Provas Difíceis</h3>
+<p><strong>Quando usar:</strong> Para provas de alta concorrência.</p>
+<div class="prompt-text">
+Você é especialista em preparação para concursos.
+Crie estratégia para:
+- Organização mental
+- Revisão final
+- Gestão do tempo
+- Controle emocional
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estudo6"
+data-titulo="Estratégia para Provas Difíceis"
+data-texto="Crie estratégia para organização, revisão e controle emocional em provas difíceis."
+data-categoria="estudo">🤍</button>
+</div>
+</div>
 
-    <!-- PROMPT 5 -->
-    <div class="card prompt-card">
-      <div class="tag">📝 Exercícios</div>
-      <h3>Lista de Exercícios</h3>
-      <p><strong>📌 Quando usar:</strong> Para treinar fixação.</p>
-      <div class="prompt-text">
-        Crie uma lista de exercícios práticos sobre o tema abaixo,
-        com respostas explicadas no final.
-      </div>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📅 Rotina de Estudo Produtiva</h3>
+<p><strong>Quando usar:</strong> Para manter constância diária.</p>
+<div class="prompt-text">
+Você é especialista em produtividade acadêmica.
+Monte uma rotina diária equilibrada com:
+- Blocos de estudo
+- Pausas estratégicas
+- Revisão diária
+- Avaliação semanal
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estudo7"
+data-titulo="Rotina de Estudo Produtiva"
+data-texto="Monte uma rotina diária equilibrada com blocos de estudo e revisão."
+data-categoria="estudo">🤍</button>
+</div>
+</div>
 
-      <div class="acoes">
-        <button onclick="copiar(this)">📋 Copiar</button>
-        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(this)">🔷 Gemini</button>
-      </div>
-    </div>
-
-    <!-- PROMPT 6 -->
-    <div class="card prompt-card">
-      <div class="tag">📊 Mapas Mentais</div>
-      <h3>Estrutura em Mapa Mental</h3>
-      <p><strong>📌 Quando usar:</strong> Para visualizar conexões.</p>
-      <div class="prompt-text">
-        Organize o conteúdo abaixo em formato de mapa mental,
-        com tópicos principais e subtópicos bem definidos.
-      </div>
-
-      <div class="acoes">
-        <button onclick="copiar(this)">📋 Copiar</button>
-        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(this)">🔷 Gemini</button>
-      </div>
-    </div>
-
-  </div>
-
+</div>
 </main>
 
 <script>
-
-const lista = document.getElementById("lista");
+const cards = document.querySelectorAll(".card");
 const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
 
-function atualizarContador() {
-  const visiveis = lista.querySelectorAll(".prompt-card:not([style*='display: none'])");
-  contador.innerText = visiveis.length + " prompt(s) encontrados";
+function atualizarContador(total){
+  contador.innerText = "Total: " + total + " prompts";
 }
 
-function filtrar() {
-  const termo = busca.value.toLowerCase();
-  const cards = lista.querySelectorAll(".prompt-card");
-
-  cards.forEach(card => {
-    const texto = card.innerText.toLowerCase();
-    card.style.display = texto.includes(termo) ? "block" : "none";
+function filtrarPrompts(){
+  const termo = document.getElementById("busca").value.toLowerCase();
+  let visiveis = 0;
+  cards.forEach(card=>{
+    if(card.innerText.toLowerCase().includes(termo)){
+      card.style.display="block";
+      visiveis++;
+    } else {
+      card.style.display="none";
+    }
   });
-
-  atualizarContador();
+  atualizarContador(visiveis);
 }
 
-function copiar(btn) {
-  const texto = btn.closest(".prompt-card").querySelector(".prompt-text").innerText;
+function copiarPrompt(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
   navigator.clipboard.writeText(texto);
-  btn.innerText = "✅ Copiado!";
-  setTimeout(() => btn.innerText = "📋 Copiar", 1500);
+  btn.innerText="✅ Copiado!";
+  setTimeout(()=>btn.innerText="📋 Copiar",1500);
 }
 
-function abrirChatGPT(btn) {
-  const texto = btn.closest(".prompt-card").querySelector(".prompt-text").innerText;
-  window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto), "_blank");
+function abrirChatGPT(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-function abrirGemini(btn) {
-  const texto = btn.closest(".prompt-card").querySelector(".prompt-text").innerText;
-  window.open("https://gemini.google.com/app", "_blank");
+function abrirGemini(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-atualizarContador();
-
+atualizarContador(cards.length);
 </script>
 
 </body>
