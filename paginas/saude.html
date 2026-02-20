@@ -7,17 +7,43 @@
 <link rel="stylesheet" href="../style.css">
 
 <style>
-.prompt-text{
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+.prompt-text {
   white-space: pre-wrap;
-  background:#f9fafb;
-  padding:15px;
-  border-radius:10px;
-  border:1px solid #e5e7eb;
-  margin:15px 0;
-  font-size:14px;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.tag {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 10px;
 }
 </style>
-
 </head>
 
 <body>
@@ -27,286 +53,215 @@
 
 <main>
 
-<h1>🧠 Prompts de Saúde e Bem-Estar</h1>
-<p>Ferramentas estratégicas para organização mental, emocional e física.</p>
+<h1>🧠 Saúde e Bem-Estar</h1>
+<p>
+Prompts estratégicos para melhorar sua saúde física, mental e disciplina diária.
+</p>
 
-<!-- ================================================= -->
-<!-- 🔹 1️⃣ PROMPTS SIMPLES -->
-<!-- ================================================= -->
-
-<div class="card">
-<h3>🟢 1. Rotina Saudável Simples</h3>
-<div class="prompt-text">
-Crie uma rotina saudável básica para alguém que trabalha o dia todo e quer melhorar energia e disposição.
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrarPrompts()">
+  <div class="contador" id="contador"></div>
 </div>
+
+<div id="lista">
+
+<!-- ======================= -->
+<!-- 🔹 1 SIMPLES -->
+<!-- ======================= -->
+<div class="card">
+<div class="tag">⚡ Simples</div>
+<h3>Rotina Saudável Básica</h3>
+<p><strong>Quando usar:</strong> Quando quiser melhorar hábitos diários.</p>
+<div class="prompt-text">Crie uma rotina diária simples para melhorar saúde física e mental. Inclua alimentação, exercício leve e sono.</div>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button class="fav-btn"
-data-id="saude-simples-1"
-data-titulo="Rotina Saudável Simples"
-data-texto="Crie uma rotina saudável básica para alguém que trabalha o dia todo e quer melhorar energia e disposição."
-data-categoria="Saúde">🤍</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn" data-id="saude1" data-titulo="Rotina Saudável Básica" data-texto="Crie uma rotina diária simples para melhorar saúde física e mental." data-categoria="saude">🤍</button>
 </div>
 </div>
 
+<!-- ======================= -->
+<!-- 🔹 2 SIMPLES -->
+<!-- ======================= -->
 <div class="card">
-<h3>🟢 2. Redução de Estresse Rápida</h3>
-<div class="prompt-text">
-Explique técnicas simples para reduzir estresse no dia a dia em linguagem prática.
-</div>
+<div class="tag">⚡ Simples</div>
+<h3>Plano Semanal de Exercícios</h3>
+<p><strong>Quando usar:</strong> Quando quiser organizar treinos básicos.</p>
+<div class="prompt-text">Monte um plano semanal de exercícios equilibrado para iniciantes com dias de descanso.</div>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button class="fav-btn"
-data-id="saude-simples-2"
-data-titulo="Redução de Estresse Rápida"
-data-texto="Explique técnicas simples para reduzir estresse no dia a dia em linguagem prática."
-data-categoria="Saúde">🤍</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn" data-id="saude2" data-titulo="Plano Semanal de Exercícios" data-texto="Monte um plano semanal de exercícios equilibrado para iniciantes." data-categoria="saude">🤍</button>
 </div>
 </div>
 
-<!-- ================================================= -->
-<!-- 🔵 6 PROMPTS PROFISSIONAIS -->
-<!-- ================================================= -->
+<!-- ======================= -->
+<!-- 🔹 6 COMPLETOS -->
+<!-- ======================= -->
 
 <div class="card">
-<h3>🔵 3. Planejamento de Saúde Personalizado</h3>
+<div class="tag">🧠 Completo</div>
+<h3>Reorganização Total da Saúde</h3>
+<p><strong>Quando usar:</strong> Quando estiver desorganizado fisicamente.</p>
 <div class="prompt-text">
 Você é um especialista em saúde preventiva.
+Analise minha rotina: [Descreva]
+Crie um plano dividido em:
+1. Alimentação
+2. Exercícios
+3. Sono
+4. Metas mensais
+5. Erros a evitar
+Seja estratégico.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn" data-id="saude3" data-titulo="Reorganização Total da Saúde" data-texto="Você é um especialista em saúde preventiva..." data-categoria="saude">🤍</button>
+</div>
+</div>
 
-Crie um plano estratégico personalizado considerando:
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>Plano de Saúde Mental Estratégico</h3>
+<p><strong>Quando usar:</strong> Para reduzir ansiedade e estresse.</p>
+<div class="prompt-text">
+Você é psicólogo especialista em produtividade.
+Crie um plano para reduzir estresse com:
+- Rotina mental
+- Técnicas de respiração
+- Organização emocional
+- Estratégias semanais
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn" data-id="saude4" data-titulo="Plano de Saúde Mental Estratégico" data-texto="Você é psicólogo especialista..." data-categoria="saude">🤍</button>
+</div>
+</div>
 
-[Descreva idade, rotina, objetivos]
-
-Estruture:
-- Diagnóstico inicial
-- Ajustes de rotina
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>Plano de Emagrecimento Inteligente</h3>
+<p><strong>Quando usar:</strong> Quando quiser perder peso com estratégia.</p>
+<div class="prompt-text">
+Você é nutricionista esportivo.
+Crie um plano de emagrecimento saudável dividido em:
 - Alimentação
-- Exercícios
-- Saúde mental
-- Plano semanal prático
-- Linguagem clara e organizada
+- Treino
+- Mentalidade
+- Acompanhamento semanal
+Sem soluções radicais.
 </div>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button class="fav-btn"
-data-id="saude-pro-1"
-data-titulo="Planejamento de Saúde Personalizado"
-data-texto="Você é um especialista em saúde preventiva.
-
-Crie um plano estratégico personalizado considerando:
-
-[Descreva idade, rotina, objetivos]
-
-Estruture:
-- Diagnóstico inicial
-- Ajustes de rotina
-- Alimentação
-- Exercícios
-- Saúde mental
-- Plano semanal prático
-- Linguagem clara e organizada"
-data-categoria="Saúde">🤍</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn" data-id="saude5" data-titulo="Plano de Emagrecimento Inteligente" data-texto="Você é nutricionista esportivo..." data-categoria="saude">🤍</button>
 </div>
 </div>
 
 <div class="card">
-<h3>🔵 4. Plano Antiestresse Profissional</h3>
+<div class="tag">🧠 Completo</div>
+<h3>Rotina Anti-Procrastinação Física</h3>
+<p><strong>Quando usar:</strong> Quando estiver sedentário.</p>
 <div class="prompt-text">
-Você é psicólogo especialista em gestão emocional corporativa.
-
-Crie um protocolo detalhado para reduzir estresse crônico.
-
-Inclua:
-- Causas
-- Técnicas práticas
-- Exercícios respiratórios
-- Estratégias mentais
-- Organização da agenda
-- Plano de 30 dias
+Você é especialista em mudança de hábitos.
+Crie um plano de 30 dias para sair do sedentarismo
+com metas progressivas e acompanhamento.
 </div>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button class="fav-btn"
-data-id="saude-pro-2"
-data-titulo="Plano Antiestresse Profissional"
-data-texto="Você é psicólogo especialista em gestão emocional corporativa.
-
-Crie um protocolo detalhado para reduzir estresse crônico.
-
-Inclua:
-- Causas
-- Técnicas práticas
-- Exercícios respiratórios
-- Estratégias mentais
-- Organização da agenda
-- Plano de 30 dias"
-data-categoria="Saúde">🤍</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn" data-id="saude6" data-titulo="Rotina Anti-Procrastinação Física" data-texto="Você é especialista em mudança de hábitos..." data-categoria="saude">🤍</button>
 </div>
 </div>
 
 <div class="card">
-<h3>🔵 5. Organização Mental Avançada</h3>
+<div class="tag">🧠 Completo</div>
+<h3>Plano de Disciplina Alimentar</h3>
+<p><strong>Quando usar:</strong> Para controlar impulsos alimentares.</p>
 <div class="prompt-text">
-Você é um especialista em produtividade e saúde mental.
-
-Desenvolva um método estruturado para melhorar clareza mental e foco.
-
-Inclua:
-- Técnicas cognitivas
-- Rotina de organização
-- Controle de distrações
-- Estratégia semanal
-- Checklist prático
+Você é especialista em comportamento alimentar.
+Crie um plano estratégico para melhorar disciplina alimentar,
+incluindo gatilhos emocionais e controle de ambiente.
 </div>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button class="fav-btn"
-data-id="saude-pro-3"
-data-titulo="Organização Mental Avançada"
-data-texto="Você é um especialista em produtividade e saúde mental.
-
-Desenvolva um método estruturado para melhorar clareza mental e foco.
-
-Inclua:
-- Técnicas cognitivas
-- Rotina de organização
-- Controle de distrações
-- Estratégia semanal
-- Checklist prático"
-data-categoria="Saúde">🤍</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn" data-id="saude7" data-titulo="Plano de Disciplina Alimentar" data-texto="Você é especialista em comportamento alimentar..." data-categoria="saude">🤍</button>
 </div>
 </div>
 
 <div class="card">
-<h3>🔵 6. Plano de Reeducação de Hábitos</h3>
+<div class="tag">🧠 Completo</div>
+<h3>Plano de Alta Performance Física</h3>
+<p><strong>Quando usar:</strong> Para elevar desempenho físico.</p>
 <div class="prompt-text">
-Crie um plano estruturado para substituir hábitos prejudiciais por hábitos saudáveis.
-
-Inclua:
-- Identificação de gatilhos
-- Substituições práticas
-- Reforço positivo
-- Plano de 21 dias
-- Estratégias de manutenção
+Você é treinador de alta performance.
+Crie um plano estratégico para melhorar:
+- Força
+- Resistência
+- Recuperação
+- Monitoramento de progresso
 </div>
 <div class="acoes">
 <button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button class="fav-btn"
-data-id="saude-pro-4"
-data-titulo="Plano de Reeducação de Hábitos"
-data-texto="Crie um plano estruturado para substituir hábitos prejudiciais por hábitos saudáveis.
-
-Inclua:
-- Identificação de gatilhos
-- Substituições práticas
-- Reforço positivo
-- Plano de 21 dias
-- Estratégias de manutenção"
-data-categoria="Saúde">🤍</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn" data-id="saude8" data-titulo="Plano de Alta Performance Física" data-texto="Você é treinador de alta performance..." data-categoria="saude">🤍</button>
 </div>
 </div>
 
-<div class="card">
-<h3>🔵 7. Estratégia de Energia Diária</h3>
-<div class="prompt-text">
-Você é especialista em performance humana.
-
-Desenvolva um plano para manter energia alta durante o dia inteiro.
-
-Inclua:
-- Alimentação estratégica
-- Pausas inteligentes
-- Organização de tarefas
-- Sono
-- Checklist diário
 </div>
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button class="fav-btn"
-data-id="saude-pro-5"
-data-titulo="Estratégia de Energia Diária"
-data-texto="Você é especialista em performance humana.
-
-Desenvolva um plano para manter energia alta durante o dia inteiro.
-
-Inclua:
-- Alimentação estratégica
-- Pausas inteligentes
-- Organização de tarefas
-- Sono
-- Checklist diário"
-data-categoria="Saúde">🤍</button>
-</div>
-</div>
-
-<div class="card">
-<h3>🔵 8. Planejamento de Saúde 360º</h3>
-<div class="prompt-text">
-Crie um planejamento completo de saúde física e mental integrando:
-
-- Exercícios
-- Alimentação
-- Sono
-- Controle emocional
-- Planejamento semanal
-- Avaliação mensal
-
-Organize em etapas claras e aplicáveis.
-</div>
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button class="fav-btn"
-data-id="saude-pro-6"
-data-titulo="Planejamento de Saúde 360º"
-data-texto="Crie um planejamento completo de saúde física e mental integrando:
-
-- Exercícios
-- Alimentação
-- Sono
-- Controle emocional
-- Planejamento semanal
-- Avaliação mensal
-
-Organize em etapas claras e aplicáveis."
-data-categoria="Saúde">🤍</button>
-</div>
-</div>
-
 </main>
 
 <script>
+const cards = document.querySelectorAll(".card");
+const contador = document.getElementById("contador");
+
+function atualizarContador(total){
+  contador.innerText = "Total: " + total + " prompts";
+}
+
+function filtrarPrompts(){
+  const termo = document.getElementById("busca").value.toLowerCase();
+  let visiveis = 0;
+  cards.forEach(card=>{
+    if(card.innerText.toLowerCase().includes(termo)){
+      card.style.display="block";
+      visiveis++;
+    } else {
+      card.style.display="none";
+    }
+  });
+  atualizarContador(visiveis);
+}
+
 function copiarPrompt(btn){
-const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
-navigator.clipboard.writeText(texto);
-btn.innerText="✅ Copiado!";
-setTimeout(()=>btn.innerText="📋 Copiar",1500);
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  navigator.clipboard.writeText(texto);
+  btn.innerText="✅ Copiado!";
+  setTimeout(()=>btn.innerText="📋 Copiar",1500);
 }
 
 function abrirChatGPT(btn){
-const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
-window.open("https://chat.openai.com/?q="+encodeURIComponent(texto),"_blank");
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
 }
 
 function abrirGemini(btn){
-const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
-window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
 }
+
+atualizarContador(cards.length);
 </script>
 
 </body>
