@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Saúde | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+  <!-- TÍTULO -->
+  <section class="hero">
+    <h1>🧠 Prompts de Saúde</h1>
+    <h2>Cuide do corpo e da mente com ajuda da IA</h2>
+  </section>
+
+  <!-- INTRODUÇÃO -->
+  <section class="card">
+    <p>
+      Aqui você encontra prompts prontos para melhorar sua saúde física,
+      mental, alimentação, foco e rotina de bem-estar.
+    </p>
+  </section>
+
+  <!-- OBJETIVO -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar você a criar planos de saúde personalizados, melhorar hábitos
+      e obter orientações organizadas usando inteligência artificial.
+    </p>
+  </section>
+
+  <!-- BUSCA -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar prompt..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- LISTA -->
+  <div id="lista"></div>
+
+</main>
+
+<script>
+const lista = document.getElementById("lista");
+const busca = document.getElementById("busca");
+const contador = document.getElementById("contador");
+
+const prompts = [
+
+{
+titulo: "Plano de Treino Personalizado",
+quando: "Quando quiser iniciar exercícios físicos organizados.",
+conteudo: `Crie um plano de treino semanal personalizado.
+Considere:
+- Objetivo (emagrecimento, ganho de massa ou condicionamento)
+- Nível (iniciante, intermediário ou avançado)
+- Tempo disponível por dia
+Organize por dias da semana com explicações simples.`
+},
+
+{
+titulo: "Plano Alimentar Básico",
+quando: "Quando quiser melhorar alimentação.",
+conteudo: `Crie um plano alimentar simples e equilibrado.
+Inclua:
+- Café da manhã
+- Almoço
+- Jantar
+- Lanches
+Explique de forma clara e sem termos técnicos.`
+},
+
+{
+titulo: "Rotina para Melhorar Sono",
+quando: "Quando estiver dormindo mal.",
+conteudo: `Crie uma rotina noturna para melhorar a qualidade do sono.
+Inclua:
+- Horário ideal
+- Hábitos antes de dormir
+- O que evitar
+Explique de forma prática e aplicável.`
+},
+
+{
+titulo: "Redução de Ansiedade",
+quando: "Quando estiver se sentindo ansioso.",
+conteudo: `Explique técnicas práticas para reduzir ansiedade no dia a dia.
+Inclua:
+- Técnicas de respiração
+- Exercícios rápidos
+- Estratégias mentais
+Organize em passos simples.`
+},
+
+{
+titulo: "Planejamento de Hábitos Saudáveis",
+quando: "Quando quiser mudar sua rotina.",
+conteudo: `Monte um plano de criação de hábitos saudáveis.
+Inclua:
+- Pequenas metas
+- Sistema de acompanhamento
+- Estratégias para manter consistência
+Seja objetivo e organizado.`
+},
+
+{
+titulo: "Organização de Rotina Fitness",
+quando: "Quando quiser organizar melhor seu tempo.",
+conteudo: `Ajude a organizar uma rotina equilibrada entre:
+- Trabalho/estudo
+- Exercícios
+- Alimentação
+- Descanso
+Crie um modelo semanal simples.`
+}
+
+];
+
+function atualizarContador(arr){
+  contador.innerText = arr.length + " prompt" + (arr.length !== 1 ? "s" : "");
+}
+
+function renderizar(arr){
+  lista.innerHTML = "";
+
+  if(arr.length === 0){
+    lista.innerHTML = `<div class="card"><p>📭 Nenhum prompt encontrado.</p></div>`;
+    return;
+  }
+
+  arr.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <h3>${p.titulo}</h3>
+      <p><strong>Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.conteudo}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarPrompt(\`${p.conteudo}\`)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(\`${p.conteudo}\`)">🤖 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.conteudo}\`)">✨ Gemini</button>
+      </div>
+    `;
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts(){
+  const termo = busca.value.toLowerCase();
+  const filtrados = prompts.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.conteudo.toLowerCase().includes(termo)
+  );
+  atualizarContador(filtrados);
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto){
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
+}
+
+function abrirChatGPT(texto){
+  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
+}
+
+function abrirGemini(texto){
+  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+}
+
+atualizarContador(prompts);
+renderizar(prompts);
+
+</script>
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 1;
+}
+
+pre {
+  background: #f3f4f6;
+  padding: 12px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+</style>
+
+</body>
+</html>

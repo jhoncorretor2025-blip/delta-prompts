@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Trabalho | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+<!-- TÍTULO -->
+<section class="hero">
+  <h1>💼 Prompts para Trabalho</h1>
+  <p>Ferramentas estratégicas para crescimento profissional, produtividade e performance.</p>
+</section>
+
+<!-- OBJETIVO -->
+<section class="card">
+  <h3>🎯 Objetivo</h3>
+  <p>
+    Esta página reúne prompts estruturados para melhorar desempenho,
+    comunicação, organização e crescimento profissional.
+  </p>
+</section>
+
+<!-- BUSCA -->
+<section class="card">
+  <input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrar()">
+  <div id="contador"></div>
+</section>
+
+<!-- LISTA -->
+<section id="lista"></section>
+
+</main>
+
+<script>
+
+const prompts = [
+
+{
+id: 1,
+categoria: "📊 Produtividade",
+titulo: "Organização de Rotina Profissional",
+quando: "Quando está sobrecarregado e precisa organizar suas tarefas.",
+conteudo: `Você é um consultor de produtividade executiva.
+
+OBJETIVO:
+Organizar minha rotina profissional de forma estratégica.
+
+INSTRUÇÕES:
+1. Estruture minha semana em blocos produtivos.
+2. Separe tarefas por prioridade.
+3. Identifique tarefas delegáveis.
+4. Sugira método de acompanhamento diário.
+5. Inclua modelo simples de planejamento semanal.
+
+Seja claro e prático.`
+},
+
+{
+id: 2,
+categoria: "💬 Comunicação",
+titulo: "Melhoria de Comunicação Profissional",
+quando: "Quando deseja se comunicar com mais clareza e autoridade.",
+conteudo: `Você é especialista em comunicação corporativa.
+
+OBJETIVO:
+Melhorar minha comunicação profissional.
+
+INSTRUÇÕES:
+1. Estruture modelo ideal de e-mail profissional.
+2. Sugira padrão de mensagem assertiva.
+3. Explique como evitar ruídos de comunicação.
+4. Dê exemplos práticos aplicáveis.
+
+Seja objetivo e profissional.`
+},
+
+{
+id: 3,
+categoria: "📈 Crescimento",
+titulo: "Plano de Crescimento na Carreira",
+quando: "Quando deseja evoluir profissionalmente.",
+conteudo: `Crie um plano estratégico para crescimento profissional.
+
+Inclua:
+- Diagnóstico atual
+- Habilidades a desenvolver
+- Estratégia de posicionamento interno
+- Networking estratégico
+- Meta de crescimento em 12 meses
+
+Seja estratégico e estruturado.`
+},
+
+{
+id: 4,
+categoria: "🎯 Projetos",
+titulo: "Planejamento de Projeto Profissional",
+quando: "Quando precisa organizar um novo projeto.",
+conteudo: `Crie um modelo de planejamento de projeto profissional.
+
+Inclua:
+- Objetivo principal
+- Etapas
+- Cronograma
+- Indicadores de sucesso
+- Riscos possíveis
+- Plano de execução
+
+Seja estruturado e claro.`
+},
+
+{
+id: 5,
+categoria: "🤝 Negociação",
+titulo: "Estratégia de Negociação Profissional",
+quando: "Quando precisa negociar salário ou contrato.",
+conteudo: `Crie uma estratégia de negociação profissional.
+
+Inclua:
+- Preparação prévia
+- Argumentos estratégicos
+- Técnicas de persuasão ética
+- Como lidar com objeções
+- Estratégia de fechamento
+
+Seja assertivo e estratégico.`
+},
+
+{
+id: 6,
+categoria: "🧠 Alta Performance",
+titulo: "Plano de Alta Performance no Trabalho",
+quando: "Quando deseja melhorar resultados e desempenho.",
+conteudo: `Crie um plano de alta performance profissional.
+
+Inclua:
+- Gestão de tempo
+- Foco em tarefas de alto impacto
+- Redução de distrações
+- Indicadores de produtividade
+- Rotina diária recomendada
+
+Seja prático e aplicável.`
+},
+
+{
+id: 7,
+categoria: "📄 Currículo & LinkedIn",
+titulo: "Otimização de Perfil Profissional",
+quando: "Quando quer melhorar currículo ou LinkedIn.",
+conteudo: `Crie um plano para otimizar currículo e LinkedIn.
+
+Inclua:
+- Estrutura ideal
+- Palavras-chave estratégicas
+- Como destacar resultados
+- Erros comuns a evitar
+- Modelo resumido de apresentação`
+},
+
+{
+id: 8,
+categoria: "💼 Serviços",
+titulo: "Estruturação de Serviço Profissional",
+quando: "Quando deseja transformar habilidade em serviço pago.",
+conteudo: `Crie um plano para estruturar um serviço profissional.
+
+Inclua:
+- Definição clara do serviço
+- Público-alvo
+- Modelo de precificação
+- Estratégia de captação de clientes
+- Diferencial competitivo
+
+Seja estratégico e realista.`
+}
+
+];
+
+const lista = document.getElementById("lista");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr){
+lista.innerHTML = "";
+contador.innerText = `Total: ${arr.length} prompt${arr.length!==1?"s":""}`;
+
+arr.forEach(p=>{
+const favorito = JSON.parse(localStorage.getItem("favoritosTrabalho")) || [];
+const ativo = favorito.includes(p.id);
+
+lista.innerHTML += `
+<div class="card">
+  <div style="font-size:13px; opacity:0.7;">${p.categoria}</div>
+  <h3>${p.titulo}</h3>
+  <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+  <pre>${p.conteudo}</pre>
+
+  <div class="acoes">
+    <button onclick="favoritar(${p.id})">
+      ${ativo ? "⭐ Favoritado" : "☆ Favoritar"}
+    </button>
+    <button onclick="copiar(\`${p.conteudo}\`)">📋 Copiar</button>
+    <button onclick="abrirChat()">💬 ChatGPT</button>
+    <button onclick="abrirGemini()">🔷 Gemini</button>
+  </div>
+</div>
+`;
+});
+}
+
+function filtrar(){
+const termo = busca.value.toLowerCase();
+const filtrados = prompts.filter(p =>
+p.titulo.toLowerCase().includes(termo) ||
+p.categoria.toLowerCase().includes(termo) ||
+p.conteudo.toLowerCase().includes(termo)
+);
+renderizar(filtrados);
+}
+
+function copiar(texto){
+navigator.clipboard.writeText(texto);
+alert("Prompt copiado!");
+}
+
+function favoritar(id){
+let fav = JSON.parse(localStorage.getItem("favoritosTrabalho")) || [];
+if(fav.includes(id)){
+fav = fav.filter(f=>f!==id);
+}else{
+fav.push(id);
+}
+localStorage.setItem("favoritosTrabalho", JSON.stringify(fav));
+renderizar(prompts);
+}
+
+function abrirChat(){
+window.open("https://chat.openai.com", "_blank");
+}
+
+function abrirGemini(){
+window.open("https://gemini.google.com", "_blank");
+}
+
+renderizar(prompts);
+
+</script>
+
+</body>
+</html>

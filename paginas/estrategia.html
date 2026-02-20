@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Estratégia IA | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+  <h1>🧠 Estratégia com Inteligência Artificial</h1>
+  <p>
+    Use a IA de forma estratégica para planejar crescimento, organizar metas e aumentar produtividade.
+    Aqui você encontra prompts focados em visão de longo prazo e tomada de decisão inteligente.
+  </p>
+
+  <!-- ============================ -->
+  <!-- PROMPTS ESTRATÉGICOS -->
+  <!-- ============================ -->
+
+  <div class="card">
+    <h3>📊 Planejamento Estratégico Pessoal</h3>
+    <p>
+      Crie um plano estratégico de crescimento profissional para os próximos 6 meses considerando:
+      metas financeiras, posicionamento de mercado, desenvolvimento de habilidades e diferenciação competitiva.
+      Estruture com objetivos claros, ações práticas e indicadores de desempenho.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h3>⚙ Automação Inteligente de Rotina</h3>
+    <p>
+      Analise minha rotina de trabalho e sugira formas estratégicas de usar IA para automatizar tarefas repetitivas,
+      otimizar tempo e aumentar produtividade. Apresente soluções práticas e ferramentas recomendadas.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h3>🎯 Plano de Crescimento com IA</h3>
+    <p>
+      Crie uma estratégia para usar Inteligência Artificial como vantagem competitiva no meu setor.
+      Identifique oportunidades, diferenciais e possíveis riscos. Estruture em curto, médio e longo prazo.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h3>📈 Diagnóstico Estratégico Profissional</h3>
+    <p>
+      Analise meu perfil profissional considerando pontos fortes, pontos fracos, oportunidades de mercado
+      e ameaças externas (análise SWOT). Apresente recomendações estratégicas para evolução.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h3>🚀 Construção de Posicionamento Estratégico</h3>
+    <p>
+      Desenvolva uma estratégia de posicionamento profissional clara e diferenciada.
+      Defina público-alvo, proposta de valor, mensagem central e diferenciais competitivos.
+    </p>
+
+    <div class="botoes">
+      <button onclick="copiarTexto(this)">📋 Copiar</button>
+      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
+      <button onclick="usarGemini(this)">✨ Gemini</button>
+      <button onclick="favoritar(this)">❤️</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function copiarTexto(botao) {
+  const texto = botao.parentElement.previousElementSibling.innerText;
+  navigator.clipboard.writeText(texto);
+  alert("Prompt copiado!");
+}
+
+function usarChatGPT(botao) {
+  const texto = botao.parentElement.previousElementSibling.innerText;
+  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
+}
+
+function usarGemini(botao) {
+  const texto = botao.parentElement.previousElementSibling.innerText;
+  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+}
+
+function favoritar(botao) {
+  botao.innerText = "💖";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Comunicação | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+  <!-- 1. Título Forte -->
+  <h1>🗣️ Comunicação Profissional com IA</h1>
+
+  <!-- 2. Introdução Curta -->
+  <p>
+    Prompts estratégicos para melhorar sua comunicação em vendas, trabalho,
+    liderança, redes sociais e conversas difíceis.
+  </p>
+
+  <!-- 3. Objetivo -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar você a se comunicar com mais clareza, persuasão e estratégia,
+      usando IA para estruturar mensagens profissionais.
+    </p>
+  </section>
+
+  <!-- 4. Busca -->
+  <div class="top-bar">
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar prompt..."
+      oninput="filtrarPrompts()"
+    >
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <!-- 5. Cards -->
+  <div id="lista"></div>
+
+</main>
+
+<script>
+const lista = document.getElementById("lista");
+const busca = document.getElementById("busca");
+const contador = document.getElementById("contador");
+
+let prompts = [
+
+{
+id: 1,
+categoria: "📢 Comunicação Persuasiva",
+titulo: "Mensagem de Venda Estratégica",
+quando: "Quando precisar enviar proposta ou abordagem comercial.",
+conteudo: `Você é um especialista em copywriting persuasivo.
+
+Crie uma mensagem de venda clara e profissional.
+
+Contexto:
+[Descreva o produto/serviço]
+
+Objetivo:
+Gerar interesse e estimular resposta.
+
+Estruture:
+- Abertura estratégica
+- Identificação do problema
+- Apresentação da solução
+- Benefícios claros
+- Chamada para ação
+
+Tom: Confiante, profissional e direto.
+`
+},
+
+{
+id: 2,
+categoria: "💼 Comunicação Corporativa",
+titulo: "E-mail Profissional Claro",
+quando: "Para enviar mensagens formais no trabalho.",
+conteudo: `Você é um consultor de comunicação corporativa.
+
+Reescreva o texto abaixo tornando-o mais claro,
+objetivo e profissional.
+
+Texto base:
+[Colar mensagem]
+
+Estruture:
+- Introdução objetiva
+- Ponto principal
+- Detalhes organizados
+- Encerramento educado
+
+Evite informalidade excessiva.
+`
+},
+
+{
+id: 3,
+categoria: "🧠 Conversas Difíceis",
+titulo: "Estrutura para Conversa Delicada",
+quando: "Para dar feedback ou tratar conflitos.",
+conteudo: `Você é especialista em comunicação não violenta.
+
+Monte um roteiro para uma conversa delicada.
+
+Contexto:
+[Explique situação]
+
+Inclua:
+- Como iniciar sem gerar defesa
+- Como expor o problema com fatos
+- Como propor solução
+- Como manter clima respeitoso
+
+Tom equilibrado e profissional.
+`
+},
+
+{
+id: 4,
+categoria: "📱 Redes Sociais",
+titulo: "Post Estratégico de Autoridade",
+quando: "Para posicionamento profissional online.",
+conteudo: `Você é especialista em posicionamento digital.
+
+Crie um post estratégico para LinkedIn.
+
+Tema:
+[Descrever tema]
+
+Objetivo:
+Gerar autoridade e engajamento.
+
+Estruture:
+- Gancho forte
+- Desenvolvimento com insight
+- Conclusão prática
+- Pergunta final para engajamento
+`
+},
+
+{
+id: 5,
+categoria: "🤝 Negociação",
+titulo: "Estratégia de Argumentação",
+quando: "Para defender preço ou proposta.",
+conteudo: `Você é especialista em negociação estratégica.
+
+Monte argumentos sólidos para defender minha proposta.
+
+Contexto:
+[Descrever cenário]
+
+Inclua:
+- Valorização da oferta
+- Quebra de objeções
+- Comparação estratégica
+- Fechamento firme
+`
+},
+
+{
+id: 6,
+categoria: "🎤 Apresentações",
+titulo: "Roteiro de Apresentação Impactante",
+quando: "Para reuniões ou palestras.",
+conteudo: `Você é especialista em apresentações de alto impacto.
+
+Crie um roteiro estruturado.
+
+Tema:
+[Descrever tema]
+
+Inclua:
+- Abertura forte
+- Problema
+- Solução
+- Exemplo prático
+- Encerramento memorável
+
+Tom profissional e confiante.
+`
+}
+
+];
+
+function atualizarContador(arr) {
+  contador.innerText = arr.length + " prompt(s)";
+}
+
+function renderizar(arr) {
+  lista.innerHTML = "";
+
+  arr.forEach(p => {
+
+    const favorito = localStorage.getItem("fav-com-" + p.id) === "true";
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">${p.categoria}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+      <pre>${p.conteudo}</pre>
+
+      <div class="acoes">
+        <button onclick="favoritar(${p.id})">
+          ${favorito ? "⭐ Favoritado" : "☆ Favoritar"}
+        </button>
+        <button onclick="copiarPrompt(\`${p.conteudo}\`)">📋 Copiar</button>
+        <button onclick="abrirChatGPT()">💬 ChatGPT</button>
+        <button onclick="abrirGemini()">🔷 Gemini</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = prompts.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.categoria.toLowerCase().includes(termo)
+  );
+
+  atualizarContador(filtrados);
+  renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+  navigator.clipboard.writeText(texto);
+}
+
+function favoritar(id) {
+  const key = "fav-com-" + id;
+  const atual = localStorage.getItem(key) === "true";
+  localStorage.setItem(key, !atual);
+  renderizar(prompts);
+}
+
+function abrirChatGPT() {
+  window.open("https://chat.openai.com", "_blank");
+}
+
+function abrirGemini() {
+  window.open("https://gemini.google.com", "_blank");
+}
+
+atualizarContador(prompts);
+renderizar(prompts);
+
+</script>
+
+<style>
+.top-bar {
+  display:flex;
+  gap:15px;
+  align-items:center;
+  margin:20px 0;
+}
+
+.top-bar input {
+  flex:1;
+}
+.meta {
+  font-size:13px;
+  opacity:0.7;
+  margin-bottom:10px;
+}
+pre {
+  background:#f5f7fb;
+  padding:14px;
+  border-radius:10px;
+  white-space:pre-wrap;
+  font-family:inherit;
+}
+</style>
+
+</body>
+</html>

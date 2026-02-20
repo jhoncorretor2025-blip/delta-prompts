@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Estudo | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+  <!-- 1️⃣ Título Forte -->
+  <section class="hero">
+    <h1>📚 Prompts para Estudo Inteligente</h1>
+    <p class="hero-text">
+      Use IA para aprender mais rápido, organizar matérias e criar planos de estudo eficientes.
+    </p>
+  </section>
+
+  <!-- 2️⃣ Objetivo -->
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>
+      Ajudar estudantes a resumir conteúdos, criar planos estratégicos, revisar matérias
+      e aprender de forma estruturada usando IA.
+    </p>
+  </section>
+
+  <!-- 3️⃣ Busca -->
+  <section class="card">
+    <input 
+      type="text" 
+      id="busca" 
+      placeholder="🔎 Buscar prompt..."
+      oninput="filtrar()"
+    >
+    <div id="contador" style="margin-top:10px; font-size:14px; opacity:0.7;"></div>
+  </section>
+
+  <!-- 4️⃣ Cards -->
+  <div id="lista">
+
+    <!-- PROMPT 1 -->
+    <div class="card prompt-card">
+      <div class="tag">📘 Resumo</div>
+      <h3>Resumo Inteligente de Conteúdo</h3>
+      <p><strong>📌 Quando usar:</strong> Para resumir capítulos, PDFs ou textos longos.</p>
+      <div class="prompt-text">
+        Resuma o conteúdo abaixo de forma clara, organizada e didática.
+        Use tópicos, exemplos simples e linguagem fácil para estudo.
+      </div>
+
+      <div class="acoes">
+        <button onclick="copiar(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(this)">🔷 Gemini</button>
+      </div>
+    </div>
+
+    <!-- PROMPT 2 -->
+    <div class="card prompt-card">
+      <div class="tag">🧠 Revisão</div>
+      <h3>Perguntas para Revisão</h3>
+      <p><strong>📌 Quando usar:</strong> Antes de prova ou revisão geral.</p>
+      <div class="prompt-text">
+        Crie 10 perguntas estratégicas sobre o tema abaixo,
+        variando entre fáceis, médias e difíceis.
+      </div>
+
+      <div class="acoes">
+        <button onclick="copiar(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(this)">🔷 Gemini</button>
+      </div>
+    </div>
+
+    <!-- PROMPT 3 -->
+    <div class="card prompt-card">
+      <div class="tag">📅 Planejamento</div>
+      <h3>Plano de Estudo Personalizado</h3>
+      <p><strong>📌 Quando usar:</strong> Para organizar rotina semanal.</p>
+      <div class="prompt-text">
+        Crie um plano de estudo organizado para o tema abaixo,
+        considerando tempo disponível por dia e nível de dificuldade.
+      </div>
+
+      <div class="acoes">
+        <button onclick="copiar(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(this)">🔷 Gemini</button>
+      </div>
+    </div>
+
+    <!-- PROMPT 4 -->
+    <div class="card prompt-card">
+      <div class="tag">📖 Explicação</div>
+      <h3>Explique Como se Eu Tivesse 12 Anos</h3>
+      <p><strong>📌 Quando usar:</strong> Para entender temas difíceis.</p>
+      <div class="prompt-text">
+        Explique o tema abaixo de forma extremamente simples,
+        usando analogias e exemplos práticos.
+      </div>
+
+      <div class="acoes">
+        <button onclick="copiar(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(this)">🔷 Gemini</button>
+      </div>
+    </div>
+
+    <!-- PROMPT 5 -->
+    <div class="card prompt-card">
+      <div class="tag">📝 Exercícios</div>
+      <h3>Lista de Exercícios</h3>
+      <p><strong>📌 Quando usar:</strong> Para treinar fixação.</p>
+      <div class="prompt-text">
+        Crie uma lista de exercícios práticos sobre o tema abaixo,
+        com respostas explicadas no final.
+      </div>
+
+      <div class="acoes">
+        <button onclick="copiar(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(this)">🔷 Gemini</button>
+      </div>
+    </div>
+
+    <!-- PROMPT 6 -->
+    <div class="card prompt-card">
+      <div class="tag">📊 Mapas Mentais</div>
+      <h3>Estrutura em Mapa Mental</h3>
+      <p><strong>📌 Quando usar:</strong> Para visualizar conexões.</p>
+      <div class="prompt-text">
+        Organize o conteúdo abaixo em formato de mapa mental,
+        com tópicos principais e subtópicos bem definidos.
+      </div>
+
+      <div class="acoes">
+        <button onclick="copiar(this)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(this)">🔷 Gemini</button>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+
+const lista = document.getElementById("lista");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function atualizarContador() {
+  const visiveis = lista.querySelectorAll(".prompt-card:not([style*='display: none'])");
+  contador.innerText = visiveis.length + " prompt(s) encontrados";
+}
+
+function filtrar() {
+  const termo = busca.value.toLowerCase();
+  const cards = lista.querySelectorAll(".prompt-card");
+
+  cards.forEach(card => {
+    const texto = card.innerText.toLowerCase();
+    card.style.display = texto.includes(termo) ? "block" : "none";
+  });
+
+  atualizarContador();
+}
+
+function copiar(btn) {
+  const texto = btn.closest(".prompt-card").querySelector(".prompt-text").innerText;
+  navigator.clipboard.writeText(texto);
+  btn.innerText = "✅ Copiado!";
+  setTimeout(() => btn.innerText = "📋 Copiar", 1500);
+}
+
+function abrirChatGPT(btn) {
+  const texto = btn.closest(".prompt-card").querySelector(".prompt-text").innerText;
+  window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto), "_blank");
+}
+
+function abrirGemini(btn) {
+  const texto = btn.closest(".prompt-card").querySelector(".prompt-text").innerText;
+  window.open("https://gemini.google.com/app", "_blank");
+}
+
+atualizarContador();
+
+</script>
+
+</body>
+</html>

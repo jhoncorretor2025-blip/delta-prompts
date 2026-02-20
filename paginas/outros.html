@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Outros | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.search-box{
+display:flex;
+gap:10px;
+align-items:center;
+margin:30px 0;
+}
+.search-box input{
+flex:1;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+}
+.result-count{
+font-size:14px;
+opacity:0.7;
+}
+
+.categoria{
+margin-top:50px;
+font-size:20px;
+font-weight:bold;
+border-left:5px solid #5b5ce2;
+padding-left:10px;
+}
+
+.quando-usar{
+font-weight:600;
+margin-bottom:8px;
+color:#444;
+}
+</style>
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+<h1>🧩 Outros Prompts Estratégicos</h1>
+
+<p>
+Aqui ficam prompts versáteis para organização, estratégia,
+reflexão e criatividade. Ideal para evolução pessoal e profissional.
+</p>
+
+<h2>🎯 Objetivo</h2>
+<p>
+Ajudar você a pensar melhor, organizar ideias,
+criar estratégias claras e evoluir com mais direção.
+</p>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Buscar prompt...">
+<div class="result-count">Resultados: <span id="resultCount">0</span></div>
+</div>
+
+<div id="cards-container">
+
+<!-- ========================= -->
+<!-- ORGANIZAÇÃO -->
+<!-- ========================= -->
+
+<div class="categoria">📅 Organização</div>
+
+<div class="card">
+<h3>🗓 Planejamento Semanal Inteligente</h3>
+<p class="quando-usar">💡 Quando usar: Para organizar sua semana com foco.</p>
+<p class="prompt-text">
+Crie um planejamento semanal estratégico baseado nas minhas prioridades,
+incluindo metas principais, tarefas secundárias e momentos de descanso.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<div class="card">
+<h3>🎯 Lista de Metas Estratégicas</h3>
+<p class="quando-usar">💡 Quando usar: Para definir metas claras.</p>
+<p class="prompt-text">
+Crie uma lista de metas estratégicas divididas em curto,
+médio e longo prazo, com plano de ação para cada uma.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<!-- ========================= -->
+<!-- REFLEXÃO -->
+<!-- ========================= -->
+
+<div class="categoria">🧠 Reflexão</div>
+
+<div class="card">
+<h3>🔎 Reflexão Profunda Guiada</h3>
+<p class="quando-usar">💡 Quando usar: Para autoconhecimento.</p>
+<p class="prompt-text">
+Conduza uma reflexão profunda sobre minha fase atual da vida,
+identificando padrões, bloqueios e oportunidades de crescimento.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<!-- ========================= -->
+<!-- CRIATIVIDADE -->
+<!-- ========================= -->
+
+<div class="categoria">💡 Criatividade</div>
+
+<div class="card">
+<h3>🚀 Brainstorm Criativo Avançado</h3>
+<p class="quando-usar">💡 Quando usar: Para gerar ideias novas.</p>
+<p class="prompt-text">
+Faça um brainstorm criativo sobre [TEMA],
+gerando no mínimo 20 ideias originais,
+divididas por categorias estratégicas.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<div class="card">
+<h3>🧩 Solução Criativa de Problemas</h3>
+<p class="quando-usar">💡 Quando usar: Quando estiver travado.</p>
+<p class="prompt-text">
+Analise um problema específico e apresente
+5 soluções criativas e estratégicas,
+explicando riscos e vantagens.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+</div>
+
+</main>
+
+<script>
+
+// COPIAR
+function copiar(btn){
+const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+navigator.clipboard.writeText(texto);
+btn.innerText="✅";
+setTimeout(()=>btn.innerText="📋 Copiar",1000);
+}
+
+// CHATGPT
+function chatgpt(btn){
+const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+window.open("https://chat.openai.com/?q="+encodeURIComponent(texto),"_blank");
+}
+
+// GEMINI
+function gemini(btn){
+const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+navigator.clipboard.writeText(texto);
+window.open("https://gemini.google.com/app","_blank");
+}
+
+// FAVORITO
+function favoritar(btn){
+btn.innerText = btn.innerText === "🤍" ? "❤️" : "🤍";
+}
+
+// BUSCA
+const input=document.getElementById("searchInput");
+const cards=document.querySelectorAll(".card");
+const resultCount=document.getElementById("resultCount");
+
+function atualizarBusca(){
+let count=0;
+cards.forEach(card=>{
+if(card.innerText.toLowerCase().includes(input.value.toLowerCase())){
+card.style.display="block";
+count++;
+}else{
+card.style.display="none";
+}
+});
+resultCount.innerText=count;
+}
+
+input.addEventListener("input",atualizarBusca);
+resultCount.innerText=cards.length;
+
+</script>
+
+</body>
+</html>

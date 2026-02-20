@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Trend | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.search-box{
+display:flex;
+gap:10px;
+align-items:center;
+margin:30px 0;
+}
+.search-box input{
+flex:1;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+}
+.result-count{
+font-size:14px;
+opacity:0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+<h1>🔥 Trends Visuais</h1>
+
+<p>
+Aqui você encontra prompts para criar imagens virais, criativas e com alto potencial de engajamento.
+Ideal para Instagram, TikTok, perfil profissional ou conteúdo divertido.
+</p>
+
+<h2>🎯 Objetivo</h2>
+
+<p>
+Transformar sua profissão ou personalidade em conteúdos visuais chamativos
+que aumentem alcance, autoridade e engajamento.
+</p>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Buscar trend...">
+<div class="result-count">Resultados: <span id="resultCount">0</span></div>
+</div>
+
+<div id="cards-container">
+
+<!-- 1 -->
+<div class="card">
+<h3>🎨 Caricatura da Profissão</h3>
+<p><strong>💡 Quando usar:</strong> Para humanizar sua imagem profissional.</p>
+<p class="prompt-text">
+Crie uma caricatura moderna da profissão de [SUA PROFISSÃO],
+traços suaves, cores vibrantes e cenário relacionado ao trabalho.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<!-- 2 -->
+<div class="card">
+<h3>🦸 Profissão Super-Herói</h3>
+<p><strong>💡 Quando usar:</strong> Para posicionamento forte.</p>
+<p class="prompt-text">
+Transforme uma pessoa da profissão de [SUA PROFISSÃO]
+em um super-herói com uniforme inspirado na área
+e cenário épico ao fundo.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<!-- 3 -->
+<div class="card">
+<h3>📈 Antes e Depois da Carreira</h3>
+<p><strong>💡 Quando usar:</strong> Mostrar evolução.</p>
+<p class="prompt-text">
+Crie duas imagens lado a lado:
+à esquerda início da carreira,
+à direita versão bem-sucedida com cenário moderno.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<!-- 4 -->
+<div class="card">
+<h3>🎮 Avatar 3D</h3>
+<p><strong>💡 Quando usar:</strong> Criar identidade digital.</p>
+<p class="prompt-text">
+Transforme minha foto em personagem 3D estilizado,
+cabeça levemente maior e iluminação alegre.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<!-- 5 -->
+<div class="card">
+<h3>💑 Casal Profissional Elegante</h3>
+<p><strong>💡 Quando usar:</strong> Para posts de parceria.</p>
+<p class="prompt-text">
+Crie foto de casal elegante,
+roupas neutras e iluminação suave de estúdio.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<!-- 6 -->
+<div class="card">
+<h3>🌇 Namorado Ideal IA</h3>
+<p><strong>💡 Quando usar:</strong> Conteúdo divertido.</p>
+<p class="prompt-text">
+Gere imagem de namorado ideal em cenário urbano ao pôr do sol,
+estilo realista e clima romântico.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<!-- 7 -->
+<div class="card">
+<h3>🎭 Versão Desenho Animado</h3>
+<p><strong>💡 Quando usar:</strong> Para perfil criativo.</p>
+<p class="prompt-text">
+Transforme minha imagem em versão desenho animado 3D colorido
+com cenário relacionado à profissão.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+<!-- 8 -->
+<div class="card">
+<h3>🎨 Hobby + Profissão</h3>
+<p><strong>💡 Quando usar:</strong> Mostrar equilíbrio.</p>
+<p class="prompt-text">
+Crie imagem mostrando minha profissão
+junto com meu hobby favorito,
+misturando os dois cenários de forma criativa.
+</p>
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chatgpt(this)">🤖 ChatGPT</button>
+<button onclick="gemini(this)">✨ Gemini</button>
+<button onclick="favoritar(this)">🤍</button>
+</div>
+</div>
+
+</div>
+
+<div style="margin-top:60px;text-align:center;">
+<a href="/delta-prompts/paginas/imagens.html"
+style="padding:20px 50px;background:linear-gradient(135deg,#5b5ce2,#7a7cff);color:white;font-size:18px;font-weight:bold;border-radius:14px;text-decoration:none;">
+🎨 Voltar para Imagens Estratégicas
+</a>
+</div>
+
+</main>
+
+<script>
+
+// COPIAR
+function copiar(btn){
+const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+navigator.clipboard.writeText(texto);
+btn.innerText="✅";
+setTimeout(()=>btn.innerText="📋 Copiar",1000);
+}
+
+// CHATGPT
+function chatgpt(btn){
+const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+window.open("https://chat.openai.com/?q="+encodeURIComponent(texto),"_blank");
+}
+
+// GEMINI
+function gemini(btn){
+const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+navigator.clipboard.writeText(texto);
+window.open("https://gemini.google.com/app","_blank");
+}
+
+// FAVORITO
+function favoritar(btn){
+btn.innerText = btn.innerText === "🤍" ? "❤️" : "🤍";
+}
+
+// BUSCA
+const input=document.getElementById("searchInput");
+const cards=document.querySelectorAll(".card");
+const resultCount=document.getElementById("resultCount");
+
+function atualizarBusca(){
+let count=0;
+cards.forEach(card=>{
+if(card.innerText.toLowerCase().includes(input.value.toLowerCase())){
+card.style.display="block";
+count++;
+}else{
+card.style.display="none";
+}
+});
+resultCount.innerText=count;
+}
+
+input.addEventListener("input",atualizarBusca);
+resultCount.innerText=cards.length;
+
+</script>
+
+</body>
+</html>
