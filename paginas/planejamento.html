@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Planejamento & Estratégia | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<title>Planejamento | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+.prompt-text {
+  white-space: pre-wrap;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.tag {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+</style>
 </head>
 
 <body>
@@ -14,89 +53,237 @@
 
 <main>
 
-  <h1>🧠 Planejamento & Estratégia</h1>
-  <p>Prompts para organizar metas, estruturar planos e tomar decisões com visão de longo prazo.</p>
+<h1>📅 Planejamento Estratégico</h1>
+<p>
+Prompts para organizar metas, estruturar projetos e criar planos claros de execução.
+</p>
 
-  <div class="card">
-    <h3>1️⃣ Planejamento Estratégico Completo</h3>
-    <p>
-      Atue como um estrategista experiente e me ajude a criar um plano estratégico detalhado para [objetivo]. 
-      Estruture com: cenário atual, oportunidades, riscos, diferenciais competitivos, metas claras e plano de execução.
-    </p>
-    <div class="buttons">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrarPrompts()">
+  <div class="contador" id="contador"></div>
+</div>
 
-  <div class="card">
-    <h3>2️⃣ Plano de Ação 30 Dias</h3>
-    <p>
-      Crie um plano de ação prático para os próximos 30 dias visando [objetivo específico]. 
-      Organize em etapas semanais com metas claras, prioridades e indicadores de progresso.
-    </p>
-    <div class="buttons">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<div id="lista">
 
-  <div class="card">
-    <h3>3️⃣ Mapa de Metas e Prioridades</h3>
-    <p>
-      Organize minhas metas descritas abaixo em ordem de prioridade, separando curto, médio e longo prazo.
-      Identifique possíveis conflitos e sugira sequência ideal de execução.
-    </p>
-    <div class="buttons">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<!-- ======================= -->
+<!-- 🔹 SIMPLES -->
+<!-- ======================= -->
 
-  <div class="card">
-    <h3>4️⃣ Avaliação de Decisão Importante</h3>
-    <p>
-      Analise a decisão descrita abaixo considerando riscos, benefícios, impacto financeiro,
-      impacto emocional e consequências no longo prazo. Apresente recomendação lógica e estratégica.
-    </p>
-    <div class="buttons">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<div class="card">
+<div class="tag">⚡ Simples</div>
+<h3>📌 Planejamento Semanal Rápido</h3>
+<p><strong>Quando usar:</strong> Para organizar sua semana em minutos.</p>
+<div class="prompt-text">
+Organize minha semana com base nas seguintes tarefas:
+[Descreva]
 
+Divida por prioridade e dias.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="planejamento1"
+data-titulo="Planejamento Semanal Rápido"
+data-texto="Organize minha semana dividindo tarefas por prioridade e dias."
+data-categoria="planejamento">🤍</button>
+</div>
+</div>
+
+<div class="card">
+<div class="tag">⚡ Simples</div>
+<h3>🎯 Definição de Metas Mensais</h3>
+<p><strong>Quando usar:</strong> Para criar foco no mês atual.</p>
+<div class="prompt-text">
+Crie metas mensais claras com base no objetivo abaixo:
+[Descreva]
+
+Inclua indicador de progresso.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="planejamento2"
+data-titulo="Definição de Metas Mensais"
+data-texto="Crie metas mensais claras com indicador de progresso."
+data-categoria="planejamento">🤍</button>
+</div>
+</div>
+
+<!-- ======================= -->
+<!-- 🔹 COMPLETOS -->
+<!-- ======================= -->
+
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📅 Planejamento Anual Estratégico</h3>
+<p><strong>Quando usar:</strong> Para visão de longo prazo.</p>
+<div class="prompt-text">
+Você é especialista em planejamento estratégico.
+Crie planejamento anual dividido em:
+1. Objetivos principais
+2. Metas trimestrais
+3. Indicadores de desempenho
+4. Revisões estratégicas
+5. Riscos e ajustes
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="planejamento3"
+data-titulo="Planejamento Anual Estratégico"
+data-texto="Crie planejamento anual com metas trimestrais e indicadores."
+data-categoria="planejamento">🤍</button>
+</div>
+</div>
+
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>🚀 Plano de Execução de Projeto</h3>
+<p><strong>Quando usar:</strong> Para transformar ideia em ação.</p>
+<div class="prompt-text">
+Você é gestor de projetos.
+Transforme a ideia abaixo em plano detalhado:
+- Etapas
+- Cronograma
+- Recursos necessários
+- Indicadores
+- Riscos
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="planejamento4"
+data-titulo="Plano de Execução de Projeto"
+data-texto="Transforme a ideia em plano com etapas, cronograma e indicadores."
+data-categoria="planejamento">🤍</button>
+</div>
+</div>
+
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📊 Planejamento de Crescimento Pessoal</h3>
+<p><strong>Quando usar:</strong> Para evolução pessoal estruturada.</p>
+<div class="prompt-text">
+Você é especialista em desenvolvimento pessoal.
+Crie plano estratégico dividido em:
+- Habilidades a desenvolver
+- Rotina semanal
+- Indicadores de progresso
+- Avaliação mensal
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="planejamento5"
+data-titulo="Planejamento de Crescimento Pessoal"
+data-texto="Crie plano estratégico de desenvolvimento pessoal com indicadores."
+data-categoria="planejamento">🤍</button>
+</div>
+</div>
+
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>🧩 Planejamento Estratégico Empresarial</h3>
+<p><strong>Quando usar:</strong> Para estruturar empresas ou negócios.</p>
+<div class="prompt-text">
+Você é consultor empresarial.
+Crie planejamento estratégico dividido em:
+- Diagnóstico
+- Objetivos
+- Plano de ação
+- Indicadores
+- Revisão trimestral
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="planejamento6"
+data-titulo="Planejamento Estratégico Empresarial"
+data-texto="Crie planejamento estratégico empresarial com diagnóstico e indicadores."
+data-categoria="planejamento">🤍</button>
+</div>
+</div>
+
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📈 Planejamento de Metas de Alta Performance</h3>
+<p><strong>Quando usar:</strong> Para metas ambiciosas.</p>
+<div class="prompt-text">
+Você é especialista em alta performance.
+Crie plano estratégico com:
+- Meta principal
+- Metas intermediárias
+- Indicadores
+- Monitoramento semanal
+- Ajustes estratégicos
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="planejamento7"
+data-titulo="Planejamento de Metas de Alta Performance"
+data-texto="Crie plano estratégico com metas intermediárias e monitoramento semanal."
+data-categoria="planejamento">🤍</button>
+</div>
+</div>
+
+</div>
 </main>
 
 <script>
-function copiarTexto(botao) {
-  const texto = botao.parentElement.previousElementSibling.innerText;
+const cards = document.querySelectorAll(".card");
+const contador = document.getElementById("contador");
+
+function atualizarContador(total){
+  contador.innerText = "Total: " + total + " prompts";
+}
+
+function filtrarPrompts(){
+  const termo = document.getElementById("busca").value.toLowerCase();
+  let visiveis = 0;
+  cards.forEach(card=>{
+    if(card.innerText.toLowerCase().includes(termo)){
+      card.style.display="block";
+      visiveis++;
+    } else {
+      card.style.display="none";
+    }
+  });
+  atualizarContador(visiveis);
+}
+
+function copiarPrompt(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
   navigator.clipboard.writeText(texto);
-  alert("Prompt copiado!");
+  btn.innerText="✅ Copiado!";
+  setTimeout(()=>btn.innerText="📋 Copiar",1500);
 }
 
-function usarChatGPT(botao) {
-  const texto = botao.parentElement.previousElementSibling.innerText;
-  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
+function abrirChatGPT(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-function usarGemini(botao) {
-  const texto = botao.parentElement.previousElementSibling.innerText;
-  const url = "https://gemini.google.com/app?q=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
+function abrirGemini(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-function favoritar(botao) {
-  alert("Função favoritos pode ser conectada ao localStorage depois.");
-}
+atualizarContador(cards.length);
 </script>
 
 </body>
