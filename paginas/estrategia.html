@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Estratégia IA | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<title>Estratégia com IA | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+.prompt-text {
+  white-space: pre-wrap;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.tag {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+</style>
 </head>
 
 <body>
@@ -14,118 +53,242 @@
 
 <main>
 
-  <h1>🧠 Estratégia com Inteligência Artificial</h1>
-  <p>
-    Use a IA de forma estratégica para planejar crescimento, organizar metas e aumentar produtividade.
-    Aqui você encontra prompts focados em visão de longo prazo e tomada de decisão inteligente.
-  </p>
+<h1>🧠 Estratégia com Inteligência Artificial</h1>
+<p>
+Prompts para tomada de decisão, planejamento avançado e pensamento estratégico usando IA.
+</p>
 
-  <!-- ============================ -->
-  <!-- PROMPTS ESTRATÉGICOS -->
-  <!-- ============================ -->
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrarPrompts()">
+  <div class="contador" id="contador"></div>
+</div>
 
-  <div class="card">
-    <h3>📊 Planejamento Estratégico Pessoal</h3>
-    <p>
-      Crie um plano estratégico de crescimento profissional para os próximos 6 meses considerando:
-      metas financeiras, posicionamento de mercado, desenvolvimento de habilidades e diferenciação competitiva.
-      Estruture com objetivos claros, ações práticas e indicadores de desempenho.
-    </p>
+<div id="lista">
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<!-- ======================= -->
+<!-- 🔹 SIMPLES -->
+<!-- ======================= -->
 
+<div class="card">
+<div class="tag">⚡ Simples</div>
+<h3>🎯 Definição de Objetivo Estratégico</h3>
+<p><strong>Quando usar:</strong> Para clarear metas antes de agir.</p>
+<div class="prompt-text">
+Defina um objetivo estratégico claro com base na seguinte situação:
+[Descreva]
+Inclua meta principal e próximos passos.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estrategia1"
+data-titulo="Definição de Objetivo Estratégico"
+data-texto="Defina um objetivo estratégico claro com meta principal e próximos passos."
+data-categoria="estrategia">🤍</button>
+</div>
+</div>
 
-  <div class="card">
-    <h3>⚙ Automação Inteligente de Rotina</h3>
-    <p>
-      Analise minha rotina de trabalho e sugira formas estratégicas de usar IA para automatizar tarefas repetitivas,
-      otimizar tempo e aumentar produtividade. Apresente soluções práticas e ferramentas recomendadas.
-    </p>
+<div class="card">
+<div class="tag">⚡ Simples</div>
+<h3>🧩 Organização de Plano Rápido</h3>
+<p><strong>Quando usar:</strong> Para estruturar ideias soltas.</p>
+<div class="prompt-text">
+Organize o plano abaixo em etapas lógicas e sequenciais.
+Inclua prioridade e risco.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estrategia2"
+data-titulo="Organização de Plano Rápido"
+data-texto="Organize o plano abaixo em etapas lógicas com prioridade e risco."
+data-categoria="estrategia">🤍</button>
+</div>
+</div>
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<!-- ======================= -->
+<!-- 🔹 COMPLETOS -->
+<!-- ======================= -->
 
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📊 Estratégia de Crescimento Inteligente</h3>
+<p><strong>Quando usar:</strong> Para expandir negócio ou projeto.</p>
+<div class="prompt-text">
+Você é estrategista de negócios.
+Analise o cenário:
+[Descreva]
 
-  <div class="card">
-    <h3>🎯 Plano de Crescimento com IA</h3>
-    <p>
-      Crie uma estratégia para usar Inteligência Artificial como vantagem competitiva no meu setor.
-      Identifique oportunidades, diferenciais e possíveis riscos. Estruture em curto, médio e longo prazo.
-    </p>
+Crie plano estratégico dividido em:
+1. Diagnóstico atual
+2. Oportunidades
+3. Plano de ação
+4. Indicadores de sucesso
+5. Riscos e mitigação
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estrategia3"
+data-titulo="Estratégia de Crescimento Inteligente"
+data-texto="Crie plano estratégico dividido em diagnóstico, oportunidades, plano de ação e indicadores."
+data-categoria="estrategia">🤍</button>
+</div>
+</div>
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>🚀 Plano de Execução Estratégica</h3>
+<p><strong>Quando usar:</strong> Para transformar estratégia em ação.</p>
+<div class="prompt-text">
+Você é especialista em execução estratégica.
+Transforme o plano abaixo em:
+- Cronograma
+- Divisão de tarefas
+- Metas semanais
+- Monitoramento
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estrategia4"
+data-titulo="Plano de Execução Estratégica"
+data-texto="Transforme o plano abaixo em cronograma com metas semanais."
+data-categoria="estrategia">🤍</button>
+</div>
+</div>
 
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📈 Estratégia de Posicionamento</h3>
+<p><strong>Quando usar:</strong> Para fortalecer imagem ou marca.</p>
+<div class="prompt-text">
+Você é estrategista de posicionamento.
+Analise meu perfil ou negócio:
+[Descreva]
 
-  <div class="card">
-    <h3>📈 Diagnóstico Estratégico Profissional</h3>
-    <p>
-      Analise meu perfil profissional considerando pontos fortes, pontos fracos, oportunidades de mercado
-      e ameaças externas (análise SWOT). Apresente recomendações estratégicas para evolução.
-    </p>
+Crie plano estratégico de:
+- Diferenciação
+- Público-alvo
+- Comunicação
+- Crescimento
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estrategia5"
+data-titulo="Estratégia de Posicionamento"
+data-texto="Crie plano estratégico de diferenciação e crescimento."
+data-categoria="estrategia">🤍</button>
+</div>
+</div>
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>🧠 Tomada de Decisão com IA</h3>
+<p><strong>Quando usar:</strong> Para decisões complexas.</p>
+<div class="prompt-text">
+Você é especialista em tomada de decisão estratégica.
+Analise as opções abaixo:
+[Descreva]
 
+Compare:
+- Risco
+- Retorno
+- Impacto
+- Sustentabilidade
 
-  <div class="card">
-    <h3>🚀 Construção de Posicionamento Estratégico</h3>
-    <p>
-      Desenvolva uma estratégia de posicionamento profissional clara e diferenciada.
-      Defina público-alvo, proposta de valor, mensagem central e diferenciais competitivos.
-    </p>
+Finalize com recomendação fundamentada.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estrategia6"
+data-titulo="Tomada de Decisão com IA"
+data-texto="Compare risco, retorno e impacto e finalize com recomendação fundamentada."
+data-categoria="estrategia">🤍</button>
+</div>
+</div>
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📅 Planejamento Estratégico Anual</h3>
+<p><strong>Quando usar:</strong> Para visão de longo prazo.</p>
+<div class="prompt-text">
+Você é especialista em planejamento estratégico.
+Crie planejamento anual dividido em:
+- Objetivos principais
+- Metas trimestrais
+- Indicadores
+- Revisões estratégicas
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="estrategia7"
+data-titulo="Planejamento Estratégico Anual"
+data-texto="Crie planejamento anual com metas trimestrais e indicadores."
+data-categoria="estrategia">🤍</button>
+</div>
+</div>
 
+</div>
 </main>
 
 <script>
-function copiarTexto(botao) {
-  const texto = botao.parentElement.previousElementSibling.innerText;
+const cards = document.querySelectorAll(".card");
+const contador = document.getElementById("contador");
+
+function atualizarContador(total){
+  contador.innerText = "Total: " + total + " prompts";
+}
+
+function filtrarPrompts(){
+  const termo = document.getElementById("busca").value.toLowerCase();
+  let visiveis = 0;
+  cards.forEach(card=>{
+    if(card.innerText.toLowerCase().includes(termo)){
+      card.style.display="block";
+      visiveis++;
+    } else {
+      card.style.display="none";
+    }
+  });
+  atualizarContador(visiveis);
+}
+
+function copiarPrompt(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
   navigator.clipboard.writeText(texto);
-  alert("Prompt copiado!");
+  btn.innerText="✅ Copiado!";
+  setTimeout(()=>btn.innerText="📋 Copiar",1500);
 }
 
-function usarChatGPT(botao) {
-  const texto = botao.parentElement.previousElementSibling.innerText;
-  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
+function abrirChatGPT(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-function usarGemini(botao) {
-  const texto = botao.parentElement.previousElementSibling.innerText;
-  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+function abrirGemini(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-function favoritar(botao) {
-  botao.innerText = "💖";
-}
+atualizarContador(cards.length);
 </script>
 
 </body>
