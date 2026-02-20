@@ -1,125 +1,129 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Gerador Pro | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Gerador Pro | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 
-  <style>
-    .hero {
-      max-width: 900px;
-      margin: 40px auto;
-      text-align: center;
-    }
+<style>
 
-    .hero h1 {
-      font-size: 36px;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
+.hero {
+  max-width: 1000px;
+  margin: 50px auto;
+  text-align: center;
+}
 
-    .hero p {
-      font-size: 16px;
-      color: #666;
-      margin-bottom: 35px;
-    }
+.hero h1 {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
 
-    .generator-card {
-      background: #ffffff;
-      padding: 35px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      border: 1px solid #e5e5e5;
-      text-align: left;
-    }
+.hero p {
+  color: #666;
+  margin-bottom: 40px;
+}
 
-    .field {
-      margin-bottom: 22px;
-    }
+.generator-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+  border: 1px solid #e5e5e5;
+  text-align: left;
+}
 
-    .field label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      font-size: 14px;
-      color: #444;
-    }
+.field {
+  margin-bottom: 22px;
+}
 
-    .field textarea,
-    .field input,
-    .field select {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 14px;
-      font-family: inherit;
-      transition: 0.2s;
-    }
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
 
-    .field textarea:focus,
-    .field input:focus,
-    .field select:focus {
-      outline: none;
-      border-color: #5b5ce2;
-      box-shadow: 0 0 0 3px rgba(91,92,226,0.15);
-    }
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.2s;
+}
 
-    .field textarea {
-      min-height: 130px;
-      resize: vertical;
-    }
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
 
-    .counter {
-      text-align: right;
-      font-size: 12px;
-      color: #888;
-      margin-top: 4px;
-    }
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: #5b5ce2;
+  box-shadow: 0 0 0 3px rgba(91,92,226,0.15);
+}
 
-    .btn-primary {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #5b5ce2, #4a4be0);
-      color: white;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.2s;
-      margin-top: 8px;
-    }
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
 
-    .btn-primary:hover {
-      opacity: 0.9;
-    }
+.btn-primary {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #5b5ce2, #4a4be0);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
-    .btn-secondary {
-      width: 100%;
-      padding: 15px;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-      background: #f9f9f9;
-      cursor: pointer;
-      margin-top: 10px;
-      font-weight: 500;
-    }
+.btn-secondary {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
-    .resultado {
-      margin-top: 30px;
-      display: none;
-    }
+.resultado {
+  margin-top: 35px;
+  display: none;
+}
 
-    .resultado textarea {
-      background: #f4f6fb;
-    }
+.resultado textarea {
+  background: #f4f6fb;
+  min-height: 200px;
+}
 
-    .copiado {
-      background: #16a34a !important;
-    }
-  </style>
+.badge-pro {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px){
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+</style>
 </head>
 
 <body>
@@ -128,129 +132,146 @@
 <script src="menu-loader.js"></script>
 
 <main>
-  <section class="hero">
-    <h1>⚡ Gerador de Prompts Profissionais</h1>
-    <p>Crie prompts estruturados, claros e estratégicos em segundos</p>
+<section class="hero">
 
-    <div class="generator-card">
+<span class="badge-pro">⚡ Ferramenta Profissional</span>
+<h1>Gerador Estratégico de Prompt</h1>
+<p>Construa prompts estruturados, profissionais e de alta performance.</p>
 
-      <div class="field">
-        <label>Tópico</label>
-        <textarea id="topico" maxlength="500"
-          placeholder="Ex: Criação de conteúdo para Instagram sobre imóveis de alto padrão"></textarea>
-        <div class="counter" id="countTopico">0 / 500</div>
-      </div>
+<div class="generator-card">
 
-      <div class="field">
-        <label>Objetivo</label>
-        <input id="objetivo"
-          placeholder="Ex: Gerar ideias persuasivas para atrair clientes">
-      </div>
+<div class="field">
+<label>Contexto</label>
+<textarea id="contexto" placeholder="Explique o cenário ou situação..."></textarea>
+</div>
 
-      <div class="field">
-        <label>Persona da IA (opcional)</label>
-        <input id="persona"
-          placeholder="Ex: Advogado imobiliário experiente, especialista em contratos">
-      </div>
+<div class="field">
+<label>Objetivo</label>
+<textarea id="objetivo" placeholder="Descreva exatamente o que deseja que a IA faça..."></textarea>
+</div>
 
-      <div class="field">
-        <label>Nível de Detalhe</label>
-        <select id="nivel">
-          <option value="basico">Básico</option>
-          <option value="detalhado">Detalhado</option>
-          <option value="avancado">Avançado</option>
-          <option value="extremo">Extremamente detalhado</option>
-        </select>
-      </div>
+<div class="field">
+<label>Público-Alvo</label>
+<input id="publico" placeholder="Ex: Corretores iniciantes, empresários, estudantes...">
+</div>
 
-      <div class="field">
-        <label>Restrições (opcional)</label>
-        <input id="negativas"
-          placeholder="Ex: sem emojis, sem textos longos, não usar termos técnicos">
-      </div>
+<div class="grid-2">
 
-      <button class="btn-primary" onclick="gerarPrompt()">🚀 Gerar Prompt</button>
-      <button class="btn-secondary" onclick="limparFormulario()">🧹 Limpar</button>
+<div class="field">
+<label>Tom de Voz</label>
+<select id="tom">
+<option value="profissional">Profissional</option>
+<option value="persuasivo">Persuasivo</option>
+<option value="didatico">Didático</option>
+<option value="autoridade">Autoridade</option>
+<option value="casual">Casual</option>
+</select>
+</div>
 
-      <div class="resultado" id="resultado">
-        <div class="field">
-          <label>Prompt Gerado</label>
-          <textarea id="promptFinal"></textarea>
-        </div>
-        <button id="btnCopiar" class="btn-primary" onclick="copiarPrompt()">📋 Copiar Prompt</button>
-      </div>
+<div class="field">
+<label>Formato da Resposta</label>
+<select id="formato">
+<option value="lista">Lista organizada</option>
+<option value="passo">Passo a passo</option>
+<option value="roteiro">Roteiro estruturado</option>
+<option value="plano">Plano estratégico</option>
+<option value="tabela">Tabela comparativa</option>
+</select>
+</div>
 
-    </div>
-  </section>
+</div>
+
+<div class="field">
+<label>Nível de Profundidade</label>
+<select id="nivel">
+<option value="basico">Básico e direto</option>
+<option value="detalhado">Detalhado</option>
+<option value="avancado">Avançado e estratégico</option>
+<option value="extremo">Extremamente aprofundado</option>
+</select>
+</div>
+
+<div class="field">
+<label>Restrições (Opcional)</label>
+<input id="restricoes" placeholder="Ex: Sem emojis, sem textos longos, evitar termos técnicos...">
+</div>
+
+<button class="btn-primary" onclick="gerarPrompt()">🚀 Gerar Prompt Profissional</button>
+<button class="btn-secondary" onclick="limparFormulario()">🧹 Limpar</button>
+
+<div class="resultado" id="resultado">
+<div class="field">
+<label>Prompt Gerado</label>
+<textarea id="promptFinal"></textarea>
+</div>
+<button class="btn-primary" onclick="copiarPrompt()">📋 Copiar Prompt</button>
+</div>
+
+</div>
+</section>
 </main>
 
 <script>
-const topico = document.getElementById("topico");
-const countTopico = document.getElementById("countTopico");
 
-topico.addEventListener("input", () => {
-  countTopico.innerText = topico.value.length + " / 500";
-});
+function gerarPrompt(){
 
-function gerarPrompt() {
-  const t = topico.value.trim();
-  const o = document.getElementById("objetivo").value.trim();
-  const persona = document.getElementById("persona").value.trim();
-  const n = document.getElementById("nivel").value;
-  const neg = document.getElementById("negativas").value.trim();
+const contexto = document.getElementById("contexto").value.trim();
+const objetivo = document.getElementById("objetivo").value.trim();
+const publico = document.getElementById("publico").value.trim();
+const tom = document.getElementById("tom").value;
+const formato = document.getElementById("formato").value;
+const nivel = document.getElementById("nivel").value;
+const restricoes = document.getElementById("restricoes").value.trim();
 
-  if (!t || !o) {
-    alert("Preencha o tópico e o objetivo.");
-    return;
-  }
-
-  const niveis = {
-    basico: "Responda de forma simples, direta e objetiva.",
-    detalhado: "Responda de forma detalhada, com explicações claras e exemplos.",
-    avancado: "Responda de forma aprofundada, estruturada, com boas práticas e exemplos.",
-    extremo: "Responda de forma extremamente detalhada, passo a passo, com alto nível de clareza."
-  };
-
-  let prompt = "";
-
-  prompt += persona
-    ? `Você é ${persona}.\n\n`
-    : `Você é um especialista no assunto.\n\n`;
-
-  prompt += `TÓPICO:\n${t}\n\nOBJETIVO:\n${o}\n\nNÍVEL DE DETALHE:\n${niveis[n]}\n`;
-
-  if (neg) {
-    prompt += `\nRESTRIÇÕES:\n${neg}\n`;
-  }
-
-  prompt += `\nINSTRUÇÕES FINAIS:\nSeja claro, organizado, prático e profissional.`;
-
-  document.getElementById("promptFinal").value = prompt;
-  document.getElementById("resultado").style.display = "block";
-  document.getElementById("resultado").scrollIntoView({ behavior: "smooth" });
+if(!contexto || !objetivo){
+alert("Preencha pelo menos Contexto e Objetivo.");
+return;
 }
 
-function copiarPrompt() {
-  const btn = document.getElementById("btnCopiar");
-  navigator.clipboard.writeText(document.getElementById("promptFinal").value);
-  btn.innerText = "✅ Copiado!";
-  btn.classList.add("copiado");
+const niveis = {
+basico: "Responda de forma simples, clara e objetiva.",
+detalhado: "Responda de forma detalhada, com explicações organizadas.",
+avancado: "Responda com estratégia, profundidade e boas práticas.",
+extremo: "Responda de forma extremamente aprofundada, estruturada e estratégica."
+};
 
-  setTimeout(() => {
-    btn.innerText = "📋 Copiar Prompt";
-    btn.classList.remove("copiado");
-  }, 1500);
+let prompt = "";
+
+prompt += "Você é um especialista altamente qualificado.\n\n";
+
+prompt += "CONTEXTO:\n" + contexto + "\n\n";
+prompt += "OBJETIVO:\n" + objetivo + "\n\n";
+
+if(publico){
+prompt += "PÚBLICO-ALVO:\n" + publico + "\n\n";
 }
 
-function limparFormulario() {
-  topico.value = "";
-  document.getElementById("objetivo").value = "";
-  document.getElementById("persona").value = "";
-  document.getElementById("negativas").value = "";
-  document.getElementById("promptFinal").value = "";
-  document.getElementById("resultado").style.display = "none";
-  countTopico.innerText = "0 / 500";
+prompt += "TOM DE VOZ:\n" + tom + "\n\n";
+prompt += "FORMATO DA RESPOSTA:\n" + formato + "\n\n";
+prompt += "NÍVEL DE PROFUNDIDADE:\n" + niveis[nivel] + "\n\n";
+
+if(restricoes){
+prompt += "RESTRIÇÕES:\n" + restricoes + "\n\n";
 }
+
+prompt += "Organize a resposta de forma clara, profissional e prática.";
+
+document.getElementById("promptFinal").value = prompt;
+document.getElementById("resultado").style.display = "block";
+document.getElementById("resultado").scrollIntoView({behavior:"smooth"});
+
+}
+
+function copiarPrompt(){
+navigator.clipboard.writeText(document.getElementById("promptFinal").value);
+alert("Prompt copiado!");
+}
+
+function limparFormulario(){
+document.querySelectorAll("textarea, input").forEach(el => el.value = "");
+document.getElementById("resultado").style.display = "none";
+}
+
 </script>
 
 </body>
