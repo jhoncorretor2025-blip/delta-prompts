@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Ideias Práticas de Renda Extra | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../../menu-loader.js"></script>
+
+<main>
+
+<!-- TÍTULO -->
+<section class="hero">
+  <h1>💡 Ideias Práticas de Renda Extra</h1>
+  <p>Modelos simples, aplicáveis e com potencial de retorno rápido.</p>
+</section>
+
+<!-- OBJETIVO -->
+<section class="card">
+  <h3>🎯 Objetivo</h3>
+  <p>
+    Esta página reúne ideias práticas de renda extra com foco em ação imediata,
+    baixo investimento inicial e possibilidade de crescimento.
+  </p>
+</section>
+
+<!-- BUSCA -->
+<section class="card">
+  <input type="text" id="busca" placeholder="🔎 Buscar ideia prática..." oninput="filtrar()">
+  <div id="contador"></div>
+</section>
+
+<!-- LISTA -->
+<section id="lista"></section>
+
+</main>
+
+<script>
+
+const prompts = [
+
+{
+id: 1,
+categoria: "🛍 Marketplace",
+titulo: "Revenda Simples na Shopee",
+quando: "Quando quer começar rápido vendendo produtos populares.",
+conteudo: `Crie um plano simples para começar a vender na Shopee.
+
+Inclua:
+- Como escolher produto com alta saída
+- Estratégia de preço competitivo
+- Como montar anúncio que converte
+- Meta de lucro mensal
+- Risco e investimento inicial estimado
+
+Seja direto e prático.`
+},
+
+{
+id: 2,
+categoria: "🎥 TikTok",
+titulo: "Vendas com Vídeos Curtos",
+quando: "Quando quer vender usando vídeos simples e naturais.",
+conteudo: `Monte um plano para vender produtos usando vídeos no TikTok.
+
+Inclua:
+- Tipo de produto ideal
+- Modelo de roteiro simples
+- Frequência de postagem
+- Estratégia para gerar confiança
+- Como transformar visualização em venda`
+},
+
+{
+id: 3,
+categoria: "🖨 Serviços",
+titulo: "Venda de Cartões de Visita Locais",
+quando: "Quando quer atender profissionais da sua cidade.",
+conteudo: `Crie um plano prático para vender cartões de visita.
+
+Inclua:
+- Público ideal
+- Oferta simples (design + impressão)
+- Abordagem direta
+- Margem de lucro
+- Como conseguir indicações`
+},
+
+{
+id: 4,
+categoria: "📄 Serviços",
+titulo: "Criação de Currículos Profissionais",
+quando: "Quando deseja oferecer serviço rápido e digital.",
+conteudo: `Monte um modelo simples para vender currículos profissionais.
+
+Inclua:
+- Estrutura moderna de currículo
+- Público ideal
+- Estratégia para captar clientes
+- Preço sugerido
+- Como escalar para LinkedIn`
+},
+
+{
+id: 5,
+categoria: "🌐 Digital",
+titulo: "Criação de Sites Simples para Negócios Locais",
+quando: "Quando quer oferecer serviço digital básico.",
+conteudo: `Crie um plano prático para ganhar dinheiro criando sites simples.
+
+Inclua:
+- Tipo de cliente ideal
+- Ferramentas fáceis de usar
+- Modelo de cobrança
+- Como prospectar clientes
+- Como oferecer manutenção mensal`
+},
+
+{
+id: 6,
+categoria: "🏠 Local",
+titulo: "Serviços Rápidos na Sua Cidade",
+quando: "Quando quer renda imediata com baixo investimento.",
+conteudo: `Liste 5 serviços simples para oferecer localmente.
+
+Inclua:
+- Tipo de serviço
+- Público-alvo
+- Investimento inicial
+- Estratégia para conseguir primeiros clientes
+- Potencial de lucro mensal`
+},
+
+{
+id: 7,
+categoria: "📦 Produtos",
+titulo: "Montagem de Kits para Revenda",
+quando: "Quando quer agregar valor a produtos simples.",
+conteudo: `Crie uma estratégia para montar kits temáticos para venda.
+
+Inclua:
+- Tipo de kit
+- Público ideal
+- Custo médio
+- Estratégia de divulgação
+- Margem estimada`
+},
+
+{
+id: 8,
+categoria: "🤖 IA",
+titulo: "Serviços com Inteligência Artificial",
+quando: "Quando quer usar IA para ganhar dinheiro rápido.",
+conteudo: `Crie 3 serviços simples que usam IA para gerar renda.
+
+Inclua:
+- Tipo de serviço
+- Ferramentas necessárias
+- Público ideal
+- Estratégia para vender
+- Potencial de faturamento`
+}
+
+];
+
+const lista = document.getElementById("lista");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr){
+lista.innerHTML = "";
+contador.innerText = `Total: ${arr.length} ideia${arr.length!==1?"s":""}`;
+
+arr.forEach(p=>{
+const favorito = JSON.parse(localStorage.getItem("favoritosIdeiasPraticas")) || [];
+const ativo = favorito.includes(p.id);
+
+lista.innerHTML += `
+<div class="card">
+  <div style="font-size:13px; opacity:0.7;">${p.categoria}</div>
+  <h3>${p.titulo}</h3>
+  <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+  <pre>${p.conteudo}</pre>
+
+  <div class="acoes">
+    <button onclick="favoritar(${p.id})">
+      ${ativo ? "⭐ Favoritado" : "☆ Favoritar"}
+    </button>
+    <button onclick="copiar(\`${p.conteudo}\`)">📋 Copiar</button>
+    <button onclick="abrirChat()">💬 ChatGPT</button>
+    <button onclick="abrirGemini()">🔷 Gemini</button>
+  </div>
+</div>
+`;
+});
+}
+
+function filtrar(){
+const termo = busca.value.toLowerCase();
+const filtrados = prompts.filter(p =>
+p.titulo.toLowerCase().includes(termo) ||
+p.categoria.toLowerCase().includes(termo) ||
+p.conteudo.toLowerCase().includes(termo)
+);
+renderizar(filtrados);
+}
+
+function copiar(texto){
+navigator.clipboard.writeText(texto);
+alert("Ideia copiada!");
+}
+
+function favoritar(id){
+let fav = JSON.parse(localStorage.getItem("favoritosIdeiasPraticas")) || [];
+if(fav.includes(id)){
+fav = fav.filter(f=>f!==id);
+}else{
+fav.push(id);
+}
+localStorage.setItem("favoritosIdeiasPraticas", JSON.stringify(fav));
+renderizar(prompts);
+}
+
+function abrirChat(){
+window.open("https://chat.openai.com", "_blank");
+}
+
+function abrirGemini(){
+window.open("https://gemini.google.com", "_blank");
+}
+
+renderizar(prompts);
+
+</script>
+
+</body>
+</html>
