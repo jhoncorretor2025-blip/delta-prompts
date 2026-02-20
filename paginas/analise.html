@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Análise & Diagnóstico | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<title>Análise | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+.top-bar input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+.prompt-text {
+  white-space: pre-wrap;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.tag {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+</style>
 </head>
 
 <body>
@@ -14,119 +53,237 @@
 
 <main>
 
-  <h1>📊 Análise & Diagnóstico Estratégico</h1>
-  <p>
-    Antes de tomar decisões, é preciso analisar.  
-    Use estes prompts para diagnosticar situações, identificar falhas,
-    entender oportunidades e agir com base em dados e lógica.
-  </p>
+<h1>📊 Análise Estratégica</h1>
+<p>
+Prompts para analisar situações, negócios, decisões e cenários com profundidade.
+</p>
 
-  <!-- ============================ -->
-  <!-- PROMPTS DE ANÁLISE -->
-  <!-- ============================ -->
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrarPrompts()">
+  <div class="contador" id="contador"></div>
+</div>
 
-  <div class="card">
-    <h3>🔍 Análise Completa de Texto</h3>
-    <p>
-      Analise o texto abaixo identificando clareza, coerência, pontos fortes,
-      pontos fracos, possíveis melhorias e sugestões práticas para aprimorar.
-      Seja objetivo e estratégico.
-    </p>
+<div id="lista">
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<!-- ======================= -->
+<!-- 🔹 1 SIMPLES -->
+<!-- ======================= -->
+<div class="card">
+<div class="tag">⚡ Simples</div>
+<h3>🔍 Análise Rápida de Situação</h3>
+<p><strong>Quando usar:</strong> Para entender rapidamente um problema.</p>
+<div class="prompt-text">
+Analise a situação abaixo.
+Liste pontos fortes, pontos fracos e possíveis soluções.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="analise1"
+data-titulo="Análise Rápida de Situação"
+data-texto="Analise a situação abaixo. Liste pontos fortes, pontos fracos e possíveis soluções."
+data-categoria="analise">🤍</button>
+</div>
+</div>
 
-  <div class="card">
-    <h3>📈 Diagnóstico Profissional Estratégico</h3>
-    <p>
-      Faça uma análise estratégica do meu posicionamento profissional.
-      Identifique diferenciais, fraquezas, oportunidades de crescimento
-      e riscos competitivos. Estruture em análise SWOT.
-    </p>
+<!-- ======================= -->
+<!-- 🔹 2 SIMPLES -->
+<!-- ======================= -->
+<div class="card">
+<div class="tag">⚡ Simples</div>
+<h3>📈 Diagnóstico Objetivo</h3>
+<p><strong>Quando usar:</strong> Para decisões rápidas e práticas.</p>
+<div class="prompt-text">
+Faça um diagnóstico objetivo sobre o cenário abaixo.
+Identifique o principal problema e a melhor ação imediata.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="analise2"
+data-titulo="Diagnóstico Objetivo"
+data-texto="Faça um diagnóstico objetivo sobre o cenário abaixo e indique a melhor ação imediata."
+data-categoria="analise">🤍</button>
+</div>
+</div>
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+<!-- ======================= -->
+<!-- 🔹 COMPLETOS -->
+<!-- ======================= -->
 
-  <div class="card">
-    <h3>⚖ Avaliação de Decisão</h3>
-    <p>
-      Analise a situação descrita abaixo apresentando prós, contras,
-      riscos envolvidos, impacto de curto e longo prazo
-      e recomendação racional baseada em estratégia.
-    </p>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📊 Análise SWOT Estratégica</h3>
+<p><strong>Quando usar:</strong> Para analisar negócios ou projetos.</p>
+<div class="prompt-text">
+Você é consultor estratégico.
+Faça uma análise SWOT completa (Forças, Fraquezas, Oportunidades e Ameaças) sobre:
+[Descreva o projeto ou negócio]
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+Inclua recomendações estratégicas finais.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="analise3"
+data-titulo="Análise SWOT Estratégica"
+data-texto="Faça uma análise SWOT completa sobre o projeto descrito e inclua recomendações estratégicas."
+data-categoria="analise">🤍</button>
+</div>
+</div>
 
-  <div class="card">
-    <h3>📊 Análise de Concorrência</h3>
-    <p>
-      Analise meus principais concorrentes considerando posicionamento,
-      diferenciação, comunicação, preços e percepção de valor.
-      Apresente oportunidades estratégicas para me destacar.
-    </p>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>🧩 Análise de Tomada de Decisão</h3>
+<p><strong>Quando usar:</strong> Para decisões importantes.</p>
+<div class="prompt-text">
+Você é especialista em tomada de decisão.
+Analise as opções abaixo:
+[Descreva as opções]
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+Compare riscos, benefícios, impacto a curto e longo prazo.
+Finalize com recomendação estratégica.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="analise4"
+data-titulo="Análise de Tomada de Decisão"
+data-texto="Analise opções, compare riscos e benefícios e finalize com recomendação estratégica."
+data-categoria="analise">🤍</button>
+</div>
+</div>
 
-  <div class="card">
-    <h3>🧠 Diagnóstico de Comunicação</h3>
-    <p>
-      Avalie minha comunicação considerando clareza, objetividade,
-      persuasão e impacto emocional. Identifique pontos de melhoria
-      e sugira ajustes práticos.
-    </p>
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📉 Análise de Riscos Estratégicos</h3>
+<p><strong>Quando usar:</strong> Antes de iniciar projetos.</p>
+<div class="prompt-text">
+Você é especialista em gestão de riscos.
+Analise o cenário abaixo:
+[Descreva]
 
-    <div class="botoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">❤️</button>
-    </div>
-  </div>
+Liste:
+1. Principais riscos
+2. Probabilidade
+3. Impacto
+4. Plano de mitigação
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="analise5"
+data-titulo="Análise de Riscos Estratégicos"
+data-texto="Liste riscos, probabilidade, impacto e plano de mitigação."
+data-categoria="analise">🤍</button>
+</div>
+</div>
 
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>📋 Diagnóstico Empresarial Completo</h3>
+<p><strong>Quando usar:</strong> Para avaliar negócios.</p>
+<div class="prompt-text">
+Você é consultor empresarial.
+Analise a empresa abaixo considerando:
+- Modelo de negócio
+- Diferencial competitivo
+- Eficiência operacional
+- Pontos de melhoria
+Finalize com plano estratégico.
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="analise6"
+data-titulo="Diagnóstico Empresarial Completo"
+data-texto="Analise modelo de negócio, diferencial, eficiência e finalize com plano estratégico."
+data-categoria="analise">🤍</button>
+</div>
+</div>
+
+<div class="card">
+<div class="tag">🧠 Completo</div>
+<h3>🎯 Análise Estratégica Pessoal</h3>
+<p><strong>Quando usar:</strong> Para decisões de vida ou carreira.</p>
+<div class="prompt-text">
+Você é especialista em planejamento estratégico pessoal.
+Analise minha situação:
+[Descreva]
+
+Divida em:
+- Objetivos
+- Obstáculos
+- Recursos disponíveis
+- Plano de ação
+</div>
+<div class="acoes">
+<button onclick="copiarPrompt(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="analise7"
+data-titulo="Análise Estratégica Pessoal"
+data-texto="Analise objetivos, obstáculos, recursos e plano de ação."
+data-categoria="analise">🤍</button>
+</div>
+</div>
+
+</div>
 </main>
 
 <script>
-function copiarTexto(botao) {
-  const texto = botao.parentElement.previousElementSibling.innerText;
+const cards = document.querySelectorAll(".card");
+const contador = document.getElementById("contador");
+
+function atualizarContador(total){
+  contador.innerText = "Total: " + total + " prompts";
+}
+
+function filtrarPrompts(){
+  const termo = document.getElementById("busca").value.toLowerCase();
+  let visiveis = 0;
+  cards.forEach(card=>{
+    if(card.innerText.toLowerCase().includes(termo)){
+      card.style.display="block";
+      visiveis++;
+    } else {
+      card.style.display="none";
+    }
+  });
+  atualizarContador(visiveis);
+}
+
+function copiarPrompt(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
   navigator.clipboard.writeText(texto);
-  alert("Prompt copiado!");
+  btn.innerText="✅ Copiado!";
+  setTimeout(()=>btn.innerText="📋 Copiar",1500);
 }
 
-function usarChatGPT(botao) {
-  const texto = botao.parentElement.previousElementSibling.innerText;
-  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
+function abrirChatGPT(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-function usarGemini(botao) {
-  const texto = botao.parentElement.previousElementSibling.innerText;
-  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+function abrirGemini(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-function favoritar(botao) {
-  botao.innerText = "💖";
-}
+atualizarContador(cards.length);
 </script>
 
 </body>
