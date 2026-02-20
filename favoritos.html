@@ -6,101 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
-</head>
-
-<body>
-
-<div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js"></script>
-
-<main>
-  <h1>❤️ Prompts Favoritos</h1>
-  <p>Aqui ficam todos os prompts que você marcou como favorito.</p>
-
-  <div id="lista"></div>
-</main>
-
-<script>
-
-const lista = document.getElementById("lista");
-
-function carregarFavoritos() {
-
-  lista.innerHTML = "";
-
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const favoritos = prompts.filter(p => p.favorito);
-
-  if (favoritos.length === 0) {
-    lista.innerHTML = `
-      <div class="card">
-        <p>⚠️ Nenhum prompt favorito ainda.</p>
-        <p>Marque ⭐ nas páginas para aparecer aqui.</p>
-      </div>
-    `;
-    return;
-  }
-
-  favoritos.forEach(item => {
-
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <div class="meta">📂 ${item.categoria}</div>
-      <h3>${item.titulo}</h3>
-      <pre>${item.conteudo}</pre>
-
-      <div class="acoes">
-        <button onclick="copiar('${item.id}')">📋 Copiar</button>
-        <button onclick="editar('${item.id}')">✏️ Editar</button>
-        <button onclick="remover('${item.id}')">❌ Remover</button>
-      </div>
-    `;
-
-    lista.appendChild(card);
-  });
-}
-
-function copiar(id) {
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const item = prompts.find(p => p.id == id);
-
-  navigator.clipboard.writeText(item.conteudo);
-  alert("📋 Copiado!");
-}
-
-function editar(id) {
-
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const item = prompts.find(p => p.id == id);
-
-  const novoTitulo = window.prompt("Editar título:", item.titulo);
-  const novoConteudo = window.prompt("Editar conteúdo:", item.conteudo);
-
-  if (novoTitulo && novoConteudo) {
-    item.titulo = novoTitulo;
-    item.conteudo = novoConteudo;
-
-    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-    carregarFavoritos();
-  }
-}
-
-function remover(id) {
-
-  let prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  const item = prompts.find(p => p.id == id);
-
-  item.favorito = false;
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  carregarFavoritos();
-}
-
-carregarFavoritos();
-
-</script>
 
 <style>
 
@@ -120,7 +25,105 @@ pre {
   margin-bottom: 8px;
 }
 
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
 </style>
+
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+  <h1>❤️ Prompts Favoritos</h1>
+  <p>Aqui ficam todos os prompts que você marcou como favorito.</p>
+
+  <div class="top-bar">
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <div id="lista"></div>
+
+</main>
+
+<script>
+
+const lista = document.getElementById("lista");
+const contador = document.getElementById("contador");
+
+function carregarFavoritos() {
+
+  lista.innerHTML = "";
+
+  const favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+
+  contador.innerText = `Total de favoritos: ${favoritos.length}`;
+
+  if (favoritos.length === 0) {
+    lista.innerHTML = `
+      <div class="card">
+        <p>⚠️ Nenhum prompt favorito ainda.</p>
+        <p>Marque ❤️ nas páginas para aparecer aqui.</p>
+      </div>
+    `;
+    return;
+  }
+
+  favoritos.forEach(item => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="meta">📂 ${item.categoria || "Sem categoria"}</div>
+      <h3>${item.titulo}</h3>
+      <pre>${item.texto}</pre>
+
+      <div class="acoes">
+        <button onclick="copiarTexto(\`${item.texto}\`)">📋 Copiar</button>
+        <button onclick="removerFavorito('${item.id}')">❌ Remover</button>
+      </div>
+    `;
+
+    lista.appendChild(card);
+  });
+
+}
+
+function copiarTexto(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("📋 Prompt copiado!");
+}
+
+function removerFavorito(id) {
+
+  let favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+
+  favoritos = favoritos.filter(f => f.id !== id);
+
+  localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+
+  carregarFavoritos();
+}
+
+document.addEventListener("DOMContentLoaded", carregarFavoritos);
+
+</script>
 
 </body>
 </html>
