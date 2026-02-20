@@ -75,7 +75,8 @@ Prompts para organizar metas, estruturar projetos e criar planos claros de execu
 <!-- 🔹 SIMPLES -->
 <!-- ======================= -->
 
-<div class="card">
+
+  <div class="card" data-tipo="pessoal">
 <div class="tag">⚡ Simples</div>
 <h3>📌 Planejamento Semanal Rápido</h3>
 <p><strong>Quando usar:</strong> Para organizar sua semana em minutos.</p>
@@ -97,7 +98,7 @@ data-categoria="planejamento">🤍</button>
 </div>
 </div>
 
-<div class="card">
+<div class="card" data-tipo="pessoal">
 <div class="tag">⚡ Simples</div>
 <h3>🎯 Definição de Metas Mensais</h3>
 <p><strong>Quando usar:</strong> Para criar foco no mês atual.</p>
@@ -123,7 +124,7 @@ data-categoria="planejamento">🤍</button>
 <!-- 🔹 COMPLETOS -->
 <!-- ======================= -->
 
-<div class="card">
+<div class="card" data-tipo="pessoal">
 <div class="tag">🧠 Completo</div>
 <h3>📅 Planejamento Anual Estratégico</h3>
 <p><strong>Quando usar:</strong> Para visão de longo prazo.</p>
@@ -148,7 +149,7 @@ data-categoria="planejamento">🤍</button>
 </div>
 </div>
 
-<div class="card">
+<div class="card" data-tipo="empresarial">
 <div class="tag">🧠 Completo</div>
 <h3>🚀 Plano de Execução de Projeto</h3>
 <p><strong>Quando usar:</strong> Para transformar ideia em ação.</p>
@@ -173,7 +174,7 @@ data-categoria="planejamento">🤍</button>
 </div>
 </div>
 
-<div class="card">
+<div class="card" data-tipo="pessoal">
 <div class="tag">🧠 Completo</div>
 <h3>📊 Planejamento de Crescimento Pessoal</h3>
 <p><strong>Quando usar:</strong> Para evolução pessoal estruturada.</p>
@@ -197,7 +198,7 @@ data-categoria="planejamento">🤍</button>
 </div>
 </div>
 
-<div class="card">
+<div class="card" data-tipo="empresarial">
 <div class="tag">🧠 Completo</div>
 <h3>🧩 Planejamento Estratégico Empresarial</h3>
 <p><strong>Quando usar:</strong> Para estruturar empresas ou negócios.</p>
@@ -222,7 +223,7 @@ data-categoria="planejamento">🤍</button>
 </div>
 </div>
 
-<div class="card">
+<div class="card" data-tipo="empresarial">
 <div class="tag">🧠 Completo</div>
 <h3>📈 Planejamento de Metas de Alta Performance</h3>
 <p><strong>Quando usar:</strong> Para metas ambiciosas.</p>
@@ -290,6 +291,7 @@ function abrirGemini(btn){
 }
 
 atualizarContador(cards.length);
+  initFiltros();
 </script>
 <script src="../js/filtros.js"></script>
 </body>
