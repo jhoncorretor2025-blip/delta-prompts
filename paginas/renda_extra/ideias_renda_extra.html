@@ -4,169 +4,321 @@
 <meta charset="UTF-8">
 <title>💰 Ideias de Renda Extra | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../../style.css">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
 </head>
 
 <body>
 
 <div id="menu"></div>
-<script src="../../menu-loader.js"></script>
+<script src="/delta-prompts/menu-loader.js"></script>
 
 <main>
 
-<h1>💰 Ideias de Renda Extra</h1>
-<p>Prompts estratégicos para gerar novas fontes de renda usando inteligência artificial.</p>
+<h1>💰 Ideias Estratégicas de Renda Extra</h1>
+
+<p>
+Prompts estruturados para criar novas fontes de renda com estratégia, organização e potencial real de crescimento.
+</p>
+
+<section class="card">
+<h3>🎯 Objetivo</h3>
+<p>
+Ajudar você a identificar, estruturar e escalar ideias de renda extra usando inteligência estratégica.
+</p>
+</section>
 
 <!-- BUSCA -->
 <div class="top-bar">
-  <input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrar()">
-  <div class="contador" id="contador"></div>
+<input type="text" id="busca" placeholder="🔎 Buscar modelo..." oninput="filtrarPrompts()">
+<div class="contador" id="contador"></div>
 </div>
 
-<div id="lista">
-
-<!-- ========================= -->
-<!-- 1️⃣ SIMPLES -->
-<!-- ========================= -->
-
-<div class="card" data-titulo="Ideias rápidas de renda extra">
-
-<div class="tag">💡 Simples</div>
-<h3>Ideias rápidas de renda extra</h3>
-
-<p><strong>📌 Quando usar:</strong> Quando quiser sugestões rápidas para começar hoje.</p>
-
-<p class="prompt-text">
-Liste 10 ideias práticas de renda extra que possam ser iniciadas com pouco investimento.
-</p>
-
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-<button onclick="abrirGemini(this)">🔷 Gemini</button>
-<button class="fav-btn"
-data-id="renda1"
-data-titulo="Ideias rápidas de renda extra"
-data-texto="Liste 10 ideias práticas de renda extra que possam ser iniciadas com pouco investimento."
-data-categoria="Renda Extra">🤍</button>
+<!-- FILTRO NÍVEL -->
+<div class="filtro-nivel" style="margin-bottom:20px;">
+<button onclick="filtrarNivel(event,'todos')" class="ativo">Todos</button>
+<button onclick="filtrarNivel(event,'basico')">🟢 Básico</button>
+<button onclick="filtrarNivel(event,'intermediario')">🟡 Intermediário</button>
+<button onclick="filtrarNivel(event,'avancado')">🔴 Avançado</button>
 </div>
 
-</div>
-
-<!-- 2️⃣ SIMPLES -->
-
-<div class="card" data-titulo="Renda extra online">
-
-<div class="tag">🌐 Simples</div>
-<h3>Renda extra online</h3>
-
-<p><strong>📌 Quando usar:</strong> Para trabalhar apenas pela internet.</p>
-
-<p class="prompt-text">
-Liste 10 formas de ganhar dinheiro online usando habilidades simples.
-</p>
-
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-<button onclick="abrirGemini(this)">🔷 Gemini</button>
-<button class="fav-btn"
-data-id="renda2"
-data-titulo="Renda extra online"
-data-texto="Liste 10 formas de ganhar dinheiro online usando habilidades simples."
-data-categoria="Renda Extra">🤍</button>
-</div>
-
-</div>
-
-<!-- 6 COMPLETOS ABAIXO -->
-
-<div class="card" data-titulo="Plano estruturado de renda extra">
-
-<div class="tag">📈 Completo</div>
-<h3>Plano estruturado de renda extra</h3>
-
-<p><strong>📌 Quando usar:</strong> Quando quiser transformar uma ideia em plano real.</p>
-
-<p class="prompt-text">
-Você é um especialista em empreendedorismo digital.
-
-Crie um plano detalhado para transformar a seguinte habilidade em renda extra:
-
-[Descreva a habilidade]
-
-Inclua:
-- Modelo de monetização
-- Público-alvo
-- Estratégia de divulgação
-- Estimativa de ganhos
-- Passo a passo inicial
-</p>
-
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-<button onclick="abrirGemini(this)">🔷 Gemini</button>
-<button class="fav-btn"
-data-id="renda3"
-data-titulo="Plano estruturado de renda extra"
-data-texto="Você é um especialista em empreendedorismo digital. Crie um plano detalhado para transformar uma habilidade em renda extra."
-data-categoria="Renda Extra">🤍</button>
-</div>
-
-</div>
-
-<!-- ADICIONAR MAIS 5 COMPLETOS seguindo o mesmo padrão -->
-
-</div>
+<div id="lista-prompts"></div>
 
 </main>
 
 <script>
 
-function copiar(btn){
-  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
-  navigator.clipboard.writeText(texto);
-  btn.innerText = "✅ Copiado!";
-  setTimeout(()=>btn.innerText="📋 Copiar",1500);
+const prompts = [
+
+/* ===============================
+   2 BÁSICOS PRIMEIRO
+=================================*/
+
+{
+nivel:"basico",
+titulo:"Ideias rápidas para começar hoje",
+quando:"Quando quiser sugestões simples e práticas.",
+prompt:`Liste 15 ideias de renda extra que possam ser iniciadas imediatamente com pouco investimento.`
+},
+
+{
+nivel:"basico",
+titulo:"Renda extra usando internet",
+quando:"Quando quiser ganhar dinheiro online.",
+prompt:`Liste 10 formas realistas de ganhar dinheiro online usando habilidades simples.`
+},
+
+/* ===============================
+   6 COMPLETOS
+=================================*/
+
+{
+nivel:"intermediario",
+titulo:"Plano estruturado de renda extra",
+quando:"Para transformar habilidade em renda.",
+prompt:`Você é especialista em empreendedorismo.
+
+Crie um plano detalhado para transformar a habilidade [INSIRA HABILIDADE] em renda extra.
+
+Inclua:
+- Público-alvo
+- Modelo de monetização
+- Estratégia de divulgação
+- Passo a passo inicial
+- Estimativa de ganhos`
+},
+
+{
+nivel:"intermediario",
+titulo:"Validação de ideia antes de investir",
+quando:"Antes de investir tempo ou dinheiro.",
+prompt:`Analise a seguinte ideia de renda extra:
+
+[DESCREVA A IDEIA]
+
+Avalie:
+- Demanda de mercado
+- Concorrência
+- Diferencial competitivo
+- Riscos
+- Potencial de lucro`
+},
+
+{
+nivel:"intermediario",
+titulo:"Estratégia de divulgação orgânica",
+quando:"Para crescer sem investir em anúncios.",
+prompt:`Crie uma estratégia de divulgação orgânica para promover:
+
+[IDEIA DE RENDA EXTRA]
+
+Inclua:
+- Redes sociais ideais
+- Tipo de conteúdo
+- Frequência
+- Estratégia de autoridade`
+},
+
+{
+nivel:"avancado",
+titulo:"Escalar renda extra para negócio",
+quando:"Quando quiser crescer e escalar.",
+prompt:`Você é especialista em crescimento empresarial.
+
+Mostre como transformar a seguinte renda extra em um negócio escalável:
+
+[IDEIA]
+
+Inclua:
+- Automação
+- Delegação
+- Modelo recorrente
+- Estratégia de crescimento`
+},
+
+{
+nivel:"avancado",
+titulo:"Renda extra com IA",
+quando:"Para usar inteligência artificial estrategicamente.",
+prompt:`Crie 5 modelos de renda extra usando inteligência artificial.
+
+Explique:
+- Como funciona
+- Ferramentas necessárias
+- Modelo de monetização
+- Potencial de ganho`
+},
+
+{
+nivel:"avancado",
+titulo:"Plano financeiro estratégico",
+quando:"Para organizar ganhos e reinvestimento.",
+prompt:`Crie um plano financeiro estratégico para organizar e reinvestir lucros de uma renda extra.
+
+Inclua:
+- Separação de capital
+- Reinvestimento
+- Reserva
+- Crescimento progressivo`
 }
 
-function abrirChatGPT(btn){
-  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
-  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr){
+lista.innerHTML="";
+contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+
+arr.forEach((p,index)=>{
+
+const card=document.createElement("div");
+card.className="card";
+card.dataset.nivel=p.nivel;
+
+card.innerHTML=`
+<div class="nivel nivel-${p.nivel}">
+${p.nivel==="avancado"?"🔴 Avançado":
+p.nivel==="intermediario"?"🟡 Intermediário":"🟢 Básico"}
+</div>
+
+<h3>${p.titulo}</h3>
+<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+<pre>${p.prompt}</pre>
+
+<div class="acoes">
+<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+<button onclick="favoritarPrompt('${p.titulo}',\`${p.prompt}\`)">⭐ Favoritar</button>
+<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+</div>
+`;
+
+lista.appendChild(card);
+
+});
 }
 
-function abrirGemini(btn){
-  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
-  const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
+function filtrarPrompts(){
+const termo=busca.value.toLowerCase();
+const filtrados=prompts.filter(p=>
+p.titulo.toLowerCase().includes(termo)||
+p.prompt.toLowerCase().includes(termo)
+);
+renderizar(filtrados);
 }
 
-function filtrar(){
-  const termo = document.getElementById("busca").value.toLowerCase();
-  const cards = document.querySelectorAll(".card");
-  let total = 0;
+function filtrarNivel(event,nivel){
+document.querySelectorAll(".filtro-nivel button")
+.forEach(btn=>btn.classList.remove("ativo"));
+event.target.classList.add("ativo");
 
-  cards.forEach(c=>{
-    const titulo = c.dataset.titulo.toLowerCase();
-    if(titulo.includes(termo)){
-      c.style.display="block";
-      total++;
-    } else {
-      c.style.display="none";
-    }
-  });
+const cards=document.querySelectorAll("#lista-prompts .card");
 
-  document.getElementById("contador").innerText = "Total: "+total+" prompts";
+cards.forEach(card=>{
+if(nivel==="todos"){
+card.style.display="block";
+}else{
+card.style.display=
+card.dataset.nivel===nivel?"block":"none";
+}
+});
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
-  document.getElementById("contador").innerText =
-    "Total: "+document.querySelectorAll(".card").length+" prompts";
+function copiarPrompt(texto){
+navigator.clipboard.writeText(texto);
+alert("📋 Prompt copiado!");
+}
+
+function favoritarPrompt(titulo,conteudo){
+const promptsSalvos=JSON.parse(localStorage.getItem("deltaPrompts"))||[];
+
+promptsSalvos.push({
+id:Date.now(),
+titulo,
+categoria:"Renda Extra",
+conteudo,
+favorito:true
 });
 
+localStorage.setItem("deltaPrompts",JSON.stringify(promptsSalvos));
+alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto){
+const url="https://chat.openai.com/?prompt="+encodeURIComponent(texto);
+window.open(url,"_blank");
+}
+
+function abrirGemini(texto){
+const url="https://gemini.google.com/app?prompt="+encodeURIComponent(texto);
+window.open(url,"_blank");
+}
+
+renderizar(prompts);
+
 </script>
+
+<style>
+
+.top-bar{
+display:flex;
+gap:15px;
+align-items:center;
+margin:20px 0;
+flex-wrap:wrap;
+}
+
+.top-bar input{
+flex:1;
+padding:14px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+}
+
+.contador{
+font-size:14px;
+opacity:0.75;
+}
+
+.filtro-nivel button{
+padding:8px 14px;
+border-radius:8px;
+border:1px solid #ddd;
+background:#fff;
+cursor:pointer;
+margin-right:8px;
+}
+
+.filtro-nivel button.ativo{
+background:#5b5ce2;
+color:#fff;
+border-color:#5b5ce2;
+}
+
+.nivel{
+font-size:13px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.nivel-basico{color:#16a34a;}
+.nivel-intermediario{color:#ca8a04;}
+.nivel-avancado{color:#dc2626;}
+
+pre{
+white-space:pre-wrap;
+font-size:14px;
+background:#f9fafb;
+padding:15px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+}
+
+</style>
 
 </body>
 </html>
