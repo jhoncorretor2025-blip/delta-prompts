@@ -14,6 +14,8 @@
 <div id="menu"></div>
 <script src="/delta-prompts/menu-loader.js"></script>
 
+  
+
 <main>
 
 <!-- 1️⃣ TÍTULO FORTE -->
@@ -62,148 +64,191 @@ Ajudar você a criar imagens estratégicas para campanhas, lojas, redes sociais 
 
 <div id="lista-prompts"></div>
 
+  <!-- ============================= -->
+<!-- 🔄 VOLTAR PARA MARKETING TEXTO -->
+<!-- ============================= -->
+
+<section class="card" style="text-align:center; margin-top:40px;">
+
+  <h2>📝 Já criou o visual?</h2>
+
+  <p style="max-width:700px; margin:15px auto; line-height:1.6;">
+    Agora volte para a parte estratégica de texto e campanha
+    para alinhar copy e criativo visual.
+  </p>
+
+  <a href="/delta-prompts/paginas/marketing-campanha.html"
+     style="
+       display:inline-block;
+       margin-top:20px;
+       padding:14px 28px;
+       background: linear-gradient(135deg, #111827, #1f2937);
+       color:white;
+       font-weight:600;
+       border-radius:12px;
+       text-decoration:none;
+       box-shadow:0 8px 20px rgba(0,0,0,0.25);
+       transition:0.2s;
+     "
+     onmouseover="this.style.transform='translateY(-2px)'"
+     onmouseout="this.style.transform='translateY(0)'"
+  >
+    📣 Ir para Marketing Texto & Campanhas
+  </a>
+
+</section>
+
 </main>
 
 <script>
 
 const promptsImagem = [
 
+const promptsImagem = [
+
 /* ===================== */
-/* 2 BÁSICOS */
+/* 🟢 2 BÁSICOS */
 /* ===================== */
 
 {
 nivel: "basico",
-titulo: "Imagem Promocional Simples",
+titulo: "📷 Imagem Promocional Simples",
 quando: "Para criar arte rápida de oferta.",
-prompt: `Crie uma imagem promocional para:
+prompt: `🎯 Crie uma imagem promocional para:
 
-[PRODUTO]
+📦 [PRODUTO]
 
 Inclua:
-- Destaque no produto
-- Texto curto chamativo
-- Fundo atrativo
-- Estilo moderno`
+- ✨ Destaque no produto
+- 📝 Texto curto e chamativo
+- 🎨 Fundo atrativo
+- 📐 Estilo moderno e limpo`
 },
 
 {
 nivel: "basico",
-titulo: "Banner para Loja",
-quando: "Para criar banner físico ou digital.",
-prompt: `Crie um banner promocional para loja com:
+titulo: "📢 Banner para Loja Física ou Digital",
+quando: "Para criar banner promocional direto.",
+prompt: `🛍️ Crie um banner promocional para:
 
-[PRODUTO OU PROMOÇÃO]
+📦 [PRODUTO OU PROMOÇÃO]
 
 Inclua:
-- Oferta clara
-- Cores chamativas
-- Elemento visual forte
-- Destaque para preço ou desconto`
+- 💰 Oferta clara
+- 🎨 Cores chamativas
+- 🔥 Elemento visual forte
+- 🏷️ Destaque para preço ou desconto`
 },
 
 /* ===================== */
-/* 6 COMPLETOS */
+/* 🟡 3 INTERMEDIÁRIOS */
 /* ===================== */
 
 {
 nivel: "intermediario",
-titulo: "Folder Promocional Profissional",
-quando: "Para campanhas estruturadas.",
-prompt: `Crie conceito visual para folder promocional de:
+titulo: "🖼️ Folder Promocional Profissional",
+quando: "Para campanhas estruturadas e distribuição física ou digital.",
+prompt: `🎨 Crie conceito visual para folder promocional de:
 
-[PRODUTO]
+📦 [PRODUTO]
 
 Inclua:
-- Layout organizado
-- Hierarquia visual
-- Destaque para oferta
-- Elementos gráficos estratégicos
-- Sugestão de cores`
+- 📐 Layout organizado
+- 🧭 Hierarquia visual clara
+- 💰 Destaque estratégico para oferta
+- 🎯 Elementos gráficos de apoio
+- 🎨 Sugestão de paleta de cores
+- 🗂️ Organização inteligente de blocos`
 },
 
 {
 nivel: "intermediario",
-titulo: "Criativo para Instagram Ads",
-quando: "Para anúncio patrocinado.",
-prompt: `Crie conceito visual para anúncio no Instagram:
+titulo: "📱 Criativo para Instagram Ads",
+quando: "Para anúncio patrocinado focado em impacto visual.",
+prompt: `🚀 Crie conceito visual para anúncio no Instagram:
 
-[PRODUTO]
+📦 [PRODUTO]
 
 Inclua:
-- Gancho visual forte
-- Foco no benefício
-- Estilo moderno
-- Sugestão de texto curto
-- CTA visual`
+- ⚡ Gancho visual imediato
+- 🎯 Foco no principal benefício
+- 🎨 Estilo moderno
+- 📝 Texto curto estratégico
+- 🔘 CTA visual integrado`
 },
 
 {
 nivel: "intermediario",
-titulo: "Imagem para Campanha Sazonal",
-quando: "Para datas comemorativas.",
-prompt: `Crie conceito visual para campanha sazonal:
+titulo: "🎉 Imagem para Campanha Sazonal",
+quando: "Para datas comemorativas ou campanhas temáticas.",
+prompt: `📅 Crie conceito visual para campanha sazonal:
 
-[PRODUTO]
-[DATA COMEMORATIVA]
+📦 [PRODUTO]
+🎊 [DATA COMEMORATIVA]
 
 Inclua:
-- Elementos temáticos
-- Oferta especial
-- Composição equilibrada
-- Estilo chamativo`
+- 🎨 Elementos temáticos
+- 💰 Oferta especial destacada
+- 📐 Composição equilibrada
+- ✨ Estilo chamativo e comercial`
 },
+
+/* ===================== */
+/* 🔴 3 AVANÇADOS */
+/* ===================== */
 
 {
 nivel: "avancado",
-titulo: "Direção de Arte Completa para Campanha",
-quando: "Para criar identidade visual estratégica.",
-prompt: `Você é diretor de arte especialista em campanhas comerciais.
+titulo: "🎨 Direção de Arte Completa para Campanha",
+quando: "Para criar identidade visual estratégica da campanha.",
+prompt: `👨‍🎨 Você é diretor de arte especialista em campanhas comerciais.
 
 Crie direção visual completa para:
 
-[PRODUTO]
+📦 [PRODUTO]
 
 Inclua:
-- Conceito criativo
-- Paleta de cores
-- Tipografia
-- Elementos visuais
-- Estilo fotográfico
-- Aplicação em diferentes formatos`
+- 💡 Conceito criativo central
+- 🎨 Paleta de cores estratégica
+- 🔤 Tipografia sugerida
+- 🧩 Elementos visuais principais
+- 📸 Estilo fotográfico
+- 📱 Aplicação em feed, story e banner`
 },
 
 {
 nivel: "avancado",
-titulo: "Criativo de Alta Conversão para Tráfego Pago",
-quando: "Para anúncios focados em performance.",
-prompt: `Crie conceito visual focado em alta conversão para tráfego pago:
+titulo: "🚀 Criativo de Alta Conversão para Tráfego Pago",
+quando: "Para anúncios focados em performance e vendas.",
+prompt: `📊 Crie conceito visual focado em alta conversão para tráfego pago:
 
-[PRODUTO]
+📦 [PRODUTO]
 
 Inclua:
-- Elemento de impacto imediato
-- Prova visual
-- Destaque para benefício principal
-- Urgência visual
-- CTA estratégico`
+- ⚡ Elemento de impacto imediato
+- 👁️ Prova visual forte
+- 🎯 Destaque para principal vantagem
+- ⏳ Urgência visual
+- 🔘 CTA estratégico integrado ao layout`
 },
 
 {
 nivel: "avancado",
-titulo: "Vitrine Visual para Loja Online",
-quando: "Para destacar produtos em e-commerce.",
-prompt: `Crie conceito visual para vitrine digital de:
+titulo: "🛒 Vitrine Visual Premium para Loja Online",
+quando: "Para destacar produto em e-commerce ou loja virtual.",
+prompt: `✨ Crie conceito visual premium para vitrine digital de:
 
-[PRODUTO]
+📦 [PRODUTO]
 
 Inclua:
-- Composição elegante
-- Destaque no produto
-- Iluminação estratégica
-- Fundo profissional
-- Estilo premium`
+- 🏆 Composição elegante
+- 🔦 Destaque absoluto no produto
+- 💡 Iluminação estratégica
+- 🎨 Fundo profissional
+- 💎 Estilo sofisticado
+- 📈 Sensação de alto valor`
 }
+
 
 ];
 
