@@ -14,37 +14,35 @@
 <div id="menu"></div>
 <script src="/delta-prompts/menu-loader.js"></script>
 
-  
-
 <main>
 
 <!-- 1️⃣ TÍTULO FORTE -->
-<h1>🎨 Marketing Visual & Criativos</h1>
+<h1>🎨 Marketing Visual & Imagens</h1>
 
-<!-- 2️⃣ INTRODUÇÃO EMOCIONAL -->
+<!-- 2️⃣ INTRODUÇÃO -->
 <p>
 Crie artes que vendem antes mesmo da pessoa ler o texto.  
-Prompts profissionais para gerar folders, banners, posts e imagens de alto impacto.
+Prompts estratégicos para folders, banners, posts, vitrines e anúncios de alto impacto.
 </p>
 
 <!-- 3️⃣ OBJETIVO -->
 <section class="card">
 <h3>🎯 Objetivo</h3>
 <p>
-Ajudar você a criar imagens estratégicas para campanhas, lojas, redes sociais e anúncios pagos.
+Ajudar você a criar imagens estratégicas para campanhas, lojas físicas, e-commerce e redes sociais.
 </p>
 </section>
 
-<!-- BLOCO DE INSPIRAÇÃO -->
+<!-- BLOCO INSPIRAÇÃO -->
 <section class="card">
 <h3>🔥 O que você pode criar aqui</h3>
 <ul style="line-height:1.8;">
 <li>📦 Folder promocional profissional</li>
 <li>🛍️ Banner para loja física</li>
 <li>📱 Criativo para Instagram</li>
-<li>🖼️ Imagem para campanha paga</li>
+<li>🖼️ Imagem para tráfego pago</li>
 <li>🏷️ Arte para oferta com desconto</li>
-<li>🛒 Imagem para vitrine virtual</li>
+<li>🛒 Vitrine digital para e-commerce</li>
 </ul>
 </section>
 
@@ -62,40 +60,30 @@ Ajudar você a criar imagens estratégicas para campanhas, lojas, redes sociais 
 <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
 </div>
 
+<!-- 5️⃣ CARDS -->
 <div id="lista-prompts"></div>
 
-  <!-- ============================= -->
-<!-- 🔄 VOLTAR PARA MARKETING TEXTO -->
-<!-- ============================= -->
-
+<!-- CTA FINAL -->
 <section class="card" style="text-align:center; margin-top:40px;">
-
-  <h2>📝 Já criou o visual?</h2>
-
-  <p style="max-width:700px; margin:15px auto; line-height:1.6;">
-    Agora volte para a parte estratégica de texto e campanha
-    para alinhar copy e criativo visual.
-  </p>
-
-  <a href="/delta-prompts/paginas/marketing-campanha.html"
-     style="
-       display:inline-block;
-       margin-top:20px;
-       padding:14px 28px;
-       background: linear-gradient(135deg, #111827, #1f2937);
-       color:white;
-       font-weight:600;
-       border-radius:12px;
-       text-decoration:none;
-       box-shadow:0 8px 20px rgba(0,0,0,0.25);
-       transition:0.2s;
-     "
-     onmouseover="this.style.transform='translateY(-2px)'"
-     onmouseout="this.style.transform='translateY(0)'"
-  >
-    📣 Ir para Marketing Texto & Campanhas
-  </a>
-
+<h2>📝 Precisa estruturar o texto da campanha?</h2>
+<p style="max-width:700px; margin:15px auto; line-height:1.6;">
+Volte para a parte estratégica e alinhe copy + visual para máxima conversão.
+</p>
+<a href="marketing-texto.html"
+   style="
+   display:inline-block;
+   margin-top:20px;
+   padding:14px 28px;
+   background: linear-gradient(135deg, #111827, #1f2937);
+   color:white;
+   font-weight:600;
+   border-radius:12px;
+   text-decoration:none;
+   box-shadow:0 8px 20px rgba(0,0,0,0.25);
+   transition:0.2s;
+   ">
+📣 Ir para Marketing Texto & Campanhas
+</a>
 </section>
 
 </main>
@@ -104,32 +92,28 @@ Ajudar você a criar imagens estratégicas para campanhas, lojas, redes sociais 
 
 const promptsImagem = [
 
-const promptsImagem = [
-
-/* ===================== */
 /* 🟢 2 BÁSICOS */
-/* ===================== */
 
 {
 nivel: "basico",
 titulo: "📷 Imagem Promocional Simples",
 quando: "Para criar arte rápida de oferta.",
-prompt: `🎯 Crie uma imagem promocional para:
+prompt: `🎯 Crie imagem promocional para:
 
 📦 [PRODUTO]
 
 Inclua:
 - ✨ Destaque no produto
-- 📝 Texto curto e chamativo
+- 📝 Texto curto chamativo
 - 🎨 Fundo atrativo
-- 📐 Estilo moderno e limpo`
+- 📐 Estilo moderno`
 },
 
 {
 nivel: "basico",
-titulo: "📢 Banner para Loja Física ou Digital",
-quando: "Para criar banner promocional direto.",
-prompt: `🛍️ Crie um banner promocional para:
+titulo: "📢 Banner Promocional",
+quando: "Para loja física ou digital.",
+prompt: `🛍️ Crie banner promocional para:
 
 📦 [PRODUTO OU PROMOÇÃO]
 
@@ -137,118 +121,99 @@ Inclua:
 - 💰 Oferta clara
 - 🎨 Cores chamativas
 - 🔥 Elemento visual forte
-- 🏷️ Destaque para preço ou desconto`
+- 🏷️ Destaque para preço`
 },
 
-/* ===================== */
 /* 🟡 3 INTERMEDIÁRIOS */
-/* ===================== */
 
 {
 nivel: "intermediario",
-titulo: "🖼️ Folder Promocional Profissional",
-quando: "Para campanhas estruturadas e distribuição física ou digital.",
-prompt: `🎨 Crie conceito visual para folder promocional de:
+titulo: "🖼️ Folder Profissional",
+quando: "Para campanhas estruturadas.",
+prompt: `🎨 Crie conceito visual para folder de:
 
 📦 [PRODUTO]
 
 Inclua:
 - 📐 Layout organizado
-- 🧭 Hierarquia visual clara
-- 💰 Destaque estratégico para oferta
-- 🎯 Elementos gráficos de apoio
-- 🎨 Sugestão de paleta de cores
-- 🗂️ Organização inteligente de blocos`
+- 🧭 Hierarquia visual
+- 💰 Destaque para oferta
+- 🎯 Elementos gráficos estratégicos`
 },
 
 {
 nivel: "intermediario",
 titulo: "📱 Criativo para Instagram Ads",
-quando: "Para anúncio patrocinado focado em impacto visual.",
-prompt: `🚀 Crie conceito visual para anúncio no Instagram:
+quando: "Para anúncio patrocinado.",
+prompt: `🚀 Crie conceito visual para Instagram Ads:
 
 📦 [PRODUTO]
 
 Inclua:
-- ⚡ Gancho visual imediato
-- 🎯 Foco no principal benefício
-- 🎨 Estilo moderno
-- 📝 Texto curto estratégico
-- 🔘 CTA visual integrado`
+- ⚡ Impacto visual imediato
+- 🎯 Foco no benefício
+- 🔘 CTA visual estratégico`
 },
 
 {
 nivel: "intermediario",
-titulo: "🎉 Imagem para Campanha Sazonal",
-quando: "Para datas comemorativas ou campanhas temáticas.",
-prompt: `📅 Crie conceito visual para campanha sazonal:
+titulo: "🎉 Campanha Sazonal",
+quando: "Para datas comemorativas.",
+prompt: `📅 Crie conceito visual para campanha:
 
 📦 [PRODUTO]
-🎊 [DATA COMEMORATIVA]
+🎊 [DATA]
 
 Inclua:
 - 🎨 Elementos temáticos
-- 💰 Oferta especial destacada
-- 📐 Composição equilibrada
-- ✨ Estilo chamativo e comercial`
+- 💰 Oferta especial
+- ✨ Estilo chamativo`
 },
 
-/* ===================== */
 /* 🔴 3 AVANÇADOS */
-/* ===================== */
 
 {
 nivel: "avancado",
-titulo: "🎨 Direção de Arte Completa para Campanha",
-quando: "Para criar identidade visual estratégica da campanha.",
-prompt: `👨‍🎨 Você é diretor de arte especialista em campanhas comerciais.
-
-Crie direção visual completa para:
+titulo: "🎨 Direção de Arte Completa",
+quando: "Para identidade visual estratégica.",
+prompt: `👨‍🎨 Crie direção visual completa para:
 
 📦 [PRODUTO]
 
 Inclua:
-- 💡 Conceito criativo central
-- 🎨 Paleta de cores estratégica
-- 🔤 Tipografia sugerida
-- 🧩 Elementos visuais principais
-- 📸 Estilo fotográfico
-- 📱 Aplicação em feed, story e banner`
+- 💡 Conceito criativo
+- 🎨 Paleta de cores
+- 🔤 Tipografia
+- 📱 Aplicação em diferentes formatos`
 },
 
 {
 nivel: "avancado",
-titulo: "🚀 Criativo de Alta Conversão para Tráfego Pago",
-quando: "Para anúncios focados em performance e vendas.",
-prompt: `📊 Crie conceito visual focado em alta conversão para tráfego pago:
+titulo: "🚀 Criativo de Alta Conversão",
+quando: "Para tráfego pago.",
+prompt: `📊 Crie criativo visual de alta conversão:
 
 📦 [PRODUTO]
 
 Inclua:
 - ⚡ Elemento de impacto imediato
-- 👁️ Prova visual forte
-- 🎯 Destaque para principal vantagem
-- ⏳ Urgência visual
-- 🔘 CTA estratégico integrado ao layout`
+- 🎯 Destaque do principal benefício
+- ⏳ Urgência visual`
 },
 
 {
 nivel: "avancado",
-titulo: "🛒 Vitrine Visual Premium para Loja Online",
-quando: "Para destacar produto em e-commerce ou loja virtual.",
-prompt: `✨ Crie conceito visual premium para vitrine digital de:
+titulo: "🛒 Vitrine Premium para Loja Online",
+quando: "Para e-commerce.",
+prompt: `✨ Crie conceito visual premium para:
 
 📦 [PRODUTO]
 
 Inclua:
 - 🏆 Composição elegante
-- 🔦 Destaque absoluto no produto
-- 💡 Iluminação estratégica
-- 🎨 Fundo profissional
-- 💎 Estilo sofisticado
-- 📈 Sensação de alto valor`
+- 🔦 Iluminação estratégica
+- 💎 Estilo sofisticado`
 }
-
 
 ];
 
@@ -257,7 +222,6 @@ const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
 function renderizar(arr) {
-
 lista.innerHTML = "";
 contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
@@ -289,7 +253,6 @@ p.nivel === 'intermediario' ? '🟡 Intermediário' :
 lista.appendChild(card);
 
 });
-
 }
 
 function filtrarPrompts() {
@@ -307,14 +270,10 @@ botoes.forEach(btn => btn.classList.remove("ativo"));
 event.target.classList.add("ativo");
 
 const cards = document.querySelectorAll("#lista-prompts .card");
-
 cards.forEach(card => {
-if (nivel === "todos") {
-card.style.display = "block";
-} else {
 card.style.display =
-card.dataset.nivel === nivel ? "block" : "none";
-}
+nivel === "todos" || card.dataset.nivel === nivel
+? "block" : "none";
 });
 }
 
@@ -337,46 +296,16 @@ alert("⭐ Adicionado aos favoritos!");
 }
 
 function abrirChatGPT(texto) {
-const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
-window.open(url, "_blank");
+window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto), "_blank");
 }
 
 function abrirGemini(texto) {
-const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
-window.open(url, "_blank");
+window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
 }
 
 renderizar(promptsImagem);
 
 </script>
-
-<style>
-.top-bar {
-display: flex;
-gap: 15px;
-align-items: center;
-margin: 20px 0;
-flex-wrap: wrap;
-}
-.top-bar input {
-flex: 1;
-padding: 14px;
-border-radius: 10px;
-border: 1px solid #e5e7eb;
-}
-.contador {
-font-size: 14px;
-opacity: 0.75;
-}
-pre {
-white-space: pre-wrap;
-font-size: 14px;
-background: #f9fafb;
-padding: 15px;
-border-radius: 10px;
-border: 1px solid #e5e7eb;
-}
-</style>
 
 </body>
 </html>
