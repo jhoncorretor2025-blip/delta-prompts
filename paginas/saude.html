@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>🧩 Outros Prompts | Delta Prompts</title>
+<title>🧠 Saúde Inteligente | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
@@ -16,26 +16,26 @@
 
 <main>
 
-<h1>🧩✨ Outros Prompts Estratégicos</h1>
+<h1>🧠💚 Saúde Inteligente com IA</h1>
 
 <p>
-Modelos versáteis para situações diversas que não se encaixam em categorias específicas.
+Prompts estratégicos para organizar saúde física, mental e hábitos com clareza e consciência.
 </p>
 
 <section class="card">
   <h3>🎯 Objetivo</h3>
   <p>
-    Oferecer prompts úteis para organização pessoal, criatividade, tomada de decisão e situações do dia a dia.
+    Ajudar você a melhorar sua saúde física e mental através de organização, análise e planejamento estruturado.
   </p>
 </section>
 
 <section class="card">
-  <h3>🗺️ Organização da Página</h3>
+  <h3>🗺️ Jornada da Saúde</h3>
   <ul style="line-height:1.6;">
-    <li><strong>🧠 Organização:</strong> Clareza mental e estrutura.</li>
-    <li><strong>🎨 Criatividade:</strong> Ideias fora do padrão.</li>
-    <li><strong>⚖️ Decisão:</strong> Análises estratégicas.</li>
-    <li><strong>🚀 Produtividade:</strong> Otimização de tempo.</li>
+    <li><strong>🔎 Autoconhecimento:</strong> Entender seu estado atual.</li>
+    <li><strong>📋 Planejamento:</strong> Criar plano saudável e realista.</li>
+    <li><strong>💪 Execução:</strong> Implementar hábitos consistentes.</li>
+    <li><strong>📊 Monitoramento:</strong> Avaliar evolução e ajustar.</li>
   </ul>
 </section>
 
@@ -58,72 +58,255 @@ Modelos versáteis para situações diversas que não se encaixam em categorias 
 <script>
 
 const ordemCategorias = [
-"🧠 Organização",
-"🎨 Criatividade",
-"⚖️ Decisão",
-"🚀 Produtividade"
+"🔎 Autoconhecimento",
+"📋 Planejamento",
+"💪 Execução",
+"📊 Monitoramento"
 ];
 
 const prompts = [
 
 {
-categoria:"🧠 Organização",
+categoria:"🔎 Autoconhecimento",
 nivel:"basico",
-titulo:"📋🧠 Organizar Ideias Confusas",
-quando:"Quando estiver com muitas ideias e pouca clareza.",
-prompt:`Organize as seguintes ideias:
+titulo:"🧠🔍 Avaliação de Hábitos Atuais",
+quando:"Para entender seu estado atual de saúde.",
+prompt:`Analise meus hábitos atuais:
 
-[DESCREVA]
+[DESCREVA ROTINA]
 
-Estruture em:
-• 📌 Prioridades
-• 🗂️ Categorias
-• 🎯 Próximos passos`
+Identifique:
+• Pontos positivos
+• Pontos de risco
+• Pequenas melhorias possíveis`
 },
 
 {
-categoria:"🎨 Criatividade",
+categoria:"📋 Planejamento",
 nivel:"intermediario",
-titulo:"💡🎨 Gerador de Ideias Criativas",
-quando:"Quando precisar sair do padrão.",
-prompt:`Gere 10 ideias criativas sobre:
+titulo:"📅🥗 Plano Alimentar Estratégico",
+quando:"Para organizar alimentação saudável.",
+prompt:`Crie um plano alimentar semanal considerando:
 
-[TEMA]
+• Meu objetivo: [EMAGRECER / GANHAR MASSA / EQUILÍBRIO]
+• Restrições alimentares: [SE HOUVER]
+• Tempo disponível para preparar refeições
+
+Organize de forma prática.`
+},
+
+{
+categoria:"💪 Execução",
+nivel:"intermediario",
+titulo:"🏋️‍♂️💪 Plano de Exercícios Personalizado",
+quando:"Para organizar rotina de treino.",
+prompt:`Monte um plano de exercícios para:
+
+• Objetivo: [DEFINA]
+• Tempo disponível por dia
+• Nível atual
 
 Inclua:
-• 🚀 Ideia principal
-• 📈 Aplicação prática
-• 🎯 Público ideal`
+• Divisão semanal
+• Tipo de treino
+• Duração`
 },
 
 {
-categoria:"⚖️ Decisão",
-nivel:"intermediario",
-titulo:"⚖️📊 Análise de Decisão Estratégica",
-quando:"Quando precisar tomar decisão importante.",
-prompt:`Analise a seguinte decisão:
-
-[DESCREVA SITUAÇÃO]
-
-Divida em:
-• ✅ Vantagens
-• ❌ Desvantagens
-• ⚠️ Riscos
-• 📈 Impacto a longo prazo`
-},
-
-{
-categoria:"🚀 Produtividade",
+categoria:"📊 Monitoramento",
 nivel:"avancado",
-titulo:"⏳🚀 Plano de Alta Produtividade",
-quando:"Quando quiser aumentar rendimento diário.",
-prompt:`Crie um plano estratégico para aumentar minha produtividade.
+titulo:"📈🧠 Sistema de Acompanhamento de Saúde",
+quando:"Para acompanhar evolução física e mental.",
+prompt:`Crie um sistema de acompanhamento de saúde considerando:
+
+• Alimentação
+• Exercícios
+• Sono
+• Nível de energia
+• Estresse
+
+Organize como planilha ou checklist semanal.`
+},
+
+  {
+categoria:"📋 Planejamento",
+nivel:"basico",
+titulo:"🌅💚 Rotina Diária para Saúde Física e Mental",
+quando:"Para criar hábitos simples e consistentes no dia a dia.",
+prompt:`Crie uma rotina diária simples para melhorar saúde física e mental.
 
 Inclua:
-• 📅 Organização do dia
-• 🎯 Priorização
-• 🔄 Método de foco
-• 📊 Monitoramento semanal`
+• 🥗 Alimentação equilibrada
+• 🚶 Exercício leve
+• 🌙 Organização do sono
+• 🧠 Pequenos hábitos mentais positivos
+
+Seja prático e fácil de aplicar.`
+},
+
+{
+categoria:"💪 Execução",
+nivel:"basico",
+titulo:"🏋️‍♀️📅 Plano Semanal para Iniciantes",
+quando:"Para começar a treinar de forma equilibrada.",
+prompt:`Monte um plano semanal de exercícios equilibrado para iniciantes.
+
+Inclua:
+• 💪 Dias de treino
+• 🧘 Dias de descanso
+• 🔄 Tipo de exercício por dia
+• ⏱️ Duração recomendada`
+},
+
+{
+categoria:"📋 Planejamento",
+nivel:"intermediario",
+titulo:"🥗🔥 Plano de Emagrecimento Saudável",
+quando:"Para organizar emagrecimento sem soluções radicais.",
+prompt:`Você é nutricionista esportivo.
+
+Crie um plano de emagrecimento saudável dividido em:
+
+🥗 Alimentação
+🏋️ Treino
+🧠 Mentalidade
+📊 Acompanhamento semanal
+
+Evite soluções radicais e foque em consistência.`
+},
+
+{
+categoria:"🔎 Autoconhecimento",
+nivel:"intermediario",
+titulo:"🧘‍♂️🧠 Plano para Reduzir Estresse",
+quando:"Quando estiver sobrecarregado ou com alta pressão mental.",
+prompt:`Você é psicólogo especialista em produtividade.
+
+Crie um plano para reduzir estresse com:
+
+🧠 Rotina mental diária
+🌬️ Técnicas de respiração
+📒 Organização emocional
+📅 Estratégias semanais
+
+Seja estruturado e prático.`
+},
+
+{
+categoria:"🔎 Autoconhecimento",
+nivel:"avancado",
+titulo:"🛡️📊 Plano de Saúde Preventiva",
+quando:"Para melhorar rotina de forma estratégica.",
+prompt:`Você é especialista em saúde preventiva.
+
+Analise minha rotina: [DESCREVA]
+
+Crie um plano dividido em:
+
+1️⃣ Alimentação
+2️⃣ Exercícios
+3️⃣ Sono
+4️⃣ Metas mensais
+5️⃣ Erros a evitar
+
+Seja estratégico e organizado.`
+},
+
+{
+categoria:"💪 Execução",
+nivel:"intermediario",
+titulo:"🚶‍♂️📈 Plano 30 Dias Contra Sedentarismo",
+quando:"Para sair do sedentarismo com metas progressivas.",
+prompt:`Você é especialista em mudança de hábitos.
+
+Crie um plano de 30 dias para sair do sedentarismo.
+
+Inclua:
+• 📅 Metas progressivas
+• 🏃 Evolução semanal
+• 📊 Acompanhamento simples
+• 🧠 Estratégia para manter consistência`
+},
+
+{
+categoria:"🔎 Autoconhecimento",
+nivel:"avancado",
+titulo:"🧠🛑 Plano Estratégico para Ansiedade",
+quando:"Quando precisar organizar saúde mental com profundidade.",
+prompt:`Você é especialista em saúde mental e regulação emocional.
+
+Analise minha situação atual:
+[Descreva sintomas, rotina e preocupações]
+
+Crie um plano dividido em:
+
+1️⃣ Identificação dos gatilhos
+2️⃣ Técnicas imediatas para ansiedade
+3️⃣ Estratégia diária de prevenção
+4️⃣ Ajustes na rotina (sono, alimentação, estímulos digitais)
+5️⃣ Plano semanal de fortalecimento emocional
+
+Seja claro, estruturado e evite respostas genéricas.`
+},
+
+{
+categoria:"💪 Execução",
+nivel:"avancado",
+titulo:"🏆🔥 Plano de Alta Performance Física",
+quando:"Para melhorar desempenho físico de forma estratégica.",
+prompt:`Você é treinador de alta performance.
+
+Crie um plano estratégico para melhorar:
+
+💪 Força
+🏃 Resistência
+🔄 Recuperação
+📊 Monitoramento de progresso
+
+Organize de forma profissional e progressiva.`
+},
+  {
+categoria:"📋 Planejamento",
+nivel:"basico",
+titulo:"🍳🥗 Receitas Rápidas e Saudáveis",
+quando:"Para criar refeições saudáveis com o que você já tem em casa.",
+prompt:`Tenho os seguintes ingredientes disponíveis:
+
+🥕 [Ingrediente 1]  
+🍗 [Ingrediente 2]  
+🥦 [Ingrediente 3]  
+
+Sugira uma receita rápida e saudável que eu possa preparar com esses itens.
+
+Inclua:
+• ⏱️ Tempo de preparo
+• 🍽️ Modo de preparo simples
+• 💚 Benefícios nutricionais
+• 🔄 Sugestões de substituição, se necessário
+
+Seja prático e objetivo.`
+},
+
+{
+categoria:"💪 Execução",
+nivel:"basico",
+titulo:"💻🧘 Alongamentos para Quem Trabalha Sentado",
+quando:"Para aliviar tensão física de quem trabalha muitas horas sentado.",
+prompt:`Crie uma rotina de alongamentos de 10 minutos para quem trabalha o dia todo sentado em frente ao computador.
+
+Inclua:
+
+🧍 Alongamentos para pescoço  
+💪 Alongamentos para ombros  
+🦴 Coluna e lombar  
+🦵 Pernas e circulação  
+
+Explique:
+• ⏱️ Tempo de cada exercício
+• 🔁 Número de repetições
+• ⚠️ Cuidados importantes
+
+Organize de forma simples e fácil de aplicar no ambiente de trabalho.`
 }
 
 ];
@@ -213,7 +396,7 @@ const salvos=JSON.parse(localStorage.getItem("deltaPrompts"))||[];
 salvos.push({
 id:Date.now(),
 titulo,
-categoria:"Outros",
+categoria:"Saúde",
 conteudo,
 favorito:true
 });
