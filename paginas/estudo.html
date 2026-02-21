@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
+  <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
 </head>
 
 <body>
@@ -61,6 +62,14 @@
     >
     <div class="contador" id="contador"></div>
   </div>
+
+  <!-- 🔎 Filtro por Nível -->
+<div class="filtro-nivel" style="margin-bottom:20px;">
+  <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos</button>
+  <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+  <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+  <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+</div>
 
   <!-- 5️⃣ CARDS -->
   <div id="lista-prompts"></div>
@@ -377,11 +386,18 @@ function renderizar(arr) {
 
     grupo.forEach(p => {
 
-      const card = document.createElement("div");
-      card.className = "card";
+    const card = document.createElement("div");
+card.className = "card";
+card.setAttribute("data-nivel", p.nivel || "basico");
 
-      card.innerHTML = `
-        <h3>${p.titulo}</h3>
+   card.innerHTML = `
+  <div class="nivel nivel-${p.nivel || 'basico'}">
+    ${p.nivel === 'avancado' ? '🔴 Avançado' :
+      p.nivel === 'intermediario' ? '🟡 Intermediário' :
+      '🟢 Básico'}
+  </div>
+
+  <h3>${p.titulo}</h3>
         <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
         <pre>${p.prompt}</pre>
 
@@ -484,6 +500,7 @@ pre {
 
 </body>
 </html>
+
 
 
 
