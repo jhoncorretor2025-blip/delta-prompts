@@ -2,11 +2,9 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Ideias de Renda Extra | Delta Prompts</title>
+<title>💰 Ideias de Renda Extra | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="stylesheet" href="../../style.css">
-
-  
+<link rel="stylesheet" href="../../style.css">
 </head>
 
 <body>
@@ -14,300 +12,160 @@
 <div id="menu"></div>
 <script src="../../menu-loader.js"></script>
 
- 
-
-
-
 <main>
 
-<!-- 1. TÍTULO FORTE -->
-<section class="hero">
-  <h1>💰 Ideias Estratégicas de Renda Extra</h1>
-  <p>Prompts profissionais para gerar, validar e estruturar fontes reais de renda extra.</p>
-</section>
+<h1>💰 Ideias de Renda Extra</h1>
+<p>Prompts estratégicos para gerar novas fontes de renda usando inteligência artificial.</p>
 
-<!-- 2. OBJETIVO -->
-<section class="card">
-  <h3>🎯 Objetivo</h3>
-  <p>
-    Esta página reúne prompts estruturados para ajudar você a identificar,
-    validar e executar ideias de renda extra de forma prática e estratégica.
-  </p>
-</section>
+<!-- BUSCA -->
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrar()">
+  <div class="contador" id="contador"></div>
+</div>
 
-<!-- 3. BUSCA -->
-<section class="card">
-  <input type="text" id="busca" placeholder="🔎 Buscar ideia ou categoria..." oninput="filtrar()">
-  <div id="contador"></div>
-</section>
+<div id="lista">
 
-<!-- 4. CARDS -->
-<section id="lista"></section>
+<!-- ========================= -->
+<!-- 1️⃣ SIMPLES -->
+<!-- ========================= -->
+
+<div class="card" data-titulo="Ideias rápidas de renda extra">
+
+<div class="tag">💡 Simples</div>
+<h3>Ideias rápidas de renda extra</h3>
+
+<p><strong>📌 Quando usar:</strong> Quando quiser sugestões rápidas para começar hoje.</p>
+
+<p class="prompt-text">
+Liste 10 ideias práticas de renda extra que possam ser iniciadas com pouco investimento.
+</p>
+
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="renda1"
+data-titulo="Ideias rápidas de renda extra"
+data-texto="Liste 10 ideias práticas de renda extra que possam ser iniciadas com pouco investimento."
+data-categoria="Renda Extra">🤍</button>
+</div>
+
+</div>
+
+<!-- 2️⃣ SIMPLES -->
+
+<div class="card" data-titulo="Renda extra online">
+
+<div class="tag">🌐 Simples</div>
+<h3>Renda extra online</h3>
+
+<p><strong>📌 Quando usar:</strong> Para trabalhar apenas pela internet.</p>
+
+<p class="prompt-text">
+Liste 10 formas de ganhar dinheiro online usando habilidades simples.
+</p>
+
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="renda2"
+data-titulo="Renda extra online"
+data-texto="Liste 10 formas de ganhar dinheiro online usando habilidades simples."
+data-categoria="Renda Extra">🤍</button>
+</div>
+
+</div>
+
+<!-- 6 COMPLETOS ABAIXO -->
+
+<div class="card" data-titulo="Plano estruturado de renda extra">
+
+<div class="tag">📈 Completo</div>
+<h3>Plano estruturado de renda extra</h3>
+
+<p><strong>📌 Quando usar:</strong> Quando quiser transformar uma ideia em plano real.</p>
+
+<p class="prompt-text">
+Você é um especialista em empreendedorismo digital.
+
+Crie um plano detalhado para transformar a seguinte habilidade em renda extra:
+
+[Descreva a habilidade]
+
+Inclua:
+- Modelo de monetização
+- Público-alvo
+- Estratégia de divulgação
+- Estimativa de ganhos
+- Passo a passo inicial
+</p>
+
+<div class="acoes">
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
+<button onclick="abrirGemini(this)">🔷 Gemini</button>
+<button class="fav-btn"
+data-id="renda3"
+data-titulo="Plano estruturado de renda extra"
+data-texto="Você é um especialista em empreendedorismo digital. Crie um plano detalhado para transformar uma habilidade em renda extra."
+data-categoria="Renda Extra">🤍</button>
+</div>
+
+</div>
+
+<!-- ADICIONAR MAIS 5 COMPLETOS seguindo o mesmo padrão -->
+
+</div>
 
 </main>
 
 <script>
-const prompts = [
 
-{
-id: 1,
-categoria: "💻 Digital",
-titulo: "Mapeamento de Habilidades Monetizáveis",
-quando: "Quando você quer descobrir como ganhar dinheiro com o que já sabe fazer.",
-conteudo: `Você é um estrategista de negócios digitais.
-
-OBJETIVO:
-Mapear habilidades pessoais que possam gerar renda extra.
-
-INSTRUÇÕES:
-1. Liste habilidades técnicas e comportamentais.
-2. Sugira formas práticas de monetização.
-3. Indique plataformas ideais.
-4. Classifique por nível de dificuldade (baixo, médio, alto).
-5. Estime tempo para gerar os primeiros ganhos.
-
-Seja estratégico e realista.`
-},
-
-{
-id: 2,
-categoria: "📱 Redes Sociais",
-titulo: "Plano de Renda Extra com Instagram",
-quando: "Quando deseja usar Instagram para gerar renda paralela.",
-conteudo: `Crie um plano estratégico para monetizar um perfil no Instagram.
-
-Inclua:
-- Nicho ideal
-- Estratégia de conteúdo
-- Modelo de monetização
-- Cronograma de 30 dias
-- Meta de faturamento inicial
-
-Seja detalhado e estruturado.`
-},
-
-{
-id: 3,
-categoria: "🛒 Produtos",
-titulo: "Validação de Produto Antes de Investir",
-quando: "Antes de investir dinheiro em estoque ou produção.",
-conteudo: `Analise a viabilidade de um produto para renda extra.
-
-Inclua:
-- Público-alvo
-- Problema resolvido
-- Diferencial competitivo
-- Teste de validação barato
-- Riscos envolvidos
-
-Seja crítico e estratégico.`
-},
-
-{
-id: 4,
-categoria: "🤖 IA",
-titulo: "Renda Extra com Inteligência Artificial",
-quando: "Quando quer usar IA para gerar serviços e produtos.",
-conteudo: `Crie 5 modelos de serviços usando IA para renda extra.
-
-Para cada um:
-- Descreva o serviço
-- Público ideal
-- Ferramentas necessárias
-- Como conseguir os primeiros clientes
-- Ticket médio sugerido`
-},
-
-{
-id: 5,
-categoria: "🏠 Local",
-titulo: "Renda Extra na Minha Cidade",
-quando: "Quando deseja oportunidades físicas ou locais.",
-conteudo: `Liste oportunidades de renda extra locais considerando:
-
-- Cidade média brasileira
-- Baixo investimento inicial
-- Demanda recorrente
-- Possibilidade de escalar
-
-Explique como começar em cada caso.`
-},
-
-{
-id: 6,
-categoria: "📦 Escalável",
-titulo: "Construção de Micro Negócio Paralelo",
-quando: "Quando deseja criar algo que possa virar renda principal.",
-conteudo: `Crie um plano para iniciar um micro negócio paralelo.
-
-Inclua:
-- Ideia inicial
-- Modelo de receita
-- Estrutura mínima necessária
-- Plano de crescimento em 90 dias
-- Indicadores de validação`
-},
-
-{
-id: 7,
-categoria: "🛍 Marketplace",
-titulo: "Venda de Produtos na Shopee",
-quando: "Quando quer vender produtos físicos online com baixo investimento.",
-conteudo: `Crie um plano estratégico para vender produtos na Shopee.
-
-Inclua:
-- Como escolher produtos com alta demanda
-- Estratégia de precificação
-- Como analisar concorrência
-- Como estruturar anúncios persuasivos
-- Estratégia para conseguir as primeiras avaliações
-- Meta de faturamento inicial
-
-Seja prático e realista.`
-},
-
-{
-id: 8,
-categoria: "🎥 TikTok",
-titulo: "Vendas pelo TikTok Shop",
-quando: "Quando deseja vender produtos usando vídeos curtos.",
-conteudo: `Monte um plano para vender produtos pelo TikTok.
-
-Inclua:
-- Tipo de produto ideal
-- Estratégia de vídeos que convertem
-- Roteiro simples de vídeo vendedor
-- Frequência de postagem
-- Estratégia para gerar tráfego
-- Como transformar visualizações em vendas
-
-Seja estratégico e focado em conversão.`
-},
-
-{
-id: 9,
-categoria: "🖨 Serviços",
-titulo: "Venda de Cartão de Visita",
-quando: "Quando deseja ganhar dinheiro oferecendo criação ou revenda de cartões.",
-conteudo: `Crie um plano para vender cartões de visita como renda extra.
-
-Inclua:
-- Público ideal (profissionais locais)
-- Modelo de oferta (design + impressão)
-- Estratégia de abordagem
-- Como fechar os primeiros clientes
-- Margem de lucro sugerida
-- Como escalar o serviço
-
-Seja direto e comercial.`
-},
-
-{
-id: 10,
-categoria: "📄 Serviços",
-titulo: "Venda de Currículos Profissionais",
-quando: "Quando quer oferecer serviço de criação ou melhoria de currículos.",
-conteudo: `Crie um modelo de negócio para vender currículos profissionais.
-
-Inclua:
-- Público-alvo
-- Estrutura ideal de currículo moderno
-- Diferencial competitivo
-- Estratégia para captar clientes
-- Ticket médio sugerido
-- Possibilidade de oferecer versão LinkedIn
-
-Seja estruturado e profissional.`
-},
-
-{
-id: 11,
-categoria: "🌐 Digital",
-titulo: "Criação de Sites como Renda Extra",
-quando: "Quando deseja ganhar dinheiro criando sites simples.",
-conteudo: `Monte um plano para ganhar dinheiro criando sites simples.
-
-Inclua:
-- Tipo de cliente ideal
-- Ferramentas recomendadas
-- Modelo de preço
-- Como conseguir os primeiros clientes
-- Como oferecer manutenção mensal
-- Meta de faturamento inicial
-
-Seja estratégico e aplicável.`
+function copiar(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  navigator.clipboard.writeText(texto);
+  btn.innerText = "✅ Copiado!";
+  setTimeout(()=>btn.innerText="📋 Copiar",1500);
 }
 
-];
+function abrirChatGPT(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
+}
 
-
-const lista = document.getElementById("lista");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
-
-function renderizar(arr){
-lista.innerHTML = "";
-contador.innerText = `Total: ${arr.length} prompt${arr.length!==1?"s":""}`;
-
-arr.forEach(p=>{
-const favorito = JSON.parse(localStorage.getItem("favoritosRendaExtra")) || [];
-const ativo = favorito.includes(p.id);
-
-lista.innerHTML += `
-<div class="card">
-  <div style="font-size:13px; opacity:0.7;">${p.categoria}</div>
-  <h3>${p.titulo}</h3>
-  <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-  <pre>${p.conteudo}</pre>
-
-  <div class="acoes">
-    <button onclick="favoritar(${p.id})">
-      ${ativo ? "⭐ Favoritado" : "☆ Favoritar"}
-    </button>
-    <button onclick="copiar(\`${p.conteudo}\`)">📋 Copiar</button>
-    <button onclick="abrirChat()">💬 ChatGPT</button>
-    <button onclick="abrirGemini()">🔷 Gemini</button>
-  </div>
-</div>
-`;
-});
+function abrirGemini(btn){
+  const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
+  const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
+  window.open(url, "_blank");
 }
 
 function filtrar(){
-const termo = busca.value.toLowerCase();
-const filtrados = prompts.filter(p =>
-p.titulo.toLowerCase().includes(termo) ||
-p.categoria.toLowerCase().includes(termo) ||
-p.conteudo.toLowerCase().includes(termo)
-);
-renderizar(filtrados);
+  const termo = document.getElementById("busca").value.toLowerCase();
+  const cards = document.querySelectorAll(".card");
+  let total = 0;
+
+  cards.forEach(c=>{
+    const titulo = c.dataset.titulo.toLowerCase();
+    if(titulo.includes(termo)){
+      c.style.display="block";
+      total++;
+    } else {
+      c.style.display="none";
+    }
+  });
+
+  document.getElementById("contador").innerText = "Total: "+total+" prompts";
 }
 
-function copiar(texto){
-navigator.clipboard.writeText(texto);
-alert("Prompt copiado!");
-}
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("contador").innerText =
+    "Total: "+document.querySelectorAll(".card").length+" prompts";
+});
 
-function favoritar(id){
-let fav = JSON.parse(localStorage.getItem("favoritosRendaExtra")) || [];
-if(fav.includes(id)){
-fav = fav.filter(f=>f!==id);
-}else{
-fav.push(id);
-}
-localStorage.setItem("favoritosRendaExtra", JSON.stringify(fav));
-renderizar(prompts);
-}
-
-function abrirChat(){
-window.open("https://chat.openai.com", "_blank");
-}
-
-function abrirGemini(){
-window.open("https://gemini.google.com", "_blank");
-}
-
-renderizar(prompts);
 </script>
 
 </body>
