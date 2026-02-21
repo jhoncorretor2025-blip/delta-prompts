@@ -474,6 +474,26 @@ function abrirGemini(texto) {
   window.open(url, "_blank");
 }
 
+  function filtrarNivel(event, nivel) {
+
+  const botoes = document.querySelectorAll(".filtro-nivel button");
+  botoes.forEach(btn => btn.classList.remove("ativo"));
+  event.target.classList.add("ativo");
+
+  const cards = document.querySelectorAll("#lista-prompts .card");
+
+  cards.forEach(card => {
+
+    if (nivel === "todos") {
+      card.style.display = "block";
+    } else {
+      card.style.display =
+        card.dataset.nivel === nivel ? "block" : "none";
+    }
+
+  });
+}
+
 renderizar(promptsEstudo);
 
 </script>
@@ -517,6 +537,7 @@ pre {
 
 </body>
 </html>
+
 
 
 
