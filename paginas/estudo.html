@@ -339,30 +339,46 @@ const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
 function renderizar(arr) {
+
   lista.innerHTML = "";
   contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
-  arr.forEach(p => {
+  ordemCategorias.forEach(cat => {
 
-    const card = document.createElement("div");
-    card.className = "card";
+    const grupo = arr.filter(p => p.categoria === cat);
 
-    card.innerHTML = `
-      <div class="meta">${p.categoria}</div>
-      <h3>${p.titulo}</h3>
-      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-      <pre>${p.prompt}</pre>
+    if (grupo.length === 0) return;
 
-      <div class="acoes">
-        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-      </div>
-    `;
+    // 🔹 Título VISÍVEL da seção
+    const tituloSecao = document.createElement("h2");
+    tituloSecao.className = "secao-titulo";
+    tituloSecao.innerText = cat;
+    lista.appendChild(tituloSecao);
 
-    lista.appendChild(card);
+    grupo.forEach(p => {
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <h3>${p.titulo}</h3>
+        <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+        <pre>${p.prompt}</pre>
+
+        <div class="acoes">
+          <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+          <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+          <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+          <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+        </div>
+      `;
+
+      lista.appendChild(card);
+
+    });
+
   });
+
 }
 
 function filtrarPrompts() {
@@ -448,6 +464,7 @@ pre {
 
 </body>
 </html>
+
 
 
 
