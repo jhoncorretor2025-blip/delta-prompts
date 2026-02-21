@@ -1,1 +1,237 @@
-teste
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Estudo Estratégico | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/delta-prompts/style.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+<h1>📚 Jornada de Estudo Estratégico</h1>
+
+<p>
+Organize seu aprendizado em etapas claras: preparação, estruturação,
+aprendizado, memorização e avaliação.
+</p>
+
+<section class="card">
+<h3>🎯 Objetivo</h3>
+<p>
+Transformar estudo em processo estratégico, estruturado e eficiente.
+</p>
+</section>
+
+<div class="top-bar">
+<input
+type="text"
+id="busca"
+placeholder="🔎 Buscar modelo..."
+oninput="filtrarPrompts()"
+>
+<div class="contador" id="contador"></div>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const ordemCategorias = [
+"🧭 Preparação",
+"📚 Estruturação",
+"🎓 Didática",
+"🧠 Memorização",
+"📊 Avaliação",
+"🧠 Aprimoramento"
+];
+
+const promptsEstudo = [
+
+{
+categoria: "🧭 Preparação",
+titulo: "Plano com Princípio de Pareto",
+quando: "Para aprender do zero focando no essencial.",
+prompt: `Quero aprender [ASSUNTO] do zero.
+
+Use o princípio de Pareto (80/20) para identificar o conteúdo essencial.
+
+Crie um plano estratégico considerando:
+- Objetivo final
+- Tempo disponível
+- Aplicação prática`
+},
+
+{
+categoria: "📚 Estruturação",
+titulo: "Dividir Tema em Módulos",
+quando: "Para organizar como se fosse um curso.",
+prompt: `Estruture o tema [ASSUNTO] em módulos progressivos.
+
+Inclua:
+- Módulos
+- Aulas
+- Exercícios práticos`
+},
+
+{
+categoria: "🎓 Didática",
+titulo: "Explicação com Técnica de Feynman",
+quando: "Para entender profundamente.",
+prompt: `Explique [CONCEITO] como se fosse para uma criança de 12 anos.
+
+Depois identifique partes confusas e explique novamente.`
+},
+
+{
+categoria: "🧠 Memorização",
+titulo: "Estratégia de Memorização",
+quando: "Para fixar conteúdo.",
+prompt: `Crie estratégia de memorização para [ASSUNTO].
+
+Inclua:
+- Repetição espaçada
+- Associação mental
+- Resumo ultra condensado`
+},
+
+{
+categoria: "📊 Avaliação",
+titulo: "Simulado Estratégico",
+quando: "Antes da prova.",
+prompt: `Crie um simulado sobre [ASSUNTO].
+
+Inclua:
+- Questões fáceis
+- Intermediárias
+- Avançadas
+- Gabarito comentado`
+},
+
+{
+categoria: "🧠 Aprimoramento",
+titulo: "Análise e Melhoria",
+quando: "Para evoluir após estudar.",
+prompt: `Analise este [PROJETO/TEXTO].
+
+Identifique:
+- Pontos fortes
+- Pontos fracos
+- Melhorias possíveis`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+
+lista.innerHTML = "";
+contador.innerText = `Total: ${arr.length} modelo(s)`;
+
+ordemCategorias.forEach(cat => {
+
+const grupo = arr.filter(p => p.categoria === cat);
+if (grupo.length === 0) return;
+
+const tituloSecao = document.createElement("h2");
+tituloSecao.className = "secao-titulo";
+tituloSecao.innerText = cat;
+lista.appendChild(tituloSecao);
+
+grupo.forEach(p => {
+
+const card = document.createElement("div");
+card.className = "card";
+
+card.innerHTML = `
+<h3>${p.titulo}</h3>
+<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+<pre>${p.prompt}</pre>
+<div class="acoes">
+<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+</div>
+`;
+
+lista.appendChild(card);
+
+});
+
+});
+
+}
+
+function filtrarPrompts() {
+const termo = busca.value.toLowerCase();
+const filtrados = promptsEstudo.filter(p =>
+p.titulo.toLowerCase().includes(termo) ||
+p.prompt.toLowerCase().includes(termo) ||
+p.categoria.toLowerCase().includes(termo)
+);
+renderizar(filtrados);
+}
+
+function copiarPrompt(texto) {
+navigator.clipboard.writeText(texto);
+alert("📋 Copiado!");
+}
+
+function abrirChatGPT(texto) {
+window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto), "_blank");
+}
+
+function abrirGemini(texto) {
+window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+}
+
+renderizar(promptsEstudo);
+
+</script>
+
+<style>
+
+.secao-titulo {
+margin-top: 40px;
+margin-bottom: 15px;
+padding: 10px 0;
+font-size: 22px;
+border-bottom: 2px solid #5b5ce2;
+}
+
+.top-bar {
+display: flex;
+gap: 15px;
+margin: 20px 0;
+flex-wrap: wrap;
+}
+
+.top-bar input {
+flex: 1;
+padding: 14px;
+border-radius: 10px;
+border: 1px solid #e5e7eb;
+}
+
+pre {
+white-space: pre-wrap;
+background: #f9fafb;
+padding: 15px;
+border-radius: 10px;
+border: 1px solid #e5e7eb;
+}
+
+</style>
+
+</body>
+</html>
