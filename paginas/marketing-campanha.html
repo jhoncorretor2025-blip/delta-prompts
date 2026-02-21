@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Marketing Campanha | Delta Prompts</title>
+<title>Marketing Visual & Imagens | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
@@ -17,24 +17,38 @@
 <main>
 
 <!-- 1️⃣ TÍTULO FORTE -->
-<h1>🚀 Marketing de Campanhas Estratégicas</h1>
+<h1>🎨 Marketing Visual & Criativos</h1>
 
-<!-- 2️⃣ INTRODUÇÃO -->
+<!-- 2️⃣ INTRODUÇÃO EMOCIONAL -->
 <p>
-Prompts profissionais para estruturar campanhas completas, aumentar conversão e organizar estratégias de venda.
+Crie artes que vendem antes mesmo da pessoa ler o texto.  
+Prompts profissionais para gerar folders, banners, posts e imagens de alto impacto.
 </p>
 
 <!-- 3️⃣ OBJETIVO -->
 <section class="card">
 <h3>🎯 Objetivo</h3>
 <p>
-Ajudar você a criar campanhas organizadas, persuasivas e orientadas a resultado.
+Ajudar você a criar imagens estratégicas para campanhas, lojas, redes sociais e anúncios pagos.
 </p>
+</section>
+
+<!-- BLOCO DE INSPIRAÇÃO -->
+<section class="card">
+<h3>🔥 O que você pode criar aqui</h3>
+<ul style="line-height:1.8;">
+<li>📦 Folder promocional profissional</li>
+<li>🛍️ Banner para loja física</li>
+<li>📱 Criativo para Instagram</li>
+<li>🖼️ Imagem para campanha paga</li>
+<li>🏷️ Arte para oferta com desconto</li>
+<li>🛒 Imagem para vitrine virtual</li>
+</ul>
 </section>
 
 <!-- 4️⃣ BUSCA -->
 <div class="top-bar">
-<input type="text" id="busca" placeholder="🔎 Buscar modelo de campanha..." oninput="filtrarPrompts()">
+<input type="text" id="busca" placeholder="🔎 Buscar modelo de criativo..." oninput="filtrarPrompts()">
 <div class="contador" id="contador"></div>
 </div>
 
@@ -46,14 +60,13 @@ Ajudar você a criar campanhas organizadas, persuasivas e orientadas a resultado
 <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
 </div>
 
-<!-- LISTA -->
 <div id="lista-prompts"></div>
 
 </main>
 
 <script>
 
-const promptsCampanha = [
+const promptsImagem = [
 
 /* ===================== */
 /* 2 BÁSICOS */
@@ -61,30 +74,32 @@ const promptsCampanha = [
 
 {
 nivel: "basico",
-titulo: "Campanha Direta Simples",
-quando: "Para criar campanha rápida de venda.",
-prompt: `Crie uma campanha simples para vender:
+titulo: "Imagem Promocional Simples",
+quando: "Para criar arte rápida de oferta.",
+prompt: `Crie uma imagem promocional para:
 
-[DESCREVA PRODUTO]
+[PRODUTO]
 
 Inclua:
-- Benefício principal
-- Linguagem persuasiva
-- Chamada para ação`
+- Destaque no produto
+- Texto curto chamativo
+- Fundo atrativo
+- Estilo moderno`
 },
 
 {
 nivel: "basico",
-titulo: "Storytelling de Campanha",
-quando: "Para gerar conexão antes da venda.",
-prompt: `Crie um storytelling curto para promover:
+titulo: "Banner para Loja",
+quando: "Para criar banner físico ou digital.",
+prompt: `Crie um banner promocional para loja com:
 
-[PRODUTO]
+[PRODUTO OU PROMOÇÃO]
 
-Estruture:
-- Problema
-- Transformação
-- Conexão com oferta`
+Inclua:
+- Oferta clara
+- Cores chamativas
+- Elemento visual forte
+- Destaque para preço ou desconto`
 },
 
 /* ===================== */
@@ -93,103 +108,101 @@ Estruture:
 
 {
 nivel: "intermediario",
-titulo: "Campanha Direta com 3 Versões",
-quando: "Para testar variações de conversão.",
-prompt: `Você é especialista em marketing digital focado em conversão.
-
-Crie uma campanha direta para vender:
-[Descreva o produto]
-
-Regras:
-- Linguagem persuasiva
-- Destacar principal benefício
-- Criar urgência
-- Finalizar com CTA
-- Gerar 3 versões diferentes`
-},
-
-{
-nivel: "intermediario",
-titulo: "Storytelling Estratégico com 3 Versões",
-quando: "Para criar conexão emocional estruturada.",
-prompt: `Crie um storytelling para promover:
-[Produto]
-
-Estrutura:
-- Situação inicial
-- Conflito
-- Transformação
-- Conexão com produto
-- Gerar 3 versões diferentes`
-},
-
-{
-nivel: "intermediario",
-titulo: "Sequência Estratégica de WhatsApp",
-quando: "Para conduzir cliente até o fechamento.",
-prompt: `Você é especialista em vendas consultivas.
-
-Crie sequência estratégica de 5 mensagens para WhatsApp:
-
-Produto:
-[PREENCHA]
-
-Inclua:
-- Quebra de objeção
-- Prova social
-- Oferta
-- CTA`
-},
-
-{
-nivel: "avancado",
-titulo: "Funil Completo de Alta Conversão",
-quando: "Para estruturar campanha completa com tráfego.",
-prompt: `Você é estrategista de marketing digital especialista em funis de alta conversão.
-
-CONTEXTO:
-[Produto]
-
-Crie funil completo com:
-- Topo
-- Meio
-- Fundo
-- Oferta
-- Estratégia de tráfego
-
-Organize em etapas numeradas.
-Inclua exemplos práticos.`
-},
-
-{
-nivel: "avancado",
-titulo: "Plano de Lançamento Estratégico",
-quando: "Para organizar lançamento de produto.",
-prompt: `Crie plano estratégico de lançamento para:
+titulo: "Folder Promocional Profissional",
+quando: "Para campanhas estruturadas.",
+prompt: `Crie conceito visual para folder promocional de:
 
 [PRODUTO]
 
 Inclua:
-- Aquecimento
-- Conteúdo pré-lançamento
-- Oferta principal
-- Estratégia de escassez
-- Pós-venda`
+- Layout organizado
+- Hierarquia visual
+- Destaque para oferta
+- Elementos gráficos estratégicos
+- Sugestão de cores`
+},
+
+{
+nivel: "intermediario",
+titulo: "Criativo para Instagram Ads",
+quando: "Para anúncio patrocinado.",
+prompt: `Crie conceito visual para anúncio no Instagram:
+
+[PRODUTO]
+
+Inclua:
+- Gancho visual forte
+- Foco no benefício
+- Estilo moderno
+- Sugestão de texto curto
+- CTA visual`
+},
+
+{
+nivel: "intermediario",
+titulo: "Imagem para Campanha Sazonal",
+quando: "Para datas comemorativas.",
+prompt: `Crie conceito visual para campanha sazonal:
+
+[PRODUTO]
+[DATA COMEMORATIVA]
+
+Inclua:
+- Elementos temáticos
+- Oferta especial
+- Composição equilibrada
+- Estilo chamativo`
 },
 
 {
 nivel: "avancado",
-titulo: "Análise e Otimização de Campanha",
-quando: "Para melhorar campanha já existente.",
-prompt: `Analise a seguinte campanha:
+titulo: "Direção de Arte Completa para Campanha",
+quando: "Para criar identidade visual estratégica.",
+prompt: `Você é diretor de arte especialista em campanhas comerciais.
 
-[COLE A CAMPANHA]
+Crie direção visual completa para:
 
-Identifique:
-- Pontos fracos
-- Falhas de persuasão
-- Melhorias estratégicas
-- Ajustes de conversão`
+[PRODUTO]
+
+Inclua:
+- Conceito criativo
+- Paleta de cores
+- Tipografia
+- Elementos visuais
+- Estilo fotográfico
+- Aplicação em diferentes formatos`
+},
+
+{
+nivel: "avancado",
+titulo: "Criativo de Alta Conversão para Tráfego Pago",
+quando: "Para anúncios focados em performance.",
+prompt: `Crie conceito visual focado em alta conversão para tráfego pago:
+
+[PRODUTO]
+
+Inclua:
+- Elemento de impacto imediato
+- Prova visual
+- Destaque para benefício principal
+- Urgência visual
+- CTA estratégico`
+},
+
+{
+nivel: "avancado",
+titulo: "Vitrine Visual para Loja Online",
+quando: "Para destacar produtos em e-commerce.",
+prompt: `Crie conceito visual para vitrine digital de:
+
+[PRODUTO]
+
+Inclua:
+- Composição elegante
+- Destaque no produto
+- Iluminação estratégica
+- Fundo profissional
+- Estilo premium`
 }
 
 ];
@@ -236,7 +249,7 @@ lista.appendChild(card);
 
 function filtrarPrompts() {
 const termo = busca.value.toLowerCase();
-const filtrados = promptsCampanha.filter(p =>
+const filtrados = promptsImagem.filter(p =>
 p.titulo.toLowerCase().includes(termo) ||
 p.prompt.toLowerCase().includes(termo)
 );
@@ -270,7 +283,7 @@ const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
 prompts.push({
 id: Date.now(),
 titulo,
-categoria: "Marketing Campanha",
+categoria: "Marketing Imagem",
 conteudo,
 favorito: true
 });
@@ -288,7 +301,7 @@ const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
 window.open(url, "_blank");
 }
 
-renderizar(promptsCampanha);
+renderizar(promptsImagem);
 
 </script>
 
