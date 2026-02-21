@@ -1,186 +1,217 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>Estudo Estratégico | Delta Prompts</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/delta-prompts/style.css">
+  <meta charset="UTF-8">
+  <title>Teste de Níveis | Delta Prompts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS Global -->
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- CSS Modular de Melhorias -->
+  <link rel="stylesheet" href="../css/melhoriaspaginas.css">
 </head>
 
 <body>
 
 <div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js"></script>
+<script src="../menu-loader.js"></script>
 
 <main>
 
-<h1>📚 Sistema de Estudo Estratégico</h1>
+  <!-- TÍTULO -->
+  <h1>🎓 Sistema de Prompts por Nível</h1>
+  <p>
+    Explore os prompts organizados por grau de complexidade.
+    Escolha entre básico, intermediário ou avançado.
+  </p>
 
-<p>
-Aprenda de forma estruturada seguindo uma jornada inteligente.
-Não é apenas uma lista de prompts — é um método organizado.
-</p>
+  <!-- FILTRO DE NÍVEL -->
+  <div class="filtro-nivel">
+    <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos</button>
+    <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+    <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+    <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+  </div>
 
-<section class="card destaque">
-<h3>🗺️ Como Funciona a Jornada</h3>
-<ul class="jornada-lista">
-<li><strong>🧭 Preparação:</strong> Defina objetivo e plano.</li>
-<li><strong>📚 Estruturação:</strong> Organize o conteúdo.</li>
-<li><strong>🎓 Didática:</strong> Entenda com clareza.</li>
-<li><strong>🧠 Memorização:</strong> Fixe o conhecimento.</li>
-<li><strong>📊 Avaliação:</strong> Teste e valide.</li>
-<li><strong>🚀 Aprimoramento:</strong> Evolua após os erros.</li>
-</ul>
-</section>
+  <!-- ========================= -->
+  <!-- PROMPT 1 - BÁSICO -->
+  <!-- ========================= -->
 
-<div class="top-bar">
-<input
-type="text"
-id="busca"
-placeholder="🔎 Buscar modelo de estudo..."
-oninput="filtrarPrompts()"
->
-<div class="contador" id="contador"></div>
-</div>
+  <div class="card" data-nivel="basico">
 
-<div id="lista-prompts"></div>
+    <div class="nivel nivel-basico">🟢 Básico</div>
+
+    <h3>1️⃣ Explicação Simples</h3>
+
+    <p><strong>Quando usar:</strong> Para entender rapidamente um conceito novo.</p>
+
+    <p>
+Você é um professor experiente.
+Explique o seguinte tema de forma simples e objetiva:
+
+[Tema]
+
+Use exemplos práticos e linguagem acessível.
+    </p>
+
+  </div>
+
+  <!-- ========================= -->
+  <!-- PROMPT 2 - BÁSICO -->
+  <!-- ========================= -->
+
+  <div class="card" data-nivel="basico">
+
+    <div class="nivel nivel-basico">🟢 Básico</div>
+
+    <h3>2️⃣ Resumo Direto</h3>
+
+    <p><strong>Quando usar:</strong> Quando precisar revisar conteúdo rapidamente.</p>
+
+    <p>
+Resuma o seguinte conteúdo de forma clara e organizada:
+
+[Conteúdo]
+
+Use tópicos e destaque os pontos principais.
+    </p>
+
+  </div>
+
+  <!-- ========================= -->
+  <!-- PROMPT 3 - INTERMEDIÁRIO -->
+  <!-- ========================= -->
+
+  <div class="card" data-nivel="intermediario">
+
+    <div class="nivel nivel-intermediario">🟡 Intermediário</div>
+
+    <h3>3️⃣ Explicação Estruturada</h3>
+
+    <p><strong>Quando usar:</strong> Para aprender com mais profundidade e organização.</p>
+
+    <p>
+Você é um especialista no assunto.
+
+Explique o seguinte tema:
+
+[Tema]
+
+Estruture sua resposta em:
+- Definição
+- Contexto
+- Exemplos
+- Aplicação prática
+    </p>
+
+  </div>
+
+  <!-- ========================= -->
+  <!-- PROMPT 4 - INTERMEDIÁRIO -->
+  <!-- ========================= -->
+
+  <div class="card" data-nivel="intermediario">
+
+    <div class="nivel nivel-intermediario">🟡 Intermediário</div>
+
+    <h3>4️⃣ Perguntas para Fixação</h3>
+
+    <p><strong>Quando usar:</strong> Para testar seu conhecimento.</p>
+
+    <p>
+Crie 10 perguntas sobre o seguinte tema:
+
+[Tema]
+
+Inclua:
+- Perguntas conceituais
+- Perguntas práticas
+- Respostas comentadas
+    </p>
+
+  </div>
+
+  <!-- ========================= -->
+  <!-- PROMPT 5 - AVANÇADO -->
+  <!-- ========================= -->
+
+  <div class="card" data-nivel="avancado">
+
+    <div class="nivel nivel-avancado">🔴 Avançado</div>
+
+    <h3>5️⃣ Análise Profunda</h3>
+
+    <p><strong>Quando usar:</strong> Para dominar um tema com visão crítica.</p>
+
+    <p>
+Você é um especialista acadêmico.
+
+Analise profundamente o seguinte tema:
+
+[Tema]
+
+Inclua:
+- Contexto histórico
+- Pontos fortes
+- Limitações
+- Aplicações atuais
+- Perspectivas futuras
+    </p>
+
+  </div>
+
+  <!-- ========================= -->
+  <!-- PROMPT 6 - AVANÇADO -->
+  <!-- ========================= -->
+
+  <div class="card" data-nivel="avancado">
+
+    <div class="nivel nivel-avancado">🔴 Avançado</div>
+
+    <h3>6️⃣ Plano de Estudo Estratégico</h3>
+
+    <p><strong>Quando usar:</strong> Para criar domínio estruturado sobre um assunto.</p>
+
+    <p>
+Crie um plano de estudo completo para aprender:
+
+[Tema]
+
+Inclua:
+- Ordem de aprendizado
+- Recursos sugeridos
+- Exercícios práticos
+- Cronograma semanal
+- Indicadores de evolução
+    </p>
+
+  </div>
 
 </main>
 
+<!-- SCRIPT FILTRO -->
 <script>
+function filtrarNivel(event, nivel) {
 
-const promptsEstudo = [
+  const cards = document.querySelectorAll(".card");
+  const botoes = document.querySelectorAll(".filtro-nivel button");
 
-{ categoria:"🧭 Preparação", titulo:"Plano com Pareto",
-quando:"Aprender focando no essencial.",
-prompt:`Quero aprender [ASSUNTO] do zero usando o princípio 80/20.
-Crie um plano estratégico focado no essencial.` },
+  botoes.forEach(btn => btn.classList.remove("ativo"));
+  event.target.classList.add("ativo");
 
-{ categoria:"📚 Estruturação", titulo:"Dividir em Módulos",
-quando:"Organizar como curso.",
-prompt:`Divida o tema [ASSUNTO] em módulos progressivos com exercícios.` },
+  cards.forEach(card => {
 
-{ categoria:"🎓 Didática", titulo:"Explicação Simplificada",
-quando:"Entender claramente.",
-prompt:`Explique [ASSUNTO] como para um iniciante usando analogias.` },
-
-{ categoria:"🧠 Memorização", titulo:"Mapa Mental Estratégico",
-quando:"Fixar conteúdo visualmente.",
-prompt:`Crie um mapa mental estruturado sobre [ASSUNTO].` },
-
-{ categoria:"📊 Avaliação", titulo:"Simulado Inteligente",
-quando:"Testar conhecimento.",
-prompt:`Crie um simulado com níveis fácil, médio e difícil sobre [ASSUNTO].` },
-
-{ categoria:"🚀 Aprimoramento", titulo:"Análise de Erros",
-quando:"Evoluir após avaliação.",
-prompt:`Analise meus erros em [ASSUNTO] e sugira melhorias práticas.` }
-
-];
-
-const lista = document.getElementById("lista-prompts");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
-
-function renderizar(arr) {
-
-  lista.innerHTML = "";
-  contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
-
-  const categoriasUnicas = [...new Set(arr.map(p => p.categoria))];
-
-  categoriasUnicas.forEach(cat => {
-
-    const grupo = arr.filter(p => p.categoria === cat);
-
-    const tituloSecao = document.createElement("h2");
-    tituloSecao.className = "secao-titulo";
-    tituloSecao.innerText = cat;
-    lista.appendChild(tituloSecao);
-
-    grupo.forEach(p => {
-
-      const card = document.createElement("div");
-      card.className = "card";
-
-      card.innerHTML = `
-        <h3>${p.titulo}</h3>
-        <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-        <pre>${p.prompt}</pre>
-        <div class="acoes">
-          <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-        </div>
-      `;
-
-      lista.appendChild(card);
-
-    });
+    if (nivel === "todos") {
+      card.style.display = "block";
+    } else {
+      card.style.display =
+        card.dataset.nivel === nivel ? "block" : "none";
+    }
 
   });
-
 }
-
-function filtrarPrompts() {
-  const termo = busca.value.toLowerCase();
-  const filtrados = promptsEstudo.filter(p =>
-    p.titulo.toLowerCase().includes(termo) ||
-    p.prompt.toLowerCase().includes(termo)
-  );
-  renderizar(filtrados);
-}
-
-function copiarPrompt(texto) {
-  navigator.clipboard.writeText(texto);
-  alert("📋 Prompt copiado!");
-}
-
-renderizar(promptsEstudo);
-
 </script>
-
-<style>
-
-.destaque {
-background: linear-gradient(135deg,#f0f3ff,#ffffff);
-border-left: 4px solid #5b5ce2;
-}
-
-.jornada-lista {
-margin-top:10px;
-line-height:1.8;
-}
-
-.secao-titulo {
-margin-top: 50px;
-margin-bottom: 20px;
-padding-bottom: 8px;
-font-size: 24px;
-border-bottom: 3px solid #5b5ce2;
-}
-
-.top-bar {
-display: flex;
-gap: 15px;
-margin: 25px 0;
-flex-wrap: wrap;
-}
-
-.top-bar input {
-flex: 1;
-padding: 14px;
-border-radius: 10px;
-border: 1px solid #e5e7eb;
-}
-
-pre {
-white-space: pre-wrap;
-background: #f9fafb;
-padding: 15px;
-border-radius: 10px;
-border: 1px solid #e5e7eb;
-}
-
-</style>
 
 </body>
 </html>
