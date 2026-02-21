@@ -1,1 +1,251 @@
 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>💻 Serviços Digitais | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+<h1>💻🚀 Serviços Digitais e Infoprodutos</h1>
+
+<p>
+Prompts estratégicos para criar e vender serviços digitais com profissionalismo e posicionamento forte.
+</p>
+
+<section class="card">
+  <h3>🎯 Objetivo</h3>
+  <p>
+    Ajudar você a estruturar serviços digitais como criação de currículo, design gráfico e desenvolvimento de sites.
+  </p>
+</section>
+
+<section class="card">
+  <h3>🗺️ Jornada dos Serviços Digitais</h3>
+  <ul style="line-height:1.6;">
+    <li><strong>💡 Ideação:</strong> Definir o serviço e proposta de valor.</li>
+    <li><strong>🛠️ Execução:</strong> Criar o material com padrão profissional.</li>
+  </ul>
+</section>
+
+<div class="top-bar">
+<input type="text" id="busca" placeholder="🔎 Buscar modelo..." oninput="filtrarPrompts()">
+<div class="contador" id="contador"></div>
+</div>
+
+<div class="filtro-nivel" style="margin-bottom:20px;">
+<button onclick="filtrarNivel(event,'todos')" class="ativo">Todos</button>
+<button onclick="filtrarNivel(event,'basico')">🟢 Básico</button>
+<button onclick="filtrarNivel(event,'intermediario')">🟡 Intermediário</button>
+<button onclick="filtrarNivel(event,'avancado')">🔴 Avançado</button>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const ordemCategorias = [
+"💡 Ideação",
+"🛠️ Execução"
+];
+
+const prompts = [
+
+{
+categoria:"💡 Ideação",
+nivel:"basico",
+titulo:"💳🎨 Serviço de Criação de Cartão de Visita",
+quando:"Quando quiser oferecer design para pequenos negócios.",
+prompt:`Você é um designer profissional.
+
+Crie um modelo estratégico de cartão de visita para:
+
+[DESCREVA O PROFISSIONAL OU EMPRESA]
+
+Inclua:
+🎨 Estilo visual
+📌 Informações essenciais
+🧠 Posicionamento visual
+📱 Versão digital
+🖨️ Orientação para impressão`
+},
+
+{
+categoria:"💡 Ideação",
+nivel:"basico",
+titulo:"📄📢 Serviço de Criação de Folder",
+quando:"Para divulgar empresas e serviços locais.",
+prompt:`Você é especialista em design e marketing.
+
+Crie a estrutura de um folder profissional para:
+
+[DESCREVA O NEGÓCIO]
+
+Inclua:
+🎯 Objetivo
+📌 Estrutura de conteúdo
+🧠 Estratégia persuasiva
+📷 Sugestão de imagens
+📞 Chamada para ação`
+},
+
+{
+categoria:"🛠️ Execução",
+nivel:"intermediario",
+titulo:"📑🚀 Criação de Currículo Profissional",
+quando:"Quando quiser oferecer serviço de currículo estratégico.",
+prompt:`Você é especialista em recrutamento.
+
+Crie um currículo estratégico para:
+
+[DESCREVA O PERFIL]
+
+Inclua:
+🎯 Resumo impactante
+💼 Experiência organizada
+🏆 Competências
+📈 Resultados
+✨ Diferencial competitivo`
+},
+
+{
+categoria:"🛠️ Execução",
+nivel:"avancado",
+titulo:"🌐🚀 Criação de Site Profissional",
+quando:"Quando quiser estruturar um site completo.",
+prompt:`Você é especialista em UX e conversão.
+
+Crie a estrutura completa de um site para:
+
+[DESCREVA O NEGÓCIO]
+
+Inclua:
+🏠 Página inicial
+📄 Páginas internas
+🎯 Estratégia de conversão
+🧠 Copy estratégica
+📱 Responsividade
+📈 Elementos de autoridade`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr){
+
+lista.innerHTML="";
+contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+
+ordemCategorias.forEach(cat=>{
+
+const grupo = arr.filter(p=>p.categoria===cat);
+
+if(grupo.length===0) return;
+
+const tituloSecao=document.createElement("h2");
+tituloSecao.className="secao-titulo";
+tituloSecao.innerText=cat;
+lista.appendChild(tituloSecao);
+
+grupo.forEach(p=>{
+
+const card=document.createElement("div");
+card.className="card";
+card.dataset.nivel=p.nivel;
+
+card.innerHTML=`
+<div class="nivel nivel-${p.nivel}">
+${p.nivel==="avancado"?"🔴 Avançado":
+p.nivel==="intermediario"?"🟡 Intermediário":"🟢 Básico"}
+</div>
+
+<h3>${p.titulo}</h3>
+<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+<pre>${p.prompt}</pre>
+
+<div class="acoes">
+<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+<button onclick="favoritarPrompt('${p.titulo}',\`${p.prompt}\`)">⭐ Favoritar</button>
+<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+</div>
+`;
+
+lista.appendChild(card);
+
+});
+
+});
+
+}
+
+function filtrarPrompts(){
+const termo=busca.value.toLowerCase();
+const filtrados=prompts.filter(p=>
+p.titulo.toLowerCase().includes(termo)||
+p.prompt.toLowerCase().includes(termo)||
+p.categoria.toLowerCase().includes(termo)
+);
+renderizar(filtrados);
+}
+
+function filtrarNivel(event,nivel){
+
+document.querySelectorAll(".filtro-nivel button")
+.forEach(btn=>btn.classList.remove("ativo"));
+event.target.classList.add("ativo");
+
+const filtrados = nivel==="todos"
+? prompts
+: prompts.filter(p=>p.nivel===nivel);
+
+renderizar(filtrados);
+}
+
+function copiarPrompt(texto){
+navigator.clipboard.writeText(texto);
+alert("📋 Copiado!");
+}
+
+function favoritarPrompt(titulo,conteudo){
+const salvos=JSON.parse(localStorage.getItem("deltaPrompts"))||[];
+salvos.push({
+id:Date.now(),
+titulo,
+categoria:"Serviços Digitais",
+conteudo,
+favorito:true
+});
+localStorage.setItem("deltaPrompts",JSON.stringify(salvos));
+alert("⭐ Favoritado!");
+}
+
+function abrirChatGPT(texto){
+window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
+}
+
+function abrirGemini(texto){
+window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
+}
+
+renderizar(prompts);
+
+</script>
+
+</body>
+</html>
