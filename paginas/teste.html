@@ -14,25 +14,30 @@
 
 <main>
 
-<h1>📚 Jornada de Estudo Estratégico</h1>
+<h1>📚 Sistema de Estudo Estratégico</h1>
 
 <p>
-Organize seu aprendizado em etapas claras: preparação, estruturação,
-aprendizado, memorização e avaliação.
+Aprenda de forma estruturada seguindo uma jornada inteligente.
+Não é apenas uma lista de prompts — é um método organizado.
 </p>
 
-<section class="card">
-<h3>🎯 Objetivo</h3>
-<p>
-Transformar estudo em processo estratégico, estruturado e eficiente.
-</p>
+<section class="card destaque">
+<h3>🗺️ Como Funciona a Jornada</h3>
+<ul class="jornada-lista">
+<li><strong>🧭 Preparação:</strong> Defina objetivo e plano.</li>
+<li><strong>📚 Estruturação:</strong> Organize o conteúdo.</li>
+<li><strong>🎓 Didática:</strong> Entenda com clareza.</li>
+<li><strong>🧠 Memorização:</strong> Fixe o conhecimento.</li>
+<li><strong>📊 Avaliação:</strong> Teste e valide.</li>
+<li><strong>🚀 Aprimoramento:</strong> Evolua após os erros.</li>
+</ul>
 </section>
 
 <div class="top-bar">
 <input
 type="text"
 id="busca"
-placeholder="🔎 Buscar modelo..."
+placeholder="🔎 Buscar modelo de estudo..."
 oninput="filtrarPrompts()"
 >
 <div class="contador" id="contador"></div>
@@ -44,88 +49,32 @@ oninput="filtrarPrompts()"
 
 <script>
 
-const ordemCategorias = [
-"🧭 Preparação",
-"📚 Estruturação",
-"🎓 Didática",
-"🧠 Memorização",
-"📊 Avaliação",
-"🧠 Aprimoramento"
-];
-
 const promptsEstudo = [
 
-{
-categoria: "🧭 Preparação",
-titulo: "Plano com Princípio de Pareto",
-quando: "Para aprender do zero focando no essencial.",
-prompt: `Quero aprender [ASSUNTO] do zero.
+{ categoria:"🧭 Preparação", titulo:"Plano com Pareto",
+quando:"Aprender focando no essencial.",
+prompt:`Quero aprender [ASSUNTO] do zero usando o princípio 80/20.
+Crie um plano estratégico focado no essencial.` },
 
-Use o princípio de Pareto (80/20) para identificar o conteúdo essencial.
+{ categoria:"📚 Estruturação", titulo:"Dividir em Módulos",
+quando:"Organizar como curso.",
+prompt:`Divida o tema [ASSUNTO] em módulos progressivos com exercícios.` },
 
-Crie um plano estratégico considerando:
-- Objetivo final
-- Tempo disponível
-- Aplicação prática`
-},
+{ categoria:"🎓 Didática", titulo:"Explicação Simplificada",
+quando:"Entender claramente.",
+prompt:`Explique [ASSUNTO] como para um iniciante usando analogias.` },
 
-{
-categoria: "📚 Estruturação",
-titulo: "Dividir Tema em Módulos",
-quando: "Para organizar como se fosse um curso.",
-prompt: `Estruture o tema [ASSUNTO] em módulos progressivos.
+{ categoria:"🧠 Memorização", titulo:"Mapa Mental Estratégico",
+quando:"Fixar conteúdo visualmente.",
+prompt:`Crie um mapa mental estruturado sobre [ASSUNTO].` },
 
-Inclua:
-- Módulos
-- Aulas
-- Exercícios práticos`
-},
+{ categoria:"📊 Avaliação", titulo:"Simulado Inteligente",
+quando:"Testar conhecimento.",
+prompt:`Crie um simulado com níveis fácil, médio e difícil sobre [ASSUNTO].` },
 
-{
-categoria: "🎓 Didática",
-titulo: "Explicação com Técnica de Feynman",
-quando: "Para entender profundamente.",
-prompt: `Explique [CONCEITO] como se fosse para uma criança de 12 anos.
-
-Depois identifique partes confusas e explique novamente.`
-},
-
-{
-categoria: "🧠 Memorização",
-titulo: "Estratégia de Memorização",
-quando: "Para fixar conteúdo.",
-prompt: `Crie estratégia de memorização para [ASSUNTO].
-
-Inclua:
-- Repetição espaçada
-- Associação mental
-- Resumo ultra condensado`
-},
-
-{
-categoria: "📊 Avaliação",
-titulo: "Simulado Estratégico",
-quando: "Antes da prova.",
-prompt: `Crie um simulado sobre [ASSUNTO].
-
-Inclua:
-- Questões fáceis
-- Intermediárias
-- Avançadas
-- Gabarito comentado`
-},
-
-{
-categoria: "🧠 Aprimoramento",
-titulo: "Análise e Melhoria",
-quando: "Para evoluir após estudar.",
-prompt: `Analise este [PROJETO/TEXTO].
-
-Identifique:
-- Pontos fortes
-- Pontos fracos
-- Melhorias possíveis`
-}
+{ categoria:"🚀 Aprimoramento", titulo:"Análise de Erros",
+quando:"Evoluir após avaliação.",
+prompt:`Analise meus erros em [ASSUNTO] e sugira melhorias práticas.` }
 
 ];
 
@@ -135,64 +84,54 @@ const busca = document.getElementById("busca");
 
 function renderizar(arr) {
 
-lista.innerHTML = "";
-contador.innerText = `Total: ${arr.length} modelo(s)`;
+  lista.innerHTML = "";
+  contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
-ordemCategorias.forEach(cat => {
+  const categoriasUnicas = [...new Set(arr.map(p => p.categoria))];
 
-const grupo = arr.filter(p => p.categoria === cat);
-if (grupo.length === 0) return;
+  categoriasUnicas.forEach(cat => {
 
-const tituloSecao = document.createElement("h2");
-tituloSecao.className = "secao-titulo";
-tituloSecao.innerText = cat;
-lista.appendChild(tituloSecao);
+    const grupo = arr.filter(p => p.categoria === cat);
 
-grupo.forEach(p => {
+    const tituloSecao = document.createElement("h2");
+    tituloSecao.className = "secao-titulo";
+    tituloSecao.innerText = cat;
+    lista.appendChild(tituloSecao);
 
-const card = document.createElement("div");
-card.className = "card";
+    grupo.forEach(p => {
 
-card.innerHTML = `
-<h3>${p.titulo}</h3>
-<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-<pre>${p.prompt}</pre>
-<div class="acoes">
-<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-</div>
-`;
+      const card = document.createElement("div");
+      card.className = "card";
 
-lista.appendChild(card);
+      card.innerHTML = `
+        <h3>${p.titulo}</h3>
+        <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+        <pre>${p.prompt}</pre>
+        <div class="acoes">
+          <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+        </div>
+      `;
 
-});
+      lista.appendChild(card);
 
-});
+    });
+
+  });
 
 }
 
 function filtrarPrompts() {
-const termo = busca.value.toLowerCase();
-const filtrados = promptsEstudo.filter(p =>
-p.titulo.toLowerCase().includes(termo) ||
-p.prompt.toLowerCase().includes(termo) ||
-p.categoria.toLowerCase().includes(termo)
-);
-renderizar(filtrados);
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsEstudo.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
 }
 
 function copiarPrompt(texto) {
-navigator.clipboard.writeText(texto);
-alert("📋 Copiado!");
-}
-
-function abrirChatGPT(texto) {
-window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto), "_blank");
-}
-
-function abrirGemini(texto) {
-window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
+  navigator.clipboard.writeText(texto);
+  alert("📋 Prompt copiado!");
 }
 
 renderizar(promptsEstudo);
@@ -201,18 +140,28 @@ renderizar(promptsEstudo);
 
 <style>
 
+.destaque {
+background: linear-gradient(135deg,#f0f3ff,#ffffff);
+border-left: 4px solid #5b5ce2;
+}
+
+.jornada-lista {
+margin-top:10px;
+line-height:1.8;
+}
+
 .secao-titulo {
-margin-top: 40px;
-margin-bottom: 15px;
-padding: 10px 0;
-font-size: 22px;
-border-bottom: 2px solid #5b5ce2;
+margin-top: 50px;
+margin-bottom: 20px;
+padding-bottom: 8px;
+font-size: 24px;
+border-bottom: 3px solid #5b5ce2;
 }
 
 .top-bar {
 display: flex;
 gap: 15px;
-margin: 20px 0;
+margin: 25px 0;
 flex-wrap: wrap;
 }
 
