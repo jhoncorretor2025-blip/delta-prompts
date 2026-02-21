@@ -16,26 +16,27 @@
 
 <main>
 
-<h1>💰🚀 Ideias Estratégicas de Renda Extra com IA</h1>
+<h1>💰 Ideias Estratégicas de Renda Extra</h1>
 
 <p>
-Prompts profissionais para criar, validar e escalar fontes de renda extra com estratégia e inteligência.
+Prompts organizados por etapas para sair da ideia até a primeira venda.
 </p>
 
 <section class="card">
-<h3>🎯 Objetivo</h3>
-<p>
-Ajudar você a transformar ideias em fontes reais de renda, com estrutura, análise e visão de crescimento.
-</p>
+  <h3>💡🗺️ Jornada da Renda Extra</h3>
+  <ul style="line-height:1.6;">
+    <li><strong>💡 Ideação:</strong> Descobrir oportunidades reais.</li>
+    <li><strong>🔎 Validação:</strong> Testar demanda antes de investir tempo.</li>
+    <li><strong>🛠️ Execução Inicial:</strong> Criar a primeira versão.</li>
+    <li><strong>📢 Primeiras Vendas:</strong> Gerar os primeiros resultados.</li>
+  </ul>
 </section>
 
-<!-- BUSCA -->
 <div class="top-bar">
-<input type="text" id="busca" placeholder="🔎 Buscar modelo..." oninput="filtrarPrompts()">
+<input type="text" id="busca" placeholder="🔎 Buscar..." oninput="filtrarPrompts()">
 <div class="contador" id="contador"></div>
 </div>
 
-<!-- FILTRO NÍVEL -->
 <div class="filtro-nivel" style="margin-bottom:20px;">
 <button onclick="filtrarNivel(event,'todos')" class="ativo">Todos</button>
 <button onclick="filtrarNivel(event,'basico')">🟢 Básico</button>
@@ -49,134 +50,134 @@ Ajudar você a transformar ideias em fontes reais de renda, com estrutura, anál
 
 <script>
 
-const prompts = [
+const ordemCategorias = [
+"💡 Ideação",
+"🔎 Validação",
+"🛠️ Execução Inicial",
+"📢 Primeiras Vendas"
+];
 
-/* ===============================
-   2 BÁSICOS PRIMEIRO
-=================================*/
+const promptsRenda = [
+
+/* ================= IDEAÇÃO ================= */
 
 {
+categoria:"💡 Ideação",
 nivel:"basico",
 titulo:"💡 Ideias rápidas para começar hoje",
-quando:"Quando quiser sugestões simples e práticas.",
-prompt:`💡 Liste 15 ideias de renda extra que possam ser iniciadas imediatamente com pouco investimento.
-
-Inclua:
-• 🛠️ Tipo de atividade
-• 💰 Como monetizar
-• ⏳ Tempo médio para começar`
+quando:"Quando quiser sugestões simples.",
+prompt:`Liste 15 ideias simples de renda extra que possam ser iniciadas imediatamente com pouco investimento.`
 },
 
 {
-nivel:"basico",
-titulo:"🌐 Renda extra usando internet",
-quando:"Quando quiser ganhar dinheiro online.",
-prompt:`🌐 Liste 10 formas realistas de ganhar dinheiro online usando habilidades simples.
+categoria:"💡 Ideação",
+nivel:"intermediario",
+titulo:"🧠 Ideias baseadas em habilidades pessoais",
+quando:"Para transformar habilidade em renda.",
+prompt:`Analise minhas habilidades: [INSIRA HABILIDADES]
+
+Sugira ideias de renda extra compatíveis com meu perfil.
 
 Explique:
-• 🧠 Habilidade necessária
-• 💵 Forma de pagamento
-• 📈 Potencial de crescimento`
+- Público ideal
+- Como monetizar
+- Potencial de ganho`
 },
 
-/* ===============================
-   6 COMPLETOS
-=================================*/
+/* ================= VALIDAÇÃO ================= */
 
 {
-nivel:"intermediario",
-titulo:"📈 Plano estruturado de renda extra",
-quando:"Para transformar habilidade em renda.",
-prompt:`Você é especialista em empreendedorismo.
+categoria:"🔎 Validação",
+nivel:"basico",
+titulo:"🔍 Existe demanda para essa ideia?",
+quando:"Antes de começar.",
+prompt:`Avalie se existe demanda para a seguinte ideia:
 
-Crie um plano detalhado para transformar a habilidade [INSIRA HABILIDADE] em renda extra.
+[DESCREVA IDEIA]
 
-Estruture:
-
-🎯 Público-alvo  
-💰 Modelo de monetização  
-📣 Estratégia de divulgação  
-🛠️ Passo a passo inicial  
-📊 Estimativa de ganhos`
+Responda de forma simples e direta.`
 },
 
 {
+categoria:"🔎 Validação",
 nivel:"intermediario",
-titulo:"🔎 Validação estratégica da ideia",
-quando:"Antes de investir tempo ou dinheiro.",
-prompt:`Analise a seguinte ideia de renda extra:
+titulo:"📊 Análise estratégica da ideia",
+quando:"Antes de investir tempo.",
+prompt:`Analise a ideia:
 
-[DESCREVA A IDEIA]
+[DESCREVA]
 
 Avalie:
-
-📊 Demanda de mercado  
-⚔️ Concorrência  
-✨ Diferencial competitivo  
-⚠️ Riscos  
-💵 Potencial de lucro`
+- Demanda
+- Concorrência
+- Diferencial
+- Riscos`
 },
 
+/* ================= EXECUÇÃO ================= */
+
 {
+categoria:"🛠️ Execução Inicial",
 nivel:"intermediario",
-titulo:"📢 Estratégia de divulgação orgânica",
-quando:"Para crescer sem investir em anúncios.",
-prompt:`Crie uma estratégia de divulgação orgânica para promover:
-
-[IDEIA DE RENDA EXTRA]
-
-Inclua:
-
-📱 Redes sociais ideais  
-📝 Tipo de conteúdo  
-📅 Frequência de postagem  
-🧠 Estratégia de autoridade`
-},
-
-{
-nivel:"avancado",
-titulo:"🚀 Escalar renda extra para negócio",
-quando:"Quando quiser crescer e escalar.",
-prompt:`Você é especialista em crescimento empresarial.
-
-Mostre como transformar a seguinte renda extra em um negócio escalável:
+titulo:"🛠️ Plano inicial de execução",
+quando:"Quando quiser começar certo.",
+prompt:`Crie um plano inicial para executar:
 
 [IDEIA]
 
 Inclua:
-
-🤖 Automação  
-👥 Delegação  
-🔁 Modelo recorrente  
-📈 Estratégia de crescimento`
+- Passo a passo
+- Ferramentas necessárias
+- Primeira meta`
 },
 
 {
+categoria:"🛠️ Execução Inicial",
 nivel:"avancado",
-titulo:"🤖 Renda extra com Inteligência Artificial",
-quando:"Para usar IA estrategicamente.",
-prompt:`Crie 5 modelos de renda extra usando Inteligência Artificial.
+titulo:"⚙️ Estrutura profissional mínima",
+quando:"Para começar estruturado.",
+prompt:`Crie estrutura mínima profissional para iniciar:
 
-Explique:
-
-⚙️ Como funciona  
-🛠️ Ferramentas necessárias  
-💰 Modelo de monetização  
-📊 Potencial de ganho`
-},
-
-{
-nivel:"avancado",
-titulo:"💰 Plano financeiro estratégico",
-quando:"Para organizar ganhos e reinvestimento.",
-prompt:`Crie um plano financeiro estratégico para organizar e reinvestir lucros de uma renda extra.
+[IDEIA]
 
 Inclua:
+- Posicionamento
+- Oferta
+- Diferencial
+- Modelo de entrega`
+},
 
-🏦 Separação de capital  
-📈 Reinvestimento  
-🛡️ Reserva financeira  
-🚀 Crescimento progressivo`
+/* ================= PRIMEIRAS VENDAS ================= */
+
+{
+categoria:"📢 Primeiras Vendas",
+nivel:"intermediario",
+titulo:"📣 Estratégia para primeiras vendas",
+quando:"Quando quiser gerar receita inicial.",
+prompt:`Crie estratégia prática para conseguir as primeiras vendas de:
+
+[IDEIA]
+
+Inclua:
+- Onde divulgar
+- Como abordar
+- Mensagem persuasiva`
+},
+
+{
+categoria:"📢 Primeiras Vendas",
+nivel:"avancado",
+titulo:"🚀 Plano de lançamento inicial",
+quando:"Para lançar com impacto.",
+prompt:`Monte plano de lançamento simples para:
+
+[IDEIA]
+
+Inclua:
+- Pré-aquecimento
+- Oferta inicial
+- Gatilhos mentais
+- Meta de vendas`
 }
 
 ];
@@ -186,10 +187,22 @@ const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
 function renderizar(arr){
+
 lista.innerHTML="";
 contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
 
-arr.forEach(p=>{
+ordemCategorias.forEach(cat=>{
+
+const grupo = arr.filter(p=>p.categoria===cat);
+
+if(grupo.length===0) return;
+
+const tituloSecao=document.createElement("h2");
+tituloSecao.className="secao-titulo";
+tituloSecao.innerText=cat;
+lista.appendChild(tituloSecao);
+
+grupo.forEach(p=>{
 
 const card=document.createElement("div");
 card.className="card";
@@ -216,65 +229,61 @@ p.nivel==="intermediario"?"🟡 Intermediário":"🟢 Básico"}
 lista.appendChild(card);
 
 });
+
+});
+
 }
 
 function filtrarPrompts(){
 const termo=busca.value.toLowerCase();
-const filtrados=prompts.filter(p=>
+const filtrados=promptsRenda.filter(p=>
 p.titulo.toLowerCase().includes(termo)||
-p.prompt.toLowerCase().includes(termo)
+p.prompt.toLowerCase().includes(termo)||
+p.categoria.toLowerCase().includes(termo)
 );
 renderizar(filtrados);
 }
 
 function filtrarNivel(event,nivel){
+
 document.querySelectorAll(".filtro-nivel button")
 .forEach(btn=>btn.classList.remove("ativo"));
 event.target.classList.add("ativo");
 
-const cards=document.querySelectorAll("#lista-prompts .card");
+const filtrados = nivel==="todos"
+? promptsRenda
+: promptsRenda.filter(p=>p.nivel===nivel);
 
-cards.forEach(card=>{
-if(nivel==="todos"){
-card.style.display="block";
-}else{
-card.style.display=
-card.dataset.nivel===nivel?"block":"none";
-}
-});
+renderizar(filtrados);
 }
 
 function copiarPrompt(texto){
 navigator.clipboard.writeText(texto);
-alert("📋 Prompt copiado!");
+alert("📋 Copiado!");
 }
 
 function favoritarPrompt(titulo,conteudo){
-const promptsSalvos=JSON.parse(localStorage.getItem("deltaPrompts"))||[];
-
-promptsSalvos.push({
+const salvos=JSON.parse(localStorage.getItem("deltaPrompts"))||[];
+salvos.push({
 id:Date.now(),
 titulo,
 categoria:"Renda Extra",
 conteudo,
 favorito:true
 });
-
-localStorage.setItem("deltaPrompts",JSON.stringify(promptsSalvos));
-alert("⭐ Adicionado aos favoritos!");
+localStorage.setItem("deltaPrompts",JSON.stringify(salvos));
+alert("⭐ Favoritado!");
 }
 
 function abrirChatGPT(texto){
-const url="https://chat.openai.com/?prompt="+encodeURIComponent(texto);
-window.open(url,"_blank");
+window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
 }
 
 function abrirGemini(texto){
-const url="https://gemini.google.com/app?prompt="+encodeURIComponent(texto);
-window.open(url,"_blank");
+window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-renderizar(prompts);
+renderizar(promptsRenda);
 
 </script>
 
