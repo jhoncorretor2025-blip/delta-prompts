@@ -5,6 +5,8 @@
 <title>Estudo Inteligente | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+
 <link rel="stylesheet" href="/delta-prompts/style.css">
   <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
 </head>
@@ -78,13 +80,14 @@
 
 <script>
 
-  const ordemCategorias = [
+const ordemCategorias = [
 "🧭 Preparação",
 "📚 Estruturação",
 "🎓 Didática",
 "🧠 Memorização",
 "📊 Avaliação",
-"🧠 Aprimoramento"
+"🧠 Aprimoramento",
+"🚀 Aplicação Profissional com IA"
 ];
 
 const promptsEstudo = [
@@ -376,6 +379,72 @@ Organize em:
 - Diferenças
 - Exemplos
 - Quando usar cada um`
+},
+
+  {
+categoria:"🎓 Didática",
+nivel:"basico",
+titulo:"🧒📖 Explicação Simples (5 anos)",
+quando:"Para simplificar conceitos complexos de forma didática e acessível.",
+prompt:`Explique o tema [INSIRA TÓPICO] como se eu fosse uma criança de 5 anos.
+
+Inclua:
+- 🧠 Conceito principal explicado de forma simples
+- 🎨 Analogias fáceis
+- 🚫 Evite jargões técnicos
+- 📌 Base clara do conceito
+
+Seja extremamente didático e acessível.`
+},
+
+{
+categoria:"🧭 Preparação",
+nivel:"intermediario",
+titulo:"📅🧠 Plano de Estudos Semanal",
+quando:"Para organizar o aprendizado de um novo assunto do zero.",
+prompt:`Crie um plano de estudos semanal para aprender [ASSUNTO] do zero.
+
+Considere:
+- ⏰ Tenho [X] horas disponíveis por dia
+- 🎯 Quero focar em [TÓPICO ESPECÍFICO]
+
+Organize:
+- 📆 Divisão por dias
+- 📚 Conteúdo prioritário
+- 🧠 Momentos de revisão
+- 📊 Meta semanal`
+},
+
+{
+categoria:"📊 Avaliação",
+nivel:"intermediario",
+titulo:"📝🎯 Simulado para Prova",
+quando:"Para testar conhecimentos antes de uma prova ou concurso.",
+prompt:`Crie um simulado com 5 questões de múltipla escolha sobre [MATÉRIA/TEMA].
+
+Inclua:
+- 4 alternativas por questão
+- 1 correta
+- 📌 Gabarito comentado ao final
+- 🧠 Explicação breve da resposta correta`
+},
+
+{
+categoria:"🎓 Didática",
+nivel:"avancado",
+titulo:"🤖👨‍🏫 Professor IA Personalizado",
+quando:"Quando quiser transformar a IA em um professor particular.",
+prompt:`Você será meu Professor IA especializado em [ASSUNTO].
+
+Sua função é:
+
+- 📚 Ensinar de forma progressiva
+- 🧠 Explicar com clareza e profundidade
+- 📊 Aplicar exercícios práticos
+- 🔎 Identificar meus erros
+- 🚀 Ajustar o nível conforme meu desempenho
+
+Comece perguntando meu nível atual e meu objetivo final antes de iniciar a explicação.`
 }
 
 ];
@@ -537,6 +606,7 @@ pre {
 
 </body>
 </html>
+
 
 
 
