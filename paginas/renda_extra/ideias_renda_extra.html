@@ -16,16 +16,16 @@
 
 <main>
 
-<h1>💰 Ideias Estratégicas de Renda Extra</h1>
+<h1>💰🚀 Ideias Estratégicas de Renda Extra com IA</h1>
 
 <p>
-Prompts estruturados para criar novas fontes de renda com estratégia, organização e potencial real de crescimento.
+Prompts profissionais para criar, validar e escalar fontes de renda extra com estratégia e inteligência.
 </p>
 
 <section class="card">
 <h3>🎯 Objetivo</h3>
 <p>
-Ajudar você a identificar, estruturar e escalar ideias de renda extra usando inteligência estratégica.
+Ajudar você a transformar ideias em fontes reais de renda, com estrutura, análise e visão de crescimento.
 </p>
 </section>
 
@@ -57,16 +57,26 @@ const prompts = [
 
 {
 nivel:"basico",
-titulo:"Ideias rápidas para começar hoje",
+titulo:"💡 Ideias rápidas para começar hoje",
 quando:"Quando quiser sugestões simples e práticas.",
-prompt:`Liste 15 ideias de renda extra que possam ser iniciadas imediatamente com pouco investimento.`
+prompt:`💡 Liste 15 ideias de renda extra que possam ser iniciadas imediatamente com pouco investimento.
+
+Inclua:
+• 🛠️ Tipo de atividade
+• 💰 Como monetizar
+• ⏳ Tempo médio para começar`
 },
 
 {
 nivel:"basico",
-titulo:"Renda extra usando internet",
+titulo:"🌐 Renda extra usando internet",
 quando:"Quando quiser ganhar dinheiro online.",
-prompt:`Liste 10 formas realistas de ganhar dinheiro online usando habilidades simples.`
+prompt:`🌐 Liste 10 formas realistas de ganhar dinheiro online usando habilidades simples.
+
+Explique:
+• 🧠 Habilidade necessária
+• 💵 Forma de pagamento
+• 📈 Potencial de crescimento`
 },
 
 /* ===============================
@@ -75,54 +85,57 @@ prompt:`Liste 10 formas realistas de ganhar dinheiro online usando habilidades s
 
 {
 nivel:"intermediario",
-titulo:"Plano estruturado de renda extra",
+titulo:"📈 Plano estruturado de renda extra",
 quando:"Para transformar habilidade em renda.",
 prompt:`Você é especialista em empreendedorismo.
 
 Crie um plano detalhado para transformar a habilidade [INSIRA HABILIDADE] em renda extra.
 
-Inclua:
-- Público-alvo
-- Modelo de monetização
-- Estratégia de divulgação
-- Passo a passo inicial
-- Estimativa de ganhos`
+Estruture:
+
+🎯 Público-alvo  
+💰 Modelo de monetização  
+📣 Estratégia de divulgação  
+🛠️ Passo a passo inicial  
+📊 Estimativa de ganhos`
 },
 
 {
 nivel:"intermediario",
-titulo:"Validação de ideia antes de investir",
+titulo:"🔎 Validação estratégica da ideia",
 quando:"Antes de investir tempo ou dinheiro.",
 prompt:`Analise a seguinte ideia de renda extra:
 
 [DESCREVA A IDEIA]
 
 Avalie:
-- Demanda de mercado
-- Concorrência
-- Diferencial competitivo
-- Riscos
-- Potencial de lucro`
+
+📊 Demanda de mercado  
+⚔️ Concorrência  
+✨ Diferencial competitivo  
+⚠️ Riscos  
+💵 Potencial de lucro`
 },
 
 {
 nivel:"intermediario",
-titulo:"Estratégia de divulgação orgânica",
+titulo:"📢 Estratégia de divulgação orgânica",
 quando:"Para crescer sem investir em anúncios.",
 prompt:`Crie uma estratégia de divulgação orgânica para promover:
 
 [IDEIA DE RENDA EXTRA]
 
 Inclua:
-- Redes sociais ideais
-- Tipo de conteúdo
-- Frequência
-- Estratégia de autoridade`
+
+📱 Redes sociais ideais  
+📝 Tipo de conteúdo  
+📅 Frequência de postagem  
+🧠 Estratégia de autoridade`
 },
 
 {
 nivel:"avancado",
-titulo:"Escalar renda extra para negócio",
+titulo:"🚀 Escalar renda extra para negócio",
 quando:"Quando quiser crescer e escalar.",
 prompt:`Você é especialista em crescimento empresarial.
 
@@ -131,36 +144,39 @@ Mostre como transformar a seguinte renda extra em um negócio escalável:
 [IDEIA]
 
 Inclua:
-- Automação
-- Delegação
-- Modelo recorrente
-- Estratégia de crescimento`
+
+🤖 Automação  
+👥 Delegação  
+🔁 Modelo recorrente  
+📈 Estratégia de crescimento`
 },
 
 {
 nivel:"avancado",
-titulo:"Renda extra com IA",
-quando:"Para usar inteligência artificial estrategicamente.",
-prompt:`Crie 5 modelos de renda extra usando inteligência artificial.
+titulo:"🤖 Renda extra com Inteligência Artificial",
+quando:"Para usar IA estrategicamente.",
+prompt:`Crie 5 modelos de renda extra usando Inteligência Artificial.
 
 Explique:
-- Como funciona
-- Ferramentas necessárias
-- Modelo de monetização
-- Potencial de ganho`
+
+⚙️ Como funciona  
+🛠️ Ferramentas necessárias  
+💰 Modelo de monetização  
+📊 Potencial de ganho`
 },
 
 {
 nivel:"avancado",
-titulo:"Plano financeiro estratégico",
+titulo:"💰 Plano financeiro estratégico",
 quando:"Para organizar ganhos e reinvestimento.",
 prompt:`Crie um plano financeiro estratégico para organizar e reinvestir lucros de uma renda extra.
 
 Inclua:
-- Separação de capital
-- Reinvestimento
-- Reserva
-- Crescimento progressivo`
+
+🏦 Separação de capital  
+📈 Reinvestimento  
+🛡️ Reserva financeira  
+🚀 Crescimento progressivo`
 }
 
 ];
@@ -173,7 +189,7 @@ function renderizar(arr){
 lista.innerHTML="";
 contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
 
-arr.forEach((p,index)=>{
+arr.forEach(p=>{
 
 const card=document.createElement("div");
 card.className="card";
@@ -261,64 +277,6 @@ window.open(url,"_blank");
 renderizar(prompts);
 
 </script>
-
-<style>
-
-.top-bar{
-display:flex;
-gap:15px;
-align-items:center;
-margin:20px 0;
-flex-wrap:wrap;
-}
-
-.top-bar input{
-flex:1;
-padding:14px;
-border-radius:10px;
-border:1px solid #e5e7eb;
-}
-
-.contador{
-font-size:14px;
-opacity:0.75;
-}
-
-.filtro-nivel button{
-padding:8px 14px;
-border-radius:8px;
-border:1px solid #ddd;
-background:#fff;
-cursor:pointer;
-margin-right:8px;
-}
-
-.filtro-nivel button.ativo{
-background:#5b5ce2;
-color:#fff;
-border-color:#5b5ce2;
-}
-
-.nivel{
-font-size:13px;
-font-weight:600;
-margin-bottom:10px;
-}
-
-.nivel-basico{color:#16a34a;}
-.nivel-intermediario{color:#ca8a04;}
-.nivel-avancado{color:#dc2626;}
-
-pre{
-white-space:pre-wrap;
-font-size:14px;
-background:#f9fafb;
-padding:15px;
-border-radius:10px;
-border:1px solid #e5e7eb;
-}
-
-</style>
 
 </body>
 </html>
