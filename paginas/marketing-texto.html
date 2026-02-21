@@ -1,1 +1,317 @@
 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Marketing Texto & Campanhas | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+<h1>📣 Marketing Texto & Campanhas</h1>
+
+<p>
+Prompts estratégicos para criação de campanhas, copy persuasiva e posicionamento profissional.
+</p>
+
+<section class="card">
+<h3>🎯 Objetivo</h3>
+<p>
+Ajudar você a criar textos que vendem, posicionam autoridade e aumentam conversão.
+</p>
+</section>
+
+<div class="top-bar">
+<input type="text" id="busca" placeholder="🔎 Buscar modelo de campanha..." oninput="filtrarPrompts()">
+<div class="contador" id="contador"></div>
+</div>
+
+<div class="filtro-nivel" style="margin-bottom:20px;">
+<button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos</button>
+<button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+<button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+<button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const promptsMarketing = [
+
+/* ===================== */
+/* 2 BÁSICOS */
+/* ===================== */
+
+{
+nivel: "basico",
+titulo: "Post Simples de Divulgação",
+quando: "Para divulgar produto ou serviço rapidamente.",
+prompt: `Crie um post simples e direto para divulgar:
+
+[DESCREVA PRODUTO OU SERVIÇO]
+
+Inclua:
+- Benefício principal
+- Chamada para ação clara
+- Linguagem objetiva`
+},
+
+{
+nivel: "basico",
+titulo: "Descrição Comercial Curta",
+quando: "Para usar em bio, WhatsApp ou anúncio rápido.",
+prompt: `Crie uma descrição comercial curta para:
+
+[DESCREVA PRODUTO OU SERVIÇO]
+
+Foque em:
+- Diferencial
+- Benefício principal
+- Linguagem persuasiva`
+},
+
+/* ===================== */
+/* 6 COMPLETOS */
+/* ===================== */
+
+{
+nivel: "intermediario",
+titulo: "Campanha Direta de Venda",
+quando: "Quando quiser foco total em conversão.",
+prompt: `Você é especialista em marketing digital focado em conversão.
+
+Crie uma campanha direta para:
+
+[DESCREVA PRODUTO OU SERVIÇO]
+
+Inclua:
+- Dor do público
+- Benefícios
+- Prova social
+- Urgência
+- Chamada para ação`
+},
+
+{
+nivel: "intermediario",
+titulo: "Storytelling Persuasivo",
+quando: "Para gerar conexão emocional antes da venda.",
+prompt: `Crie um storytelling para promover:
+
+[DESCREVA PRODUTO OU SERVIÇO]
+
+Estruture:
+- Situação inicial
+- Problema
+- Transformação
+- Solução
+- Chamada para ação`
+},
+
+{
+nivel: "intermediario",
+titulo: "Posicionamento de Autoridade",
+quando: "Para fortalecer imagem profissional.",
+prompt: `Crie um texto de posicionamento profissional sobre:
+
+[TEMA]
+
+Inclua:
+- Visão estratégica
+- Experiência
+- Diferencial
+- Frase de impacto final`
+},
+
+{
+nivel: "avancado",
+titulo: "Estrutura de VSL (Roteiro de Vídeo de Vendas)",
+quando: "Para criar vídeo persuasivo de alta conversão.",
+prompt: `Você é especialista em copy para VSL.
+
+Crie um roteiro completo para vender:
+
+[PRODUTO OU SERVIÇO]
+
+Inclua:
+- Gancho inicial forte
+- Quebra de padrão
+- História
+- Oferta
+- Garantia
+- CTA`
+},
+
+{
+nivel: "avancado",
+titulo: "Funil de Lançamento Estratégico",
+quando: "Para estruturar lançamento completo.",
+prompt: `Crie um plano estratégico de lançamento para:
+
+[PRODUTO]
+
+Inclua:
+- Aquecimento
+- Conteúdo pré-lançamento
+- Oferta principal
+- Sequência de e-mails
+- Estratégia de escassez`
+},
+
+{
+nivel: "avancado",
+titulo: "Análise e Melhoria de Copy",
+quando: "Para otimizar texto já existente.",
+prompt: `Analise o seguinte texto de venda:
+
+[COLE A COPY]
+
+Identifique:
+- Pontos fracos
+- Falhas de persuasão
+- Melhorias estratégicas
+- Sugestões práticas`
+}
+
+];
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+function renderizar(arr) {
+
+lista.innerHTML = "";
+contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+
+arr.forEach(p => {
+
+const card = document.createElement("div");
+card.className = "card";
+card.setAttribute("data-nivel", p.nivel);
+
+card.innerHTML = `
+<div class="nivel nivel-${p.nivel}">
+${p.nivel === 'avancado' ? '🔴 Avançado' :
+p.nivel === 'intermediario' ? '🟡 Intermediário' :
+'🟢 Básico'}
+</div>
+
+<h3>${p.titulo}</h3>
+<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+<pre>${p.prompt}</pre>
+
+<div class="acoes">
+<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+<button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+</div>
+`;
+
+lista.appendChild(card);
+
+});
+
+}
+
+function filtrarPrompts() {
+const termo = busca.value.toLowerCase();
+const filtrados = promptsMarketing.filter(p =>
+p.titulo.toLowerCase().includes(termo) ||
+p.prompt.toLowerCase().includes(termo)
+);
+renderizar(filtrados);
+}
+
+function filtrarNivel(event, nivel) {
+const botoes = document.querySelectorAll(".filtro-nivel button");
+botoes.forEach(btn => btn.classList.remove("ativo"));
+event.target.classList.add("ativo");
+
+const cards = document.querySelectorAll("#lista-prompts .card");
+
+cards.forEach(card => {
+if (nivel === "todos") {
+card.style.display = "block";
+} else {
+card.style.display =
+card.dataset.nivel === nivel ? "block" : "none";
+}
+});
+}
+
+function copiarPrompt(texto) {
+navigator.clipboard.writeText(texto);
+alert("📋 Prompt copiado!");
+}
+
+function favoritarPrompt(titulo, conteudo) {
+const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+prompts.push({
+id: Date.now(),
+titulo,
+categoria: "Marketing Texto",
+conteudo,
+favorito: true
+});
+localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto) {
+const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
+window.open(url, "_blank");
+}
+
+function abrirGemini(texto) {
+const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
+window.open(url, "_blank");
+}
+
+renderizar(promptsMarketing);
+
+</script>
+
+<style>
+.top-bar {
+display: flex;
+gap: 15px;
+align-items: center;
+margin: 20px 0;
+flex-wrap: wrap;
+}
+.top-bar input {
+flex: 1;
+padding: 14px;
+border-radius: 10px;
+border: 1px solid #e5e7eb;
+}
+.contador {
+font-size: 14px;
+opacity: 0.75;
+}
+pre {
+white-space: pre-wrap;
+font-size: 14px;
+background: #f9fafb;
+padding: 15px;
+border-radius: 10px;
+border: 1px solid #e5e7eb;
+}
+</style>
+
+</body>
+</html>
