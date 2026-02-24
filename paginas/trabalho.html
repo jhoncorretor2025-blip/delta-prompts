@@ -2,257 +2,256 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Trabalho | Delta Prompts</title>
+<title>Trabalho Estratégico | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../style.css">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+
 </head>
 
 <body>
 
 <div id="menu"></div>
-<script src="../menu-loader.js"></script>
+<script src="/delta-prompts/menu-loader.js"></script>
 
 <main>
 
-<!-- TÍTULO -->
-<section class="hero">
-  <h1>💼 Prompts para Trabalho</h1>
-  <p>Ferramentas estratégicas para crescimento profissional, produtividade e performance.</p>
-</section>
+<h1>💼 Trabalho Estratégico com IA</h1>
 
-<!-- OBJETIVO -->
+<p>
+Prompts profissionais para melhorar performance, organização,
+posicionamento e tomada de decisão no ambiente de trabalho.
+</p>
+
 <section class="card">
-  <h3>🎯 Objetivo</h3>
-  <p>
-    Esta página reúne prompts estruturados para melhorar desempenho,
-    comunicação, organização e crescimento profissional.
-  </p>
+<h3>🎯 Objetivo</h3>
+<p>
+Ajudar profissionais a estruturar tarefas, resolver problemas,
+organizar projetos e crescer estrategicamente na carreira.
+</p>
 </section>
 
-<!-- BUSCA -->
-<section class="card">
-  <input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrar()">
-  <div id="contador"></div>
-</section>
+<div class="top-bar">
+<input
+type="text"
+id="busca"
+placeholder="🔎 Buscar modelo profissional..."
+oninput="filtrarPrompts()"
+>
+<div class="contador" id="contador"></div>
+</div>
 
-<!-- LISTA -->
-<section id="lista"></section>
+<div class="filtro-nivel" style="margin-bottom:20px;">
+<button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos</button>
+<button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+<button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+<button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+</div>
+
+<div id="lista-prompts"></div>
 
 </main>
 
 <script>
 
-const prompts = [
+const ordemCategorias = [
+"📋 Organização",
+"📈 Produtividade",
+"🎯 Estratégia",
+"🚀 Crescimento Profissional"
+];
+
+const promptsTrabalho = [
 
 {
-id: 1,
-categoria: "📊 Produtividade",
-titulo: "Organização de Rotina Profissional",
-quando: "Quando está sobrecarregado e precisa organizar suas tarefas.",
-conteudo: `Você é um consultor de produtividade executiva.
+categoria: "📋 Organização",
+nivel: "basico",
+titulo: "📋 Organização de Tarefas",
+quando: "Quando estiver sobrecarregado e precisar organizar prioridades.",
+prompt: `Você é especialista em produtividade.
 
-OBJETIVO:
-Organizar minha rotina profissional de forma estratégica.
+Organize minhas tarefas abaixo em ordem de prioridade:
 
-INSTRUÇÕES:
-1. Estruture minha semana em blocos produtivos.
-2. Separe tarefas por prioridade.
-3. Identifique tarefas delegáveis.
-4. Sugira método de acompanhamento diário.
-5. Inclua modelo simples de planejamento semanal.
+[LISTA DE TAREFAS]
 
-Seja claro e prático.`
+Classifique por:
+- Urgência
+- Importância
+- Impacto
+- Tempo estimado
+
+Sugira plano de execução para hoje.`
 },
 
 {
-id: 2,
-categoria: "💬 Comunicação",
-titulo: "Melhoria de Comunicação Profissional",
-quando: "Quando deseja se comunicar com mais clareza e autoridade.",
-conteudo: `Você é especialista em comunicação corporativa.
+categoria: "📈 Produtividade",
+nivel: "intermediario",
+titulo: "📈 Plano de Alta Performance",
+quando: "Para melhorar produtividade semanal.",
+prompt: `Você é consultor de alta performance profissional.
 
-OBJETIVO:
-Melhorar minha comunicação profissional.
+Monte um plano de produtividade considerando:
 
-INSTRUÇÕES:
-1. Estruture modelo ideal de e-mail profissional.
-2. Sugira padrão de mensagem assertiva.
-3. Explique como evitar ruídos de comunicação.
-4. Dê exemplos práticos aplicáveis.
-
-Seja objetivo e profissional.`
-},
-
-{
-id: 3,
-categoria: "📈 Crescimento",
-titulo: "Plano de Crescimento na Carreira",
-quando: "Quando deseja evoluir profissionalmente.",
-conteudo: `Crie um plano estratégico para crescimento profissional.
+- Minha função: [CARGO]
+- Minha rotina atual: [DESCREVER]
+- Objetivo profissional: [OBJETIVO]
 
 Inclua:
-- Diagnóstico atual
-- Habilidades a desenvolver
-- Estratégia de posicionamento interno
-- Networking estratégico
-- Meta de crescimento em 12 meses
-
-Seja estratégico e estruturado.`
+- Rotina ideal
+- Blocos de foco
+- Métricas de acompanhamento
+- Ajustes estratégicos`
 },
 
 {
-id: 4,
-categoria: "🎯 Projetos",
-titulo: "Planejamento de Projeto Profissional",
-quando: "Quando precisa organizar um novo projeto.",
-conteudo: `Crie um modelo de planejamento de projeto profissional.
+categoria: "🎯 Estratégia",
+nivel: "avancado",
+titulo: "🎯 Planejamento Estratégico Profissional",
+quando: "Para estruturar metas e decisões importantes.",
+prompt: `Atue como estrategista corporativo.
+
+Monte um planejamento estratégico para:
+
+[OBJETIVO PROFISSIONAL]
 
 Inclua:
-- Objetivo principal
-- Etapas
-- Cronograma
+- Análise de cenário
+- Riscos
+- Oportunidades
+- Plano de ação
 - Indicadores de sucesso
-- Riscos possíveis
-- Plano de execução
-
-Seja estruturado e claro.`
+- Cronograma`
 },
 
 {
-id: 5,
-categoria: "🤝 Negociação",
-titulo: "Estratégia de Negociação Profissional",
-quando: "Quando precisa negociar salário ou contrato.",
-conteudo: `Crie uma estratégia de negociação profissional.
+categoria: "🚀 Crescimento Profissional",
+nivel: "avancado",
+titulo: "🚀 Plano de Crescimento de Carreira",
+quando: "Quando quiser evoluir profissionalmente.",
+prompt: `Você é especialista em desenvolvimento de carreira.
+
+Crie um plano de crescimento profissional considerando:
+
+- Minha área: [ÁREA]
+- Meu nível atual: [NÍVEL]
+- Objetivo futuro: [OBJETIVO]
 
 Inclua:
-- Preparação prévia
-- Argumentos estratégicos
-- Técnicas de persuasão ética
-- Como lidar com objeções
-- Estratégia de fechamento
-
-Seja assertivo e estratégico.`
-},
-
-{
-id: 6,
-categoria: "🧠 Alta Performance",
-titulo: "Plano de Alta Performance no Trabalho",
-quando: "Quando deseja melhorar resultados e desempenho.",
-conteudo: `Crie um plano de alta performance profissional.
-
-Inclua:
-- Gestão de tempo
-- Foco em tarefas de alto impacto
-- Redução de distrações
-- Indicadores de produtividade
-- Rotina diária recomendada
-
-Seja prático e aplicável.`
-},
-
-{
-id: 7,
-categoria: "📄 Currículo & LinkedIn",
-titulo: "Otimização de Perfil Profissional",
-quando: "Quando quer melhorar currículo ou LinkedIn.",
-conteudo: `Crie um plano para otimizar currículo e LinkedIn.
-
-Inclua:
-- Estrutura ideal
-- Palavras-chave estratégicas
-- Como destacar resultados
-- Erros comuns a evitar
-- Modelo resumido de apresentação`
-},
-
-{
-id: 8,
-categoria: "💼 Serviços",
-titulo: "Estruturação de Serviço Profissional",
-quando: "Quando deseja transformar habilidade em serviço pago.",
-conteudo: `Crie um plano para estruturar um serviço profissional.
-
-Inclua:
-- Definição clara do serviço
-- Público-alvo
-- Modelo de precificação
-- Estratégia de captação de clientes
-- Diferencial competitivo
-
-Seja estratégico e realista.`
+- Competências a desenvolver
+- Estratégia de networking
+- Posicionamento profissional
+- Plano de 6 meses`
 }
 
 ];
 
-const lista = document.getElementById("lista");
+const lista = document.getElementById("lista-prompts");
 const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
 function renderizar(arr){
+
 lista.innerHTML = "";
-contador.innerText = `Total: ${arr.length} prompt${arr.length!==1?"s":""}`;
+contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
-arr.forEach(p=>{
-const favorito = JSON.parse(localStorage.getItem("favoritosTrabalho")) || [];
-const ativo = favorito.includes(p.id);
+ordemCategorias.forEach(cat => {
 
-lista.innerHTML += `
-<div class="card">
-  <div style="font-size:13px; opacity:0.7;">${p.categoria}</div>
-  <h3>${p.titulo}</h3>
-  <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-  <pre>${p.conteudo}</pre>
+const grupo = arr.filter(p => p.categoria === cat);
+if(grupo.length === 0) return;
 
-  <div class="acoes">
-    <button onclick="favoritar(${p.id})">
-      ${ativo ? "⭐ Favoritado" : "☆ Favoritar"}
-    </button>
-    <button onclick="copiar(\`${p.conteudo}\`)">📋 Copiar</button>
-    <button onclick="abrirChat()">💬 ChatGPT</button>
-    <button onclick="abrirGemini()">🔷 Gemini</button>
-  </div>
+const tituloSecao = document.createElement("h2");
+tituloSecao.className = "secao-titulo";
+tituloSecao.innerText = cat;
+lista.appendChild(tituloSecao);
+
+grupo.forEach(p => {
+
+const card = document.createElement("div");
+card.className = "card";
+card.setAttribute("data-nivel", p.nivel);
+
+card.innerHTML = `
+<div class="nivel nivel-${p.nivel}">
+${p.nivel === 'avancado' ? '🔴 Avançado' :
+p.nivel === 'intermediario' ? '🟡 Intermediário' :
+'🟢 Básico'}
+</div>
+
+<h3>${p.titulo}</h3>
+<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+<pre>${p.prompt}</pre>
+
+<div class="acoes">
+<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+<button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
 </div>
 `;
+
+lista.appendChild(card);
+
 });
+
+});
+
 }
 
-function filtrar(){
+function filtrarPrompts(){
 const termo = busca.value.toLowerCase();
-const filtrados = prompts.filter(p =>
+const filtrados = promptsTrabalho.filter(p =>
 p.titulo.toLowerCase().includes(termo) ||
-p.categoria.toLowerCase().includes(termo) ||
-p.conteudo.toLowerCase().includes(termo)
+p.prompt.toLowerCase().includes(termo) ||
+p.categoria.toLowerCase().includes(termo)
 );
 renderizar(filtrados);
 }
 
-function copiar(texto){
-navigator.clipboard.writeText(texto);
-alert("Prompt copiado!");
-}
+function filtrarNivel(event, nivel){
+const botoes = document.querySelectorAll(".filtro-nivel button");
+botoes.forEach(btn => btn.classList.remove("ativo"));
+event.target.classList.add("ativo");
 
-function favoritar(id){
-let fav = JSON.parse(localStorage.getItem("favoritosTrabalho")) || [];
-if(fav.includes(id)){
-fav = fav.filter(f=>f!==id);
+const cards = document.querySelectorAll("#lista-prompts .card");
+
+cards.forEach(card=>{
+if(nivel === "todos"){
+card.style.display = "block";
 }else{
-fav.push(id);
+card.style.display =
+card.dataset.nivel === nivel ? "block" : "none";
 }
-localStorage.setItem("favoritosTrabalho", JSON.stringify(fav));
-renderizar(prompts);
-}
-
-function abrirChat(){
-window.open("https://chat.openai.com", "_blank");
+});
 }
 
-function abrirGemini(){
-window.open("https://gemini.google.com", "_blank");
+function copiarPrompt(texto){
+navigator.clipboard.writeText(texto);
+alert("📋 Prompt copiado!");
 }
 
-renderizar(prompts);
+function favoritarPrompt(titulo, conteudo){
+const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+prompts.push({
+id: Date.now(),
+titulo,
+categoria: "Trabalho",
+conteudo,
+favorito: true
+});
+localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto){
+window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto));
+}
+
+function abrirGemini(texto){
+window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto));
+}
+
+renderizar(promptsTrabalho);
 
 </script>
 
