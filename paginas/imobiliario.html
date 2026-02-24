@@ -15,10 +15,11 @@
 
 <main>
 
-<h1>🏠 Biblioteca Imobiliária Estratégica</h1>
+<h1>🏠 Imobiliário</h1>
+
 <p>
-Prompts profissionais para corretores, advogados imobiliários e investidores.
-Venda, negociação, contratos e posicionamento com nível estratégico.
+Prompts estratégicos para corretores, advogados imobiliários e investidores.
+Venda, contratos, negociação e posicionamento com padrão profissional.
 </p>
 
 <h2 class="secao-titulo">🎯 Objetivo</h2>
@@ -27,10 +28,13 @@ Fornecer prompts estruturados para aumentar conversão,
 reduzir riscos jurídicos e elevar autoridade no mercado imobiliário.
 </p>
 
-<!-- ============================= -->
-<!-- FILTRO DE NÍVEL -->
-<!-- ============================= -->
+<!-- BUSCA -->
+<div class="top-bar">
+<input type="text" id="busca" placeholder="🔎 Buscar modelo imobiliário..." oninput="filtrarPrompts()">
+<div class="contador" id="contador"></div>
+</div>
 
+<!-- FILTRO DE NÍVEL -->
 <div class="filtro-nivel">
 <button onclick="filtrarNivel('todos')" class="ativo">Todos</button>
 <button onclick="filtrarNivel('basico')">Básico</button>
@@ -38,31 +42,15 @@ reduzir riscos jurídicos e elevar autoridade no mercado imobiliário.
 <button onclick="filtrarNivel('avancado')">Avançado</button>
 </div>
 
-<!-- ============================= -->
-<!-- BUSCA -->
-<!-- ============================= -->
-
-<div class="top-bar">
-<input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrarPrompts()">
-<div class="contador" id="contador"></div>
-</div>
-
 <div id="lista-prompts">
 
 <!-- ================================================= -->
-<!-- 🔹 1️⃣ ADVOGADO IMOBILIÁRIO (BÁSICO) -->
+<!-- 🔹 BÁSICO 1 – ADVOGADO IMOBILIÁRIO -->
 <!-- ================================================= -->
 
-<div class="card"
-data-nivel="basico"
-data-categoria="⚖️ Jurídico">
+<div class="card" data-nivel="basico" data-categoria="⚖️ Jurídico">
 
-<span class="nivel nivel-basico">BÁSICO</span>
-
-<div class="tags">
-<span class="tag simples">Simples</span>
-<span class="tag">Jurídico</span>
-</div>
+<span class="nivel nivel-basico">Básico</span>
 
 <h3>⚖️ Advogado Imobiliário</h3>
 
@@ -93,21 +81,14 @@ Explique:
 </div>
 
 <!-- ================================================= -->
-<!-- 🔹 2️⃣ DESCRIÇÃO RÁPIDA (BÁSICO) -->
+<!-- 🔹 BÁSICO 2 -->
 <!-- ================================================= -->
 
-<div class="card"
-data-nivel="basico"
-data-categoria="🏠 Venda">
+<div class="card" data-nivel="basico" data-categoria="🏠 Venda">
 
-<span class="nivel nivel-basico">BÁSICO</span>
+<span class="nivel nivel-basico">Básico</span>
 
-<div class="tags">
-<span class="tag simples">Simples</span>
-<span class="tag">Venda</span>
-</div>
-
-<h3>🏡 Descrição Rápida de Imóvel</h3>
+<h3>🏡 Descrição de Imóvel</h3>
 
 <p><strong>📌 Quando usar:</strong>
 Para criar descrição objetiva para portais imobiliários.</p>
@@ -120,7 +101,7 @@ Crie uma descrição atrativa e profissional para:
 Regras:
 - Linguagem clara
 - Destacar diferenciais
-- Foco em benefício
+- Foco em benefícios
 - Finalizar com chamada para ação
 </p>
 
@@ -132,15 +113,13 @@ Regras:
 </div>
 </div>
 
-<h2 class="secao-titulo">🚀 Prompts Profissionais</h2>
+<!-- ================================================= -->
+<!-- 🔸 INTERMEDIÁRIO -->
+<!-- ================================================= -->
 
-<!-- 3 INTERMEDIÁRIOS -->
+<div class="card" data-nivel="intermediario" data-categoria="📈 Estratégia">
 
-<div class="card"
-data-nivel="intermediario"
-data-categoria="📈 Estratégia">
-
-<span class="nivel nivel-intermediario">INTERMEDIÁRIO</span>
+<span class="nivel nivel-intermediario">Intermediário</span>
 
 <h3>📈 Estratégia de Venda</h3>
 
@@ -153,7 +132,7 @@ Monte uma estratégia completa de venda para:
 
 Inclua:
 - Público ideal
-- Estratégia de precificação
+- Precificação estratégica
 - Plano de divulgação
 - Roteiro de atendimento
 - Técnicas de fechamento
@@ -167,11 +146,9 @@ Inclua:
 </div>
 </div>
 
-<div class="card"
-data-nivel="intermediario"
-data-categoria="📜 Contrato">
+<div class="card" data-nivel="intermediario" data-categoria="📜 Contrato">
 
-<span class="nivel nivel-intermediario">INTERMEDIÁRIO</span>
+<span class="nivel nivel-intermediario">Intermediário</span>
 
 <h3>📜 Análise de Contrato</h3>
 
@@ -185,8 +162,8 @@ Analise o contrato abaixo:
 Identifique:
 - Cláusulas de risco
 - Pontos abusivos
-- Sugestões de melhoria
 - Ajustes recomendados
+- Melhorias estratégicas
 </p>
 
 <div class="acoes">
@@ -197,41 +174,13 @@ Identifique:
 </div>
 </div>
 
-<div class="card"
-data-nivel="intermediario"
-data-categoria="📢 Captação">
+<!-- ================================================= -->
+<!-- 🔴 AVANÇADO -->
+<!-- ================================================= -->
 
-<span class="nivel nivel-intermediario">INTERMEDIÁRIO</span>
+<div class="card" data-nivel="avancado" data-categoria="💰 Investimento">
 
-<h3>📢 Captação Estratégica</h3>
-
-<p class="prompt-text">
-Você é especialista em captação de imóveis.
-
-Crie roteiro de abordagem para proprietário:
-
-Inclua:
-- Argumento de valorização
-- Diferencial competitivo
-- Prova social
-- Fechamento estratégico
-</p>
-
-<div class="acoes">
-<button class="btn-favorito">☆ Favoritar</button>
-<button class="btn-copy">📋 Copiar</button>
-<button class="btn-chat">💬 ChatGPT</button>
-<button class="btn-gemini">🔷 Gemini</button>
-</div>
-</div>
-
-<!-- 3 AVANÇADOS -->
-
-<div class="card"
-data-nivel="avancado"
-data-categoria="💰 Investimento">
-
-<span class="nivel nivel-avancado">AVANÇADO</span>
+<span class="nivel nivel-avancado">Avançado</span>
 
 <h3>💰 Análise de Investimento</h3>
 
@@ -258,69 +207,12 @@ Inclua:
 </div>
 </div>
 
-<div class="card"
-data-nivel="avancado"
-data-categoria="🤝 Negociação">
-
-<span class="nivel nivel-avancado">AVANÇADO</span>
-
-<h3>🤝 Estratégia de Negociação</h3>
-
-<p class="prompt-text">
-Você é especialista em negociação imobiliária.
-
-Monte estratégia para negociação:
-
-Inclua:
-- Pontos de alavancagem
-- Técnicas psicológicas
-- Estratégia de concessão
-- Plano de fechamento
-</p>
-
-<div class="acoes">
-<button class="btn-favorito">☆ Favoritar</button>
-<button class="btn-copy">📋 Copiar</button>
-<button class="btn-chat">💬 ChatGPT</button>
-<button class="btn-gemini">🔷 Gemini</button>
-</div>
-</div>
-
-<div class="card"
-data-nivel="avancado"
-data-categoria="🎤 Autoridade">
-
-<span class="nivel nivel-avancado">AVANÇADO</span>
-
-<h3>🎤 Posicionamento como Especialista</h3>
-
-<p class="prompt-text">
-Você é estrategista de marca pessoal.
-
-Crie texto de posicionamento no mercado imobiliário:
-
-Regras:
-- Autoridade sem arrogância
-- Clareza
-- Diferenciação
-- Final marcante
-</p>
-
-<div class="acoes">
-<button class="btn-favorito">☆ Favoritar</button>
-<button class="btn-copy">📋 Copiar</button>
-<button class="btn-chat">💬 ChatGPT</button>
-<button class="btn-gemini">🔷 Gemini</button>
-</div>
-</div>
-
 </div>
 </main>
 
 <script src="../funcoes.js"></script>
 
 <script>
-
 const busca = document.getElementById("busca");
 const contador = document.getElementById("contador");
 const cards = document.querySelectorAll(".card");
@@ -356,7 +248,6 @@ filtrarPrompts();
 }
 
 filtrarPrompts();
-
 </script>
 
 </body>
