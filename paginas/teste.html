@@ -1,217 +1,189 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Teste de Níveis | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h1>🏠 Prompts para Imobiliária</h1>
 
-  <!-- CSS Global -->
-  <link rel="stylesheet" href="../style.css">
+<p>Prompts estratégicos para corretores, imobiliárias e marketing imobiliário venderem mais usando IA.</p>
 
-  <!-- CSS Modular de Melhorias -->
-  <link rel="stylesheet" href="../css/melhoriaspaginas.css">
-</head>
+<section class="card">
+<h2>🎯 Objetivo</h2>
+<p>Gerar anúncios, descrições, scripts de venda, qualificação de clientes e estratégias imobiliárias com inteligência artificial.</p>
+</section>
 
-<body>
+<input type="text" id="busca" placeholder="Buscar prompt..." oninput="renderizar()" />
 
-<div id="menu"></div>
-<script src="../menu-loader.js"></script>
+<select id="filtro-nivel" onchange="renderizar()">
+<option value="">Todos os níveis</option>
+<option value="basico">Básico</option>
+<option value="intermediario">Intermediário</option>
+<option value="avancado">Avançado</option>
+</select>
 
-<main>
+<div id="lista-prompts"></div>
 
-  <!-- TÍTULO -->
-  <h1>🎓 Sistema de Prompts por Nível</h1>
-  <p>
-    Explore os prompts organizados por grau de complexidade.
-    Escolha entre básico, intermediário ou avançado.
-  </p>
-
-  <!-- FILTRO DE NÍVEL -->
-  <div class="filtro-nivel">
-    <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos</button>
-    <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
-    <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
-    <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
-  </div>
-
-  <!-- ========================= -->
-  <!-- PROMPT 1 - BÁSICO -->
-  <!-- ========================= -->
-
-  <div class="card" data-nivel="basico">
-
-    <div class="nivel nivel-basico">🟢 Básico</div>
-
-    <h3>1️⃣ Explicação Simples</h3>
-
-    <p><strong>Quando usar:</strong> Para entender rapidamente um conceito novo.</p>
-
-    <p>
-Você é um professor experiente.
-Explique o seguinte tema de forma simples e objetiva:
-
-[Tema]
-
-Use exemplos práticos e linguagem acessível.
-    </p>
-
-  </div>
-
-  <!-- ========================= -->
-  <!-- PROMPT 2 - BÁSICO -->
-  <!-- ========================= -->
-
-  <div class="card" data-nivel="basico">
-
-    <div class="nivel nivel-basico">🟢 Básico</div>
-
-    <h3>2️⃣ Resumo Direto</h3>
-
-    <p><strong>Quando usar:</strong> Quando precisar revisar conteúdo rapidamente.</p>
-
-    <p>
-Resuma o seguinte conteúdo de forma clara e organizada:
-
-[Conteúdo]
-
-Use tópicos e destaque os pontos principais.
-    </p>
-
-  </div>
-
-  <!-- ========================= -->
-  <!-- PROMPT 3 - INTERMEDIÁRIO -->
-  <!-- ========================= -->
-
-  <div class="card" data-nivel="intermediario">
-
-    <div class="nivel nivel-intermediario">🟡 Intermediário</div>
-
-    <h3>3️⃣ Explicação Estruturada</h3>
-
-    <p><strong>Quando usar:</strong> Para aprender com mais profundidade e organização.</p>
-
-    <p>
-Você é um especialista no assunto.
-
-Explique o seguinte tema:
-
-[Tema]
-
-Estruture sua resposta em:
-- Definição
-- Contexto
-- Exemplos
-- Aplicação prática
-    </p>
-
-  </div>
-
-  <!-- ========================= -->
-  <!-- PROMPT 4 - INTERMEDIÁRIO -->
-  <!-- ========================= -->
-
-  <div class="card" data-nivel="intermediario">
-
-    <div class="nivel nivel-intermediario">🟡 Intermediário</div>
-
-    <h3>4️⃣ Perguntas para Fixação</h3>
-
-    <p><strong>Quando usar:</strong> Para testar seu conhecimento.</p>
-
-    <p>
-Crie 10 perguntas sobre o seguinte tema:
-
-[Tema]
-
-Inclua:
-- Perguntas conceituais
-- Perguntas práticas
-- Respostas comentadas
-    </p>
-
-  </div>
-
-  <!-- ========================= -->
-  <!-- PROMPT 5 - AVANÇADO -->
-  <!-- ========================= -->
-
-  <div class="card" data-nivel="avancado">
-
-    <div class="nivel nivel-avancado">🔴 Avançado</div>
-
-    <h3>5️⃣ Análise Profunda</h3>
-
-    <p><strong>Quando usar:</strong> Para dominar um tema com visão crítica.</p>
-
-    <p>
-Você é um especialista acadêmico.
-
-Analise profundamente o seguinte tema:
-
-[Tema]
-
-Inclua:
-- Contexto histórico
-- Pontos fortes
-- Limitações
-- Aplicações atuais
-- Perspectivas futuras
-    </p>
-
-  </div>
-
-  <!-- ========================= -->
-  <!-- PROMPT 6 - AVANÇADO -->
-  <!-- ========================= -->
-
-  <div class="card" data-nivel="avancado">
-
-    <div class="nivel nivel-avancado">🔴 Avançado</div>
-
-    <h3>6️⃣ Plano de Estudo Estratégico</h3>
-
-    <p><strong>Quando usar:</strong> Para criar domínio estruturado sobre um assunto.</p>
-
-    <p>
-Crie um plano de estudo completo para aprender:
-
-[Tema]
-
-Inclua:
-- Ordem de aprendizado
-- Recursos sugeridos
-- Exercícios práticos
-- Cronograma semanal
-- Indicadores de evolução
-    </p>
-
-  </div>
-
-</main>
-
-<!-- SCRIPT FILTRO -->
 <script>
-function filtrarNivel(event, nivel) {
+const prompts = [
 
-  const cards = document.querySelectorAll(".card");
-  const botoes = document.querySelectorAll(".filtro-nivel button");
+{
+categoria: "Anúncios",
+nivel: "basico",
+titulo: "Descrição de Imóvel para Venda",
+quando: "Quando precisar criar anúncio atrativo rapidamente",
+prompt: `
+Crie uma descrição persuasiva para vender o seguinte imóvel:
 
-  botoes.forEach(btn => btn.classList.remove("ativo"));
-  event.target.classList.add("ativo");
+Tipo:
+Localização:
+Quantidade de quartos:
+Diferenciais:
+Valor:
 
-  cards.forEach(card => {
+Use linguagem emocional, destaque benefícios e finalize com chamada para ação.
+`
+},
 
-    if (nivel === "todos") {
-      card.style.display = "block";
-    } else {
-      card.style.display =
-        card.dataset.nivel === nivel ? "block" : "none";
-    }
+{
+categoria: "Anúncios",
+nivel: "intermediario",
+titulo: "Anúncio Magnético para Portais",
+quando: "Quando quiser se destacar no Zap, OLX ou VivaReal",
+prompt: `
+Crie um anúncio altamente persuasivo para portal imobiliário.
 
-  });
+Use:
+• Título chamativo
+• Gatilhos mentais
+• Benefícios antes das características
+• Chamada para ação forte
+
+Dados do imóvel:
+[Inserir informações]
+`
+},
+
+{
+categoria: "Captação",
+nivel: "intermediario",
+titulo: "Mensagem para Captar Imóvel",
+quando: "Quando quiser convencer proprietário a anunciar com você",
+prompt: `
+Crie uma mensagem estratégica para convencer um proprietário a anunciar o imóvel comigo.
+
+Inclua:
+• Autoridade
+• Prova social
+• Diferencial competitivo
+• Benefícios da parceria
+`
+},
+
+{
+categoria: "Atendimento",
+nivel: "basico",
+titulo: "Resposta Automática para Leads",
+quando: "Quando receber contato pelo WhatsApp",
+prompt: `
+Crie uma resposta automática profissional para lead interessado em imóvel.
+
+Objetivo:
+• Gerar conexão
+• Entender necessidade
+• Avançar para visita
+`
+},
+
+{
+categoria: "Vendas",
+nivel: "avancado",
+titulo: "Script de Fechamento Imobiliário",
+quando: "Quando o cliente está indeciso",
+prompt: `
+Crie um script estratégico de fechamento para cliente indeciso.
+
+Inclua:
+• Quebra de objeções
+• Reforço de valor
+• Escassez
+• Próximo passo claro
+`
 }
-</script>
 
-</body>
-</html>
+];
+
+const ordemCategorias = [
+"Anúncios",
+"Captação",
+"Atendimento",
+"Vendas"
+];
+
+function renderizar() {
+const lista = document.getElementById("lista-prompts");
+const busca = document.getElementById("busca").value.toLowerCase();
+const nivelSelecionado = document.getElementById("filtro-nivel").value;
+
+lista.innerHTML = "";
+
+ordemCategorias.forEach(cat => {
+
+const categoriaPrompts = prompts.filter(p => 
+p.categoria === cat &&
+(p.titulo.toLowerCase().includes(busca) ||
+p.prompt.toLowerCase().includes(busca)) &&
+(nivelSelecionado === "" || p.nivel === nivelSelecionado)
+);
+
+if(categoriaPrompts.length > 0){
+
+const tituloCategoria = document.createElement("h2");
+tituloCategoria.textContent = cat;
+lista.appendChild(tituloCategoria);
+
+categoriaPrompts.forEach((p, index) => {
+
+const card = document.createElement("section");
+card.className = "card";
+card.setAttribute("data-nivel", p.nivel);
+
+card.innerHTML = `
+<div class="nivel nivel-${p.nivel}">
+<strong>${p.titulo}</strong>
+<span>Quando usar: ${p.quando}</span>
+</div>
+
+<pre>${p.prompt}</pre>
+
+<div class="acoes">
+<button onclick="copiarPrompt(\`${p.prompt}\`)">Copiar</button>
+<button onclick="favoritarPrompt(${index})">Favoritar</button>
+<button onclick="usarChatGPT(\`${p.prompt}\`)">ChatGPT</button>
+<button onclick="usarGemini(\`${p.prompt}\`)">Gemini</button>
+</div>
+`;
+
+lista.appendChild(card);
+
+});
+
+}
+
+});
+
+}
+
+function copiarPrompt(texto){
+navigator.clipboard.writeText(texto);
+alert("Prompt copiado!");
+}
+
+function favoritarPrompt(index){
+alert("Adicionado aos favoritos!");
+}
+
+function usarChatGPT(prompt){
+window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(prompt));
+}
+
+function usarGemini(prompt){
+window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(prompt));
+}
+
+renderizar();
+</script>
