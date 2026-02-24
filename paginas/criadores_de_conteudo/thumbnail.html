@@ -2,11 +2,11 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Thumbnail | Delta Prompts</title>
+<title>Thumbnail Estratégica | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
-<link rel="stylesheet" href="/delta-prompts/melhoriaspaginas.css">
+<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
 
 </head>
 <body>
@@ -16,47 +16,58 @@
 
 <main>
 
-<h1>🖼 Prompts para Thumbnail</h1>
-<p>Prompts estratégicos para criar thumbnails magnéticas, altamente clicáveis e otimizadas para mobile.</p>
+<h1>🖼 Thumbnail Estratégica com IA</h1>
+
+<p>
+Prompts profissionais para criar thumbnails magnéticas, com alto CTR e totalmente otimizadas para mobile.
+</p>
 
 <section class="card">
 <h3>🎯 Objetivo</h3>
-<p>Gerar thumbnails que aumentam CTR, dominam no mobile e criam impacto visual imediato.</p>
+<p>
+Ajudar criadores a desenvolver thumbnails que param o scroll, geram curiosidade e aumentam a taxa de cliques.
+</p>
 </section>
 
-<input type="text" id="busca" placeholder="🔎 Buscar prompt...">
+<!-- BUSCA -->
+<div class="top-bar">
+<input
+type="text"
+id="busca"
+placeholder="🔎 Buscar modelo de thumbnail..."
+oninput="filtrarPrompts()"
+>
+<div class="contador" id="contador"></div>
+</div>
 
+<!-- FILTRO NIVEL -->
 <div class="filtro-nivel">
-<button class="ativo" onclick="filtrarNivel('todos')">Todos</button>
-<button onclick="filtrarNivel('basico')">Básico</button>
-<button onclick="filtrarNivel('intermediario')">Intermediário</button>
-<button onclick="filtrarNivel('avancado')">Avançado</button>
+<button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos</button>
+<button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+<button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+<button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
 </div>
 
 <div id="lista-prompts"></div>
 
+</main>
+
 <script>
 
-/* ============================= */
-/* ORDEM DE CATEGORIAS */
-/* ============================= */
-
 const ordemCategorias = [
-  "Thumbnail"
+"🔥 Magnética",
+"🎯 Mais Cliques",
+"📱 Mobile"
 ];
 
-/* ============================= */
-/* ARRAY DE PROMPTS */
-/* ============================= */
-
-const prompts = [
+const promptsThumbnail = [
 
 {
-  categoria: "Thumbnail",
-  nivel: "basico",
-  titulo: "Thumbnail Magnética Simples",
-  quando: "Para vídeos gerais que precisam chamar atenção rápida",
-  prompt: `Crie uma thumbnail magnética para YouTube.
+categoria: "🔥 Magnética",
+nivel: "basico",
+titulo: "Thumbnail Magnética Simples",
+quando: "Para vídeos gerais que precisam chamar atenção rápida",
+prompt: `Crie uma thumbnail magnética para YouTube.
 
 Tema: [TEMA]
 
@@ -70,11 +81,11 @@ Objetivo: parar o scroll imediatamente.`
 },
 
 {
-  categoria: "Thumbnail",
-  nivel: "intermediario",
-  titulo: "Thumbnail para Aumentar CTR",
-  quando: "Quando o vídeo precisa melhorar taxa de clique",
-  prompt: `Crie uma thumbnail altamente clicável.
+categoria: "🎯 Mais Cliques",
+nivel: "intermediario",
+titulo: "Thumbnail para Aumentar CTR",
+quando: "Quando o vídeo precisa melhorar taxa de clique",
+prompt: `Crie uma thumbnail altamente clicável.
 
 Tema: [TEMA]
 
@@ -82,75 +93,17 @@ Use:
 - Curiosidade aberta
 - Texto provocativo
 - Expressão emocional intensa
-- Elemento visual que gere pergunta mental
+- Elemento que gere pergunta mental
 
 Foco total em aumentar CTR.`
 },
 
 {
-  categoria: "Thumbnail",
-  nivel: "avancado",
-  titulo: "Thumbnail Magnética Psicológica",
-  quando: "Para vídeos competitivos disputando atenção",
-  prompt: `Você é especialista em psicologia visual aplicada ao YouTube.
-
-Crie uma thumbnail estratégica baseada em:
-
-Tema: [TEMA]
-Público: [PÚBLICO]
-
-Aplique:
-- Contraste emocional
-- Cores de alerta
-- Quebra de padrão visual
-- Máximo 3 palavras impactantes
-
-Explique a lógica estratégica utilizada.`
-},
-
-{
-  categoria: "Thumbnail",
-  nivel: "basico",
-  titulo: "Thumbnail Otimizada para Celular",
-  quando: "Quando a maioria da audiência vem do mobile",
-  prompt: `Crie uma thumbnail otimizada para celular.
-
-Tema: [TEMA]
-
-Regras:
-- Texto extremamente grande
-- Máximo 3 palavras
-- Elemento principal centralizado
-- Evitar detalhes pequenos
-- Alto contraste
-
-Foco total em legibilidade mobile.`
-},
-
-{
-  categoria: "Thumbnail",
-  nivel: "intermediario",
-  titulo: "Thumbnail com Loop de Curiosidade",
-  quando: "Para vídeos que dependem de curiosidade forte",
-  prompt: `Crie uma thumbnail que gere loop mental.
-
-Tema: [TEMA]
-
-A thumbnail deve:
-- Criar tensão visual
-- Gerar pergunta não respondida
-- Usar contraste forte
-- Texto curto e provocativo
-
-Objetivo: forçar o clique por curiosidade.`
-},
-
-{
-  categoria: "Thumbnail",
-  nivel: "avancado",
-  titulo: "Thumbnail Mobile Dominante",
-  quando: "Para canais com audiência majoritariamente mobile",
-  prompt: `Você é especialista em design para YouTube mobile.
+categoria: "📱 Mobile",
+nivel: "avancado",
+titulo: "Thumbnail Dominante para Celular",
+quando: "Para canais com maioria da audiência mobile",
+prompt: `Você é especialista em design para YouTube mobile.
 
 Crie uma thumbnail dominante para telas pequenas.
 
@@ -159,112 +112,146 @@ Tema: [TEMA]
 Aplique:
 - Hierarquia visual forte
 - Elemento principal exagerado
+- Máximo 3 palavras
 - Redução total de ruído visual
-- Zona de leitura central
 
-Explique por que funcionará melhor no celular.`
+Explique a lógica estratégica.`
 }
 
 ];
 
-/* ============================= */
-/* RENDERIZAÇÃO */
-/* ============================= */
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
 
-function renderizar(lista = prompts){
+function renderizar(arr) {
 
-const container = document.getElementById("lista-prompts");
-container.innerHTML = "";
+lista.innerHTML = "";
+contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
 ordemCategorias.forEach(cat => {
 
-  const grupo = lista.filter(p => p.categoria === cat);
-  if(grupo.length === 0) return;
+const grupo = arr.filter(p => p.categoria === cat);
 
-  grupo.forEach(p => {
+if (grupo.length === 0) return;
 
-    const card = document.createElement("div");
+const tituloSecao = document.createElement("h2");
+tituloSecao.className = "secao-titulo";
+tituloSecao.innerText = cat;
+lista.appendChild(tituloSecao);
 
-    card.classList.add("card");
-    card.setAttribute("data-nivel", p.nivel);
+grupo.forEach(p => {
 
-    card.innerHTML = `
+const card = document.createElement("div");
+card.className = "card";
+card.setAttribute("data-nivel", p.nivel);
+
+card.innerHTML = `
 <div class="nivel nivel-${p.nivel}">
-${p.nivel.toUpperCase()}
+${p.nivel === 'avancado' ? '🔴 Avançado' :
+p.nivel === 'intermediario' ? '🟡 Intermediário' :
+'🟢 Básico'}
 </div>
 
 <h3>${p.titulo}</h3>
-<p><strong>Quando usar:</strong> ${p.quando}</p>
+<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
 
-<pre class="prompt-text">${p.prompt}</pre>
+<pre>${p.prompt}</pre>
 
 <div class="acoes">
-<button onclick="copiar(this)" class="btn-copy">📋 Copiar</button>
-<button onclick="chat(this)" class="btn-chat">💬 ChatGPT</button>
-<button onclick="gemini(this)" class="btn-gemini">✨ Gemini</button>
-<button onclick="favoritar(this)" class="btn-favorito">☆ Favoritar</button>
+<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
 </div>
 `;
 
-    container.appendChild(card);
+lista.appendChild(card);
 
-  });
+});
 
 });
 
 }
 
-/* ============================= */
-/* FILTRO POR NÍVEL */
-/* ============================= */
+function filtrarPrompts() {
+const termo = busca.value.toLowerCase();
+const filtrados = promptsThumbnail.filter(p =>
+p.titulo.toLowerCase().includes(termo) ||
+p.prompt.toLowerCase().includes(termo) ||
+p.categoria.toLowerCase().includes(termo)
+);
+renderizar(filtrados);
+}
 
-function filtrarNivel(nivel){
+function filtrarNivel(event, nivel) {
 
 const botoes = document.querySelectorAll(".filtro-nivel button");
-botoes.forEach(b => b.classList.remove("ativo"));
+botoes.forEach(btn => btn.classList.remove("ativo"));
 event.target.classList.add("ativo");
 
 const cards = document.querySelectorAll("#lista-prompts .card");
 
 cards.forEach(card => {
 
-  if(nivel === "todos"){
-    card.style.display = "block";
-  } else {
-    card.style.display =
-      card.getAttribute("data-nivel") === nivel
-      ? "block"
-      : "none";
-  }
-
-});
-
+if (nivel === "todos") {
+card.style.display = "block";
+} else {
+card.style.display =
+card.dataset.nivel === nivel ? "block" : "none";
 }
 
-/* ============================= */
-/* BUSCA */
-/* ============================= */
-
-document.getElementById("busca").addEventListener("keyup", function(){
-const termo = this.value.toLowerCase();
-const cards = document.querySelectorAll("#lista-prompts .card");
-
-cards.forEach(card => {
-  const texto = card.innerText.toLowerCase();
-  card.style.display = texto.includes(termo) ? "block" : "none";
 });
-});
+}
 
-/* ============================= */
-/* INICIAR */
-/* ============================= */
+function copiarPrompt(texto) {
+navigator.clipboard.writeText(texto);
+alert("📋 Prompt copiado!");
+}
 
-renderizar();
+function abrirChatGPT(texto) {
+window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto));
+}
+
+function abrirGemini(texto) {
+window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto));
+}
+
+renderizar(promptsThumbnail);
 
 </script>
 
-<script src="/delta-prompts/funcoes.js"></script>
+<style>
 
-</main>
+.top-bar {
+display: flex;
+gap: 15px;
+align-items: center;
+margin: 20px 0;
+flex-wrap: wrap;
+}
+
+.top-bar input {
+flex: 1;
+padding: 14px;
+border-radius: 10px;
+border: 1px solid #e5e7eb;
+}
+
+.contador {
+font-size: 14px;
+opacity: 0.75;
+}
+
+pre {
+white-space: pre-wrap;
+font-size: 14px;
+background: #f9fafb;
+padding: 15px;
+border-radius: 10px;
+border: 1px solid #e5e7eb;
+}
+
+</style>
+
 </body>
 </html>
