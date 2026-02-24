@@ -2,12 +2,13 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Thumbnails Estratégicas | Delta Prompts</title>
+<title>Thumbnail | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
-</head>
+<link rel="stylesheet" href="/delta-prompts/melhoriaspaginas.css">
 
+</head>
 <body>
 
 <div id="menu"></div>
@@ -15,291 +16,255 @@
 
 <main>
 
-  <!-- 1. TÍTULO FORTE -->
-  <h1>🎨 Criação Estratégica de Thumbnails</h1>
+<h1>🖼 Prompts para Thumbnail</h1>
+<p>Prompts estratégicos para criar thumbnails magnéticas, altamente clicáveis e otimizadas para mobile.</p>
 
-  <!-- 2. INTRODUÇÃO -->
-  <p>
-    Prompts profissionais para criar thumbnails que aumentam CTR e chamam atenção no feed do YouTube.
-  </p>
+<section class="card">
+<h3>🎯 Objetivo</h3>
+<p>Gerar thumbnails que aumentam CTR, dominam no mobile e criam impacto visual imediato.</p>
+</section>
 
-  <!-- 3. OBJETIVO -->
-  <section class="card">
-    <h3>🎯 Objetivo</h3>
-    <p>
-      Ajudar criadores a desenvolver thumbnails visualmente fortes, estratégicas e otimizadas para gerar cliques.
-    </p>
-  </section>
+<input type="text" id="busca" placeholder="🔎 Buscar prompt...">
 
-  <!-- 4. BUSCA -->
-  <div class="top-bar">
-    <input
-      type="text"
-      id="busca"
-      placeholder="🔎 Buscar modelo de thumbnail..."
-      oninput="filtrarPrompts()"
-    >
-    <div class="contador" id="contador"></div>
-  </div>
+<div class="filtro-nivel">
+<button class="ativo" onclick="filtrarNivel('todos')">Todos</button>
+<button onclick="filtrarNivel('basico')">Básico</button>
+<button onclick="filtrarNivel('intermediario')">Intermediário</button>
+<button onclick="filtrarNivel('avancado')">Avançado</button>
+</div>
 
-  <!-- 5. CARDS -->
-  <div id="lista-prompts"></div>
-
-</main>
+<div id="lista-prompts"></div>
 
 <script>
 
-const promptsThumbnails = [
+/* ============================= */
+/* ORDEM DE CATEGORIAS */
+/* ============================= */
+
+const ordemCategorias = [
+  "Thumbnail"
+];
+
+/* ============================= */
+/* ARRAY DE PROMPTS */
+/* ============================= */
+
+const prompts = [
 
 {
-categoria: "🔥 Alta CTR",
-titulo: "Estrutura de Thumbnail de Alta Conversão",
-quando: "Quando quiser aumentar a taxa de cliques (CTR).",
-prompt: `Você é especialista em design estratégico para YouTube.
+  categoria: "Thumbnail",
+  nivel: "basico",
+  titulo: "Thumbnail Magnética Simples",
+  quando: "Para vídeos gerais que precisam chamar atenção rápida",
+  prompt: `Crie uma thumbnail magnética para YouTube.
 
-Crie um conceito de thumbnail para o vídeo sobre: [INSIRA TEMA]
+Tema: [TEMA]
 
-Inclua:
-- Texto ideal na thumbnail (máx 4 palavras)
-- Emoção facial recomendada
-- Cor de fundo estratégica
-- Elementos visuais principais
-- Contraste ideal
-- Erros a evitar
+Use:
+- Texto grande (máx 3 palavras)
+- Fundo com alto contraste
+- Expressão facial forte
+- Elemento visual central destacado
 
-Explique a lógica psicológica por trás das escolhas.`
+Objetivo: parar o scroll imediatamente.`
 },
 
 {
-categoria: "🎯 Minimalista",
-titulo: "Thumbnail Minimalista Impactante",
-quando: "Para vídeos diretos e fortes.",
-prompt: `Atue como especialista em design minimalista para YouTube.
+  categoria: "Thumbnail",
+  nivel: "intermediario",
+  titulo: "Thumbnail para Aumentar CTR",
+  quando: "Quando o vídeo precisa melhorar taxa de clique",
+  prompt: `Crie uma thumbnail altamente clicável.
 
-Crie uma thumbnail minimalista para o tema: [INSIRA TEMA]
+Tema: [TEMA]
+
+Use:
+- Curiosidade aberta
+- Texto provocativo
+- Expressão emocional intensa
+- Elemento visual que gere pergunta mental
+
+Foco total em aumentar CTR.`
+},
+
+{
+  categoria: "Thumbnail",
+  nivel: "avancado",
+  titulo: "Thumbnail Magnética Psicológica",
+  quando: "Para vídeos competitivos disputando atenção",
+  prompt: `Você é especialista em psicologia visual aplicada ao YouTube.
+
+Crie uma thumbnail estratégica baseada em:
+
+Tema: [TEMA]
+Público: [PÚBLICO]
+
+Aplique:
+- Contraste emocional
+- Cores de alerta
+- Quebra de padrão visual
+- Máximo 3 palavras impactantes
+
+Explique a lógica estratégica utilizada.`
+},
+
+{
+  categoria: "Thumbnail",
+  nivel: "basico",
+  titulo: "Thumbnail Otimizada para Celular",
+  quando: "Quando a maioria da audiência vem do mobile",
+  prompt: `Crie uma thumbnail otimizada para celular.
+
+Tema: [TEMA]
 
 Regras:
-- Pouco texto
-- Foco em 1 elemento principal
-- Fundo limpo
+- Texto extremamente grande
+- Máximo 3 palavras
+- Elemento principal centralizado
+- Evitar detalhes pequenos
 - Alto contraste
-- Clareza mesmo em tela pequena
 
-Explique o conceito estratégico.`
+Foco total em legibilidade mobile.`
 },
 
 {
-categoria: "💥 Impacto Emocional",
-titulo: "Thumbnail com Emoção Forte",
-quando: "Para vídeos que exploram surpresa, medo ou curiosidade.",
-prompt: `Você é especialista em psicologia visual.
+  categoria: "Thumbnail",
+  nivel: "intermediario",
+  titulo: "Thumbnail com Loop de Curiosidade",
+  quando: "Para vídeos que dependem de curiosidade forte",
+  prompt: `Crie uma thumbnail que gere loop mental.
 
-Crie uma thumbnail emocional para o tema: [INSIRA TEMA]
+Tema: [TEMA]
 
-Inclua:
-- Expressão facial ideal
-- Tipo de emoção (choque, medo, surpresa, curiosidade)
-- Palavras-chave visuais
-- Uso de setas, círculos ou destaque
-- Cor dominante
+A thumbnail deve:
+- Criar tensão visual
+- Gerar pergunta não respondida
+- Usar contraste forte
+- Texto curto e provocativo
 
-Explique como isso aumenta o CTR.`
+Objetivo: forçar o clique por curiosidade.`
 },
 
 {
-categoria: "📊 Educativo",
-titulo: "Thumbnail para Vídeos Educativos",
-quando: "Para conteúdos explicativos e tutoriais.",
-prompt: `Atue como estrategista de thumbnails educativas.
+  categoria: "Thumbnail",
+  nivel: "avancado",
+  titulo: "Thumbnail Mobile Dominante",
+  quando: "Para canais com audiência majoritariamente mobile",
+  prompt: `Você é especialista em design para YouTube mobile.
 
-Crie uma thumbnail para vídeo tutorial sobre: [INSIRA TEMA]
+Crie uma thumbnail dominante para telas pequenas.
 
-Inclua:
-- Texto claro e direto
-- Elemento visual que represente o tema
-- Fundo estratégico
-- Cor que transmita autoridade
-- Evitar excesso de informação
+Tema: [TEMA]
 
-Organize de forma estruturada.`
-},
+Aplique:
+- Hierarquia visual forte
+- Elemento principal exagerado
+- Redução total de ruído visual
+- Zona de leitura central
 
-{
-categoria: "🔥 Competitivo",
-titulo: "Análise de Thumbnail da Concorrência",
-quando: "Para melhorar thumbnails comparando com concorrentes.",
-prompt: `Você é analista estratégico de YouTube.
-
-Explique como analisar thumbnails de concorrentes.
-
-Depois, crie um modelo de thumbnail superior para o tema: [INSIRA TEMA].
-
-Inclua:
-- Diferencial competitivo
-- Melhor contraste
-- Texto mais forte
-- Emoção mais impactante`
-},
-
-{
-categoria: "⚡ Shorts",
-titulo: "Thumbnail Estratégica para Shorts",
-quando: "Para vídeos curtos que precisam chamar atenção instantânea.",
-prompt: `Atue como especialista em YouTube Shorts.
-
-Crie um conceito de thumbnail para Shorts sobre: [INSIRA TEMA].
-
-Inclua:
-- Texto ultra curto
-- Elemento visual dominante
-- Cor forte
-- Foco em impacto rápido
-
-Explique como isso ajuda no scroll do feed.`
-},
-
-  {
-categoria: "🖼 Thumbnail Profissional",
-titulo: "Thumbnail Ultra Nítida para Alta Taxa de Cliques",
-quando: "Quando quiser criar uma thumbnail impactante, moderna e com foco extremo em CTR.",
-prompt: `Você é um designer especialista em thumbnails virais para YouTube.
-
-Crie uma thumbnail profissional no formato 16:9 (1280x720), ultra nítida e focada em alta taxa de cliques.
-
-Tema do vídeo: [TEMA DO VÍDEO]
-
-Incluir:
-
-- Expressão facial forte transmitindo [EMOÇÃO PRINCIPAL: surpresa, choque, felicidade, medo, curiosidade]
-- Fundo com cores contrastantes e vibrantes
-- Iluminação dramática destacando o rosto
-- Texto curto e grande com a frase: “[TEXTO DA CAPA]”
-- Tipografia bold, extremamente legível mesmo em telas pequenas
-- Composição limpa com foco principal no rosto e no texto
-- Estilo moderno de canal grande de YouTube
-
-Regras:
-- Sem logo
-- Sem bordas
-- Nada poluído
-- Pronto para uso imediato como capa de vídeo
-
-Explique brevemente a lógica estratégica por trás das escolhas visuais.`
-},
+Explique por que funcionará melhor no celular.`
+}
 
 ];
 
-const lista = document.getElementById("lista-prompts");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
+/* ============================= */
+/* RENDERIZAÇÃO */
+/* ============================= */
 
-function renderizar(arr) {
-  lista.innerHTML = "";
-  contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+function renderizar(lista = prompts){
 
-  arr.forEach(p => {
+const container = document.getElementById("lista-prompts");
+container.innerHTML = "";
+
+ordemCategorias.forEach(cat => {
+
+  const grupo = lista.filter(p => p.categoria === cat);
+  if(grupo.length === 0) return;
+
+  grupo.forEach(p => {
 
     const card = document.createElement("div");
-    card.className = "card";
+
+    card.classList.add("card");
+    card.setAttribute("data-nivel", p.nivel);
 
     card.innerHTML = `
-      <div class="meta">${p.categoria}</div>
-      <h3>${p.titulo}</h3>
-      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-      <pre>${p.prompt}</pre>
+<div class="nivel nivel-${p.nivel}">
+${p.nivel.toUpperCase()}
+</div>
 
-      <div class="acoes">
-        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
-        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-      </div>
-    `;
+<h3>${p.titulo}</h3>
+<p><strong>Quando usar:</strong> ${p.quando}</p>
 
-    lista.appendChild(card);
-  });
-}
+<pre class="prompt-text">${p.prompt}</pre>
 
-function filtrarPrompts() {
-  const termo = busca.value.toLowerCase();
-  const filtrados = promptsThumbnails.filter(p =>
-    p.titulo.toLowerCase().includes(termo) ||
-    p.prompt.toLowerCase().includes(termo) ||
-    p.categoria.toLowerCase().includes(termo)
-  );
-  renderizar(filtrados);
-}
+<div class="acoes">
+<button onclick="copiar(this)" class="btn-copy">📋 Copiar</button>
+<button onclick="chat(this)" class="btn-chat">💬 ChatGPT</button>
+<button onclick="gemini(this)" class="btn-gemini">✨ Gemini</button>
+<button onclick="favoritar(this)" class="btn-favorito">☆ Favoritar</button>
+</div>
+`;
 
-function copiarPrompt(texto) {
-  navigator.clipboard.writeText(texto);
-  alert("📋 Prompt copiado!");
-}
+    container.appendChild(card);
 
-function favoritarPrompt(titulo, conteudo) {
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  prompts.push({
-    id: Date.now(),
-    titulo,
-    categoria: "YouTube",
-    conteudo,
-    favorito: true
   });
 
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  alert("⭐ Adicionado aos favoritos!");
+});
+
 }
 
-function abrirChatGPT(texto) {
-  navigator.clipboard.writeText(texto);
-  window.open("https://chat.openai.com/", "_blank");
+/* ============================= */
+/* FILTRO POR NÍVEL */
+/* ============================= */
+
+function filtrarNivel(nivel){
+
+const botoes = document.querySelectorAll(".filtro-nivel button");
+botoes.forEach(b => b.classList.remove("ativo"));
+event.target.classList.add("ativo");
+
+const cards = document.querySelectorAll("#lista-prompts .card");
+
+cards.forEach(card => {
+
+  if(nivel === "todos"){
+    card.style.display = "block";
+  } else {
+    card.style.display =
+      card.getAttribute("data-nivel") === nivel
+      ? "block"
+      : "none";
+  }
+
+});
+
 }
 
-function abrirGemini(texto) {
-  navigator.clipboard.writeText(texto);
-  window.open("https://gemini.google.com/app", "_blank");
-}
+/* ============================= */
+/* BUSCA */
+/* ============================= */
 
-renderizar(promptsThumbnails);
+document.getElementById("busca").addEventListener("keyup", function(){
+const termo = this.value.toLowerCase();
+const cards = document.querySelectorAll("#lista-prompts .card");
+
+cards.forEach(card => {
+  const texto = card.innerText.toLowerCase();
+  card.style.display = texto.includes(termo) ? "block" : "none";
+});
+});
+
+/* ============================= */
+/* INICIAR */
+/* ============================= */
+
+renderizar();
 
 </script>
 
-<style>
-.top-bar {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  margin: 20px 0;
-  flex-wrap: wrap;
-}
+<script src="/delta-prompts/funcoes.js"></script>
 
-.top-bar input {
-  flex: 1;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-}
-
-.contador {
-  font-size: 14px;
-  opacity: 0.75;
-}
-
-pre {
-  white-space: pre-wrap;
-  font-size: 14px;
-  background: #f9fafb;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-}
-
-.meta {
-  font-size: 13px;
-  opacity: 0.7;
-  margin-bottom: 8px;
-}
-</style>
-
+</main>
 </body>
 </html>
