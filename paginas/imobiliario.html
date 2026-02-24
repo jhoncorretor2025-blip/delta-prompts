@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Imobiliário | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+<meta charset="UTF-8">
+<title>Imobiliário | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../melhoriaspaginas.css">
 </head>
 
 <body>
@@ -14,176 +15,348 @@
 
 <main>
 
-  <h1>🏠 Prompts para o Mercado Imobiliário</h1>
-  <p>Ferramentas estratégicas para locação, vendas, negociação e comunicação profissional.</p>
+<h1>🏠 Biblioteca Imobiliária Estratégica</h1>
+<p>
+Prompts profissionais para corretores, advogados imobiliários e investidores.
+Venda, negociação, contratos e posicionamento com nível estratégico.
+</p>
 
-  <!-- ===================== -->
-  <!-- JURÍDICO -->
-  <!-- ===================== -->
+<h2 class="secao-titulo">🎯 Objetivo</h2>
+<p>
+Fornecer prompts estruturados para aumentar conversão,
+reduzir riscos jurídicos e elevar autoridade no mercado imobiliário.
+</p>
 
-  <h2 style="margin-top:40px;">⚖️ JURÍDICO IMOBILIÁRIO</h2>
+<!-- ============================= -->
+<!-- FILTRO DE NÍVEL -->
+<!-- ============================= -->
 
-  <div class="card">
-    <h3>1️⃣ Advogado Imobiliário Especialista</h3>
-    <p>
-      Atue como advogado imobiliário com mais de 20 anos de experiência
-      em locações e vendas. Analise o caso abaixo considerando riscos jurídicos,
-      responsabilidades das partes, possíveis falhas contratuais
-      e orientações estratégicas para proteger meus interesses.
-      Meu caso é: [cole aqui seu caso].
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<div class="filtro-nivel">
+<button onclick="filtrarNivel('todos')" class="ativo">Todos</button>
+<button onclick="filtrarNivel('basico')">Básico</button>
+<button onclick="filtrarNivel('intermediario')">Intermediário</button>
+<button onclick="filtrarNivel('avancado')">Avançado</button>
+</div>
 
-  <!-- ===================== -->
-  <!-- COMUNICAÇÃO -->
-  <!-- ===================== -->
+<!-- ============================= -->
+<!-- BUSCA -->
+<!-- ============================= -->
 
-  <h2 style="margin-top:60px;">✍️ COMUNICAÇÃO PROFISSIONAL</h2>
+<div class="top-bar">
+<input type="text" id="busca" placeholder="🔎 Buscar prompt..." oninput="filtrarPrompts()">
+<div class="contador" id="contador"></div>
+</div>
 
-  <div class="card">
-    <h3>2️⃣ Melhorar Escrita Formal</h3>
-    <p>
-      Reescreva o texto abaixo tornando-o mais formal,
-      claro, educado e profissional,
-      mantendo objetividade e postura adequada
-      para comunicação imobiliária.
-      Texto: [cole aqui].
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<div id="lista-prompts">
 
-  <!-- ===================== -->
-  <!-- ANÁLISE DE TEXTO -->
-  <!-- ===================== -->
+<!-- ================================================= -->
+<!-- 🔹 1️⃣ ADVOGADO IMOBILIÁRIO (BÁSICO) -->
+<!-- ================================================= -->
 
-  <h2 style="margin-top:60px;">🔎 ANÁLISE & REVISÃO</h2>
+<div class="card"
+data-nivel="basico"
+data-categoria="⚖️ Jurídico">
 
-  <div class="card">
-    <h3>3️⃣ Avaliação Crítica do Texto</h3>
-    <p>
-      Analise o texto abaixo e identifique pelo menos 5 pontos que podem
-      estar fracos, incompletos ou mal estruturados.
-      Questione o que está faltando,
-      sugira melhorias estratégicas
-      e indique ajustes para fortalecer a mensagem.
-      Texto: [cole aqui].
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<span class="nivel nivel-basico">BÁSICO</span>
 
-  <!-- ===================== -->
-  <!-- ESTRATÉGIA COMERCIAL -->
-  <!-- ===================== -->
+<div class="tags">
+<span class="tag simples">Simples</span>
+<span class="tag">Jurídico</span>
+</div>
 
-  <h2 style="margin-top:60px;">📈 ESTRATÉGIA & VENDAS</h2>
+<h3>⚖️ Advogado Imobiliário</h3>
 
-  <div class="card">
-    <h3>4️⃣ Estratégia de Venda de Imóvel</h3>
-    <p>
-      Desenvolva uma estratégia de venda para o imóvel descrito abaixo,
-      considerando público ideal, diferenciais competitivos,
-      objeções comuns e abordagem de negociação.
-      Imóvel: [descreva aqui].
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<p><strong>📌 Quando usar:</strong>
+Quando precisar de orientação jurídica sobre compra, venda, locação ou distrato.</p>
 
-  <div class="card">
-    <h3>5️⃣ Análise de Risco na Locação</h3>
-    <p>
-      Analise a situação de locação descrita abaixo,
-      identifique riscos jurídicos e financeiros,
-      possíveis problemas contratuais
-      e estratégias preventivas.
-      Caso: [descreva aqui].
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+<p class="prompt-text">
+Você é um advogado especializado em direito imobiliário.
 
-  <div class="card">
-    <h3>6️⃣ Negociação Estratégica com Cliente</h3>
-    <p>
-      Simule uma negociação imobiliária profissional,
-      considerando objeções do cliente,
-      argumentos de valor
-      e técnicas para conduzir ao fechamento.
-      Situação: [descreva aqui].
-    </p>
-    <div class="acoes">
-      <button onclick="copiarTexto(this)">📋 Copiar</button>
-      <button onclick="usarChatGPT(this)">🧠 ChatGPT</button>
-      <button onclick="usarGemini(this)">✨ Gemini</button>
-      <button onclick="favoritar(this)">🤍</button>
-    </div>
-  </div>
+Analise a seguinte situação:
 
+[Descreva o caso imobiliário]
+
+Explique:
+- Riscos jurídicos envolvidos
+- Direitos e deveres das partes
+- Pontos de atenção no contrato
+- Próximos passos recomendados
+- Estratégia preventiva para evitar prejuízo
+</p>
+
+<div class="acoes">
+<button class="btn-favorito">☆ Favoritar</button>
+<button class="btn-copy">📋 Copiar</button>
+<button class="btn-chat">💬 ChatGPT</button>
+<button class="btn-gemini">🔷 Gemini</button>
+</div>
+</div>
+
+<!-- ================================================= -->
+<!-- 🔹 2️⃣ DESCRIÇÃO RÁPIDA (BÁSICO) -->
+<!-- ================================================= -->
+
+<div class="card"
+data-nivel="basico"
+data-categoria="🏠 Venda">
+
+<span class="nivel nivel-basico">BÁSICO</span>
+
+<div class="tags">
+<span class="tag simples">Simples</span>
+<span class="tag">Venda</span>
+</div>
+
+<h3>🏡 Descrição Rápida de Imóvel</h3>
+
+<p><strong>📌 Quando usar:</strong>
+Para criar descrição objetiva para portais imobiliários.</p>
+
+<p class="prompt-text">
+Crie uma descrição atrativa e profissional para:
+
+[Descreva o imóvel]
+
+Regras:
+- Linguagem clara
+- Destacar diferenciais
+- Foco em benefício
+- Finalizar com chamada para ação
+</p>
+
+<div class="acoes">
+<button class="btn-favorito">☆ Favoritar</button>
+<button class="btn-copy">📋 Copiar</button>
+<button class="btn-chat">💬 ChatGPT</button>
+<button class="btn-gemini">🔷 Gemini</button>
+</div>
+</div>
+
+<h2 class="secao-titulo">🚀 Prompts Profissionais</h2>
+
+<!-- 3 INTERMEDIÁRIOS -->
+
+<div class="card"
+data-nivel="intermediario"
+data-categoria="📈 Estratégia">
+
+<span class="nivel nivel-intermediario">INTERMEDIÁRIO</span>
+
+<h3>📈 Estratégia de Venda</h3>
+
+<p class="prompt-text">
+Você é consultor imobiliário especialista em conversão.
+
+Monte uma estratégia completa de venda para:
+
+[Tipo de imóvel]
+
+Inclua:
+- Público ideal
+- Estratégia de precificação
+- Plano de divulgação
+- Roteiro de atendimento
+- Técnicas de fechamento
+</p>
+
+<div class="acoes">
+<button class="btn-favorito">☆ Favoritar</button>
+<button class="btn-copy">📋 Copiar</button>
+<button class="btn-chat">💬 ChatGPT</button>
+<button class="btn-gemini">🔷 Gemini</button>
+</div>
+</div>
+
+<div class="card"
+data-nivel="intermediario"
+data-categoria="📜 Contrato">
+
+<span class="nivel nivel-intermediario">INTERMEDIÁRIO</span>
+
+<h3>📜 Análise de Contrato</h3>
+
+<p class="prompt-text">
+Você é advogado imobiliário.
+
+Analise o contrato abaixo:
+
+[Cole o texto]
+
+Identifique:
+- Cláusulas de risco
+- Pontos abusivos
+- Sugestões de melhoria
+- Ajustes recomendados
+</p>
+
+<div class="acoes">
+<button class="btn-favorito">☆ Favoritar</button>
+<button class="btn-copy">📋 Copiar</button>
+<button class="btn-chat">💬 ChatGPT</button>
+<button class="btn-gemini">🔷 Gemini</button>
+</div>
+</div>
+
+<div class="card"
+data-nivel="intermediario"
+data-categoria="📢 Captação">
+
+<span class="nivel nivel-intermediario">INTERMEDIÁRIO</span>
+
+<h3>📢 Captação Estratégica</h3>
+
+<p class="prompt-text">
+Você é especialista em captação de imóveis.
+
+Crie roteiro de abordagem para proprietário:
+
+Inclua:
+- Argumento de valorização
+- Diferencial competitivo
+- Prova social
+- Fechamento estratégico
+</p>
+
+<div class="acoes">
+<button class="btn-favorito">☆ Favoritar</button>
+<button class="btn-copy">📋 Copiar</button>
+<button class="btn-chat">💬 ChatGPT</button>
+<button class="btn-gemini">🔷 Gemini</button>
+</div>
+</div>
+
+<!-- 3 AVANÇADOS -->
+
+<div class="card"
+data-nivel="avancado"
+data-categoria="💰 Investimento">
+
+<span class="nivel nivel-avancado">AVANÇADO</span>
+
+<h3>💰 Análise de Investimento</h3>
+
+<p class="prompt-text">
+Você é analista imobiliário sênior.
+
+Avalie como investimento:
+
+[Detalhes do imóvel]
+
+Inclua:
+- Valorização projetada
+- Indicadores financeiros
+- Comparativo de mercado
+- Cenários de risco
+- Estratégia de saída
+</p>
+
+<div class="acoes">
+<button class="btn-favorito">☆ Favoritar</button>
+<button class="btn-copy">📋 Copiar</button>
+<button class="btn-chat">💬 ChatGPT</button>
+<button class="btn-gemini">🔷 Gemini</button>
+</div>
+</div>
+
+<div class="card"
+data-nivel="avancado"
+data-categoria="🤝 Negociação">
+
+<span class="nivel nivel-avancado">AVANÇADO</span>
+
+<h3>🤝 Estratégia de Negociação</h3>
+
+<p class="prompt-text">
+Você é especialista em negociação imobiliária.
+
+Monte estratégia para negociação:
+
+Inclua:
+- Pontos de alavancagem
+- Técnicas psicológicas
+- Estratégia de concessão
+- Plano de fechamento
+</p>
+
+<div class="acoes">
+<button class="btn-favorito">☆ Favoritar</button>
+<button class="btn-copy">📋 Copiar</button>
+<button class="btn-chat">💬 ChatGPT</button>
+<button class="btn-gemini">🔷 Gemini</button>
+</div>
+</div>
+
+<div class="card"
+data-nivel="avancado"
+data-categoria="🎤 Autoridade">
+
+<span class="nivel nivel-avancado">AVANÇADO</span>
+
+<h3>🎤 Posicionamento como Especialista</h3>
+
+<p class="prompt-text">
+Você é estrategista de marca pessoal.
+
+Crie texto de posicionamento no mercado imobiliário:
+
+Regras:
+- Autoridade sem arrogância
+- Clareza
+- Diferenciação
+- Final marcante
+</p>
+
+<div class="acoes">
+<button class="btn-favorito">☆ Favoritar</button>
+<button class="btn-copy">📋 Copiar</button>
+<button class="btn-chat">💬 ChatGPT</button>
+<button class="btn-gemini">🔷 Gemini</button>
+</div>
+</div>
+
+</div>
 </main>
 
+<script src="../funcoes.js"></script>
+
 <script>
-function copiarTexto(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
-  navigator.clipboard.writeText(texto);
-  alert("Prompt copiado!");
+
+const busca = document.getElementById("busca");
+const contador = document.getElementById("contador");
+const cards = document.querySelectorAll(".card");
+let nivelAtual = "todos";
+
+function filtrarPrompts() {
+const termo = busca.value.toLowerCase();
+let visiveis = 0;
+
+cards.forEach(card => {
+const texto = card.innerText.toLowerCase();
+const nivelCard = card.dataset.nivel;
+
+const matchBusca = texto.includes(termo);
+const matchNivel = nivelAtual === "todos" || nivelCard === nivelAtual;
+
+const mostrar = matchBusca && matchNivel;
+
+card.style.display = mostrar ? "block" : "none";
+if(mostrar) visiveis++;
+});
+
+contador.innerText = `Total: ${visiveis} prompt${visiveis !== 1 ? "s" : ""}`;
 }
 
-function usarChatGPT(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
-  const url = "https://chat.openai.com/?q=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
+function filtrarNivel(nivel){
+nivelAtual = nivel;
+document.querySelectorAll(".filtro-nivel button").forEach(btn=>{
+btn.classList.remove("ativo");
+});
+event.target.classList.add("ativo");
+filtrarPrompts();
 }
 
-function usarGemini(botao) {
-  const texto = botao.closest(".card").querySelector("p").innerText;
-  navigator.clipboard.writeText(texto);
-  window.open("https://gemini.google.com/app", "_blank");
-  alert("Prompt copiado! Cole no Gemini.");
-}
+filtrarPrompts();
 
-function favoritar(botao) {
-  const card = botao.closest(".card");
-  const titulo = card.querySelector("h3").innerText;
-  const texto = card.querySelector("p").innerText;
-
-  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-  const jaExiste = favoritos.find(f => f.titulo === titulo);
-
-  if (jaExiste) {
-    favoritos = favoritos.filter(f => f.titulo !== titulo);
-    botao.innerText = "🤍";
-  } else {
-    favoritos.push({ titulo, texto });
-    botao.innerText = "❤️";
-  }
-
-  localStorage.setItem("favoritos", JSON.stringify(favoritos));
-}
 </script>
 
 </body>
