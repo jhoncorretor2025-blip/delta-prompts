@@ -19,7 +19,7 @@
 
 <p>
 Prompts estratégicos para corretores, advogados imobiliários e investidores.
-Venda, contratos, negociação e posicionamento com padrão profissional.
+Venda, contratos, negociação e posicionamento profissional.
 </p>
 
 <h2 class="secao-titulo">🎯 Objetivo</h2>
@@ -30,26 +30,30 @@ reduzir riscos jurídicos e elevar autoridade no mercado imobiliário.
 
 <!-- BUSCA -->
 <div class="top-bar">
-<input type="text" id="busca" placeholder="🔎 Buscar modelo imobiliário..." oninput="filtrarPrompts()">
-<div class="contador" id="contador"></div>
+  <input 
+    type="text" 
+    id="busca" 
+    placeholder="🔎 Buscar modelo imobiliário..."
+    oninput="filtrarPrompts()"
+  >
+  <div class="contador" id="contador"></div>
 </div>
 
 <!-- FILTRO DE NÍVEL -->
 <div class="filtro-nivel">
-<button onclick="filtrarNivel('todos')" class="ativo">Todos</button>
-<button onclick="filtrarNivel('basico')">Básico</button>
-<button onclick="filtrarNivel('intermediario')">Intermediário</button>
-<button onclick="filtrarNivel('avancado')">Avançado</button>
+  <button onclick="filtrarNivel('todos')" class="ativo">Todos</button>
+  <button onclick="filtrarNivel('basico')">Básico</button>
+  <button onclick="filtrarNivel('intermediario')">Intermediário</button>
+  <button onclick="filtrarNivel('avancado')">Avançado</button>
 </div>
 
 <div id="lista-prompts">
 
-<!-- ================================================= -->
-<!-- 🔹 BÁSICO 1 – ADVOGADO IMOBILIÁRIO -->
-<!-- ================================================= -->
+<!-- ============================= -->
+<!-- 1️⃣ BÁSICO – ADVOGADO -->
+<!-- ============================= -->
 
 <div class="card" data-nivel="basico" data-categoria="⚖️ Jurídico">
-
 <span class="nivel nivel-basico">Básico</span>
 
 <h3>⚖️ Advogado Imobiliário</h3>
@@ -80,12 +84,11 @@ Explique:
 </div>
 </div>
 
-<!-- ================================================= -->
-<!-- 🔹 BÁSICO 2 -->
-<!-- ================================================= -->
+<!-- ============================= -->
+<!-- 2️⃣ BÁSICO – DESCRIÇÃO -->
+<!-- ============================= -->
 
 <div class="card" data-nivel="basico" data-categoria="🏠 Venda">
-
 <span class="nivel nivel-basico">Básico</span>
 
 <h3>🏡 Descrição de Imóvel</h3>
@@ -113,12 +116,11 @@ Regras:
 </div>
 </div>
 
-<!-- ================================================= -->
-<!-- 🔸 INTERMEDIÁRIO -->
-<!-- ================================================= -->
+<!-- ============================= -->
+<!-- 3️⃣ INTERMEDIÁRIO -->
+<!-- ============================= -->
 
 <div class="card" data-nivel="intermediario" data-categoria="📈 Estratégia">
-
 <span class="nivel nivel-intermediario">Intermediário</span>
 
 <h3>📈 Estratégia de Venda</h3>
@@ -146,8 +148,11 @@ Inclua:
 </div>
 </div>
 
-<div class="card" data-nivel="intermediario" data-categoria="📜 Contrato">
+<!-- ============================= -->
+<!-- 4️⃣ INTERMEDIÁRIO -->
+<!-- ============================= -->
 
+<div class="card" data-nivel="intermediario" data-categoria="📜 Contrato">
 <span class="nivel nivel-intermediario">Intermediário</span>
 
 <h3>📜 Análise de Contrato</h3>
@@ -174,12 +179,11 @@ Identifique:
 </div>
 </div>
 
-<!-- ================================================= -->
-<!-- 🔴 AVANÇADO -->
-<!-- ================================================= -->
+<!-- ============================= -->
+<!-- 5️⃣ AVANÇADO -->
+<!-- ============================= -->
 
 <div class="card" data-nivel="avancado" data-categoria="💰 Investimento">
-
 <span class="nivel nivel-avancado">Avançado</span>
 
 <h3>💰 Análise de Investimento</h3>
@@ -219,32 +223,32 @@ const cards = document.querySelectorAll(".card");
 let nivelAtual = "todos";
 
 function filtrarPrompts() {
-const termo = busca.value.toLowerCase();
-let visiveis = 0;
+  const termo = busca.value.toLowerCase();
+  let visiveis = 0;
 
-cards.forEach(card => {
-const texto = card.innerText.toLowerCase();
-const nivelCard = card.dataset.nivel;
+  cards.forEach(card => {
+    const texto = card.innerText.toLowerCase();
+    const nivelCard = card.dataset.nivel;
 
-const matchBusca = texto.includes(termo);
-const matchNivel = nivelAtual === "todos" || nivelCard === nivelAtual;
+    const matchBusca = texto.includes(termo);
+    const matchNivel = nivelAtual === "todos" || nivelCard === nivelAtual;
 
-const mostrar = matchBusca && matchNivel;
+    const mostrar = matchBusca && matchNivel;
 
-card.style.display = mostrar ? "block" : "none";
-if(mostrar) visiveis++;
-});
+    card.style.display = mostrar ? "block" : "none";
+    if(mostrar) visiveis++;
+  });
 
-contador.innerText = `Total: ${visiveis} prompt${visiveis !== 1 ? "s" : ""}`;
+  contador.innerText = `Total: ${visiveis} prompt${visiveis !== 1 ? "s" : ""}`;
 }
 
 function filtrarNivel(nivel){
-nivelAtual = nivel;
-document.querySelectorAll(".filtro-nivel button").forEach(btn=>{
-btn.classList.remove("ativo");
-});
-event.target.classList.add("ativo");
-filtrarPrompts();
+  nivelAtual = nivel;
+  document.querySelectorAll(".filtro-nivel button").forEach(btn=>{
+    btn.classList.remove("ativo");
+  });
+  event.target.classList.add("ativo");
+  filtrarPrompts();
 }
 
 filtrarPrompts();
