@@ -5,8 +5,8 @@
 <title>Thumbnail Estratégica | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Prompts profissionais para criação de Thumbnails com IA. Aumente seu CTR com estratégias de polêmica, segredo revelado e design mobile-first na Delta Prompts.">
-<meta name="keywords" content="prompts thumbnail, thumbnail youtube ia, aumentar ctr youtube, prompt para thumbnail, design youtube mobile">
+<meta name="description" content="Prompts profissionais para criação de Thumbnails com IA. Aumente seu CTR com estratégias avançadas na Delta Prompts.">
+<meta name="keywords" content="prompts thumbnail, thumbnail youtube ia, aumentar ctr youtube, design mobile youtube">
 <meta name="author" content="Delta Prompts">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
@@ -29,17 +29,12 @@ Prompts profissionais para criar thumbnails magnéticas, aumentar CTR e dominar 
 <section class="card">
 <h3>🎯 Objetivo</h3>
 <p>
-Ajudar criadores a desenvolver thumbnails que param o scroll, geram curiosidade e aumentam a taxa de cliques.
+Fornecer modelos estratégicos para criação de thumbnails altamente clicáveis e otimizadas.
 </p>
 </section>
 
 <div class="top-bar">
-<input
-type="text"
-id="busca"
-placeholder="🔎 Buscar modelo..."
-oninput="filtrarPrompts()"
->
+<input type="text" id="busca" placeholder="🔎 Buscar modelo..." oninput="filtrarPrompts()">
 <div class="contador" id="contador"></div>
 </div>
 
@@ -59,63 +54,134 @@ oninput="filtrarPrompts()"
 const ordemCategorias = [
 "🔥 Magnética",
 "🎯 Mais Cliques",
-"📱 Mobile"
+"📱 Mobile",
+"⚡ Alta Conversão",
+"🧠 Psicologia Visual",
+"🎬 Storytelling Visual"
 ];
 
 const prompts = [
 
 {
-  categoria: "🔥 Magnética",
-  nivel: "basico",
-  titulo: "Thumbnail Magnética Simples",
-  quando: "Para vídeos que precisam chamar atenção imediatamente.",
-  tipo: "Vlog / Tutorial / Gaming",
-  prompt: `Tema: [INSIRA SEU TEMA AQUI]
+categoria:"🔥 Magnética",
+nivel:"basico",
+titulo:"Impacto Visual Imediato",
+quando:"Para parar o scroll rapidamente.",
+tipo:"Vlog / Tutorial",
+prompt:`Tema: [INSIRA TEMA]
 
-Crie uma thumbnail magnética com:
-
+Crie uma thumbnail com:
 - Texto curto (máx 3 palavras)
 - Fundo contrastante
-- Expressão facial forte
-- Elemento visual central destacado
-
-Objetivo: parar o scroll imediatamente.`
+- Expressão forte
+- Elemento central destacado`
 },
 
 {
-  categoria: "🎯 Mais Cliques",
-  nivel: "basico",
-  titulo: "Thumbnail com Número Forte",
-  quando: "Quando o vídeo apresenta lista ou promessa objetiva.",
-  tipo: "Tutorial / Lista / Review",
-  prompt: `Tema: [INSIRA SEU TEMA AQUI]
+categoria:"🎯 Mais Cliques",
+nivel:"basico",
+titulo:"Número Forte Chamativo",
+quando:"Quando o vídeo tem promessa objetiva.",
+tipo:"Lista / Review",
+prompt:`Tema: [INSIRA TEMA]
 
-Crie uma thumbnail focada em número forte:
-
-- Número grande e chamativo
-- Texto curto de apoio
-- Fundo simples com alto contraste
-- Expressão coerente com o resultado
-
-Objetivo: gerar curiosidade e clique.`
+Inclua:
+- Número grande
+- Texto provocativo
+- Contraste alto
+- Expressão coerente`
 },
 
 {
-  categoria: "📱 Mobile",
-  nivel: "basico",
-  titulo: "Thumbnail Ultra Simples Mobile",
-  quando: "Quando a audiência é majoritariamente mobile.",
-  tipo: "Shorts / Conteúdo rápido",
-  prompt: `Tema: [INSIRA SEU TEMA AQUI]
+categoria:"📱 Mobile",
+nivel:"basico",
+titulo:"Mobile 1 Segundo",
+quando:"Para público majoritariamente mobile.",
+tipo:"Shorts / Conteúdo rápido",
+prompt:`Tema: [INSIRA TEMA]
 
-Crie uma thumbnail otimizada para celular:
-
+Regras:
 - Máximo 3 palavras
-- Texto extremamente grande
+- Texto enorme
 - Fundo simples
-- Um único elemento principal
+- Zero poluição`
+},
 
-Objetivo: ser entendida em 1 segundo durante o scroll.`
+{
+categoria:"⚡ Alta Conversão",
+nivel:"intermediario",
+titulo:"Promessa Irresistível",
+quando:"Quando o vídeo entrega resultado forte.",
+tipo:"Educacional / Estratégia",
+prompt:`Tema: [INSIRA TEMA]
+
+Inclua:
+- Frase impactante
+- Emoção intensa
+- Fundo vibrante
+- Foco no rosto`
+},
+
+{
+categoria:"🧠 Psicologia Visual",
+nivel:"intermediario",
+titulo:"Gatilho de Curiosidade",
+quando:"Quando quiser gerar pergunta mental.",
+tipo:"Opinião / Descoberta",
+prompt:`Tema: [INSIRA TEMA]
+
+Use:
+- Texto incompleto
+- Expressão de surpresa
+- Elemento que esconda informação`
+},
+
+{
+categoria:"🎬 Storytelling Visual",
+nivel:"intermediario",
+titulo:"Cena Congelada Dramática",
+quando:"Quando o vídeo conta uma história.",
+tipo:"Vlog / Narrativa",
+prompt:`Tema: [INSIRA TEMA]
+
+Crie:
+- Cena dramática
+- Emoção clara
+- Texto curto
+- Composição cinematográfica`
+},
+
+{
+categoria:"📱 Mobile",
+nivel:"avancado",
+titulo:"Mobile Teste A/B",
+quando:"Para testar variações de CTR.",
+tipo:"Tecnologia / Educacional",
+prompt:`Tema: [INSIRA TEMA]
+
+Crie 3 versões diferentes:
+- Máx 3 palavras
+- Alto contraste
+- Emoção forte
+
+Explique qual tem maior potencial de clique.`
+},
+
+{
+categoria:"⚡ Alta Conversão",
+nivel:"avancado",
+titulo:"Thumbnail Polêmica Estratégica",
+quando:"Quando o vídeo envolve opinião forte.",
+tipo:"React / Opinião",
+prompt:`Tema: [INSIRA TEMA]
+
+Inclua:
+- Expressão intensa
+- Texto provocativo
+- Elemento de conflito
+- Fundo dramático
+
+Objetivo: gerar tensão e clique imediato.`
 }
 
 ];
@@ -125,14 +191,13 @@ const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
 function renderizar(arr) {
-
 lista.innerHTML = "";
 contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
 ordemCategorias.forEach(cat => {
 
 const grupo = arr.filter(p => p.categoria === cat);
-if (grupo.length === 0) return;
+if(grupo.length === 0) return;
 
 const tituloSecao = document.createElement("h2");
 tituloSecao.className = "secao-titulo";
@@ -153,15 +218,13 @@ p.nivel === 'intermediario' ? '🟡 Intermediário' :
 </div>
 
 <h3>${p.titulo}</h3>
-
 <p class="meta"><strong>Tipo:</strong> ${p.tipo || "Geral"}</p>
-
 <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
 
 <pre class="prompt-text">${p.prompt}</pre>
 
 <p class="meta">
-⚙️ <strong>Personalize:</strong> Substitua os textos entre colchetes como <b>[INSIRA SEU TEMA AQUI]</b>.
+⚙️ <strong>Personalize:</strong> Substitua textos como <b>[INSIRA TEMA]</b>.
 </p>
 
 <div class="acoes">
@@ -177,10 +240,9 @@ lista.appendChild(card);
 });
 
 });
-
 }
 
-function filtrarPrompts() {
+function filtrarPrompts(){
 const termo = busca.value.toLowerCase();
 const filtrados = prompts.filter(p =>
 p.titulo.toLowerCase().includes(termo) ||
@@ -190,18 +252,16 @@ p.categoria.toLowerCase().includes(termo)
 renderizar(filtrados);
 }
 
-function filtrarNivel(event, nivel) {
-
+function filtrarNivel(event,nivel){
 const botoes = document.querySelectorAll(".filtro-nivel button");
-botoes.forEach(btn => btn.classList.remove("ativo"));
+botoes.forEach(btn=>btn.classList.remove("ativo"));
 event.target.classList.add("ativo");
 
 renderizar(
-nivel === "todos"
+nivel==="todos"
 ? prompts
-: prompts.filter(p => p.nivel === nivel)
+: prompts.filter(p=>p.nivel===nivel)
 );
-
 }
 
 renderizar(prompts);
@@ -211,40 +271,11 @@ renderizar(prompts);
 <script src="/delta-prompts/funcoes.js"></script>
 
 <style>
-.top-bar {
-display: flex;
-gap: 15px;
-align-items: center;
-margin: 20px 0;
-flex-wrap: wrap;
-}
-
-.top-bar input {
-flex: 1;
-padding: 14px;
-border-radius: 10px;
-border: 1px solid #e5e7eb;
-}
-
-.contador {
-font-size: 14px;
-opacity: 0.75;
-}
-
-.meta {
-font-size: 13px;
-opacity: 0.75;
-margin-bottom: 8px;
-}
-
-pre {
-white-space: pre-wrap;
-font-size: 14px;
-background: #f9fafb;
-padding: 15px;
-border-radius: 10px;
-border: 1px solid #e5e7eb;
-}
+.top-bar{display:flex;gap:15px;align-items:center;margin:20px 0;flex-wrap:wrap;}
+.top-bar input{flex:1;padding:14px;border-radius:10px;border:1px solid #e5e7eb;}
+.contador{font-size:14px;opacity:0.75;}
+.meta{font-size:13px;opacity:0.75;margin-bottom:8px;}
+pre{white-space:pre-wrap;font-size:14px;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb;}
 </style>
 
 </body>
