@@ -19,9 +19,13 @@
 .meta{font-size:13px;opacity:0.75;margin-bottom:8px;}
 pre{white-space:pre-wrap;font-size:14px;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb;}
 </style>
-</head>
 
+</head>
 <body>
+
+<!-- MENU LATERAL -->
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
 
 <main>
 
@@ -161,6 +165,7 @@ const grupo=arr.filter(p=>p.categoria===cat);
 if(grupo.length===0)return;
 
 const titulo=document.createElement("h2");
+titulo.className="secao-titulo";
 titulo.innerText=cat;
 lista.appendChild(titulo);
 
