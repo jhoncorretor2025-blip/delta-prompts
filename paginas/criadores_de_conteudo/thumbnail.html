@@ -5,8 +5,8 @@
 <title>Thumbnail Estratégica | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Prompts profissionais para criação de Thumbnails com IA.">
-<meta name="keywords" content="prompts thumbnail, youtube, ctr">
+<meta name="description" content="Prompts profissionais para criação de Thumbnails com IA. Aumente seu CTR com a Delta Prompts.">
+<meta name="keywords" content="prompts thumbnail, youtube ctr, design mobile youtube">
 <meta name="author" content="Delta Prompts">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
@@ -19,15 +19,15 @@
 .meta{font-size:13px;opacity:0.75;margin-bottom:8px;}
 pre{white-space:pre-wrap;font-size:14px;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb;}
 </style>
-
 </head>
+
 <body>
 
 <main>
 
 <h1>🖼 Thumbnail Estratégica com IA</h1>
 
-<p>Prompts profissionais para criar thumbnails magnéticas e aumentar CTR.</p>
+<p>Biblioteca profissional de prompts para thumbnails de alta conversão.</p>
 
 <section class="card">
 <h3>🎯 Objetivo</h3>
@@ -55,51 +55,102 @@ pre{white-space:pre-wrap;font-size:14px;background:#f9fafb;padding:15px;border-r
 const ordemCategorias = [
 "🔥 Magnética",
 "🎯 Mais Cliques",
-"📱 Mobile"
+"📱 Mobile",
+"⚡ Alta Conversão",
+"🧠 Psicologia Visual",
+"📊 Teste A/B",
+"🎬 Storytelling Visual"
 ];
 
 const prompts = [
 
 {
-categoria:"📱 Mobile",
-nivel:"avancado",
-titulo:"ThumbMagnet Mobile — Público Feminino IA",
-quando:"Para thumbnails virais focadas em mulheres iniciantes.",
-tipo:"Tecnologia",
-prompt:`🔥 PROMPT DEFINITIVO — ThumbMagnet Mobile
+categoria:"⚡ Alta Conversão",
+nivel:"basico",
+titulo:"Promessa Direta de Resultado",
+quando:"Quando o vídeo entrega benefício claro.",
+tipo:"Educacional",
+prompt:`Tema: [INSIRA TEMA]
 
-Tema: [INSIRA SEU TEMA AQUI]
+Crie thumbnail com promessa direta:
+- Texto forte
+- Emoção positiva
+- Fundo vibrante`
+},
 
-Crie conceito otimizado para celular:
-- Máximo 3 palavras
-- Alto contraste
-- Emoção forte
-- Fundo simples
-- Leitura em 1 segundo`
+{
+categoria:"🧠 Psicologia Visual",
+nivel:"basico",
+titulo:"Curiosidade Incompleta",
+quando:"Para gerar pergunta mental.",
+tipo:"Descoberta",
+prompt:`Tema: [INSIRA TEMA]
+
+Use:
+- Texto incompleto
+- Expressão surpresa
+- Elemento oculto`
+},
+
+{
+categoria:"📊 Teste A/B",
+nivel:"basico",
+titulo:"Teste Simples A/B",
+quando:"Para testar duas versões.",
+tipo:"Experimento",
+prompt:`Tema: [INSIRA TEMA]
+
+Crie versão A e versão B com:
+- Texto diferente
+- Emoção diferente`
+},
+
+{
+categoria:"🎬 Storytelling Visual",
+nivel:"basico",
+titulo:"Momento Congelado Dramático",
+quando:"Quando há narrativa.",
+tipo:"Vlog",
+prompt:`Tema: [INSIRA TEMA]
+
+Crie cena dramática com:
+- Expressão forte
+- Texto curto`
 },
 
 {
 categoria:"🔥 Magnética",
-nivel:"intermediario",
-titulo:"Thumbnail Viral Profissional 16:9",
-quando:"Para alto impacto visual.",
-tipo:"Vlog / Tutorial",
-prompt:`Você é um designer especialista em thumbnails virais.
+nivel:"basico",
+titulo:"Contraste Explosivo",
+quando:"Para impacto imediato.",
+tipo:"Geral",
+prompt:`Tema: [INSIRA TEMA]
 
-Tema: [INSIRA SEU TEMA AQUI]
+Use:
+- Fundo muito contrastante
+- Texto curto
+- Elemento grande`
+},
 
-Inclua:
-- Expressão forte
-- Fundo contrastante
-- Texto grande
-- Composição limpa`
+{
+categoria:"📱 Mobile",
+nivel:"basico",
+titulo:"Mobile Ultra Simples",
+quando:"Para leitura em 1 segundo.",
+tipo:"Shorts",
+prompt:`Tema: [INSIRA TEMA]
+
+Regras:
+- Máx 3 palavras
+- Fundo limpo
+- Texto enorme`
 }
 
 ];
 
-const lista = document.getElementById("lista-prompts");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
+const lista=document.getElementById("lista-prompts");
+const contador=document.getElementById("contador");
+const busca=document.getElementById("busca");
 
 function renderizar(arr){
 lista.innerHTML="";
@@ -109,12 +160,11 @@ ordemCategorias.forEach(cat=>{
 const grupo=arr.filter(p=>p.categoria===cat);
 if(grupo.length===0)return;
 
-const tituloSecao=document.createElement("h2");
-tituloSecao.innerText=cat;
-lista.appendChild(tituloSecao);
+const titulo=document.createElement("h2");
+titulo.innerText=cat;
+lista.appendChild(titulo);
 
 grupo.forEach(p=>{
-
 const card=document.createElement("div");
 card.className="card";
 card.setAttribute("data-nivel",p.nivel);
@@ -122,8 +172,7 @@ card.setAttribute("data-nivel",p.nivel);
 card.innerHTML=`
 <div class="nivel nivel-${p.nivel}">
 ${p.nivel==="avancado"?"🔴 Avançado":
-p.nivel==="intermediario"?"🟡 Intermediário":
-"🟢 Básico"}
+p.nivel==="intermediario"?"🟡 Intermediário":"🟢 Básico"}
 </div>
 
 <h3>${p.titulo}</h3>
@@ -133,61 +182,49 @@ p.nivel==="intermediario"?"🟡 Intermediário":
 <pre class="prompt-text">${p.prompt}</pre>
 
 <div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">💬 ChatGPT</button>
-<button onclick="abrirGemini(this)">🔷 Gemini</button>
-<button onclick="favoritarPrompt(this)">⭐ Favoritar</button>
+<button onclick="copiar(this)">📋 Copiar</button>
+<button onclick="chat(this)">💬 ChatGPT</button>
+<button onclick="gemini(this)">🔷 Gemini</button>
+<button onclick="favoritar(this)">⭐ Favoritar</button>
 </div>
 `;
-
 lista.appendChild(card);
-
 });
-
 });
 }
 
-function copiarPrompt(btn){
+function copiar(btn){
 const texto=btn.closest(".card").querySelector(".prompt-text").innerText;
 navigator.clipboard.writeText(texto);
-alert("Prompt copiado!");
+alert("Copiado!");
 }
 
-function abrirChatGPT(btn){
+function chat(btn){
 const texto=btn.closest(".card").querySelector(".prompt-text").innerText;
-window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
+window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto));
 }
 
-function abrirGemini(btn){
+function gemini(btn){
 const texto=btn.closest(".card").querySelector(".prompt-text").innerText;
-window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
+window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto));
 }
 
-function favoritarPrompt(btn){
-const card=btn.closest(".card");
-const titulo=card.querySelector("h3").innerText;
-const conteudo=card.querySelector(".prompt-text").innerText;
-
-let favoritos=JSON.parse(localStorage.getItem("deltaFavoritos"))||[];
-
-favoritos.push({
-id:Date.now(),
-titulo,
-conteudo
-});
-
-localStorage.setItem("deltaFavoritos",JSON.stringify(favoritos));
-alert("Adicionado aos favoritos!");
+function favoritar(btn){
+const texto=btn.closest(".card").querySelector(".prompt-text").innerText;
+const titulo=btn.closest(".card").querySelector("h3").innerText;
+let fav=JSON.parse(localStorage.getItem("deltaFav"))||[];
+fav.push({id:Date.now(),titulo,conteudo:texto});
+localStorage.setItem("deltaFav",JSON.stringify(fav));
+alert("Favoritado!");
 }
 
 function filtrarPrompts(){
 const termo=busca.value.toLowerCase();
-const filtrados=prompts.filter(p=>
+renderizar(prompts.filter(p=>
 p.titulo.toLowerCase().includes(termo)||
 p.prompt.toLowerCase().includes(termo)||
 p.categoria.toLowerCase().includes(termo)
-);
-renderizar(filtrados);
+));
 }
 
 function filtrarNivel(nivel){
