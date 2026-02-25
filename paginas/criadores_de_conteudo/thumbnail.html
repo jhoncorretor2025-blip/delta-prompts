@@ -5,10 +5,14 @@
 <title>Thumbnail Estratégica | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<meta name="description" content="Prompts profissionais para criação de Thumbnails com IA. Aumente seu CTR com estratégias de polêmica, segredo revelado e design mobile-first na Delta Prompts.">
+<meta name="keywords" content="prompts thumbnail, thumbnail youtube ia, aumentar ctr youtube, prompt para thumbnail, design youtube mobile">
+<meta name="author" content="Delta Prompts">
+
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
-
 </head>
+
 <body>
 
 <div id="menu"></div>
@@ -19,7 +23,7 @@
 <h1>🖼 Thumbnail Estratégica com IA</h1>
 
 <p>
-Prompts profissionais para criar thumbnails magnéticas, com alto CTR e totalmente otimizadas para mobile.
+Prompts profissionais para criar thumbnails magnéticas, aumentar CTR e dominar o mobile.
 </p>
 
 <section class="card">
@@ -33,7 +37,7 @@ Ajudar criadores a desenvolver thumbnails que param o scroll, geram curiosidade 
 <input
 type="text"
 id="busca"
-placeholder="🔎 Buscar modelo de thumbnail..."
+placeholder="🔎 Buscar modelo..."
 oninput="filtrarPrompts()"
 >
 <div class="contador" id="contador"></div>
@@ -61,239 +65,57 @@ const ordemCategorias = [
 const prompts = [
 
 {
-categoria: "🔥 Magnética",
-nivel: "basico",
-titulo: "Thumbnail Magnética Simples",
-quando: "Para vídeos gerais que precisam chamar atenção rápida",
-prompt: `Crie uma thumbnail magnética para YouTube.
+  categoria: "🔥 Magnética",
+  nivel: "basico",
+  titulo: "Thumbnail Magnética Simples",
+  quando: "Para vídeos que precisam chamar atenção imediatamente.",
+  tipo: "Vlog / Tutorial / Gaming",
+  prompt: `Tema: [INSIRA SEU TEMA AQUI]
 
-Tema: [TEMA]
+Crie uma thumbnail magnética com:
 
-Use:
-- Texto grande (máx 3 palavras)
-- Fundo com alto contraste
+- Texto curto (máx 3 palavras)
+- Fundo contrastante
 - Expressão facial forte
 - Elemento visual central destacado
 
 Objetivo: parar o scroll imediatamente.`
 },
 
-  {
-  categoria: "📱 Mobile",
-  nivel: "avancado",
-  titulo: "ThumbMagnet Mobile — Público Feminino IA",
-  quando: "Quando quiser criar conceitos de thumbnail altamente clicáveis para vídeos sobre Inteligência Artificial voltados para mulheres iniciantes.",
-  prompt: `🔥 PROMPT DEFINITIVO — ThumbMagnet Mobile
-
-Quero que você atue como meu assistente especialista chamado ThumbMagnet Mobile, focado em criar thumbnails altamente virais para YouTube.
-
-Contexto do canal:
-
-Nicho: Inteligência Artificial e tecnologias
-Público: 90% mulheres
-Nível da audiência: iniciante
-Eu apareço em todas as thumbnails
-Foco total em visualização via celular
-Objetivo principal: aumentar CTR e potencial de viralização
-
-Sua missão é criar conceitos de thumbnail que:
-
-Sejam extremamente claros em tela pequena
-Gerem curiosidade imediata
-Conectem emocionalmente com mulheres
-Transmitam tecnologia de forma acessível
-Misturem feminilidade + autoridade + modernidade
-
-Você deve aplicar:
-
-• Psicologia das cores voltada ao público feminino
-• Design mobile-first (leitura em menos de 1 segundo)
-• Máximo de 3 a 5 palavras
-• Letras grossas, com alto contraste
-• Fundo simples e impactante
-• Foco principal no meu rosto como elemento emocional
-• Estética moderna, limpa e tecnológica
-
-Sempre entregue no seguinte formato:
-
-TEXTO PRINCIPAL DA THUMBNAIL
-
-PALETA DE CORES:
-Fundo:
-Texto:
-Elementos de destaque:
-
-EXPRESSÃO FACIAL RECOMENDADA:
-
-COMPOSIÇÃO:
-
-ELEMENTOS VISUAIS EXTRAS:
-
-EMOÇÃO QUE PRECISA PROVOCAR:
-
-JUSTIFICATIVA ESTRATÉGICA:
-
-REGRAS OBRIGATÓRIAS:
-
-Nada genérico
-Nada poluído
-Nada técnico demais
-Nada com muito texto
-Sempre priorizar leitura instantânea
-Sempre considerar que estou presente na imagem
-Se a ideia não tiver alto potencial de clique, reformule
-Se necessário, gere 3 variações diferentes para testar CTR.`
-},
-
-  {
-  categoria: "🎯 Mais Cliques",
-  nivel: "avancado",
-  titulo: "Thumbnail de Polêmica Estratégica",
-  quando: "Quando o vídeo envolve opinião forte, erro, crítica ou quebra de expectativa.",
-  prompt: `Você é um especialista em thumbnails de alto impacto focadas em polêmica e CTR extremo.
-
-Crie uma thumbnail altamente clicável para o tema: [INSIRA TEMA]
-
-Objetivo:
-Gerar tensão, conflito visual e curiosidade imediata.
-
-A thumbnail deve incluir:
-
-- Expressão facial intensa (choque, indignação, dúvida ou surpresa)
-- Texto curto e provocativo (máximo 3 palavras)
-- Contraste forte de cores
-- Elemento visual que sugira conflito (seta, X vermelho, comparação, reação exagerada)
-- Fundo simples e dramático
-
-Estratégia:
-- Criar sensação de "isso vai dar problema"
-- Estimular curiosidade sem revelar tudo
-- Induzir clique por tensão emocional
-
-Explique por que essa thumbnail gera alto CTR.`
-},
-
-  {
-  categoria: "🎯 Mais Cliques",
-  nivel: "basico",
-  titulo: "Thumbnail de Polêmica Simples",
-  quando: "Quando o vídeo envolve opinião forte ou assunto controverso.",
-  prompt: `Crie uma thumbnail com foco em polêmica para o tema: [INSIRA TEMA]
-
-Inclua:
-
-- Expressão facial de choque ou indignação
-- Texto curto e provocativo (máx 3 palavras)
-- Cores contrastantes
-- Elemento visual que indique conflito (X vermelho, seta, comparação)
-
-Objetivo:
-Gerar curiosidade e tensão para aumentar cliques.`
-},
-
 {
-  categoria: "🔥 Magnética",
+  categoria: "🎯 Mais Cliques",
   nivel: "basico",
-  titulo: "Thumbnail Segredo Revelado Simples",
-  quando: "Quando o vídeo revela dica, estratégia ou informação pouco conhecida.",
-  prompt: `Crie uma thumbnail estilo “segredo revelado” para o tema: [INSIRA TEMA]
+  titulo: "Thumbnail com Número Forte",
+  quando: "Quando o vídeo apresenta lista ou promessa objetiva.",
+  tipo: "Tutorial / Lista / Review",
+  prompt: `Tema: [INSIRA SEU TEMA AQUI]
 
-Inclua:
+Crie uma thumbnail focada em número forte:
 
-- Expressão facial de surpresa ou descoberta
-- Texto curto como: “O SEGREDO” ou “NINGUÉM CONTA”
-- Fundo com bom contraste
-- Destaque visual simples
+- Número grande e chamativo
+- Texto curto de apoio
+- Fundo simples com alto contraste
+- Expressão coerente com o resultado
 
-Objetivo:
-Criar sensação de descoberta exclusiva.`
+Objetivo: gerar curiosidade e clique.`
 },
 
 {
   categoria: "📱 Mobile",
   nivel: "basico",
-  titulo: "Thumbnail Ultra Simples para Celular",
-  quando: "Quando o foco principal é visualização rápida no celular.",
-  prompt: `Crie uma thumbnail otimizada para celular para o tema: [INSIRA TEMA]
+  titulo: "Thumbnail Ultra Simples Mobile",
+  quando: "Quando a audiência é majoritariamente mobile.",
+  tipo: "Shorts / Conteúdo rápido",
+  prompt: `Tema: [INSIRA SEU TEMA AQUI]
 
-Regras:
+Crie uma thumbnail otimizada para celular:
 
 - Máximo 3 palavras
-- Texto grande e centralizado
+- Texto extremamente grande
 - Fundo simples
 - Um único elemento principal
-- Sem detalhes pequenos
 
-Objetivo:
-Ser entendida imediatamente durante o scroll.`
-},
-
-{
-  categoria: "🔥 Magnética",
-  nivel: "intermediario",
-  titulo: "Thumbnail Viral Profissional 16:9",
-  quando: "Quando quiser criar uma thumbnail profissional pronta para alto impacto visual.",
-  prompt: `Você é um designer especialista em thumbnails virais para YouTube.
-
-Crie uma thumbnail profissional no formato 16:9 (1280x720), ultra nítida e focada em alta taxa de cliques.
-
-Tema do vídeo: [TEMA DO VÍDEO]
-
-Incluir:
-
-- Expressão facial forte transmitindo [EMOÇÃO PRINCIPAL: surpresa, choque, felicidade, medo, curiosidade]
-- Fundo com cores contrastantes e vibrantes
-- Iluminação dramática destacando o rosto
-- Texto curto e grande com a frase: “[TEXTO DA CAPA]”
-- Tipografia bold, extremamente legível mesmo em telas pequenas
-- Composição limpa com foco principal no rosto e no texto
-- Estilo moderno de canal grande de YouTube
-
-Regras:
-- Sem logo
-- Sem bordas
-- Nada poluído
-- Pronto para uso imediato como capa de vídeo
-
-Explique brevemente a lógica estratégica por trás das escolhas visuais.`
-},
-
-{
-categoria: "🎯 Mais Cliques",
-nivel: "intermediario",
-titulo: "Thumbnail para Aumentar CTR",
-quando: "Quando o vídeo precisa melhorar taxa de clique",
-prompt: `Crie uma thumbnail altamente clicável.
-
-Tema: [TEMA]
-
-Use:
-- Curiosidade aberta
-- Texto provocativo
-- Expressão emocional intensa
-- Elemento que gere pergunta mental
-
-Foco total em aumentar CTR.`
-},
-
-{
-categoria: "📱 Mobile",
-nivel: "avancado",
-titulo: "Thumbnail Dominante para Celular",
-quando: "Para canais com maioria da audiência mobile",
-prompt: `Você é especialista em design para YouTube mobile.
-
-Crie uma thumbnail dominante para telas pequenas.
-
-Tema: [TEMA]
-
-Aplique:
-- Hierarquia visual forte
-- Elemento principal exagerado
-- Máximo 3 palavras
-- Redução total de ruído visual
-
-Explique a lógica estratégica.`
+Objetivo: ser entendida em 1 segundo durante o scroll.`
 }
 
 ];
@@ -331,14 +153,22 @@ p.nivel === 'intermediario' ? '🟡 Intermediário' :
 </div>
 
 <h3>${p.titulo}</h3>
+
+<p class="meta"><strong>Tipo:</strong> ${p.tipo || "Geral"}</p>
+
 <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
 
-<pre>${p.prompt}</pre>
+<pre class="prompt-text">${p.prompt}</pre>
+
+<p class="meta">
+⚙️ <strong>Personalize:</strong> Substitua os textos entre colchetes como <b>[INSIRA SEU TEMA AQUI]</b>.
+</p>
 
 <div class="acoes">
-<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+<button class="btn-copy" onclick="copiar(this)">📋 Copiar</button>
+<button class="btn-chat" onclick="chat(this)">💬 ChatGPT</button>
+<button class="btn-gemini" onclick="gemini(this)">🔷 Gemini</button>
+<button class="btn-favorito">☆ Favoritar</button>
 </div>
 `;
 
@@ -374,25 +204,13 @@ nivel === "todos"
 
 }
 
-function copiarPrompt(texto) {
-navigator.clipboard.writeText(texto);
-alert("📋 Prompt copiado!");
-}
-
-function abrirChatGPT(texto) {
-window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto));
-}
-
-function abrirGemini(texto) {
-window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto));
-}
-
 renderizar(prompts);
 
 </script>
 
-<style>
+<script src="/delta-prompts/funcoes.js"></script>
 
+<style>
 .top-bar {
 display: flex;
 gap: 15px;
@@ -413,6 +231,12 @@ font-size: 14px;
 opacity: 0.75;
 }
 
+.meta {
+font-size: 13px;
+opacity: 0.75;
+margin-bottom: 8px;
+}
+
 pre {
 white-space: pre-wrap;
 font-size: 14px;
@@ -421,7 +245,6 @@ padding: 15px;
 border-radius: 10px;
 border: 1px solid #e5e7eb;
 }
-
 </style>
 
 </body>
