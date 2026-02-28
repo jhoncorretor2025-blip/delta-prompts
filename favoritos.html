@@ -5,7 +5,7 @@
     <title>Favoritos | Delta Prompts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Importação dos estilos originais do seu projeto -->
+    <!-- Links para os teus ficheiros do GitHub -->
     <link rel="stylesheet" href="/delta-prompts/style.css">
     <link rel="stylesheet" href="/delta-prompts/melhoriaspaginas.css">
 
@@ -23,29 +23,16 @@
             padding: 20px 25px;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-left: 4px solid #5b5ce2;
         }
 
-        .ai-suggestion-box {
-            background: linear-gradient(135deg, #e0e7ff 0%, #f5f3ff 100%);
-            border: 1px solid #c7d2fe;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .ai-suggestion-box i { font-size: 24px; }
-
         #lista-favoritos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px;
         }
 
@@ -53,7 +40,15 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            position: relative;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .card-favorito:hover {
+            transform: translateY(-5px);
         }
 
         .prompt-preview {
@@ -64,73 +59,69 @@
             color: #4a5568;
             line-height: 1.6;
             margin: 15px 0;
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
             border: 1px solid #edf2f7;
             white-space: pre-wrap;
-        }
-
-        .ai-response-area {
-            background: #fff;
-            border: 1px solid #e0e7ff;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: #4338ca;
-            display: none;
-            animation: fadeIn 0.3s ease;
+            flex-grow: 1;
         }
 
         .acoes-favoritos {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: auto;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .btn-fav {
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 10px 15px;
+            border-radius: 8px;
             border: none;
             cursor: pointer;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
             transition: 0.2s;
         }
 
-        .btn-copy { background: #5b5ce2; color: white; flex: 1.5; }
-        .btn-ai { background: #f5f3ff; color: #5b5ce2; border: 1px solid #c7d2fe; flex: 1; }
-        .btn-ai:hover { background: #e0e7ff; }
-        .btn-remove { background: #fff; color: #e53e3e; border: 1px solid #feb2b2; }
-
-        .loading-spinner {
-            width: 14px;
-            height: 14px;
-            border: 2px solid #5b5ce2;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .btn-copy { 
+            background: #5b5ce2; 
+            color: white; 
+            flex: 2;
         }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .btn-copy:hover {
+            background: #4a4abf;
+        }
+
+        .btn-remove { 
+            background: #fff; 
+            color: #e53e3e; 
+            border: 1px solid #feb2b2;
+            flex: 1;
+        }
+
+        .btn-remove:hover {
+            background: #fff5f5;
+        }
 
         #toast {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             background: #2d3748;
             color: white;
-            padding: 12px 20px;
+            padding: 12px 25px;
             border-radius: 8px;
             display: none;
             z-index: 3000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
         }
+
+        @keyframes fadeIn { from { opacity: 0; bottom: 20px; } to { opacity: 1; bottom: 30px; } }
     </style>
 </head>
 <body>
@@ -139,153 +130,95 @@
 
     <main class="main-content">
         <header class="header-favoritos">
-            <h1>❤️ Meus Favoritos</h1>
-            <div id="contador" style="font-weight: bold; color: #5b5ce2;">0 itens</div>
+            <h1>❤️ Os Meus Favoritos</h1>
+            <div id="contador" style="font-weight: bold; color: #5b5ce2; background: #f0f0ff; padding: 5px 12px; border-radius: 20px;">0 itens</div>
         </header>
-
-        <div class="ai-suggestion-box">
-            <div>✨</div>
-            <div id="ai-global-tip">Clique aqui para o Gemini analisar o seu perfil de favoritos...</div>
-            <button class="btn-fav btn-ai" onclick="gerarSugestaoGlobal(this)" style="margin-left: auto;">Analisar ✨</button>
-        </div>
 
         <div id="lista-favoritos"></div>
     </main>
 
-    <div id="toast">Copiado!</div>
+    <div id="toast">📋 Copiado com sucesso!</div>
 
+    <!-- Script para carregar o menu do teu GitHub -->
     <script src="/delta-prompts/menu-loader.js"></script>
     
     <script>
-        const apiKey = ""; // Chave fornecida pelo ambiente
         const container = document.getElementById("lista-favoritos");
         const contador = document.getElementById("contador");
 
-        // Função para chamar o Gemini API com retentativas
-        async function callGemini(prompt, systemPrompt = "") {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
-            };
-
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    const data = await response.json();
-                    return data.candidates?.[0]?.content?.parts?.[0]?.text;
-                } catch (e) {
-                    await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
-                }
-            }
-            return "Erro ao conectar com a IA. Tente novamente.";
-        }
-
+        // Função para mostrar os favoritos salvos no navegador
         function renderizarFavoritos() {
             const favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
-            contador.innerText = `${favoritos.length} itens salvos`;
+            contador.innerText = `${favoritos.length} ${favoritos.length === 1 ? 'item' : 'itens'}`;
             container.innerHTML = "";
 
             if (favoritos.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: #a0aec0; border: 2px dashed #e2e8f0; border-radius: 12px;">Nenhum favorito.</div>`;
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #a0aec0; background: white; border-radius: 12px; border: 2px dashed #e2e8f0;">
+                        <p style="font-size: 18px;">Ainda não tens nenhum prompt favorito.</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Explora as categorias e clica no ❤️ para guardar aqui.</p>
+                    </div>`;
                 return;
             }
 
+            // Criar os cards um por um
             favoritos.forEach(item => {
                 const card = document.createElement("div");
-                card.className = "card card-favorito"; 
+                card.className = "card-favorito"; 
                 card.innerHTML = `
-                    <div class="tag">${item.categoria || 'Geral'}</div>
-                    <h3 style="margin-top:10px;">${item.titulo}</h3>
-                    <div id="ai-res-${item.id}" class="ai-response-area"></div>
+                    <div class="tag" style="background: #edf2f7; color: #4a5568; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; align-self: flex-start;">
+                        ${(item.categoria || 'Geral').toUpperCase()}
+                    </div>
+                    <h3 style="margin: 15px 0 10px 0; font-size: 18px; color: #2d3748;">${item.titulo}</h3>
                     <div class="prompt-preview" id="txt-${item.id}">${item.texto}</div>
                     <div class="acoes-favoritos">
-                        <button class="btn-fav btn-copy" onclick="copiarPrompt('${item.id}', this)">📋 Copiar</button>
-                        <button class="btn-fav btn-ai" onclick="melhorarPrompt('${item.id}', this)">Melhorar ✨</button>
-                        <button class="btn-fav btn-ai" onclick="explicarPrompt('${item.id}', this)">Dicas ✨</button>
-                        <button class="btn-fav btn-remove" onclick="removerFavorito('${item.id}')">🗑️</button>
+                        <button class="btn-fav btn-copy" onclick="copiarPrompt('${item.id}')">
+                            📋 Copiar Prompt
+                        </button>
+                        <button class="btn-fav btn-remove" onclick="removerFavorito('${item.id}')" title="Remover dos favoritos">
+                            🗑️
+                        </button>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        async function melhorarPrompt(id, btn) {
-            const originalText = btn.innerHTML;
-            const area = document.getElementById(`ai-res-${id}`);
-            const promptTexto = document.getElementById(`txt-${id}`).innerText;
-
-            btn.disabled = true;
-            btn.innerHTML = `<div class="loading-spinner"></div>`;
-            area.style.display = "block";
-            area.innerText = "O Gemini está a otimizar o seu prompt...";
-
-            const result = await callGemini(
-                `Melhore este prompt para obter resultados mais profissionais: ${promptTexto}`,
-                "És um especialista em Engenharia de Prompt para o setor imobiliário da Delta Imóveis. Reescreve o prompt para ser mais claro e eficaz, mantendo o idioma original."
-            );
-
-            area.innerHTML = `<strong>Sugestão IA:</strong><br>${result}`;
-            btn.innerHTML = "Melhorado ✨";
-            btn.style.background = "#e0e7ff";
-        }
-
-        async function explicarPrompt(id, btn) {
-            const area = document.getElementById(`ai-res-${id}`);
-            const promptTexto = document.getElementById(`txt-${id}`).innerText;
-
-            btn.disabled = true;
-            btn.innerHTML = `<div class="loading-spinner"></div>`;
-            area.style.display = "block";
-            area.innerText = "A analisar estratégia...";
-
-            const result = await callGemini(
-                `Explica resumidamente porque este prompt é bom e dá uma dica de ouro para usá-lo: ${promptTexto}`,
-                "És um mentor de IA. Dá uma explicação curta (3 frases) e uma dica prática."
-            );
-
-            area.innerHTML = `<strong>Estratégia:</strong><br>${result}`;
-            btn.innerHTML = "Dicas ✨";
-            btn.disabled = false;
-        }
-
-        async function gerarSugestaoGlobal(btn) {
-            const favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
-            if (favoritos.length === 0) return;
-
-            const titulos = favoritos.map(f => f.titulo).join(", ");
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `<div class="loading-spinner"></div>`;
-
-            const result = await callGemini(
-                `Com base nestes temas de prompts favoritados: ${titulos}. Sugere UM novo tema ou ideia de prompt que falta para completar este fluxo de trabalho imobiliário.`,
-                "És um analista de produtividade imobiliária. Sugere apenas uma ideia curta e criativa."
-            );
-
-            document.getElementById("ai-global-tip").innerHTML = `<strong>Sugestão ✨:</strong> ${result}`;
-            btn.innerHTML = "Nova Análise";
-        }
-
-        function copiarPrompt(id, btn) {
+        // Função para copiar o texto para a área de transferência
+        function copiarPrompt(id) {
             const txt = document.getElementById(`txt-${id}`).innerText;
-            navigator.clipboard.writeText(txt).then(() => {
-                const t = document.getElementById("toast");
-                t.style.display = "block";
-                setTimeout(() => t.style.display = "none", 2000);
-            });
+            
+            // Método compatível com a maioria dos navegadores
+            const tempInput = document.createElement("textarea");
+            tempInput.value = txt;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            // Mostrar aviso de sucesso
+            const t = document.getElementById("toast");
+            t.style.display = "block";
+            setTimeout(() => t.style.display = "none", 2500);
         }
 
+        // Função para remover o item da lista
         function removerFavorito(id) {
             let favs = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
-            favs = favs.filter(f => f.id !== id);
-            localStorage.setItem("deltaFavoritos", JSON.stringify(favs));
+            
+            // Garantimos que comparamos o ID como String para não falhar
+            const novaLista = favs.filter(f => String(f.id) !== String(id));
+            
+            localStorage.setItem("deltaFavoritos", JSON.stringify(novaLista));
+            
+            // Atualiza a tela imediatamente
             renderizarFavoritos();
+            
+            // Notifica o menu que os favoritos mudaram (se necessário)
+            if(window.initFavButtons) window.initFavButtons();
         }
 
+        // Inicia a página lendo os dados
         document.addEventListener("DOMContentLoaded", renderizarFavoritos);
     </script>
 </body>
