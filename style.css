@@ -108,13 +108,8 @@ margin: 15px 0;
 /* ========================= */
 
 main {
-
-flex: 1;
-
-padding: 60px;
-
-max-width: 1100px;
-
+  flex: 1;
+  padding: 60px;
 }
 
 /* ========================= */
@@ -557,6 +552,7 @@ pointer-events: auto;
   font-size: 22px;
   border-bottom: 2px solid #5b5ce2;
 }
+
 
 
 
