@@ -1,11 +1,667 @@
-
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>Delta Prompts</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Delta Prompts - Biblioteca estratégica de prompts profissionais para IA. Crie prompts poderosos para trabalho, marketing, estudo e criatividade em segundos.">
+  <meta name="keywords" content="prompts, IA, inteligência artificial, ChatGPT, Gemini, produtividade, marketing, criação de conteúdo">
+  <meta name="author" content="Delta Prompts">
+  <meta name="theme-color" content="#5b5ce2">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Delta Prompts - Crie Prompts Profissionais em Segundos">
+  <meta property="og:description" content="Transforme suas ideias em resultados com IA 3x mais rápido. Biblioteca estratégica pronta para trabalho, marketing e estudo.">
+  <meta property="og:type" content="website">
+  
+  <title>Delta Prompts - Crie Prompts Profissionais em Segundos</title>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="melhoriaspaginas.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== VARIÁVEIS E RESET ===== */
+    :root {
+      --primary: #5b5ce2;
+      --primary-light: #7a5bff;
+      --primary-dark: #4a4bc7;
+      --gradient: linear-gradient(135deg, #5b5ce2 0%, #7a5bff 100%);
+      --gradient-hover: linear-gradient(135deg, #4a4bc7 0%, #6a4bef 100%);
+      --bg: #f4f6fb;
+      --card-bg: #ffffff;
+      --text: #1e1e1e;
+      --text-secondary: #666;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 40px rgba(91, 92, 226, 0.2);
+      --radius: 16px;
+      --radius-sm: 12px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    /* ===== ANIMAÇÕES ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    .animate-fadeInUp {
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    
+    .animate-delay-1 { animation-delay: 0.1s; }
+    .animate-delay-2 { animation-delay: 0.2s; }
+    .animate-delay-3 { animation-delay: 0.3s; }
+    .animate-delay-4 { animation-delay: 0.4s; }
+    .animate-delay-5 { animation-delay: 0.5s; }
+    
+    /* ===== HERO SECTION ===== */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 40px;
+      background: linear-gradient(135deg, #f4f6fb 0%, #e8ecff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(91, 92, 226, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(122, 91, 255, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite reverse;
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(91, 92, 226, 0.1);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.5s ease-out;
+    }
+    
+    .hero-badge::before {
+      content: '✨';
+    }
+    
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #1e1e1e 0%, #5b5ce2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero h1 .highlight {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 40px;
+      background: var(--gradient);
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(91, 92, 226, 0.3);
+    }
+    
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+    
+    .btn-primary:active {
+      transform: translateY(-1px);
+    }
+    
+    /* ===== BUSCA SECTION ===== */
+    .search-section {
+      padding: 40px;
+      background: white;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    
+    .search-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .search-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      font-size: 20px;
+      color: #999;
+      pointer-events: none;
+    }
+    
+    #busca-global {
+      width: 100%;
+      padding: 18px 24px 18px 56px;
+      border-radius: var(--radius);
+      border: 2px solid #e5e5e5;
+      font-size: 16px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      background: #fafafa;
+    }
+    
+    #busca-global:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(91, 92, 226, 0.1);
+    }
+    
+    #busca-global::placeholder {
+      color: #999;
+    }
+    
+    .search-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    #contador-global {
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    #contador-global::before {
+      content: '📊';
+    }
+    
+    .search-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .search-tag {
+      padding: 6px 14px;
+      background: #f0f0f5;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+    
+    .search-tag:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    /* ===== CATEGORIAS SECTION ===== */
+    .categories-section {
+      padding: 80px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .section-header h2 {
+      font-size: clamp(28px, 3vw, 36px);
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 18px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+    
+    .category-card {
+      background: var(--card-bg);
+      padding: 32px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+    }
+    
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(91, 92, 226, 0.2);
+    }
+    
+    .category-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .category-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+    
+    .category-card:hover .category-icon {
+      transform: scale(1.1) rotate(-5deg);
+    }
+    
+    .category-card.estudo .category-icon { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+    .category-card.profissionais .category-icon { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .category-card.criativos .category-icon { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+    .category-card.redes .category-icon { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .category-card.produtividade .category-icon { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+    .category-card.criadores .category-icon { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }
+    
+    .category-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    
+    .category-card p {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    
+    .category-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: gap 0.3s ease;
+    }
+    
+    .category-link::after {
+      content: '→';
+      transition: transform 0.3s ease;
+    }
+    
+    .category-card:hover .category-link {
+      gap: 12px;
+    }
+    
+    .category-card:hover .category-link::after {
+      transform: translateX(4px);
+    }
+    
+    .category-count {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: #f0f0f5;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    
+    /* ===== RESULTADOS BUSCA ===== */
+    .search-results {
+      display: none;
+      padding: 40px;
+      background: white;
+      border-top: 1px solid #e5e5e5;
+    }
+    
+    .search-results.active {
+      display: block;
+    }
+    
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .results-header h3 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .clear-search {
+      padding: 10px 20px;
+      background: #f0f0f5;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .clear-search:hover {
+      background: #e5e5e5;
+    }
+    
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    
+    .result-card {
+      background: #fafafa;
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #e5e5e5;
+      transition: all 0.2s ease;
+    }
+    
+    .result-card:hover {
+      background: white;
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .result-card h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    
+    .result-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    
+    .result-card .category-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(91, 92, 226, 0.1);
+      color: var(--primary);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+    
+    .no-results-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 40px;
+      text-align: center;
+      border-top: 1px solid #e5e5e5;
+      background: white;
+    }
+    
+    .footer p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a1a1a1;
+    }
+    
+    /* ===== RESPONSIVO ===== */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 60px 20px;
+        min-height: auto;
+      }
+      
+      .hero-stats {
+        gap: 24px;
+      }
+      
+      .stat-number {
+        font-size: 24px;
+      }
+      
+      .search-section,
+      .categories-section {
+        padding: 40px 20px;
+      }
+      
+      .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .category-card {
+        padding: 24px;
+      }
+      
+      .search-info {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+    
+    /* ===== MENU INTEGRATION ===== */
+    body {
+      display: flex;
+    }
+    
+    main {
+      flex: 1;
+      margin-left: 240px;
+    }
+    
+    @media (max-width: 900px) {
+      main {
+        margin-left: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -13,113 +669,408 @@
 <div id="menu"></div>
 <script src="menu-loader.js"></script>
 
-<main style="padding:60px 40px; max-width:1200px; margin:auto;">
-
-  <!-- HERO -->
-  <section style="margin-bottom:60px;">
-    <h1 style="font-size:48px; margin-bottom:20px;">
-      🚀 Crie Prompts Profissionais em Segundos
-    </h1>
-
-    <p style="font-size:18px; max-width:700px; margin-bottom:30px;">
-      Transforme suas ideias em resultados com IA 3x mais rápido.
-      Biblioteca estratégica pronta para trabalho, marketing e estudo.
-    </p>
-
-    <a href="paginas/planejamento.html"
-       style="display:inline-block;
-              padding:18px 40px;
-              background: linear-gradient(135deg, #5b5bff, #7a5bff);
-              color:white;
-              font-weight:bold;
-              border-radius:14px;
-              text-decoration:none;
-              box-shadow:0 10px 25px rgba(0,0,0,0.15);
-              transition:0.3s;">
-      ⚡ Começar Agora
-    </a>
+<main>
+  
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge animate-fadeInUp">Mais de 182 prompts profissionais</div>
+      
+      <h1 class="animate-fadeInUp animate-delay-1">
+        🚀 Crie <span class="highlight">Prompts Profissionais</span> em Segundos
+      </h1>
+      
+      <p class="animate-fadeInUp animate-delay-2">
+        Transforme suas ideias em resultados com IA 3x mais rápido. 
+        Biblioteca estratégica pronta para trabalho, marketing e estudo.
+      </p>
+      
+      <div class="hero-stats animate-fadeInUp animate-delay-3">
+        <div class="stat-item">
+          <span class="stat-number" id="stat-prompts">182+</span>
+          <span class="stat-label">Prompts</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">6</span>
+          <span class="stat-label">Categorias</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Gratuito</span>
+        </div>
+      </div>
+      
+      <a href="paginas/planejamento.html" class="btn-primary animate-fadeInUp animate-delay-4">
+        ⚡ Começar Agora
+      </a>
+    </div>
   </section>
-
+  
   <!-- BUSCA GLOBAL -->
-  <section style="margin-bottom:60px; max-width:700px;">
-    
-    <input 
-      type="text" 
-      id="busca-global"
-      placeholder="🔎 Buscar prompt em toda a biblioteca..."
-      style="width:100%; padding:14px 18px; border-radius:12px; border:1px solid #ddd; font-size:16px;"
-    >
-
-    <p id="contador-global" style="margin-top:10px; font-weight:600;">
-      Total de prompts disponíveis: 0
-    </p>
-
+  <section class="search-section">
+    <div class="search-container">
+      <div class="search-wrapper">
+        <span class="search-icon">🔎</span>
+        <input 
+          type="text" 
+          id="busca-global"
+          placeholder="Buscar prompt em toda a biblioteca..."
+          autocomplete="off"
+        >
+      </div>
+      
+      <div class="search-info">
+        <span id="contador-global">Total de prompts disponíveis: 182</span>
+        <div class="search-tags">
+          <button class="search-tag" data-search="estudo">📚 Estudo</button>
+          <button class="search-tag" data-search="trabalho">💼 Trabalho</button>
+          <button class="search-tag" data-search="marketing">📣 Marketing</button>
+          <button class="search-tag" data-search="criativo">🎨 Criativo</button>
+        </div>
+      </div>
+    </div>
   </section>
-
+  
+  <!-- RESULTADOS DA BUSCA -->
+  <section class="search-results" id="search-results">
+    <div class="results-header">
+      <h3>🔍 Resultados da busca</h3>
+      <button class="clear-search" onclick="limparBusca()">Limpar busca</button>
+    </div>
+    <div class="results-grid" id="results-grid">
+      <!-- Resultados serão inseridos aqui via JS -->
+    </div>
+  </section>
+  
   <!-- CATEGORIAS -->
-  <section style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px;">
-
-    <div class="card">
-      <h3>📚 Estudo</h3>
-      <p>Resumos, explicações estruturadas e perguntas inteligentes.</p>
-      <a href="paginas/estudo.html">Acessar →</a>
+  <section class="categories-section">
+    <div class="section-header">
+      <h2>Explore por Categoria</h2>
+      <p>Escolha a área que você precisa e encontre prompts prontos para usar</p>
     </div>
-
-    <div class="card">
-      <h3>💼 Profissionais</h3>
-      <p>Prompts estratégicos para corretores, advogados e consultores.</p>
-      <a href="paginas/trabalho.html">Acessar →</a>
+    
+    <div class="categories-grid">
+      
+      <div class="category-card estudo animate-fadeInUp animate-delay-1" data-categoria="estudo">
+        <span class="category-count">32 prompts</span>
+        <div class="category-icon">📚</div>
+        <h3>Estudo</h3>
+        <p>Resumos, explicações estruturadas e perguntas inteligentes para acelerar seu aprendizado.</p>
+        <a href="paginas/estudo.html" class="category-link">Acessar categoria</a>
+      </div>
+      
+      <div class="category-card profissionais animate-fadeInUp animate-delay-2" data-categoria="profissionais">
+        <span class="category-count">45 prompts</span>
+        <div class="category-icon">💼</div>
+        <h3>Profissionais</h3>
+        <p>Prompts estratégicos para corretores, advogados, consultores e diversas profissões.</p>
+        <a href="paginas/trabalho.html" class="category-link">Acessar categoria</a>
+      </div>
+      
+      <div class="category-card criativos animate-fadeInUp animate-delay-3" data-categoria="criativos">
+        <span class="category-count">28 prompts</span>
+        <div class="category-icon">🎨</div>
+        <h3>Criativos</h3>
+        <p>Imagens, marketing, copy e ideias fora do comum para destacar seus projetos.</p>
+        <a href="paginas/imagens.html" class="category-link">Acessar categoria</a>
+      </div>
+      
+      <div class="category-card redes animate-fadeInUp animate-delay-4" data-categoria="redes">
+        <span class="category-count">24 prompts</span>
+        <div class="category-icon">📱</div>
+        <h3>Redes Sociais</h3>
+        <p>Posts estratégicos, storytelling e autoridade digital para crescer nas redes.</p>
+        <a href="paginas/redes-sociais.html" class="category-link">Acessar categoria</a>
+      </div>
+      
+      <div class="category-card produtividade animate-fadeInUp animate-delay-5" data-categoria="produtividade">
+        <span class="category-count">31 prompts</span>
+        <div class="category-icon">🧠</div>
+        <h3>Produtividade</h3>
+        <p>Análises, planejamento e organização estratégica para otimizar seu tempo.</p>
+        <a href="paginas/planejamento.html" class="category-link">Acessar categoria</a>
+      </div>
+      
+      <div class="category-card criadores animate-fadeInUp animate-delay-5" data-categoria="criadores">
+        <span class="category-count">22 prompts</span>
+        <div class="category-icon">🎬</div>
+        <h3>Criadores de Conteúdo</h3>
+        <p>Planejamento, roteiros, thumbnails, descrições e estratégias de crescimento.</p>
+        <a href="paginas/criadores_de_conteudo/planejamento.html" class="category-link">Acessar categoria</a>
+      </div>
+      
     </div>
-
-    <div class="card">
-      <h3>🎨 Criativos</h3>
-      <p>Imagens, marketing, copy e ideias fora do comum.</p>
-      <a href="paginas/imagens.html">Acessar →</a>
-    </div>
-
-    <div class="card">
-      <h3>📱 Redes Sociais</h3>
-      <p>Posts estratégicos, storytelling e autoridade digital.</p>
-      <a href="paginas/redes-sociais.html">Acessar →</a>
-    </div>
-
-    <div class="card">
-      <h3>🧠 Produtividade</h3>
-      <p>Análises, planejamento e organização estratégica.</p>
-      <a href="paginas/planejamento.html">Acessar →</a>
-    </div>
-
-    <div class="card">
-      <h3>🎬 Criadores de Conteúdo</h3>
-      <p>Planejamento, roteiros, thumbnail, descrição e crescimento.</p>
-      <a href="paginas/criadores_de_conteudo/planejamento.html">Acessar →</a>
-    </div>
-
   </section>
-
+  
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2024 Delta Prompts. Feito com 💜 para potencializar sua produtividade com IA.</p>
+  </footer>
+  
 </main>
 
 <script>
+// ===== DADOS DAS CATEGORIAS =====
+const categoriasData = [
+  {
+    id: 'estudo',
+    nome: 'Estudo',
+    icone: '📚',
+    descricao: 'Resumos, explicações estruturadas e perguntas inteligentes.',
+    link: 'paginas/estudo.html',
+    prompts: [
+      { titulo: 'Resumo Estruturado', descricao: 'Crie resumos organizados de qualquer conteúdo' },
+      { titulo: 'Explicação Simples', descricao: 'Explique conceitos complexos de forma simples' },
+      { titulo: 'Flashcards Automáticos', descricao: 'Gere flashcards para memorização' },
+      { titulo: 'Quiz Gerador', descricao: 'Crie quizzes para testar conhecimento' }
+    ]
+  },
+  {
+    id: 'profissionais',
+    nome: 'Profissionais',
+    icone: '💼',
+    descricao: 'Prompts estratégicos para corretores, advogados e consultores.',
+    link: 'paginas/trabalho.html',
+    prompts: [
+      { titulo: 'Email Profissional', descricao: 'Redija emails corporativos eficientes' },
+      { titulo: 'Proposta Comercial', descricao: 'Crie propostas persuasivas' },
+      { titulo: 'Análise de Mercado', descricao: 'Analise tendências do seu setor' },
+      { titulo: 'Relatório Executivo', descricao: 'Gere relatórios profissionais' }
+    ]
+  },
+  {
+    id: 'criativos',
+    nome: 'Criativos',
+    icone: '🎨',
+    descricao: 'Imagens, marketing, copy e ideias fora do comum.',
+    link: 'paginas/imagens.html',
+    prompts: [
+      { titulo: 'Prompt para Imagem', descricao: 'Crie descrições detalhadas para IA de imagem' },
+      { titulo: 'Copy de Vendas', descricao: 'Textos persuasivos para conversão' },
+      { titulo: 'Brainstorming', descricao: 'Gere ideias criativas rapidamente' },
+      { titulo: 'Slogan Criativo', descricao: 'Crie slogans memoráveis' }
+    ]
+  },
+  {
+    id: 'redes',
+    nome: 'Redes Sociais',
+    icone: '📱',
+    descricao: 'Posts estratégicos, storytelling e autoridade digital.',
+    link: 'paginas/redes-sociais.html',
+    prompts: [
+      { titulo: 'Post Engajador', descricao: 'Crie posts que geram interação' },
+      { titulo: 'Storytelling', descricao: 'Narrativas que conectam com a audiência' },
+      { titulo: 'Legenda Criativa', descricao: 'Legendas que chamam atenção' },
+      { titulo: 'Calendário de Conteúdo', descricao: 'Planeje suas postagens' }
+    ]
+  },
+  {
+    id: 'produtividade',
+    nome: 'Produtividade',
+    icone: '🧠',
+    descricao: 'Análises, planejamento e organização estratégica.',
+    link: 'paginas/planejamento.html',
+    prompts: [
+      { titulo: 'Planejamento Semanal', descricao: 'Organize sua semana eficientemente' },
+      { titulo: 'Análise SWOT', descricao: 'Análise estratégica completa' },
+      { titulo: 'Lista de Tarefas', descricao: 'Priorize suas atividades' },
+      { titulo: 'Metas SMART', descricao: 'Defina objetivos alcançáveis' }
+    ]
+  },
+  {
+    id: 'criadores',
+    nome: 'Criadores de Conteúdo',
+    icone: '🎬',
+    descricao: 'Planejamento, roteiros, thumbnail, descrição e crescimento.',
+    link: 'paginas/criadores_de_conteudo/planejamento.html',
+    prompts: [
+      { titulo: 'Roteiro de Vídeo', descricao: 'Estruture vídeos engajadores' },
+      { titulo: 'Título Clickbait Ético', descricao: 'Títulos que geram cliques' },
+      { titulo: 'Descrição SEO', descricao: 'Otimize para mecanismos de busca' },
+      { titulo: 'Thumbnail Concept', descricao: 'Ideias para thumbnails impactantes' }
+    ]
+  }
+];
 
-// CONTADOR GLOBAL (ajuste manual se quiser)
+// ===== CONTADOR GLOBAL =====
 const TOTAL_PROMPTS = 182;
-document.getElementById("contador-global").innerText =
-  "Total de prompts disponíveis: " + TOTAL_PROMPTS;
 
+function atualizarContador() {
+  const contador = document.getElementById('contador-global');
+  if (contador) {
+    contador.innerHTML = `📊 Total de prompts disponíveis: <strong>${TOTAL_PROMPTS}</strong>`;
+  }
+}
 
-// BUSCA SIMPLES (placeholder)
-document.getElementById("busca-global")
-  .addEventListener("keyup", function(e){
-    console.log("Buscar:", e.target.value);
+// ===== BUSCA FUNCIONAL =====
+function initBusca() {
+  const inputBusca = document.getElementById('busca-global');
+  const resultadosSection = document.getElementById('search-results');
+  const resultsGrid = document.getElementById('results-grid');
+  
+  if (!inputBusca) return;
+  
+  inputBusca.addEventListener('input', function(e) {
+    const termo = e.target.value.toLowerCase().trim();
+    
+    if (termo.length === 0) {
+      resultadosSection.classList.remove('active');
+      return;
+    }
+    
+    const resultados = buscarPrompts(termo);
+    exibirResultados(resultados, termo);
   });
+  
+  // Busca por tags
+  document.querySelectorAll('.search-tag').forEach(tag => {
+    tag.addEventListener('click', function() {
+      const searchTerm = this.dataset.search;
+      inputBusca.value = searchTerm;
+      inputBusca.focus();
+      const resultados = buscarPrompts(searchTerm);
+      exibirResultados(resultados, searchTerm);
+    });
+  });
+}
 
+function buscarPrompts(termo) {
+  const resultados = [];
+  
+  categoriasData.forEach(categoria => {
+    // Busca no nome da categoria
+    if (categoria.nome.toLowerCase().includes(termo) || 
+        categoria.descricao.toLowerCase().includes(termo)) {
+      resultados.push({
+        tipo: 'categoria',
+        ...categoria
+      });
+    }
+    
+    // Busca nos prompts
+    categoria.prompts.forEach(prompt => {
+      if (prompt.titulo.toLowerCase().includes(termo) || 
+          prompt.descricao.toLowerCase().includes(termo)) {
+        resultados.push({
+          tipo: 'prompt',
+          categoria: categoria.nome,
+          categoriaLink: categoria.link,
+          categoriaIcone: categoria.icone,
+          ...prompt
+        });
+      }
+    });
+  });
+  
+  return resultados;
+}
+
+function exibirResultados(resultados, termo) {
+  const resultadosSection = document.getElementById('search-results');
+  const resultsGrid = document.getElementById('results-grid');
+  const resultsHeader = resultadosSection.querySelector('h3');
+  
+  resultadosSection.classList.add('active');
+  resultsHeader.innerHTML = `🔍 ${resultados.length} resultado${resultados.length !== 1 ? 's' : ''} para "${termo}"`;
+  
+  if (resultados.length === 0) {
+    resultsGrid.innerHTML = `
+      <div class="no-results" style="grid-column: 1 / -1;">
+        <div class="no-results-icon">🔍</div>
+        <h4>Nenhum resultado encontrado</h4>
+        <p>Tente buscar com termos diferentes ou explore as categorias abaixo.</p>
+      </div>
+    `;
+    return;
+  }
+  
+  resultsGrid.innerHTML = resultados.map(item => {
+    if (item.tipo === 'categoria') {
+      return `
+        <div class="result-card">
+          <span class="category-tag">${item.icone} ${item.nome}</span>
+          <h4>${item.nome}</h4>
+          <p>${item.descricao}</p>
+          <a href="${item.link}" class="category-link">Ver categoria →</a>
+        </div>
+      `;
+    } else {
+      return `
+        <div class="result-card">
+          <span class="category-tag">${item.categoriaIcone} ${item.categoria}</span>
+          <h4>${item.titulo}</h4>
+          <p>${item.descricao}</p>
+          <a href="${item.categoriaLink}" class="category-link">Usar prompt →</a>
+        </div>
+      `;
+    }
+  }).join('');
+  
+  // Scroll suave para resultados
+  resultadosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function limparBusca() {
+  const inputBusca = document.getElementById('busca-global');
+  const resultadosSection = document.getElementById('search-results');
+  
+  inputBusca.value = '';
+  resultadosSection.classList.remove('active');
+  inputBusca.focus();
+}
+
+// ===== ANIMAÇÃO DE CONTADOR =====
+function animarContador() {
+  const statPrompts = document.getElementById('stat-prompts');
+  if (!statPrompts) return;
+  
+  const valorFinal = 182;
+  const duracao = 2000;
+  const incremento = valorFinal / (duracao / 16);
+  let valorAtual = 0;
+  
+  const timer = setInterval(() => {
+    valorAtual += incremento;
+    if (valorAtual >= valorFinal) {
+      valorAtual = valorFinal;
+      clearInterval(timer);
+    }
+    statPrompts.textContent = Math.floor(valorAtual) + '+';
+  }, 16);
+}
+
+// ===== INTERSEÇÃO OBSERVER PARA ANIMAÇÕES =====
+function initScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  document.querySelectorAll('.animate-fadeInUp').forEach(el => {
+    observer.observe(el);
+  });
+}
+
+// ===== INICIALIZAÇÃO =====
+document.addEventListener('DOMContentLoaded', function() {
+  atualizarContador();
+  initBusca();
+  animarContador();
+  initScrollAnimations();
+  
+  // Atalho de teclado para busca
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key === 'k') {
+      e.preventDefault();
+      document.getElementById('busca-global').focus();
+    }
+  });
+});
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
