@@ -68,3 +68,43 @@
   color: #555;
   line-height: 1.6;
 }
+
+/*cadastro contador */
+
+<script>
+async function atualizarContadores() {
+
+  const paginas = {
+    estudo: "paginas/estudo.html",
+    profissionais: "paginas/trabalho.html",
+    criativos: "paginas/imagens.html",
+    redes: "paginas/redes-sociais.html",
+    produtividade: "paginas/planejamento.html",
+    criadores: "paginas/criadores.html"
+  };
+
+  for (const categoria in paginas) {
+
+    try {
+      const res = await fetch(paginas[categoria]);
+      const html = await res.text();
+
+      // Conta quantas vezes aparece "categoria:"
+      const total = (html.match(/categoria:/g) || []).length;
+
+      const el = document.querySelector(
+        `.category-count[data-categoria="${categoria}"]`
+      );
+
+      if (el) {
+        el.innerText = `${total} prompts`;
+      }
+
+    } catch (e) {
+      console.error("Erro ao contar", categoria, e);
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", atualizarContadores);
+</script>
