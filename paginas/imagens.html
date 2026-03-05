@@ -1,95 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Imagens | Delta Prompts</title>
-  <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../melhoriaspaginas.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imagens | Delta Prompts</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../melhoriaspaginas.css">
+
 </head>
 <body>
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-  
-  <nav id="menu">
-    <h2>🎨 Delta Prompts</h2>
-    <a href="../index.html">🏠 Início</a>
-    <a href="texto.html">📝 Texto</a>
-    <a href="imagens.html">🖼️ Imagens</a>
-    <a href="video.html">🎬 Vídeo</a>
-    <a href="audio.html">🎵 Áudio</a>
-    <a href="codigo.html">💻 Código</a>
-    <a href="estudo.html">📚 Estudo</a>
-    <hr>
-    <a href="favoritos.html">⭐ Favoritos</a>
-    <a href="trend.html">🔥 Trends</a>
-  </nav>
 
-  <main>
-    <header>
-      <h1>🎨 Prompts para Transformação de Imagens</h1>
-      <p class="subtitulo">Melhore, transforme e eleve suas fotos para um nível profissional ou criativo.</p>
-    </header>
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
 
-    <section class="objetivo">
-      <h2>🎯 Objetivo</h2>
-      <p>Criar imagens mais impactantes e profissionais para redes sociais.</p>
-    </section>
+<main>
 
-    <section class="como-funciona">
-      <h2>🗺️ Níveis de Prompt</h2>
-      <p>Selecione o nível de complexidade ideal para sua necessidade.</p>
-      <div class="niveis-info">
-        <div class="nivel-item">
-          <span class="nivel-badge nivel-basico">🟢 Básico</span>
-          <p>Transformações simples e rápidas</p>
-        </div>
-        <div class="nivel-item">
-          <span class="nivel-badge nivel-intermediario">🟡 Intermediário</span>
-          <p>Edições com mais detalhes e estilo</p>
-        </div>
-        <div class="nivel-item">
-          <span class="nivel-badge nivel-avancado">🔴 Avançado</span>
-          <p>Transformações complexas e criativas</p>
-        </div>
-      </div>
-    </section>
+<h1>🎨 Prompts para Transformação de Imagens</h1>
 
-    <div class="filtro-container">
-      <button class="filtro-btn ativo" data-tipo="todos">📌 Todos</button>
-      <button class="filtro-btn" data-tipo="basico">🟢 Básico</button>
-      <button class="filtro-btn" data-tipo="intermediario">🟡 Intermediário</button>
-      <button class="filtro-btn" data-tipo="avancado">🔴 Avançado</button>
-    </div>
+<p class="subtitulo">
+Melhore, transforme e eleve suas fotos para um nível profissional ou criativo.
+</p>
 
-    <div class="busca-container">
-      <input type="text" id="busca" placeholder="🔍 Buscar prompt..." class="busca-input" onkeyup="aplicarFiltros()">
-      <span class="resultados-counter">Resultados: <strong id="contador">0</strong></span>
-    </div>
+<section class="card">
+<h2>🎯 Objetivo</h2>
+<p>
+Criar imagens mais impactantes e profissionais para redes sociais.
+</p>
+</section>
 
-    <div class="galeria-prompts" id="galeria">
-      <!-- Cards renderizados via JavaScript -->
-    </div>
+<input type="text" id="busca" placeholder="🔎 Buscar prompt..." onkeyup="aplicarFiltros()">
 
-    <div style="margin-top: 40px; text-align: center;">
-      <a href="trend.html" class="btn-trend">🔥 FAZER UMA TREND AGORA</a>
-    </div>
-  </main>
+<div class="filtro-container">
 
-  <div class="menu-overlay" onclick="toggleMenu()"></div>
+<button class="filtro-btn ativo" data-nivel="todos">
+📌 Todos
+</button>
 
-  <!-- ORDEM IMPORTANTE: prompts → filtros → funcoes -->
-  <script src="../prompts/imagens.js"></script>
-  <script src="../filtros.js"></script>
-  <script src="../funcoes.js"></script>
-  <script>
-    function toggleMenu(){
-      const menu = document.getElementById("menu");
-      const overlay = document.querySelector(".menu-overlay");
-      const body = document.body;
-      menu.classList.toggle("active");
-      overlay?.classList.toggle("visible");
-      body.classList.toggle("menu-open");
-    }
-  </script>
+<button class="filtro-btn" data-nivel="basico">
+🟢 Básico
+</button>
+
+<button class="filtro-btn" data-nivel="intermediario">
+🟡 Intermediário
+</button>
+
+<button class="filtro-btn" data-nivel="avancado">
+🔴 Avançado
+</button>
+
+</div>
+
+<p>Resultados: <strong id="contador">0</strong></p>
+
+<div id="galeria"></div>
+
+</main>
+
+<script src="../prompts/imagens.js"></script>
+<script src="../filtros.js"></script>
+<script src="../funcoes.js"></script>
+
 </body>
 </html>
