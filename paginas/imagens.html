@@ -54,7 +54,6 @@
       </div>
     </section>
 
-    <!-- FILTROS -->
     <div class="filtro-container">
       <button class="filtro-btn ativo" data-tipo="todos">📌 Todos</button>
       <button class="filtro-btn" data-tipo="basico">🟢 Básico</button>
@@ -62,15 +61,13 @@
       <button class="filtro-btn" data-tipo="avancado">🔴 Avançado</button>
     </div>
 
-    <!-- BUSCA -->
     <div class="busca-container">
       <input type="text" id="busca" placeholder="🔍 Buscar prompt..." class="busca-input" onkeyup="aplicarFiltros()">
       <span class="resultados-counter">Resultados: <strong id="contador">0</strong></span>
     </div>
 
-    <!-- GALERIA DE PROMPTS -->
-    <div class="galeria-prompts" id="galeria-imagens">
-      <!-- Cards serão renderizados via JavaScript -->
+    <div class="galeria-prompts" id="galeria">
+      <!-- Cards renderizados via JavaScript -->
     </div>
 
     <div style="margin-top: 40px; text-align: center;">
@@ -80,6 +77,8 @@
 
   <div class="menu-overlay" onclick="toggleMenu()"></div>
 
+  <!-- ORDEM IMPORTANTE: prompts → filtros → funcoes -->
+  <script src="../prompts/imagens.js"></script>
   <script src="../filtros.js"></script>
   <script src="../funcoes.js"></script>
   <script>
