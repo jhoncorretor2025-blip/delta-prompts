@@ -1,31 +1,43 @@
-const promptsDaPagina = [
-{
-id: "img1",
-nivel: "basico",
-titulo: "Melhorar qualidade da foto",
-quandoUsar: "Quando a imagem estiver escura ou sem nitidez",
-tags: ["foto","qualidade"],
-prompt: `Melhore a qualidade desta imagem.
-Aumente nitidez, iluminação natural e cores realistas.`
-},
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imagens | Delta Prompts</title>
 
-{
-id: "img2",
-nivel: "intermediario",
-titulo: "Transformar em arte digital",
-quandoUsar: "Quando quiser transformar uma foto em arte",
-tags: ["arte","criativo"],
-prompt: `Transforme esta foto em arte digital moderna.
-Estilo pintura digital, iluminação dramática e cores vibrantes.`
-},
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../melhoriaspaginas.css">
+</head>
 
-{
-id: "img3",
-nivel: "avancado",
-titulo: "Estilo cinematográfico",
-quandoUsar: "Quando quiser aparência de filme",
-tags: ["cinema"],
-prompt: `Transforme esta imagem em estilo cinematográfico.
-Iluminação dramática, cores profundas e composição profissional.`
-}
-];
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+<h1>🎨 Prompts para Transformação de Imagens</h1>
+
+<input type="text" id="busca" placeholder="🔎 Buscar prompt..." onkeyup="aplicarFiltros()">
+
+<div class="filtro-container">
+
+<button class="filtro-btn ativo" data-nivel="todos">Todos</button>
+<button class="filtro-btn" data-nivel="basico">Básico</button>
+<button class="filtro-btn" data-nivel="intermediario">Intermediário</button>
+<button class="filtro-btn" data-nivel="avancado">Avançado</button>
+
+</div>
+
+<p>Resultados: <strong id="contador">0</strong></p>
+
+<div id="galeria"></div>
+
+</main>
+
+<script src="../prompts/imagens.js"></script>
+<script src="../filtros.js"></script>
+<script src="../funcoes.js"></script>
+
+</body>
+</html>
