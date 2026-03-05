@@ -1,5 +1,5 @@
 // ==============================
-// SISTEMA GLOBAL DE FILTRO POR TIPO
+// SISTEMA GLOBAL DE FILTROS
 // ==============================
 (function(){
   let filtroAtual = "todos";
@@ -27,12 +27,12 @@
 
     cards.forEach(card => {
       const texto = card.innerText.toLowerCase();
-      const tipo = card.dataset.tipo || "todos";
+      const nivel = card.dataset.nivel || "todos";
 
       const combinaBusca = termo === "" || texto.includes(termo);
-      const combinaTipo = filtroAtual === "todos" || tipo === filtroAtual;
+      const combinaNivel = filtroAtual === "todos" || nivel === filtroAtual;
 
-      if(combinaBusca && combinaTipo){
+      if(combinaBusca && combinaNivel){
         card.style.display = "block";
         visiveis++;
       } else {
