@@ -1,54 +1,91 @@
-// ==============================
-// PROMPTS DE IMAGENS
-// ==============================
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imagens | Delta Prompts</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../melhoriaspaginas.css">
+</head>
+<body>
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  
+  <!-- Menu carregado via JavaScript (menu.html) -->
+  <div id="menu"></div>
 
-const promptsDaPagina = [
-  {
-    id: 1,
-    titulo: "📸 Foto LinkedIn Premium",
-    nivel: "basico",
-    quandoUsar: "Atualizar perfil profissional",
-    prompt: "Transforme minha foto em retrato profissional estilo LinkedIn, fundo neutro desfocado, iluminação suave e expressão confiante.",
-    tags: ["profissional", "linkedin", "retrato"]
-  },
-  {
-    id: 2,
-    titulo: "🏢 Foto Executiva",
-    nivel: "basico",
-    quandoUsar: "Transmitir autoridade",
-    prompt: "Edite minha foto para retrato executivo corporativo com fundo de escritório moderno.",
-    tags: ["corporativo", "executivo", "business"]
-  },
-  {
-    id: 3,
-    titulo: "🧑‍💼 Retrato Minimalista",
-    nivel: "intermediario",
-    quandoUsar: "Visual clean e elegante",
-    prompt: "Transforme minha imagem em retrato minimalista moderno com fundo claro e iluminação suave.",
-    tags: ["minimalista", "clean", "moderno"]
-  },
-  {
-    id: 4,
-    titulo: "🎨 Pintura Digital",
-    nivel: "intermediario",
-    quandoUsar: "Estilo artístico",
-    prompt: "Transforme minha foto em pintura digital semi-realista com pinceladas visíveis e cores vibrantes.",
-    tags: ["arte", "pintura", "digital"]
-  },
-  {
-    id: 5,
-    titulo: "🎬 Estilo Cinematográfico",
-    nivel: "avancado",
-    quandoUsar: "Visual dramático",
-    prompt: "Edite minha foto com luz dramática cinematográfica, atmosfera de filme, color grading profissional e profundidade de campo.",
-    tags: ["cinema", "dramático", "profissional"]
-  },
-  {
-    id: 6,
-    titulo: "🦸 Versão Super-Herói",
-    nivel: "avancado",
-    quandoUsar: "Avatar poderoso",
-    prompt: "Transforme minha foto em super-herói moderno com traje épico, cenário de cidade futurista e efeitos de energia.",
-    tags: ["herói", "avatar", "criativo"]
-  }
-];
+  <main>
+    <header>
+      <h1>🎨 Prompts para Transformação de Imagens</h1>
+      <p class="subtitulo">Melhore, transforme e eleve suas fotos para um nível profissional ou criativo.</p>
+    </header>
+
+    <section class="objetivo">
+      <h2>🎯 Objetivo</h2>
+      <p>Criar imagens mais impactantes e profissionais para redes sociais.</p>
+    </section>
+
+    <section class="como-funciona">
+      <h2>🗺️ Níveis de Prompt</h2>
+      <p>Selecione o nível de complexidade ideal para sua necessidade.</p>
+      <div class="niveis-info">
+        <div class="nivel-item">
+          <span class="nivel-badge nivel-basico">🟢 Básico</span>
+          <p>Transformações simples e rápidas</p>
+        </div>
+        <div class="nivel-item">
+          <span class="nivel-badge nivel-intermediario">🟡 Intermediário</span>
+          <p>Edições com mais detalhes e estilo</p>
+        </div>
+        <div class="nivel-item">
+          <span class="nivel-badge nivel-avancado">🔴 Avançado</span>
+          <p>Transformações complexas e criativas</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="filtro-container">
+      <button class="filtro-btn ativo" data-tipo="todos">📌 Todos</button>
+      <button class="filtro-btn" data-tipo="basico">🟢 Básico</button>
+      <button class="filtro-btn" data-tipo="intermediario">🟡 Intermediário</button>
+      <button class="filtro-btn" data-tipo="avancado">🔴 Avançado</button>
+    </div>
+
+    <div class="busca-container">
+      <input type="text" id="busca" placeholder="🔍 Buscar prompt..." class="busca-input" onkeyup="aplicarFiltros()">
+      <span class="resultados-counter">Resultados: <strong id="contador">0</strong></span>
+    </div>
+
+    <div class="galeria-prompts" id="galeria">
+      <!-- Cards renderizados via JavaScript -->
+    </div>
+
+    <div style="margin-top: 40px; text-align: center;">
+      <a href="trend.html" class="btn-trend">🔥 FAZER UMA TREND AGORA</a>
+    </div>
+  </main>
+
+  <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+  <!-- Scripts na ordem correta -->
+  <script src="../prompts/imagens.js"></script>
+  <script src="../filtros.js"></script>
+  <script src="../funcoes.js"></script>
+  <script>
+    // Carregar menu.html
+    fetch('../menu.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('menu').innerHTML = html;
+      });
+
+    function toggleMenu(){
+      const menu = document.getElementById("menu");
+      const overlay = document.querySelector(".menu-overlay");
+      const body = document.body;
+      menu?.classList.toggle("active");
+      overlay?.classList.toggle("visible");
+      body.classList.toggle("menu-open");
+    }
+  </script>
+</body>
+</html>
