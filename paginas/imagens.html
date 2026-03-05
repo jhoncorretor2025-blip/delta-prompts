@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Imagens | Delta Prompts</title>
 
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../melhoriaspaginas.css">
+
 </head>
 
 <body>
@@ -18,26 +20,86 @@
 
 <h1>🎨 Prompts para Transformação de Imagens</h1>
 
-<input type="text" id="busca" placeholder="🔎 Buscar prompt..." onkeyup="aplicarFiltros()">
+<p class="subtitulo">
+Melhore, transforme e eleve suas fotos para um nível profissional ou criativo.
+</p>
+
+<section class="card">
+
+<h2>🎯 Objetivo</h2>
+
+<p>
+Criar imagens mais impactantes e profissionais para redes sociais.
+</p>
+
+</section>
+
+<input 
+type="text" 
+id="busca" 
+placeholder="🔎 Buscar prompt..." 
+onkeyup="aplicarFiltros()"
+>
 
 <div class="filtro-container">
 
-<button class="filtro-btn ativo" data-nivel="todos">Todos</button>
-<button class="filtro-btn" data-nivel="basico">Básico</button>
-<button class="filtro-btn" data-nivel="intermediario">Intermediário</button>
-<button class="filtro-btn" data-nivel="avancado">Avançado</button>
+<button class="filtro-btn ativo" data-nivel="todos">
+📌 Todos
+</button>
+
+<button class="filtro-btn" data-nivel="basico">
+🟢 Básico
+</button>
+
+<button class="filtro-btn" data-nivel="intermediario">
+🟡 Intermediário
+</button>
+
+<button class="filtro-btn" data-nivel="avancado">
+🔴 Avançado
+</button>
 
 </div>
 
-<p>Resultados: <strong id="contador">0</strong></p>
+<p>
+Resultados: <strong id="contador">0</strong>
+</p>
 
 <div id="galeria"></div>
+
+<div style="margin-top:40px;text-align:center;">
+
+<a href="trend.html" class="btn-trend">
+🔥 FAZER UMA TREND AGORA
+</a>
+
+</div>
 
 </main>
 
 <script src="../prompts/imagens.js"></script>
 <script src="../filtros.js"></script>
 <script src="../funcoes.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+if(typeof promptsDaPagina !== "undefined"){
+
+renderizarCards(promptsDaPagina,"galeria");
+
+}
+
+if(typeof initFiltros === "function"){
+
+initFiltros();
+
+}
+
+});
+
+</script>
 
 </body>
 </html>
