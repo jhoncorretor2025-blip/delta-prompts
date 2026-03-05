@@ -1,13 +1,10 @@
 // ==============================
 // SISTEMA GLOBAL DE FILTRO POR TIPO
 // ==============================
-
 (function(){
-
   let filtroAtual = "todos";
-
+  
   window.initFiltros = function(){
-
     const botoes = document.querySelectorAll(".filtro-btn");
     if(!botoes.length) return;
 
@@ -19,23 +16,20 @@
         aplicarFiltros();
       });
     });
-
   };
 
   window.aplicarFiltros = function(){
-
     const busca = document.getElementById("busca");
-    const termo = busca ? busca.value.toLowerCase() : "";
+    const termo = busca ? busca.value.toLowerCase().trim() : "";
 
     const cards = document.querySelectorAll(".card");
     let visiveis = 0;
 
     cards.forEach(card => {
-
       const texto = card.innerText.toLowerCase();
       const tipo = card.dataset.tipo || "todos";
 
-      const combinaBusca = texto.includes(termo);
+      const combinaBusca = termo === "" || texto.includes(termo);
       const combinaTipo = filtroAtual === "todos" || tipo === filtroAtual;
 
       if(combinaBusca && combinaTipo){
@@ -44,13 +38,10 @@
       } else {
         card.style.display = "none";
       }
-
     });
 
     if(typeof atualizarContador === "function"){
       atualizarContador(visiveis);
     }
-
   };
-
 })();
