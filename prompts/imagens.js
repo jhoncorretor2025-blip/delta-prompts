@@ -3,7 +3,7 @@ const promptsDaPagina = [
 id: "img1",
 nivel: "basico",
 titulo: "Melhorar qualidade da foto",
-quandoUsar: "Quando a imagem estiver escura ou sem nitidez",
+quandoUsar: "Quando uma foto estiver escura ou sem nitidez",
 tags: ["foto","qualidade"],
 prompt: `Melhore a qualidade desta imagem.
 Aumente nitidez, iluminação natural e cores realistas.`
@@ -12,7 +12,7 @@ Aumente nitidez, iluminação natural e cores realistas.`
 {
 id: "img2",
 nivel: "intermediario",
-titulo: "Transformar em arte digital",
+titulo: "Transformar foto em arte digital",
 quandoUsar: "Quando quiser transformar uma foto em arte",
 tags: ["arte","criativo"],
 prompt: `Transforme esta foto em arte digital moderna.
