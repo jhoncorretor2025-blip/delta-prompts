@@ -1,117 +1,34 @@
 // ==============================
-// BANCO DE PROMPTS - IMAGENS
+// HELPERS
 // ==============================
-const promptsImagens = [
-  {
-    id: 1,
-    titulo: "📸 Foto LinkedIn Premium",
-    nivel: "basico",
-    quandoUsar: "Atualizar perfil profissional",
-    prompt: "Transforme minha foto em retrato profissional estilo LinkedIn, fundo neutro desfocado, iluminação suave e expressão confiante.",
-    tags: ["profissional", "linkedin", "retrato"]
-  },
-  {
-    id: 2,
-    titulo: "🏢 Foto Executiva",
-    nivel: "basico",
-    quandoUsar: "Transmitir autoridade",
-    prompt: "Edite minha foto para retrato executivo corporativo com fundo de escritório moderno.",
-    tags: ["corporativo", "executivo", "business"]
-  },
-  {
-    id: 3,
-    titulo: "🧑‍💼 Retrato Minimalista",
-    nivel: "intermediario",
-    quandoUsar: "Visual clean e elegante",
-    prompt: "Transforme minha imagem em retrato minimalista moderno com fundo claro e iluminação suave.",
-    tags: ["minimalista", "clean", "moderno"]
-  },
-  {
-    id: 4,
-    titulo: "🎨 Pintura Digital",
-    nivel: "intermediario",
-    quandoUsar: "Estilo artístico",
-    prompt: "Transforme minha foto em pintura digital semi-realista com pinceladas visíveis e cores vibrantes.",
-    tags: ["arte", "pintura", "digital"]
-  },
-  {
-    id: 5,
-    titulo: "🎬 Estilo Cinematográfico",
-    nivel: "avancado",
-    quandoUsar: "Visual dramático",
-    prompt: "Edite minha foto com luz dramática cinematográfica, atmosfera de filme, color grading profissional e profundidade de campo.",
-    tags: ["cinema", "dramático", "profissional"]
-  },
-  {
-    id: 6,
-    titulo: "🦸 Versão Super-Herói",
-    nivel: "avancado",
-    quandoUsar: "Avatar poderoso",
-    prompt: "Transforme minha foto em super-herói moderno com traje épico, cenário de cidade futurista e efeitos de energia.",
-    tags: ["herói", "avatar", "criativo"]
-  }
-];
+function safeQuery(el, selector){
+  return el ? el.querySelector(selector) : null;
+}
 
-// ==============================
-// BANCO DE PROMPTS - ESTUDO
-// ==============================
-const promptsEstudo = [
-  {
-    id: 1,
-    titulo: "📋 Plano de Estudos Semanal",
-    nivel: "basico",
-    quandoUsar: "Organizar rotina de estudos",
-    prompt: "Crie um plano de estudos semanal para [matéria], com 2 horas diárias, incluindo revisões e exercícios práticos.",
-    tags: ["organização", "planejamento", "rotina"]
-  },
-  {
-    id: 2,
-    titulo: "📚 Resumo de Conteúdo",
-    nivel: "basico",
-    quandoUsar: "Sintetizar material longo",
-    prompt: "Faça um resumo estruturado do seguinte conteúdo, destacando os pontos principais em tópicos claros.",
-    tags: ["resumo", "síntese", "conteúdo"]
-  },
-  {
-    id: 3,
-    titulo: "🧠 Mapa Mental",
-    nivel: "intermediario",
-    quandoUsar: "Visualizar conexões",
-    prompt: "Crie um mapa mental detalhado sobre [tema], mostrando relações entre conceitos principais e secundários.",
-    tags: ["mapa mental", "visual", "conexões"]
-  },
-  {
-    id: 4,
-    titulo: "📝 Questões de Prova",
-    nivel: "intermediario",
-    quandoUsar: "Simular avaliações",
-    prompt: "Gere 10 questões de múltipla escolha sobre [tema] com gabarito comentado no final.",
-    tags: ["prova", "questões", "avaliação"]
-  },
-  {
-    id: 5,
-    titulo: "🎓 Técnica Feynman",
-    nivel: "avancado",
-    quandoUsar: "Dominar conceitos difíceis",
-    prompt: "Explique [conceito] como se eu tivesse 12 anos, usando analogias simples e exemplos do cotidiano.",
-    tags: ["feynman", "didática", "compreensão"]
-  },
-  {
-    id: 6,
-    titulo: "📊 Análise de Erros",
-    nivel: "avancado",
-    quandoUsar: "Evoluir após provas",
-    prompt: "Analise meus erros nesta prova e crie um plano específico para corrigir cada lacuna de conhecimento identificada.",
-    tags: ["análise", "erros", "melhoria"]
+function simpleHash(str){
+  let h = 2166136261 >>> 0;
+  for(let i = 0; i < str.length; i++){
+    h ^= str.charCodeAt(i);
+    h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24);
   }
-];
+  return (h >>> 0).toString(36);
+}
+
+function getNivelLabel(nivel){
+  const labels = {
+    'basico': '🟢 Básico',
+    'intermediario': '🟡 Intermediário',
+    'avancado': '🔴 Avançado'
+  };
+  return labels[nivel] || nivel;
+}
 
 // ==============================
 // RENDERIZAR CARDS
 // ==============================
 function renderizarCards(prompts, containerId){
   const container = document.getElementById(containerId);
-  if(!container) return;
+  if(!container || !prompts) return;
 
   container.innerHTML = prompts.map(p => `
     <div class="card" data-nivel="${p.nivel}" data-id="${p.id}">
@@ -131,35 +48,12 @@ function renderizarCards(prompts, containerId){
     </div>
   `).join('');
 
-  // Re-inicializar eventos
   setTimeout(inicializarEventos, 100);
 }
 
-function getNivelLabel(nivel){
-  const labels = {
-    'basico': '🟢 Básico',
-    'intermediario': '🟡 Intermediário',
-    'avancado': '🔴 Avançado'
-  };
-  return labels[nivel] || nivel;
-}
-
 // ==============================
-// HELPERS
+// PEGAR TEXTO DO CARD
 // ==============================
-function safeQuery(el, selector){
-  return el ? el.querySelector(selector) : null;
-}
-
-function simpleHash(str){
-  let h = 2166136261 >>> 0;
-  for(let i = 0; i < str.length; i++){
-    h ^= str.charCodeAt(i);
-    h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24);
-  }
-  return (h >>> 0).toString(36);
-}
-
 function pegarTexto(btn){
   if(!btn) return "";
   const card = btn.closest(".card");
@@ -169,7 +63,7 @@ function pegarTexto(btn){
 }
 
 // ==============================
-// AÇÕES DOS BOTÕES
+// COPIAR
 // ==============================
 async function copiar(btn){
   const txt = pegarTexto(btn);
@@ -184,6 +78,9 @@ async function copiar(btn){
   }
 }
 
+// ==============================
+// CHATGPT
+// ==============================
 function chat(btn){
   const texto = pegarTexto(btn);
   if(!texto) return;
@@ -191,6 +88,9 @@ function chat(btn){
   window.open(url, "_blank");
 }
 
+// ==============================
+// GEMINI
+// ==============================
 async function gemini(btn){
   const texto = pegarTexto(btn);
   if(!texto) return;
@@ -310,19 +210,15 @@ function atualizarContador(visiveis){
 // DOM READY
 // ==============================
 document.addEventListener("DOMContentLoaded", () => {
-  // Renderizar prompts se existir container
-  if(document.getElementById("galeria-imagens")){
-    renderizarCards(promptsImagens, "galeria-imagens");
-  }
-  if(document.getElementById("galeria-estudo")){
-    renderizarCards(promptsEstudo, "galeria-estudo");
+  const galeria = document.getElementById("galeria");
+  
+  if(typeof promptsDaPagina !== 'undefined' && galeria){
+    renderizarCards(promptsDaPagina, "galeria");
   }
   
-  // Inicializar filtros e eventos
   if(typeof initFiltros === "function") initFiltros();
   inicializarEventos();
   
-  // Atualizar contador inicial
   const cards = document.querySelectorAll(".card");
   const contador = document.getElementById("contador");
   if(contador) contador.textContent = cards.length;
