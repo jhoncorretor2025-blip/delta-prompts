@@ -18,6 +18,7 @@
     <a href="video.html">🎬 Vídeo</a>
     <a href="audio.html">🎵 Áudio</a>
     <a href="codigo.html">💻 Código</a>
+    <a href="estudo.html">📚 Estudo</a>
     <hr>
     <a href="favoritos.html">⭐ Favoritos</a>
     <a href="trend.html">🔥 Trends</a>
@@ -34,132 +35,42 @@
       <p>Criar imagens mais impactantes e profissionais para redes sociais.</p>
     </section>
 
+    <section class="como-funciona">
+      <h2>🗺️ Níveis de Prompt</h2>
+      <p>Selecione o nível de complexidade ideal para sua necessidade.</p>
+      <div class="niveis-info">
+        <div class="nivel-item">
+          <span class="nivel-badge nivel-basico">🟢 Básico</span>
+          <p>Transformações simples e rápidas</p>
+        </div>
+        <div class="nivel-item">
+          <span class="nivel-badge nivel-intermediario">🟡 Intermediário</span>
+          <p>Edições com mais detalhes e estilo</p>
+        </div>
+        <div class="nivel-item">
+          <span class="nivel-badge nivel-avancado">🔴 Avançado</span>
+          <p>Transformações complexas e criativas</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTROS -->
+    <div class="filtro-container">
+      <button class="filtro-btn ativo" data-tipo="todos">📌 Todos</button>
+      <button class="filtro-btn" data-tipo="basico">🟢 Básico</button>
+      <button class="filtro-btn" data-tipo="intermediario">🟡 Intermediário</button>
+      <button class="filtro-btn" data-tipo="avancado">🔴 Avançado</button>
+    </div>
+
     <!-- BUSCA -->
     <div class="busca-container">
       <input type="text" id="busca" placeholder="🔍 Buscar prompt..." class="busca-input" onkeyup="aplicarFiltros()">
       <span class="resultados-counter">Resultados: <strong id="contador">0</strong></span>
     </div>
 
-    <!-- FILTROS -->
-    <div class="filtro-container">
-      <button class="filtro-btn ativo" data-tipo="todos">📌 Todos</button>
-      <button class="filtro-btn" data-tipo="profissional">💼 Profissional</button>
-      <button class="filtro-btn" data-tipo="artistico">🎨 Artístico</button>
-      <button class="filtro-btn" data-tipo="criativo">✨ Criativo</button>
-      <button class="filtro-btn" data-tipo="redes-sociais">📱 Redes Sociais</button>
-    </div>
-
     <!-- GALERIA DE PROMPTS -->
-    <div class="galeria-prompts">
-      
-      <!-- CARD 1 -->
-      <div class="card" data-tipo="profissional" data-nivel="basico">
-        <span class="nivel nivel-basico">Básico</span>
-        <h3>📸 Foto LinkedIn Premium</h3>
-        <p class="quando-usar">💡 <strong>Quando usar:</strong> Atualizar perfil profissional</p>
-        <p class="prompt-text">Transforme minha foto em retrato profissional estilo LinkedIn, fundo neutro desfocado, iluminação suave e expressão confiante.</p>
-        <div class="tags">
-          <span class="tag">profissional</span>
-          <span class="tag">linkedin</span>
-        </div>
-        <div class="acoes">
-          <button class="btn-copy">📋 Copiar</button>
-          <button class="btn-chat">🤖 ChatGPT</button>
-          <button class="btn-gemini">✨ Gemini</button>
-          <button class="btn-favorito">🤍 Favoritar</button>
-        </div>
-      </div>
-
-      <!-- CARD 2 -->
-      <div class="card" data-tipo="profissional" data-nivel="basico">
-        <span class="nivel nivel-basico">Básico</span>
-        <h3>🏢 Foto Executiva</h3>
-        <p class="quando-usar">💡 <strong>Quando usar:</strong> Transmitir autoridade</p>
-        <p class="prompt-text">Edite minha foto para retrato executivo corporativo com fundo de escritório moderno.</p>
-        <div class="tags">
-          <span class="tag">corporativo</span>
-          <span class="tag">executivo</span>
-        </div>
-        <div class="acoes">
-          <button class="btn-copy">📋 Copiar</button>
-          <button class="btn-chat">🤖 ChatGPT</button>
-          <button class="btn-gemini">✨ Gemini</button>
-          <button class="btn-favorito">🤍 Favoritar</button>
-        </div>
-      </div>
-
-      <!-- CARD 3 -->
-      <div class="card" data-tipo="profissional" data-nivel="intermediario">
-        <span class="nivel nivel-intermediario">Intermediário</span>
-        <h3>🧑‍💼 Retrato Minimalista</h3>
-        <p class="quando-usar">💡 <strong>Quando usar:</strong> Visual clean e elegante</p>
-        <p class="prompt-text">Transforme minha imagem em retrato minimalista moderno com fundo claro e iluminação suave.</p>
-        <div class="tags">
-          <span class="tag">minimalista</span>
-          <span class="tag">clean</span>
-        </div>
-        <div class="acoes">
-          <button class="btn-copy">📋 Copiar</button>
-          <button class="btn-chat">🤖 ChatGPT</button>
-          <button class="btn-gemini">✨ Gemini</button>
-          <button class="btn-favorito">🤍 Favoritar</button>
-        </div>
-      </div>
-
-      <!-- CARD 4 -->
-      <div class="card" data-tipo="artistico" data-nivel="intermediario">
-        <span class="nivel nivel-intermediario">Intermediário</span>
-        <h3>🎨 Pintura Digital</h3>
-        <p class="quando-usar">💡 <strong>Quando usar:</strong> Estilo artístico</p>
-        <p class="prompt-text">Transforme minha foto em pintura digital semi-realista com pinceladas visíveis e cores vibrantes.</p>
-        <div class="tags">
-          <span class="tag">arte</span>
-          <span class="tag">pintura</span>
-        </div>
-        <div class="acoes">
-          <button class="btn-copy">📋 Copiar</button>
-          <button class="btn-chat">🤖 ChatGPT</button>
-          <button class="btn-gemini">✨ Gemini</button>
-          <button class="btn-favorito">🤍 Favoritar</button>
-        </div>
-      </div>
-
-      <!-- CARD 5 -->
-      <div class="card" data-tipo="criativo" data-nivel="avancado">
-        <span class="nivel nivel-avancado">Avançado</span>
-        <h3>🎬 Estilo Cinematográfico</h3>
-        <p class="quando-usar">💡 <strong>Quando usar:</strong> Visual dramático</p>
-        <p class="prompt-text">Edite minha foto com luz dramática cinematográfica, atmosfera de filme, color grading profissional e profundidade de campo.</p>
-        <div class="tags">
-          <span class="tag">cinema</span>
-          <span class="tag">dramático</span>
-        </div>
-        <div class="acoes">
-          <button class="btn-copy">📋 Copiar</button>
-          <button class="btn-chat">🤖 ChatGPT</button>
-          <button class="btn-gemini">✨ Gemini</button>
-          <button class="btn-favorito">🤍 Favoritar</button>
-        </div>
-      </div>
-
-      <!-- CARD 6 -->
-      <div class="card" data-tipo="criativo" data-nivel="avancado">
-        <span class="nivel nivel-avancado">Avançado</span>
-        <h3>🦸 Versão Super-Herói</h3>
-        <p class="quando-usar">💡 <strong>Quando usar:</strong> Avatar poderoso</p>
-        <p class="prompt-text">Transforme minha foto em super-herói moderno com traje épico, cenário de cidade futurista e efeitos de energia.</p>
-        <div class="tags">
-          <span class="tag">herói</span>
-          <span class="tag">avatar</span>
-        </div>
-        <div class="acoes">
-          <button class="btn-copy">📋 Copiar</button>
-          <button class="btn-chat">🤖 ChatGPT</button>
-          <button class="btn-gemini">✨ Gemini</button>
-          <button class="btn-favorito">🤍 Favoritar</button>
-        </div>
-      </div>
-
+    <div class="galeria-prompts" id="galeria-imagens">
+      <!-- Cards serão renderizados via JavaScript -->
     </div>
 
     <div style="margin-top: 40px; text-align: center;">
@@ -180,15 +91,6 @@
       overlay?.classList.toggle("visible");
       body.classList.toggle("menu-open");
     }
-
-    // Inicializa contador ao carregar
-    document.addEventListener("DOMContentLoaded", () => {
-      const cards = document.querySelectorAll(".card");
-      const contador = document.getElementById("contador");
-      if(contador){
-        contador.textContent = cards.length;
-      }
-    });
   </script>
 </body>
 </html>
