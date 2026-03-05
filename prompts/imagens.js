@@ -1,91 +1,23 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Imagens | Delta Prompts</title>
-  <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../melhoriaspaginas.css">
-</head>
-<body>
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-  
-  <!-- Menu carregado via JavaScript (menu.html) -->
-  <div id="menu"></div>
+const promptsDaPagina = [
 
-  <main>
-    <header>
-      <h1>🎨 Prompts para Transformação de Imagens</h1>
-      <p class="subtitulo">Melhore, transforme e eleve suas fotos para um nível profissional ou criativo.</p>
-    </header>
+{
+  id: "img001",
+  nivel: "basico",
+  titulo: "Melhorar qualidade da foto",
+  quandoUsar: "Quando a foto está sem nitidez ou iluminação",
+  tags: ["foto", "melhoria", "qualidade"],
+  prompt: `Melhore a qualidade desta imagem.
+Aumente nitidez, iluminação natural e cores realistas.`
+},
 
-    <section class="objetivo">
-      <h2>🎯 Objetivo</h2>
-      <p>Criar imagens mais impactantes e profissionais para redes sociais.</p>
-    </section>
+{
+  id: "img002",
+  nivel: "intermediario",
+  titulo: "Transformar em arte digital",
+  quandoUsar: "Quando quiser transformar uma foto em arte",
+  tags: ["arte", "digital", "criativo"],
+  prompt: `Transforme esta foto em uma arte digital moderna.
+Estilo pintura digital, iluminação dramática e cores vibrantes.`
+}
 
-    <section class="como-funciona">
-      <h2>🗺️ Níveis de Prompt</h2>
-      <p>Selecione o nível de complexidade ideal para sua necessidade.</p>
-      <div class="niveis-info">
-        <div class="nivel-item">
-          <span class="nivel-badge nivel-basico">🟢 Básico</span>
-          <p>Transformações simples e rápidas</p>
-        </div>
-        <div class="nivel-item">
-          <span class="nivel-badge nivel-intermediario">🟡 Intermediário</span>
-          <p>Edições com mais detalhes e estilo</p>
-        </div>
-        <div class="nivel-item">
-          <span class="nivel-badge nivel-avancado">🔴 Avançado</span>
-          <p>Transformações complexas e criativas</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="filtro-container">
-      <button class="filtro-btn ativo" data-tipo="todos">📌 Todos</button>
-      <button class="filtro-btn" data-tipo="basico">🟢 Básico</button>
-      <button class="filtro-btn" data-tipo="intermediario">🟡 Intermediário</button>
-      <button class="filtro-btn" data-tipo="avancado">🔴 Avançado</button>
-    </div>
-
-    <div class="busca-container">
-      <input type="text" id="busca" placeholder="🔍 Buscar prompt..." class="busca-input" onkeyup="aplicarFiltros()">
-      <span class="resultados-counter">Resultados: <strong id="contador">0</strong></span>
-    </div>
-
-    <div class="galeria-prompts" id="galeria">
-      <!-- Cards renderizados via JavaScript -->
-    </div>
-
-    <div style="margin-top: 40px; text-align: center;">
-      <a href="trend.html" class="btn-trend">🔥 FAZER UMA TREND AGORA</a>
-    </div>
-  </main>
-
-  <div class="menu-overlay" onclick="toggleMenu()"></div>
-
-  <!-- Scripts na ordem correta -->
-  <script src="../prompts/imagens.js"></script>
-  <script src="../filtros.js"></script>
-  <script src="../funcoes.js"></script>
-  <script>
-    // Carregar menu.html
-    fetch('../menu.html')
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('menu').innerHTML = html;
-      });
-
-    function toggleMenu(){
-      const menu = document.getElementById("menu");
-      const overlay = document.querySelector(".menu-overlay");
-      const body = document.body;
-      menu?.classList.toggle("active");
-      overlay?.classList.toggle("visible");
-      body.classList.toggle("menu-open");
-    }
-  </script>
-</body>
-</html>
+];
