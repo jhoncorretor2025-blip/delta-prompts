@@ -8,11 +8,12 @@
     const path = window.location.pathname;
     const depth = Math.max(path.split('/').filter(Boolean).length - 1, 0);
     const relativeRoot = depth > 0 ? '../'.repeat(depth) : './';
+    const version = 'automacao-ia-20260517';
 
     return [
-      new URL('menu.html', window.location.href).href,
-      `${relativeRoot}menu.html`,
-      '/delta-prompts/menu.html'
+      `${new URL('menu.html', window.location.href).href}?v=${version}`,
+      `${relativeRoot}menu.html?v=${version}`,
+      `/delta-prompts/menu.html?v=${version}`
     ];
   }
 
@@ -22,7 +23,7 @@
 
     for (const url of urls) {
       try {
-        const res = await fetch(url);
+        const res = await fetch(url, { cache: 'no-store' });
         if (res.ok) return res.text();
         lastError = new Error(`Falha ao carregar menu: ${res.status}`);
       } catch (err) {
@@ -47,7 +48,7 @@
     .catch(err => {
       console.error(err);
       const c = document.getElementById('menu');
-      if (c) c.innerHTML = '<button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button><nav class="sidebar"><h2>Delta Prompts</h2><a href="/delta-prompts/index.html">🏠 Início</a><a href="/delta-prompts/biblioteca.html">📦 Biblioteca</a></nav>';
+      if (c) c.innerHTML = '<button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button><nav class="sidebar"><h2>Delta Prompts</h2><a href="/delta-prompts/index.html">🏠 Início</a><a href="/delta-prompts/paginas/automacao-ia.html">🤖 Automação com IA</a><a href="/delta-prompts/biblioteca.html">📦 Biblioteca</a></nav>';
     });
 
   window.attachMenuControls = function attachMenuControls() {
@@ -91,7 +92,7 @@
       if (!title || !links) return;
 
       const text = title.innerText.toLowerCase();
-      if (text.includes('pessoal') || text.includes('trabalho')) {
+      if (text.includes('pessoal') || text.includes('trabalho') || text.includes('produtividade')) {
         links.classList.add('active');
       }
 
@@ -222,6 +223,8 @@
 
 (function(){
   const promptMap = {
+    'Mapear Processo Repetitivo': 'Atue como especialista em automacao com IA. Analise esta rotina: [DESCREVA A ROTINA]. Identifique etapas repetitivas, informacoes necessarias, ferramentas envolvidas, o que pode ser automatizado e o fluxo ideal.',
+    'Descrição de Imóvel': 'Atue como corretor imobiliario especialista em vendas. Crie uma descricao persuasiva para este imovel: [INSIRA OS DADOS]. Destaque localizacao, diferenciais, publico ideal e chamada para acao.',
     'Descricao de Imovel': 'Atue como corretor imobiliario especialista em vendas. Crie uma descricao persuasiva para este imovel: [INSIRA OS DADOS]. Destaque localizacao, diferenciais, publico ideal e chamada para acao.',
     'Copy de Vendas': 'Atue como copywriter profissional. Crie uma copy de vendas para: [PRODUTO OU SERVICO]. Inclua promessa, beneficios, prova, objeções e chamada para acao.',
     'Post para Instagram': 'Atue como estrategista de redes sociais. Crie um post para Instagram sobre: [TEMA]. Inclua gancho, legenda, hashtags e chamada para acao.'
@@ -282,6 +285,7 @@
         <p>Use estes filtros para ir direto ao tipo de resultado que voce quer gerar.</p>
       </div>
       <div class="objective-grid">
+        <button type="button" data-home-search="automação">Automatizar tarefas</button>
         <button type="button" data-home-search="vendas">Vender melhor</button>
         <button type="button" data-home-search="imobiliario">Divulgar imovel</button>
         <button type="button" data-home-search="estudo">Estudar mais rapido</button>
