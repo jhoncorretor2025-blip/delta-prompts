@@ -4,110 +4,104 @@
 
 (function() {
 
-  const MENU_PATH = "/delta-prompts/menu.html";
+  function getMenuCandidates() {
+    const path = window.location.pathname;
+    const depth = Math.max(path.split('/').filter(Boolean).length - 1, 0);
+    const relativeRoot = depth > 0 ? '../'.repeat(depth) : './';
 
-  // Carrega o HTML do menu
-  fetch(MENU_PATH)
-    .then(res => {
-      if (!res.ok) throw new Error("Falha ao carregar menu: " + res.status);
-      return res.text();
-    })
+    return [
+      new URL('menu.html', window.location.href).href,
+      `${relativeRoot}menu.html`,
+      '/delta-prompts/menu.html'
+    ];
+  }
+
+  async function fetchMenu() {
+    const urls = [...new Set(getMenuCandidates())];
+    let lastError;
+
+    for (const url of urls) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) return res.text();
+        lastError = new Error(`Falha ao carregar menu: ${res.status}`);
+      } catch (err) {
+        lastError = err;
+      }
+    }
+
+    throw lastError || new Error('Falha ao carregar menu');
+  }
+
+  fetchMenu()
     .then(html => {
-      const container = document.getElementById("menu");
+      const container = document.getElementById('menu');
       if (!container) {
-        console.warn("menu-loader: #menu não encontrado.");
+        console.warn('menu-loader: #menu nao encontrado.');
         return;
       }
 
       container.innerHTML = html;
-
-      // Ativa controles após injetar
       attachMenuControls();
     })
     .catch(err => {
       console.error(err);
-      const c = document.getElementById("menu");
-      if (c) c.innerHTML = '<div style="padding:16px;color:#c00;">Erro ao carregar menu</div>';
+      const c = document.getElementById('menu');
+      if (c) c.innerHTML = '<button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button><nav class="sidebar"><h2>Delta Prompts</h2><a href="/delta-prompts/index.html">🏠 Início</a><a href="/delta-prompts/biblioteca.html">📦 Biblioteca</a></nav>';
     });
 
-  // ==========================================
-  // CONTROLES DO MENU
-  // ==========================================
   window.attachMenuControls = function attachMenuControls() {
 
-    const menuEl = document.getElementById("menu");
-    const sidebar = menuEl.querySelector(".sidebar");
-    const toggle = menuEl.querySelector(".menu-toggle");
+    const menuEl = document.getElementById('menu');
+    const sidebar = menuEl && menuEl.querySelector('.sidebar');
+    const toggle = menuEl && menuEl.querySelector('.menu-toggle');
 
-    if (!sidebar || !toggle) return;
+    if (!menuEl || !sidebar || !toggle) return;
 
-    // ==============================
-    // TOGGLE MOBILE
-    // ==============================
     function setOpen(open) {
-      if (open) {
-        sidebar.classList.add("active");
-        toggle.setAttribute("aria-expanded", "true");
-        document.documentElement.classList.add("menu-open");
-      } else {
-        sidebar.classList.remove("active");
-        toggle.setAttribute("aria-expanded", "false");
-        document.documentElement.classList.remove("menu-open");
-      }
+      sidebar.classList.toggle('active', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      document.documentElement.classList.toggle('menu-open', open);
     }
 
-    toggle.addEventListener("click", (e) => {
+    toggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      setOpen(!sidebar.classList.contains("active"));
+      setOpen(!sidebar.classList.contains('active'));
     });
 
-    menuEl.querySelectorAll("a").forEach(a => {
-      a.addEventListener("click", () => setOpen(false));
+    menuEl.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => setOpen(false));
     });
 
-    document.addEventListener("click", (ev) => {
-      if (!sidebar.classList.contains("active")) return;
-      if (!sidebar.contains(ev.target) && !toggle.contains(ev.target)) {
-        setOpen(false);
-      }
+    document.addEventListener('click', (ev) => {
+      if (!sidebar.classList.contains('active')) return;
+      if (!sidebar.contains(ev.target) && !toggle.contains(ev.target)) setOpen(false);
     });
 
-    document.addEventListener("keydown", (ev) => {
-      if (ev.key === "Escape") setOpen(false);
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape') setOpen(false);
     });
 
-    // ==============================
-    // ACORDEÃO (DESKTOP)
-    // ==============================
-    const sections = menuEl.querySelectorAll(".menu-section");
+    const sections = menuEl.querySelectorAll('.menu-section');
 
     sections.forEach(section => {
-
-      const title = section.querySelector(".menu-title");
-      const links = section.querySelector(".menu-links");
+      const title = section.querySelector('.menu-title');
+      const links = section.querySelector('.menu-links');
 
       if (!title || !links) return;
 
-      // 🔹 Abre Pessoal e Trabalho por padrão
       const text = title.innerText.toLowerCase();
-      if (text.includes("pessoal") || text.includes("trabalho")) {
-        links.classList.add("active");
+      if (text.includes('pessoal') || text.includes('trabalho')) {
+        links.classList.add('active');
       }
 
-      // 🔹 Clique para abrir/fechar
-      title.addEventListener("click", function() {
-
-        // Fecha todos
-        menuEl.querySelectorAll(".menu-links").forEach(menu => {
-          if (menu !== links) {
-            menu.classList.remove("active");
-          }
+      title.addEventListener('click', function() {
+        menuEl.querySelectorAll('.menu-links').forEach(menu => {
+          if (menu !== links) menu.classList.remove('active');
         });
 
-        // Alterna o atual
-        links.classList.toggle("active");
+        links.classList.toggle('active');
       });
-
     });
 
   };
@@ -121,11 +115,11 @@
 
 (function () {
 
-  const GA_ID = "G-1YF2VY4HXW";
+  const GA_ID = 'G-1YF2VY4HXW';
 
   if (window.gtag) return;
 
-  const script = document.createElement("script");
+  const script = document.createElement('script');
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
   document.head.appendChild(script);
@@ -146,11 +140,11 @@
 
 (function(){
 
-  const STORAGE_KEY = "deltaFavoritos";
+  const STORAGE_KEY = 'deltaFavoritos';
 
   window.getFavoritos = function(){
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     } catch(e) {
       return [];
     }
@@ -171,9 +165,9 @@
     if (exists === -1) {
       list.unshift({
         id: item.id,
-        titulo: item.titulo || "",
-        texto: item.texto || "",
-        categoria: item.categoria || "",
+        titulo: item.titulo || '',
+        texto: item.texto || '',
+        categoria: item.categoria || '',
         createdAt: Date.now()
       });
       saveFavoritos(list);
@@ -190,32 +184,32 @@
     if (!id) return;
 
     if (isFavorito(id)) {
-      button.classList.add("favorito");
-      button.innerText = "❤️";
+      button.classList.add('favorito');
+      button.innerText = '❤️';
     } else {
-      button.classList.remove("favorito");
-      button.innerText = "🤍";
+      button.classList.remove('favorito');
+      button.innerText = '🤍';
     }
   };
 
   window.initFavButtons = function(root = document){
-    root.querySelectorAll(".fav-btn").forEach(btn => updateFavButtonUI(btn));
+    root.querySelectorAll('.fav-btn').forEach(btn => updateFavButtonUI(btn));
   };
 
-  document.addEventListener("click", function(e){
-    const btn = e.target.closest && e.target.closest(".fav-btn");
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest && e.target.closest('.fav-btn');
     if (!btn) return;
 
     const id = btn.dataset.id;
-    const titulo = btn.dataset.titulo || "";
-    const texto = btn.dataset.texto || "";
-    const categoria = btn.dataset.categoria || "";
+    const titulo = btn.dataset.titulo || '';
+    const texto = btn.dataset.texto || '';
+    const categoria = btn.dataset.categoria || '';
 
     toggleFavorito({ id, titulo, texto, categoria });
     updateFavButtonUI(btn);
   });
 
-  document.addEventListener("DOMContentLoaded", function(){
+  document.addEventListener('DOMContentLoaded', function(){
     initFavButtons();
   });
 
