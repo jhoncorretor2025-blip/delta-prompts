@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Delta Prompts - Biblioteca estrategica de prompts profissionais para IA, trabalho, marketing, estudo e criacao de conteudo.">
-  <meta name="keywords" content="prompts, IA, inteligencia artificial, ChatGPT, Gemini, produtividade, marketing, criacao de conteudo">
+  <meta name="description" content="Delta Prompts - Biblioteca estrategica de prompts profissionais para IA, automacao, trabalho, marketing, estudo e criacao de conteudo.">
+  <meta name="keywords" content="prompts, IA, inteligencia artificial, ChatGPT, Gemini, automacao com IA, produtividade, marketing, criacao de conteudo">
   <meta name="author" content="Delta Prompts">
   <meta name="theme-color" content="#5b5ce2">
   <meta property="og:title" content="Delta Prompts - Crie Prompts Profissionais em Segundos">
-  <meta property="og:description" content="Biblioteca estrategica com prompts prontos para trabalho, marketing, estudo e criacao de conteudo.">
+  <meta property="og:description" content="Biblioteca estrategica com prompts prontos para automacao, trabalho, marketing, estudo e criacao de conteudo.">
   <meta property="og:type" content="website">
   <title>Delta Prompts - Crie Prompts Profissionais em Segundos</title>
   <link rel="stylesheet" href="style.css">
@@ -21,7 +21,6 @@
     :root {
       --primary: #5b5ce2;
       --primary-dark: #4243bb;
-      --accent: #11a37f;
       --bg: #f4f6fb;
       --card-bg: #ffffff;
       --text: #1e1e1e;
@@ -35,40 +34,20 @@
     }
 
     * { box-sizing: border-box; }
-
-    html { overflow-x: hidden; }
-
+    html, body { overflow-x: hidden; }
     body {
       margin: 0;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      overflow-x: hidden;
     }
+    main { flex: 1; min-width: 0; }
 
-    main {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .hero {
-      position: relative;
-      padding: 56px 40px 48px;
-      overflow: hidden;
-    }
-
-    .hero-content {
-      max-width: 980px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
+    .hero { padding: 56px 40px 48px; }
+    .hero-content { max-width: 980px; margin: 0 auto; }
     .hero-badge {
       display: inline-flex;
-      align-items: center;
-      gap: 8px;
       background: rgba(91, 92, 226, 0.1);
       color: var(--primary-dark);
       padding: 8px 16px;
@@ -77,7 +56,6 @@
       font-weight: 700;
       margin-bottom: 22px;
     }
-
     .hero h1 {
       max-width: 860px;
       margin: 0 0 22px;
@@ -87,50 +65,22 @@
       letter-spacing: 0;
       color: #202236;
     }
-
-    .hero h1 span {
-      color: var(--primary);
-    }
-
+    .hero h1 span { color: var(--primary); }
     .hero p {
       max-width: 650px;
       margin: 0 0 30px;
       color: var(--muted);
       font-size: clamp(16px, 2vw, 20px);
     }
-
-    .hero-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px 34px;
-      margin-bottom: 34px;
-    }
-
-    .stat-item {
-      min-width: 108px;
-    }
-
-    .stat-number {
-      display: block;
-      color: var(--primary);
-      font-size: 32px;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .stat-label {
-      display: block;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 18px 34px; margin-bottom: 34px; }
+    .stat-item { min-width: 108px; }
+    .stat-number { display: block; color: var(--primary); font-size: 32px; font-weight: 800; line-height: 1; }
+    .stat-label { display: block; margin-top: 8px; color: var(--muted); font-size: 14px; }
     .btn-primary {
       display: inline-flex;
+      min-height: 56px;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      min-height: 56px;
       padding: 16px 28px;
       border-radius: var(--radius-sm);
       background: var(--gradient);
@@ -138,38 +88,12 @@
       font-weight: 800;
       text-decoration: none;
       box-shadow: var(--shadow-md);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 34px rgba(91, 92, 226, 0.24);
-    }
-
-    .search-section {
-      padding: 34px 40px;
-      background: white;
-      border-block: 1px solid var(--border);
-    }
-
-    .search-container {
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .search-wrapper {
-      position: relative;
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 20px;
-      pointer-events: none;
-    }
-
+    .search-section, .search-results { padding: 34px 40px; background: white; border-block: 1px solid var(--border); }
+    .search-container { max-width: 760px; margin: 0 auto; }
+    .search-wrapper { position: relative; }
+    .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 20px; pointer-events: none; }
     #busca-global {
       width: 100%;
       min-height: 58px;
@@ -181,36 +105,11 @@
       font: inherit;
       font-size: 16px;
     }
-
-    #busca-global:focus {
-      outline: none;
-      border-color: var(--primary);
-      background: white;
-      box-shadow: 0 0 0 4px rgba(91, 92, 226, 0.12);
-    }
-
-    .search-info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    #contador-global {
-      color: var(--primary-dark);
-      font-weight: 700;
-    }
-
-    .search-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .search-tag,
-    .clear-search {
+    #busca-global:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(91, 92, 226, 0.12); }
+    .search-info { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; flex-wrap: wrap; }
+    #contador-global { color: var(--primary-dark); font-weight: 700; }
+    .search-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .search-tag, .clear-search {
       border: 0;
       border-radius: 999px;
       background: #f0f1f7;
@@ -221,88 +120,28 @@
       font-weight: 700;
       padding: 8px 14px;
     }
-
-    .search-tag:hover,
-    .clear-search:hover {
-      background: var(--primary);
-      color: white;
-    }
-
-    .search-results {
-      display: none;
-      padding: 34px 40px 44px;
-      background: white;
-    }
-
+    .search-tag:hover, .clear-search:hover { background: var(--primary); color: white; }
+    .search-results { display: none; }
     .search-results.active { display: block; }
-
     body.is-searching .categories-section { display: none; }
 
-    .results-header,
-    .section-header {
-      max-width: 1120px;
-      margin-inline: auto;
-    }
-
-    .results-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-    }
-
+    .results-header, .section-header { max-width: 1120px; margin-inline: auto; }
+    .results-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
     .results-header h3 { margin: 0; }
-
-    .results-grid,
-    .categories-grid,
-    .featured-grid {
+    .results-grid, .categories-grid, .featured-grid {
       max-width: 1120px;
       margin: 0 auto;
       display: grid;
       gap: 20px;
     }
-
-    .results-grid,
-    .featured-grid {
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    }
-
-    .categories-section,
-    .featured-section {
-      padding: 64px 40px;
-    }
-
-    .featured-section {
-      padding-bottom: 20px;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 34px;
-    }
-
-    .section-header h2 {
-      margin: 0 0 10px;
-      font-size: clamp(26px, 3vw, 36px);
-      line-height: 1.15;
-    }
-
-    .section-header p {
-      margin: 0 auto;
-      max-width: 620px;
-      color: var(--muted);
-      font-size: 17px;
-    }
-
-    .categories-grid {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-
-    .category-card,
-    .result-card,
-    .featured-card {
+    .results-grid, .featured-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .categories-section, .featured-section { padding: 64px 40px; }
+    .featured-section { padding-bottom: 20px; }
+    .section-header { text-align: center; margin-bottom: 34px; }
+    .section-header h2 { margin: 0 0 10px; font-size: clamp(26px, 3vw, 36px); line-height: 1.15; }
+    .section-header p { margin: 0 auto; max-width: 620px; color: var(--muted); font-size: 17px; }
+    .categories-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .category-card, .result-card, .featured-card {
       position: relative;
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -311,17 +150,8 @@
       box-shadow: var(--shadow-sm);
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
-
-    .category-card:hover,
-    .result-card:hover,
-    .featured-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(91, 92, 226, 0.35);
-      box-shadow: var(--shadow-md);
-    }
-
-    .category-count,
-    .category-tag {
+    .category-card:hover, .result-card:hover, .featured-card:hover { transform: translateY(-4px); border-color: rgba(91, 92, 226, 0.35); box-shadow: var(--shadow-md); }
+    .category-count, .category-tag {
       display: inline-flex;
       width: fit-content;
       border-radius: 999px;
@@ -331,90 +161,24 @@
       font-weight: 800;
       padding: 6px 12px;
     }
-
-    .category-count {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-
-    .category-icon {
-      width: 58px;
-      height: 58px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 18px;
-      border-radius: 14px;
-      background: #eef2ff;
-      font-size: 28px;
-    }
-
-    .category-card h3,
-    .featured-card h3,
-    .result-card h4 {
-      margin: 0 0 10px;
-      line-height: 1.25;
-    }
-
-    .category-card p,
-    .featured-card p,
-    .result-card p {
-      margin: 0 0 20px;
-      color: var(--muted);
-    }
-
-    .category-link {
-      color: var(--primary-dark);
-      font-weight: 800;
-      text-decoration: none;
-    }
-
+    .category-count { position: absolute; top: 20px; right: 20px; }
+    .category-icon { width: 58px; height: 58px; display: grid; place-items: center; margin-bottom: 18px; border-radius: 14px; background: #eef2ff; font-size: 28px; }
+    .category-card h3, .featured-card h3, .result-card h4 { margin: 0 0 10px; line-height: 1.25; }
+    .category-card p, .featured-card p, .result-card p { margin: 0 0 20px; color: var(--muted); }
+    .category-link { color: var(--primary-dark); font-weight: 800; text-decoration: none; }
     .category-link:hover { text-decoration: underline; }
-
-    .no-results {
-      grid-column: 1 / -1;
-      text-align: center;
-      color: var(--muted);
-      padding: 34px;
-    }
-
-    .footer {
-      padding: 34px 40px;
-      text-align: center;
-      background: white;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .no-results { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 34px; }
+    .footer { padding: 34px 40px; text-align: center; background: white; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
 
     @media (max-width: 768px) {
-      .hero,
-      .search-section,
-      .search-results,
-      .categories-section,
-      .featured-section,
-      .footer {
-        padding-left: 18px;
-        padding-right: 18px;
-      }
-
+      .hero, .search-section, .search-results, .categories-section, .featured-section, .footer { padding-left: 18px; padding-right: 18px; }
       .hero { padding-top: 72px; }
-
       .hero-stats { gap: 16px; }
-
       .stat-item { min-width: 86px; }
-
       .stat-number { font-size: 26px; }
-
-      .search-info { align-items: flex-start; }
-
       .search-tags { width: 100%; }
-
       .search-tag { flex: 1 1 auto; }
-
-      .category-card,
-      .result-card,
-      .featured-card { padding: 22px; }
+      .category-card, .result-card, .featured-card { padding: 22px; }
     }
   </style>
 </head>
@@ -425,23 +189,14 @@
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-content">
-        <div class="hero-badge">Mais de 182 prompts profissionais</div>
+        <div class="hero-badge">Mais de 188 prompts profissionais</div>
         <h1 id="hero-title">Crie <span>Prompts Profissionais</span> em Segundos</h1>
-        <p>Transforme suas ideias em respostas melhores com uma biblioteca pronta para trabalho, marketing, estudo, imoveis e criacao de conteudo.</p>
+        <p>Transforme suas ideias em respostas melhores com uma biblioteca pronta para automação com IA, trabalho, marketing, estudo, imóveis e criação de conteúdo.</p>
 
         <div class="hero-stats" aria-label="Resumo da biblioteca">
-          <div class="stat-item">
-            <span class="stat-number" id="stat-prompts">182+</span>
-            <span class="stat-label">Prompts</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">6</span>
-            <span class="stat-label">Categorias</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">100%</span>
-            <span class="stat-label">Gratuito</span>
-          </div>
+          <div class="stat-item"><span class="stat-number" id="stat-prompts">188+</span><span class="stat-label">Prompts</span></div>
+          <div class="stat-item"><span class="stat-number">7</span><span class="stat-label">Categorias</span></div>
+          <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Gratuito</span></div>
         </div>
 
         <a href="cadastro.html" class="btn-primary">Criar prompt agora</a>
@@ -452,14 +207,15 @@
       <div class="search-container">
         <div class="search-wrapper">
           <span class="search-icon" aria-hidden="true">🔎</span>
-          <input type="search" id="busca-global" placeholder="Buscar por marketing, estudo, imoveis, redes sociais..." autocomplete="off">
+          <input type="search" id="busca-global" placeholder="Buscar por automação, marketing, estudo, imóveis, redes sociais..." autocomplete="off">
         </div>
 
         <div class="search-info">
-          <span id="contador-global">Total de prompts disponiveis: 182</span>
-          <div class="search-tags" aria-label="Buscas rapidas">
+          <span id="contador-global">Total de prompts disponíveis: 188</span>
+          <div class="search-tags" aria-label="Buscas rápidas">
+            <button class="search-tag" type="button" data-search="automação">🤖 Automação</button>
             <button class="search-tag" type="button" data-search="estudo">📚 Estudo</button>
-            <button class="search-tag" type="button" data-search="imobiliario">🏠 Imobiliario</button>
+            <button class="search-tag" type="button" data-search="imobiliario">🏠 Imobiliário</button>
             <button class="search-tag" type="button" data-search="marketing">📣 Marketing</button>
             <button class="search-tag" type="button" data-search="redes sociais">📱 Redes Sociais</button>
           </div>
@@ -478,7 +234,7 @@
     <section class="featured-section" aria-labelledby="featured-title">
       <div class="section-header">
         <h2 id="featured-title">Prompts recomendados</h2>
-        <p>Comece pelos usos mais comuns e chegue mais rapido no resultado que precisa.</p>
+        <p>Comece pelos usos mais comuns e chegue mais rápido no resultado que precisa.</p>
       </div>
       <div class="featured-grid" id="featured-grid"></div>
     </section>
@@ -486,7 +242,7 @@
     <section class="categories-section" aria-labelledby="categories-title">
       <div class="section-header">
         <h2 id="categories-title">Explore por Categoria</h2>
-        <p>Escolha a area que voce precisa e encontre prompts prontos para usar.</p>
+        <p>Escolha a área que você precisa e encontre prompts prontos para usar.</p>
       </div>
       <div class="categories-grid" id="categories-grid"></div>
     </section>
@@ -497,99 +253,93 @@
   </main>
 
   <script>
-    const TOTAL_PROMPTS = 182;
+    const TOTAL_PROMPTS = 188;
 
     const categoriasData = [
       {
-        id: 'estudo',
-        nome: 'Estudo',
-        icone: '📚',
-        total: 32,
-        termos: ['aula', 'resumo', 'quiz', 'flashcards', 'aprendizado'],
-        descricao: 'Resumos, explicacoes estruturadas e perguntas inteligentes para acelerar seu aprendizado.',
-        link: 'paginas/estudo.html',
+        id: 'automacao', nome: 'Automação com IA', icone: '🤖', total: 6,
+        termos: ['automacao', 'automação', 'ia', 'zapier', 'make', 'n8n', 'fluxo', 'processo', 'atendimento', 'follow-up'],
+        descricao: 'Fluxos, processos e tarefas repetitivas transformadas em automações práticas com IA.',
+        link: 'paginas/automacao-ia.html',
         prompts: [
-          { titulo: 'Resumo Estruturado', descricao: 'Transforme qualquer conteudo em resumo organizado por topicos.' },
-          { titulo: 'Explicacao Simples', descricao: 'Explique conceitos complexos de um jeito facil de entender.' },
-          { titulo: 'Flashcards Automaticos', descricao: 'Crie cartoes de estudo para revisar e memorizar.' }
+          { titulo: 'Mapear Processo Repetitivo', descricao: 'Descubra etapas manuais que podem virar automação.' },
+          { titulo: 'Fluxo de Atendimento Automático', descricao: 'Crie respostas e etapas automáticas para clientes.' },
+          { titulo: 'Briefing para Zapier, Make ou n8n', descricao: 'Transforme uma ideia em fluxo pronto para implementar.' }
         ]
       },
       {
-        id: 'profissionais',
-        nome: 'Profissionais',
-        icone: '💼',
-        total: 45,
-        termos: ['trabalho', 'corretor', 'advogado', 'consultor', 'imobiliario', 'imoveis', 'cliente'],
+        id: 'estudo', nome: 'Estudo', icone: '📚', total: 32,
+        termos: ['aula', 'resumo', 'quiz', 'flashcards', 'aprendizado'],
+        descricao: 'Resumos, explicações estruturadas e perguntas inteligentes para acelerar seu aprendizado.',
+        link: 'paginas/estudo.html',
+        prompts: [
+          { titulo: 'Resumo Estruturado', descricao: 'Transforme qualquer conteúdo em resumo organizado por tópicos.' },
+          { titulo: 'Explicação Simples', descricao: 'Explique conceitos complexos de um jeito fácil de entender.' },
+          { titulo: 'Flashcards Automáticos', descricao: 'Crie cartões de estudo para revisar e memorizar.' }
+        ]
+      },
+      {
+        id: 'profissionais', nome: 'Profissionais', icone: '💼', total: 45,
+        termos: ['trabalho', 'corretor', 'advogado', 'consultor', 'imobiliario', 'imóveis', 'cliente'],
         descricao: 'Prompts para trabalho, corretores, atendimento, propostas e rotina profissional.',
         link: 'paginas/trabalho.html',
         prompts: [
           { titulo: 'Proposta Comercial', descricao: 'Monte uma proposta clara, persuasiva e pronta para enviar.' },
-          { titulo: 'Atendimento ao Cliente', descricao: 'Responda clientes com clareza, educacao e foco em conversao.' },
-          { titulo: 'Descricao de Imovel', descricao: 'Crie textos melhores para divulgar casas, apartamentos e terrenos.' }
+          { titulo: 'Atendimento ao Cliente', descricao: 'Responda clientes com clareza, educação e foco em conversão.' },
+          { titulo: 'Descrição de Imóvel', descricao: 'Crie textos melhores para divulgar casas, apartamentos e terrenos.' }
         ]
       },
       {
-        id: 'marketing',
-        nome: 'Marketing e Criativos',
-        icone: '📣',
-        total: 28,
+        id: 'marketing', nome: 'Marketing e Criativos', icone: '📣', total: 28,
         termos: ['marketing', 'copy', 'campanha', 'vendas', 'criativo', 'imagem', 'visual'],
         descricao: 'Copy, campanhas, imagens e ideias criativas para destacar seus projetos.',
         link: 'paginas/marketing.html',
         prompts: [
-          { titulo: 'Copy de Vendas', descricao: 'Crie textos persuasivos para paginas, anuncios e ofertas.' },
-          { titulo: 'Ideia de Campanha', descricao: 'Gere campanhas completas com promessa, publico e chamada.' },
+          { titulo: 'Copy de Vendas', descricao: 'Crie textos persuasivos para páginas, anúncios e ofertas.' },
+          { titulo: 'Ideia de Campanha', descricao: 'Gere campanhas completas com promessa, público e chamada.' },
           { titulo: 'Prompt para Imagem', descricao: 'Descreva imagens profissionais para ferramentas de IA visual.' }
         ]
       },
       {
-        id: 'redes',
-        nome: 'Redes Sociais',
-        icone: '📱',
-        total: 24,
+        id: 'redes', nome: 'Redes Sociais', icone: '📱', total: 24,
         termos: ['instagram', 'post', 'story', 'storytelling', 'legenda', 'redes sociais'],
         descricao: 'Posts, legendas, storytelling e autoridade digital para crescer nas redes.',
         link: 'paginas/redes-sociais.html',
         prompts: [
-          { titulo: 'Post Engajador', descricao: 'Crie posts que chamam atencao e geram comentarios.' },
-          { titulo: 'Legenda Criativa', descricao: 'Escreva legendas com gancho, valor e chamada para acao.' },
-          { titulo: 'Calendario de Conteudo', descricao: 'Planeje temas de publicacao para varios dias.' }
+          { titulo: 'Post Engajador', descricao: 'Crie posts que chamam atenção e geram comentários.' },
+          { titulo: 'Legenda Criativa', descricao: 'Escreva legendas com gancho, valor e chamada para ação.' },
+          { titulo: 'Calendário de Conteúdo', descricao: 'Planeje temas de publicação para vários dias.' }
         ]
       },
       {
-        id: 'produtividade',
-        nome: 'Produtividade',
-        icone: '⚡',
-        total: 31,
-        termos: ['planejamento', 'analise', 'estrategia', 'organizacao', 'tarefas'],
-        descricao: 'Analises, planejamento e organizacao estrategica para otimizar seu tempo.',
+        id: 'produtividade', nome: 'Produtividade', icone: '⚡', total: 31,
+        termos: ['planejamento', 'analise', 'estratégia', 'organização', 'tarefas'],
+        descricao: 'Análises, planejamento e organização estratégica para otimizar seu tempo.',
         link: 'paginas/planejamento.html',
         prompts: [
-          { titulo: 'Planejamento Semanal', descricao: 'Organize a semana com prioridades e proximas acoes.' },
-          { titulo: 'Analise SWOT', descricao: 'Avalie forcas, fraquezas, oportunidades e riscos.' },
-          { titulo: 'Metas SMART', descricao: 'Transforme objetivos soltos em metas claras e mensuraveis.' }
+          { titulo: 'Planejamento Semanal', descricao: 'Organize a semana com prioridades e próximas ações.' },
+          { titulo: 'Análise SWOT', descricao: 'Avalie forças, fraquezas, oportunidades e riscos.' },
+          { titulo: 'Metas SMART', descricao: 'Transforme objetivos soltos em metas claras e mensuráveis.' }
         ]
       },
       {
-        id: 'criadores',
-        nome: 'Criadores de Conteudo',
-        icone: '🎬',
-        total: 22,
-        termos: ['youtube', 'roteiro', 'thumbnail', 'titulo', 'descricao', 'metricas', 'conteudo'],
-        descricao: 'Planejamento, roteiros, thumbnails, descricoes e estrategias de crescimento.',
+        id: 'criadores', nome: 'Criadores de Conteúdo', icone: '🎬', total: 22,
+        termos: ['youtube', 'roteiro', 'thumbnail', 'título', 'descrição', 'métricas', 'conteúdo'],
+        descricao: 'Planejamento, roteiros, thumbnails, descrições e estratégias de crescimento.',
         link: 'paginas/criadores_de_conteudo/planejamento.html',
         prompts: [
-          { titulo: 'Roteiro de Video', descricao: 'Estruture videos com abertura, desenvolvimento e chamada final.' },
-          { titulo: 'Titulo Forte', descricao: 'Gere titulos chamativos sem perder clareza.' },
-          { titulo: 'Descricao SEO', descricao: 'Otimize descricoes para busca e recomendacao.' }
+          { titulo: 'Roteiro de Vídeo', descricao: 'Estruture vídeos com abertura, desenvolvimento e chamada final.' },
+          { titulo: 'Título Forte', descricao: 'Gere títulos chamativos sem perder clareza.' },
+          { titulo: 'Descrição SEO', descricao: 'Otimize descrições para busca e recomendação.' }
         ]
       }
     ];
 
     const featuredPrompts = [
-      { categoria: 'Profissionais', icone: '🏠', titulo: 'Descricao de Imovel', descricao: 'Transforme dados de um imovel em anuncio mais atraente.', link: 'paginas/imobiliario.html' },
-      { categoria: 'Marketing', icone: '📣', titulo: 'Copy de Vendas', descricao: 'Crie uma oferta com promessa, beneficios e chamada para acao.', link: 'paginas/marketing.html' },
-      { categoria: 'Redes Sociais', icone: '📱', titulo: 'Post para Instagram', descricao: 'Monte uma publicacao com gancho, conteudo e CTA.', link: 'paginas/redes-sociais.html' }
+      { categoria: 'Automação com IA', icone: '🤖', titulo: 'Mapear Processo Repetitivo', descricao: 'Descubra o que pode ser automatizado na sua rotina.', link: 'paginas/automacao-ia.html' },
+      { categoria: 'Profissionais', icone: '🏠', titulo: 'Descrição de Imóvel', descricao: 'Transforme dados de um imóvel em anúncio mais atraente.', link: 'paginas/imobiliario.html' },
+      { categoria: 'Marketing', icone: '📣', titulo: 'Copy de Vendas', descricao: 'Crie uma oferta com promessa, benefícios e chamada para ação.', link: 'paginas/marketing.html' },
+      { categoria: 'Redes Sociais', icone: '📱', titulo: 'Post para Instagram', descricao: 'Monte uma publicação com gancho, conteúdo e CTA.', link: 'paginas/redes-sociais.html' }
     ];
 
     function normalizar(texto) {
@@ -598,13 +348,12 @@
 
     function atualizarContador() {
       const contador = document.getElementById('contador-global');
-      if (contador) contador.innerHTML = `📊 Total de prompts disponiveis: <strong>${TOTAL_PROMPTS}</strong>`;
+      if (contador) contador.innerHTML = `📊 Total de prompts disponíveis: <strong>${TOTAL_PROMPTS}</strong>`;
     }
 
     function renderCategorias() {
       const grid = document.getElementById('categories-grid');
       if (!grid) return;
-
       grid.innerHTML = categoriasData.map(categoria => `
         <article class="category-card ${categoria.id}" data-categoria="${categoria.id}">
           <span class="category-count">${categoria.total} prompts</span>
@@ -619,7 +368,6 @@
     function renderRecomendados() {
       const grid = document.getElementById('featured-grid');
       if (!grid) return;
-
       grid.innerHTML = featuredPrompts.map(item => `
         <article class="featured-card">
           <span class="category-tag">${item.icone} ${item.categoria}</span>
@@ -633,27 +381,16 @@
     function buscarPrompts(termoOriginal) {
       const termo = normalizar(termoOriginal);
       const resultados = [];
-
       categoriasData.forEach(categoria => {
         const textoCategoria = normalizar(`${categoria.nome} ${categoria.descricao} ${categoria.termos.join(' ')}`);
-        if (textoCategoria.includes(termo)) {
-          resultados.push({ tipo: 'categoria', ...categoria });
-        }
-
+        if (textoCategoria.includes(termo)) resultados.push({ tipo: 'categoria', ...categoria });
         categoria.prompts.forEach(prompt => {
           const textoPrompt = normalizar(`${prompt.titulo} ${prompt.descricao} ${categoria.nome} ${categoria.termos.join(' ')}`);
           if (textoPrompt.includes(termo)) {
-            resultados.push({
-              tipo: 'prompt',
-              categoria: categoria.nome,
-              categoriaIcone: categoria.icone,
-              categoriaLink: categoria.link,
-              ...prompt
-            });
+            resultados.push({ tipo: 'prompt', categoria: categoria.nome, categoriaIcone: categoria.icone, categoriaLink: categoria.link, ...prompt });
           }
         });
       });
-
       return resultados;
     }
 
@@ -661,42 +398,28 @@
       const resultadosSection = document.getElementById('search-results');
       const resultsGrid = document.getElementById('results-grid');
       const resultsHeader = resultadosSection.querySelector('h3');
-
       document.body.classList.add('is-searching');
       resultadosSection.classList.add('active');
       resultsHeader.textContent = `${resultados.length} resultado${resultados.length !== 1 ? 's' : ''} para "${termo}"`;
-
       if (resultados.length === 0) {
-        resultsGrid.innerHTML = `
-          <div class="no-results">
-            <h4>Nenhum resultado encontrado</h4>
-            <p>Tente buscar por marketing, estudo, imoveis, redes sociais ou produtividade.</p>
-          </div>
-        `;
+        resultsGrid.innerHTML = `<div class="no-results"><h4>Nenhum resultado encontrado</h4><p>Tente buscar por automação, marketing, estudo, imóveis, redes sociais ou produtividade.</p></div>`;
         return;
       }
-
-      resultsGrid.innerHTML = resultados.map(item => {
-        if (item.tipo === 'categoria') {
-          return `
-            <article class="result-card">
-              <span class="category-tag">${item.icone} ${item.nome}</span>
-              <h4>${item.nome}</h4>
-              <p>${item.descricao}</p>
-              <a href="${item.link}" class="category-link">Ver categoria</a>
-            </article>
-          `;
-        }
-
-        return `
-          <article class="result-card">
-            <span class="category-tag">${item.categoriaIcone} ${item.categoria}</span>
-            <h4>${item.titulo}</h4>
-            <p>${item.descricao}</p>
-            <a href="${item.categoriaLink}" class="category-link">Usar prompt</a>
-          </article>
-        `;
-      }).join('');
+      resultsGrid.innerHTML = resultados.map(item => item.tipo === 'categoria' ? `
+        <article class="result-card">
+          <span class="category-tag">${item.icone} ${item.nome}</span>
+          <h4>${item.nome}</h4>
+          <p>${item.descricao}</p>
+          <a href="${item.link}" class="category-link">Ver categoria</a>
+        </article>
+      ` : `
+        <article class="result-card">
+          <span class="category-tag">${item.categoriaIcone} ${item.categoria}</span>
+          <h4>${item.titulo}</h4>
+          <p>${item.descricao}</p>
+          <a href="${item.categoriaLink}" class="category-link">Usar prompt</a>
+        </article>
+      `).join('');
     }
 
     function limparBusca() {
@@ -712,7 +435,6 @@
       const inputBusca = document.getElementById('busca-global');
       const resultadosSection = document.getElementById('search-results');
       if (!inputBusca || !resultadosSection) return;
-
       inputBusca.addEventListener('input', function(e) {
         const termo = e.target.value.trim();
         if (!termo) {
@@ -722,7 +444,6 @@
         }
         exibirResultados(buscarPrompts(termo), termo);
       });
-
       document.querySelectorAll('.search-tag').forEach(tag => {
         tag.addEventListener('click', function() {
           const termo = this.dataset.search;
@@ -736,12 +457,10 @@
     function animarContador() {
       const statPrompts = document.getElementById('stat-prompts');
       if (!statPrompts) return;
-
       const valorFinal = TOTAL_PROMPTS;
       const duracao = 900;
       const incremento = valorFinal / (duracao / 16);
       let valorAtual = 0;
-
       const timer = setInterval(() => {
         valorAtual += incremento;
         if (valorAtual >= valorFinal) {
@@ -758,7 +477,6 @@
       renderRecomendados();
       initBusca();
       animarContador();
-
       document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
           e.preventDefault();
