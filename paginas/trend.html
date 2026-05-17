@@ -2,268 +2,497 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Trend | Delta Prompts</title>
+<title>Trends Visuais | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../style.css">
 
-<style>
-.search-box{
-display:flex;
-gap:10px;
-align-items:center;
-margin:30px 0;
-}
-.search-box input{
-flex:1;
-padding:12px;
-border-radius:10px;
-border:1px solid #ddd;
-}
-.result-count{
-font-size:14px;
-opacity:0.7;
-}
-</style>
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+
 </head>
 
 <body>
 
 <div id="menu"></div>
-<script src="../menu-loader.js"></script>
+<script src="/delta-prompts/menu-loader.js"></script>
 
 <main>
 
-<h1>🔥 Trends Visuais</h1>
+<!-- 🔥 TÍTULO -->
+<h1>🔥 Trends Visuais com IA</h1>
+
+<!-- 📝 INTRO -->
+<p>
+Prompts criativos e virais para gerar imagens impactantes,
+modernas e altamente compartilháveis usando inteligência artificial.
+</p>
+
+<!-- 🎯 OBJETIVO -->
+<section class="card">
+<h3>🎯 Objetivo</h3>
+<p>
+Ajudar criadores, profissionais e usuários comuns
+a criarem imagens impressionantes para redes sociais,
+marketing, branding e conteúdo viral.
+</p>
+</section>
+
+<!-- 🗺️ ORGANIZAÇÃO -->
+<section class="card">
+<h3>🗺️ Como as Trends Estão Organizadas</h3>
 
 <p>
-Aqui você encontra prompts para criar imagens virais, criativas e com alto potencial de engajamento.
-Ideal para Instagram, TikTok, perfil profissional ou conteúdo divertido.
+Esta página está dividida em categorias estratégicas
+para facilitar a criação de conteúdo visual.
 </p>
 
-<h2>🎯 Objetivo</h2>
+<ul style="margin-top:10px; line-height:1.7;">
+<li><strong>🔥 Viral:</strong> Conteúdo com alto potencial de engajamento.</li>
+<li><strong>💼 Profissional:</strong> Imagens para autoridade e branding.</li>
+<li><strong>🎬 Cinematográfico:</strong> Visual estilo filme.</li>
+<li><strong>🌌 Futurista:</strong> IA, neon, cyberpunk e tecnologia.</li>
+<li><strong>❤️ Social:</strong> Casais, lifestyle e conteúdo emocional.</li>
+<li><strong>🎨 Criativo:</strong> Estilos diferentes e artísticos.</li>
+</ul>
 
-<p>
-Transformar sua profissão ou personalidade em conteúdos visuais chamativos
-que aumentem alcance, autoridade e engajamento.
+<p style="margin-top:15px;">
+Explore as categorias e encontre a trend ideal para seu conteúdo.
 </p>
+</section>
 
-<div class="search-box">
-<input type="text" id="searchInput" placeholder="Buscar trend...">
-<div class="result-count">Resultados: <span id="resultCount">0</span></div>
-</div>
+<!-- 🔎 BUSCA -->
+<div class="top-bar">
 
-<div id="cards-container">
+<input
+type="text"
+id="busca"
+placeholder="🔎 Buscar trend..."
+oninput="filtrarPrompts()"
+>
 
-<!-- 1 -->
-<div class="card">
-<h3>🎨 Caricatura da Profissão</h3>
-<p><strong>💡 Quando usar:</strong> Para humanizar sua imagem profissional.</p>
-<p class="prompt-text">
-Crie uma caricatura moderna da profissão de [SUA PROFISSÃO],
-traços suaves, cores vibrantes e cenário relacionado ao trabalho.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="chatgpt(this)">🤖 ChatGPT</button>
-<button onclick="gemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">🤍</button>
-</div>
-</div>
-
-<!-- 2 -->
-<div class="card">
-<h3>🦸 Profissão Super-Herói</h3>
-<p><strong>💡 Quando usar:</strong> Para posicionamento forte.</p>
-<p class="prompt-text">
-Transforme uma pessoa da profissão de [SUA PROFISSÃO]
-em um super-herói com uniforme inspirado na área
-e cenário épico ao fundo.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="chatgpt(this)">🤖 ChatGPT</button>
-<button onclick="gemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">🤍</button>
-</div>
-</div>
-
-<!-- 3 -->
-<div class="card">
-<h3>📈 Antes e Depois da Carreira</h3>
-<p><strong>💡 Quando usar:</strong> Mostrar evolução.</p>
-<p class="prompt-text">
-Crie duas imagens lado a lado:
-à esquerda início da carreira,
-à direita versão bem-sucedida com cenário moderno.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="chatgpt(this)">🤖 ChatGPT</button>
-<button onclick="gemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">🤍</button>
-</div>
-</div>
-
-<!-- 4 -->
-<div class="card">
-<h3>🎮 Avatar 3D</h3>
-<p><strong>💡 Quando usar:</strong> Criar identidade digital.</p>
-<p class="prompt-text">
-Transforme minha foto em personagem 3D estilizado,
-cabeça levemente maior e iluminação alegre.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="chatgpt(this)">🤖 ChatGPT</button>
-<button onclick="gemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">🤍</button>
-</div>
-</div>
-
-<!-- 5 -->
-<div class="card">
-<h3>💑 Casal Profissional Elegante</h3>
-<p><strong>💡 Quando usar:</strong> Para posts de parceria.</p>
-<p class="prompt-text">
-Crie foto de casal elegante,
-roupas neutras e iluminação suave de estúdio.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="chatgpt(this)">🤖 ChatGPT</button>
-<button onclick="gemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">🤍</button>
-</div>
-</div>
-
-<!-- 6 -->
-<div class="card">
-<h3>🌇 Namorado Ideal IA</h3>
-<p><strong>💡 Quando usar:</strong> Conteúdo divertido.</p>
-<p class="prompt-text">
-Gere imagem de namorado ideal em cenário urbano ao pôr do sol,
-estilo realista e clima romântico.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="chatgpt(this)">🤖 ChatGPT</button>
-<button onclick="gemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">🤍</button>
-</div>
-</div>
-
-<!-- 7 -->
-<div class="card">
-<h3>🎭 Versão Desenho Animado</h3>
-<p><strong>💡 Quando usar:</strong> Para perfil criativo.</p>
-<p class="prompt-text">
-Transforme minha imagem em versão desenho animado 3D colorido
-com cenário relacionado à profissão.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="chatgpt(this)">🤖 ChatGPT</button>
-<button onclick="gemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">🤍</button>
-</div>
-</div>
-
-  <div class="card">
-<h3>💎 Profissão de Luxo</h3>
-<p><strong>💡 Quando usar:</strong> Mostrar autoridade e sucesso.</p>
-<p class="prompt-text">
-Transforme a profissão de [SUA PROFISSÃO]
-em uma versão luxuosa e sofisticada,
-com roupas elegantes, ambiente premium,
-carro de luxo e iluminação cinematográfica.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="chatgpt(this)">🤖 ChatGPT</button>
-<button onclick="gemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">🤍</button>
-</div>
-</div>
-
-
-<!-- 8 -->
-<div class="card">
-<h3>🎨 Hobby + Profissão</h3>
-<p><strong>💡 Quando usar:</strong> Mostrar equilíbrio.</p>
-<p class="prompt-text">
-Crie imagem mostrando minha profissão
-junto com meu hobby favorito,
-misturando os dois cenários de forma criativa.
-</p>
-<div class="acoes">
-<button onclick="copiar(this)">📋 Copiar</button>
-<button onclick="chatgpt(this)">🤖 ChatGPT</button>
-<button onclick="gemini(this)">✨ Gemini</button>
-<button onclick="favoritar(this)">🤍</button>
-</div>
-</div>
+<div class="contador" id="contador"></div>
 
 </div>
 
-<div style="margin-top:60px;text-align:center;">
-<a href="/delta-prompts/paginas/imagens.html"
-style="padding:20px 50px;background:linear-gradient(135deg,#5b5ce2,#7a7cff);color:white;font-size:18px;font-weight:bold;border-radius:14px;text-decoration:none;">
-🎨 Voltar para Imagens Estratégicas
-</a>
+<!-- 🔥 FILTRO -->
+<div class="filtro-nivel" style="margin-bottom:20px;">
+
+<button onclick="filtrarNivel(event, 'todos')" class="ativo">
+Todos
+</button>
+
+<button onclick="filtrarNivel(event, 'basico')">
+🟢 Básico
+</button>
+
+<button onclick="filtrarNivel(event, 'intermediario')">
+🟡 Intermediário
+</button>
+
+<button onclick="filtrarNivel(event, 'avancado')">
+🔴 Avançado
+</button>
+
 </div>
+
+<!-- 📦 LISTA -->
+<div id="lista-prompts"></div>
 
 </main>
 
 <script>
 
-// COPIAR
-function copiar(btn){
-const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
-navigator.clipboard.writeText(texto);
-btn.innerText="✅";
-setTimeout(()=>btn.innerText="📋 Copiar",1000);
+const ordemCategorias = [
+
+"🔥 Viral",
+"💼 Profissional",
+"🎬 Cinematográfico",
+"🌌 Futurista",
+"❤️ Social",
+"🎨 Criativo"
+
+];
+
+const promptsTrend = [
+
+{
+categoria:"🔥 Viral",
+nivel:"basico",
+titulo:"🎥 Trend Cinematográfica",
+quando:"Para criar imagens virais estilo filme.",
+prompt:`Transforme esta imagem em uma cena cinematográfica épica.
+
+Inclua:
+- iluminação dramática
+- profundidade realista
+- qualidade de filme
+- visual premium
+- cores intensas`
+},
+
+{
+categoria:"💼 Profissional",
+nivel:"intermediario",
+titulo:"🏡 Profissão Premium",
+quando:"Para gerar autoridade profissional.",
+prompt:`Crie uma imagem profissional elegante da profissão [SUA PROFISSÃO].
+
+Inclua:
+- roupas sofisticadas
+- ambiente moderno
+- iluminação premium
+- aparência de sucesso
+- visual cinematográfico`
+},
+
+{
+categoria:"🌌 Futurista",
+nivel:"avancado",
+titulo:"🚀 Cidade Cyberpunk",
+quando:"Para conteúdo futurista e tecnológico.",
+prompt:`Crie uma cidade cyberpunk futurista.
+
+Inclua:
+- luzes neon
+- carros futuristas
+- chuva
+- hologramas
+- atmosfera tecnológica
+- estilo ultra realista`
+},
+
+{
+categoria:"❤️ Social",
+nivel:"basico",
+titulo:"💑 Casal Elegante",
+quando:"Para posts românticos ou lifestyle.",
+prompt:`Crie uma foto elegante de casal moderno.
+
+Inclua:
+- roupas neutras
+- iluminação suave
+- ambiente sofisticado
+- aparência natural
+- qualidade fotográfica premium`
+},
+
+{
+categoria:"🎨 Criativo",
+nivel:"intermediario",
+titulo:"🎭 Versão Desenho Animado",
+quando:"Para transformar fotos em arte criativa.",
+prompt:`Transforme minha foto em desenho animado 3D.
+
+Inclua:
+- estilo moderno
+- cores vibrantes
+- iluminação divertida
+- cenário personalizado
+- qualidade Pixar`
+},
+
+{
+categoria:"🎬 Cinematográfico",
+nivel:"avancado",
+titulo:"🎬 Cena de Filme",
+quando:"Para criar imagens extremamente impactantes.",
+prompt:`Transforme esta cena em um pôster de filme hollywoodiano.
+
+Inclua:
+- iluminação cinematográfica
+- fundo dramático
+- atmosfera intensa
+- composição épica
+- qualidade ultra realista`
+},
+
+{
+categoria:"🔥 Viral",
+nivel:"intermediario",
+titulo:"📱 Influenciador Premium",
+quando:"Para Instagram e TikTok.",
+prompt:`Crie uma foto estilo influenciador digital premium.
+
+Inclua:
+- visual moderno
+- iluminação profissional
+- fundo sofisticado
+- aparência natural
+- qualidade de revista`
+},
+
+{
+categoria:"💼 Profissional",
+nivel:"avancado",
+titulo:"💎 Empresário de Luxo",
+quando:"Para transmitir poder e sucesso.",
+prompt:`Crie uma imagem de empresário de luxo moderno.
+
+Inclua:
+- terno elegante
+- carro premium
+- ambiente sofisticado
+- iluminação cinematográfica
+- energia de liderança`
+},
+
+{
+categoria:"🌌 Futurista",
+nivel:"intermediario",
+titulo:"🤖 Humano + IA",
+quando:"Para conteúdos tecnológicos.",
+prompt:`Crie uma imagem misturando humano e inteligência artificial.
+
+Inclua:
+- detalhes tecnológicos
+- circuitos sutis
+- iluminação neon
+- visual futurista
+- aparência realista`
+},
+
+{
+categoria:"🎨 Criativo",
+nivel:"basico",
+titulo:"🦸 Super-Herói Personalizado",
+quando:"Para conteúdo divertido e criativo.",
+prompt:`Transforme uma pessoa em super-herói moderno.
+
+Inclua:
+- uniforme épico
+- cenário cinematográfico
+- pose heroica
+- iluminação forte
+- qualidade ultra realista`
 }
 
-// CHATGPT
-function chatgpt(btn){
-const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
-window.open("https://chat.openai.com/?q="+encodeURIComponent(texto),"_blank");
-}
+];
 
-// GEMINI
-function gemini(btn){
-const texto = btn.closest(".card").querySelector(".prompt-text").innerText;
-navigator.clipboard.writeText(texto);
-window.open("https://gemini.google.com/app","_blank");
-}
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
 
-// FAVORITO
-function favoritar(btn){
-btn.innerText = btn.innerText === "🤍" ? "❤️" : "🤍";
-}
+function renderizar(arr){
 
-// BUSCA
-const input=document.getElementById("searchInput");
-const cards=document.querySelectorAll(".card");
-const resultCount=document.getElementById("resultCount");
+lista.innerHTML="";
 
-function atualizarBusca(){
-let count=0;
-cards.forEach(card=>{
-if(card.innerText.toLowerCase().includes(input.value.toLowerCase())){
-card.style.display="block";
-count++;
-}else{
-card.style.display="none";
-}
+contador.innerText =
+`Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+
+ordemCategorias.forEach(cat=>{
+
+const grupo = arr.filter(p=>p.categoria === cat);
+
+if(grupo.length === 0) return;
+
+const tituloSecao = document.createElement("h2");
+
+tituloSecao.className = "secao-titulo";
+tituloSecao.innerText = cat;
+
+lista.appendChild(tituloSecao);
+
+grupo.forEach(p=>{
+
+const card = document.createElement("div");
+
+card.className = "card";
+
+card.setAttribute("data-nivel", p.nivel || "basico");
+
+card.innerHTML = `
+
+<div class="nivel nivel-${p.nivel || 'basico'}">
+
+${p.nivel === 'avancado'
+? '🔴 Avançado'
+: p.nivel === 'intermediario'
+? '🟡 Intermediário'
+: '🟢 Básico'}
+
+</div>
+
+<h3>${p.titulo}</h3>
+
+<p>
+<strong>📌 Quando usar:</strong>
+${p.quando}
+</p>
+
+<pre>${p.prompt}</pre>
+
+<div class="acoes">
+
+<button onclick="copiarPrompt(\`${p.prompt}\`)">
+📋 Copiar
+</button>
+
+<button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">
+⭐ Favoritar
+</button>
+
+<button onclick="abrirChatGPT(\`${p.prompt}\`)">
+💬 ChatGPT
+</button>
+
+<button onclick="abrirGemini(\`${p.prompt}\`)">
+🔷 Gemini
+</button>
+
+</div>
+
+`;
+
+lista.appendChild(card);
+
 });
-resultCount.innerText=count;
+
+});
+
 }
 
-input.addEventListener("input",atualizarBusca);
-resultCount.innerText=cards.length;
+function filtrarPrompts(){
+
+const termo = busca.value.toLowerCase();
+
+const filtrados = promptsTrend.filter(p =>
+
+p.titulo.toLowerCase().includes(termo) ||
+p.prompt.toLowerCase().includes(termo) ||
+p.categoria.toLowerCase().includes(termo)
+
+);
+
+renderizar(filtrados);
+
+}
+
+function copiarPrompt(texto){
+
+navigator.clipboard.writeText(texto);
+
+alert("📋 Prompt copiado!");
+
+}
+
+function favoritarPrompt(titulo, conteudo){
+
+const prompts =
+JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+
+prompts.push({
+
+id: Date.now(),
+titulo,
+categoria: "Trend",
+conteudo,
+favorito: true
+
+});
+
+localStorage.setItem(
+"deltaPrompts",
+JSON.stringify(prompts)
+);
+
+alert("⭐ Adicionado aos favoritos!");
+
+}
+
+function abrirChatGPT(texto){
+
+const url =
+"https://chat.openai.com/?prompt=" +
+encodeURIComponent(texto);
+
+window.open(url,"_blank");
+
+}
+
+function abrirGemini(texto){
+
+const url =
+"https://gemini.google.com/app?prompt=" +
+encodeURIComponent(texto);
+
+window.open(url,"_blank");
+
+}
+
+function filtrarNivel(event, nivel){
+
+const botoes =
+document.querySelectorAll(".filtro-nivel button");
+
+botoes.forEach(btn =>
+btn.classList.remove("ativo")
+);
+
+event.target.classList.add("ativo");
+
+const cards =
+document.querySelectorAll("#lista-prompts .card");
+
+cards.forEach(card=>{
+
+if(nivel === "todos"){
+
+card.style.display = "block";
+
+}else{
+
+card.style.display =
+card.dataset.nivel === nivel
+? "block"
+: "none";
+
+}
+
+});
+
+}
+
+renderizar(promptsTrend);
 
 </script>
+
+<style>
+
+.top-bar{
+display:flex;
+gap:15px;
+align-items:center;
+margin:20px 0;
+flex-wrap:wrap;
+}
+
+.top-bar input{
+flex:1;
+padding:14px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+}
+
+.contador{
+font-size:14px;
+opacity:0.75;
+}
+
+pre{
+white-space:pre-wrap;
+font-size:14px;
+background:#f9fafb;
+padding:15px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+}
+
+.meta{
+font-size:13px;
+opacity:0.7;
+margin-bottom:8px;
+}
+
+</style>
 
 </body>
 </html>
