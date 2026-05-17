@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Automação com IA | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Prompts para criar automações com IA, organizar processos, integrar ferramentas e economizar tempo.">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../melhoriaspaginas.css">
+<style>
+.top-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+.top-bar input {
+  flex: 1;
+  min-width: 240px;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+.contador {
+  font-size: 14px;
+  opacity: 0.75;
+}
+.prompt-text {
+  white-space: pre-wrap;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.tag {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+  <h1>🤖 Automação com IA</h1>
+  <p>Prompts para transformar tarefas repetitivas em fluxos mais rápidos, claros e automatizados com inteligência artificial.</p>
+
+  <section class="card">
+    <h3>🎯 Objetivo</h3>
+    <p>Mapear processos, criar fluxos automáticos, conectar ferramentas e reduzir trabalho manual em atendimento, marketing, vendas, estudo e rotina profissional.</p>
+  </section>
+
+  <div class="top-bar">
+    <input type="text" id="busca" placeholder="🔎 Buscar automação..." oninput="filtrarPrompts()">
+    <div class="contador" id="contador"></div>
+  </div>
+
+  <div id="lista"></div>
+</main>
+
+<script>
+const promptsAutomacao = [
+  {
+    id: 'automacao-ia-1',
+    tipo: 'Processos',
+    titulo: 'Mapear Processo Repetitivo',
+    quando: 'Quando quiser descobrir o que pode ser automatizado em uma rotina.',
+    prompt: `Atue como especialista em automação com IA.
+
+Analise esta rotina: [DESCREVA A ROTINA]
+
+Identifique:
+- Etapas repetitivas
+- Informações necessárias
+- Ferramentas envolvidas
+- O que pode ser automatizado
+- Riscos ou cuidados
+- Fluxo ideal passo a passo
+
+Finalize com uma versão simples para começar hoje.`
+  },
+  {
+    id: 'automacao-ia-2',
+    tipo: 'Atendimento',
+    titulo: 'Fluxo de Atendimento Automático',
+    quando: 'Para criar respostas e etapas automáticas para clientes.',
+    prompt: `Crie um fluxo de atendimento automático para: [TIPO DE NEGÓCIO]
+
+Inclua:
+- Mensagem inicial
+- Perguntas para qualificação
+- Respostas para dúvidas comuns
+- Critérios para encaminhar para humano
+- Mensagem final com chamada para ação
+
+Use linguagem clara, profissional e natural.`
+  },
+  {
+    id: 'automacao-ia-3',
+    tipo: 'Marketing',
+    titulo: 'Automação de Conteúdo Semanal',
+    quando: 'Para planejar criação de posts, ideias e legendas com menos esforço.',
+    prompt: `Monte uma automação de conteúdo semanal para o nicho: [NICHO]
+
+Defina:
+- Entrada de ideias
+- Geração de temas
+- Criação de legendas
+- Revisão
+- Organização em calendário
+- Reaproveitamento em outros formatos
+
+Sugira ferramentas simples para cada etapa.`
+  },
+  {
+    id: 'automacao-ia-4',
+    tipo: 'Vendas',
+    titulo: 'Follow-up Automático de Leads',
+    quando: 'Para criar mensagens de acompanhamento sem parecer robótico.',
+    prompt: `Crie uma sequência de follow-up para leads interessados em: [PRODUTO/SERVIÇO]
+
+Inclua:
+- Mensagem após primeiro contato
+- Mensagem após 24 horas
+- Mensagem com prova/benefício
+- Mensagem para objeção
+- Mensagem final de reativação
+
+Mantenha tom humano, consultivo e objetivo.`
+  },
+  {
+    id: 'automacao-ia-5',
+    tipo: 'Organização',
+    titulo: 'Automação de Tarefas Diárias',
+    quando: 'Para transformar tarefas soltas em uma rotina mais organizada.',
+    prompt: `Organize minhas tarefas diárias e proponha automações simples.
+
+Tarefas atuais:
+[LISTE AS TAREFAS]
+
+Classifique por:
+- Manual e repetitiva
+- Manual mas estratégica
+- Automatizável com IA
+- Automatizável com ferramentas
+
+Depois crie um plano prático de implementação.`
+  },
+  {
+    id: 'automacao-ia-6',
+    tipo: 'Integrações',
+    titulo: 'Briefing para Criar Automação no Zapier/Make/n8n',
+    quando: 'Para descrever uma automação antes de montar em ferramentas externas.',
+    prompt: `Transforme esta ideia em um briefing técnico para automação:
+[DESCREVA A IDEIA]
+
+Inclua:
+- Gatilho inicial
+- Dados de entrada
+- Passos do fluxo
+- Condições e regras
+- Ferramentas envolvidas
+- Resultado esperado
+- Possíveis erros e exceções
+
+Escreva de forma clara para implementar em Zapier, Make ou n8n.`
+  }
+];
+
+const lista = document.getElementById('lista');
+const contador = document.getElementById('contador');
+const busca = document.getElementById('busca');
+
+function renderizar(arr) {
+  contador.innerText = `Total: ${arr.length} prompt${arr.length !== 1 ? 's' : ''}`;
+  lista.innerHTML = arr.map(p => `
+    <div class="card">
+      <div class="tag">${p.tipo}</div>
+      <h3>${p.titulo}</h3>
+      <p><strong>Quando usar:</strong> ${p.quando}</p>
+      <div class="prompt-text">${p.prompt}</div>
+      <div class="acoes">
+        <button onclick="copiarTexto(\`${p.prompt}\`)">📋 Copiar</button>
+        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+        <button class="fav-btn" data-id="${p.id}" data-titulo="${p.titulo}" data-texto="${p.prompt.replace(/"/g, '&quot;')}" data-categoria="Automação com IA">🤍</button>
+      </div>
+    </div>
+  `).join('');
+
+  if (window.initFavButtons) initFavButtons(lista);
+}
+
+function filtrarPrompts() {
+  const termo = busca.value.toLowerCase();
+  const filtrados = promptsAutomacao.filter(p =>
+    p.titulo.toLowerCase().includes(termo) ||
+    p.tipo.toLowerCase().includes(termo) ||
+    p.quando.toLowerCase().includes(termo) ||
+    p.prompt.toLowerCase().includes(termo)
+  );
+  renderizar(filtrados);
+}
+
+async function copiarTexto(texto) {
+  await navigator.clipboard.writeText(texto);
+  alert('📋 Prompt copiado!');
+}
+
+function abrirChatGPT(texto) {
+  window.open('https://chat.openai.com/?prompt=' + encodeURIComponent(texto), '_blank');
+}
+
+function abrirGemini(texto) {
+  window.open('https://gemini.google.com/app?prompt=' + encodeURIComponent(texto), '_blank');
+}
+
+renderizar(promptsAutomacao);
+</script>
+
+</body>
+</html>
