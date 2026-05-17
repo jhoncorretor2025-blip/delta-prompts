@@ -214,3 +214,144 @@
   });
 
 })();
+
+
+// ==============================
+// MELHORIAS DA HOME
+// ==============================
+
+(function(){
+  const promptMap = {
+    'Descricao de Imovel': 'Atue como corretor imobiliario especialista em vendas. Crie uma descricao persuasiva para este imovel: [INSIRA OS DADOS]. Destaque localizacao, diferenciais, publico ideal e chamada para acao.',
+    'Copy de Vendas': 'Atue como copywriter profissional. Crie uma copy de vendas para: [PRODUTO OU SERVICO]. Inclua promessa, beneficios, prova, objeções e chamada para acao.',
+    'Post para Instagram': 'Atue como estrategista de redes sociais. Crie um post para Instagram sobre: [TEMA]. Inclua gancho, legenda, hashtags e chamada para acao.'
+  };
+
+  function toast(message) {
+    let el = document.querySelector('.delta-toast');
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'delta-toast';
+      document.body.appendChild(el);
+    }
+
+    el.textContent = message;
+    el.classList.add('visible');
+    clearTimeout(el._timer);
+    el._timer = setTimeout(() => el.classList.remove('visible'), 2200);
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast('Prompt copiado');
+    } catch (err) {
+      toast('Nao foi possivel copiar automaticamente');
+    }
+  }
+
+  function addWorkflowSection() {
+    if (!document.getElementById('home-workflow') || document.querySelector('.workflow-grid')) return;
+
+    const section = document.createElement('section');
+    section.className = 'workflow-section';
+    section.innerHTML = `
+      <div class="section-header">
+        <h2>Caminhos rapidos</h2>
+        <p>Escolha o melhor ponto de partida para criar, encontrar ou guardar prompts.</p>
+      </div>
+      <div class="workflow-grid">
+        <a class="workflow-card" href="cadastro.html"><span>➕</span><strong>Novo Prompt</strong><small>Monte um prompt personalizado do zero.</small></a>
+        <a class="workflow-card" href="prompt_pro.html"><span>⚡</span><strong>Gerador Pro</strong><small>Use um fluxo guiado para chegar mais rapido ao resultado.</small></a>
+        <a class="workflow-card" href="biblioteca.html"><span>📦</span><strong>Biblioteca</strong><small>Veja tudo que ja existe e encontre modelos prontos.</small></a>
+      </div>
+    `;
+
+    document.getElementById('home-workflow').replaceWith(section);
+  }
+
+  function addObjectiveSection() {
+    const categories = document.querySelector('.categories-section');
+    if (!categories || document.querySelector('.objective-section')) return;
+
+    const section = document.createElement('section');
+    section.className = 'objective-section';
+    section.innerHTML = `
+      <div class="section-header">
+        <h2>Atalhos por objetivo</h2>
+        <p>Use estes filtros para ir direto ao tipo de resultado que voce quer gerar.</p>
+      </div>
+      <div class="objective-grid">
+        <button type="button" data-home-search="vendas">Vender melhor</button>
+        <button type="button" data-home-search="imobiliario">Divulgar imovel</button>
+        <button type="button" data-home-search="estudo">Estudar mais rapido</button>
+        <button type="button" data-home-search="redes sociais">Criar posts</button>
+        <button type="button" data-home-search="planejamento">Planejar rotina</button>
+        <button type="button" data-home-search="youtube">Criar videos</button>
+      </div>
+    `;
+
+    categories.before(section);
+  }
+
+  function enhanceFeaturedCards() {
+    document.querySelectorAll('.featured-card').forEach(card => {
+      if (card.querySelector('.card-actions')) return;
+
+      const title = card.querySelector('h3') && card.querySelector('h3').textContent.trim();
+      const prompt = promptMap[title];
+      if (!prompt) return;
+
+      const actions = document.createElement('div');
+      actions.className = 'card-actions';
+      actions.innerHTML = `
+        <button type="button" data-copy-text="${prompt.replace(/"/g, '&quot;')}">Copiar</button>
+        <button type="button" data-favorite-home="true" data-id="home-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}" data-titulo="${title}" data-texto="${prompt.replace(/"/g, '&quot;')}" data-categoria="Recomendados">Favoritar</button>
+      `;
+
+      card.appendChild(actions);
+    });
+  }
+
+  document.addEventListener('click', function(e) {
+    const objective = e.target.closest && e.target.closest('[data-home-search]');
+    if (objective) {
+      const input = document.getElementById('busca-global');
+      if (input) {
+        input.value = objective.dataset.homeSearch;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    const copy = e.target.closest && e.target.closest('[data-copy-text]');
+    if (copy) copyText(copy.dataset.copyText);
+
+    const fav = e.target.closest && e.target.closest('[data-favorite-home]');
+    if (fav && window.toggleFavorito) {
+      const saved = window.toggleFavorito({
+        id: fav.dataset.id,
+        titulo: fav.dataset.titulo,
+        texto: fav.dataset.texto,
+        categoria: fav.dataset.categoria
+      });
+      fav.textContent = saved ? 'Favorito' : 'Favoritar';
+      toast(saved ? 'Adicionado aos favoritos' : 'Removido dos favoritos');
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!document.getElementById('featured-grid')) return;
+
+    const marker = document.createElement('div');
+    marker.id = 'home-workflow';
+    const search = document.querySelector('.search-section');
+    if (search) search.after(marker);
+
+    setTimeout(() => {
+      addWorkflowSection();
+      addObjectiveSection();
+      enhanceFeaturedCards();
+    }, 0);
+  });
+})();
