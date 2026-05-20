@@ -8,6 +8,86 @@
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
 
+<style>
+/* --- ESTILOS PADRONIZADOS DA NAVEGAÇÃO E FILTROS --- */
+.top-bar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+.top-bar input {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.contador {
+    font-size: 14px;
+    opacity: 0.75;
+}
+pre {
+    white-space: pre-wrap;
+    font-size: 14px;
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.filtros-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.filtro-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.filtro-botoes button {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.filtro-botoes button:hover {
+    background: #f0f0f0;
+}
+.filtro-botoes button.ativo {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+/* --- ESTILO DAS CATEGORIAS SEPARADAS POR BLOCOS --- */
+.secao-categoria {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f1f5f9;
+}
+.secao-titulo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+.grid-prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+</style>
+
 </head>
 
 <body>
@@ -37,16 +117,22 @@ reduzir riscos jurídicos e elevar autoridade no mercado imobiliário.
 type="text"
 id="busca"
 placeholder="🔎 Buscar modelo imobiliário..."
-oninput="filtrarPrompts()"
+oninput="atualizarFiltros()"
 >
 <div class="contador" id="contador"></div>
 </div>
 
-<div class="filtro-nivel" style="margin-bottom:20px;">
-<button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos</button>
-<button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
-<button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
-<button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+<div class="filtros-container">
+    
+    <div class="filtro-botoes filtro-categoria" id="botoes-categoria"></div>
+
+    <div class="filtro-botoes filtro-nivel">
+        <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
+        <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+        <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+        <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+    </div>
+
 </div>
 
 <div id="lista-prompts"></div>
@@ -56,289 +142,181 @@ oninput="filtrarPrompts()"
 <script>
 
 const ordemCategorias = [
-"⚖️ Jurídico",
-"🏠 Venda",
-"📈 Estratégia",
-"💰 Investimento"
+    "⚖️ Jurídico",
+    "🏠 Venda",
+    "📈 Estratégia",
+    "📲 Marketing",
+    "💰 Investimento"
 ];
 
 const promptsImobiliario = [
-
-{
-categoria: "⚖️ Jurídico",
-nivel: "basico",
-titulo: "⚖️ Advogado Imobiliário",
-quando: "Quando precisar de orientação jurídica sobre compra, venda ou locação.",
-prompt: `Você é um advogado especializado em direito imobiliário.
-
-Analise a seguinte situação:
-
-[DESCREVA O CASO]
-
-Explique:
-- Riscos jurídicos envolvidos
-- Direitos e deveres das partes
-- Pontos de atenção no contrato
-- Próximos passos recomendados`
-},
-
-{
-categoria: "🏠 Venda",
-nivel: "basico",
-titulo: "🏡 Descrição Estratégica de Imóvel",
-quando: "Para anunciar imóvel em portais ou redes sociais.",
-prompt: `Crie uma descrição atrativa e profissional para:
-
-[DESCREVA O IMÓVEL]
-
-Inclua:
-- Diferenciais
-- Benefícios
-- Público ideal
-- Chamada para ação`
-},
-
-{
-categoria: "📈 Estratégia",
-nivel: "intermediario",
-titulo: "📈 Estratégia Completa de Venda",
-quando: "Para estruturar plano de venda de imóvel.",
-prompt: `Monte uma estratégia completa de venda para:
-
-[TIPO DE IMÓVEL]
-
-Inclua:
-- Público ideal
-- Estratégia de precificação
-- Plano de divulgação
-- Roteiro de atendimento
-- Técnicas de fechamento`
-},
-
-  {
-categoria: "⚖️ Jurídico",
-nivel: "avancado",
-titulo: "⚖️ Análise Jurídica Imobiliária Completa",
-quando: "Quando precisar de análise técnica aprofundada sobre contratos, compra, venda, locação ou litígios imobiliários.",
-prompt: `Você é um advogado especialista em Direito Imobiliário, com atuação prática em contratos, locações, compra e venda, distratos, inadimplência e litígios imobiliários.
-
-Analise detalhadamente a seguinte situação:
-
-[DESCREVA O CASO IMOBILIÁRIO]
-
-Estruture sua resposta com:
-
-1. Enquadramento jurídico do caso
-- Natureza da relação
-- Legislação aplicável
-
-2. Riscos jurídicos envolvidos
-- Para cada parte envolvida
-
-3. Direitos e deveres das partes
-- Conforme a legislação
-- Conforme o contrato
-
-4. Pontos críticos e cláusulas sensíveis
-- Disposições que exigem atenção especial
-
-5. Probabilidade de conflito ou judicialização
-
-6. Próximos passos recomendados
-- Medidas extrajudiciais
-- Medidas judiciais, se necessárias
-
-7. Estratégia preventiva
-- Como reduzir riscos
-- Como evitar prejuízo futuro
-
-8. Sugestões de melhoria contratual
-- Ajustes estratégicos, se aplicável
-
-Responda de forma técnica, objetiva e estratégica, considerando a realidade do mercado imobiliário brasileiro.`
-},
-
-  {
-categoria: "📲 Marketing Imobiliário",
-nivel: "avancado",
-titulo: "📅📲 Planejamento Semanal de Conteúdo para Status",
-quando: "Quando quiser organizar conteúdos estratégicos para WhatsApp e Instagram.",
-prompt: `🏢 Atue como estrategista digital especializado no mercado imobiliário.
-
-📌 MISSÃO:
-Criar um planejamento semanal de conteúdos para postar no Status do WhatsApp e no Instagram.
-
-━━━━━━━━━━━━━━━━━━
-🔎 ANTES DE COMEÇAR:
-
-1️⃣ Defina o período da semana:
-( ) 📅 Segunda a Sexta
-( ) 📅 Segunda a Sábado
-( ) 📅 Segunda a Domingo
-
-2️⃣ Defina o foco da semana:
-( ) 🏠 Apenas Vendas
-( ) 🏢 Apenas Locações
-( ) 🔄 Vendas e Locações
-
-━━━━━━━━━━━━━━━━━━
-📋 INSTRUÇÕES:
-
-• Para cada dia da semana, gere 3 ideias de posts.
-• Os conteúdos devem ser curtos, diretos e pensados para status (impacto rápido).
-• Misture estrategicamente:
-
-  ⭐ Prova social  
-  🏆 Autoridade  
-  ⏳ Urgência  
-  🎬 Bastidores  
-  💰 Oferta direta  
-  📚 Conteúdo educativo  
-
-• Indique o 🎯 objetivo de cada post (ex: gerar leads, despertar curiosidade, prova social).
-• Se fizer sentido, sugira um 📲 CTA curto.
-• Linguagem simples, estratégica e persuasiva.
-• Pensado para corretor de imóveis em região urbana.
-
-━━━━━━━━━━━━━━━━━━
-📑 FORMATO DE RESPOSTA:
-
-📅 SEGUNDA  
-1)  
-2)  
-3)  
-
-📅 TERÇA  
-1)  
-2)  
-3)  
-
-E assim sucessivamente.`
-},
-
-{
-categoria: "💰 Investimento",
-nivel: "avancado",
-titulo: "💰 Análise de Investimento Imobiliário",
-quando: "Para avaliar compra como investimento.",
-prompt: `Avalie o imóvel como investimento:
-
-[DETALHES DO IMÓVEL]
-
-Inclua:
-- Potencial de valorização
-- Indicadores financeiros
-- Comparativo de mercado
-- Riscos envolvidos`
-}
-
+    {
+        categoria: "⚖️ Jurídico",
+        nivel: "basico",
+        titulo: "⚖️ Advogado Imobiliário",
+        quando: "Quando precisar de orientação jurídica sobre compra, venda ou locação.",
+        prompt: `Você é um advogado especializado em direito imobiliário.\n\nAnalise a seguinte situação:\n\n[DESCREVA O CASO]\n\nExplique:\n- Riscos jurídicos envolvidos\n- Direitos e deveres das partes\n- Pontos de atenção no contrato\n- Próximos passos recomendados`
+    },
+    {
+        categoria: "⚖️ Jurídico",
+        nivel: "avancado",
+        titulo: "⚖️ Análise Jurídica Imobiliária Completa",
+        quando: "Quando precisar de análise técnica aprofundada sobre contratos, compra, venda, locação ou litígios imobiliários.",
+        prompt: `Você é um advogado especialista em Direito Imobiliário, com atuação prática em contratos, locações, compra e venda, distratos, inadimplência e litígios imobiliários.\n\nAnalise detalhadamente a seguinte situação:\n\n[DESCREVA O CASO IMOBILIÁRIO]\n\nEstruture sua resposta com:\n\n1. Enquadramento jurídico do caso\n- Natureza da relação\n- Legislação aplicável\n\n2. Riscos jurídicos envolvidos\n- Para cada parte envolvida\n\n3. Direitos e deveres das partes\n- Conforme a legislação\n- Conforme o contrato\n\n4. Pontos críticos e cláusulas sensíveis\n- Disposições que exigem atenção especial\n\n5. Probabilidade de conflito ou judicialização\n\n6. Próximos passos recomendados\n- Medidas extrajudiciais\n- Medidas judiciais, se necessárias\n\n7. Estratégia preventiva\n- Como reduzir riscos\n- Como evitar prejuízo futuro\n\n8. Sugestões de melhoria contratual\n- Ajustes estratégicos, se aplicável\n\nResponda de forma técnica, objetiva e estratégica, considerando a realidade do mercado imobiliário brasileiro.`
+    },
+    {
+        categoria: "🏠 Venda",
+        nivel: "basico",
+        titulo: "🏡 Descrição Estratégica de Imóvel",
+        quando: "Para anunciar imóvel em portais ou redes sociais.",
+        prompt: `Crie uma descrição atrativa e profissional para:\n\n[DESCREVA O IMÓVEL]\n\nInclua:\n- Diferenciais\n- Benefícios\n- Público ideal\n- Chamada para ação`
+    },
+    {
+        categoria: "📈 Estratégia",
+        nivel: "intermediario",
+        titulo: "📈 Estratégia Completa de Venda",
+        quando: "Para estruturar plano de venda de imóvel.",
+        prompt: `Monte uma estratégia completa de venda para:\n\n[TIPO DE IMÓVEL]\n\nInclua:\n- Público ideal\n- Estratégia de precificação\n- Plano de divulgação\n- Roteiro de atendimento\n- Técnicas de fechamento`
+    },
+    {
+        categoria: "📲 Marketing",
+        nivel: "avancado",
+        titulo: "📅📲 Planejamento Semanal de Conteúdo para Status",
+        quando: "Quando quiser organizar conteúdos estratégicos para WhatsApp e Instagram.",
+        prompt: `🏢 Atue como estrategista digital especializado no mercado imobiliário.\n\n📌 MISSÃO:\nCriar um planejamento semanal de conteúdos para postar no Status do WhatsApp e no Instagram.\n\n━━━━━━━━━━━━━━━━━━\n🔎 ANTES DE COMEÇAR:\n\n1️⃣ Defina o período da semana:\n( ) 📅 Segunda a Sexta\n( ) 📅 Segunda a Sábado\n( ) 📅 Segunda a Domingo\n\n2️⃣ Defina o foco da semana:\n( ) 🏠 Apenas Vendas\n( ) 🏢 Apenas Locações\n( ) 🔄 Vendas e Locações\n\n━━━━━━━━━━━━━━━━━━\n📋 INSTRUÇÕES:\n\n• Para cada dia da semana, gere 3 ideias de posts.\n• Os conteúdos devem ser curtos, diretos e pensados para status (impacto rápido).\n• Misture estrategicamente:\n\n  ⭐ Prova social  \n  🏆 Autoridade  \n  ⏳ Urgência  \n  🎬 Bastidores  \n  💰 Oferta direta  \n  📚 Conteúdo educativo  \n\n• Indique o 🎯 objetivo de cada post (ex: gerar leads, despertar curiosidade, prova social).\n• Se fizer sentido, sugira um 📲 CTA curto.\n• Linguagem simples, estratégica e persuasiva.\n• Pensado para corretor de imóveis em região urbana.\n\n━━━━━━━━━━━━━━━━━━\n📑 FORMATO DE RESPOSTA:\n\n📅 SEGUNDA  \n1)  \n2)  \n3)  \n\n📅 TERÇA  \n1)  \n2)  \n3)  \n\nE assim sucessivamente.`
+    },
+    {
+        categoria: "💰 Investimento",
+        nivel: "avancado",
+        titulo: "💰 Análise de Investimento Imobiliário",
+        quando: "Para avaliar compra como investimento.",
+        prompt: `Avalie o imóvel como investimento:\n\n[DETALHES DO IMÓVEL]\n\nInclua:\n- Potencial de valorização\n- Indicadores financeiros\n- Comparativo de mercado\n- Riscos envolvidos`
+    }
 ];
+
+// Injeção dinâmica dos botões de filtro de categoria
+const containerCategorias = document.getElementById("botoes-categoria");
+let htmlCategorias = '<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
+
+ordemCategorias.forEach(cat => {
+    htmlCategorias += `<button onclick="filtrarCategoria(event, '${cat}')">${cat}</button>`;
+});
+containerCategorias.innerHTML = htmlCategorias;
 
 const lista = document.getElementById("lista-prompts");
 const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
+let estadoFiltroTexto = "";
+let estadoFiltroNivel = "todos";
+let estadoFiltroCategoria = "todas";
+
+// --- RENDERIZAÇÃO EM BLOCOS DE CATEGORIAS SEPARADAS ---
 function renderizar(arr){
+    lista.innerHTML = "";
+    contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
-lista.innerHTML = "";
-contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+    ordemCategorias.forEach(cat => {
+        const grupo = arr.filter(p => p.categoria === cat);
+        if(grupo.length === 0) return;
 
-ordemCategorias.forEach(cat => {
+        const blocoCategoria = document.createElement("section");
+        blocoCategoria.className = "secao-categoria";
 
-const grupo = arr.filter(p => p.categoria === cat);
-if(grupo.length === 0) return;
+        const tituloSecao = document.createElement("h2");
+        tituloSecao.className = "secao-titulo";
+        tituloSecao.innerText = cat;
+        blocoCategoria.appendChild(tituloSecao);
 
-const tituloSecao = document.createElement("h2");
-tituloSecao.className = "secao-titulo";
-tituloSecao.innerText = cat;
-lista.appendChild(tituloSecao);
+        const gridPrompts = document.createElement("div");
+        gridPrompts.className = "grid-prompts";
 
-grupo.forEach(p => {
+        grupo.forEach(p => {
+            const card = document.createElement("div");
+            card.className = "card";
+            
+            card.innerHTML = `
+                <div class="nivel nivel-${p.nivel || 'basico'}">
+                    ${p.nivel === 'avancado' ? '🔴 Avançado' : p.nivel === 'intermediario' ? '🟡 Intermediário' : '🟢 Básico'}
+                </div>
+                <h3>${p.titulo}</h3>
+                <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+                <pre>${p.prompt}</pre>
+                <div class="acoes">
+                    <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+                    <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+                    <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+                    <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+                </div>
+            `;
+            gridPrompts.appendChild(card);
+        });
 
-const card = document.createElement("div");
-card.className = "card";
-card.setAttribute("data-nivel", p.nivel);
-
-card.innerHTML = `
-<div class="nivel nivel-${p.nivel}">
-${p.nivel === 'avancado' ? '🔴 Avançado' :
-p.nivel === 'intermediario' ? '🟡 Intermediário' :
-'🟢 Básico'}
-</div>
-
-<h3>${p.titulo}</h3>
-<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-<pre>${p.prompt}</pre>
-
-<div class="acoes">
-<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-<button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-</div>
-`;
-
-lista.appendChild(card);
-
-});
-
-});
-
+        blocoCategoria.appendChild(gridPrompts);
+        lista.appendChild(blocoCategoria);
+    });
 }
 
-function filtrarPrompts(){
-const termo = busca.value.toLowerCase();
-const filtrados = promptsImobiliario.filter(p =>
-p.titulo.toLowerCase().includes(termo) ||
-p.prompt.toLowerCase().includes(termo) ||
-p.categoria.toLowerCase().includes(termo)
-);
-renderizar(filtrados);
+function atualizarFiltros() {
+    estadoFiltroTexto = busca.value.toLowerCase();
+    
+    const filtrados = promptsImobiliario.filter(p => {
+        const matchTexto = p.titulo.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.prompt.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.categoria.toLowerCase().includes(estadoFiltroTexto);
+        
+        const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
+        const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria === estadoFiltroCategoria;
+
+        return matchTexto && matchNivel && matchCategoria;
+    });
+
+    renderizar(filtrados);
 }
 
-function filtrarNivel(event, nivel){
-const botoes = document.querySelectorAll(".filtro-nivel button");
-botoes.forEach(btn => btn.classList.remove("ativo"));
-event.target.classList.add("ativo");
-
-const cards = document.querySelectorAll("#lista-prompts .card");
-
-cards.forEach(card=>{
-if(nivel === "todos"){
-card.style.display = "block";
-}else{
-card.style.display =
-card.dataset.nivel === nivel ? "block" : "none";
+function filtrarCategoria(event, categoria) {
+    document.querySelectorAll(".filtro-categoria button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroCategoria = categoria;
+    atualizarFiltros();
 }
-});
+
+function filtrarNivel(event, nivel) {
+    document.querySelectorAll(".filtro-nivel button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroNivel = nivel;
+    atualizarFiltros();
 }
 
 function copiarPrompt(texto){
-navigator.clipboard.writeText(texto);
-alert("📋 Prompt copiado!");
+    navigator.clipboard.writeText(texto);
+    alert("📋 Prompt copiado!");
 }
 
 function favoritarPrompt(titulo, conteudo){
-const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-prompts.push({
-id: Date.now(),
-titulo,
-categoria: "Imobiliário",
-conteudo,
-favorito: true
-});
-localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-alert("⭐ Adicionado aos favoritos!");
+    const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+    prompts.push({
+        id: Date.now(),
+        titulo,
+        categoria: "Imobiliário",
+        conteudo,
+        favorito: true
+    });
+    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+    alert("⭐ Adicionado aos favoritos!");
 }
 
 function abrirChatGPT(texto){
-window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto));
+    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
 }
 
 function abrirGemini(texto){
-window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto));
+    const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
 }
 
+// Inicializa a renderização completa da tela
 renderizar(promptsImobiliario);
 
 </script>
