@@ -2,11 +2,92 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>🧩 Outros Prompts | Delta Prompts</title>
+<title>Outros Prompts | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+
+<style>
+/* --- ESTILOS PADRONIZADOS DA NAVEGAÇÃO E FILTROS --- */
+.top-bar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+.top-bar input {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.contador {
+    font-size: 14px;
+    opacity: 0.75;
+}
+pre {
+    white-space: pre-wrap;
+    font-size: 14px;
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.filtros-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.filtro-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.filtro-botoes button {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.filtro-botoes button:hover {
+    background: #f0f0f0;
+}
+.filtro-botoes button.ativo {
+    background: #6366f1;
+    color: white;
+    border-color: #6366f1;
+}
+
+/* --- ESTILO DAS CATEGORIAS SEPARADAS POR BLOCOS --- */
+.secao-categoria {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f1f5f9;
+}
+.secao-titulo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+.grid-prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+</style>
+
 </head>
 
 <body>
@@ -40,15 +121,21 @@ Modelos versáteis para situações diversas que não se encaixam em categorias 
 </section>
 
 <div class="top-bar">
-<input type="text" id="busca" placeholder="🔎 Buscar modelo..." oninput="filtrarPrompts()">
+<input type="text" id="busca" placeholder="🔎 Buscar modelo estratégico..." oninput="atualizarFiltros()">
 <div class="contador" id="contador"></div>
 </div>
 
-<div class="filtro-nivel" style="margin-bottom:20px;">
-<button onclick="filtrarNivel(event,'todos')" class="ativo">Todos</button>
-<button onclick="filtrarNivel(event,'basico')">🟢 Básico</button>
-<button onclick="filtrarNivel(event,'intermediario')">🟡 Intermediário</button>
-<button onclick="filtrarNivel(event,'avancado')">🔴 Avançado</button>
+<div class="filtros-container">
+    
+    <div class="filtro-botoes filtro-categoria" id="botoes-categoria"></div>
+
+    <div class="filtro-botoes filtro-nivel">
+        <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
+        <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+        <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+        <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+    </div>
+
 </div>
 
 <div id="lista-prompts"></div>
@@ -58,316 +145,218 @@ Modelos versáteis para situações diversas que não se encaixam em categorias 
 <script>
 
 const ordemCategorias = [
-"🧠 Organização",
-"🎨 Criatividade",
-"⚖️ Decisão",
-"🚀 Produtividade"
+    "🧠 Organização",
+    "🎨 Criatividade",
+    "⚖️ Decisão",
+    "🚀 Produtividade"
 ];
 
-const prompts = [
-
-{
-categoria:"🧠 Organização",
-nivel:"basico",
-titulo:"📋🧠 Organizar Ideias Confusas",
-quando:"Quando estiver com muitas ideias e pouca clareza.",
-prompt:`Organize as seguintes ideias:
-
-[DESCREVA]
-
-Estruture em:
-• 📌 Prioridades
-• 🗂️ Categorias
-• 🎯 Próximos passos`
-},
-
-{
-categoria:"🎨 Criatividade",
-nivel:"intermediario",
-titulo:"💡🎨 Gerador de Ideias Criativas",
-quando:"Quando precisar sair do padrão.",
-prompt:`Gere 10 ideias criativas sobre:
-
-[TEMA]
-
-Inclua:
-• 🚀 Ideia principal
-• 📈 Aplicação prática
-• 🎯 Público ideal`
-},
-
-{
-categoria:"⚖️ Decisão",
-nivel:"intermediario",
-titulo:"⚖️📊 Análise de Decisão Estratégica",
-quando:"Quando precisar tomar decisão importante.",
-prompt:`Analise a seguinte decisão:
-
-[DESCREVA SITUAÇÃO]
-
-Divida em:
-• ✅ Vantagens
-• ❌ Desvantagens
-• ⚠️ Riscos
-• 📈 Impacto a longo prazo`
-},
-
-{
-categoria:"🚀 Produtividade",
-nivel:"avancado",
-titulo:"⏳🚀 Plano de Alta Produtividade",
-quando:"Quando quiser aumentar rendimento diário.",
-prompt:`Crie um plano estratégico para aumentar minha produtividade.
-
-Inclua:
-• 📅 Organização do dia
-• 🎯 Priorização
-• 🔄 Método de foco
-• 📊 Monitoramento semanal`
-},
-
+const promptsOutros = [
     {
-categoria:"🚀 Produtividade",
-nivel:"intermediario",
-titulo:"📅🎯 Planejamento Semanal Estratégico",
-quando:"Quando quiser organizar sua semana com foco e equilíbrio.",
-prompt:`Crie um planejamento semanal estratégico baseado nas minhas prioridades:
-
-[DESCREVA SUAS PRIORIDADES]
-
-Inclua:
-
-🎯 Metas principais  
-📌 Tarefas secundárias  
-⏳ Distribuição equilibrada de tempo  
-🧘 Momentos de descanso  
-📊 Critério de avaliação da semana  
-
-Organize de forma clara e prática.`
-},
-
-{
-categoria:"🚀 Produtividade",
-nivel:"intermediario",
-titulo:"🏆📊 Metas Estratégicas de Curto, Médio e Longo Prazo",
-quando:"Para estruturar objetivos com visão estratégica.",
-prompt:`Crie uma lista de metas estratégicas divididas em:
-
-1️⃣ Curto prazo  
-2️⃣ Médio prazo  
-3️⃣ Longo prazo  
-
-Para cada meta, inclua:
-
-🎯 Objetivo claro  
-🛠️ Plano de ação  
-⏳ Prazo estimado  
-📈 Indicador de progresso  
-
-Seja organizado e estratégico.`
-},
-
-{
-categoria:"🧠 Organização",
-nivel:"avancado",
-titulo:"🧠🔎 Reflexão Profunda da Fase Atual",
-quando:"Quando quiser entender melhor sua fase atual da vida.",
-prompt:`Conduza uma reflexão profunda sobre minha fase atual da vida.
-
-Analise:
-
-🔁 Padrões recorrentes  
-🚧 Bloqueios internos  
-🌱 Oportunidades de crescimento  
-⚠️ Decisões que precisam ser tomadas  
-
-Seja estruturado, estratégico e evite respostas superficiais.`
-},
-
-{
-categoria:"🎨 Criatividade",
-nivel:"intermediario",
-titulo:"💡🎨 Brainstorm Estratégico por Categorias",
-quando:"Quando precisar gerar muitas ideias organizadas.",
-prompt:`Faça um brainstorm criativo sobre:
-
-[TEMA]
-
-Gere no mínimo 20 ideias originais, divididas por categorias estratégicas.
-
-Para cada categoria inclua:
-
-📌 Tipo de aplicação  
-🎯 Público ideal  
-🚀 Potencial de impacto  
-
-Organize de forma clara e estruturada.`
-},
-
-{
-categoria:"⚖️ Decisão",
-nivel:"avancado",
-titulo:"⚖️📈 Análise Estratégica de Problema",
-quando:"Quando precisar resolver um problema importante.",
-prompt:`Analise o seguinte problema:
-
-[DESCREVA O PROBLEMA]
-
-Apresente:
-
-1️⃣ Cinco soluções criativas  
-2️⃣ Vantagens de cada solução  
-3️⃣ Riscos envolvidos  
-4️⃣ Melhor alternativa estratégica  
-
-Explique de forma clara e estruturada.`
-},
-  {
-categoria:"🎨 Criatividade",
-nivel:"basico",
-titulo:"✈️🗺️ Planejamento de Viagem Econômica",
-quando:"Para montar roteiros turísticos focados em economia e cultura local.",
-prompt:`Crie um roteiro de viagem de 5 dias para:
-
-📍 [CIDADE/PAÍS]
-
-Com foco em:
-
-💸 Pontos turísticos gratuitos  
-🍽️ Restaurantes de comida local  
-🏛️ Experiências culturais autênticas  
-🚌 Sugestões de transporte econômico  
-
-Organize por dia e inclua breve descrição de cada atividade.`
-},
-
-{
-categoria:"🎨 Criatividade",
-nivel:"basico",
-titulo:"🎵🎧 Criação de Playlist Personalizada",
-quando:"Para encontrar músicas ideais para atividades específicas.",
-prompt:`Sugira uma playlist com 10 músicas para:
-
-🎯 Atividade: [Ex: focar no trabalho / treinar na academia / relaxar]
-🎶 Baseada no estilo de: [ARTISTA OU GÊNERO]
-
-Inclua:
-
-🎼 Nome da música  
-🎤 Artista  
-⚡ Energia ou clima da música  
-🧠 Por que combina com a atividade  
-
-Organize de forma clara e envolvente.`
-}
-
+        categoria: "🧠 Organização",
+        nivel: "basico",
+        titulo: "📋🧠 Organizar Ideias Confusas",
+        quando: "Quando estiver com muitas ideias e pouca clareza.",
+        prompt: `Organize as seguintes ideias:\n\n[DESCREVA]\n\nEstruture em:\n• 📌 Prioridades\n• 🗂️ Categorias\n• 🎯 Próximos passos`
+    },
+    {
+        categoria: "🧠 Organização",
+        nivel: "avancado",
+        titulo: "🧠🔎 Reflexão Profunda da Fase Atual",
+        quando: "Quando quiser entender melhor sua fase atual da vida.",
+        prompt: `Conduza uma reflexão profunda sobre minha fase atual da vida.\n\nAnalise:\n\n🔁 Padrões recorrentes  \n🚧 Bloqueios internos  \n🌱 Oportunidades de crescimento  \n⚠️ Decisões que precisam ser tomadas  \n\nSeja estruturado, estratégico e evite respostas superficiais.`
+    },
+    {
+        categoria: "🎨 Criatividade",
+        nivel: "basico",
+        titulo: "✈️🗺️ Planejamento de Viagem Econômica",
+        quando: "Para montar roteiros turísticos focados em economia e cultura local.",
+        prompt: `Crie um roteiro de viagem de 5 dias para:\n\n📍 [CIDADE/PAÍS]\n\nCom foco em:\n\n💸 Pontos turísticos gratuitos  \n🍽️ Restaurantes de comida local  \n🏛️ Experiências culturais autênticas  \n🚌 Sugestões de transporte econômico  \n\nOrganize por dia e inclua breve descrição de cada atividade.`
+    },
+    {
+        categoria: "🎨 Criatividade",
+        nivel: "basico",
+        titulo: "🎵🎧 Criação de Playlist Personalizada",
+        quando: "Para encontrar músicas ideais para atividades específicas.",
+        prompt: `Sugira uma playlist com 10 músicas para:\n\n🎯 Atividade: [Ex: focar no trabalho / treinar na academia / relaxar]\n🎶 Baseada no estilo de: [ARTISTA OU GÊNERO]\n\nInclua:\n\n🎼 Nome da música  \n🎤 Artista  \n⚡ Energia ou clima da música  \n🧠 Por que combina com a atividade  \n\nOrganize de forma clara e envolvendo.`
+    },
+    {
+        categoria: "🎨 Criatividade",
+        nivel: "intermediario",
+        titulo: "💡🎨 Gerador de Ideias Criativas",
+        quando: "Quando precisar sair do padrão.",
+        prompt: `Gere 10 ideias criativas sobre:\n\n[TEMA]\n\nInclua:\n• 🚀 Ideia principal\n• 📈 Aplicação prática\n• 🎯 Público ideal`
+    },
+    {
+        categoria: "🎨 Criatividade",
+        nivel: "intermediario",
+        titulo: "💡🎨 Brainstorm Estratégico por Categorias",
+        quando: "Quando precisar gerar muitas ideias organizadas.",
+        prompt: `Faça um brainstorm criativo sobre:\n\n[TEMA]\n\nGere no mínimo 20 ideias originais, divididas por categorias estratégicas.\n\nPara cada categoria inclua:\n\n📌 Tipo de aplicação  \n🎯 Público ideal  \n🚀 Potencial de impacto  \n\nOrganize de forma clara e estruturada.`
+    },
+    {
+        categoria: "⚖️ Decisão",
+        nivel: "intermediario",
+        titulo: "⚖️📊 Análise de Decisão Estratégica",
+        quando: "Quando precisar tomar decisão importante.",
+        prompt: `Analise a seguinte decisão:\n\n[DESCREVA SITUAÇÃO]\n\nDivida em:\n• ✅ Vantagens\n• ❌ Desvantagens\n• ⚠️ Riscos\n• 📈 Impacto a longo prazo`
+    },
+    {
+        categoria: "⚖️ Decisão",
+        nivel: "avancado",
+        titulo: "⚖️📈 Análise Estratégica de Problema",
+        quando: "Quando precisar resolver um problema importante.",
+        prompt: `Analise o seguinte problema:\n\n[DESCREVA O PROBLEMA]\n\nApresente:\n\n1️⃣ Cinco soluções criativas  \n2️⃣ Vantagens de cada solução  \n3️⃣ Riscos envolvidos  \n4️⃣ Melhor alternativa estratégica  \n\nExplique de forma clara e estruturada.`
+    },
+    {
+        categoria: "🚀 Produtividade",
+        nivel: "intermediario",
+        titulo: "📅🎯 Planejamento Semanal Estratégico",
+        quando: "Quando quiser organizar sua semana com foco e equilíbrio.",
+        prompt: `Crie um planejamento semanal estratégico baseado nas minhas prioridades:\n\n[DESCREVA SUAS PRIORIDADES]\n\nInclua:\n\n🎯 Metas principais  \n📌 Tarefas secundárias  \n⏳ Distribuição equilibrada de tempo  \n2️⃣ Momentos de descanso  \n📊 Critério de avaliação da semana  \n\nOrganize de forma clara e prática.`
+    },
+    {
+        categoria: "🚀 Produtividade",
+        nivel: "intermediario",
+        titulo: "🏆📊 Metas Estratégicas de Curto, Médio e Longo Prazo",
+        quando: "Para estruturar objetivos com visão estratégica.",
+        prompt: `Crie uma lista de metas estratégicas divididas em:\n\n1️⃣ Curto prazo  \n2️⃣ Médio prazo  \n3️⃣ Longo prazo  \n\nPara cada meta, inclua:\n\n🎯 Objetivo claro  \n🛠️ Plano de ação  \n⏳ Prazo estimado  \n📈 Indicador de progresso  \n\nSeja organizado e estratégico.`
+    },
+    {
+        categoria: "🚀 Produtividade",
+        nivel: "avancado",
+        titulo: "⏳🚀 Plano de Alta Produtividade",
+        quando: "Quando quiser aumentar rendimento diário.",
+        prompt: `Crie um plano estratégico para aumentar minha produtividade.\n\nInclua:\n• 📅 Organização do dia\n• 🎯 Priorização\n• 🔄 Método de foco\n• 📊 Monitoramento semanal`
+    }
 ];
+
+// Injeção dinâmica dos botões de filtro de categoria
+const containerCategorias = document.getElementById("botoes-categoria");
+let htmlCategorias = '<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
+
+ordemCategorias.forEach(cat => {
+    htmlCategorias += `<button onclick="filtrarCategoria(event, '${cat}')">${cat}</button>`;
+});
+containerCategorias.innerHTML = htmlCategorias;
 
 const lista = document.getElementById("lista-prompts");
 const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
+let estadoFiltroTexto = "";
+let estadoFiltroNivel = "todos";
+let estadoFiltroCategoria = "todas";
+
+// --- RENDERIZAÇÃO EM BLOCOS DE CATEGORIAS SEPARADAS ---
 function renderizar(arr){
+    lista.innerHTML = "";
+    contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
-lista.innerHTML="";
-contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+    ordemCategorias.forEach(cat => {
+        const grupo = arr.filter(p => p.categoria === cat);
+        if(grupo.length === 0) return;
 
-ordemCategorias.forEach(cat=>{
+        const blocoCategoria = document.createElement("section");
+        blocoCategoria.className = "secao-categoria";
 
-const grupo = arr.filter(p=>p.categoria===cat);
+        const tituloSecao = document.createElement("h2");
+        tituloSecao.className = "secao-titulo";
+        tituloSecao.innerText = cat;
+        blocoCategoria.appendChild(tituloSecao);
 
-if(grupo.length===0) return;
+        const gridPrompts = document.createElement("div");
+        gridPrompts.className = "grid-prompts";
 
-const tituloSecao=document.createElement("h2");
-tituloSecao.className="secao-titulo";
-tituloSecao.innerText=cat;
-lista.appendChild(tituloSecao);
+        grupo.forEach(p => {
+            const card = document.createElement("div");
+            card.className = "card";
+            
+            card.innerHTML = `
+                <div class="nivel nivel-${p.nivel || 'basico'}">
+                    ${p.nivel === 'avancado' ? '🔴 Avançado' : p.nivel === 'intermediario' ? '🟡 Intermediário' : '🟢 Básico'}
+                </div>
+                <h3>${p.titulo}</h3>
+                <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+                <pre>${p.prompt}</pre>
+                <div class="acoes">
+                    <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+                    <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+                    <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+                    <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+                </div>
+            `;
+            gridPrompts.appendChild(card);
+        });
 
-grupo.forEach(p=>{
-
-const card=document.createElement("div");
-card.className="card";
-card.dataset.nivel=p.nivel;
-
-card.innerHTML=`
-<div class="nivel nivel-${p.nivel}">
-${p.nivel==="avancado"?"🔴 Avançado":
-p.nivel==="intermediario"?"🟡 Intermediário":"🟢 Básico"}
-</div>
-
-<h3>${p.titulo}</h3>
-<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-<pre>${p.prompt}</pre>
-
-<div class="acoes">
-<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-<button onclick="favoritarPrompt('${p.titulo}',\`${p.prompt}\`)">⭐ Favoritar</button>
-<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-</div>
-`;
-
-lista.appendChild(card);
-
-});
-
-});
-
+        blocoCategoria.appendChild(gridPrompts);
+        lista.appendChild(blocoCategoria);
+    });
 }
 
-function filtrarPrompts(){
-const termo=busca.value.toLowerCase();
-const filtrados=prompts.filter(p=>
-p.titulo.toLowerCase().includes(termo)||
-p.prompt.toLowerCase().includes(termo)||
-p.categoria.toLowerCase().includes(termo)
-);
-renderizar(filtrados);
+function atualizarFiltros() {
+    estadoFiltroTexto = busca.value.toLowerCase();
+    
+    const filtrados = promptsOutros.filter(p => {
+        const matchTexto = p.titulo.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.prompt.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.categoria.toLowerCase().includes(estadoFiltroTexto);
+        
+        const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
+        const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria === estadoFiltroCategoria;
+
+        return matchTexto && matchNivel && matchCategoria;
+    });
+
+    renderizar(filtrados);
 }
 
-function filtrarNivel(event,nivel){
+function filtrarCategoria(event, categoria) {
+    document.querySelectorAll(".filtro-categoria button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroCategoria = categoria;
+    atualizarFiltros();
+}
 
-document.querySelectorAll(".filtro-nivel button")
-.forEach(btn=>btn.classList.remove("ativo"));
-event.target.classList.add("ativo");
-
-const filtrados = nivel==="todos"
-? prompts
-: prompts.filter(p=>p.nivel===nivel);
-
-renderizar(filtrados);
+function filtrarNivel(event, nivel) {
+    document.querySelectorAll(".filtro-nivel button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroNivel = nivel;
+    atualizarFiltros();
 }
 
 function copiarPrompt(texto){
-navigator.clipboard.writeText(texto);
-alert("📋 Copiado!");
+    navigator.clipboard.writeText(texto);
+    alert("📋 Prompt copiado!");
 }
 
-function favoritarPrompt(titulo,conteudo){
-const salvos=JSON.parse(localStorage.getItem("deltaPrompts"))||[];
-salvos.push({
-id:Date.now(),
-titulo,
-categoria:"Outros",
-conteudo,
-favorito:true
-});
-localStorage.setItem("deltaPrompts",JSON.stringify(salvos));
-alert("⭐ Favoritado!");
+function favoritarPrompt(titulo, conteudo){
+    const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+    prompts.push({
+        id: Date.now(),
+        titulo,
+        categoria: "Outros",
+        conteudo,
+        favorito: true
+    });
+    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+    alert("⭐ Adicionado aos favoritos!");
 }
 
 function abrirChatGPT(texto){
-window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
+    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
 }
 
 function abrirGemini(texto){
-window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
+    const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
 }
 
-renderizar(prompts);
+// Inicializa a renderização
+renderizar(promptsOutros);
 
 </script>
 
 </body>
 </html>
-
