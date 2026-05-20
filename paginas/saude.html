@@ -2,11 +2,92 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>🧠 Saúde Inteligente | Delta Prompts</title>
+<title>Saúde Inteligente | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+
+<style>
+/* --- ESTILOS PADRONIZADOS DA NAVEGAÇÃO E FILTROS --- */
+.top-bar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+.top-bar input {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.contador {
+    font-size: 14px;
+    opacity: 0.75;
+}
+pre {
+    white-space: pre-wrap;
+    font-size: 14px;
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.filtros-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.filtro-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.filtro-botoes button {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.filtro-botoes button:hover {
+    background: #f0f0f0;
+}
+.filtro-botoes button.ativo {
+    background: #22c55e;
+    color: white;
+    border-color: #22c55e;
+}
+
+/* --- ESTILO DAS CATEGORIAS SEPARADAS POR BLOCOS --- */
+.secao-categoria {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f1f5f9;
+}
+.secao-titulo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+.grid-prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+</style>
+
 </head>
 
 <body>
@@ -40,15 +121,21 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
 </section>
 
 <div class="top-bar">
-<input type="text" id="busca" placeholder="🔎 Buscar modelo..." oninput="filtrarPrompts()">
+<input type="text" id="busca" placeholder="🔎 Buscar modelo de saúde..." oninput="atualizarFiltros()">
 <div class="contador" id="contador"></div>
 </div>
 
-<div class="filtro-nivel" style="margin-bottom:20px;">
-<button onclick="filtrarNivel(event,'todos')" class="ativo">Todos</button>
-<button onclick="filtrarNivel(event,'basico')">🟢 Básico</button>
-<button onclick="filtrarNivel(event,'intermediario')">🟡 Intermediário</button>
-<button onclick="filtrarNivel(event,'avancado')">🔴 Avançado</button>
+<div class="filtros-container">
+    
+    <div class="filtro-botoes filtro-categoria" id="botoes-categoria"></div>
+
+    <div class="filtro-botoes filtro-nivel">
+        <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
+        <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+        <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+        <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+    </div>
+
 </div>
 
 <div id="lista-prompts"></div>
@@ -58,366 +145,239 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
 <script>
 
 const ordemCategorias = [
-"🔎 Autoconhecimento",
-"📋 Planejamento",
-"💪 Execução",
-"📊 Monitoramento"
+    "🔎 Autoconhecimento",
+    "📋 Planejamento",
+    "💪 Execução",
+    "📊 Monitoramento"
 ];
 
-const prompts = [
-
-{
-categoria:"🔎 Autoconhecimento",
-nivel:"basico",
-titulo:"🧠🔍 Avaliação de Hábitos Atuais",
-quando:"Para entender seu estado atual de saúde.",
-prompt:`Analise meus hábitos atuais:
-
-[DESCREVA ROTINA]
-
-Identifique:
-• Pontos positivos
-• Pontos de risco
-• Pequenas melhorias possíveis`
-},
-
-{
-categoria:"📋 Planejamento",
-nivel:"intermediario",
-titulo:"📅🥗 Plano Alimentar Estratégico",
-quando:"Para organizar alimentação saudável.",
-prompt:`Crie um plano alimentar semanal considerando:
-
-• Meu objetivo: [EMAGRECER / GANHAR MASSA / EQUILÍBRIO]
-• Restrições alimentares: [SE HOUVER]
-• Tempo disponível para preparar refeições
-
-Organize de forma prática.`
-},
-
-{
-categoria:"💪 Execução",
-nivel:"intermediario",
-titulo:"🏋️‍♂️💪 Plano de Exercícios Personalizado",
-quando:"Para organizar rotina de treino.",
-prompt:`Monte um plano de exercícios para:
-
-• Objetivo: [DEFINA]
-• Tempo disponível por dia
-• Nível atual
-
-Inclua:
-• Divisão semanal
-• Tipo de treino
-• Duração`
-},
-
-{
-categoria:"📊 Monitoramento",
-nivel:"avancado",
-titulo:"📈🧠 Sistema de Acompanhamento de Saúde",
-quando:"Para acompanhar evolução física e mental.",
-prompt:`Crie um sistema de acompanhamento de saúde considerando:
-
-• Alimentação
-• Exercícios
-• Sono
-• Nível de energia
-• Estresse
-
-Organize como planilha ou checklist semanal.`
-},
-
-  {
-categoria:"📋 Planejamento",
-nivel:"basico",
-titulo:"🌅💚 Rotina Diária para Saúde Física e Mental",
-quando:"Para criar hábitos simples e consistentes no dia a dia.",
-prompt:`Crie uma rotina diária simples para melhorar saúde física e mental.
-
-Inclua:
-• 🥗 Alimentação equilibrada
-• 🚶 Exercício leve
-• 🌙 Organização do sono
-• 🧠 Pequenos hábitos mentais positivos
-
-Seja prático e fácil de aplicar.`
-},
-
-{
-categoria:"💪 Execução",
-nivel:"basico",
-titulo:"🏋️‍♀️📅 Plano Semanal para Iniciantes",
-quando:"Para começar a treinar de forma equilibrada.",
-prompt:`Monte um plano semanal de exercícios equilibrado para iniciantes.
-
-Inclua:
-• 💪 Dias de treino
-• 🧘 Dias de descanso
-• 🔄 Tipo de exercício por dia
-• ⏱️ Duração recomendada`
-},
-
-{
-categoria:"📋 Planejamento",
-nivel:"intermediario",
-titulo:"🥗🔥 Plano de Emagrecimento Saudável",
-quando:"Para organizar emagrecimento sem soluções radicais.",
-prompt:`Você é nutricionista esportivo.
-
-Crie um plano de emagrecimento saudável dividido em:
-
-🥗 Alimentação
-🏋️ Treino
-🧠 Mentalidade
-📊 Acompanhamento semanal
-
-Evite soluções radicais e foque em consistência.`
-},
-
-{
-categoria:"🔎 Autoconhecimento",
-nivel:"intermediario",
-titulo:"🧘‍♂️🧠 Plano para Reduzir Estresse",
-quando:"Quando estiver sobrecarregado ou com alta pressão mental.",
-prompt:`Você é psicólogo especialista em produtividade.
-
-Crie um plano para reduzir estresse com:
-
-🧠 Rotina mental diária
-🌬️ Técnicas de respiração
-📒 Organização emocional
-📅 Estratégias semanais
-
-Seja estruturado e prático.`
-},
-
-{
-categoria:"🔎 Autoconhecimento",
-nivel:"avancado",
-titulo:"🛡️📊 Plano de Saúde Preventiva",
-quando:"Para melhorar rotina de forma estratégica.",
-prompt:`Você é especialista em saúde preventiva.
-
-Analise minha rotina: [DESCREVA]
-
-Crie um plano dividido em:
-
-1️⃣ Alimentação
-2️⃣ Exercícios
-3️⃣ Sono
-4️⃣ Metas mensais
-5️⃣ Erros a evitar
-
-Seja estratégico e organizado.`
-},
-
-{
-categoria:"💪 Execução",
-nivel:"intermediario",
-titulo:"🚶‍♂️📈 Plano 30 Dias Contra Sedentarismo",
-quando:"Para sair do sedentarismo com metas progressivas.",
-prompt:`Você é especialista em mudança de hábitos.
-
-Crie um plano de 30 dias para sair do sedentarismo.
-
-Inclua:
-• 📅 Metas progressivas
-• 🏃 Evolução semanal
-• 📊 Acompanhamento simples
-• 🧠 Estratégia para manter consistência`
-},
-
-{
-categoria:"🔎 Autoconhecimento",
-nivel:"avancado",
-titulo:"🧠🛑 Plano Estratégico para Ansiedade",
-quando:"Quando precisar organizar saúde mental com profundidade.",
-prompt:`Você é especialista em saúde mental e regulação emocional.
-
-Analise minha situação atual:
-[Descreva sintomas, rotina e preocupações]
-
-Crie um plano dividido em:
-
-1️⃣ Identificação dos gatilhos
-2️⃣ Técnicas imediatas para ansiedade
-3️⃣ Estratégia diária de prevenção
-4️⃣ Ajustes na rotina (sono, alimentação, estímulos digitais)
-5️⃣ Plano semanal de fortalecimento emocional
-
-Seja claro, estruturado e evite respostas genéricas.`
-},
-
-{
-categoria:"💪 Execução",
-nivel:"avancado",
-titulo:"🏆🔥 Plano de Alta Performance Física",
-quando:"Para melhorar desempenho físico de forma estratégica.",
-prompt:`Você é treinador de alta performance.
-
-Crie um plano estratégico para melhorar:
-
-💪 Força
-🏃 Resistência
-🔄 Recuperação
-📊 Monitoramento de progresso
-
-Organize de forma profissional e progressiva.`
-},
-  {
-categoria:"📋 Planejamento",
-nivel:"basico",
-titulo:"🍳🥗 Receitas Rápidas e Saudáveis",
-quando:"Para criar refeições saudáveis com o que você já tem em casa.",
-prompt:`Tenho os seguintes ingredientes disponíveis:
-
-🥕 [Ingrediente 1]  
-🍗 [Ingrediente 2]  
-🥦 [Ingrediente 3]  
-
-Sugira uma receita rápida e saudável que eu possa preparar com esses itens.
-
-Inclua:
-• ⏱️ Tempo de preparo
-• 🍽️ Modo de preparo simples
-• 💚 Benefícios nutricionais
-• 🔄 Sugestões de substituição, se necessário
-
-Seja prático e objetivo.`
-},
-
-{
-categoria:"💪 Execução",
-nivel:"basico",
-titulo:"💻🧘 Alongamentos para Quem Trabalha Sentado",
-quando:"Para aliviar tensão física de quem trabalha muitas horas sentado.",
-prompt:`Crie uma rotina de alongamentos de 10 minutos para quem trabalha o dia todo sentado em frente ao computador.
-
-Inclua:
-
-🧍 Alongamentos para pescoço  
-💪 Alongamentos para ombros  
-🦴 Coluna e lombar  
-🦵 Pernas e circulação  
-
-Explique:
-• ⏱️ Tempo de cada exercício
-• 🔁 Número de repetições
-• ⚠️ Cuidados importantes
-
-Organize de forma simples e fácil de aplicar no ambiente de trabalho.`
-}
-
-
+const promptsSaude = [
+    {
+        categoria: "🔎 Autoconhecimento",
+        nivel: "basico",
+        titulo: "🧠🔍 Avaliação de Hábitos Atuais",
+        quando: "Para entender seu estado atual de saúde.",
+        prompt: `Analise meus hábitos atuais:\n\n[DESCREVA ROTINA]\n\nIdentifique:\n• Pontos positivos\n• Pontos de risco\n• Pequenas melhorias possíveis`
+    },
+    {
+        categoria: "🔎 Autoconhecimento",
+        nivel: "intermediario",
+        titulo: "🧘‍♂️🧠 Plano para Reduzir Estresse",
+        quando: "Quando estiver sobrecarregado ou com alta pressão mental.",
+        prompt: `Você é psicólogo especialista em produtividade.\n\nCrie um plano para reduzir estresse com:\n\n🧠 Rotina mental diária\n🌬️ Técnicas de respiração\n\n📒 Organização emocional\n📅 Estratégias semanais\n\nSeja estruturado e prático.`
+    },
+    {
+        categoria: "🔎 Autoconhecimento",
+        nivel: "avancado",
+        titulo: "🛡️📊 Plano de Saúde Preventiva",
+        quando: "Para melhorar rotina de forma estratégica.",
+        prompt: `Você é especialista em saúde preventiva.\n\nAnalise minha rotina: [DESCREVA]\n\nCrie um plano dividido em:\n\n1️⃣ Alimentação\n2️⃣ Exercícios\n3️⃣ Sono\n4️⃣ Metas mensais\n5️⃣ Erros a evitar\n\nSeja estratégico e organizado.`
+    },
+    {
+        categoria: "🔎 Autoconhecimento",
+        nivel: "avancado",
+        titulo: "🧠🛑 Plano Estratégico para Ansiedade",
+        quando: "Quando precisar organizar saúde mental com profundidade.",
+        prompt: `Você é especialista em saúde mental e regulação emocional.\n\nAnalise minha situação atual:\n[Descreva sintomas, rotina e preocupações]\n\nCrie um plano dividido em:\n\n1️⃣ Identificação dos gatilhos\n2️⃣ Técnicas imediatas para ansiedade\n3️⃣ Estratégia diária de prevenção\n4️⃣ Ajustes na rotina (sono, alimentação, estímulos digitais)\n5️⃣ Plano semanal de fortalecimento emocional\n\nSeja claro, estruturado e evite respostas genéricas.`
+    },
+    {
+        categoria: "📋 Planejamento",
+        nivel: "basico",
+        titulo: "🌅💚 Rotina Diária para Saúde Física e Mental",
+        quando: "Para criar hábitos simples e consistentes no dia a dia.",
+        prompt: `Crie uma rotina diária simples para melhorar saúde física e mental.\n\nInclua:\n• 🥗 Alimentação equilibrada\n• 🚶 Exercício leve\n• 🌙 Organização do sono\n• 🧠 Pequenos hábitos mentais positivos\n\nSeja prático e fácil de aplicar.`
+    },
+    {
+        categoria: "📋 Planejamento",
+        nivel: "basico",
+        titulo: "🍳🥗 Receitas Rápidas e Saudáveis",
+        quando: "Para criar refeições saudáveis com o que você já tem em casa.",
+        prompt: `Tenho os seguintes ingredientes disponíveis:\n\n🥕 [Ingrediente 1]  \nFileira [Ingrediente 2]  \n🥦 [Ingrediente 3]  \n\nSugira uma receita rápida e saudável que eu possa preparar com esses itens.\n\nInclua:\n• ⏱️ Tempo de preparo\n• 🍽️ Modo de preparo simples\n• 💚 Benefícios nutricionais\n• 🔄 Sugestões de substituição, se necessário\n\nSeja prático e objetivo.`
+    },
+    {
+        categoria: "📋 Planejamento",
+        nivel: "intermediario",
+        titulo: "📅🥗 Plano Alimentar Estratégico",
+        quando: "Para organizar alimentação saudável.",
+        prompt: `Crie um plano alimentar semanal considerando:\n\n• Meu objetivo: [EMAGRECER / GANHAR MASSA / EQUILÍBRIO]\n• Restrições alimentares: [SE HOUVER]\n• Tempo disponível para preparar refeições\n\nOrganize de forma prática.`
+    },
+    {
+        categoria: "📋 Planejamento",
+        nivel: "intermediario",
+        titulo: "🥗🔥 Plano de Emagrecimento Saudável",
+        quando: "Para organizar emagrecimento sem soluções radicais.",
+        prompt: `Você é nutricionista esportivo.\n\nCrie um plano de emagrecimento saudável dividido em:\n\n🥗 Alimentação\n🏋️ Treino\n🧠 Mentalidade\n📊 Acompanhamento semanal\n\nEvite soluções radicais e foque em consistência.`
+    },
+    {
+        categoria: "💪 Execução",
+        nivel: "basico",
+        titulo: "🏋️‍♀️📅 Plano Semanal para Iniciantes",
+        quando: "Para começar a treinar de forma equilibrada.",
+        prompt: `Monte um plano semanal de exercícios equilibrado para iniciantes.\n\nInclua:\n• 💪 Dias de treino\n• 🧘 Dias de descanso\n• 🔄 Tipo de exercício por dia\n• ⏱️ Duração recomendada`
+    },
+    {
+        categoria: "💪 Execução",
+        nivel: "basico",
+        titulo: "💻🧘 Alongamentos para Quem Trabalha Sentado",
+        quando: "Para aliviar tensão física de quem trabalha muitas horas sentado.",
+        prompt: `Crie uma rotina de alongamentos de 10 minutos para quem trabalha o dia todo sentado em frente ao computador.\n\nInclua:\n\n🧍 Alongamentos para pescoço  \n💪 Alongamentos para ombros  \n🦴 Coluna e lombar  \n🦵 Pernas e circulação  \n\nExplique:\n• ⏱️ Tempo de cada exercício\n• 🔁 Número de repetições\n• ⚠️ Cuidados importantes\n\nOrganize de forma simples e fácil de aplicar no ambiente de trabalho.`
+    },
+    {
+        categoria: "💪 Execução",
+        nivel: "intermediario",
+        titulo: "🏋️‍♂️💪 Plano de Exercícios Personalizado",
+        quando: "Para organizar rotina de treino.",
+        prompt: `Monte um plano de exercícios para:\n\n• Objetivo: [DEFINA]\n• Tempo disponível por dia\n• Nível atual\n\nInclua:\n• Divisão semanal\n• Tipo de treino\n• Duração`
+    },
+    {
+        categoria: "💪 Execução",
+        nivel: "intermediario",
+        titulo: "🚶‍♂️📈 Plano 30 Dias Contra Sedentarismo",
+        quando: "Para sair do sedentarismo com metas progressivas.",
+        prompt: `Você é especialista em mudança de hábitos.\n\nCrie um plano de 30 dias para sair do sedentarismo.\n\nInclua:\n• 📅 Metas progressivas\n• 🏃 Evolução semanal\n• 📊 Acompanhamento simples\n• 🧠 Estratégia para manter consistência`
+    },
+    {
+        categoria: "💪 Execução",
+        nivel: "avancado",
+        titulo: "🏆🔥 Plano de Alta Performance Física",
+        quando: "Para melhorar desempenho físico de forma estratégica.",
+        prompt: `Você é treinador de alta performance.\n\nCrie um plano estratégico para melhorar:\n\n💪 Força\n🏃 Resistência\n🔄 Recuperação\n📊 Monitoramento de progresso\n\nOrganize de forma profissional e progressiva.`
+    },
+    {
+        categoria: "📊 Monitoramento",
+        nivel: "avancado",
+        titulo: "📈🧠 Sistema de Acompanhamento de Saúde",
+        quando: "Para acompanhar evolução física e mental.",
+        prompt: `Crie um sistema de acompanhamento de saúde considerando:\n\n• Alimentação\n• Exercícios\n• Sono\n• Nível de energia\n• Estresse\n\nOrganize como planilha ou checklist semanal.`
+    }
 ];
+
+// Injeção dinâmica dos botões de filtro de categoria
+const containerCategorias = document.getElementById("botoes-categoria");
+let htmlCategorias = '<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
+
+ordemCategorias.forEach(cat => {
+    htmlCategorias += `<button onclick="filtrarCategoria(event, '${cat}')">${cat}</button>`;
+});
+containerCategorias.innerHTML = htmlCategorias;
 
 const lista = document.getElementById("lista-prompts");
 const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
+let estadoFiltroTexto = "";
+let estadoFiltroNivel = "todos";
+let estadoFiltroCategoria = "todas";
+
+// --- RENDERIZAÇÃO EM BLOCOS DE CATEGORIAS SEPARADAS ---
 function renderizar(arr){
+    lista.innerHTML = "";
+    contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
-lista.innerHTML="";
-contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+    ordemCategorias.forEach(cat => {
+        const grupo = arr.filter(p => p.categoria === cat);
+        if(grupo.length === 0) return;
 
-ordemCategorias.forEach(cat=>{
+        const blocoCategoria = document.createElement("section");
+        blocoCategoria.className = "secao-categoria";
 
-const grupo = arr.filter(p=>p.categoria===cat);
+        const tituloSecao = document.createElement("h2");
+        tituloSecao.className = "secao-titulo";
+        tituloSecao.innerText = cat;
+        blocoCategoria.appendChild(tituloSecao);
 
-if(grupo.length===0) return;
+        const gridPrompts = document.createElement("div");
+        gridPrompts.className = "grid-prompts";
 
-const tituloSecao=document.createElement("h2");
-tituloSecao.className="secao-titulo";
-tituloSecao.innerText=cat;
-lista.appendChild(tituloSecao);
+        grupo.forEach(p => {
+            const card = document.createElement("div");
+            card.className = "card";
+            
+            card.innerHTML = `
+                <div class="nivel nivel-${p.nivel || 'basico'}">
+                    ${p.nivel === 'avancado' ? '🔴 Avançado' : p.nivel === 'intermediario' ? '🟡 Intermediário' : '🟢 Básico'}
+                </div>
+                <h3>${p.titulo}</h3>
+                <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+                <pre>${p.prompt}</pre>
+                <div class="acoes">
+                    <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+                    <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+                    <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+                    <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+                </div>
+            `;
+            gridPrompts.appendChild(card);
+        });
 
-grupo.forEach(p=>{
-
-const card=document.createElement("div");
-card.className="card";
-card.dataset.nivel=p.nivel;
-
-card.innerHTML=`
-<div class="nivel nivel-${p.nivel}">
-${p.nivel==="avancado"?"🔴 Avançado":
-p.nivel==="intermediario"?"🟡 Intermediário":"🟢 Básico"}
-</div>
-
-<h3>${p.titulo}</h3>
-<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-<pre>${p.prompt}</pre>
-
-<div class="acoes">
-<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-<button onclick="favoritarPrompt('${p.titulo}',\`${p.prompt}\`)">⭐ Favoritar</button>
-<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-</div>
-`;
-
-lista.appendChild(card);
-
-});
-
-});
-
+        blocoCategoria.appendChild(gridPrompts);
+        lista.appendChild(blocoCategoria);
+    });
 }
 
-function filtrarPrompts(){
-const termo=busca.value.toLowerCase();
-const filtrados=prompts.filter(p=>
-p.titulo.toLowerCase().includes(termo)||
-p.prompt.toLowerCase().includes(termo)||
-p.categoria.toLowerCase().includes(termo)
-);
-renderizar(filtrados);
+function atualizarFiltros() {
+    estadoFiltroTexto = busca.value.toLowerCase();
+    
+    const filtrados = promptsSaude.filter(p => {
+        const matchTexto = p.titulo.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.prompt.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.categoria.toLowerCase().includes(estadoFiltroTexto);
+        
+        const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
+        const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria === estadoFiltroCategoria;
+
+        return matchTexto && matchNivel && matchCategoria;
+    });
+
+    renderizar(filtrados);
 }
 
-function filtrarNivel(event,nivel){
+function filtrarCategoria(event, categoria) {
+    document.querySelectorAll(".filtro-categoria button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroCategoria = categoria;
+    atualizarFiltros();
+}
 
-document.querySelectorAll(".filtro-nivel button")
-.forEach(btn=>btn.classList.remove("ativo"));
-event.target.classList.add("ativo");
-
-const filtrados = nivel==="todos"
-? prompts
-: prompts.filter(p=>p.nivel===nivel);
-
-renderizar(filtrados);
+function filtrarNivel(event, nivel) {
+    document.querySelectorAll(".filtro-nivel button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroNivel = nivel;
+    atualizarFiltros();
 }
 
 function copiarPrompt(texto){
-navigator.clipboard.writeText(texto);
-alert("📋 Copiado!");
+    navigator.clipboard.writeText(texto);
+    alert("📋 Prompt copiado!");
 }
 
-function favoritarPrompt(titulo,conteudo){
-const salvos=JSON.parse(localStorage.getItem("deltaPrompts"))||[];
-salvos.push({
-id:Date.now(),
-titulo,
-categoria:"Saúde",
-conteudo,
-favorito:true
-});
-localStorage.setItem("deltaPrompts",JSON.stringify(salvos));
-alert("⭐ Favoritado!");
+function favoritarPrompt(titulo, conteudo){
+    const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+    prompts.push({
+        id: Date.now(),
+        titulo,
+        categoria: "Saúde",
+        conteudo,
+        favorito: true
+    });
+    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+    alert("⭐ Adicionado aos favoritos!");
 }
 
 function abrirChatGPT(texto){
-window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
+    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
 }
 
 function abrirGemini(texto){
-window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
+    const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
 }
 
-renderizar(prompts);
+// Inicializa a renderização
+renderizar(promptsSaude);
 
 </script>
 
 </body>
 </html>
-
-
