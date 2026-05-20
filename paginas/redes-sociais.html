@@ -4,249 +4,322 @@
 <meta charset="UTF-8">
 <title>Redes Sociais | Delta Prompts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../style.css">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+
+<style>
+/* --- ESTILOS PADRONIZADOS DA NAVEGAÇÃO E FILTROS --- */
+.top-bar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+.top-bar input {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.contador {
+    font-size: 14px;
+    opacity: 0.75;
+}
+pre {
+    white-space: pre-wrap;
+    font-size: 14px;
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.filtros-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.filtro-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.filtro-botoes button {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.filtro-botoes button:hover {
+    background: #f0f0f0;
+}
+.filtro-botoes button.ativo {
+    background: #db2777;
+    color: white;
+    border-color: #db2777;
+}
+
+/* --- ESTILO DAS CATEGORIAS SEPARADAS POR BLOCOS --- */
+.secao-categoria {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f1f5f9;
+}
+.secao-titulo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+.grid-prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+</style>
+
 </head>
 
 <body>
 
 <div id="menu"></div>
-<script src="../menu-loader.js"></script>
+<script src="/delta-prompts/menu-loader.js"></script>
 
 <main>
 
 <h1>📱 Prompts para Redes Sociais</h1>
 
-<p style="max-width:800px;">
-Prompts estratégicos para criar conteúdos impactantes
-para Instagram, WhatsApp, Facebook e LinkedIn.
+<p>
+Prompts estratégicos para criar conteúdos impactantes para Instagram, WhatsApp, Facebook e LinkedIn.
 </p>
 
-<h2 style="margin-top:20px;">🎯 Objetivo</h2>
-<p style="max-width:800px;">
-Gerar autoridade, conexão e vendas com comunicação estratégica.
-</p>
+<section class="card">
+  <h3>🎯 Objetivo</h3>
+  <p>
+    Gerar autoridade, conexão, engajamento e vendas através de uma comunicação altamente estratégica e persuasiva.
+  </p>
+</section>
 
-<!-- BUSCA -->
-<div style="margin:30px 0; display:flex; gap:15px; align-items:center;">
-<input type="text" id="busca" placeholder="Buscar prompt..."
-style="padding:12px; border-radius:10px; border:1px solid #ddd; flex:1;">
-<div id="contador" style="font-weight:bold; color:#5b5ce2;">
-Total: 6 prompts
-</div>
-</div>
+<section class="card">
+  <h3>🗺️ Pilares do Conteúdo</h3>
+  <ul style="line-height:1.6;">
+    <li><strong>🔥 Autoridade & Opinião:</strong> Posicionamento forte e quebra de objeções cotidianas.</li>
+    <li><strong>📖 Conexão & Storytelling:</strong> Narrativas que geram empatia e identificação imediata.</li>
+    <li><strong>💡 Educativo & Valor:</strong> Tutoriais e dicas práticas que geram salvamentos e compartilhamentos.</li>
+    <li><strong>🎯 Vendas & Conversão:</strong> Ofertas sutis e diretas focadas em atrair leads e fechar negócios.</li>
+  </ul>
+</section>
 
-<!-- ===================== -->
-<!-- 1 -->
-<!-- ===================== -->
-
-<div class="card prompt-card">
-<h3>🔥 Post de Autoridade</h3>
-<p><strong>💡 Quando usar:</strong> Para se posicionar como especialista.</p>
-<p class="prompt-text">
-Crie um post sobre [TEMA] com frase inicial forte,
-explicação clara do problema
-e insight estratégico final.
-</p>
-
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button 
-class="fav-btn"
-data-id="rs01"
-data-titulo="Post de Autoridade"
-data-texto="Crie um post sobre [TEMA] com frase inicial forte..."
-data-categoria="redes-sociais">
-🤍
-</button>
-</div>
+<div class="top-bar">
+<input type="text" id="busca" placeholder="🔎 Buscar modelo de post ou rede social..." oninput="atualizarFiltros()">
+<div class="contador" id="contador"></div>
 </div>
 
-<!-- ===================== -->
-<!-- 2 -->
-<!-- ===================== -->
+<div class="filtros-container">
+    
+    <div class="filtro-botoes filtro-categoria" id="botoes-categoria"></div>
 
-<div class="card prompt-card">
-<h3>📖 Post Storytelling</h3>
-<p><strong>💡 Quando usar:</strong> Para gerar conexão emocional.</p>
-<p class="prompt-text">
-Crie um post em formato storytelling sobre [TEMA],
-mostrando desafio, virada de chave e aprendizado final.
-</p>
+    <div class="filtro-botoes filtro-nivel">
+        <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
+        <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+        <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+        <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+    </div>
 
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button 
-class="fav-btn"
-data-id="rs02"
-data-titulo="Post Storytelling"
-data-texto="Crie um post em formato storytelling sobre [TEMA]..."
-data-categoria="redes-sociais">
-🤍
-</button>
-</div>
 </div>
 
-<!-- ===================== -->
-<!-- 3 -->
-<!-- ===================== -->
-
-<div class="card prompt-card">
-<h3>📚 Post Educativo</h3>
-<p><strong>💡 Quando usar:</strong> Para entregar valor prático.</p>
-<p class="prompt-text">
-Crie um post educativo sobre [TEMA]
-dividido em 3 tópicos claros e objetivos.
-</p>
-
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button 
-class="fav-btn"
-data-id="rs03"
-data-titulo="Post Educativo"
-data-texto="Crie um post educativo sobre [TEMA] dividido em 3 tópicos..."
-data-categoria="redes-sociais">
-🤍
-</button>
-</div>
-</div>
-
-<!-- ===================== -->
-<!-- 4 -->
-<!-- ===================== -->
-
-<div class="card prompt-card">
-<h3>⚡ Post de Opinião</h3>
-<p><strong>💡 Quando usar:</strong> Para gerar debate.</p>
-<p class="prompt-text">
-Crie um post opinativo sobre [TEMA],
-quebrando uma crença comum e incentivando comentários.
-</p>
-
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button 
-class="fav-btn"
-data-id="rs04"
-data-titulo="Post de Opinião"
-data-texto="Crie um post opinativo sobre [TEMA]..."
-data-categoria="redes-sociais">
-🤍
-</button>
-</div>
-</div>
-
-<!-- ===================== -->
-<!-- 5 -->
-<!-- ===================== -->
-
-<div class="card prompt-card">
-<h3>🎯 Post de Venda Natural</h3>
-<p><strong>💡 Quando usar:</strong> Para vender sem parecer venda.</p>
-<p class="prompt-text">
-Crie um post despertando desejo pelo [produto/serviço],
-mostrando problema e solução de forma natural.
-</p>
-
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button 
-class="fav-btn"
-data-id="rs05"
-data-titulo="Post de Venda Natural"
-data-texto="Crie um post despertando desejo pelo [produto/serviço]..."
-data-categoria="redes-sociais">
-🤍
-</button>
-</div>
-</div>
-
-<!-- ===================== -->
-<!-- 6 -->
-<!-- ===================== -->
-
-<div class="card prompt-card">
-<h3>📲 Status WhatsApp Impactante</h3>
-<p><strong>💡 Quando usar:</strong> Para mensagens curtas e diretas.</p>
-<p class="prompt-text">
-Crie uma mensagem curta para status do WhatsApp
-sobre [TEMA], com impacto imediato.
-</p>
-
-<div class="acoes">
-<button onclick="copiarPrompt(this)">📋 Copiar</button>
-<button onclick="abrirChatGPT(this)">🤖 ChatGPT</button>
-<button onclick="abrirGemini(this)">✨ Gemini</button>
-<button 
-class="fav-btn"
-data-id="rs06"
-data-titulo="Status WhatsApp Impactante"
-data-texto="Crie uma mensagem curta para status do WhatsApp..."
-data-categoria="redes-sociais">
-🤍
-</button>
-</div>
-</div>
+<div id="lista-prompts"></div>
 
 </main>
 
 <script>
 
-function pegarTexto(btn){
-  return btn.closest(".card").querySelector(".prompt-text").innerText.trim();
-}
+const ordemCategorias = [
+    "🔥 Autoridade & Opinião",
+    "📖 Conexão & Storytelling",
+    "💡 Educativo & Valor",
+    "🎯 Vendas & Conversão"
+];
 
-function copiarPrompt(btn){
-  const texto = pegarTexto(btn);
-  navigator.clipboard.writeText(texto);
-  btn.innerText = "✅";
-  setTimeout(()=>btn.innerText="📋 Copiar",1000);
-}
-
-function abrirChatGPT(btn){
-  const texto = pegarTexto(btn);
-  navigator.clipboard.writeText(texto);
-  window.open("https://chat.openai.com/?q=" + encodeURIComponent(texto), "_blank");
-}
-
-function abrirGemini(btn){
-  const texto = pegarTexto(btn);
-  navigator.clipboard.writeText(texto);
-  window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto), "_blank");
-}
-
-/* BUSCA */
-
-const busca = document.getElementById("busca");
-const cards = document.querySelectorAll(".prompt-card");
-const contador = document.getElementById("contador");
-
-busca.addEventListener("input", function(){
-  let visiveis = 0;
-  const termo = this.value.toLowerCase();
-
-  cards.forEach(card=>{
-    const texto = card.innerText.toLowerCase();
-    if(texto.includes(termo)){
-      card.style.display="block";
-      visiveis++;
-    } else {
-      card.style.display="none";
+const promptsRedes = [
+    {
+        categoria: "🔥 Autoridade & Opinião",
+        nivel: "basico",
+        titulo: "🔥 Post de Autoridade",
+        quando: "Para se posicionar como especialista e referência na sua área.",
+        prompt: `Crie um post focado em autoridade sobre o tema [TEMA].\n\nEstruture o conteúdo seguindo as diretrizes:\n1. Uma frase inicial (gancho) forte que prenda a atenção do leitor nos primeiros 3 segundos.\n2. Uma explicação clara e objetiva sobre o problema central que a maioria comete nesse assunto.\n3. Um insight estratégico final que mostre que você domina totalmente a solução prática para esse cenário.`
+    },
+    {
+        categoria: "🔥 Autoridade & Opinião",
+        nivel: "intermediario",
+        titulo: "⚡ Post de Opinião (Gerador de Debate)",
+        quando: "Para movimentar os comentários quebrando uma crença comum do mercado.",
+        prompt: `Escreva um post opinativo e altamente engajante sobre o tema [TEMA].\n\nDiretrizes de escrita:\n- Comece quebrando de forma direta uma crença ou mito muito comum do mercado.\n- Explique com argumentos sólidos e lógicos o porquê essa visão comum está errada ou defasada.\n- Termine com uma pergunta forte que incentive as pessoas a deixarem suas opiniões nos comentários.`
+    },
+    {
+        categoria: "📖 Conexão & Storytelling",
+        nivel: "intermediario",
+        titulo: "📖 Post Storytelling (Conexão Emocional)",
+        quando: "Para gerar forte empatia humanizando sua trajetória ou a da empresa.",
+        prompt: `Crie um post em formato de Storytelling narrativo focado na temática [TEMA].\n\nDesenvolva o texto utilizando a seguinte estrutura clássica:\n- Cenário / Desafio Inicial: Mostre a dificuldade realista ou a dúvida comum enfrentada no início.\n- A Virada de Chave: O momento do estalo, da decisão ou da descoberta da solução.\n- Aprendizado Final: Qual lição valiosa essa história traz para quem está lendo hoje.`
+    },
+    {
+        categoria: "💡 Educativo & Valor",
+        nivel: "basico",
+        titulo: "📚 Post Educativo (Prático e Acionável)",
+        quando: "Excelente para gerar compartilhamentos e salvamentos entregando valor direto.",
+        prompt: `Desenvolva um texto para post educativo explicando o conceito de [TEMA].\n\nOrganize o conteúdo de forma extremamente limpa e visual:\n- Divida a explicação em exatamente 3 tópicos claros, objetivos e numerados.\n- Utilize bullet points e emojis para facilitar a leitura rápida.\n- Conclua incentivando o leitor a salvar o post para consultar o checklist prático mais tarde.`
+    },
+    {
+        categoria: "🎯 Vendas & Conversão",
+        nivel: "intermediario",
+        titulo: "🎯 Post de Venda Natural (Invisível)",
+        quando: "Para despertar desejo real por um produto/serviço sem parecer panfletagem agressiva.",
+        prompt: `Atue como um Copywriter especialista em vendas orgânicas.\n\nEscreva um texto focado em despertar desejo sutil pelo [PRODUTO OU SERVIÇO].\n\nEstrutura do post:\n- Inicie mapeando uma dor ou frustração real que o cliente ideal sente no dia a dia.\n- Apresente a solução mostrando os benefícios práticos de forma natural.\n- Finalize com uma Call to Action (CTA) elegante convidando o cliente a entrar em contato via Direct ou link da bio.`
+    },
+    {
+        categoria: "🎯 Vendas & Conversão",
+        nivel: "basico",
+        titulo: "📲 Status WhatsApp Impactante",
+        quando: "Para comunicações rápidas, limpas e diretas na barra de status ou stories curtos.",
+        prompt: `Crie 3 opções de mensagens curtas e de forte impacto visual para serem publicadas nos Status do WhatsApp sobre o tema: [TEMA].\n\nRegras:\n- Cada opção deve ter no máximo 2 a 3 linhas.\n- Devem ir direto ao ponto gerando curiosidade imediata.\n- Utilize gatilhos mentais simples e chamativos acompanhados de emojis estratégicos.`
     }
-  });
+];
 
-  contador.innerText = "Resultados: " + visiveis;
+// Injeção dinâmica dos botões de filtro de categoria
+const containerCategorias = document.getElementById("botoes-categoria");
+let htmlCategorias = '<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
+
+ordemCategorias.forEach(cat => {
+    htmlCategorias += `<button onclick="filtrarCategoria(event, '${cat}')">${cat}</button>`;
 });
+containerCategorias.innerHTML = htmlCategorias;
+
+const lista = document.getElementById("lista-prompts");
+const contador = document.getElementById("contador");
+const busca = document.getElementById("busca");
+
+let estadoFiltroTexto = "";
+let estadoFiltroNivel = "todos";
+let estadoFiltroCategoria = "todas";
+
+// --- RENDERIZAÇÃO EM BLOCOS DE CATEGORIAS SEPARADAS ---
+function renderizar(arr){
+    lista.innerHTML = "";
+    contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+
+    ordemCategorias.forEach(cat => {
+        const grupo = arr.filter(p => p.categoria === cat);
+        if(grupo.length === 0) return;
+
+        const blocoCategoria = document.createElement("section");
+        blocoCategoria.className = "secao-categoria";
+
+        const tituloSecao = document.createElement("h2");
+        tituloSecao.className = "secao-titulo";
+        tituloSecao.innerText = cat;
+        blocoCategoria.appendChild(tituloSecao);
+
+        const gridPrompts = document.createElement("div");
+        gridPrompts.className = "grid-prompts";
+
+        grupo.forEach(p => {
+            const card = document.createElement("div");
+            card.className = "card";
+            
+            card.innerHTML = `
+                <div class="nivel nivel-${p.nivel || 'basico'}">
+                    ${p.nivel === 'avancado' ? '🔴 Avançado' : p.nivel === 'intermediario' ? '🟡 Intermediário' : '🟢 Básico'}
+                </div>
+                <h3>${p.titulo}</h3>
+                <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+                <pre>${p.prompt}</pre>
+                <div class="acoes">
+                    <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+                    <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+                    <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+                    <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+                </div>
+            `;
+            gridPrompts.appendChild(card);
+        });
+
+        blocoCategoria.appendChild(gridPrompts);
+        lista.appendChild(blocoCategoria);
+    });
+}
+
+function atualizarFiltros() {
+    estadoFiltroTexto = busca.value.toLowerCase();
+    
+    const filtrados = promptsRedes.filter(p => {
+        const matchTexto = p.titulo.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.prompt.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.categoria.toLowerCase().includes(estadoFiltroTexto);
+        
+        const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
+        const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria === estadoFiltroCategoria;
+
+        return matchTexto && matchNivel && matchCategoria;
+    });
+
+    renderizar(filtrados);
+}
+
+function filtrarCategoria(event, categoria) {
+    document.querySelectorAll(".filtro-categoria button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroCategoria = categoria;
+    atualizarFiltros();
+}
+
+function filtrarNivel(event, nivel) {
+    document.querySelectorAll(".filtro-nivel button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroNivel = nivel;
+    atualizarFiltros();
+}
+
+function copiarPrompt(texto){
+    navigator.clipboard.writeText(texto);
+    alert("📋 Prompt copiado!");
+}
+
+function favoritarPrompt(titulo, conteudo){
+    const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+    prompts.push({
+        id: Date.now(),
+        titulo,
+        categoria: "Redes Sociais",
+        conteudo,
+        favorito: true
+    });
+    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+    alert("⭐ Adicionado aos favoritos!");
+}
+
+function abrirChatGPT(texto){
+    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
+}
+
+function abrirGemini(texto){
+    const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
+}
+
+// Inicializa a renderização completa da tela
+renderizar(promptsRedes);
 
 </script>
 
