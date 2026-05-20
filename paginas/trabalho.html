@@ -112,6 +112,20 @@ organizar projetos e crescer estrategicamente na carreira.
 </p>
 </section>
 
+<section class="card">
+<h3>🗺️ Como os Prompts Estão Organizados</h3>
+<p>
+Esta página está dividida em categorias estratégicas
+para facilitar sua rotina e evolução no trabalho:
+</p>
+<ul style="margin-top:10px; line-height:1.7;">
+<li><strong>📋 Organização:</strong> Estruturação de tarefas, processos e e-mails.</li>
+<li><strong>📈 Produtividade:</strong> Planos de foco e automação de rotinas.</li>
+<li><strong>🎯 Estratégia:</strong> Análise de mercado, planejamento e negociações.</li>
+<li><strong>🚀 Crescimento Profissional:</strong> Evolução de carreira e aprendizado acelerado.</li>
+</ul>
+</section>
+
 <div class="top-bar">
     <input type="text" id="busca" placeholder="🔎 Buscar modelo profissional..." oninput="atualizarFiltros()">
     <div class="contador" id="contador"></div>
@@ -144,48 +158,98 @@ const ordemCategorias = [
     "🚀 Crescimento Profissional"
 ];
 
+// Array atualizado contendo o novo prompt de comunicação com o cliente
 const promptsTrabalho = [
     {
         categoria: "📋 Organização",
         nivel: "basico",
-        titulo: "📋 Organização de Tarefas",
-        quando: "Quando estiver sobrecarregado e precisar organizar prioridades.",
+        titulo: "💬 Mensagem Profissional e Polida para Clientes",
+        quando: "Quando precisar contatar ou responder um cliente com o máximo de educação, clareza e profissionalismo.",
+        prompt: `Atue como um especialista em atendimento ao cliente de alto padrão e comunicação corporativa.\n\nEscreva uma mensagem extremamente polida, educada e profissional para ser enviada a um cliente via [WhatsApp/E-mail].\n\nContexto da situação: [EXPLIQUE O MOTIVO, EX: ENVIO DE CONTRATO, ANDAMENTO DE VISTORIA, SOLICITAÇÃO DE DOCUMENTOS OU RESPONDER UM QUESTIONAMENTO].\n\nDiretrizes obrigatórias:\n1. Inicie com uma saudação cordial, respeitosa e personalizada.\n2. Vá direto ao ponto de forma clara, mantendo a gentileza absoluta.\n3. Demonstre empatia, segurança e total prontidão para esclarecer qualquer dúvida.\n4. Conclua com uma despedida elegante e uma chamada para ação clara (ex: "Fico no aguardo do seu retorno para darmos o próximo passo").\n5. Deixe campos editáveis entre colchetes para personalização.`
+    },
+    {
+        categoria: "📋 Organização",
+        nivel: "basico",
+        titulo: "📋 Organização de Tarefas e Prioridades",
+        quando: "Quando estiver sobrecarregado e precisar organizar prioridades diárias.",
         prompt: `Você é especialista em produtividade.\n\nOrganize minhas tarefas abaixo em ordem de prioridade:\n\n[LISTA DE TAREFAS]\n\nClassifique por:\n- Urgência\n- Importância\n- Impacto\n- Tempo estimado\n\nSugira plano de execução para hoje.`
+    },
+    {
+        categoria: "📋 Organização",
+        nivel: "basico",
+        titulo: "📧 Triagem e Resumo de Comunicações",
+        quando: "Quando precisar lidar com muitos e-mails ou mensagens e formular respostas profissionais.",
+        prompt: `Atue como meu assistente executivo.\n\nLeia o texto/e-mail abaixo e faça o seguinte:\n1. Resuma o ponto principal em uma frase.\n2. Liste as ações exigidas da minha parte.\n3. Crie 3 opções de resposta curta e profissional (uma aceitando, uma recusando educadamente, e uma pedindo mais informações ou prazo).\n\nTEXTO: [COLE O E-MAIL OU MENSAGEM AQUI]`
+    },
+    {
+        categoria: "📋 Organização",
+        nivel: "intermediario",
+        titulo: "⚙️ Padronização de Processos (POP)",
+        quando: "Para criar check-lists claros na análise de documentos, vistorias ou rotinas repetitivas.",
+        prompt: `Você é um especialista em operações e qualidade.\n\nPreciso criar um Procedimento Operacional Padrão (POP) e um check-list prático para a seguinte rotina:\n[DESCREVER A TAREFA/ROTINA]\n\nEstruture a resposta com:\n- Objetivo do processo.\n- Passo a passo numerado de forma clara.\n- Principais pontos de atenção (onde erros costumam acontecer).\n- Como validar se o trabalho foi bem feito no final.`
+    },
+    {
+        categoria: "📈 Produtividade",
+        nivel: "intermediario",
+        titulo: "🧠 Organização Estratégica da Rotina",
+        quando: "Quando quiser organizar sua rotina semanal de forma mais produtiva e estratégica.",
+        prompt: `Você é um consultor de produtividade executiva.\n\nOBJETIVO:\nOrganizar minha rotina profissional de forma estratégica.\n\nINSTRUÇÕES:\n1. Estruture minha semana em blocos produtivos.\n2. Separe tarefas por prioridade (alta, média e baixa).\n3. Identifique tarefas que podem ser delegadas.\n4. Sugira um método simples de acompanhamento diário.\n5. Inclua um modelo prático de planejamento semanal.\n\nSeja claro, direto e aplicável à rotina profissional.`
     },
     {
         categoria: "📈 Produtividade",
         nivel: "intermediario",
         titulo: "📈 Plano de Alta Performance",
-        quando: "Para melhorar produtividade semanal.",
-        prompt: `Você é consultor de alta performance profissional.\n\nMonte um plano de produtividade considerando:\n\n- Minha função: [CARGO]\n- Minha rotina atual: [DESCREVER]\n- Objetivo profissional: [OBJETIVO]\n\nInclua:\n- Rotina ideal\n- Blocos de foco\n- Métricas de acompanhamento\n- Ajustes estratégicos`
+        quando: "Para melhorar o rendimento e o foco nos objetivos profissionais.",
+        prompt: `Você é consultor de alta performance profissional.\n\nMonte um plano de produtividade considerando:\n\n- Minha função: [CARGO]\n- Minha rotina atual: [DESCREVER]\n- Objetivo profissional: [OBJETIVO]\n\nInclua:\n- Rotina ideal (manhã e tarde)\n- Blocos de foco ininterrupto\n- Métricas de acompanhamento semanais\n- Ajustes estratégicos para evitar procrastinação`
+    },
+    {
+        categoria: "📈 Produtividade",
+        nivel: "avancado",
+        titulo: "🤖 Otimização de Tarefas com Inteligência Artificial",
+        quando: "Para descobrir onde você pode economizar tempo usando IA no trabalho.",
+        prompt: `Atue como um especialista em automação e engenharia de prompt.\n\nAbaixo descrevo minhas principais tarefas diárias:\n[LISTAR TAREFAS]\n\nAnalise essa lista e identifique pelo menos 3 processos que podem ser otimizados, acelerados ou automatizados com o uso de IAs (como Gemini, ChatGPT, Perplexity, etc). Descreva a ferramenta ideal para cada tarefa e me dê um modelo de prompt base para começar a testar essa automação agora mesmo.`
+    },
+    {
+        categoria: "🎯 Estratégia",
+        nivel: "intermediario",
+        titulo: "🤝 Roteiro Estratégico de Negociação",
+        quando: "Para se preparar antes de acordos, negociação de valores ou fechamento de contratos.",
+        prompt: `Atue como um especialista in negociação e resolução de conflitos.\n\nVou entrar em uma negociação com o seguinte cenário:\n- Meu objetivo: [O QUE VOCÊ QUER ALCANÇAR]\n- Outra parte: [QUEM É A PESSOA/EMPRESA]\n- Contexto/Oferta: [DETALHES]\n\nCrie um roteiro estratégico contendo:\n1. Argumentos principais de persuasão.\n2. As 3 maiores objeções que a outra parte fará e como rebatê-las de forma lógica.\n3. Uma "Moeda de troca" (concessão de baixo custo para mim, mas de alto valor para eles) para ajudar a fechar o acordo.`
     },
     {
         categoria: "🎯 Estratégia",
         nivel: "avancado",
-        titulo: "🎯 Planejamento Estratégico Profissional",
-        quando: "Para estruturar metas e decisões importantes.",
-        prompt: `Atue como estrategista corporativo.\n\nMonte um planejamento estratégico para:\n\n[OBJETIVO PROFISSIONAL]\n\nInclua:\n- Análise de cenário\n- Riscos\n- Oportunidades\n- Plano de ação\n- Indicadores de sucesso\n- Cronograma`
+        titulo: "📊 Pesquisa de Mercado e Inteligência Competitiva",
+        quando: "Para levantar dados sobre a concorrência e embasar decisões táticas na sua região.",
+        prompt: `Atue como um analista de inteligência competitiva e pesquisa de mercado.\n\nPreciso levantar dados e analisar a concorrência no mercado de [SETOR/NICHO] na região de [CIDADE/BAIRRO]. \n\nCrie um roteiro estruturado mostrando:\n- Quais métricas e dados devo pesquisar para comparar com o meu negócio (ex: preço, qualidade, posicionamento).\n- Como identificar os diferenciais (pontos fracos da concorrência que posso explorar).\n- Estrutura de uma tabela para eu organizar essas informações e tirar conclusões rápidas.`
     },
     {
-        categoria: "📈 Produtividade",
-        nivel: "intermediario",
-        titulo: "🧠 Organização Estratégica da Rotina Profissional",
-        quando: "Quando quiser organizar sua rotina semanal de forma mais produtiva e estratégica.",
-        prompt: `Você é um consultor de produtividade executiva.\n\nOBJETIVO:\nOrganizar minha rotina profissional de forma estratégica.\n\nINSTRUÇÕES:\n1. Estruture minha semana em blocos produtivos.\n2. Separe tarefas por prioridade (alta, média e baixa).\n3. Identifique tarefas que podem ser delegadas.\n4. Sugira um método simples de acompanhamento diário.\n5. Inclua um modelo prático de planejamento semanal.\n\nSeja claro, direto e aplicável à rotina profissional.`
+        categoria: "🎯 Estratégia",
+        nivel: "avancado",
+        titulo: "🎯 Planejamento Estratégico e Tomada de Decisão",
+        quando: "Para estruturar metas complexas e mitigar riscos antes de agir.",
+        prompt: `Atue como estrategista corporativo.\n\nMonte um planejamento estratégico detalhado para atingir o seguinte resultado:\n[OBJETIVO PROFISSIONAL / PROJETO]\n\nInclua:\n- Análise de cenário (Prós e Contras)\n- Mapeamento de Riscos e planos de contingência\n- Oportunidades ocultas\n- Plano de ação dividido em fases\n- Indicadores-chave de sucesso (KPIs)\n- Cronograma de execução`
+    },
+    {
+        categoria: "🚀 Crescimento Profissional",
+        nivel: "basico",
+        titulo: "📚 Trilha de Aprendizado Acelerado (80/20)",
+        quando: "Quando precisar aprender uma ferramenta, técnica ou assunto novo rapidamente para o trabalho.",
+        prompt: `Você é especialista em aprendizado acelerado.\n\nPreciso aprender sobre [TEMA/FERRAMENTA]. Use o Princípio de Pareto (A regra 80/20) para criar um roteiro de estudos.\n\nIdentifique os 20% de conceitos, técnicas ou recursos fundamentais desse assunto que vão me gerar 80% dos resultados na prática profissional. Remova todo o excesso teórico e foque apenas no que eu realmente vou usar no mercado de trabalho. Sugira 3 exercícios práticos iniciais.`
     },
     {
         categoria: "🚀 Crescimento Profissional",
         nivel: "avancado",
-        titulo: "🚀 Otimização Estratégica de Currículo e LinkedIn",
-        quando: "Quando quiser melhorar posicionamento profissional e aumentar oportunidades.",
-        prompt: `Você é um especialista em posicionamento profissional e marca pessoal.\n\nCrie um plano estratégico para otimizar meu currículo e perfil do LinkedIn.\n\nInclua:\n\n- Estrutura ideal do currículo\n- Palavras-chave estratégicas para minha área\n- Como destacar resultados e métricas\n- Erros comuns a evitar\n- Modelo resumido de apresentação profissional\n\nSeja estratégico, competitivo e alinhado ao mercado atual.`
+        titulo: "🚀 Otimização de Currículo e LinkedIn",
+        quando: "Para melhorar seu posicionamento, atrair parceiros de negócios ou novas oportunidades.",
+        prompt: `Você é um especialista em posicionamento profissional, headhunter e branding pessoal.\n\nCom base nas minhas informações abaixo, crie um plano estratégico para otimizar meu perfil do LinkedIn e meu currículo.\n[COLE SEU RESUMO PROFISSIONAL AQUI]\n\nInclua:\n- Título/Headline ideal para o LinkedIn.\n- Palavras-chave essenciais para a minha área.\n- Como transformar minhas tarefas diárias em métricas de resultados e realizações.\n- Um modelo de resumo profissional persuasivo (Sobre Mim).\n- Erros comuns na minha área que devo evitar.`
     },
     {
         categoria: "🚀 Crescimento Profissional",
         nivel: "avancado",
-        titulo: "🚀 Plano de Crescimento de Carreira",
-        quando: "Quando quiser evoluir profissionalmente.",
-        prompt: `Você é especialista em desenvolvimento de carreira.\n\nCrie um plano de crescimento profissional considerando:\n\n- Minha área: [ÁREA]\n- Meu nível atual: [NÍVEL]\n- Objetivo futuro: [OBJETIVO]\n\nInclua:\n- Competências a desenvolver\n- Estratégia de networking\n- Posicionamento profissional\n- Plano de 6 meses`
+        titulo: "🚀 Plano de Crescimento e Metas de Carreira",
+        quando: "Para definir os próximos passos práticos para evoluir na profissão.",
+        prompt: `Você é especialista em desenvolvimento de carreira.\n\nCrie um plano de crescimento profissional prático e objective considerando os seguintes dados:\n- Minha área atual: [ÁREA]\n- Meu nível/cargo atual: [NÍVEL/CARGO]\n- Meu objetivo para daqui 1 a 2 anos: [OBJETIVO FUTURO]\n\nInclua:\n- Hard skills (técnicas) e Soft skills (comportamentais) que preciso desenvolver urgentemente.\n- Estratégias práticas de networking para a minha área.\n- Como devo me posicionar e que tipo de responsabilidades devo começar a assumir agora para provar minha capacidade para o próximo nível.`
     }
 ];
 
@@ -194,9 +258,7 @@ const containerCategorias = document.getElementById("botoes-categoria");
 let htmlCategorias = '<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
 
 ordemCategorias.forEach(cat => {
-    // Remove emojis e espaços para criar um identificador limpo
-    const nomeLimpo = cat.replace(/[^a-zA-ZÀ-ÿ0-9 ]/g, '').trim(); 
-    htmlCategorias += `<button onclick="filtrarCategoria(event, '${nomeLimpo}')">${cat}</button>`;
+    htmlCategorias += `<button onclick="filtrarCategoria(event, '${cat}')">${cat}</button>`;
 });
 containerCategorias.innerHTML = htmlCategorias;
 
@@ -214,21 +276,17 @@ function renderizar(arr){
     contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
     ordemCategorias.forEach(cat => {
-        // Agrupa os prompts ativos pertencentes a esta categoria específica
         const grupo = arr.filter(p => p.categoria === cat);
-        if(grupo.length === 0) return; // Se não houver itens filtrados na categoria, não exibe o bloco
+        if(grupo.length === 0) return;
 
-        // Cria o bloco/contêiner principal da categoria separada
         const blocoCategoria = document.createElement("section");
         blocoCategoria.className = "secao-categoria";
 
-        // Adiciona o título interno do bloco
         const tituloSecao = document.createElement("h2");
         tituloSecao.className = "secao-titulo";
         tituloSecao.innerText = cat;
         blocoCategoria.appendChild(tituloSecao);
 
-        // Cria a grid interna que conterá os cards dos prompts desta categoria
         const gridPrompts = document.createElement("div");
         gridPrompts.className = "grid-prompts";
 
@@ -267,7 +325,7 @@ function atualizarFiltros() {
                            p.categoria.toLowerCase().includes(estadoFiltroTexto);
         
         const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
-        const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria.includes(estadoFiltroCategoria);
+        const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria === estadoFiltroCategoria;
 
         return matchTexto && matchNivel && matchCategoria;
     });
