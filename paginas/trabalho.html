@@ -8,6 +8,86 @@
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
 
+<style>
+/* --- ESTILOS PADRONIZADOS DA NAVEGAÇÃO E FILTROS --- */
+.top-bar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+.top-bar input {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.contador {
+    font-size: 14px;
+    opacity: 0.75;
+}
+pre {
+    white-space: pre-wrap;
+    font-size: 14px;
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.filtros-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.filtro-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.filtro-botoes button {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.filtro-botoes button:hover {
+    background: #f0f0f0;
+}
+.filtro-botoes button.ativo {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* --- ESTILO DAS CATEGORIAS SEPARADAS POR BLOCOS --- */
+.secao-categoria {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f1f5f9;
+}
+.secao-titulo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+.grid-prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+</style>
+
 </head>
 
 <body>
@@ -33,20 +113,22 @@ organizar projetos e crescer estrategicamente na carreira.
 </section>
 
 <div class="top-bar">
-<input
-type="text"
-id="busca"
-placeholder="🔎 Buscar modelo profissional..."
-oninput="filtrarPrompts()"
->
-<div class="contador" id="contador"></div>
+    <input type="text" id="busca" placeholder="🔎 Buscar modelo profissional..." oninput="atualizarFiltros()">
+    <div class="contador" id="contador"></div>
 </div>
 
-<div class="filtro-nivel" style="margin-bottom:20px;">
-<button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos</button>
-<button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
-<button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
-<button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+<div class="filtros-container">
+    
+    <div class="filtro-botoes filtro-categoria" id="botoes-categoria">
+        </div>
+
+    <div class="filtro-botoes filtro-nivel">
+        <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
+        <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
+        <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
+        <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+    </div>
+
 </div>
 
 <div id="lista-prompts"></div>
@@ -56,239 +138,183 @@ oninput="filtrarPrompts()"
 <script>
 
 const ordemCategorias = [
-"📋 Organização",
-"📈 Produtividade",
-"🎯 Estratégia",
-"🚀 Crescimento Profissional"
+    "📋 Organização",
+    "📈 Produtividade",
+    "🎯 Estratégia",
+    "🚀 Crescimento Profissional"
 ];
 
 const promptsTrabalho = [
-
-{
-categoria: "📋 Organização",
-nivel: "basico",
-titulo: "📋 Organização de Tarefas",
-quando: "Quando estiver sobrecarregado e precisar organizar prioridades.",
-prompt: `Você é especialista em produtividade.
-
-Organize minhas tarefas abaixo em ordem de prioridade:
-
-[LISTA DE TAREFAS]
-
-Classifique por:
-- Urgência
-- Importância
-- Impacto
-- Tempo estimado
-
-Sugira plano de execução para hoje.`
-},
-
-{
-categoria: "📈 Produtividade",
-nivel: "intermediario",
-titulo: "📈 Plano de Alta Performance",
-quando: "Para melhorar produtividade semanal.",
-prompt: `Você é consultor de alta performance profissional.
-
-Monte um plano de produtividade considerando:
-
-- Minha função: [CARGO]
-- Minha rotina atual: [DESCREVER]
-- Objetivo profissional: [OBJETIVO]
-
-Inclua:
-- Rotina ideal
-- Blocos de foco
-- Métricas de acompanhamento
-- Ajustes estratégicos`
-},
-
-{
-categoria: "🎯 Estratégia",
-nivel: "avancado",
-titulo: "🎯 Planejamento Estratégico Profissional",
-quando: "Para estruturar metas e decisões importantes.",
-prompt: `Atue como estrategista corporativo.
-
-Monte um planejamento estratégico para:
-
-[OBJETIVO PROFISSIONAL]
-
-Inclua:
-- Análise de cenário
-- Riscos
-- Oportunidades
-- Plano de ação
-- Indicadores de sucesso
-- Cronograma`
-},
-
-  {
-categoria: "📈 Produtividade",
-nivel: "intermediario",
-titulo: "🧠 Organização Estratégica da Rotina Profissional",
-quando: "Quando quiser organizar sua rotina semanal de forma mais produtiva e estratégica.",
-prompt: `Você é um consultor de produtividade executiva.
-
-OBJETIVO:
-Organizar minha rotina profissional de forma estratégica.
-
-INSTRUÇÕES:
-1. Estruture minha semana em blocos produtivos.
-2. Separe tarefas por prioridade (alta, média e baixa).
-3. Identifique tarefas que podem ser delegadas.
-4. Sugira um método simples de acompanhamento diário.
-5. Inclua um modelo prático de planejamento semanal.
-
-Seja claro, direto e aplicável à rotina profissional.`
-},
-
-{
-categoria: "🚀 Crescimento Profissional",
-nivel: "avancado",
-titulo: "🚀 Otimização Estratégica de Currículo e LinkedIn",
-quando: "Quando quiser melhorar posicionamento profissional e aumentar oportunidades.",
-prompt: `Você é um especialista em posicionamento profissional e marca pessoal.
-
-Crie um plano estratégico para otimizar meu currículo e perfil do LinkedIn.
-
-Inclua:
-
-- Estrutura ideal do currículo
-- Palavras-chave estratégicas para minha área
-- Como destacar resultados e métricas
-- Erros comuns a evitar
-- Modelo resumido de apresentação profissional
-
-Seja estratégico, competitivo e alinhado ao mercado atual.`
-},
-
-{
-categoria: "🚀 Crescimento Profissional",
-nivel: "avancado",
-titulo: "🚀 Plano de Crescimento de Carreira",
-quando: "Quando quiser evoluir profissionalmente.",
-prompt: `Você é especialista em desenvolvimento de carreira.
-
-Crie um plano de crescimento profissional considerando:
-
-- Minha área: [ÁREA]
-- Meu nível atual: [NÍVEL]
-- Objetivo futuro: [OBJETIVO]
-
-Inclua:
-- Competências a desenvolver
-- Estratégia de networking
-- Posicionamento profissional
-- Plano de 6 meses`
-}
-
+    {
+        categoria: "📋 Organização",
+        nivel: "basico",
+        titulo: "📋 Organização de Tarefas",
+        quando: "Quando estiver sobrecarregado e precisar organizar prioridades.",
+        prompt: `Você é especialista em produtividade.\n\nOrganize minhas tarefas abaixo em ordem de prioridade:\n\n[LISTA DE TAREFAS]\n\nClassifique por:\n- Urgência\n- Importância\n- Impacto\n- Tempo estimado\n\nSugira plano de execução para hoje.`
+    },
+    {
+        categoria: "📈 Produtividade",
+        nivel: "intermediario",
+        titulo: "📈 Plano de Alta Performance",
+        quando: "Para melhorar produtividade semanal.",
+        prompt: `Você é consultor de alta performance profissional.\n\nMonte um plano de produtividade considerando:\n\n- Minha função: [CARGO]\n- Minha rotina atual: [DESCREVER]\n- Objetivo profissional: [OBJETIVO]\n\nInclua:\n- Rotina ideal\n- Blocos de foco\n- Métricas de acompanhamento\n- Ajustes estratégicos`
+    },
+    {
+        categoria: "🎯 Estratégia",
+        nivel: "avancado",
+        titulo: "🎯 Planejamento Estratégico Profissional",
+        quando: "Para estruturar metas e decisões importantes.",
+        prompt: `Atue como estrategista corporativo.\n\nMonte um planejamento estratégico para:\n\n[OBJETIVO PROFISSIONAL]\n\nInclua:\n- Análise de cenário\n- Riscos\n- Oportunidades\n- Plano de ação\n- Indicadores de sucesso\n- Cronograma`
+    },
+    {
+        categoria: "📈 Produtividade",
+        nivel: "intermediario",
+        titulo: "🧠 Organização Estratégica da Rotina Profissional",
+        quando: "Quando quiser organizar sua rotina semanal de forma mais produtiva e estratégica.",
+        prompt: `Você é um consultor de produtividade executiva.\n\nOBJETIVO:\nOrganizar minha rotina profissional de forma estratégica.\n\nINSTRUÇÕES:\n1. Estruture minha semana em blocos produtivos.\n2. Separe tarefas por prioridade (alta, média e baixa).\n3. Identifique tarefas que podem ser delegadas.\n4. Sugira um método simples de acompanhamento diário.\n5. Inclua um modelo prático de planejamento semanal.\n\nSeja claro, direto e aplicável à rotina profissional.`
+    },
+    {
+        categoria: "🚀 Crescimento Profissional",
+        nivel: "avancado",
+        titulo: "🚀 Otimização Estratégica de Currículo e LinkedIn",
+        quando: "Quando quiser melhorar posicionamento profissional e aumentar oportunidades.",
+        prompt: `Você é um especialista em posicionamento profissional e marca pessoal.\n\nCrie um plano estratégico para otimizar meu currículo e perfil do LinkedIn.\n\nInclua:\n\n- Estrutura ideal do currículo\n- Palavras-chave estratégicas para minha área\n- Como destacar resultados e métricas\n- Erros comuns a evitar\n- Modelo resumido de apresentação profissional\n\nSeja estratégico, competitivo e alinhado ao mercado atual.`
+    },
+    {
+        categoria: "🚀 Crescimento Profissional",
+        nivel: "avancado",
+        titulo: "🚀 Plano de Crescimento de Carreira",
+        quando: "Quando quiser evoluir profissionalmente.",
+        prompt: `Você é especialista em desenvolvimento de carreira.\n\nCrie um plano de crescimento profissional considerando:\n\n- Minha área: [ÁREA]\n- Meu nível atual: [NÍVEL]\n- Objetivo futuro: [OBJETIVO]\n\nInclua:\n- Competências a desenvolver\n- Estratégia de networking\n- Posicionamento profissional\n- Plano de 6 meses`
+    }
 ];
+
+// Injeção dinâmica dos botões de filtro de categoria
+const containerCategorias = document.getElementById("botoes-categoria");
+let htmlCategorias = '<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
+
+ordemCategorias.forEach(cat => {
+    // Remove emojis e espaços para criar um identificador limpo
+    const nomeLimpo = cat.replace(/[^a-zA-ZÀ-ÿ0-9 ]/g, '').trim(); 
+    htmlCategorias += `<button onclick="filtrarCategoria(event, '${nomeLimpo}')">${cat}</button>`;
+});
+containerCategorias.innerHTML = htmlCategorias;
 
 const lista = document.getElementById("lista-prompts");
 const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
+let estadoFiltroTexto = "";
+let estadoFiltroNivel = "todos";
+let estadoFiltroCategoria = "todas";
+
+// --- RENDERIZAÇÃO EM BLOCOS DE CATEGORIAS SEPARADAS ---
 function renderizar(arr){
+    lista.innerHTML = "";
+    contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
-lista.innerHTML = "";
-contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+    ordemCategorias.forEach(cat => {
+        // Agrupa os prompts ativos pertencentes a esta categoria específica
+        const grupo = arr.filter(p => p.categoria === cat);
+        if(grupo.length === 0) return; // Se não houver itens filtrados na categoria, não exibe o bloco
 
-ordemCategorias.forEach(cat => {
+        // Cria o bloco/contêiner principal da categoria separada
+        const blocoCategoria = document.createElement("section");
+        blocoCategoria.className = "secao-categoria";
 
-const grupo = arr.filter(p => p.categoria === cat);
-if(grupo.length === 0) return;
+        // Adiciona o título interno do bloco
+        const tituloSecao = document.createElement("h2");
+        tituloSecao.className = "secao-titulo";
+        tituloSecao.innerText = cat;
+        blocoCategoria.appendChild(tituloSecao);
 
-const tituloSecao = document.createElement("h2");
-tituloSecao.className = "secao-titulo";
-tituloSecao.innerText = cat;
-lista.appendChild(tituloSecao);
+        // Cria a grid interna que conterá os cards dos prompts desta categoria
+        const gridPrompts = document.createElement("div");
+        gridPrompts.className = "grid-prompts";
 
-grupo.forEach(p => {
+        grupo.forEach(p => {
+            const card = document.createElement("div");
+            card.className = "card";
+            
+            card.innerHTML = `
+                <div class="nivel nivel-${p.nivel || 'basico'}">
+                    ${p.nivel === 'avancado' ? '🔴 Avançado' : p.nivel === 'intermediario' ? '🟡 Intermediário' : '🟢 Básico'}
+                </div>
+                <h3>${p.titulo}</h3>
+                <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+                <pre>${p.prompt}</pre>
+                <div class="acoes">
+                    <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
+                    <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
+                    <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
+                    <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
+                </div>
+            `;
+            gridPrompts.appendChild(card);
+        });
 
-const card = document.createElement("div");
-card.className = "card";
-card.setAttribute("data-nivel", p.nivel);
-
-card.innerHTML = `
-<div class="nivel nivel-${p.nivel}">
-${p.nivel === 'avancado' ? '🔴 Avançado' :
-p.nivel === 'intermediario' ? '🟡 Intermediário' :
-'🟢 Básico'}
-</div>
-
-<h3>${p.titulo}</h3>
-<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-<pre>${p.prompt}</pre>
-
-<div class="acoes">
-<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-<button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-</div>
-`;
-
-lista.appendChild(card);
-
-});
-
-});
-
+        blocoCategoria.appendChild(gridPrompts);
+        lista.appendChild(blocoCategoria);
+    });
 }
 
-function filtrarPrompts(){
-const termo = busca.value.toLowerCase();
-const filtrados = promptsTrabalho.filter(p =>
-p.titulo.toLowerCase().includes(termo) ||
-p.prompt.toLowerCase().includes(termo) ||
-p.categoria.toLowerCase().includes(termo)
-);
-renderizar(filtrados);
+function atualizarFiltros() {
+    estadoFiltroTexto = busca.value.toLowerCase();
+    
+    const filtrados = promptsTrabalho.filter(p => {
+        const matchTexto = p.titulo.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.prompt.toLowerCase().includes(estadoFiltroTexto) ||
+                           p.categoria.toLowerCase().includes(estadoFiltroTexto);
+        
+        const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
+        const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria.includes(estadoFiltroCategoria);
+
+        return matchTexto && matchNivel && matchCategoria;
+    });
+
+    renderizar(filtrados);
 }
 
-function filtrarNivel(event, nivel){
-const botoes = document.querySelectorAll(".filtro-nivel button");
-botoes.forEach(btn => btn.classList.remove("ativo"));
-event.target.classList.add("ativo");
-
-const cards = document.querySelectorAll("#lista-prompts .card");
-
-cards.forEach(card=>{
-if(nivel === "todos"){
-card.style.display = "block";
-}else{
-card.style.display =
-card.dataset.nivel === nivel ? "block" : "none";
+function filtrarCategoria(event, categoria) {
+    document.querySelectorAll(".filtro-categoria button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroCategoria = categoria;
+    atualizarFiltros();
 }
-});
+
+function filtrarNivel(event, nivel) {
+    document.querySelectorAll(".filtro-nivel button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+    estadoFiltroNivel = nivel;
+    atualizarFiltros();
 }
 
 function copiarPrompt(texto){
-navigator.clipboard.writeText(texto);
-alert("📋 Prompt copiado!");
+    navigator.clipboard.writeText(texto);
+    alert("📋 Prompt copiado!");
 }
 
 function favoritarPrompt(titulo, conteudo){
-const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-prompts.push({
-id: Date.now(),
-titulo,
-categoria: "Trabalho",
-conteudo,
-favorito: true
-});
-localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-alert("⭐ Adicionado aos favoritos!");
+    const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+    prompts.push({
+        id: Date.now(),
+        titulo,
+        categoria: "Trabalho",
+        conteudo,
+        favorito: true
+    });
+    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
+    alert("⭐ Adicionado aos favoritos!");
 }
 
 function abrirChatGPT(texto){
-window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto));
+    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
 }
 
 function abrirGemini(texto){
-window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto));
+    const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
+    window.open(url,"_blank");
 }
 
 renderizar(promptsTrabalho);
@@ -297,4 +323,3 @@ renderizar(promptsTrabalho);
 
 </body>
 </html>
-
