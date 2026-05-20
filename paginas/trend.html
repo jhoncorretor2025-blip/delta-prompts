@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
 
 <style>
-/* Ajustes para os botões de filtro ficarem organizados */
 .top-bar {
     display: flex;
     gap: 15px;
@@ -27,12 +26,6 @@
     font-size: 14px;
     opacity: 0.75;
 }
-.grupo-filtros {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 15px;
-}
 pre {
     white-space: pre-wrap;
     font-size: 14px;
@@ -46,146 +39,6 @@ pre {
     opacity: 0.7;
     margin-bottom: 8px;
 }
-</style>
-</head>
-
-<body>
-
-<div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js"></script>
-
-<main>
-
-<!-- 🔥 TÍTULO -->
-<h1>🔥 Trends Visuais com IA</h1>
-
-<!-- 📝 INTRO -->
-<p>
-Prompts criativos e virais para gerar imagens impactantes,
-modernas e altamente compartilháveis usando inteligência artificial.
-</p>
-
-<!-- 🎯 OBJETIVO -->
-<section class="card">
-<h3>🎯 Objetivo</h3>
-<p>
-Ajudar criadores, profissionais e usuários comuns
-a criarem imagens impressionantes para redes sociais,
-marketing, branding e conteúdo viral.
-</p>
-</section>
-
-<!-- 🗺️ ORGANIZAÇÃO -->
-<section class="card">
-<h3>🗺️ Como as Trends Estão Organizadas</h3>
-
-<p>
-Esta página está dividida em categorias estratégicas
-para facilitar a criação de conteúdo visual.
-</p>
-
-<ul style="margin-top:10px; line-height:1.7;">
-<li><strong>🔥 Viral:</strong> Conteúdo com alto potencial de engajamento.</li>
-<li><strong>💼 Profissional:</strong> Imagens para autoridade e branding.</li>
-<li><strong>🎬 Cinematográfico:</strong> Visual estilo filme.</li>
-<li><strong>🌌 Futurista:</strong> IA, neon, cyberpunk e tecnologia.</li>
-<li><strong>❤️ Social:</strong> Casais, lifestyle e conteúdo emocional.</li>
-<li><strong>🎨 Criativo:</strong> Estilos diferentes e artísticos.</li>
-</ul>
-
-<p style="margin-top:15px;">
-Explore as categorias e encontre a trend ideal para seu conteúdo.
-</p>
-</section>
-
-<!-- 🔎 BUSCA -->
-<div class="top-bar">
-    <input type="text" id="busca" placeholder="🔎 Buscar trend..." oninput="atualizarFiltros()">
-    <div class="contador" id="contador"></div>
-</div>
-
-<!-- 🔥 FILTRO DE NÍVEL -->
-<div class="grupo-filtros filtro-nivel" id="botoes-nivel">
-    <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
-    <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
-    <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
-    <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
-</div>
-
-<!-- 🏷️ FILTRO DE CATEGORIA (Gerado Dinamicamente) -->
-<div class="grupo-filtros filtro-categoria" id="botoes-categoria" style="margin-bottom: 30px;">
-    <!-- Os botões de categorias serão injetados aqui pelo JavaScript -->
-</div>
-
-<!-- 📦 LISTA -->
-<div id="lista-prompts"></div>
-
-</main>
-
-<script>
-const promptsTrend = [
-{ categoria:"🔥 Viral", nivel:"basico", titulo:"🎥 Trend Cinematográfica", quando:"Para criar imagens virais estilo filme.", prompt:`Transforme esta imagem em uma cena cinematográfica épica.\n\nInclua:\n- iluminação dramática\n- profundidade realista\n- qualidade de filme\n- visual premium\n- cores intensas` },
-{ categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🎮 Cinema Gamer Caótico", quando:"Para criar imagens divertidas e extremamente virais.", prompt:`A hyperrealistic cinematic shot inside a dark movie theater with visible blue seats in the background, filled with various video game characters having fun.\n\nThe main character, a man (from the provided photo), looks embarrassed, wearing a simple black Nintendo t-shirt, holding a large red and white striped popcorn bucket in one hand.\n\nOn each side of the main character:\n• Left: Mario Bros. holds a red soda cup in one hand, with a mischievous expression.\n• Right: Donkey Kong is laughing heartily, holding his own popcorn bucket.\n\nIn the background, other video game characters are visible in the seats, including Goku, Kratos, Sonic, Link, Zelda, Princess Peach, Pikachu and more.\n\nThe lighting is cinematic, coming from the movie screen, with realistic reflections and dramatic shadows.\n\nThe atmosphere is chaotic, funny, festive and ultra realistic.` },
-{ categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🦸 Cinema dos Heróis", quando:"Para criar uma cena épica com personagens famosos.", prompt:`A hyperrealistic cinematic scene inside a luxury movie theater filled with superheroes.\n\nThe main character (from the provided photo) sits nervously holding popcorn while surrounded by iconic heroes.\n\nOn the left:\n• Spider-Man laughing while pointing at the screen.\n\nOn the right:\n• Batman sitting seriously with crossed arms.\n\nBehind them:\nIron Man, Hulk, Thor, Deadpool, Wolverine and Doctor Strange are interacting, throwing popcorn and laughing.\n\nThe lighting is dramatic and cinematic, with reflections from the giant screen illuminating everyone's faces.\n\nUltra realistic movie atmosphere with Hollywood quality details.` },
-{ categoria:"🌌 Futurista", nivel:"avancado", titulo:"🚀 Cinema Cyberpunk", quando:"Para criar uma trend futurista e tecnológica.", prompt:`A hyperrealistic cyberpunk movie theater scene full of futuristic characters.\n\nThe main character (from the provided photo) is sitting in the center wearing futuristic clothing with neon details.\n\nOn each side:\n• A female android with glowing blue eyes.\n• A cybernetic warrior laughing while holding holographic popcorn.\n\nThe theater is illuminated by neon lights, holograms and futuristic advertisements.\n\nIn the background:\nrobots, hackers, futuristic soldiers and AI creatures interact in a chaotic atmosphere.\n\nThe lighting is cinematic with pink and blue neon reflections everywhere.\n\nUltra realistic cyberpunk movie style.` },
-{ categoria:"😂 Viral", nivel:"intermediario", titulo:"🍿 Cinema dos Memes", quando:"Para criar imagens engraçadas e virais.", prompt:`A hyperrealistic cinematic shot inside a crowded movie theater full of internet meme characters.\n\nThe main character (from the provided photo) looks confused while holding popcorn and looking at the camera.\n\nAround him:\n• Shrek laughing loudly.\n• Minions throwing popcorn.\n• SpongeBob screaming dramatically.\n• Gru wearing 3D glasses.\n• A giant dancing cat in the background.\n\nThe atmosphere is chaotic, exaggerated and extremely funny.\n\nThe cinematic lighting comes from the giant movie screen with realistic shadows and reflections.\n\nUltra detailed and realistic style.` },
-{ categoria:"🎮 Gamer", nivel:"avancado", titulo:"🕹️ Arena dos Games", quando:"Para criar uma imagem gamer épica.", prompt:`A hyperrealistic cinematic scene inside a giant gaming arena transformed into a movie theater.\n\nThe main character (from the provided photo) sits in the center wearing a gamer headset and holding a glowing popcorn bucket.\n\nAround him:\n• Master Chief.\n• Lara Croft.\n• Sub-Zero.\n• Scorpion.\n• Ezio Auditore.\n• Leon Kennedy.\n\nAll characters are reacting dramatically to the movie screen.\n\nLED lights, smoke effects and cinematic reflections create an intense atmosphere.\n\nUltra realistic details with blockbuster movie quality.` },
-{ categoria:"💼 Profissional", nivel:"intermediario", titulo:"🏡 Profissão Premium", quando:"Para gerar autoridade profissional.", prompt:`Crie uma imagem profissional elegante da profissão [SUA PROFISSÃO].\n\nInclua:\n- roupas sofisticadas\n- ambiente moderno\n- iluminação premium\n- aparência de sucesso\n- visual cinematográfico` },
-{ categoria:"🌌 Futurista", nivel:"avancado", titulo:"🚀 Cidade Cyberpunk", quando:"Para conteúdo futurista e tecnológico.", prompt:`Crie uma cidade cyberpunk futurista.\n\nInclua:\n- luzes neon\n- carros futuristas\n- chuva\n- hologramas\n- atmosfera tecnológica\n- estilo ultra realista` },
-{ categoria:"❤️ Social", nivel:"basico", titulo:"💑 Casal Elegante", quando:"Para posts românticos ou lifestyle.", prompt:`Crie uma foto elegante de casal moderno.\n\nInclua:\n- roupas neutras\n- iluminação suave\n- ambiente sofisticado\n- aparência natural\n- qualidade fotográfica premium` },
-{ categoria:"🎨 Criativo", nivel:"intermediario", titulo:"🎭 Versão Desenho Animado", quando:"Para transformar fotos em arte criativa.", prompt:`Transforme minha foto em desenho animado 3D.\n\nInclua:\n- estilo moderno\n- cores vibrantes\n- iluminação divertida\n- cenário personalizado\n- qualidade Pixar` },
-{ categoria:"❤️ Social", nivel:"basico", titulo:"🗼 Casal em Paris", quando:"Para criar uma cena romântica europeia.", prompt:`Crie uma foto romântica de casal em Paris.\n\nInclua:\n- Torre Eiffel ao fundo\n- roupas elegantes\n- iluminação suave do pôr do sol\n- clima apaixonante\n- qualidade fotográfica premium` },
-{ categoria:"🌌 Futurista", nivel:"intermediario", titulo:"🚀 Casal do Futuro", quando:"Para criar uma cena romântica futurista.", prompt:`Crie uma foto de casal futurista em uma cidade cyberpunk.\n\nInclua:\n- luzes neon\n- roupas tecnológicas elegantes\n- atmosfera futurista\n- reflexos cinematográficos\n- aparência ultra realista` },
-{ categoria:"📼 Retrô", nivel:"intermediario", titulo:"🕺 Casal Anos 80", quando:"Para criar uma trend retrô divertida.", prompt:`Crie uma foto de casal nos anos 80.\n\nInclua:\n- roupas coloridas vintage\n- luzes neon retrô\n- pista de dança antiga\n- clima divertido e romântico\n- qualidade cinematográfica` },
-{ categoria:"🌴 Lifestyle", nivel:"basico", titulo:"🏖️ Casal na Praia", quando:"Para criar uma cena leve e romântica.", prompt:`Crie uma foto elegante de casal caminhando na praia.\n\nInclua:\n- pôr do sol cinematográfico\n- roupas levesCom o código em mãos, agora consigo te dar a resposta exata da sua pergunta anterior: **você tem exatamente 27 prompts configurados nesta página.**
-
-Para resolver a questão do filtro por categoria (como clicar em "Profissional" e aparecer apenas os prompts dessa categoria), unifiquei o sistema de buscas. Agora, a barra de pesquisa, o filtro de dificuldade e o novo filtro de categorias trabalham juntos de forma inteligente. 
-
-Aqui está o código completo, já ajustado e pronto para você apenas copiar e colar no seu arquivo `outros.html`:
-
-```html
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Trends Visuais | Delta Prompts</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="/delta-prompts/style.css">
-<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
-
-<style>
-.top-bar {
-    display:flex;
-    gap:15px;
-    align-items:center;
-    margin:20px 0;
-    flex-wrap:wrap;
-}
-.top-bar input {
-    flex:1;
-    padding:14px;
-    border-radius:10px;
-    border:1px solid #e5e7eb;
-}
-.contador {
-    font-size:14px;
-    opacity:0.75;
-}
-pre {
-    white-space:pre-wrap;
-    font-size:14px;
-    background:#f9fafb;
-    padding:15px;
-    border-radius:10px;
-    border:1px solid #e5e7eb;
-}
-.meta {
-    font-size:13px;
-    opacity:0.7;
-    margin-bottom:8px;
-}
-/* Estilos para os botões de filtro funcionarem bem visualmente */
 .filtros-container {
     display: flex;
     flex-direction: column;
@@ -209,7 +62,7 @@ pre {
     background: #f0f0f0;
 }
 .filtro-botoes button.ativo {
-    background: #007bff; /* Ajuste para a cor padrão do seu tema se precisar */
+    background: #007bff;
     color: white;
     border-color: #007bff;
 }
@@ -224,16 +77,13 @@ pre {
 
 <main>
 
-<!-- 🔥 TÍTULO -->
 <h1>🔥 Trends Visuais com IA</h1>
 
-<!-- 📝 INTRO -->
 <p>
 Prompts criativos e virais para gerar imagens impactantes,
 modernas e altamente compartilháveis usando inteligência artificial.
 </p>
 
-<!-- 🎯 OBJETIVO -->
 <section class="card">
 <h3>🎯 Objetivo</h3>
 <p>
@@ -243,7 +93,6 @@ marketing, branding e conteúdo viral.
 </p>
 </section>
 
-<!-- 🗺️ ORGANIZAÇÃO -->
 <section class="card">
 <h3>🗺️ Como as Trends Estão Organizadas</h3>
 
@@ -266,39 +115,16 @@ Explore as categorias e encontre a trend ideal para seu conteúdo.
 </p>
 </section>
 
-<!-- 🔎 BUSCA -->
 <div class="top-bar">
-<input
-type="text"
-id="busca"
-placeholder="🔎 Buscar trend..."
-oninput="atualizarFiltros()"
->
-<div class="contador" id="contador"></div>
+    <input type="text" id="busca" placeholder="🔎 Buscar trend..." oninput="atualizarFiltros()">
+    <div class="contador" id="contador"></div>
 </div>
 
-<!-- 🔥 FILTROS (CATEGORIA E NÍVEL) -->
 <div class="filtros-container">
     
-    <!-- Filtro de Categoria -->
-    <div class="filtro-botoes filtro-categoria">
-        <button onclick="filtrarCategoria(event, 'todas')" class="ativo">Todas as Categorias</button>
-        <button onclick="filtrarCategoria(event, 'Viral')">🔥 Viral</button>
-        <button onclick="filtrarCategoria(event, 'Profissional')">💼 Profissional</button>
-        <button onclick="filtrarCategoria(event, 'Cinematográfico')">🎬 Cinematográfico</button>
-        <button onclick="filtrarCategoria(event, 'Futurista')">🌌 Futurista</button>
-        <button onclick="filtrarCategoria(event, 'Social')">❤️ Social</button>
-        <button onclick="filtrarCategoria(event, 'Criativo')">🎨 Criativo</button>
-        <button onclick="filtrarCategoria(event, 'Gamer')">🎮 Gamer</button>
-        <button onclick="filtrarCategoria(event, 'Retrô')">📼 Retrô</button>
-        <button onclick="filtrarCategoria(event, 'Lifestyle')">🌴 Lifestyle</button>
-        <button onclick="filtrarCategoria(event, 'Histórico')">🏛️ Histórico</button>
-        <button onclick="filtrarCategoria(event, 'Urbano')">🌆 Urbano</button>
-        <button onclick="filtrarCategoria(event, 'Heroico')">🦸 Heroico</button>
-        <button onclick="filtrarCategoria(event, 'Emocional')">❤️ Emocional</button>
-    </div>
+    <div class="filtro-botoes filtro-categoria" id="botoes-categoria">
+        </div>
 
-    <!-- Filtro de Nível -->
     <div class="filtro-botoes filtro-nivel">
         <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
         <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
@@ -308,19 +134,11 @@ oninput="atualizarFiltros()"
 
 </div>
 
-<!-- 📦 LISTA -->
 <div id="lista-prompts"></div>
 
 </main>
 
 <script>
-const ordemCategorias = [
-    "🔥 Viral", "💼 Profissional", "🎬 Cinematográfico", "🌌 Futurista", 
-    "❤️ Social", "🎨 Criativo", "😂 Viral", "🎮 Gamer", "📼 Retrô", 
-    "🌴 Lifestyle", "❄️ Cinematográfico", "🏛️ Histórico", "🌆 Urbano", 
-    "🚗 Lifestyle", "🦸 Heroico", "❤️ Emocional"
-];
-
 const promptsTrend = [
 {categoria:"🔥 Viral", nivel:"basico", titulo:"🎥 Trend Cinematográfica", quando:"Para criar imagens virais estilo filme.", prompt:`Transforme esta imagem em uma cena cinematográfica épica.\n\nInclua:\n- iluminação dramática\n- profundidade realista\n- qualidade de filme\n- visual premium\n- cores intensas`},
 {categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🎮 Cinema Gamer Caótico", quando:"Para criar imagens divertidas e extremamente virais.", prompt:`A hyperrealistic cinematic shot inside a dark movie theater with visible blue seats in the background, filled with various video game characters having fun.\n\nThe main character, a man (from the provided photo), looks embarrassed, wearing a simple black Nintendo t-shirt, holding a large red and white striped popcorn bucket in one hand.\n\nOn each side of the main character:\n• Left: Mario Bros. holds a red soda cup in one hand, with a mischievous expression.\n• Right: Donkey Kong is laughing heartily, holding his own popcorn bucket.\n\nIn the background, other video game characters are visible in the seats, including Goku, Kratos, Sonic, Link, Zelda, Princess Peach, Pikachu and more.\n\nThe lighting is cinematic, coming from the movie screen, with realistic reflections and dramatic shadows.\n\nThe atmosphere is chaotic, funny, festive and ultra realistic.`},
@@ -351,11 +169,21 @@ const promptsTrend = [
 {categoria:"🎨 Criativo", nivel:"basico", titulo:"🦸 Super-Herói Personalizado", quando:"Para conteúdo divertido e criativo.", prompt:`Transforme uma pessoa em super-herói moderno.\n\nInclua:\n- uniforme épico\n- cenário cinematográfico\n- pose heroica\n- iluminação forte\n- qualidade ultra realista`}
 ];
 
+const categoriasDisponiveis = [...new Set(promptsTrend.map(p => p.categoria))];
+
+const containerCategorias = document.getElementById("botoes-categoria");
+let htmlCategorias = '<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
+
+categoriasDisponiveis.forEach(cat => {
+    const nomeLimpo = cat.replace(/[^a-zA-ZÀ-ÿ0-9 ]/g, '').trim(); 
+    htmlCategorias += `<button onclick="filtrarCategoria(event, '${nomeLimpo}')">${cat}</button>`;
+});
+containerCategorias.innerHTML = htmlCategorias;
+
 const lista = document.getElementById("lista-prompts");
 const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
 
-// Variáveis de estado para os filtros
 let estadoFiltroTexto = "";
 let estadoFiltroNivel = "todos";
 let estadoFiltroCategoria = "todas";
@@ -364,7 +192,7 @@ function renderizar(arr){
     lista.innerHTML="";
     contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
-    ordemCategorias.forEach(cat=>{
+    categoriasDisponiveis.forEach(cat=>{
         const grupo = arr.filter(p=>p.categoria === cat);
         if(grupo.length === 0) return;
 
@@ -399,15 +227,12 @@ function atualizarFiltros() {
     estadoFiltroTexto = busca.value.toLowerCase();
     
     const filtrados = promptsTrend.filter(p => {
-        // Verifica o texto
         const matchTexto = p.titulo.toLowerCase().includes(estadoFiltroTexto) ||
                            p.prompt.toLowerCase().includes(estadoFiltroTexto) ||
                            p.categoria.toLowerCase().includes(estadoFiltroTexto);
         
-        // Verifica o nível
         const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
         
-        // Verifica a categoria
         const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria.includes(estadoFiltroCategoria);
 
         return matchTexto && matchNivel && matchCategoria;
@@ -449,18 +274,16 @@ function favoritarPrompt(titulo, conteudo){
 }
 
 function abrirChatGPT(texto){
-    const url = "[https://chat.openai.com/?prompt=](https://chat.openai.com/?prompt=)" + encodeURIComponent(texto);
+    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
     window.open(url,"_blank");
 }
 
 function abrirGemini(texto){
-    const url = "[https://gemini.google.com/app?prompt=](https://gemini.google.com/app?prompt=)" + encodeURIComponent(texto);
+    const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
     window.open(url,"_blank");
 }
 
-// Inicializa a renderização
 renderizar(promptsTrend);
-
 </script>
 
 </body>
