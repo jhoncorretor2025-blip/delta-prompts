@@ -211,6 +211,36 @@ border-radius:14px;
 transform:translateX(-50%) rotate(-8deg);
 }
 .preview-social .preview-after{background:linear-gradient(135deg,#f97316,#ec4899,#6366f1);}
+
+.image-prompt-preview.real-preview{
+height:190px;
+display:block;
+padding:0;
+background-size:cover;
+background-position:center;
+}
+
+.image-prompt-preview.real-preview::before{
+display:block;
+inset:0;
+border-radius:14px;
+background:linear-gradient(180deg,rgba(15,23,42,0.06),rgba(15,23,42,0.62));
+box-shadow:none;
+}
+
+.image-prompt-preview.real-preview::after,
+.image-prompt-preview.real-preview .preview-shot,
+.image-prompt-preview.real-preview .preview-arrow,
+.image-prompt-preview.real-preview .preview-caption{
+display:none;
+}
+
+.real-preview .preview-label{
+top:auto;
+right:16px;
+bottom:15px;
+background:rgba(15,23,42,0.82);
+}
 </style>
 </head>
 
@@ -243,7 +273,7 @@ transform:translateX(-50%) rotate(-8deg);
 <div class="card">
 <h3>📸 Foto LinkedIn Premium</h3>
 <p><strong>💡 Quando usar:</strong> Atualizar perfil profissional.</p>
-<p class="prompt-text">Transforme minha foto em retrato profissional estilo LinkedIn, fundo neutro desfocado, iluminação suave e expressão confiante.</p>
+<p class="prompt-text">Transforme minha foto em um retrato profissional para LinkedIn: pessoa com blazer ou terno bem ajustado, postura confiante, expressão natural, fundo corporativo neutro levemente desfocado, iluminação suave de estúdio, pele realista, enquadramento do peito para cima e aparência de foto de perfil premium.</p>
 <div class="acoes">
 <button onclick="copiar(this)">📋 Copiar</button>
 <button onclick="chatgpt(this)">🤖 ChatGPT</button>
@@ -256,7 +286,7 @@ transform:translateX(-50%) rotate(-8deg);
 <div class="card">
 <h3>🏢 Foto Executiva</h3>
 <p><strong>💡 Quando usar:</strong> Transmitir autoridade.</p>
-<p class="prompt-text">Edite minha foto para retrato executivo corporativo com fundo de escritório moderno.</p>
+<p class="prompt-text">Edite minha foto como retrato executivo de alto padrão: roupa social elegante, fundo de escritório moderno com vidro e luz natural, cores sóbrias, iluminação profissional, aparência de liderança, nitidez no rosto e acabamento realista para apresentação empresarial.</p>
 <div class="acoes">
 <button onclick="copiar(this)">📋 Copiar</button>
 <button onclick="chatgpt(this)">🤖 ChatGPT</button>
@@ -269,7 +299,7 @@ transform:translateX(-50%) rotate(-8deg);
 <div class="card">
 <h3>🧑‍💼 Retrato Minimalista</h3>
 <p><strong>💡 Quando usar:</strong> Visual clean e elegante.</p>
-<p class="prompt-text">Transforme minha imagem em retrato minimalista moderno com fundo claro e iluminação suave.</p>
+<p class="prompt-text">Transforme minha imagem em retrato minimalista moderno: fundo branco ou cinza claro, composição limpa, luz suave lateral, roupas neutras, poucos elementos visuais, aparência elegante e profissional, mantendo traços naturais do rosto.</p>
 <div class="acoes">
 <button onclick="copiar(this)">📋 Copiar</button>
 <button onclick="chatgpt(this)">🤖 ChatGPT</button>
@@ -284,7 +314,7 @@ transform:translateX(-50%) rotate(-8deg);
 <div class="card">
 <h3>🎨 Pintura Digital</h3>
 <p><strong>💡 Quando usar:</strong> Estilo artístico.</p>
-<p class="prompt-text">Transforme minha foto em pintura digital semi-realista.</p>
+<p class="prompt-text">Transforme minha foto em pintura digital semi-realista, com pinceladas visíveis, textura artística, cores vibrantes, luz suave, profundidade no rosto e acabamento de ilustração premium sem perder a semelhança da pessoa.</p>
 <div class="acoes">
 <button onclick="copiar(this)">📋 Copiar</button>
 <button onclick="chatgpt(this)">🤖 ChatGPT</button>
@@ -297,7 +327,7 @@ transform:translateX(-50%) rotate(-8deg);
 <div class="card">
 <h3>🎬 Estilo Cinematográfico</h3>
 <p><strong>💡 Quando usar:</strong> Visual dramático.</p>
-<p class="prompt-text">Edite minha foto com luz dramática e atmosfera de filme.</p>
+<p class="prompt-text">Transforme minha foto em uma cena cinematográfica: iluminação dramática de cinema, contraste alto, fundo com atmosfera de filme, profundidade de campo, tons teal and orange, brilho suave nas bordas, enquadramento de pôster e aparência realista de still de longa-metragem.</p>
 <div class="acoes">
 <button onclick="copiar(this)">📋 Copiar</button>
 <button onclick="chatgpt(this)">🤖 ChatGPT</button>
@@ -310,7 +340,7 @@ transform:translateX(-50%) rotate(-8deg);
 <div class="card">
 <h3>🦸 Versão Super-Herói</h3>
 <p><strong>💡 Quando usar:</strong> Avatar poderoso.</p>
-<p class="prompt-text">Transforme minha foto em super-herói moderno com cenário épico.</p>
+<p class="prompt-text">Transforme minha foto em um super-herói moderno: traje heroico detalhado, pose forte, capa ou armadura estilizada, cenário urbano épico ao fundo, luz dramática, partículas no ar e acabamento de pôster cinematográfico, mantendo o rosto reconhecível.</p>
 <div class="acoes">
 <button onclick="copiar(this)">📋 Copiar</button>
 <button onclick="chatgpt(this)">🤖 ChatGPT</button>
@@ -319,15 +349,63 @@ transform:translateX(-50%) rotate(-8deg);
 </div>
 </div>
 
-<!-- 7 a 15 (simplificados mas funcionais) -->
+<!-- 7 a 15 -->
 
 <script>
-for(let i=7;i<=15;i++){
+const promptsCriativos=[
+{
+titulo:"🌃 Retrato Neon Cyberpunk",
+uso:"Criar avatar moderno e impactante.",
+texto:"Transforme minha foto em retrato cyberpunk com luzes neon roxas e azuis, cidade futurista ao fundo, reflexos no rosto, contraste alto, clima noturno, detalhes tecnológicos sutis e aparência de capa de série futurista."
+},
+{
+titulo:"📼 Estilo Retrô Anos 80",
+uso:"Dar um visual nostálgico e chamativo.",
+texto:"Transforme minha foto em imagem retrô dos anos 80, com iluminação colorida, fundo com gradiente vintage, granulação leve de filme, roupa estilizada, contraste de pôster antigo e atmosfera nostálgica sem perder realismo."
+},
+{
+titulo:"💎 Retrato Luxo Premium",
+uso:"Criar visual sofisticado para marca pessoal.",
+texto:"Edite minha foto como retrato de luxo premium: iluminação elegante, fundo escuro sofisticado, roupa refinada, tons dourados discretos, pele natural, pose confiante e acabamento de campanha de marca de alto padrão."
+},
+{
+titulo:"🧙 Fantasia Épica",
+uso:"Criar personagem de fantasia.",
+texto:"Transforme minha foto em personagem de fantasia épica, com roupa detalhada, cenário mágico ao fundo, luz volumétrica, atmosfera de aventura, cores ricas, elementos místicos sutis e acabamento de arte conceitual cinematográfica."
+},
+{
+titulo:"📰 Editorial de Revista",
+uso:"Criar foto com cara de capa profissional.",
+texto:"Transforme minha foto em editorial de revista, com pose elegante, fundo limpo, iluminação de estúdio, composição sofisticada, textura realista, contraste equilibrado e aparência de ensaio fotográfico profissional."
+},
+{
+titulo:"🎮 Avatar Gamer",
+uso:"Criar imagem de perfil para games e lives.",
+texto:"Transforme minha foto em avatar gamer estilizado, com luz neon, fundo tecnológico, roupa moderna, expressão marcante, detalhes digitais, cores fortes e acabamento de personagem premium para perfil de streaming."
+},
+{
+titulo:"📦 Foto de Produto",
+uso:"Valorizar produto ou objeto em divulgação.",
+texto:"Transforme esta imagem de produto em foto comercial profissional, com fundo limpo, iluminação de estúdio, sombra suave, reflexo discreto, cores reais, alta nitidez e aparência de catálogo premium."
+},
+{
+titulo:"🧊 Render 3D Moderno",
+uso:"Criar visual tecnológico e polido.",
+texto:"Transforme minha foto em render 3D moderno, com acabamento polido, iluminação de estúdio, materiais suaves, profundidade, fundo minimalista, cores vibrantes e aparência de personagem 3D de alta qualidade."
+},
+{
+titulo:"📱 Post Impactante",
+uso:"Criar imagem forte para redes sociais.",
+texto:"Transforme minha foto em imagem vertical impactante para redes sociais, com fundo vibrante, iluminação chamativa, contraste alto, espaço visual para texto, composição dinâmica e aparência profissional de post viral."
+}
+];
+
+promptsCriativos.forEach(p=>{
 document.write(`
 <div class="card">
-<h3>✨ Transformação Criativa ${i}</h3>
-<p><strong>💡 Quando usar:</strong> Para variar o estilo visual.</p>
-<p class="prompt-text">Transforme minha foto com estilo criativo único número ${i} mantendo alta qualidade.</p>
+<h3>${p.titulo}</h3>
+<p><strong>💡 Quando usar:</strong> ${p.uso}</p>
+<p class="prompt-text">${p.texto}</p>
 <div class="acoes">
 <button onclick="copiar(this)">📋 Copiar</button>
 <button onclick="chatgpt(this)">🤖 ChatGPT</button>
@@ -336,7 +414,7 @@ document.write(`
 </div>
 </div>
 `);
-}
+});
 </script>
 
 </div>
@@ -380,21 +458,21 @@ btn.innerText = btn.innerText === "🤍" ? "❤️" : "🤍";
 
 // MINIATURAS DOS PROMPTS
 const previews=[
-{classe:"preview-linkedin",rotulo:"LinkedIn"},
-{classe:"preview-executiva",rotulo:"Executiva"},
-{classe:"preview-minimalista",rotulo:"Clean"},
-{classe:"preview-pintura",rotulo:"Pintura"},
-{classe:"preview-cinema",rotulo:"Cinema"},
-{classe:"preview-heroi",rotulo:"Herói"},
-{classe:"preview-neon",rotulo:"Neon"},
-{classe:"preview-retro",rotulo:"Retrô"},
-{classe:"preview-luxo",rotulo:"Luxo"},
-{classe:"preview-fantasia",rotulo:"Fantasia"},
-{classe:"preview-editorial",rotulo:"Editorial"},
-{classe:"preview-avatar",rotulo:"Avatar"},
-{classe:"preview-produto",rotulo:"Produto"},
-{classe:"preview-3d",rotulo:"3D"},
-{classe:"preview-social",rotulo:"Social"}
+{rotulo:"LinkedIn",img:"https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Executiva",img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Clean",img:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Pintura Digital",img:"https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Cinema",img:"https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Super-Herói",img:"https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Neon",img:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Retrô",img:"https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Luxo",img:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Fantasia",img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Editorial",img:"https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Avatar Gamer",img:"https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Produto",img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"3D",img:"https://images.unsplash.com/photo-1635776062043-223faf322554?auto=format&fit=crop&w=900&q=80"},
+{rotulo:"Social",img:"https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=900&q=80"}
 ];
 
 function adicionarMiniaturas(){
@@ -402,13 +480,9 @@ document.querySelectorAll("#cards-container .card").forEach((card,index)=>{
 if(card.querySelector(".image-prompt-preview")) return;
 const item=previews[index] || previews[previews.length-1];
 const preview=document.createElement("div");
-preview.className=`image-prompt-preview ${item.classe}`;
-preview.innerHTML=`
-<div class="preview-shot preview-before"><span class="preview-caption">Antes</span></div>
-<div class="preview-arrow">→</div>
-<div class="preview-shot preview-after"><span class="preview-caption">Depois</span></div>
-<span class="preview-label">${item.rotulo}</span>
-`;
+preview.className="image-prompt-preview real-preview";
+preview.style.backgroundImage=`url("${item.img}")`;
+preview.innerHTML=`<span class="preview-label">${item.rotulo}</span>`;
 card.prepend(preview);
 });
 }
