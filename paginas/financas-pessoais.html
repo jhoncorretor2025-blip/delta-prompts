@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>💰 Finanças Pessoais | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<link rel="stylesheet" href="/delta-prompts/melhoriaspaginas.css">
+
+<style>
+
+pre{
+white-space: pre-wrap;
+background:#f9fafb;
+padding:15px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+margin:15px 0;
+font-size:14px;
+}
+
+#busca{
+width:100%;
+padding:14px;
+border-radius:10px;
+border:1px solid #ddd;
+margin:20px 0;
+}
+
+select{
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+margin-bottom:25px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="menu"></div>
+
+<script src="/delta-prompts/menu-loader.js"></script>
+<script src="/delta-prompts/funcoes.js"></script>
+
+<main>
+
+<h1>💰 Finanças Pessoais</h1>
+
+<p>
+Prompts para organização financeira, investimentos, orçamento,
+economia e crescimento financeiro pessoal.
+</p>
+
+<section class="card">
+<h3>Objetivo</h3>
+
+<p>
+Ajudar você a controlar dinheiro, criar estratégias financeiras
+e tomar decisões melhores.
+</p>
+
+</section>
+
+<input
+id="busca"
+placeholder="Buscar prompts..."
+onkeyup="renderizar()"
+>
+
+<br>
+
+<select id="nivelFiltro" onchange="renderizar()">
+
+<option value="todos">Todos níveis</option>
+<option value="basico">Básico</option>
+<option value="intermediario">Intermediário</option>
+<option value="avancado">Avançado</option>
+
+</select>
+
+<div id="lista-prompts"></div>
+
+</main>
+
+<script>
+
+const prompts = [
+
+{
+categoria:"Finanças Pessoais",
+nivel:"basico",
+titulo:"Planejamento Financeiro Mensal",
+quando:"Controle financeiro",
+prompt:`Crie um planejamento financeiro mensal simples usando receitas, despesas fixas e variáveis. Organize em categorias e sugira melhorias.`
+},
+
+{
+categoria:"Finanças Pessoais",
+nivel:"intermediario",
+titulo:"Redução de Gastos",
+quando:"Economizar dinheiro",
+prompt:`Analise meus gastos mensais e identifique oportunidades de economia sem reduzir qualidade de vida.`
+},
+
+{
+categoria:"Finanças Pessoais",
+nivel:"avancado",
+titulo:"Plano Financeiro Estratégico",
+quando:"Construção patrimonial",
+prompt:`Monte uma estratégia financeira de longo prazo considerando reserva de emergência, investimentos, metas e crescimento patrimonial.`
+},
+
+{
+categoria:"Finanças Pessoais",
+nivel:"intermediario",
+titulo:"Organizar Dívidas",
+quando:"Quitar dívidas",
+prompt:`Crie um plano estruturado para quitar dívidas priorizando juros maiores e melhorando fluxo de caixa.`
+},
+
+{
+categoria:"Finanças Pessoais",
+nivel:"basico",
+titulo:"Reserva de Emergência",
+quando:"Segurança financeira",
+prompt:`Explique quanto devo guardar para reserva financeira e monte um plano simples para construir essa reserva.`
+}
+
+];
+
+const ordemCategorias = [
+"Finanças Pessoais"
+];
+
+function renderizar(){
+
+const lista = document.getElementById("lista-prompts");
+
+const busca =
+document.getElementById("busca")
+.value
+.toLowerCase();
+
+const nivel =
+document.getElementById("nivelFiltro")
+.value;
+
+lista.innerHTML="";
+
+prompts
+.filter(p => {
+
+const buscaOk =
+p.titulo.toLowerCase().includes(busca) ||
+p.prompt.toLowerCase().includes(busca);
+
+const nivelOk =
+nivel === "todos" ||
+p.nivel === nivel;
+
+return buscaOk && nivelOk;
+
+})
+
+.forEach(p => {
+
+const card =
+document.createElement("div");
+
+card.className="card";
+
+card.setAttribute(
+"data-nivel",
+p.nivel
+);
+
+card.innerHTML = `
+
+<div class="nivel nivel-${p.nivel}">
+${p.nivel}
+</div>
+
+<h3>${p.titulo}</h3>
+
+<p><strong>Quando usar:</strong> ${p.quando}</p>
+
+<pre class="prompt-text">${p.prompt}</pre>
+
+<div class="acoes">
+
+<button onclick="copiar(this)">
+📋 Copiar
+</button>
+
+<button onclick="chat(this)">
+🤖 ChatGPT
+</button>
+
+<button onclick="gemini(this)">
+✨ Gemini
+</button>
+
+<button
+class="btn-favorito"
+onclick="favoritar(this)"
+>
+☆ Favoritar
+</button>
+
+</div>
+
+`;
+
+lista.appendChild(card);
+
+});
+
+}
+
+renderizar();
+
+</script>
+
+</body>
+</html>
