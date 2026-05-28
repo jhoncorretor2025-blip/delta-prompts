@@ -213,11 +213,16 @@ transform:translateX(-50%) rotate(-8deg);
 .preview-social .preview-after{background:linear-gradient(135deg,#f97316,#ec4899,#6366f1);}
 
 .image-prompt-preview.real-preview{
-height:190px;
+width:min(360px,100%);
+height:auto;
+aspect-ratio:1/1;
 display:block;
 padding:0;
-background-size:cover;
+background-size:contain;
 background-position:center;
+background-repeat:no-repeat;
+background-color:#f8fafc;
+border:1px solid #e2e8f0;
 }
 
 .image-prompt-preview.real-preview::before{
