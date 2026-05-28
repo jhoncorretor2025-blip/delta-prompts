@@ -23,6 +23,83 @@ border:1px solid #ddd;
 font-size:14px;
 opacity:0.7;
 }
+
+.image-prompt-preview{
+height:118px;
+position:relative;
+overflow:hidden;
+border-radius:14px;
+margin-bottom:18px;
+background:#eef2ff;
+box-shadow:inset 0 0 0 1px rgba(15,23,42,0.08);
+}
+
+.image-prompt-preview::before,
+.image-prompt-preview::after{
+content:"";
+position:absolute;
+}
+
+.image-prompt-preview::before{
+inset:14px;
+border-radius:12px;
+background:rgba(255,255,255,0.74);
+box-shadow:0 12px 28px rgba(15,23,42,0.12);
+}
+
+.image-prompt-preview::after{
+width:48px;
+height:48px;
+left:24px;
+bottom:18px;
+border-radius:50%;
+background:#cbd5e1;
+box-shadow:60px -8px 0 -12px rgba(79,70,229,0.35),116px 0 0 -18px rgba(17,163,127,0.35);
+}
+
+.preview-label{
+position:absolute;
+right:16px;
+bottom:15px;
+z-index:1;
+padding:6px 10px;
+border-radius:999px;
+background:rgba(15,23,42,0.76);
+color:#fff;
+font-size:12px;
+font-weight:800;
+}
+
+.preview-linkedin{background:linear-gradient(135deg,#dbeafe,#f8fafc);}
+.preview-executiva{background:linear-gradient(135deg,#1e293b,#94a3b8);}
+.preview-minimalista{background:linear-gradient(135deg,#f8fafc,#e2e8f0);}
+.preview-pintura{background:linear-gradient(135deg,#fb7185,#fbbf24 45%,#60a5fa);}
+.preview-cinema{background:linear-gradient(135deg,#111827,#7c2d12 55%,#facc15);}
+.preview-heroi{background:linear-gradient(135deg,#1d4ed8,#7f1d1d);}
+.preview-neon{background:linear-gradient(135deg,#020617,#7c3aed 48%,#22d3ee);}
+.preview-retro{background:linear-gradient(135deg,#fef3c7,#fb7185,#7c3aed);}
+.preview-luxo{background:linear-gradient(135deg,#111827,#854d0e);}
+.preview-fantasia{background:linear-gradient(135deg,#065f46,#a7f3d0,#8b5cf6);}
+.preview-editorial{background:linear-gradient(135deg,#f8fafc,#64748b);}
+.preview-avatar{background:linear-gradient(135deg,#312e81,#ec4899);}
+.preview-produto{background:linear-gradient(135deg,#ecfeff,#0f766e);}
+.preview-3d{background:linear-gradient(135deg,#ede9fe,#8b5cf6,#38bdf8);}
+.preview-social{background:linear-gradient(135deg,#f97316,#ec4899,#6366f1);}
+
+.preview-pintura::before,
+.preview-neon::before,
+.preview-retro::before,
+.preview-fantasia::before,
+.preview-avatar::before,
+.preview-social::before{
+background:radial-gradient(circle at 30% 35%,rgba(255,255,255,0.88),transparent 18%),radial-gradient(circle at 72% 58%,rgba(255,255,255,0.62),transparent 22%);
+}
+
+.preview-produto::after,
+.preview-3d::after{
+border-radius:14px;
+transform:rotate(-8deg);
+}
 </style>
 </head>
 
@@ -189,6 +266,38 @@ window.open("https://gemini.google.com/app","_blank");
 function favoritar(btn){
 btn.innerText = btn.innerText === "🤍" ? "❤️" : "🤍";
 }
+
+// MINIATURAS DOS PROMPTS
+const previews=[
+{classe:"preview-linkedin",rotulo:"LinkedIn"},
+{classe:"preview-executiva",rotulo:"Executiva"},
+{classe:"preview-minimalista",rotulo:"Clean"},
+{classe:"preview-pintura",rotulo:"Pintura"},
+{classe:"preview-cinema",rotulo:"Cinema"},
+{classe:"preview-heroi",rotulo:"Herói"},
+{classe:"preview-neon",rotulo:"Neon"},
+{classe:"preview-retro",rotulo:"Retrô"},
+{classe:"preview-luxo",rotulo:"Luxo"},
+{classe:"preview-fantasia",rotulo:"Fantasia"},
+{classe:"preview-editorial",rotulo:"Editorial"},
+{classe:"preview-avatar",rotulo:"Avatar"},
+{classe:"preview-produto",rotulo:"Produto"},
+{classe:"preview-3d",rotulo:"3D"},
+{classe:"preview-social",rotulo:"Social"}
+];
+
+function adicionarMiniaturas(){
+document.querySelectorAll("#cards-container .card").forEach((card,index)=>{
+if(card.querySelector(".image-prompt-preview")) return;
+const item=previews[index] || previews[previews.length-1];
+const preview=document.createElement("div");
+preview.className=`image-prompt-preview ${item.classe}`;
+preview.innerHTML=`<span class="preview-label">${item.rotulo}</span>`;
+card.prepend(preview);
+});
+}
+
+adicionarMiniaturas();
 
 // BUSCA
 const input=document.getElementById("searchInput");
