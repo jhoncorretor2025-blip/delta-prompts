@@ -100,6 +100,117 @@ background:radial-gradient(circle at 30% 35%,rgba(255,255,255,0.88),transparent 
 border-radius:14px;
 transform:rotate(-8deg);
 }
+
+.image-prompt-preview{
+height:150px;
+display:grid;
+grid-template-columns:1fr 38px 1fr;
+gap:10px;
+align-items:center;
+padding:14px;
+}
+
+.image-prompt-preview::before,
+.image-prompt-preview::after{
+display:none;
+}
+
+.preview-shot{
+height:100%;
+position:relative;
+overflow:hidden;
+border-radius:12px;
+background:#f8fafc;
+box-shadow:inset 0 0 0 1px rgba(15,23,42,0.1);
+}
+
+.preview-shot::before{
+content:"";
+position:absolute;
+width:34px;
+height:34px;
+left:50%;
+top:24px;
+transform:translateX(-50%);
+border-radius:50%;
+background:#cbd5e1;
+}
+
+.preview-shot::after{
+content:"";
+position:absolute;
+width:66px;
+height:42px;
+left:50%;
+bottom:14px;
+transform:translateX(-50%);
+border-radius:28px 28px 10px 10px;
+background:#94a3b8;
+}
+
+.preview-before{
+filter:saturate(0.55);
+opacity:0.72;
+}
+
+.preview-after{
+background:linear-gradient(135deg,#ffffff,#dbeafe);
+box-shadow:inset 0 0 0 2px rgba(79,70,229,0.18),0 10px 22px rgba(15,23,42,0.14);
+}
+
+.preview-arrow{
+display:grid;
+place-items:center;
+width:38px;
+height:38px;
+border-radius:50%;
+background:#ffffff;
+color:#4f46e5;
+font-weight:900;
+box-shadow:0 8px 18px rgba(15,23,42,0.12);
+}
+
+.preview-label{
+right:20px;
+top:18px;
+bottom:auto;
+}
+
+.preview-caption{
+position:absolute;
+left:8px;
+bottom:8px;
+z-index:1;
+padding:4px 7px;
+border-radius:999px;
+background:rgba(255,255,255,0.84);
+color:#334155;
+font-size:11px;
+font-weight:800;
+}
+
+.preview-executiva .preview-after{background:linear-gradient(135deg,#e2e8f0,#1e293b);}
+.preview-executiva .preview-after::after{background:#1e40af;}
+.preview-minimalista .preview-after{background:linear-gradient(135deg,#ffffff,#f1f5f9);}
+.preview-minimalista .preview-after::after{background:#64748b;}
+.preview-pintura .preview-after{background:linear-gradient(135deg,#fb7185,#fbbf24,#60a5fa);}
+.preview-cinema .preview-after{background:linear-gradient(135deg,#111827,#7c2d12,#facc15);}
+.preview-heroi .preview-after{background:linear-gradient(135deg,#1d4ed8,#7f1d1d);}
+.preview-heroi .preview-after::after{background:#dc2626;}
+.preview-neon .preview-after{background:linear-gradient(135deg,#020617,#7c3aed,#22d3ee);}
+.preview-retro .preview-after{background:linear-gradient(135deg,#fef3c7,#fb7185,#7c3aed);}
+.preview-luxo .preview-after{background:linear-gradient(135deg,#111827,#854d0e);}
+.preview-fantasia .preview-after{background:linear-gradient(135deg,#065f46,#a7f3d0,#8b5cf6);}
+.preview-editorial .preview-after{background:linear-gradient(135deg,#f8fafc,#64748b);}
+.preview-avatar .preview-after{background:linear-gradient(135deg,#312e81,#ec4899);}
+.preview-produto .preview-after::before,
+.preview-produto .preview-after::after,
+.preview-3d .preview-after::before,
+.preview-3d .preview-after::after{
+border-radius:14px;
+transform:translateX(-50%) rotate(-8deg);
+}
+.preview-social .preview-after{background:linear-gradient(135deg,#f97316,#ec4899,#6366f1);}
 </style>
 </head>
 
@@ -292,7 +403,12 @@ if(card.querySelector(".image-prompt-preview")) return;
 const item=previews[index] || previews[previews.length-1];
 const preview=document.createElement("div");
 preview.className=`image-prompt-preview ${item.classe}`;
-preview.innerHTML=`<span class="preview-label">${item.rotulo}</span>`;
+preview.innerHTML=`
+<div class="preview-shot preview-before"><span class="preview-caption">Antes</span></div>
+<div class="preview-arrow">→</div>
+<div class="preview-shot preview-after"><span class="preview-caption">Depois</span></div>
+<span class="preview-label">${item.rotulo}</span>
+`;
 card.prepend(preview);
 });
 }
