@@ -1,0 +1,221 @@
+<h1>📊 Prompts para Análise de Notebooks</h1>
+
+<p>
+Colete insights, organize conhecimento e transforme notebooks em ações práticas.
+</p>
+
+<section class="card">
+<h3>🎯 Objetivo</h3>
+<p>
+Prompts para estudar, revisar, organizar e transformar conteúdos extensos em conhecimento útil.
+</p>
+</section>
+
+<input
+id="busca"
+placeholder="Buscar prompt..."
+style="
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+margin-bottom:20px;
+"
+onkeyup="renderizar()"
+>
+
+<div class="filtro-nivel">
+
+<button onclick="filtrarNivel('todos')">Todos</button>
+
+<button onclick="filtrarNivel('basico')">
+Básico
+</button>
+
+<button onclick="filtrarNivel('intermediario')">
+Intermediário
+</button>
+
+<button onclick="filtrarNivel('avancado')">
+Avançado
+</button>
+
+</div>
+
+<div id="lista-prompts"></div>
+
+<script>
+
+const prompts = [
+
+{
+categoria: "Analise",
+nivel: "basico",
+titulo: "Extração de Ideias Principais",
+quando: "Quando precisar resumir notebooks grandes",
+prompt: `Liste as 10 ideias mais importantes deste notebook e explique cada uma de forma simples.`
+},
+
+{
+categoria: "Analise",
+nivel: "intermediario",
+titulo: "Encontrar Contradições",
+quando: "Quando revisar conteúdos extensos",
+prompt: `Analise todo o conteúdo e identifique informações contraditórias, inconsistências ou pontos que precisam ser revisados.`
+},
+
+{
+categoria: "Analise",
+nivel: "basico",
+titulo: "Professor Particular",
+quando: "Quando precisar aprender rapidamente",
+prompt: `Explique este conteúdo como se eu fosse iniciante, usando exemplos práticos e linguagem simples.`
+},
+
+{
+categoria: "Analise",
+nivel: "intermediario",
+titulo: "Plano de Ação",
+quando: "Quando quiser executar conhecimento",
+prompt: `Transforme este conteúdo em um plano de ação prático, organizado por etapas e prioridades.`
+},
+
+{
+categoria: "Analise",
+nivel: "basico",
+titulo: "Organização Inteligente",
+quando: "Quando organizar materiais",
+prompt: `Organize todo o material em categorias, subtítulos e tópicos para facilitar o estudo e consulta futura.`
+},
+
+{
+categoria: "Analise",
+nivel: "intermediario",
+titulo: "Criar Perguntas",
+quando: "Quando estudar ou revisar",
+prompt: `Gere 20 perguntas e respostas baseadas neste notebook para testar meu conhecimento.`
+},
+
+{
+categoria: "Analise",
+nivel: "avancado",
+titulo: "Aplicação Prática",
+quando: "Quando transformar teoria em prática",
+prompt: `Analise este conteúdo e me mostre 5 formas práticas de aplicar isso na vida real ou no trabalho.`
+}
+
+];
+
+const ordemCategorias = [
+"Analise"
+];
+
+let nivelAtual = "todos";
+
+function filtrarNivel(nivel){
+nivelAtual = nivel;
+renderizar();
+}
+
+function renderizar(){
+
+const lista =
+document.getElementById("lista-prompts");
+
+lista.innerHTML = "";
+
+const busca =
+document.getElementById("busca")
+.value
+.toLowerCase();
+
+prompts.forEach((p, i)=>{
+
+const texto =
+(
+p.titulo +
+p.prompt +
+p.quando
+).toLowerCase();
+
+if(
+(busca && !texto.includes(busca))
+) return;
+
+if(
+nivelAtual !== "todos" &&
+p.nivel !== nivelAtual
+) return;
+
+const card =
+document.createElement("div");
+
+card.className = "card";
+
+card.setAttribute(
+"data-nivel",
+p.nivel
+);
+
+card.innerHTML = `
+
+<div class="nivel nivel-${p.nivel}">
+${p.nivel}
+</div>
+
+<h3>${p.titulo}</h3>
+
+<p><strong>Quando usar:</strong>
+${p.quando}
+</p>
+
+<pre class="prompt-text">
+${p.prompt}
+</pre>
+
+<div class="acoes">
+
+<button onclick="copiarPrompt(this)">
+📋 Copiar
+</button>
+
+<button class="btn-favorito"
+onclick="favoritar(this)">
+⭐ Favoritar
+</button>
+
+<button onclick="chat(this)">
+🤖 ChatGPT
+</button>
+
+<button onclick="gemini(this)">
+✨ Gemini
+</button>
+
+</div>
+
+`;
+
+lista.appendChild(card);
+
+});
+
+}
+
+function copiarPrompt(btn){
+
+const texto =
+btn
+.closest(".card")
+.querySelector(".prompt-text")
+.innerText;
+
+navigator.clipboard.writeText(texto);
+
+alert("Prompt copiado!");
+
+}
+
+renderizar();
+
+</script>
