@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Delta Prompts - Biblioteca estrategica de prompts profissionais para IA, automacao, trabalho, marketing, estudo e criacao de conteudo.">
-  <meta name="keywords" content="prompts, IA, inteligencia artificial, ChatGPT, Gemini, automacao com IA, produtividade, marketing, criacao de conteudo">
+  <meta name="description" content="Delta Prompts - Biblioteca estratégica de prompts profissionais para IA, automação, trabalho, marketing, estudo e criação de conteúdo.">
+  <meta name="keywords" content="prompts, IA, inteligência artificial, ChatGPT, Gemini, automação com IA, produtividade, marketing, criação de conteúdo">
   <meta name="author" content="Delta Prompts">
   <meta name="theme-color" content="#5b5ce2">
   <meta property="og:title" content="Delta Prompts - Crie Prompts Profissionais em Segundos">
-  <meta property="og:description" content="Biblioteca estrategica com prompts prontos para automacao, trabalho, marketing, estudo e criacao de conteudo.">
+  <meta property="og:description" content="Biblioteca estratégica com prompts prontos para automação, trabalho, marketing, estudo e criação de conteúdo.">
   <meta property="og:type" content="website">
   <title>Delta Prompts - Crie Prompts Profissionais em Segundos</title>
   <link rel="stylesheet" href="style.css">
@@ -44,8 +44,9 @@
     }
     main { flex: 1; min-width: 0; }
 
-    .hero { padding: 56px 40px 48px; }
-    .hero-content { max-width: 980px; margin: 0 auto; }
+    .hero { padding: 42px 40px 26px; }
+    .hero-content { max-width: 1180px; margin: 0 auto; }
+    .hero-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr); gap: 44px; align-items: center; }
     .hero-badge {
       display: inline-flex;
       background: rgba(91, 92, 226, 0.1);
@@ -89,9 +90,73 @@
       text-decoration: none;
       box-shadow: var(--shadow-md);
     }
+    .hero-preview {
+      display: grid;
+      gap: 16px;
+      align-self: stretch;
+    }
+    .brand-panel, .preview-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    }
+    .brand-panel {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 22px;
+    }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: var(--gradient);
+      color: white;
+      font-size: 30px;
+      font-weight: 800;
+      box-shadow: var(--shadow-md);
+    }
+    .brand-panel strong { display: block; font-size: 20px; color: #202236; }
+    .brand-panel span { display: block; color: var(--muted); font-size: 14px; }
+    .preview-card { padding: 22px; }
+    .preview-card h2 { margin: 0 0 16px; font-size: 18px; line-height: 1.25; }
+    .preview-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .preview-list li {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      background: #f7f8fc;
+      color: #303348;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .preview-list small { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .hero-mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .hero-mini-stats div {
+      padding: 14px;
+      border-radius: 14px;
+      background: #f7f8fc;
+      text-align: center;
+    }
+    .hero-mini-stats strong { display: block; color: var(--primary); font-size: 22px; line-height: 1; }
+    .hero-mini-stats span { display: block; margin-top: 6px; color: var(--muted); font-size: 12px; font-weight: 700; }
 
-    .search-section, .search-results { padding: 34px 40px; background: white; border-block: 1px solid var(--border); }
-    .search-container { max-width: 760px; margin: 0 auto; }
+    .search-section, .search-results { padding: 24px 40px 28px; background: white; border-block: 1px solid var(--border); }
+    .search-container { max-width: 920px; margin: 0 auto; }
+    .hero-search-card {
+      margin: 0 0 28px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+    .hero-search-card .search-container { max-width: 720px; margin: 0; }
     .search-wrapper { position: relative; }
     .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 20px; pointer-events: none; }
     #busca-global {
@@ -173,6 +238,8 @@
     @media (max-width: 768px) {
       .hero, .search-section, .search-results, .categories-section, .featured-section, .footer { padding-left: 18px; padding-right: 18px; }
       .hero { padding-top: 72px; }
+      .hero-layout { grid-template-columns: 1fr; gap: 26px; }
+      .hero-preview { display: none; }
       .hero-stats { gap: 16px; }
       .stat-item { min-width: 86px; }
       .stat-number { font-size: 26px; }
@@ -189,36 +256,65 @@
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-content">
-        <div class="hero-badge">Mais de 188 prompts profissionais</div>
-        <h1 id="hero-title">Crie <span>Prompts Profissionais</span> em Segundos</h1>
-        <p>Transforme suas ideias em respostas melhores com uma biblioteca pronta para automação com IA, trabalho, marketing, estudo, imóveis e criação de conteúdo.</p>
+        <div class="hero-layout">
+          <div class="hero-copy">
+            <div class="hero-badge">Mais de <span data-total-prompts>188</span> prompts profissionais</div>
+            <h1 id="hero-title">Crie <span>Prompts Profissionais</span> em Segundos</h1>
 
-        <div class="hero-stats" aria-label="Resumo da biblioteca">
-          <div class="stat-item"><span class="stat-number" id="stat-prompts">188+</span><span class="stat-label">Prompts</span></div>
-          <div class="stat-item"><span class="stat-number">7</span><span class="stat-label">Categorias</span></div>
-          <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Gratuito</span></div>
-        </div>
+            <section class="search-section hero-search-card" aria-label="Busca de prompts">
+              <div class="search-container">
+                <div class="search-wrapper">
+                  <span class="search-icon" aria-hidden="true">🔎</span>
+                  <input type="search" id="busca-global" placeholder="Buscar por automação, marketing, estudo, imóveis, redes sociais..." autocomplete="off">
+                </div>
 
-        <a href="cadastro.html" class="btn-primary">Criar prompt agora</a>
-      </div>
-    </section>
+                <div class="search-info">
+                  <span id="contador-global">Total de prompts disponíveis: 188</span>
+                  <div class="search-tags" aria-label="Buscas rápidas">
+                    <button class="search-tag" type="button" data-search="automação">🤖 Automação</button>
+                    <button class="search-tag" type="button" data-search="estudo">📚 Estudo</button>
+                    <button class="search-tag" type="button" data-search="imobiliario">🏠 Imobiliário</button>
+                    <button class="search-tag" type="button" data-search="marketing">📣 Marketing</button>
+                    <button class="search-tag" type="button" data-search="redes sociais">📱 Redes Sociais</button>
+                  </div>
+                </div>
+              </div>
+            </section>
 
-    <section class="search-section" aria-label="Busca de prompts">
-      <div class="search-container">
-        <div class="search-wrapper">
-          <span class="search-icon" aria-hidden="true">🔎</span>
-          <input type="search" id="busca-global" placeholder="Buscar por automação, marketing, estudo, imóveis, redes sociais..." autocomplete="off">
-        </div>
+            <p>Transforme suas ideias em respostas melhores com uma biblioteca pronta para automação com IA, trabalho, marketing, estudo, imóveis e criação de conteúdo.</p>
 
-        <div class="search-info">
-          <span id="contador-global">Total de prompts disponíveis: 188</span>
-          <div class="search-tags" aria-label="Buscas rápidas">
-            <button class="search-tag" type="button" data-search="automação">🤖 Automação</button>
-            <button class="search-tag" type="button" data-search="estudo">📚 Estudo</button>
-            <button class="search-tag" type="button" data-search="imobiliario">🏠 Imobiliário</button>
-            <button class="search-tag" type="button" data-search="marketing">📣 Marketing</button>
-            <button class="search-tag" type="button" data-search="redes sociais">📱 Redes Sociais</button>
+            <div class="hero-stats" aria-label="Resumo da biblioteca">
+              <div class="stat-item"><span class="stat-number" id="stat-prompts">188+</span><span class="stat-label">Prompts</span></div>
+              <div class="stat-item"><span class="stat-number" id="stat-areas">7</span><span class="stat-label">Áreas principais</span></div>
+              <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Gratuito</span></div>
+            </div>
+
+            <a href="cadastro.html" class="btn-primary">Criar prompt agora</a>
           </div>
+
+          <aside class="hero-preview" aria-label="Prévia da biblioteca">
+            <div class="brand-panel">
+              <div class="brand-mark">Δ</div>
+              <div>
+                <strong>Delta Prompts</strong>
+                <span>Biblioteca prática para usar IA no trabalho e na rotina.</span>
+              </div>
+            </div>
+            <div class="preview-card">
+              <h2>Comece por um objetivo</h2>
+              <ul class="preview-list">
+                <li><span>🤖</span><span>Automatizar tarefas</span><small>IA</small></li>
+                <li><span>🏠</span><span>Divulgar imóveis</span><small>vendas</small></li>
+                <li><span>📣</span><span>Criar campanhas</span><small>marketing</small></li>
+                <li><span>🎬</span><span>Planejar conteúdo</span><small>social</small></li>
+              </ul>
+            </div>
+            <div class="preview-card hero-mini-stats">
+              <div><strong data-total-prompts>188</strong><span>prompts</span></div>
+              <div><strong data-total-areas>7</strong><span>áreas</span></div>
+              <div><strong>1</strong><span>busca central</span></div>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
@@ -254,6 +350,7 @@
 
   <script>
     const TOTAL_PROMPTS = 188;
+    const TOTAL_AREAS = 7;
 
     const categoriasData = [
       {
@@ -279,7 +376,7 @@
         ]
       },
       {
-        id: 'profissionais', nome: 'Profissionais', icone: '💼', total: 45,
+        id: 'profissionais', nome: 'Trabalho e Imobiliário', icone: '💼', total: 45,
         termos: ['trabalho', 'corretor', 'advogado', 'consultor', 'imobiliario', 'imóveis', 'cliente'],
         descricao: 'Prompts para trabalho, corretores, atendimento, propostas e rotina profissional.',
         link: 'paginas/trabalho.html',
@@ -337,7 +434,7 @@
 
     const featuredPrompts = [
       { categoria: 'Automação com IA', icone: '🤖', titulo: 'Mapear Processo Repetitivo', descricao: 'Descubra o que pode ser automatizado na sua rotina.', link: 'paginas/automacao-ia.html' },
-      { categoria: 'Profissionais', icone: '🏠', titulo: 'Descrição de Imóvel', descricao: 'Transforme dados de um imóvel em anúncio mais atraente.', link: 'paginas/imobiliario.html' },
+      { categoria: 'Imobiliário', icone: '🏠', titulo: 'Descrição de Imóvel', descricao: 'Transforme dados de um imóvel em anúncio mais atraente.', link: 'paginas/imobiliario.html' },
       { categoria: 'Marketing', icone: '📣', titulo: 'Copy de Vendas', descricao: 'Crie uma oferta com promessa, benefícios e chamada para ação.', link: 'paginas/marketing.html' },
       { categoria: 'Redes Sociais', icone: '📱', titulo: 'Post para Instagram', descricao: 'Monte uma publicação com gancho, conteúdo e CTA.', link: 'paginas/redes-sociais.html' }
     ];
@@ -349,6 +446,10 @@
     function atualizarContador() {
       const contador = document.getElementById('contador-global');
       if (contador) contador.innerHTML = `📊 Total de prompts disponíveis: <strong>${TOTAL_PROMPTS}</strong>`;
+      document.querySelectorAll('[data-total-prompts]').forEach(el => el.textContent = TOTAL_PROMPTS);
+      document.querySelectorAll('[data-total-areas]').forEach(el => el.textContent = TOTAL_AREAS);
+      const statAreas = document.getElementById('stat-areas');
+      if (statAreas) statAreas.textContent = TOTAL_AREAS;
     }
 
     function renderCategorias() {
