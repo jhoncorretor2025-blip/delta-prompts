@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Sites & Landing Pages | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<link rel="stylesheet" href="/delta-prompts/melhoriaspaginas.css">
+
+<style>
+
+pre{
+white-space: pre-wrap;
+font-size:14px;
+background:#f9fafb;
+padding:15px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+margin-bottom:15px;
+}
+
+#busca{
+width:100%;
+padding:14px;
+border-radius:10px;
+border:1px solid #ddd;
+margin-bottom:20px;
+font-size:14px;
+}
+
+select{
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+margin-bottom:25px;
+}
+
+.meta{
+font-size:13px;
+opacity:.7;
+margin-bottom:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="/delta-prompts/menu-loader.js"></script>
+
+<main>
+
+<h1>🌐 Sites & Landing Pages</h1>
+
+<p>
+Prompts para criar páginas de vendas, landing pages, estruturação de sites,
+copywriting, UX e conversão.
+</p>
+
+<section class="card">
+<h3>Objetivo</h3>
+<p>
+Use estes prompts para acelerar criação de páginas, melhorar conversão
+e estruturar sites completos com IA.
+</p>
+</section>
+
+<input
+id="busca"
+placeholder="Buscar prompts..."
+oninput="renderizar()"
+>
+
+<select id="filtroNivel" onchange="renderizar()">
+<option value="todos">Todos níveis</option>
+<option value="basico">Básico</option>
+<option value="intermediario">Intermediário</option>
+<option value="avancado">Avançado</option>
+</select>
+
+<div id="lista-prompts"></div>
+
+<script src="/delta-prompts/funcoes.js"></script>
+
+<script>
+
+const ordemCategorias = [
+"LANDING PAGES",
+"COPY",
+"UX",
+"CONVERSAO",
+"SITES"
+];
+
+const prompts = [
+
+{
+categoria:"LANDING PAGES",
+nivel:"basico",
+titulo:"Landing Page Simples",
+quando:"Criar página rápida",
+prompt:`Crie uma landing page simples para [produto].
+
+Inclua:
+
+- Headline
+- Benefícios
+- CTA
+- FAQ
+- Estrutura mobile`
+},
+
+{
+categoria:"LANDING PAGES",
+nivel:"intermediario",
+titulo:"Landing de Alta Conversão",
+quando:"Aumentar vendas",
+prompt:`Monte uma landing page completa.
+
+Produto: [produto]
+
+Inclua:
+
+Headline
+Subheadline
+Prova social
+Oferta
+Objeções
+CTA
+Urgência`
+},
+
+{
+categoria:"COPY",
+nivel:"basico",
+titulo:"Criar Headline",
+quando:"Precisa chamar atenção",
+prompt:`Crie 20 headlines para uma landing page sobre [tema].
+
+Use:
+
+curiosidade
+dor
+benefício
+autoridade`
+},
+
+{
+categoria:"COPY",
+nivel:"avancado",
+titulo:"Copy Completa",
+quando:"Estruturar vendas",
+prompt:`Escreva copy completa para landing page.
+
+Use:
+
+AIDA
+gatilhos mentais
+objeções
+provas
+CTA`
+},
+
+{
+categoria:"UX",
+nivel:"intermediario",
+titulo:"Melhorar Experiência",
+quando:"Ajustar usabilidade",
+prompt:`Analise uma landing page.
+
+Mostre:
+
+problemas UX
+pontos confusos
+melhorias visuais
+otimizações mobile`
+},
+
+{
+categoria:"CONVERSAO",
+nivel:"avancado",
+titulo:"Otimizar Conversão",
+quando:"Baixa conversão",
+prompt:`Faça auditoria de conversão.
+
+Analise:
+
+CTA
+hierarquia
+copy
+provas sociais
+fricções`
+},
+
+{
+categoria:"SITES",
+nivel:"basico",
+titulo:"Estrutura de Site",
+quando:"Criar site completo",
+prompt:`Crie mapa completo do site.
+
+Páginas:
+
+home
+sobre
+serviços
+blog
+contato`
+},
+
+{
+categoria:"SITES",
+nivel:"intermediario",
+titulo:"Site Institucional",
+quando:"Empresas",
+prompt:`Estruture site institucional.
+
+Inclua:
+
+arquitetura
+copy
+menus
+CTAs
+SEO`
+},
+
+{
+categoria:"LANDING PAGES",
+nivel:"avancado",
+titulo:"Landing para Tráfego Pago",
+quando:"Campanhas",
+prompt:`Crie landing focada em anúncios.
+
+Objetivo:
+
+reduzir CPA
+aumentar CTR
+capturar leads`
+},
+
+{
+categoria:"CONVERSAO",
+nivel:"intermediario",
+titulo:"Teste A/B",
+quando:"Melhorar resultados",
+prompt:`Crie hipóteses de testes A/B.
+
+Teste:
+
+headline
+CTA
+cores
+layout
+oferta`
+}
+
+];
+
+function renderizar(){
+
+const lista=document.getElementById("lista-prompts");
+const busca=document.getElementById("busca").value.toLowerCase();
+const nivel=document.getElementById("filtroNivel").value;
+
+lista.innerHTML="";
+
+ordemCategorias.forEach(cat=>{
+
+const itens=prompts.filter(p=>{
+
+const matchBusca=
+p.titulo.toLowerCase().includes(busca) ||
+p.prompt.toLowerCase().includes(busca);
+
+const matchNivel=
+nivel==="todos" ||
+p.nivel===nivel;
+
+return p.categoria===cat &&
+matchBusca &&
+matchNivel;
+
+});
+
+if(!itens.length) return;
+
+const titulo=document.createElement("h2");
+titulo.innerText=cat;
+lista.appendChild(titulo);
+
+itens.forEach((p,i)=>{
+
+const card=document.createElement("div");
+
+card.className="card";
+
+card.setAttribute("data-nivel", p.nivel);
+
+card.innerHTML=`
+
+<div class="nivel nivel-${p.nivel}">
+${p.nivel.toUpperCase()}
+</div>
+
+<div class="meta">
+📌 ${p.quando}
+</div>
+
+<h3>${p.titulo}</h3>
+
+<pre class="prompt-text">${p.prompt}</pre>
+
+<div class="acoes">
+
+<button onclick="copiar(this)">
+📋 Copiar
+</button>
+
+<button onclick="favoritar(this)">
+⭐ Favoritar
+</button>
+
+<button onclick="chat(this)">
+ChatGPT
+</button>
+
+<button onclick="gemini(this)">
+Gemini
+</button>
+
+</div>
+
+`;
+
+lista.appendChild(card);
+
+});
+
+});
+
+}
+
+renderizar();
+
+</script>
+
+</main>
+
+</body>
+</html>
