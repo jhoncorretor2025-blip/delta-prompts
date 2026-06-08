@@ -249,7 +249,147 @@ const promptsSaude = [
         titulo: "📈🧠 Sistema de Acompanhamento de Saúde",
         quando: "Para acompanhar evolução física e mental.",
         prompt: `Crie um sistema de acompanhamento de saúde considerando:\n\n• Alimentação\n• Exercícios\n• Sono\n• Nível de energia\n• Estresse\n\nOrganize como planilha ou checklist semanal.`
-    }
+    },
+
+const promptsSaude = [
+
+{
+categoria:"🔎 Autoconhecimento",
+nivel:"basico",
+titulo:"🩺🤖 Médico IA para Pesquisa Segura",
+quando:"Quando tiver dúvidas gerais sobre saúde e quiser raciocínio estruturado.",
+prompt:`Você atuará como um assistente de pesquisa médica baseado em evidências, NÃO como substituto de profissionais de saúde.
+
+Objetivo: ajudar-me a entender sintomas, doenças, exames, medicamentos e possibilidades clínicas usando raciocínio estruturado.
+
+Regras obrigatórias:
+
+• Nunca assuma diagnóstico definitivo  
+• Sempre informe nível de confiança (baixo/médio/alto)  
+• Diferencie fatos conhecidos de hipóteses  
+• Se faltarem dados, faça perguntas antes de responder  
+• Priorize medicina baseada em evidências  
+• Informe sinais de alerta  
+• Mostre limitações e incertezas  
+• Explique em linguagem simples  
+
+Estrutura:
+
+Resumo do problema  
+Informações faltantes  
+Possíveis explicações  
+O que apoia e contradiz hipóteses  
+Sinais de alerta  
+Próximos passos  
+Grau de confiança`
+},
+
+{
+categoria:"🔎 Autoconhecimento",
+nivel:"intermediario",
+titulo:"🤒🔍 Investigação Estruturada de Sintomas",
+quando:"Quando estiver com sintomas e quiser organizar hipóteses.",
+prompt:`Tenho os seguintes sintomas:
+
+[DESCREVER]
+
+Faça investigação clínica estruturada.
+
+Primeiro faça perguntas essenciais.
+
+Depois organize:
+
+• causas comuns  
+• causas menos comuns  
+• causas graves que precisam ser descartadas  
+• sinais de emergência  
+• o que observar nas próximas horas/dias  
+
+Não conclua cedo demais e indique limitações.`
+},
+
+{
+categoria:"📋 Planejamento",
+nivel:"intermediario",
+titulo:"📚🦠 Pesquisa Profunda de Doença",
+quando:"Para estudar doenças ou condições médicas.",
+prompt:`Quero estudar:
+
+[DOENÇA]
+
+Crie revisão estruturada contendo:
+
+• definição  
+• fisiopatologia  
+• fatores de risco  
+• sintomas  
+• diagnóstico  
+• exames  
+• tratamentos  
+• complicações  
+• pesquisas recentes  
+• qualidade das evidências  
+
+Diferencie consenso científico de hipóteses emergentes.`
+},
+
+{
+categoria:"📊 Monitoramento",
+nivel:"avancado",
+titulo:"🛡️🚫 Anti-Alucinação Médica",
+quando:"Quando quiser reduzir respostas incertas ou especulativas.",
+prompt:`Antes de responder:
+
+• liste informações ausentes  
+• diga o que sabe vs o que está inferindo  
+• não invente referências  
+• diga explicitamente se confiança for baixa  
+• apresente argumentos contra sua hipótese principal  
+• mostre possíveis erros do raciocínio  
+
+Priorize transparência e limitações.`
+},
+
+{
+categoria:"📋 Planejamento",
+nivel:"basico",
+titulo:"💊🧪 Entender Medicamentos e Exames",
+quando:"Para entender exames e medicamentos em linguagem simples.",
+prompt:`Explique:
+
+[MEDICAMENTO OU EXAME]
+
+Usando:
+
+• para que serve  
+• quando costuma ser usado  
+• limitações  
+• efeitos comuns  
+• sinais importantes para procurar ajuda  
+• dúvidas para discutir com profissional  
+
+Evite linguagem excessivamente técnica.`
+},
+
+{
+categoria:"🔎 Autoconhecimento",
+nivel:"avancado",
+titulo:"🕵️‍♂️🩺 Investigador Médico",
+quando:"Quando quiser análise profunda baseada em hipóteses.",
+prompt:`Atue como investigador clínico.
+
+Para cada hipótese apresente:
+
+• evidências favoráveis  
+• evidências contrárias  
+• probabilidade relativa  
+• perguntas que mudariam o raciocínio  
+• erros comuns de interpretação  
+
+Não escolha apenas uma hipótese cedo demais.`
+}
+
+    
 ];
 
 // Injeção dinâmica dos botões de filtro de categoria
