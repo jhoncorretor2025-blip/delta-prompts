@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Favoritos | Delta Prompts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Links para os teus ficheiros do GitHub -->
     <link rel="stylesheet" href="/delta-prompts/style.css">
     <link rel="stylesheet" href="/delta-prompts/melhoriaspaginas.css">
 
@@ -130,7 +129,7 @@
 
     <main class="main-content">
         <header class="header-favoritos">
-            <h1>❤️ Os Meus Favoritos</h1>
+            <h1>❤️ Meus Favoritos</h1>
             <div id="contador" style="font-weight: bold; color: #5b5ce2; background: #f0f0ff; padding: 5px 12px; border-radius: 20px;">0 itens</div>
         </header>
 
@@ -139,43 +138,59 @@
 
     <div id="toast">📋 Copiado com sucesso!</div>
 
-    <!-- Script para carregar o menu do teu GitHub -->
     <script src="/delta-prompts/menu-loader.js"></script>
     
     <script>
         const container = document.getElementById("lista-favoritos");
         const contador = document.getElementById("contador");
 
-        // Função para mostrar os favoritos salvos no navegador
+        function escapeHtml(value) {
+            return String(value || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function getListaFavoritos() {
+            if (window.getFavoritos) return window.getFavoritos();
+            try {
+                return JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+            } catch(e) {
+                return [];
+            }
+        }
+
         function renderizarFavoritos() {
-            const favoritos = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
+            const favoritos = getListaFavoritos();
             contador.innerText = `${favoritos.length} ${favoritos.length === 1 ? 'item' : 'itens'}`;
             container.innerHTML = "";
 
             if (favoritos.length === 0) {
                 container.innerHTML = `
                     <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #a0aec0; background: white; border-radius: 12px; border: 2px dashed #e2e8f0;">
-                        <p style="font-size: 18px;">Ainda não tens nenhum prompt favorito.</p>
-                        <p style="font-size: 14px; margin-top: 10px;">Explora as categorias e clica no ❤️ para guardar aqui.</p>
+                        <p style="font-size: 18px;">Você ainda não tem nenhum prompt favorito.</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Explore as categorias e clique em ❤️ para guardar aqui.</p>
                     </div>`;
                 return;
             }
 
-            // Criar os cards um por um
             favoritos.forEach(item => {
+                const id = escapeHtml(item.id);
                 const card = document.createElement("div");
                 card.className = "card-favorito"; 
                 card.innerHTML = `
                     <div class="tag" style="background: #edf2f7; color: #4a5568; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; align-self: flex-start;">
-                        ${(item.categoria || 'Geral').toUpperCase()}
+                        ${escapeHtml(item.categoria || 'Geral').toUpperCase()}
                     </div>
-                    <h3 style="margin: 15px 0 10px 0; font-size: 18px; color: #2d3748;">${item.titulo}</h3>
-                    <div class="prompt-preview" id="txt-${item.id}">${item.texto}</div>
+                    <h3 style="margin: 15px 0 10px 0; font-size: 18px; color: #2d3748;">${escapeHtml(item.titulo)}</h3>
+                    <div class="prompt-preview" id="txt-${id}">${escapeHtml(item.texto)}</div>
                     <div class="acoes-favoritos">
-                        <button class="btn-fav btn-copy" onclick="copiarPrompt('${item.id}')">
+                        <button class="btn-fav btn-copy" onclick="copiarPrompt('${id}')">
                             📋 Copiar Prompt
                         </button>
-                        <button class="btn-fav btn-remove" onclick="removerFavorito('${item.id}')" title="Remover dos favoritos">
+                        <button class="btn-fav btn-remove" onclick="removerFavorito('${id}')" title="Remover dos favoritos">
                             🗑️
                         </button>
                     </div>
@@ -184,42 +199,38 @@
             });
         }
 
-        // Função para copiar o texto para a área de transferência
-        function copiarPrompt(id) {
+        async function copiarPrompt(id) {
             const txt = document.getElementById(`txt-${id}`).innerText;
-            
-            // Método compatível com a maioria dos navegadores
-            const tempInput = document.createElement("textarea");
-            tempInput.value = txt;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
+            if (navigator.clipboard) {
+                await navigator.clipboard.writeText(txt);
+            } else {
+                const tempInput = document.createElement("textarea");
+                tempInput.value = txt;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+            }
 
-            // Mostrar aviso de sucesso
             const t = document.getElementById("toast");
             t.style.display = "block";
             setTimeout(() => t.style.display = "none", 2500);
         }
 
-        // Função para remover o item da lista
         function removerFavorito(id) {
-            let favs = JSON.parse(localStorage.getItem("deltaFavoritos")) || [];
-            
-            // Garantimos que comparamos o ID como String para não falhar
+            let favs = getListaFavoritos();
             const novaLista = favs.filter(f => String(f.id) !== String(id));
-            
-            localStorage.setItem("deltaFavoritos", JSON.stringify(novaLista));
-            
-            // Atualiza a tela imediatamente
+            if (window.saveFavoritos) {
+                window.saveFavoritos(novaLista);
+            } else {
+                localStorage.setItem("deltaFavoritos", JSON.stringify(novaLista));
+            }
             renderizarFavoritos();
-            
-            // Notifica o menu que os favoritos mudaram (se necessário)
             if(window.initFavButtons) window.initFavButtons();
         }
 
-        // Inicia a página lendo os dados
         document.addEventListener("DOMContentLoaded", renderizarFavoritos);
+        window.addEventListener("delta:favoritos-updated", renderizarFavoritos);
     </script>
 </body>
 </html>
