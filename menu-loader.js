@@ -8,7 +8,7 @@
     const path = window.location.pathname;
     const depth = Math.max(path.split('/').filter(Boolean).length - 1, 0);
     const relativeRoot = depth > 0 ? '../'.repeat(depth) : './';
-    const version = 'automacao-ia-20260517';
+    const version = 'delta-prompts-20260607';
 
     return [
       `${new URL('menu.html', window.location.href).href}?v=${version}`,
@@ -48,7 +48,7 @@
     .catch(err => {
       console.error(err);
       const c = document.getElementById('menu');
-      if (c) c.innerHTML = '<button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button><nav class="sidebar"><h2>Delta Prompts</h2><a href="/delta-prompts/index.html">🏠 Início</a><a href="/delta-prompts/paginas/automacao-ia.html">🤖 Automação com IA</a><a href="/delta-prompts/biblioteca.html">📦 Biblioteca</a></nav>';
+      if (c) c.innerHTML = '<button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button><nav class="sidebar"><h2>Delta Prompts</h2><a href="/delta-prompts/index.html">🏠 Início</a><a href="/delta-prompts/paginas/automacao-ia.html">🤖 Automação com IA</a><a href="/delta-prompts/biblioteca.html">📦 Biblioteca</a><a href="/delta-prompts/favoritos.html">❤️ Favoritos</a></nav>';
     });
 
   window.attachMenuControls = function attachMenuControls() {
@@ -111,6 +111,23 @@
 
 
 // ==============================
+// PADRAO VISUAL DAS CATEGORIAS
+// ==============================
+
+(function(){
+  function enhanceCategoryPage() {
+    const hasPromptCards = document.querySelector('.prompt-text, pre.prompt-text, #lista');
+    const hasCategoryHeading = document.querySelector('main > h1');
+    if (!hasPromptCards || !hasCategoryHeading || document.body.classList.contains('category-page')) return;
+
+    document.body.classList.add('category-page');
+  }
+
+  document.addEventListener('DOMContentLoaded', enhanceCategoryPage);
+})();
+
+
+// ==============================
 // GOOGLE ANALYTICS GLOBAL
 // ==============================
 
@@ -142,17 +159,95 @@
 (function(){
 
   const STORAGE_KEY = 'deltaFavoritos';
+  const LEGACY_KEYS = ['deltaPrompts', 'deltaFav', 'favoritosIdeiasPraticas'];
 
-  window.getFavoritos = function(){
+  function hashText(text) {
+    let hash = 0;
+    const value = String(text || '');
+    for (let i = 0; i < value.length; i++) {
+      hash = ((hash << 5) - hash) + value.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash).toString(36);
+  }
+
+  function readList(key) {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const value = JSON.parse(localStorage.getItem(key) || '[]');
+      return Array.isArray(value) ? value : [];
     } catch(e) {
       return [];
     }
+  }
+
+  function normalizeFavorite(item, source = STORAGE_KEY, index = 0) {
+    if (typeof item === 'string') {
+      const text = item.trim();
+      if (!text) return null;
+      return {
+        id: `${source}-${hashText(text)}`,
+        titulo: 'Prompt favorito',
+        texto: text,
+        categoria: 'Geral',
+        createdAt: Date.now()
+      };
+    }
+
+    if (!item || typeof item !== 'object') return null;
+
+    if (source === 'deltaPrompts' && item.favorito !== true) return null;
+    if (source === 'favoritosIdeiasPraticas' && typeof item !== 'object') return null;
+
+    const titulo = item.titulo || item.title || item.nome || item.categoria || 'Prompt favorito';
+    const texto = item.texto || item.conteudo || item.prompt || item.descricao || '';
+    if (!String(titulo).trim() && !String(texto).trim()) return null;
+
+    return {
+      id: String(item.id || `${source}-${hashText(`${titulo}-${texto}-${index}`)}`),
+      titulo: String(titulo).trim(),
+      texto: String(texto).trim(),
+      categoria: String(item.categoria || item.category || 'Geral').trim(),
+      createdAt: Number(item.createdAt || item.data || Date.now())
+    };
+  }
+
+  function dedupeFavorites(list) {
+    const seen = new Set();
+    return list.filter(item => {
+      const normalized = normalizeFavorite(item);
+      if (!normalized) return false;
+      const key = normalized.id || hashText(`${normalized.titulo}-${normalized.texto}`);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      Object.assign(item, normalized);
+      return true;
+    });
+  }
+
+  function migrateLegacyFavorites(current) {
+    const migrated = [];
+    LEGACY_KEYS.forEach(key => {
+      readList(key).forEach((item, index) => {
+        const normalized = normalizeFavorite(item, key, index);
+        if (normalized) migrated.push(normalized);
+      });
+    });
+
+    const merged = dedupeFavorites([...current, ...migrated]);
+    if (migrated.length || merged.length !== current.length) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+    }
+    return merged;
+  }
+
+  window.getFavoritos = function(){
+    return migrateLegacyFavorites(readList(STORAGE_KEY).map((item, index) => normalizeFavorite(item, STORAGE_KEY, index)).filter(Boolean));
   };
 
   window.saveFavoritos = function(list){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    const normalized = dedupeFavorites((Array.isArray(list) ? list : []).map((item, index) => normalizeFavorite(item, STORAGE_KEY, index)).filter(Boolean));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+    window.dispatchEvent(new CustomEvent('delta:favoritos-updated', { detail: normalized }));
   };
 
   window.isFavorito = function(id){
@@ -223,11 +318,11 @@
 
 (function(){
   const promptMap = {
-    'Mapear Processo Repetitivo': 'Atue como especialista em automacao com IA. Analise esta rotina: [DESCREVA A ROTINA]. Identifique etapas repetitivas, informacoes necessarias, ferramentas envolvidas, o que pode ser automatizado e o fluxo ideal.',
-    'Descrição de Imóvel': 'Atue como corretor imobiliario especialista em vendas. Crie uma descricao persuasiva para este imovel: [INSIRA OS DADOS]. Destaque localizacao, diferenciais, publico ideal e chamada para acao.',
-    'Descricao de Imovel': 'Atue como corretor imobiliario especialista em vendas. Crie uma descricao persuasiva para este imovel: [INSIRA OS DADOS]. Destaque localizacao, diferenciais, publico ideal e chamada para acao.',
-    'Copy de Vendas': 'Atue como copywriter profissional. Crie uma copy de vendas para: [PRODUTO OU SERVICO]. Inclua promessa, beneficios, prova, objeções e chamada para acao.',
-    'Post para Instagram': 'Atue como estrategista de redes sociais. Crie um post para Instagram sobre: [TEMA]. Inclua gancho, legenda, hashtags e chamada para acao.'
+    'Mapear Processo Repetitivo': 'Atue como especialista em automação com IA. Analise esta rotina: [DESCREVA A ROTINA]. Identifique etapas repetitivas, informações necessárias, ferramentas envolvidas, o que pode ser automatizado e o fluxo ideal.',
+    'Descrição de Imóvel': 'Atue como corretor imobiliário especialista em vendas. Crie uma descrição persuasiva para este imóvel: [INSIRA OS DADOS]. Destaque localização, diferenciais, público ideal e chamada para ação.',
+    'Descricao de Imovel': 'Atue como corretor imobiliário especialista em vendas. Crie uma descrição persuasiva para este imóvel: [INSIRA OS DADOS]. Destaque localização, diferenciais, público ideal e chamada para ação.',
+    'Copy de Vendas': 'Atue como copywriter profissional. Crie uma copy de vendas para: [PRODUTO OU SERVIÇO]. Inclua promessa, benefícios, prova, objeções e chamada para ação.',
+    'Post para Instagram': 'Atue como estrategista de redes sociais. Crie um post para Instagram sobre: [TEMA]. Inclua gancho, legenda, hashtags e chamada para ação.'
   };
 
   function toast(message) {
@@ -249,7 +344,7 @@
       await navigator.clipboard.writeText(text);
       toast('Prompt copiado');
     } catch (err) {
-      toast('Nao foi possivel copiar automaticamente');
+      toast('Não foi possível copiar automaticamente');
     }
   }
 
@@ -260,13 +355,13 @@
     section.className = 'workflow-section';
     section.innerHTML = `
       <div class="section-header">
-        <h2>Caminhos rapidos</h2>
+        <h2>Caminhos rápidos</h2>
         <p>Escolha o melhor ponto de partida para criar, encontrar ou guardar prompts.</p>
       </div>
       <div class="workflow-grid">
         <a class="workflow-card" href="cadastro.html"><span>➕</span><strong>Novo Prompt</strong><small>Monte um prompt personalizado do zero.</small></a>
-        <a class="workflow-card" href="prompt_pro.html"><span>⚡</span><strong>Gerador Pro</strong><small>Use um fluxo guiado para chegar mais rapido ao resultado.</small></a>
-        <a class="workflow-card" href="biblioteca.html"><span>📦</span><strong>Biblioteca</strong><small>Veja tudo que ja existe e encontre modelos prontos.</small></a>
+        <a class="workflow-card" href="prompt_pro.html"><span>⚡</span><strong>Gerador Pro</strong><small>Use um fluxo guiado para chegar mais rápido ao resultado.</small></a>
+        <a class="workflow-card" href="biblioteca.html"><span>📦</span><strong>Biblioteca</strong><small>Veja tudo que já existe e encontre modelos prontos.</small></a>
       </div>
     `;
 
@@ -282,13 +377,13 @@
     section.innerHTML = `
       <div class="section-header">
         <h2>Atalhos por objetivo</h2>
-        <p>Use estes filtros para ir direto ao tipo de resultado que voce quer gerar.</p>
+        <p>Use estes filtros para ir direto ao tipo de resultado que você quer gerar.</p>
       </div>
       <div class="objective-grid">
         <button type="button" data-home-search="automação">Automatizar tarefas</button>
         <button type="button" data-home-search="vendas">Vender melhor</button>
-        <button type="button" data-home-search="imobiliario">Divulgar imovel</button>
-        <button type="button" data-home-search="estudo">Estudar mais rapido</button>
+        <button type="button" data-home-search="imobiliario">Divulgar imóvel</button>
+        <button type="button" data-home-search="estudo">Estudar mais rápido</button>
         <button type="button" data-home-search="redes sociais">Criar posts</button>
         <button type="button" data-home-search="planejamento">Planejar rotina</button>
         <button type="button" data-home-search="youtube">Criar videos</button>
@@ -350,7 +445,9 @@
     const marker = document.createElement('div');
     marker.id = 'home-workflow';
     const search = document.querySelector('.search-section');
-    if (search) search.after(marker);
+    const hero = document.querySelector('.hero');
+    if (hero) hero.after(marker);
+    else if (search) search.after(marker);
 
     setTimeout(() => {
       addWorkflowSection();
