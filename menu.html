@@ -1,7 +1,7 @@
 <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
 
 <nav class="sidebar" role="navigation" aria-label="Menu principal">
-  <h2>Delta Prompts</h2>
+  <h2 class="menu-brand"><span class="brand-symbol">Δ</span><span>Delta Prompts</span></h2>
 
   <a href="/delta-prompts/index.html">🏠 Início</a>
   <a href="/delta-prompts/cadastro.html">➕ Novo Prompt</a>
@@ -14,7 +14,7 @@
     <div class="menu-links">
       <a href="/delta-prompts/paginas/estudo.html">📚 Estudo <span class="menu-count">21</span></a>
       <a href="/delta-prompts/paginas/saude.html">🧠 Saúde <span class="menu-count">14</span></a>
-      <a href="/delta-prompts/paginas/financas-pessoais.html"> financeiro <span class="menu-count">5</span></a>
+      <a href="/delta-prompts/paginas/financas-pessoais.html">💰 Finanças Pessoais <span class="menu-count">5</span></a>
       
       <a href="/delta-prompts/paginas/imagens.html">🎨 Imagens <span class="menu-count">15</span></a>
       <a href="/delta-prompts/paginas/trend.html">🔥 Trends <span class="menu-count">27</span></a>
@@ -43,7 +43,7 @@
     <div class="menu-title">⚡ Produtividade</div>
     <div class="menu-links">
       <a href="/delta-prompts/paginas/analise.html">📊 Análise <span class="menu-count">4</span></a>
-      <a href="/delta-prompts/paginas/notbooklm.html"> 📚 NotebookLM </a>
+      <a href="/delta-prompts/paginas/notbooklm.html">📚 NotebookLM <span class="menu-count">1</span></a>
       <a href="/delta-prompts/paginas/estrategia.html">🎯 Estratégia <span class="menu-count">7</span></a>
       <a href="/delta-prompts/paginas/planejamento.html">📅 Planejamento <span class="menu-count">7</span></a>
       <a href="/delta-prompts/paginas/automacao-ia.html">🤖 Automação com IA <span class="menu-count">6</span></a>
@@ -58,7 +58,7 @@
       <a href="/delta-prompts/paginas/renda_extra/ideias_renda_extra.html">💡 Ideias <span class="menu-count">14</span></a>
       <a href="/delta-prompts/paginas/renda_extra/produtos_fisicos.html">🛍️ Produtos Físicos <span class="menu-count">8</span></a>
       <a href="/delta-prompts/paginas/renda_extra/servicos_digitais.html">💻 Ideias com IA <span class="menu-count">4</span></a>
-      <a href="/delta-prompts/paginas/renda_extra/estrategias_de_rendaextra.html">📈 Estratégias <span class="menu-count">0</span></a>
+      <a href="/delta-prompts/paginas/renda_extra/ideias_praticas_de_rendaextra.html">📈 Estratégias Práticas <span class="menu-count">6</span></a>
     </div>
   </div>
 
@@ -89,6 +89,25 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.menu-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-symbol {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #5b5ce2, #7a5bff);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  box-shadow: 0 10px 22px rgba(91, 92, 226, 0.22);
 }
 
 .menu-count {
