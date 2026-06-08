@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Programação No-Code | Delta Prompts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../melhoriaspaginas.css">
+
+<style>
+
+#busca{
+width:100%;
+padding:14px;
+border-radius:12px;
+border:1px solid #ddd;
+margin-bottom:20px;
+font-size:15px;
+}
+
+pre{
+white-space:pre-wrap;
+font-size:14px;
+background:#f8fafc;
+padding:15px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+margin:15px 0;
+}
+
+.meta{
+font-size:13px;
+opacity:.7;
+margin-bottom:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="menu"></div>
+<script src="../menu-loader.js"></script>
+
+<main>
+
+<h1>💻 Programação No-Code</h1>
+
+<p>
+Prompts para criar automações, apps, landing pages, fluxos e produtos digitais sem precisar programar.
+</p>
+
+<section class="card">
+<h3>Objetivo</h3>
+<p>
+Use estes prompts para acelerar criação em ferramentas no-code, automações e construção de produtos digitais.
+</p>
+</section>
+
+<input
+id="busca"
+placeholder="Buscar prompt..."
+oninput="renderizar()"
+/>
+
+<div class="filtro-nivel">
+
+<button class="nivel-btn ativo" onclick="trocarNivel('todos',this)">Todos</button>
+
+<button class="nivel-btn" onclick="trocarNivel('basico',this)">
+Básico
+</button>
+
+<button class="nivel-btn" onclick="trocarNivel('intermediario',this)">
+Intermediário
+</button>
+
+<button class="nivel-btn" onclick="trocarNivel('avancado',this)">
+Avançado
+</button>
+
+</div>
+
+<div id="lista-prompts"></div>
+
+<script src="../funcoes.js"></script>
+
+<script>
+
+const prompts = [
+
+{
+categoria:"automacao",
+nivel:"basico",
+titulo:"Criar fluxo simples",
+quando:"Automatizações rápidas",
+prompt:`Crie um fluxo simples usando ferramentas no-code para automatizar [PROCESSO]. Mostre passo a passo e ferramentas recomendadas.`
+},
+
+{
+categoria:"automacao",
+nivel:"intermediario",
+titulo:"Automação completa",
+quando:"Fluxos complexos",
+prompt:`Monte uma automação completa entre [FERRAMENTA 1] e [FERRAMENTA 2], incluindo gatilhos, ações e tratamento de erros.`
+},
+
+{
+categoria:"apps",
+nivel:"basico",
+titulo:"Criar app sem código",
+quando:"Criar MVP",
+prompt:`Crie estrutura de um aplicativo no-code para [OBJETIVO], incluindo telas, funcionalidades e banco de dados.`
+},
+
+{
+categoria:"landing pages",
+nivel:"basico",
+titulo:"Landing page rápida",
+quando:"Captar leads",
+prompt:`Crie estrutura de landing page otimizada para conversão para [PRODUTO/SERVIÇO].`
+},
+
+{
+categoria:"dashboards",
+nivel:"intermediario",
+titulo:"Dashboard inteligente",
+quando:"Analisar dados",
+prompt:`Monte dashboard no-code para acompanhar KPIs de [ÁREA].`
+},
+
+{
+categoria:"integracoes",
+nivel:"intermediario",
+titulo:"Integrações",
+quando:"Conectar sistemas",
+prompt:`Liste integrações necessárias entre ferramentas para automatizar [PROCESSO].`
+},
+
+{
+categoria:"ia",
+nivel:"avancado",
+titulo:"Sistema IA + NoCode",
+quando:"Produtos IA",
+prompt:`Crie arquitetura usando IA + no-code para construir [PRODUTO].`
+},
+
+{
+categoria:"produtos digitais",
+nivel:"avancado",
+titulo:"Criar SaaS No-Code",
+quando:"Negócios digitais",
+prompt:`Monte roadmap completo para criar SaaS usando ferramentas no-code.`
+},
+
+{
+categoria:"workflows",
+nivel:"intermediario",
+titulo:"Workflow operacional",
+quando:"Padronizar tarefas",
+prompt:`Desenvolva workflow completo para equipe usando ferramentas no-code.`
+},
+
+{
+categoria:"mvp",
+nivel:"avancado",
+titulo:"Criar MVP rápido",
+quando:"Validação",
+prompt:`Crie plano para construir MVP em 7 dias usando ferramentas no-code.`
+}
+
+];
+
+const ordemCategorias = [
+"automacao",
+"apps",
+"landing pages",
+"dashboards",
+"integracoes",
+"ia",
+"produtos digitais",
+"workflows",
+"mvp"
+];
+
+let filtroNivel = "todos";
+
+function trocarNivel(nivel,btn){
+
+filtroNivel=nivel;
+
+document
+.querySelectorAll(".nivel-btn")
+.forEach(b=>b.classList.remove("ativo"));
+
+btn.classList.add("ativo");
+
+renderizar();
+
+}
+
+function renderizar(){
+
+const lista=document.getElementById("lista-prompts");
+
+const busca=document
+.getElementById("busca")
+.value
+.toLowerCase();
+
+lista.innerHTML="";
+
+prompts.forEach((p,index)=>{
+
+const texto=(p.titulo+p.prompt+p.categoria)
+.toLowerCase();
+
+if(
+(filtroNivel==="todos" || p.nivel===filtroNivel)
+&& texto.includes(busca)
+){
+
+const card=document.createElement("div");
+
+card.className="card";
+
+card.setAttribute("data-nivel",p.nivel);
+
+card.innerHTML=`
+
+<div class="nivel nivel-${p.nivel}">
+${p.nivel}
+</div>
+
+<div class="meta">
+📂 ${p.categoria}
+</div>
+
+<h3>${p.titulo}</h3>
+
+<p>${p.quando}</p>
+
+<pre class="prompt-text">${p.prompt}</pre>
+
+<div class="acoes">
+
+<button onclick="copiar(this)">
+📋 Copiar
+</button>
+
+<button onclick="favoritar(this)">
+⭐ Favoritar
+</button>
+
+<button onclick="chat(this)">
+🤖 ChatGPT
+</button>
+
+<button onclick="gemini(this)">
+✨ Gemini
+</button>
+
+</div>
+
+`;
+
+lista.appendChild(card);
+
+}
+
+});
+
+}
+
+renderizar();
+
+</script>
+
+</main>
+
+</body>
+</html>
