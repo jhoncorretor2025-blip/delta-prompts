@@ -1,1 +1,254 @@
-<!DOCTYPE html><html lang='pt-br'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Gerador Pro | Delta Prompts</title><link rel='stylesheet' href='style.css'><style>body{background:#f4f6fb;font-family:Arial,sans-serif;margin:0}.hero{width:calc(100% - 260px);max-width:1400px;margin:35px auto;padding:25px}.top{text-align:center;margin-bottom:25px}.top h1{font-size:48px;margin:10px 0}.top p{font-size:18px;color:#666}.badge{display:inline-block;background:#eef2ff;color:#4338ca;padding:10px 18px;border-radius:999px;font-weight:700}.card{background:#fff;padding:40px;border-radius:24px;box-shadow:0 12px 35px rgba(0,0,0,.08)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.field{margin-bottom:24px}.hint{font-size:13px;color:#888;margin-top:6px}label{display:block;font-weight:700;margin-bottom:10px;font-size:17px}input,textarea,select{width:100%;padding:18px;border:1px solid #d9d9d9;border-radius:14px;font-size:16px;box-sizing:border-box}textarea{min-height:180px}input::placeholder,textarea::placeholder{color:#999}input:focus,textarea:focus,select:focus{outline:none;border-color:#5b5ce2}.preview{padding:18px;background:#f5f6ff;border-radius:14px;font-size:15px}.actions{display:flex;gap:14px;margin-top:25px}.btn{flex:1;padding:18px;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer}.primary{background:#5b5ce2;color:#fff}.secondary{background:#ececec}.result{display:none;margin-top:30px}#promptFinal{min-height:260px}@media(max-width:1100px){.hero{width:95%}.grid{grid-template-columns:1fr}.actions{flex-direction:column}.top h1{font-size:36px}}</style></head><body><div id='menu'></div><script src='menu-loader.js'></script><section class='hero'><div class='top'><span class='badge'>⚡ Ferramenta Pro</span><h1>Gerador Estratégico</h1><p>Monte prompts profissionais em segundos</p><div id='stats'></div></div><div class='card'><div class='field'><label>Contexto</label><textarea id='contexto' placeholder='Ex: Sou corretor de imóveis e quero criar conteúdo para atrair clientes no Instagram...' oninput='salvarRascunho()'></textarea><div class='hint'>Explique o cenário atual</div></div><div class='field'><label>Objetivo</label><textarea id='objetivo' placeholder='Ex: Criar 10 ideias de posts persuasivos com CTA para gerar leads...' oninput='salvarRascunho()'></textarea><div class='hint'>O que você quer que a IA entregue?</div></div><div class='grid'><div class='field'><label>Público</label><input id='publico' placeholder='Ex: Corretores iniciantes, mulheres 30+, empresários'></div><div class='field'><label>Restrições</label><input id='restricoes' placeholder='Ex: sem emojis, curto, linguagem simples'></div></div><div class='grid'><div class='field'><label>Tom</label><select id='tom'><option>Profissional</option><option>Persuasivo</option><option>Casual</option><option>Autoridade</option></select></div><div class='field'><label>Formato</label><select id='formato'><option>Passo a passo</option><option>Lista</option><option>Plano</option><option>Tabela</option></select></div></div><div class='field'><label>Profundidade</label><select id='nivel'><option>Básico</option><option>Detalhado</option><option>Avançado</option><option>Extremo</option></select></div><div class='preview' id='preview'>💡 Preencha os campos acima. Aqui aparecerá um resumo.</div><div class='actions'><button class='btn secondary' onclick='limparFormulario()'>🧹 Limpar</button><button class='btn primary' onclick='gerarPrompt()'>🚀 Gerar</button></div><div class='result' id='resultado'><div class='field'><label>Prompt Final</label><textarea id='promptFinal'></textarea></div><div class='actions'><button class='btn primary' onclick='copiarPrompt()'>📋 Copiar</button><button class='btn secondary' onclick='baixarTxt()'>⬇️ Baixar TXT</button></div></div></div></section><script>const usos=Number(localStorage.getItem('usoPromptPro')||0);stats.innerHTML='📈 Usado '+usos+'x';['contexto','objetivo'].forEach(id=>document.getElementById(id).value=localStorage.getItem(id)||'');function salvarRascunho(){localStorage.setItem('contexto',contexto.value);localStorage.setItem('objetivo',objetivo.value);preview.textContent='Contexto: '+contexto.value.slice(0,120)+' | Objetivo: '+objetivo.value.slice(0,120)}function gerarPrompt(){if(!contexto.value||!objetivo.value){alert('Preencha contexto e objetivo');return}promptFinal.value=`Você é especialista. Contexto: ${contexto.value} Objetivo: ${objetivo.value} Público: ${publico.value} Tom: ${tom.value} Formato: ${formato.value} Profundidade: ${nivel.value} Restrições: ${restricoes.value}`;resultado.style.display='block';localStorage.setItem('usoPromptPro',usos+1)}function copiarPrompt(){navigator.clipboard.writeText(promptFinal.value);alert('Copiado 🚀')}function baixarTxt(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([promptFinal.value],{type:'text/plain'}));a.download='prompt.txt';a.click()}function limparFormulario(){document.querySelectorAll('textarea,input').forEach(e=>e.value='');resultado.style.display='none';salvarRascunho()}salvarRascunho();</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gerador estratégico de prompts profissionais do Delta Prompts.">
+  <meta name="theme-color" content="#5b5ce2">
+  <title>Gerador Estratégico | Delta Prompts</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .prompt-pro { width: min(100% - 48px, 1160px); margin: 42px auto; padding: 0 0 42px; }
+    .prompt-pro__intro { max-width: 760px; margin: 0 auto 28px; text-align: center; }
+    .prompt-pro__badge { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; background: #eef2ff; color: #4338ca; font-size: 14px; font-weight: 800; }
+    .prompt-pro h1 { margin: 14px 0 10px; color: #202236; font-size: clamp(32px, 5vw, 50px); line-height: 1.08; }
+    .prompt-pro__intro p { margin: 0; color: #5f6474; font-size: 18px; }
+    .prompt-pro__counter { margin: 16px 0 0; color: #5b5ce2; font-weight: 800; font-size: 14px; }
+    .prompt-pro__card { padding: clamp(22px, 4vw, 42px); border: 1px solid #e6e8f0; border-radius: 24px; background: #fff; box-shadow: 0 14px 36px rgba(15, 23, 42, .08); }
+    .prompt-pro__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .prompt-pro__field { margin: 0 0 22px; }
+    .prompt-pro label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 9px; color: #202236; font-weight: 800; }
+    .prompt-pro label small, .prompt-pro__hint { color: #6b7280; font-size: 13px; font-weight: 500; }
+    .prompt-pro input, .prompt-pro textarea, .prompt-pro select { width: 100%; border: 1px solid #d9deea; border-radius: 13px; background: #fbfcff; color: #202236; font: inherit; padding: 14px 15px; }
+    .prompt-pro textarea { min-height: 142px; resize: vertical; line-height: 1.55; }
+    .prompt-pro input:focus, .prompt-pro textarea:focus, .prompt-pro select:focus { outline: 3px solid rgba(91, 92, 226, .16); border-color: #5b5ce2; background: #fff; }
+    .prompt-pro__hint { display: block; margin-top: 7px; }
+    .prompt-pro__preview { margin: 2px 0 24px; padding: 16px; border-radius: 14px; background: #f5f6ff; color: #454b61; line-height: 1.55; }
+    .prompt-pro__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .prompt-pro__button { min-height: 50px; padding: 12px 18px; border: 0; border-radius: 13px; cursor: pointer; font: inherit; font-weight: 800; transition: transform .18s ease, box-shadow .18s ease; }
+    .prompt-pro__button:hover { transform: translateY(-1px); }
+    .prompt-pro__button--primary { flex: 1 1 220px; background: linear-gradient(135deg, #5b5ce2, #7a5bff); color: #fff; box-shadow: 0 10px 22px rgba(91, 92, 226, .25); }
+    .prompt-pro__button--secondary { background: #eef0f5; color: #41465a; }
+    .prompt-pro__result { display: none; margin-top: 30px; padding-top: 30px; border-top: 1px solid #e6e8f0; }
+    .prompt-pro__result.is-visible { display: block; }
+    .prompt-pro__result h2 { margin: 0 0 8px; font-size: 22px; color: #202236; }
+    .prompt-pro__result p { margin: 0 0 16px; color: #5f6474; }
+    #promptFinal { min-height: 320px; background: #f8f9ff; }
+    @media (max-width: 760px) { .prompt-pro { width: min(100% - 32px, 1160px); margin-top: 72px; } .prompt-pro__grid { grid-template-columns: 1fr; gap: 0; } .prompt-pro__actions .prompt-pro__button { width: 100%; } }
+  </style>
+</head>
+<body>
+  <div id="menu"></div>
+  <script src="menu-loader.js"></script>
+
+  <main class="prompt-pro">
+    <header class="prompt-pro__intro">
+      <span class="prompt-pro__badge">⚡ Ferramenta Pro</span>
+      <h1>Gerador Estratégico de Prompts</h1>
+      <p>Transforme uma ideia simples em uma instrução clara, completa e pronta para usar em qualquer IA.</p>
+      <p class="prompt-pro__counter" id="stats" aria-live="polite"></p>
+    </header>
+
+    <section class="prompt-pro__card" aria-label="Formulário do gerador de prompts">
+      <div class="prompt-pro__field">
+        <label for="contexto">Contexto <small>obrigatório</small></label>
+        <textarea id="contexto" placeholder="Ex.: Sou corretor de imóveis e quero criar conteúdo para atrair clientes no Instagram."></textarea>
+        <span class="prompt-pro__hint">Explique o cenário, negócio, produto ou assunto.</span>
+      </div>
+
+      <div class="prompt-pro__field">
+        <label for="objetivo">Objetivo <small>obrigatório</small></label>
+        <textarea id="objetivo" placeholder="Ex.: Criar 10 ideias de posts persuasivos com CTA para gerar leads."></textarea>
+        <span class="prompt-pro__hint">Descreva exatamente o que a IA deve entregar.</span>
+      </div>
+
+      <div class="prompt-pro__grid">
+        <div class="prompt-pro__field">
+          <label for="publico">Público-alvo</label>
+          <input id="publico" type="text" placeholder="Ex.: compradores de primeira viagem">
+        </div>
+        <div class="prompt-pro__field">
+          <label for="restricoes">Restrições e preferências</label>
+          <input id="restricoes" type="text" placeholder="Ex.: linguagem simples, sem promessas exageradas">
+        </div>
+        <div class="prompt-pro__field">
+          <label for="tom">Tom de voz</label>
+          <select id="tom">
+            <option>Profissional e claro</option>
+            <option>Persuasivo</option>
+            <option>Casual e próximo</option>
+            <option>Autoridade e estratégico</option>
+            <option>Didático e simples</option>
+          </select>
+        </div>
+        <div class="prompt-pro__field">
+          <label for="formato">Formato da resposta</label>
+          <select id="formato">
+            <option>Passo a passo</option>
+            <option>Lista prática</option>
+            <option>Plano de ação</option>
+            <option>Tabela</option>
+            <option>Texto pronto para publicar</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="prompt-pro__field">
+        <label for="nivel">Profundidade desejada</label>
+        <select id="nivel">
+          <option>Objetivo e direto</option>
+          <option>Detalhado</option>
+          <option>Avançado</option>
+          <option>Extremamente completo</option>
+        </select>
+      </div>
+
+      <div class="prompt-pro__preview" id="preview" aria-live="polite">Preencha o contexto e o objetivo para ver um resumo aqui.</div>
+
+      <div class="prompt-pro__actions">
+        <button class="prompt-pro__button prompt-pro__button--secondary" type="button" id="limpar">Limpar</button>
+        <button class="prompt-pro__button prompt-pro__button--primary" type="button" id="gerar">Gerar prompt profissional</button>
+      </div>
+
+      <section class="prompt-pro__result" id="resultado" aria-live="polite">
+        <h2>Seu prompt está pronto</h2>
+        <p>Copie e cole em ChatGPT, Gemini, Claude ou outra ferramenta de IA.</p>
+        <div class="prompt-pro__field">
+          <label for="promptFinal">Prompt final</label>
+          <textarea id="promptFinal" readonly></textarea>
+        </div>
+        <div class="prompt-pro__actions">
+          <button class="prompt-pro__button prompt-pro__button--primary" type="button" id="copiar">Copiar prompt</button>
+          <button class="prompt-pro__button prompt-pro__button--secondary" type="button" id="baixar">Baixar .txt</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const fields = ["contexto", "objetivo", "publico", "restricoes", "tom", "formato", "nivel"];
+    const $ = (id) => document.getElementById(id);
+    const storageKey = "deltaPromptProDraft";
+
+    function escapeText(value) {
+      return (value || "").trim();
+    }
+
+    function saveDraft() {
+      const draft = Object.fromEntries(fields.map((id) => [id, $(id).value]));
+      localStorage.setItem(storageKey, JSON.stringify(draft));
+      updatePreview();
+    }
+
+    function loadDraft() {
+      try {
+        const draft = JSON.parse(localStorage.getItem(storageKey) || "{}");
+        fields.forEach((id) => { if (draft[id] !== undefined) $(id).value = draft[id]; });
+      } catch (_) {}
+    }
+
+    function updatePreview() {
+      const contexto = escapeText($("contexto").value);
+      const objetivo = escapeText($("objetivo").value);
+      $("preview").textContent = contexto || objetivo
+        ? "Resumo: " + (contexto || "Contexto não informado") + " — objetivo: " + (objetivo || "não informado") + "."
+        : "Preencha o contexto e o objetivo para ver um resumo aqui.";
+    }
+
+    function generatePrompt() {
+      const contexto = escapeText($("contexto").value);
+      const objetivo = escapeText($("objetivo").value);
+      if (!contexto || !objetivo) {
+        alert("Preencha o contexto e o objetivo antes de gerar o prompt.");
+        (!contexto ? $("contexto") : $("objetivo")).focus();
+        return;
+      }
+
+      const publico = escapeText($("publico").value) || "o público mais adequado ao contexto";
+      const restricoes = escapeText($("restricoes").value) || "Não invente dados. Evite generalidades e deixe claro quando precisar de mais informações.";
+      const prompt = `Atue como um especialista experiente no assunto abaixo.
+
+## Contexto
+${contexto}
+
+## Objetivo
+${objetivo}
+
+## Público-alvo
+${publico}
+
+## Diretrizes de comunicação
+- Use um tom ${$("tom").value.toLowerCase()}.
+- Produza a resposta no formato: ${$("formato").value.toLowerCase()}.
+- Nível de profundidade: ${$("nivel").value.toLowerCase()}.
+- Respeite estas restrições e preferências: ${restricoes}.
+
+## Requisitos da resposta
+1. Antes de responder, analise o contexto e identifique o resultado mais útil para o objetivo.
+2. Entregue conteúdo específico, aplicável e organizado.
+3. Inclua exemplos práticos quando ajudarem a execução.
+4. Não use frases vagas, clichês ou informações inventadas.
+5. Se faltar uma informação essencial, faça no máximo 3 perguntas objetivas antes de concluir.
+
+Agora gere a melhor resposta possível.`;
+
+      $("promptFinal").value = prompt;
+      $("resultado").classList.add("is-visible");
+      const uses = Number(localStorage.getItem("deltaPromptProUses") || 0) + 1;
+      localStorage.setItem("deltaPromptProUses", String(uses));
+      updateStats();
+      $("resultado").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    async function copyPrompt() {
+      try {
+        await navigator.clipboard.writeText($("promptFinal").value);
+        $("copiar").textContent = "✓ Prompt copiado";
+        setTimeout(() => { $("copiar").textContent = "Copiar prompt"; }, 1800);
+      } catch (_) {
+        $("promptFinal").focus();
+        $("promptFinal").select();
+        document.execCommand("copy");
+      }
+    }
+
+    function downloadPrompt() {
+      const blob = new Blob([$("promptFinal").value], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "meu-prompt-profissional.txt";
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearForm() {
+      fields.forEach((id) => { $(id).value = ""; });
+      $("tom").value = "Profissional e claro";
+      $("formato").value = "Passo a passo";
+      $("nivel").value = "Objetivo e direto";
+      $("promptFinal").value = "";
+      $("resultado").classList.remove("is-visible");
+      localStorage.removeItem(storageKey);
+      updatePreview();
+      $("contexto").focus();
+    }
+
+    function updateStats() {
+      const uses = Number(localStorage.getItem("deltaPromptProUses") || 0);
+      $("stats").textContent = uses ? "Você já gerou " + uses + " prompt" + (uses === 1 ? "" : "s") + " nesta sessão." : "Seu rascunho é salvo automaticamente neste dispositivo.";
+    }
+
+    fields.forEach((id) => $(id).addEventListener("input", saveDraft));
+    fields.filter((id) => ["tom", "formato", "nivel"].includes(id)).forEach((id) => $(id).addEventListener("change", saveDraft));
+    $("gerar").addEventListener("click", generatePrompt);
+    $("copiar").addEventListener("click", copyPrompt);
+    $("baixar").addEventListener("click", downloadPrompt);
+    $("limpar").addEventListener("click", clearForm);
+
+    loadDraft();
+    updatePreview();
+    updateStats();
+  </script>
+</body>
+</html>
