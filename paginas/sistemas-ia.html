@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prompts para criar, revisar e melhorar sistemas, apps e produtos digitais com IA.">
+  <title>Sistemas com IA | Delta Prompts</title>
+  <link rel="stylesheet" href="/delta-prompts/style.css">
+  <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+  <style>
+    .systems-intro { max-width: 820px; }
+    .systems-note { border-left: 4px solid #5b5ce2; background: #f5f6ff; }
+    .top-bar { display:flex; align-items:center; gap:14px; margin:24px 0; flex-wrap:wrap; }
+    .top-bar input { flex:1; min-width:240px; min-height:48px; padding:12px 14px; border:1px solid #e6e8f0; border-radius:12px; font:inherit; }
+    .contador { color:#4243bb; font-weight:800; }
+    .filtro-nivel { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+    .filtro-nivel button { border:1px solid #e6e8f0; border-radius:999px; background:#fff; color:#4243bb; cursor:pointer; font:inherit; font-weight:800; padding:9px 14px; }
+    .filtro-nivel button.ativo, .filtro-nivel button:hover { border-color:#5b5ce2; background:#5b5ce2; color:#fff; }
+    .meta { color:#5f6474; font-size:13px; font-weight:700; }
+    .prompt-text { white-space:pre-wrap; overflow-wrap:anywhere; background:#f8fafc; border:1px solid #e6e8f0; border-radius:12px; padding:16px; font-size:14px; line-height:1.6; }
+  </style>
+</head>
+<body class="category-page">
+  <div id="menu"></div>
+  <script src="/delta-prompts/menu-loader.js"></script>
+
+  <main>
+    <header class="systems-intro">
+      <h1>🧩 Sistemas com IA</h1>
+      <p>Prompts para usar no Studio IA e transformar sistemas já criados em produtos mais claros, úteis, bonitos e prontos para evoluir.</p>
+    </header>
+
+    <section class="card systems-note">
+      <h3>Como usar</h3>
+      <p>Copie um prompt, substitua os campos entre colchetes e envie junto com a descrição, telas, código ou link do seu sistema. Peça para a IA fazer uma análise antes de sugerir mudanças.</p>
+    </section>
+
+    <div class="top-bar">
+      <input id="busca" type="search" placeholder="🔎 Buscar por design, recursos, bugs, produto..." autocomplete="off">
+      <span class="contador" id="contador" aria-live="polite"></span>
+    </div>
+
+    <div class="filtro-nivel" aria-label="Filtrar por nível">
+      <button type="button" class="ativo" data-nivel="todos">Todos</button>
+      <button type="button" data-nivel="basico">🟢 Básico</button>
+      <button type="button" data-nivel="intermediario">🟡 Intermediário</button>
+      <button type="button" data-nivel="avancado">🔴 Avançado</button>
+    </div>
+
+    <div id="lista-prompts"></div>
+  </main>
+
+  <script src="/delta-prompts/funcoes.js"></script>
+  <script>
+    const prompts = [
+      {
+        categoria: "Produto e design", nivel: "basico",
+        titulo: "10 melhorias para página de produto",
+        quando: "Quando quiser melhorar o design, os recursos e a clareza de uma página já criada.",
+        prompt: `Você é uma equipe sênior de produto, UX/UI e conversão.
+
+Analise esta página de produto:
+[COLE O LINK, DESCRIÇÃO, PRINT OU CÓDIGO]
+
+Contexto do produto: [O QUE O PRODUTO FAZ]
+Público-alvo: [QUEM VAI USAR]
+Objetivo principal da página: [EX.: VENDER, CADASTRAR, EXPLICAR]
+
+Entregue exatamente 10 melhorias priorizadas. Para cada melhoria, informe:
+1. O problema observado
+2. A mudança recomendada
+3. O benefício para o usuário e para o negócio
+4. A prioridade: alta, média ou baixa
+5. Como implementar de forma simples
+
+Analise também hierarquia visual, cores, tipografia, imagens, CTA, confiança, responsividade e acessibilidade. Não invente informações: sinalize o que não puder avaliar.`
+      },
+      {
+        categoria: "Produto e design", nivel: "intermediario",
+        titulo: "Auditoria UX/UI de tela",
+        quando: "Para receber uma revisão completa de uma tela, dashboard ou aplicativo.",
+        prompt: `Atue como especialista em UX/UI.
+
+Revise esta tela ou fluxo:
+[COLE A DESCRIÇÃO, LINK, PRINT OU CÓDIGO]
+
+Usuário principal: [PÚBLICO]
+Tarefa principal: [O QUE ELE PRECISA CONSEGUIR]
+Dispositivo prioritário: [CELULAR / COMPUTADOR / AMBOS]
+
+Organize a auditoria em:
+- O que está claro e deve ser mantido
+- Pontos de confusão ou atrito
+- Problemas de hierarquia visual
+- Melhorias de navegação e feedback
+- Melhorias de acessibilidade
+- Versão mobile
+- 5 mudanças rápidas de alto impacto
+
+Apresente as recomendações em ordem de prioridade, com justificativa curta e exemplos de interface.`
+      },
+      {
+        categoria: "Design visual", nivel: "intermediario",
+        titulo: "Sistema visual e guia de componentes",
+        quando: "Para padronizar um sistema criado por IA antes de adicionar novas telas.",
+        prompt: `Você é um designer de produto responsável por criar consistência visual.
+
+Com base neste sistema:
+[DESCREVA OU COLE O CÓDIGO]
+
+Crie um guia de componentes com:
+- Paleta de cores e função de cada cor
+- Tipografia, tamanhos e hierarquia de textos
+- Espaçamentos e bordas
+- Botões: estados normal, hover, carregando e desabilitado
+- Campos de formulário, cartões, alertas e modais
+- Ícones e uso de imagens
+- Regras de responsividade
+
+Mostre exemplos práticos e aponte inconsistências que precisam ser corrigidas primeiro.`
+      },
+      {
+        categoria: "Recursos", nivel: "intermediario",
+        titulo: "Recursos que faltam no sistema",
+        quando: "Para descobrir funcionalidades úteis antes de desenvolver sem prioridade.",
+        prompt: `Atue como gerente de produto.
+
+Sistema atual: [DESCREVA O QUE JÁ EXISTE]
+Usuários: [PÚBLICO]
+Problema que o sistema resolve: [PROBLEMA]
+Objetivo do negócio: [OBJETIVO]
+
+Sugira 12 recursos que podem aumentar o valor do sistema.
+Para cada recurso, mostre:
+- Necessidade do usuário atendida
+- Descrição simples
+- Benefício esperado
+- Complexidade: baixa, média ou alta
+- Prioridade: agora, depois ou futuramente
+- Dependências ou riscos
+
+Evite recursos genéricos. Priorize o que realmente melhora a jornada do usuário.`
+      },
+      {
+        categoria: "Jornada do usuário", nivel: "avancado",
+        titulo: "Mapa de jornada e fluxos críticos",
+        quando: "Para encontrar abandono, confusão ou etapas desnecessárias no sistema.",
+        prompt: `Você é um especialista em experiência do usuário.
+
+Mapeie a jornada principal deste sistema:
+[DESCREVA O SISTEMA E O FLUXO ATUAL]
+
+Objetivo do usuário: [OBJETIVO]
+Ponto de entrada: [EX.: PÁGINA INICIAL, ANÚNCIO, LOGIN]
+Resultado esperado: [RESULTADO]
+
+Entregue:
+1. Etapas atuais da jornada
+2. Emoção, dúvida e ação do usuário em cada etapa
+3. Pontos de abandono e possíveis causas
+4. Fluxo ideal simplificado
+5. Mensagens, feedbacks e CTAs necessários
+6. Cenários de erro e recuperação
+7. Métrica para acompanhar cada etapa importante
+
+Use uma tabela clara e finalize com as 3 melhorias de maior impacto.`
+      },
+      {
+        categoria: "Código e qualidade", nivel: "avancado",
+        titulo: "Revisão técnica de sistema criado por IA",
+        quando: "Para melhorar organização, segurança e manutenção de um sistema já gerado.",
+        prompt: `Atue como engenheiro de software sênior fazendo uma revisão cuidadosa.
+
+Código ou arquitetura atual:
+[COLE O CÓDIGO OU DESCREVA A ESTRUTURA]
+
+Objetivo do sistema: [OBJETIVO]
+Tecnologias usadas: [TECNOLOGIAS]
+
+Analise:
+- Organização de arquivos e responsabilidades
+- Repetições e partes difíceis de manter
+- Tratamento de erros e estados vazios
+- Validação de entradas e dados sensíveis
+- Desempenho e carregamento
+- Responsividade e acessibilidade
+- Testes recomendados
+
+Liste problemas por prioridade e proponha correções pequenas primeiro. Não altere funcionalidades sem explicar o impacto.`
+      },
+      {
+        categoria: "Qualidade", nivel: "intermediario",
+        titulo: "Cenários de teste e bugs escondidos",
+        quando: "Antes de publicar um sistema ou depois de encontrar falhas.",
+        prompt: `Você é analista de qualidade de software.
+
+Sistema ou funcionalidade para testar:
+[DESCREVA OU COLE O LINK/CÓDIGO]
+
+Crie uma lista de testes com:
+- Fluxo feliz
+- Dados vazios, inválidos e muito longos
+- Erros de rede e carregamento lento
+- Uso em celular e computador
+- Acessibilidade com teclado
+- Permissões e segurança
+- Casos de borda
+- Mensagens de erro e recuperação
+
+Organize em tabela: cenário, ação, resultado esperado, prioridade e risco. Ao final, indique os 5 bugs mais prováveis.`
+      },
+      {
+        categoria: "Conversão", nivel: "intermediario",
+        titulo: "Melhorar landing page e conversão",
+        quando: "Para tornar uma página mais persuasiva sem promessas exageradas.",
+        prompt: `Atue como especialista em conversão e copywriting ético.
+
+Analise esta landing page:
+[COLE O LINK, TEXTO OU ESTRUTURA]
+
+Oferta: [OFERTA]
+Público: [PÚBLICO]
+Ação desejada: [CADASTRAR, COMPRAR, AGENDAR]
+
+Revise:
+- Título e promessa principal
+- Clareza dos benefícios
+- Provas de confiança
+- Estrutura das seções
+- Objeções frequentes
+- CTA e microtextos
+- Formulário
+- Mobile
+
+Reescreva os pontos fracos com opções de texto e descreva 8 melhorias priorizadas. Preserve honestidade e não invente depoimentos, números ou garantias.`
+      },
+      {
+        categoria: "Produto e dados", nivel: "avancado",
+        titulo: "Roadmap de evolução do produto",
+        quando: "Para transformar uma lista de ideias em plano de execução.",
+        prompt: `Você é um gerente de produto orientado por impacto.
+
+Produto atual: [DESCREVA]
+Objetivo dos próximos 90 dias: [OBJETIVO]
+Recursos ou problemas já conhecidos: [LISTA]
+Equipe e limitações: [DESCREVA]
+
+Monte um roadmap de 90 dias dividido em:
+- Descoberta e validação
+- Melhorias rápidas
+- Funcionalidades principais
+- Métricas de sucesso
+- Riscos e dependências
+- Decisões que exigem dados ou feedback dos usuários
+
+Priorize usando impacto, esforço e urgência. Mostre o que deve ser feito primeiro, o que deve ser testado e o que deve ser adiado.`
+      },
+      {
+        categoria: "Studio IA", nivel: "basico",
+        titulo: "Briefing completo para Studio IA",
+        quando: "Para pedir que uma IA crie ou refaça uma página de sistema com mais qualidade.",
+        prompt: `Você é um time formado por gerente de produto, designer UX/UI e desenvolvedor.
+
+Crie ou melhore esta página de sistema:
+[DESCREVA A PÁGINA OU COLE O CÓDIGO ATUAL]
+
+Produto: [NOME E FUNÇÃO]
+Usuário principal: [PÚBLICO]
+Ação principal: [AÇÃO]
+Estilo desejado: [EX.: MODERNO, MINIMALISTA, PROFISSIONAL]
+Cores da marca: [CORES]
+Referências: [LINKS OU EXEMPLOS]
+
+Antes de gerar, confirme os requisitos que estiverem ambíguos.
+Depois entregue:
+- Estrutura da página
+- Seções e conteúdos
+- Componentes e estados da interface
+- Regras de responsividade
+- Acessibilidade essencial
+- Textos de botão, erros e estados vazios
+- Melhorias visuais e de conversão
+- Código limpo ou instruções de implementação, conforme a ferramenta permitir
+
+Priorize clareza, velocidade e uma experiência simples para o usuário.`
+      }
+    ];
+
+    const lista = document.getElementById("lista-prompts");
+    const busca = document.getElementById("busca");
+    const contador = document.getElementById("contador");
+    let nivelAtual = "todos";
+
+    function renderizar() {
+      const termo = busca.value.trim().toLowerCase();
+      const filtrados = prompts.filter((item) => {
+        const texto = (item.titulo + item.categoria + item.quando + item.prompt).toLowerCase();
+        return (nivelAtual === "todos" || item.nivel === nivelAtual) && texto.includes(termo);
+      });
+
+      contador.textContent = filtrados.length + " prompt" + (filtrados.length === 1 ? "" : "s") + " disponível" + (filtrados.length === 1 ? "" : "eis");
+      lista.innerHTML = filtrados.map((item, index) => `
+        <article class="card" data-id="sistemas-${index}">
+          <div class="nivel nivel-${item.nivel}">${item.nivel === "avancado" ? "🔴 Avançado" : item.nivel === "intermediario" ? "🟡 Intermediário" : "🟢 Básico"}</div>
+          <p class="meta">📂 ${item.categoria}</p>
+          <h3>${item.titulo}</h3>
+          <p><strong>📌 Quando usar:</strong> ${item.quando}</p>
+          <pre class="prompt-text"></pre>
+          <div class="acoes">
+            <button class="btn-copy" type="button">📋 Copiar</button>
+            <button class="btn-favorito" type="button">☆ Favoritar</button>
+            <button class="btn-chat" type="button">💬 ChatGPT</button>
+            <button class="btn-gemini" type="button">🔷 Gemini</button>
+          </div>
+        </article>
+      `).join("");
+
+      lista.querySelectorAll(".card").forEach((card, index) => {
+        card.querySelector(".prompt-text").textContent = filtrados[index].prompt;
+      });
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+    }
+
+    busca.addEventListener("input", renderizar);
+    document.querySelectorAll(".filtro-nivel button").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelector(".filtro-nivel .ativo").classList.remove("ativo");
+        button.classList.add("ativo");
+        nivelAtual = button.dataset.nivel;
+        renderizar();
+      });
+    });
+
+    renderizar();
+  </script>
+</body>
+</html>
