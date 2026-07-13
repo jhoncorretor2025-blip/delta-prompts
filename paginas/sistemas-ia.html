@@ -50,7 +50,6 @@
     <div id="lista-prompts"></div>
   </main>
 
-  <script src="/delta-prompts/funcoes.js"></script>
   <script>
     const prompts = [
       {
@@ -317,9 +316,51 @@ Priorize clareza, velocidade e uma experiência simples para o usuário.`
 
       lista.querySelectorAll(".card").forEach((card, index) => {
         card.querySelector(".prompt-text").textContent = filtrados[index].prompt;
+        card._promptData = filtrados[index];
       });
-      document.dispatchEvent(new Event("DOMContentLoaded"));
     }
+
+    lista.addEventListener("click", async (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+
+      const card = button.closest(".card");
+      const item = card?._promptData;
+      if (!item) return;
+
+      if (button.classList.contains("btn-copy")) {
+        try {
+          await navigator.clipboard.writeText(item.prompt);
+          button.textContent = "✓ Copiado";
+          setTimeout(() => { button.textContent = "📋 Copiar"; }, 1400);
+        } catch (_) {
+          alert("Não foi possível copiar automaticamente. Selecione o texto e copie manualmente.");
+        }
+      }
+
+      if (button.classList.contains("btn-favorito")) {
+        const favoritos = JSON.parse(localStorage.getItem("deltaFavoritos") || "[]");
+        const id = "sistemas-" + item.titulo.toLowerCase().replace(/[^a-z0-9]+/gi, "-");
+        const existe = favoritos.findIndex((favorito) => favorito.id === id);
+        if (existe >= 0) {
+          favoritos.splice(existe, 1);
+          button.textContent = "☆ Favoritar";
+        } else {
+          favoritos.unshift({ id, titulo: item.titulo, texto: item.prompt, createdAt: Date.now() });
+          button.textContent = "⭐ Salvo";
+        }
+        localStorage.setItem("deltaFavoritos", JSON.stringify(favoritos));
+      }
+
+      if (button.classList.contains("btn-chat")) {
+        window.open("https://chat.openai.com/?q=" + encodeURIComponent(item.prompt), "_blank");
+      }
+
+      if (button.classList.contains("btn-gemini")) {
+        try { await navigator.clipboard.writeText(item.prompt); } catch (_) {}
+        window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(item.prompt), "_blank");
+      }
+    });
 
     busca.addEventListener("input", renderizar);
     document.querySelectorAll(".filtro-nivel button").forEach((button) => {
