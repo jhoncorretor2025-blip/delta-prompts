@@ -330,7 +330,7 @@ Organize de forma prática e realista.`
 {
 categoria: "🧠 Memorização",
   nivel: "avancado",
-titulo: "Aprender 10x Mais Rápido",
+titulo: "Aprender com Mais Eficiência",
 quando: "Para acelerar o processo de aprendizado.",
 prompt: `Atue como especialista em neuroaprendizagem.
 
@@ -448,6 +448,28 @@ Comece perguntando meu nível atual e meu objetivo final antes de iniciar a expl
 }
 
 ];
+
+const instrucoesBase = `
+
+## Critérios de qualidade da resposta
+- Se algum campo entre colchetes não estiver preenchido, faça até 3 perguntas objetivas antes de continuar.
+- Use apenas informações confiáveis; não invente fatos, fontes, resultados ou referências.
+- Explique termos técnicos na primeira vez que aparecerem.
+- Organize a resposta com títulos, passos numerados e exemplos aplicados ao tema.
+- Ao final, inclua uma atividade curta de prática e 3 perguntas de autoavaliação.`;
+
+const instrucoesPorCategoria = {
+  "🧭 Preparação": `\n\n## Planejamento\n- Considere pré-requisitos, prioridade e sequência de execução.\n- Defina metas mensuráveis e marcos de revisão.`,
+  "📚 Estruturação": `\n\n## Estrutura do aprendizado\n- Mostre dependências entre os módulos e indique o que estudar primeiro.\n- Sugira materiais ou tipos de exercício adequados a cada etapa.`,
+  "🎓 Didática": `\n\n## Ensino claro\n- Vá do simples ao complexo, verificando a compreensão em cada etapa.\n- Use um exemplo cotidiano e outro aplicado à área do tema.`,
+  "🧠 Memorização": `\n\n## Retenção de longo prazo\n- Priorize recuperação ativa em vez de releitura passiva.\n- Proponha um calendário de revisão espaçada para 1, 3, 7 e 14 dias.`,
+  "📊 Avaliação": `\n\n## Avaliação útil\n- Distribua as questões em níveis progressivos de dificuldade.\n- No gabarito, explique por que a correta é adequada e por que as demais não são.`,
+  "🧠 Aprimoramento": `\n\n## Melhoria prática\n- Priorize as sugestões por impacto e esforço.\n- Apresente uma primeira ação concreta para executar nas próximas 24 horas.`
+};
+
+promptsEstudo.forEach((item) => {
+  item.prompt = item.prompt.trim() + instrucoesBase + (instrucoesPorCategoria[item.categoria] || "");
+});
 
 const lista = document.getElementById("lista-prompts");
 const contador = document.getElementById("contador");
