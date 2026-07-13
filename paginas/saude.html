@@ -103,6 +103,12 @@ pre {
 Prompts estratégicos para organizar saúde física, mental e hábitos com clareza e consciência.
 </p>
 
+<section class="card" aria-label="Aviso importante sobre saúde">
+  <h3>⚠️ Informação com segurança</h3>
+  <p>Estes prompts ajudam a organizar informações e perguntas para profissionais. Eles não servem para diagnosticar, prescrever medicamentos, interromper tratamentos ou substituir atendimento de saúde.</p>
+  <p>Em caso de sintomas graves ou súbitos, como dificuldade intensa para respirar, dor no peito, desmaio, confusão mental, sinais de AVC, convulsão, intoxicação ou risco de suicídio, procure atendimento de urgência. No Brasil, o SAMU atende pelo 192.</p>
+</section>
+
 <section class="card">
   <h3>🎯 Objetivo</h3>
   <p>
@@ -192,7 +198,7 @@ const promptsSaude = [
         nivel: "basico",
         titulo: "🍳🥗 Receitas Rápidas e Saudáveis",
         quando: "Para criar refeições saudáveis com o que você já tem em casa.",
-        prompt: `Tenho os seguintes ingredientes disponíveis:\n\n🥕 [Ingrediente 1]  \nFileira [Ingrediente 2]  \n🥦 [Ingrediente 3]  \n\nSugira uma receita rápida e saudável que eu possa preparar com esses itens.\n\nInclua:\n• ⏱️ Tempo de preparo\n• 🍽️ Modo de preparo simples\n• 💚 Benefícios nutricionais\n• 🔄 Sugestões de substituição, se necessário\n\nSeja prático e objetivo.`
+        prompt: `Tenho os seguintes ingredientes disponíveis:\n\n🥕 [Ingrediente 1]  \n🥕 [Ingrediente 2]  \n🥦 [Ingrediente 3]  \n\nSugira uma receita rápida e saudável que eu possa preparar com esses itens.\n\nInclua:\n• ⏱️ Tempo de preparo\n• 🍽️ Modo de preparo simples\n• 💚 Benefícios nutricionais\n• 🔄 Sugestões de substituição, se necessário\n\nSeja prático e objetivo.`
     },
     {
         categoria: "📋 Planejamento",
@@ -255,7 +261,7 @@ const promptsSaude = [
 {
 categoria:"🔎 Autoconhecimento",
 nivel:"basico",
-titulo:"🩺🤖 Médico IA para Pesquisa Segura",
+titulo:"🩺🤖 Assistente de Pesquisa em Saúde",
 quando:"Quando tiver dúvidas gerais sobre saúde e quiser raciocínio estruturado.",
 prompt:`Você atuará como um assistente de pesquisa médica baseado em evidências, NÃO como substituto de profissionais de saúde.
 
@@ -373,7 +379,7 @@ Evite linguagem excessivamente técnica.`
 {
 categoria:"🔎 Autoconhecimento",
 nivel:"avancado",
-titulo:"🕵️‍♂️🩺 Investigador Médico",
+titulo:"🕵️‍♂️🩺 Organizador de Informações de Saúde",
 quando:"Quando quiser análise profunda baseada em hipóteses.",
 prompt:`Atue como investigador clínico.
 
@@ -390,6 +396,27 @@ Não escolha apenas uma hipótese cedo demais.`
 
     
 ];
+
+const instrucoesSegurancaSaude = `
+
+## Limites e segurança
+- Use esta resposta apenas para informação geral, educação e organização; ela não substitui avaliação de um profissional de saúde.
+- Não faça diagnóstico, prescrição, cálculo de dose, nem sugira iniciar, interromper ou alterar medicamentos ou tratamentos.
+- Antes de orientar, peça informações relevantes que possam mudar a resposta, como idade, duração e intensidade do problema, condições prévias, medicamentos em uso, gravidez e limitações físicas.
+- Diferencie fatos conhecidos, possibilidades e incertezas. Não invente estudos, fontes, resultados ou garantias.
+- Recomende procurar um profissional qualificado quando houver dúvida clínica, piora, persistência ou impacto importante na rotina.
+- Oriente atendimento de urgência para sinais graves ou súbitos, como dificuldade intensa para respirar, dor no peito, desmaio, confusão mental, sinais de AVC, convulsão, intoxicação ou risco de suicídio. No Brasil, o SAMU atende pelo 192.`;
+
+const instrucoesPorCategoriaSaude = {
+  "🔎 Autoconhecimento": `\n\n## Observação responsável\n- Ajude a organizar sintomas, hábitos e perguntas para uma consulta, sem concluir uma causa.\n- Sugira registrar datas, frequência, intensidade e fatores que parecem melhorar ou piorar.`,
+  "📋 Planejamento": `\n\n## Plano realista\n- Priorize mudanças graduais, mensuráveis e compatíveis com a rotina.\n- Inclua alternativas para barreiras comuns e um momento de revisão semanal.`,
+  "💪 Execução": `\n\n## Movimento com cuidado\n- Inclua aquecimento, progressão gradual, descanso e sinais para interromper a atividade.\n- Adapte a sugestão ao nível atual e recomende avaliação profissional antes de exercícios intensos ou com dor.`,
+  "📊 Monitoramento": `\n\n## Acompanhamento útil\n- Sugira indicadores simples e não invasivos, sem transformar a resposta em monitoramento clínico.\n- Defina quando os registros devem motivar conversa com um profissional.`
+};
+
+promptsSaude.forEach((item) => {
+  item.prompt = item.prompt.trim() + instrucoesSegurancaSaude + (instrucoesPorCategoriaSaude[item.categoria] || "");
+});
 
 // Injeção dinâmica dos botões de filtro de categoria
 const containerCategorias = document.getElementById("botoes-categoria");
