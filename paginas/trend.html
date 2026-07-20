@@ -2,289 +2,70 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Trends Visuais | Delta Prompts</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
-
 <style>
-.top-bar {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    margin: 20px 0;
-    flex-wrap: wrap;
-}
-.top-bar input {
-    flex: 1;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-}
-.contador {
-    font-size: 14px;
-    opacity: 0.75;
-}
-pre {
-    white-space: pre-wrap;
-    font-size: 14px;
-    background: #f9fafb;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-}
-.meta {
-    font-size: 13px;
-    opacity: 0.7;
-    margin-bottom: 8px;
-}
-.filtros-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-.filtro-botoes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-.filtro-botoes button {
-    padding: 8px 15px;
-    border: 1px solid #ddd;
-    background: #fff;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.filtro-botoes button:hover {
-    background: #f0f0f0;
-}
-.filtro-botoes button.ativo {
-    background: #007bff;
-    color: white;
-    border-color: #007bff;
-}
+.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:24px 0}.top-bar input{flex:1;min-width:220px;padding:13px;border:1px solid #ddd;border-radius:12px}.contador{font-weight:800}.filtros{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 24px}.filtros button{padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtros button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.tag{font-size:12px;font-weight:800;padding:5px 9px;border-radius:999px;background:#f1f5f9}.prompt-text{white-space:pre-wrap;background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:15px;line-height:1.55}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.jornada{margin:20px 0}.vazio{text-align:center;padding:30px;opacity:.7}.preview{width:100%;height:260px;object-fit:cover;border-radius:14px;margin:0 0 16px;background:#e5e7eb}.preview-wrap{position:relative}.preview-label{position:absolute;left:12px;bottom:28px;background:rgba(15,23,42,.78);color:#fff;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800}
 </style>
-
 </head>
-
-<body>
-
+<body class="category-page">
 <div id="menu"></div>
 <script src="/delta-prompts/menu-loader.js"></script>
-
 <main>
-
 <h1>🔥 Trends Visuais com IA</h1>
-
-<p>
-Prompts criativos e virais para gerar imagens impactantes,
-modernas e altamente compartilháveis usando inteligência artificial.
-</p>
-
-<section class="card">
-<h3>🎯 Objetivo</h3>
-<p>
-Ajudar criadores, profissionais e usuários comuns
-a criarem imagens impressionantes para redes sociais,
-marketing, branding e conteúdo viral.
-</p>
-</section>
-
-<section class="card">
-<h3>🗺️ Como as Trends Estão Organizadas</h3>
-
-<p>
-Esta página está dividida em categorias estratégicas
-para facilitar a criação de conteúdo visual.
-</p>
-
-<ul style="margin-top:10px; line-height:1.7;">
-<li><strong>🔥 Viral:</strong> Conteúdo com alto potencial de engajamento.</li>
-<li><strong>💼 Profissional:</strong> Imagens para autoridade e branding.</li>
-<li><strong>🎬 Cinematográfico:</strong> Visual estilo filme.</li>
-<li><strong>🌌 Futurista:</strong> IA, neon, cyberpunk e tecnologia.</li>
-<li><strong>❤️ Social:</strong> Casais, lifestyle e conteúdo emocional.</li>
-<li><strong>🎨 Criativo:</strong> Estilos diferentes e artísticos.</li>
-</ul>
-
-<p style="margin-top:15px;">
-Explore as categorias e encontre a trend ideal para seu conteúdo.
-</p>
-</section>
-
-<div class="top-bar">
-    <input type="text" id="busca" placeholder="🔎 Buscar trend..." oninput="atualizarFiltros()">
-    <div class="contador" id="contador"></div>
-</div>
-
-<div class="filtros-container">
-    
-    <div class="filtro-botoes filtro-categoria" id="botoes-categoria">
-        </div>
-
-    <div class="filtro-botoes filtro-nivel">
-        <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
-        <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
-        <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
-        <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
-    </div>
-
-</div>
-
+<p>Prompts criativos e virais para gerar imagens impactantes, modernas e altamente compartilháveis usando inteligência artificial.</p>
+<section class="card"><h3>🎯 Objetivo</h3><p>Ajudar criadores, profissionais e usuários comuns a criarem imagens impressionantes para redes sociais, marketing, branding e conteúdo viral.</p></section>
+<section class="card jornada"><h3>🗺️ Como escolher a trend ideal</h3><p>Use a prévia visual para entender rapidamente o clima de cada trend. As categorias ajudam a separar conteúdo viral, profissional, cinematográfico, futurista, social e criativo.</p></section>
+<div class="top-bar"><input type="text" id="busca" placeholder="🔎 Buscar trend..." oninput="atualizarFiltros()"><div class="contador" id="contador"></div></div>
+<div class="filtros"><div class="filtros" id="botoes-categoria"></div><div class="filtros"><button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button><button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button><button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button><button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button></div></div>
 <div id="lista-prompts"></div>
-
 </main>
-
 <script>
 const promptsTrend = [
-{categoria:"🔥 Viral", nivel:"basico", titulo:"🎥 Trend Cinematográfica", quando:"Para criar imagens virais estilo filme.", prompt:`Transforme esta imagem em uma cena cinematográfica épica.\n\nInclua:\n- iluminação dramática\n- profundidade realista\n- qualidade de filme\n- visual premium\n- cores intensas`},
-{categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🎮 Cinema Gamer Caótico", quando:"Para criar imagens divertidas e extremamente virais.", prompt:`A hyperrealistic cinematic shot inside a dark movie theater with visible blue seats in the background, filled with various video game characters having fun.\n\nThe main character, a man (from the provided photo), looks embarrassed, wearing a simple black Nintendo t-shirt, holding a large red and white striped popcorn bucket in one hand.\n\nOn each side of the main character:\n• Left: Mario Bros. holds a red soda cup in one hand, with a mischievous expression.\n• Right: Donkey Kong is laughing heartily, holding his own popcorn bucket.\n\nIn the background, other video game characters are visible in the seats, including Goku, Kratos, Sonic, Link, Zelda, Princess Peach, Pikachu and more.\n\nThe lighting is cinematic, coming from the movie screen, with realistic reflections and dramatic shadows.\n\nThe atmosphere is chaotic, funny, festive and ultra realistic.`},
-{categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🦸 Cinema dos Heróis", quando:"Para criar uma cena épica com personagens famosos.", prompt:`A hyperrealistic cinematic scene inside a luxury movie theater filled with superheroes.\n\nThe main character (from the provided photo) sits nervously holding popcorn while surrounded by iconic heroes.\n\nOn the left:\n• Spider-Man laughing while pointing at the screen.\n\nOn the right:\n• Batman sitting seriously with crossed arms.\n\nBehind them:\nIron Man, Hulk, Thor, Deadpool, Wolverine and Doctor Strange are interacting, throwing popcorn and laughing.\n\nThe lighting is dramatic and cinematic, with reflections from the giant screen illuminating everyone's faces.\n\nUltra realistic movie atmosphere with Hollywood quality details.`},
-{categoria:"🌌 Futurista", nivel:"avancado", titulo:"🚀 Cinema Cyberpunk", quando:"Para criar uma trend futurista e tecnológica.", prompt:`A hyperrealistic cyberpunk movie theater scene full of futuristic characters.\n\nThe main character (from the provided photo) is sitting in the center wearing futuristic clothing with neon details.\n\nOn each side:\n• A female android with glowing blue eyes.\n• A cybernetic warrior laughing while holding holographic popcorn.\n\nThe theater is illuminated by neon lights, holograms and futuristic advertisements.\n\nIn the background:\nrobots, hackers, futuristic soldiers and AI creatures interact in a chaotic atmosphere.\n\nThe lighting is cinematic with pink and blue neon reflections everywhere.\n\nUltra realistic cyberpunk movie style.`},
-{categoria:"😂 Viral", nivel:"intermediario", titulo:"🍿 Cinema dos Memes", quando:"Para criar imagens engraçadas e virais.", prompt:`A hyperrealistic cinematic shot inside a crowded movie theater full of internet meme characters.\n\nThe main character (from the provided photo) looks confused while holding popcorn and looking at the camera.\n\nAround him:\n• Shrek laughing loudly.\n• Minions throwing popcorn.\n• SpongeBob screaming dramatically.\n• Gru wearing 3D glasses.\n• A giant dancing cat in the background.\n\nThe atmosphere is chaotic, exaggerated and extremely funny.\n\nThe cinematic lighting comes from the giant movie screen with realistic shadows and reflections.\n\nUltra detailed and realistic style.`},
-{categoria:"🎮 Gamer", nivel:"avancado", titulo:"🕹️ Arena dos Games", quando:"Para criar uma imagem gamer épica.", prompt:`A hyperrealistic cinematic scene inside a giant gaming arena transformed into a movie theater.\n\nThe main character (from the provided photo) sits in the center wearing a gamer headset and holding a glowing popcorn bucket.\n\nAround him:\n• Master Chief.\n• Lara Croft.\n• Sub-Zero.\n• Scorpion.\n• Ezio Auditore.\n• Leon Kennedy.\n\nAll characters are reacting dramatically to the movie screen.\n\nLED lights, smoke effects and cinematic reflections create an intense atmosphere.\n\nUltra realistic details with blockbuster movie quality.`},
-{categoria:"💼 Profissional", nivel:"intermediario", titulo:"🏡 Profissão Premium", quando:"Para gerar autoridade profissional.", prompt:`Crie uma imagem profissional elegante da profissão [SUA PROFISSÃO].\n\nInclua:\n- roupas sofisticadas\n- ambiente moderno\n- iluminação premium\n- aparência de sucesso\n- visual cinematográfico`},
-{categoria:"🌌 Futurista", nivel:"avancado", titulo:"🚀 Cidade Cyberpunk", quando:"Para conteúdo futurista e tecnológico.", prompt:`Crie uma cidade cyberpunk futurista.\n\nInclua:\n- luzes neon\n- carros futuristas\n- chuva\n- hologramas\n- atmosfera tecnológica\n- estilo ultra realista`},
-{categoria:"❤️ Social", nivel:"basico", titulo:"💑 Casal Elegante", quando:"Para posts românticos ou lifestyle.", prompt:`Crie uma foto elegante de casal moderno.\n\nInclua:\n- roupas neutras\n- iluminação suave\n- ambiente sofisticado\n- aparência natural\n- qualidade fotográfica premium`},
-{categoria:"🎨 Criativo", nivel:"intermediario", titulo:"🎭 Versão Desenho Animado", quando:"Para transformar fotos em arte criativa.", prompt:`Transforme minha foto em desenho animado 3D.\n\nInclua:\n- estilo moderno\n- cores vibrantes\n- iluminação divertida\n- cenário personalizado\n- qualidade Pixar`},
-{categoria:"❤️ Social", nivel:"basico", titulo:"🗼 Casal em Paris", quando:"Para criar uma cena romântica europeia.", prompt:`Crie uma foto romântica de casal em Paris.\n\nInclua:\n- Torre Eiffel ao fundo\n- roupas elegantes\n- iluminação suave do pôr do sol\n- clima apaixonante\n- qualidade fotográfica premium`},
-{categoria:"🌌 Futurista", nivel:"intermediario", titulo:"🚀 Casal do Futuro", quando:"Para criar uma cena romântica futurista.", prompt:`Crie uma foto de casal futurista em uma cidade cyberpunk.\n\nInclua:\n- luzes neon\n- roupas tecnológicas elegantes\n- atmosfera futurista\n- reflexos cinematográficos\n- aparência ultra realista`},
-{categoria:"📼 Retrô", nivel:"intermediario", titulo:"🕺 Casal Anos 80", quando:"Para criar uma trend retrô divertida.", prompt:`Crie uma foto de casal nos anos 80.\n\nInclua:\n- roupas coloridas vintage\n- luzes neon retrô\n- pista de dança antiga\n- clima divertido e romântico\n- qualidade cinematográfica`},
-{categoria:"🌴 Lifestyle", nivel:"basico", titulo:"🏖️ Casal na Praia", quando:"Para criar uma cena leve e romântica.", prompt:`Crie uma foto elegante de casal caminhando na praia.\n\nInclua:\n- pôr do sol cinematográfico\n- roupas leves e sofisticadas\n- clima romântico\n- iluminação dourada natural\n- qualidade premium realista`},
-{categoria:"❄️ Cinematográfico", nivel:"intermediario", titulo:"☃️ Casal no Inverno", quando:"Para criar uma cena aconchegante e elegante.", prompt:`Crie uma foto romântica de casal em uma cidade coberta de neve.\n\nInclua:\n- roupas de inverno elegantes\n- iluminação suave noturna\n- clima aconchegante\n- neve caindo\n- aparência cinematográfica premium`},
-{categoria:"🏛️ Histórico", nivel:"avancado", titulo:"👑 Casal Medieval", quando:"Para criar uma cena épica e histórica.", prompt:`Crie uma imagem cinematográfica de casal medieval elegante.\n\nInclua:\n- castelo ao fundo\n- roupas reais luxuosas\n- iluminação dramática\n- atmosfera épica\n- qualidade ultra realista`},
-{categoria:"🌆 Urbano", nivel:"intermediario", titulo:"🌃 Casal em Nova York", quando:"Para criar uma trend moderna e sofisticada.", prompt:`Crie uma foto elegante de casal em Nova York à noite.\n\nInclua:\n- ruas iluminadas\n- prédios modernos\n- roupas sofisticadas\n- clima urbano romântico\n- qualidade fotográfica premium`},
-{categoria:"🚗 Lifestyle", nivel:"intermediario", titulo:"🛣️ Casal Road Trip", quando:"Para criar uma cena aventureira e romântica.", prompt:`Crie uma foto cinematográfica de casal viajando de carro.\n\nInclua:\n- estrada infinita\n- pôr do sol intenso\n- carro estiloso\n- clima aventureiro\n- aparência realista premium`},
-{categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🎬 Cena de Filme", quando:"Para criar imagens extremamente impactantes.", prompt:`Transforme esta cena em um pôster de filme hollywoodiano.\n\nInclua:\n- iluminação cinematográfica\n- fundo dramático\n- atmosfera intensa\n- composição épica\n- qualidade ultra realista`},
-{categoria:"🔥 Viral", nivel:"intermediario", titulo:"📱 Influenciador Premium", quando:"Para Instagram e TikTok.", prompt:`Crie uma foto estilo influenciador digital premium.\n\nInclua:\n- visual moderno\n- iluminação profissional\n- fundo sofisticado\n- aparência natural\n- qualidade de revista`},
-{categoria:"💼 Profissional", nivel:"avancado", titulo:"💎 Empresário de Luxo", quando:"Para transmitir poder e sucesso.", prompt:`Crie uma imagem de empresário de luxo moderno.\n\nInclua:\n- terno elegante\n- carro premium\n- ambiente sofisticado\n- iluminação cinematográfica\n- energia de liderança`},
-{categoria:"🌌 Futurista", nivel:"intermediario", titulo:"🤖 Humano + IA", quando:"Para conteúdos tecnológicos.", prompt:`Crie uma imagem misturando humano e inteligência artificial.\n\nInclua:\n- detalhes tecnológicos\n- circuitos sutis\n- iluminação neon\n- visual futurista\n- aparência realista`},
-{categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🔥 Cena Pós-Apocalíptica", quando:"Para criar imagens intensas e dramáticas.", prompt:`Transforme esta imagem em uma cena pós-apocalíptica cinematográfica.\n\nInclua:\n- atmosfera intensa\n- fumaça e partículas no ar\n- iluminação dramática\n- cenário destruído realista\n- qualidade de filme hollywoodiano`},
-{categoria:"🌌 Futurista", nivel:"intermediario", titulo:"🚀 Cyberpunk Neon", quando:"Para conteúdos modernos e tecnológicos.", prompt:`Transforme esta imagem em uma cena futurista cyberpunk.\n\nInclua:\n- luzes neon vibrantes\n- chuva refletindo no chão\n- ambiente tecnológico\n- atmosfera futurista\n- qualidade ultra realista`},
-{categoria:"🦸 Heroico", nivel:"intermediario", titulo:"⚡ Super-Herói Épico", quando:"Para criar imagens poderosas e virais.", prompt:`Transforme esta imagem em uma cena épica de super-herói.\n\nInclua:\n- pose poderosa\n- iluminação cinematográfica\n- fundo dramático\n- energia intensa\n- visual hollywoodiano premium`},
-{categoria:"❤️ Emocional", nivel:"basico", titulo:"🌅 Filme Emocional", quando:"Para criar cenas emocionais e bonitas.", prompt:`Transforme esta imagem em uma cena emocional de filme.\n\nInclua:\n- pôr do sol cinematográfico\n- iluminação suave e dramática\n- profundidade emocional\n- cores quentes intensas\n- aparência realista de cinema`},
-{categoria:"🎨 Criativo", nivel:"basico", titulo:"🦸 Super-Herói Personalizado", quando:"Para conteúdo divertido e criativo.", prompt:`Transforme uma pessoa em super-herói moderno.\n\nInclua:\n- uniforme épico\n- cenário cinematográfico\n- pose heroica\n- iluminação forte\n- qualidade ultra realista`}
+{categoria:"🔥 Viral", nivel:"basico", titulo:"🎥 Trend Cinematográfica", quando:"Para criar imagens virais estilo filme.", prompt:`Transforme esta imagem em uma cena cinematográfica épica.\n\nInclua:\n- iluminação dramática\n- profundidade realista\n- qualidade de filme\n- visual premium\n- cores intensas`, imagem:"https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🎮 Cinema Gamer Caótico", quando:"Para criar imagens divertidas e extremamente virais.", prompt:`A hyperrealistic cinematic shot inside a dark movie theater with visible blue seats in the background, filled with various video game characters having fun.\n\nThe main character, a man (from the provided photo), looks embarrassed, wearing a simple black Nintendo t-shirt, holding a large red and white striped popcorn bucket in one hand.\n\nOn each side of the main character:\n• Left: Mario Bros. holds a red soda cup in one hand, with a mischievous expression.\n• Right: Donkey Kong is laughing heartily, holding his own popcorn bucket.\n\nIn the background, other video game characters are visible in the seats, including Goku, Kratos, Sonic, Link, Zelda, Princess Peach, Pikachu and more.\n\nThe lighting is cinematic, coming from the movie screen, with realistic reflections and dramatic shadows.\n\nThe atmosphere is chaotic, funny, festive and ultra realistic.`, imagem:"https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🦸 Cinema dos Heróis", quando:"Para criar uma cena épica com personagens famosos.", prompt:`A hyperrealistic cinematic scene inside a luxury movie theater filled with superheroes.\n\nThe main character (from the provided photo) sits nervously holding popcorn while surrounded by iconic heroes.\n\nOn the left:\n• Spider-Man laughing while pointing at the screen.\n\nOn the right:\n• Batman sitting seriously with crossed arms.\n\nBehind them:\nIron Man, Hulk, Thor, Deadpool, Wolverine and Doctor Strange are interacting, throwing popcorn and laughing.\n\nThe lighting is dramatic and cinematic, with reflections from the giant screen illuminating everyone's faces.\n\nUltra realistic movie atmosphere with Hollywood quality details.`, imagem:"https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🌌 Futurista", nivel:"avancado", titulo:"🚀 Cinema Cyberpunk", quando:"Para criar uma trend futurista e tecnológica.", prompt:`A hyperrealistic cyberpunk movie theater scene full of futuristic characters.\n\nThe main character (from the provided photo) is sitting in the center wearing futuristic clothing with neon details.\n\nOn each side:\n• A female android with glowing blue eyes.\n• A cybernetic warrior laughing while holding holographic popcorn.\n\nThe theater is illuminated by neon lights, holograms and futuristic advertisements.\n\nIn the background:\nrobots, hackers, futuristic soldiers and AI creatures interact in a chaotic atmosphere.\n\nThe lighting is cinematic with pink and blue neon reflections everywhere.\n\nUltra realistic cyberpunk movie style.`, imagem:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"😂 Viral", nivel:"intermediario", titulo:"🍿 Cinema dos Memes", quando:"Para criar imagens engraçadas e virais.", prompt:`A hyperrealistic cinematic shot inside a crowded movie theater full of internet meme characters.\n\nThe main character (from the provided photo) looks confused while holding popcorn and looking at the camera.\n\nAround him:\n• Shrek laughing loudly.\n• Minions throwing popcorn.\n• SpongeBob screaming dramatically.\n• Gru wearing 3D glasses.\n• A giant dancing cat in the background.\n\nThe atmosphere is chaotic, exaggerated and extremely funny.\n\nThe cinematic lighting comes from the giant movie screen with realistic shadows and reflections.\n\nUltra detailed and realistic style.`, imagem:"https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🎮 Gamer", nivel:"avancado", titulo:"🕹️ Arena dos Games", quando:"Para criar uma imagem gamer épica.", prompt:`A hyperrealistic cinematic scene inside a giant gaming arena transformed into a movie theater.\n\nThe main character (from the provided photo) sits in the center wearing a gamer headset and holding a glowing popcorn bucket.\n\nAround him:\n• Master Chief.\n• Lara Croft.\n• Sub-Zero.\n• Scorpion.\n• Ezio Auditore.\n• Leon Kennedy.\n\nAll characters are reacting dramatically to the movie screen.\n\nLED lights, smoke effects and cinematic reflections create an intense atmosphere.\n\nUltra realistic details with blockbuster movie quality.`, imagem:"https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"💼 Profissional", nivel:"intermediario", titulo:"🏡 Profissão Premium", quando:"Para gerar autoridade profissional.", prompt:`Crie uma imagem profissional elegante da profissão [SUA PROFISSÃO].\n\nInclua:\n- roupas sofisticadas\n- ambiente moderno\n- iluminação premium\n- aparência de sucesso\n- visual cinematográfico`, imagem:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🌌 Futurista", nivel:"avancado", titulo:"🚀 Cidade Cyberpunk", quando:"Para conteúdo futurista e tecnológico.", prompt:`Crie uma cidade cyberpunk futurista.\n\nInclua:\n- luzes neon\n- carros futuristas\n- chuva\n- hologramas\n- atmosfera tecnológica\n- estilo ultra realista`, imagem:"https://images.unsplash.com/photo-1515634928627-2a4e0c0f51f1?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"❤️ Social", nivel:"basico", titulo:"💑 Casal Elegante", quando:"Para posts românticos ou lifestyle.", prompt:`Crie uma foto elegante de casal moderno.\n\nInclua:\n- roupas neutras\n- iluminação suave\n- ambiente sofisticado\n- aparência natural\n- qualidade fotográfica premium`, imagem:"https://images.unsplash.com/photo-1518552785283-6b6750a8e91f?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🎨 Criativo", nivel:"intermediario", titulo:"🎭 Versão Desenho Animado", quando:"Para transformar fotos em arte criativa.", prompt:`Transforme minha foto em desenho animado 3D.\n\nInclua:\n- estilo moderno\n- cores vibrantes\n- iluminação divertida\n- cenário personalizado\n- qualidade Pixar`, imagem:"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"❤️ Social", nivel:"basico", titulo:"🗼 Casal em Paris", quando:"Para criar uma cena romântica europeia.", prompt:`Crie uma foto romântica de casal em Paris.\n\nInclua:\n- Torre Eiffel ao fundo\n- roupas elegantes\n- iluminação suave do pôr do sol\n- clima apaixonante\n- qualidade fotográfica premium`, imagem:"https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🌌 Futurista", nivel:"intermediario", titulo:"🚀 Casal do Futuro", quando:"Para criar uma cena romântica futurista.", prompt:`Crie uma foto de casal futurista em uma cidade cyberpunk.\n\nInclua:\n- luzes neon\n- roupas tecnológicas elegantes\n- atmosfera futurista\n- reflexos cinematográficos\n- aparência ultra realista`, imagem:"https://images.unsplash.com/photo-1492691527719-9c1d2c9d0f9e?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"📼 Retrô", nivel:"intermediario", titulo:"🕺 Casal Anos 80", quando:"Para criar uma trend retrô divertida.", prompt:`Crie uma foto de casal nos anos 80.\n\nInclua:\n- roupas coloridas vintage\n- luzes neon retrô\n- pista de dança antiga\n- clima divertido e romântico\n- qualidade cinematográfica`, imagem:"https://images.unsplash.com/photo-1516280030429-27679b8f4a2a?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🌴 Lifestyle", nivel:"basico", titulo:"🏖️ Casal na Praia", quando:"Para criar uma cena leve e romântica.", prompt:`Crie uma foto elegante de casal caminhando na praia.\n\nInclua:\n- pôr do sol cinematográfico\n- roupas leves e sofisticadas\n- clima romântico\n- iluminação dourada natural\n- qualidade premium realista`, imagem:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"❄️ Cinematográfico", nivel:"intermediario", titulo:"☃️ Casal no Inverno", quando:"Para criar uma cena aconchegante e elegante.", prompt:`Crie uma foto romântica de casal em uma cidade coberta de neve.\n\nInclua:\n- roupas de inverno elegantes\n- iluminação suave noturna\n- clima aconchegante\n- neve caindo\n- aparência cinematográfica premium`, imagem:"https://images.unsplash.com/photo-1513001900722-370f803f498d?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🏛️ Histórico", nivel:"avancado", titulo:"👑 Casal Medieval", quando:"Para criar uma cena épica e histórica.", prompt:`Crie uma imagem cinematográfica de casal medieval elegante.\n\nInclua:\n- castelo ao fundo\n- roupas reais luxuosas\n- iluminação dramática\n- atmosfera épica\n- qualidade ultra realista`, imagem:"https://images.unsplash.com/photo-1460803506357-732cbf1399a8?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🌆 Urbano", nivel:"intermediario", titulo:"🌃 Casal em Nova York", quando:"Para criar uma trend moderna e sofisticada.", prompt:`Crie uma foto elegante de casal em Nova York à noite.\n\nInclua:\n- ruas iluminadas\n- prédios modernos\n- roupas sofisticadas\n- clima urbano romântico\n- qualidade fotográfica premium`, imagem:"https://images.unsplash.com/photo-1499092346589-b9b6be2c2b5c?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🚗 Lifestyle", nivel:"intermediario", titulo:"🛣️ Casal Road Trip", quando:"Para criar uma cena aventureira e romântica.", prompt:`Crie uma foto cinematográfica de casal viajando de carro.\n\nInclua:\n- estrada infinita\n- pôr do sol intenso\n- carro estiloso\n- clima aventureiro\n- aparência realista premium`, imagem:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🎬 Cena de Filme", quando:"Para criar imagens extremamente impactantes.", prompt:`Transforme esta cena em um pôster de filme hollywoodiano.\n\nInclua:\n- iluminação cinematográfica\n- fundo dramático\n- atmosfera intensa\n- composição épica\n- qualidade ultra realista`, imagem:"https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🔥 Viral", nivel:"intermediario", titulo:"📱 Influenciador Premium", quando:"Para Instagram e TikTok.", prompt:`Crie uma foto estilo influenciador digital premium.\n\nInclua:\n- visual moderno\n- iluminação profissional\n- fundo sofisticado\n- aparência natural\n- qualidade de revista`, imagem:"https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"💼 Profissional", nivel:"avancado", titulo:"💎 Empresário de Luxo", quando:"Para transmitir poder e sucesso.", prompt:`Crie uma imagem de empresário de luxo moderno.\n\nInclua:\n- terno elegante\n- carro premium\n- ambiente sofisticado\n- iluminação cinematográfica\n- energia de liderança`, imagem:"https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🌌 Futurista", nivel:"intermediario", titulo:"🤖 Humano + IA", quando:"Para conteúdos tecnológicos.", prompt:`Crie uma imagem misturando humano e inteligência artificial.\n\nInclua:\n- detalhes tecnológicos\n- circuitos sutis\n- iluminação neon\n- visual futurista\n- aparência realista`, imagem:"https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🎬 Cinematográfico", nivel:"avancado", titulo:"🔥 Cena Pós-Apocalíptica", quando:"Para criar imagens intensas e dramáticas.", prompt:`Transforme esta imagem em uma cena pós-apocalíptica cinematográfica.\n\nInclua:\n- atmosfera intensa\n- fumaça e partículas no ar\n- iluminação dramática\n- cenário destruído realista\n- qualidade de filme hollywoodiano`, imagem:"https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🌌 Futurista", nivel:"intermediario", titulo:"🚀 Cyberpunk Neon", quando:"Para conteúdos modernos e tecnológicos.", prompt:`Transforme esta imagem em uma cena futurista cyberpunk.\n\nInclua:\n- luzes neon vibrantes\n- chuva refletindo no chão\n- ambiente tecnológico\n- atmosfera futurista\n- qualidade ultra realista`, imagem:"https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🦸 Heroico", nivel:"intermediario", titulo:"⚡ Super-Herói Épico", quando:"Para criar imagens poderosas e virais.", prompt:`Transforme esta imagem em uma cena épica de super-herói.\n\nInclua:\n- pose poderosa\n- iluminação cinematográfica\n- fundo dramático\n- energia intensa\n- visual hollywoodiano premium`, imagem:"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"❤️ Emocional", nivel:"basico", titulo:"🌅 Filme Emocional", quando:"Para criar cenas emocionais e bonitas.", prompt:`Transforme esta imagem em uma cena emocional de filme.\n\nInclua:\n- pôr do sol cinematográfico\n- iluminação suave e dramática\n- profundidade emocional\n- cores quentes intensas\n- aparência realista de cinema`, imagem:"https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?auto=format&fit=crop&w=1200&q=80"},
+{categoria:"🎨 Criativo", nivel:"basico", titulo:"🦸 Super-Herói Personalizado", quando:"Para conteúdo divertido e criativo.", prompt:`Transforme uma pessoa em super-herói moderno.\n\nInclua:\n- uniforme épico\n- cenário cinematográfico\n- pose heroica\n- iluminação forte\n- qualidade ultra realista`, imagem:"https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80"}
 ];
-
-const categoriasDisponiveis = [...new Set(promptsTrend.map(p => p.categoria))];
-
-const containerCategorias = document.getElementById("botoes-categoria");
-let htmlCategorias = '<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
-
-categoriasDisponiveis.forEach(cat => {
-    const nomeLimpo = cat.replace(/[^a-zA-ZÀ-ÿ0-9 ]/g, '').trim(); 
-    htmlCategorias += `<button onclick="filtrarCategoria(event, '${nomeLimpo}')">${cat}</button>`;
-});
-containerCategorias.innerHTML = htmlCategorias;
-
-const lista = document.getElementById("lista-prompts");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
-
-let estadoFiltroTexto = "";
-let estadoFiltroNivel = "todos";
-let estadoFiltroCategoria = "todas";
-
-function renderizar(arr){
-    lista.innerHTML="";
-    contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
-
-    categoriasDisponiveis.forEach(cat=>{
-        const grupo = arr.filter(p=>p.categoria === cat);
-        if(grupo.length === 0) return;
-
-        const tituloSecao = document.createElement("h2");
-        tituloSecao.className = "secao-titulo";
-        tituloSecao.innerText = cat;
-        lista.appendChild(tituloSecao);
-
-        grupo.forEach(p=>{
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-                <div class="nivel nivel-${p.nivel || 'basico'}">
-                    ${p.nivel === 'avancado' ? '🔴 Avançado' : p.nivel === 'intermediario' ? '🟡 Intermediário' : '🟢 Básico'}
-                </div>
-                <h3>${p.titulo}</h3>
-                <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-                <pre>${p.prompt}</pre>
-                <div class="acoes">
-                    <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-                    <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-                    <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-                    <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-                </div>
-            `;
-            lista.appendChild(card);
-        });
-    });
-}
-
-function atualizarFiltros() {
-    estadoFiltroTexto = busca.value.toLowerCase();
-    
-    const filtrados = promptsTrend.filter(p => {
-        const matchTexto = p.titulo.toLowerCase().includes(estadoFiltroTexto) ||
-                           p.prompt.toLowerCase().includes(estadoFiltroTexto) ||
-                           p.categoria.toLowerCase().includes(estadoFiltroTexto);
-        
-        const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
-        
-        const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria.includes(estadoFiltroCategoria);
-
-        return matchTexto && matchNivel && matchCategoria;
-    });
-
-    renderizar(filtrados);
-}
-
-function filtrarCategoria(event, categoria) {
-    document.querySelectorAll(".filtro-categoria button").forEach(btn => btn.classList.remove("ativo"));
-    event.target.classList.add("ativo");
-    estadoFiltroCategoria = categoria;
-    atualizarFiltros();
-}
-
-function filtrarNivel(event, nivel) {
-    document.querySelectorAll(".filtro-nivel button").forEach(btn => btn.classList.remove("ativo"));
-    event.target.classList.add("ativo");
-    estadoFiltroNivel = nivel;
-    atualizarFiltros();
-}
-
-function copiarPrompt(texto){
-    navigator.clipboard.writeText(texto);
-    alert("📋 Prompt copiado!");
-}
-
-function favoritarPrompt(titulo, conteudo){
-    const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-    prompts.push({
-        id: Date.now(),
-        titulo,
-        categoria: "Trend",
-        conteudo,
-        favorito: true
-    });
-    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-    alert("⭐ Adicionado aos favoritos!");
-}
-
-function abrirChatGPT(texto){
-    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
-    window.open(url,"_blank");
-}
-
-function abrirGemini(texto){
-    const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
-    window.open(url,"_blank");
-}
-
-renderizar(promptsTrend);
+const categoriasDisponiveis=[...new Set(promptsTrend.map(p=>p.categoria))];
+const containerCategorias=document.getElementById('botoes-categoria');
+containerCategorias.innerHTML='<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
+categoriasDisponiveis.forEach(cat=>{const nomeLimpo=cat.replace(/[^a-zA-ZÀ-ÿ0-9 ]/g,'').trim();containerCategorias.innerHTML+=`<button onclick="filtrarCategoria(event, '${nomeLimpo}')">${cat}</button>`});
+const lista=document.getElementById('lista-prompts');const contador=document.getElementById('contador');const busca=document.getElementById('busca');let estadoFiltroTexto='';let estadoFiltroNivel='todos';let estadoFiltroCategoria='todas';
+function renderizar(arr){lista.innerHTML='';contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?'s':''}`;categoriasDisponiveis.forEach(cat=>{const grupo=arr.filter(p=>p.categoria===cat);if(grupo.length===0)return;const tituloSecao=document.createElement('h2');tituloSecao.className='secao-titulo';tituloSecao.innerText=cat;lista.appendChild(tituloSecao);grupo.forEach((p)=>{const card=document.createElement('div');card.className='card';card.innerHTML=`<div class="preview-wrap"><img class="preview" src="${p.imagem}" alt="Prévia de ${p.titulo}" loading="lazy"><span class="preview-label">Prévia do estilo</span></div><div class="nivel nivel-${p.nivel||'basico'}">${p.nivel==='avancado'?'🔴 Avançado':p.nivel==='intermediario'?'🟡 Intermediário':'🟢 Básico'}</div><h3>${p.titulo}</h3><p><strong>📌 Quando usar:</strong> ${p.quando}</p><p class="meta"><strong>🏷️ Categoria:</strong> ${p.categoria}</p><pre>${p.prompt}</pre><div class="acoes"><button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button><button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button><button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button><button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button></div>`;lista.appendChild(card)})})}
+function atualizarFiltros(){estadoFiltroTexto=busca.value.toLowerCase();const filtrados=promptsTrend.filter(p=>{const matchTexto=p.titulo.toLowerCase().includes(estadoFiltroTexto)||p.prompt.toLowerCase().includes(estadoFiltroTexto)||p.categoria.toLowerCase().includes(estadoFiltroTexto)||p.quando.toLowerCase().includes(estadoFiltroTexto);const matchNivel=estadoFiltroNivel==='todos'||p.nivel===estadoFiltroNivel;const matchCategoria=estadoFiltroCategoria==='todas'||p.categoria.replace(/[^a-zA-ZÀ-ÿ0-9 ]/g,'').trim()===estadoFiltroCategoria;return matchTexto&&matchNivel&&matchCategoria});renderizar(filtrados)}
+function filtrarNivel(event,nivel){estadoFiltroNivel=nivel;document.querySelectorAll('.filtro-nivel button').forEach(btn=>btn.classList.remove('ativo'));event.target.classList.add('ativo');atualizarFiltros()}
+function filtrarCategoria(event,categoria){estadoFiltroCategoria=categoria;document.querySelectorAll('.filtro-categoria button').forEach(btn=>btn.classList.remove('ativo'));event.target.classList.add('ativo');atualizarFiltros()}
+function copiarPrompt(prompt){navigator.clipboard.writeText(prompt);alert('Prompt copiado!')}
+function favoritarPrompt(titulo,prompt){const key='fav-'+titulo;localStorage.getItem(key)?localStorage.removeItem(key):localStorage.setItem(key,prompt);alert(localStorage.getItem(key)?'Adicionado aos favoritos!':'Removido dos favoritos!')}
+function abrirChatGPT(prompt){const url='https://chatgpt.com/?q='+encodeURIComponent(prompt);window.open(url,'_blank')}
+function abrirGemini(prompt){navigator.clipboard.writeText(prompt);window.open('https://gemini.google.com/app','_blank')}
+busca.addEventListener('input',atualizarFiltros);atualizarFiltros();
 </script>
-
 </body>
 </html>
