@@ -1,191 +1,22 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Biblioteca | Delta Prompts</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<div id="menu"></div>
-<script src="menu-loader.js"></script>
-
-
-<main>
-  <h1>📦 Biblioteca de Prompts</h1>
-  <p>Aqui estão todos os prompts que você cadastrou.</p>
-
-  <div class="top-bar">
-    <input
-      type="text"
-      id="busca"
-      placeholder="🔎 Buscar por título, conteúdo ou categoria..."
-      oninput="filtrarPrompts()"
-    >
-    <div class="contador" id="contador"></div>
-  </div>
-
-  <div id="lista"></div>
-</main>
-
-<div id="toast" class="toast">📋 Copiado!</div>
-
-<script>
-const lista = document.getElementById("lista");
-const toast = document.getElementById("toast");
-const busca = document.getElementById("busca");
-const contador = document.getElementById("contador");
-
-let prompts = [];
-
-function carregarBiblioteca() {
-  prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-  atualizarContador(prompts);
-  renderizar(prompts);
-}
-
-function atualizarContador(arr) {
-  contador.innerText = `Total: ${arr.length} prompt${arr.length !== 1 ? "s" : ""}`;
-}
-
-function renderizar(arr) {
-  lista.innerHTML = "";
-
-  if (arr.length === 0) {
-    lista.innerHTML = `
-      <div class="card">
-        <p>📭 Nenhum prompt encontrado.</p>
-      </div>
-    `;
-    return;
-  }
-
-  arr.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${p.titulo}</h3>
-      <div class="meta">📂 ${p.categoria}</div>
-      <p>${p.conteudo}</p>
-
-      <div class="acoes">
-        <button onclick="copiar('${p.id}')">📋 Copiar</button>
-        <button onclick="editar('${p.id}')">✏️ Editar</button>
-        <button onclick="apagar('${p.id}')">🗑️ Apagar</button>
-        <button onclick="favoritar('${p.id}')">
-          ${p.favorito ? "❤️" : "🤍"}
-        </button>
-      </div>
-    `;
-    lista.appendChild(card);
-  });
-}
-
-function filtrarPrompts() {
-  const termo = busca.value.toLowerCase();
-  const filtrados = prompts.filter(p =>
-    p.titulo.toLowerCase().includes(termo) ||
-    p.conteudo.toLowerCase().includes(termo) ||
-    p.categoria.toLowerCase().includes(termo)
-  );
-
-  atualizarContador(filtrados);
-  renderizar(filtrados);
-}
-
-function copiar(id) {
-  const p = prompts.find(x => x.id == id);
-  navigator.clipboard.writeText(p.conteudo);
-  mostrarToast("📋 Prompt copiado!");
-}
-
-function editar(id) {
-  const p = prompts.find(x => x.id == id);
-  const novoTitulo = prompt("Editar título:", p.titulo);
-  const novoConteudo = prompt("Editar conteúdo:", p.conteudo);
-
-  if (novoTitulo && novoConteudo) {
-    p.titulo = novoTitulo;
-    p.conteudo = novoConteudo;
-    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-    carregarBiblioteca();
-    mostrarToast("✏️ Prompt atualizado");
-  }
-}
-
-function apagar(id) {
-  if (!confirm("Deseja apagar este prompt?")) return;
-  prompts = prompts.filter(x => x.id != id);
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  carregarBiblioteca();
-  mostrarToast("🗑️ Prompt removido");
-}
-
-function favoritar(id) {
-  const p = prompts.find(x => x.id == id);
-  p.favorito = !p.favorito;
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  carregarBiblioteca();
-}
-
-function mostrarToast(msg) {
-  toast.innerText = msg;
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 1800);
-}
-
-carregarBiblioteca();
-</script>
-
-<style>
-.top-bar {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.top-bar input {
-  flex: 1;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
-
-.contador {
-  font-size: 14px;
-  opacity: 0.75;
-}
-
-.toast {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: #3b82f6;
-  color: #fff;
-  padding: 14px 20px;
-  border-radius: 12px;
-  font-weight: bold;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.meta {
-  font-size: 13px;
-  opacity: 0.7;
-  margin-bottom: 10px;
-}
-</style>
-
-</body>
-</html>
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Biblioteca | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="style.css"><style>
+.biblioteca-hero{padding:26px;margin-bottom:22px;border:1px solid #e5e7eb;border-radius:22px;background:linear-gradient(135deg,#eef2ff,#f8fafc)}.biblioteca-hero h1{margin:0 0 8px}.biblioteca-hero p{max-width:720px;color:#667085;line-height:1.6}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn-primary,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 16px;border-radius:11px;text-decoration:none;font-weight:800}.btn-primary{background:#5b5ce2;color:#fff}.btn-secondary{background:#fff;color:#344054;border:1px solid #dfe3eb}.como-usar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 24px}.passo{padding:16px;border:1px solid #e5e7eb;border-radius:15px;background:#fff}.passo strong{display:block;margin-bottom:5px}.passo small{color:#667085;line-height:1.45}.ferramentas{padding:16px;margin-bottom:20px;border:1px solid #e7e9f0;border-radius:17px;background:#fff}.top-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.top-bar input{flex:1;min-width:230px;padding:13px;border-radius:11px;border:1px solid #dfe3eb}.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.filtros select,.filtros button{padding:9px 12px;border:1px solid #dfe3eb;border-radius:10px;background:#fff;color:#475467;font-weight:700}.filtros button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}.contador{margin-left:auto;padding:7px 10px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800}.meta{font-size:13px;color:#667085;margin-bottom:10px}.prompt-preview{white-space:pre-wrap;line-height:1.55;max-height:90px;overflow:hidden;padding:13px;border:1px solid #eaecf0;border-radius:11px;background:#f8fafc}.prompt-preview.aberto{max-height:none}.ver-completo{display:block;margin:7px 0 0 auto;border:0;background:transparent;color:#4f46e5;font-weight:800;cursor:pointer}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.acoes button{cursor:pointer}.empty-state{text-align:center;padding:42px 22px;border:1px dashed #cfd4df;border-radius:18px;background:#fafbff}.empty-state .empty-icon{font-size:42px}.empty-state h2{margin:10px 0 6px}.empty-state p{max-width:520px;margin:0 auto 18px;color:#667085}.explorar{margin-top:26px;padding:18px;border-radius:16px;background:#f8fafc;border:1px solid #e5e7eb}.explorar-links{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}.explorar a{padding:9px 12px;border-radius:10px;background:#fff;border:1px solid #e5e7eb;text-decoration:none;color:#344054;font-weight:700}.toast{position:fixed;bottom:30px;right:30px;background:#3b82f6;color:#fff;padding:14px 20px;border-radius:12px;font-weight:bold;opacity:0;transform:translateY(20px);transition:.3s;z-index:2000}.toast.show{opacity:1;transform:translateY(0)}@media(max-width:700px){.como-usar{grid-template-columns:1fr}.contador{width:100%;margin-left:0;text-align:center}.filtros{flex-direction:column}.filtros select,.filtros button{width:100%}.hero-actions a{width:100%}.acoes button{flex:1 1 40%}}
+</style></head><body><div id="menu"></div><script src="menu-loader.js"></script><main><section class="biblioteca-hero"><h1>📦 Minha Biblioteca de Prompts</h1><p>Este é o seu espaço pessoal para guardar, organizar e reutilizar os prompts que você cria. Salve seus melhores comandos aqui para não precisar procurar ou escrever tudo novamente.</p><div class="hero-actions"><a class="btn-primary" href="cadastro.html">➕ Adicionar novo prompt</a><a class="btn-secondary" href="index.html">🔎 Explorar prompts prontos</a></div></section><section class="como-usar"><div class="passo"><strong>1️⃣ Adicione</strong><small>Crie um prompt próprio e salve na sua biblioteca pessoal.</small></div><div class="passo"><strong>2️⃣ Organize</strong><small>Use busca, categoria e favoritos para encontrar rapidamente.</small></div><div class="passo"><strong>3️⃣ Reutilize</strong><small>Copie o prompt ou abra diretamente no ChatGPT e Gemini.</small></div></section><section class="ferramentas"><div class="top-bar"><input type="search" id="busca" placeholder="🔎 Buscar por título, conteúdo ou categoria..."><div class="contador" id="contador"></div></div><div class="filtros"><select id="categoriaFiltro"><option value="todos">📂 Todas as categorias</option></select><button id="favoritosFiltro">🤍 Somente favoritos</button></div></section><div id="lista"></div><section class="explorar"><strong>✨ Quer encontrar novos prompts?</strong><div class="explorar-links"><a href="paginas/marketing.html">📣 Marketing</a><a href="paginas/imagens.html">🎨 Imagens</a><a href="paginas/trabalho.html">💼 Trabalho</a><a href="paginas/imobiliario.html">🏠 Imobiliário</a><a href="paginas/agentes-ia.html">🤖 Agentes de IA</a></div></section></main><div id="toast" class="toast">📋 Copiado!</div><script>
+const lista=document.getElementById('lista'),toast=document.getElementById('toast'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),categoriaFiltro=document.getElementById('categoriaFiltro'),favoritosFiltro=document.getElementById('favoritosFiltro');let prompts=[],somenteFavoritos=false;
+function carregarBiblioteca(){prompts=JSON.parse(localStorage.getItem('deltaPrompts'))||[];montarCategorias();aplicarFiltros()}
+function montarCategorias(){const atual=categoriaFiltro.value;const cats=[...new Set(prompts.map(p=>p.categoria).filter(Boolean))].sort();categoriaFiltro.innerHTML='<option value="todos">📂 Todas as categorias</option>'+cats.map(c=>`<option value="${esc(c)}">${formatarCategoria(c)}</option>`).join('');if([...categoriaFiltro.options].some(o=>o.value===atual))categoriaFiltro.value=atual}
+function formatarCategoria(c){const mapa={estudo:'📚 Estudo',saude:'💊 Saúde',imagens:'🎨 Imagens',trabalho:'💼 Trabalho',imobiliario:'🏠 Imobiliário',marketing:'📣 Marketing',outros:'⭐ Outros'};return mapa[c]||'📂 '+c}
+function esc(s){return String(s||'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
+function aplicarFiltros(){const termo=busca.value.toLowerCase().trim(),cat=categoriaFiltro.value;const filtrados=prompts.filter(p=>(!termo||(p.titulo||'').toLowerCase().includes(termo)||(p.conteudo||'').toLowerCase().includes(termo)||(p.categoria||'').toLowerCase().includes(termo))&&(cat==='todos'||p.categoria===cat)&&(!somenteFavoritos||p.favorito));contador.innerText=`${filtrados.length} de ${prompts.length} prompt${prompts.length!==1?'s':''}`;renderizar(filtrados)}
+function renderizar(arr){if(!prompts.length){lista.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div><h2>Sua biblioteca ainda está vazia</h2><p>Crie seu primeiro prompt para começar sua coleção pessoal. Depois você poderá pesquisar, favoritar, editar e reutilizar tudo por aqui.</p><a class="btn-primary" href="cadastro.html">➕ Criar meu primeiro prompt</a></div>`;return}if(!arr.length){lista.innerHTML=`<div class="empty-state"><div class="empty-icon">🔎</div><h2>Nenhum prompt encontrado</h2><p>Tente limpar a busca ou alterar os filtros para ver outros prompts da sua biblioteca.</p><button class="btn-secondary" onclick="limparFiltros()">Limpar filtros</button></div>`;return}lista.innerHTML=arr.map((p,i)=>`<section class="card"><h3>${esc(p.titulo)}</h3><div class="meta">${formatarCategoria(p.categoria)}${p.objetivo?' · 🎯 '+esc(p.objetivo):''}</div><div class="prompt-preview" id="prompt-${p.id}">${esc(p.conteudo)}</div><button class="ver-completo" onclick="togglePrompt('${p.id}',this)">📖 Ver prompt completo</button><div class="acoes"><button onclick="copiar('${p.id}')">📋 Copiar</button><button onclick="usar('${p.id}','https://chatgpt.com/')">🤖 ChatGPT</button><button onclick="usar('${p.id}','https://gemini.google.com/app')">✨ Gemini</button><button onclick="editar('${p.id}')">✏️ Editar</button><button onclick="favoritar('${p.id}')">${p.favorito?'❤️ Favorito':'🤍 Favoritar'}</button><button onclick="apagar('${p.id}')">🗑️ Apagar</button></div></section>`).join('')}
+function togglePrompt(id,b){const el=document.getElementById('prompt-'+id);el.classList.toggle('aberto');b.textContent=el.classList.contains('aberto')?'🙈 Mostrar menos':'📖 Ver prompt completo'}
+function achar(id){return prompts.find(x=>String(x.id)===String(id))}
+function copiar(id){const p=achar(id);if(!p)return;navigator.clipboard.writeText(p.conteudo);mostrarToast('📋 Prompt copiado!')}
+function usar(id,url){const p=achar(id);if(!p)return;navigator.clipboard.writeText(p.conteudo);window.open(url,'_blank')}
+function editar(id){const p=achar(id);if(!p)return;const novoTitulo=prompt('Editar título:',p.titulo),novoConteudo=prompt('Editar conteúdo:',p.conteudo);if(novoTitulo&&novoConteudo){p.titulo=novoTitulo;p.conteudo=novoConteudo;salvar();mostrarToast('✏️ Prompt atualizado')}}
+function apagar(id){if(!confirm('Deseja apagar este prompt?'))return;prompts=prompts.filter(x=>String(x.id)!==String(id));salvar();mostrarToast('🗑️ Prompt removido')}
+function favoritar(id){const p=achar(id);if(!p)return;p.favorito=!p.favorito;salvar();mostrarToast(p.favorito?'❤️ Adicionado aos favoritos':'🤍 Removido dos favoritos')}
+function salvar(){localStorage.setItem('deltaPrompts',JSON.stringify(prompts));montarCategorias();aplicarFiltros()}
+function limparFiltros(){busca.value='';categoriaFiltro.value='todos';somenteFavoritos=false;favoritosFiltro.classList.remove('ativo');favoritosFiltro.textContent='🤍 Somente favoritos';aplicarFiltros()}
+function mostrarToast(msg){toast.innerText=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1800)}
+busca.addEventListener('input',aplicarFiltros);categoriaFiltro.addEventListener('change',aplicarFiltros);favoritosFiltro.addEventListener('click',()=>{somenteFavoritos=!somenteFavoritos;favoritosFiltro.classList.toggle('ativo',somenteFavoritos);favoritosFiltro.textContent=somenteFavoritos?'❤️ Mostrando favoritos':'🤍 Somente favoritos';aplicarFiltros()});carregarBiblioteca();
+</script></body></html>
