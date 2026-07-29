@@ -1,1 +1,124 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skills de IA | Delta Prompts</title><meta name="description" content="Skills de IA prontas para copiar e usar."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>:root{--p:#4f46e5;--p2:#7c3aed;--soft:#eef2ff;--text:#172033;--muted:#667085;--border:#e5e7eb}.compact-head{margin-bottom:12px}.compact-head h1{margin:0 0 5px;font-size:clamp(25px,5vw,36px)}.compact-head p{margin:0;color:var(--muted);font-size:15px}.advanced{display:flex;gap:9px;padding:11px 14px;margin:12px 0;border:1px solid #fde68a;border-radius:13px;background:#fffbeb;font-size:13px;color:#785d16}.advanced strong{color:#684d0b}.info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 18px}.info-box{border:1px solid var(--border);border-radius:13px;background:#fff;overflow:hidden}.info-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 14px;border:0;background:#fff;font:inherit;font-weight:800;text-align:left;cursor:pointer}.info-btn span{color:var(--p);transition:.2s}.info-box.open .info-btn span{transform:rotate(180deg)}.info-content{display:none;padding:0 14px 14px;color:var(--muted);font-size:14px;line-height:1.55}.info-box.open .info-content{display:block}.mini-steps{margin:0;padding-left:20px}.mini-steps li{margin:6px 0}.explorar{scroll-margin-top:15px}.explorar h2{margin:8px 0 2px}.explorar>.sub{margin:0 0 10px;color:var(--muted);font-size:14px}.top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}.search{flex:1;min-width:220px}.search input{width:100%;box-sizing:border-box;padding:14px;border:1px solid var(--border);border-radius:14px;font-size:15px}.filtros{display:flex;gap:8px;overflow-x:auto;padding:3px 0 14px}.filtro{white-space:nowrap;border:1px solid var(--border);background:#fff;padding:9px 13px;border-radius:999px;font-weight:700}.filtro.ativo{background:var(--text);color:#fff}#lista{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.skill-card{display:flex;flex-direction:column;padding:20px;border:1px solid var(--border);border-radius:20px;background:#fff}.card-top{display:flex;justify-content:space-between;gap:8px}.tag,.comando{font-size:12px;font-weight:800;padding:6px 9px;border-radius:999px;background:var(--soft);color:var(--p)}.comando{font-family:monospace}.skill-card h3{margin:13px 0 5px}.quando{color:var(--muted);margin:0 0 12px}.prompt-text{white-space:pre-wrap;background:#f8fafc;padding:14px;border-radius:12px;color:#475467;font-size:14px;max-height:90px;overflow:hidden}.prompt-text.aberto{max-height:none}.ver-mais{margin:8px 0 0 auto;border:0;background:none;color:var(--p);font-weight:800}.acoes{display:flex;gap:8px;margin-top:auto;padding-top:14px}.acoes button{flex:1;border:0;border-radius:11px;padding:11px;font-weight:800;background:var(--soft);color:var(--p)}.acoes .copiar{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff}.empty{text-align:center;grid-column:1/-1;padding:30px}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}.toast.show{opacity:1;transform:translate(-50%,0)}@media(max-width:760px){main{padding-top:16px!important}.compact-head h1{font-size:27px}.info-row{grid-template-columns:1fr}.advanced{margin:10px 0}.info-btn{padding:12px 14px}#lista{grid-template-columns:1fr}.acoes{flex-wrap:wrap}.acoes button{min-width:130px}}</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js"></script><main><header class="compact-head"><h1>🧠 Skills de IA</h1><p>Habilidades prontas e reutilizáveis para dar funções específicas à IA.</p></header><div class="advanced">⚡ <div><strong>Área avançada:</strong> recomendada para quem já conhece o básico de prompts. Iniciantes também podem copiar e usar as Skills prontas.</div></div><div class="info-row"><section class="info-box"><button class="info-btn" onclick="toggleInfo(this)">🤔 O que é uma Skill?<span>⌄</span></button><div class="info-content">É um conjunto de instruções reutilizáveis que ensina a IA a executar uma tarefa seguindo regras específicas.</div></section><section class="info-box"><button class="info-btn" onclick="toggleInfo(this)">🛠️ Como usar?<span>⌄</span></button><div class="info-content">Escolha uma Skill, copie e cole no ChatGPT ou em outro assistente. Depois envie o conteúdo que deseja trabalhar.</div></section><section class="info-box"><button class="info-btn" onclick="toggleInfo(this)">🚀 Como funciona?<span>⌄</span></button><div class="info-content"><ol class="mini-steps"><li><strong>Escolha:</strong> encontre a Skill.</li><li><strong>Copie:</strong> copie a instrução completa.</li><li><strong>Use:</strong> cole no seu assistente de IA.</li></ol></div></section></div><section class="explorar" id="explorar"><h2>🔎 Encontre uma Skill</h2><p class="sub">Pesquise ou escolha uma categoria.</p><div class="top"><div class="search"><input id="busca" aria-label="Buscar Skill" placeholder="O que você quer fazer?"></div><strong id="contador"></strong></div><div class="filtros" id="filtros"></div><div id="lista"></div></section></main><div class="toast" id="toast">✓ Skill copiada!</div><script>const dados=[['✍️ Corretor de Português','Texto','Corrigir mensagens mantendo seu jeito natural','/corrigir','Sempre que eu enviar um texto após /corrigir, corrija ortografia, pontuação, concordância e erros de digitação. Preserve meu jeito natural de falar, não deixe excessivamente formal, não altere o significado e entregue somente o texto corrigido, salvo se eu pedir explicações.'],['✨ Melhorador de Texto','Texto','Deixar qualquer texto mais claro e bem escrito','/melhorar','Quando eu usar /melhorar, preserve minha intenção, corrija o português, organize ideias confusas e torne o texto mais claro, natural e adequado ao contexto. Não invente informações. Entregue a versão melhorada pronta para uso.'],['📋 Resumidor Inteligente','Estudo','Transformar conteúdo longo em algo fácil de entender','/resumir','Quando eu usar /resumir, transforme o conteúdo em: 1) resumo principal, 2) pontos mais importantes e 3) o que merece atenção. Elimine repetições e priorize o que é realmente útil.'],['🧠 Organizador de Ideias','Pessoal','Organizar pensamentos enviados de forma solta','/organizar','Quando eu usar /organizar, identifique o que estou tentando comunicar e organize em situação, objetivo, problemas, ideias e próximos passos quando essas divisões fizerem sentido. Preserve minha intenção original.'],['🎓 Professor Simples','Estudo','Explicar qualquer assunto para iniciantes','/explicar','Quando eu usar /explicar, ensine em cinco partes: explicação simples, analogia cotidiana, exemplo prático, aplicação na vida real e resumo em uma frase. Comece simples e aprofunde apenas quando necessário.'],['❓ Questionador 5X','Raciocínio','Descobrir pontos que faltam em uma ideia','/questionador','Analise o conteúdo enviado e faça exatamente 5 perguntas específicas e relevantes para descobrir informações ausentes, riscos, objetivos e pontos não considerados. Não responda às perguntas por mim.'],['⚖️ Assistente de Decisão','Pessoal','Organizar decisões sem decidir cegamente por você','/decidir','Analise situação, fatos, sentimentos, opções, vantagens, desvantagens, riscos e consequências. Mostre o que ainda falta saber e indique qual opção parece mais coerente com as informações disponíveis, explicando o motivo.'],['🔍 Crítico Construtivo','Raciocínio','Testar uma ideia antes de executar','/criticar','Analise minha ideia sem concordar automaticamente. Mostre pontos fortes, pontos fracos, riscos, contradições, informações ausentes e melhorias possíveis. Seja claro e construtivo.'],['💡 Gerador de Ideias','Criatividade','Criar possibilidades novas e práticas','/ideias','Gere ideias a partir do tema enviado. Organize das mais simples e práticas para as mais criativas e diferentes. Evite sugestões repetitivas ou genéricas.'],['📱 WhatsApp Natural','Comunicação','Transformar texto em mensagem pronta para WhatsApp','/whatsapp','Transforme o conteúdo em uma mensagem de WhatsApp clara, humana e direta, sem parecer escrita por IA. Preserve meu jeito de falar e adapte automaticamente entre contexto pessoal e profissional.']].map((x,i)=>({id:i,titulo:x[0],categoria:x[1],quando:x[2],comando:x[3],prompt:x[4]}));let categoriaAtiva='Todos';function toggleInfo(b){b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',b.parentElement.classList.contains('open'))}function mostrarToast(texto='✓ Skill copiada!'){const t=document.getElementById('toast');t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}async function copiar(t){try{await navigator.clipboard.writeText(t);mostrarToast()}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}async function abrirChat(t){try{await navigator.clipboard.writeText(t);mostrarToast('✓ Copiada! Abrindo o ChatGPT...')}catch(e){}setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}function alternarPrompt(id,b){const el=document.getElementById('prompt-'+id);el.classList.toggle('aberto');b.textContent=el.classList.contains('aberto')?'Mostrar menos':'Ver Skill completa'}function criarFiltros(){const cats=['Todos',...new Set(dados.map(x=>x.categoria))];document.getElementById('filtros').innerHTML=cats.map(c=>`<button class="filtro ${c===categoriaAtiva?'ativo':''}" onclick="filtrar('${c}')">${c}</button>`).join('')}function filtrar(c){categoriaAtiva=c;criarFiltros();render()}function render(){const q=document.getElementById('busca').value.toLowerCase().trim();const f=dados.filter(x=>(categoriaAtiva==='Todos'||x.categoria===categoriaAtiva)&&(x.titulo+' '+x.categoria+' '+x.quando+' '+x.comando+' '+x.prompt).toLowerCase().includes(q));document.getElementById('contador').textContent=f.length+' Skills encontradas';document.getElementById('lista').innerHTML=f.length?f.map(x=>`<article class="skill-card"><div class="card-top"><span class="tag">${x.categoria}</span><span class="comando">${x.comando}</span></div><h3>${x.titulo}</h3><p class="quando">💡 ${x.quando}</p><div class="prompt-text" id="prompt-${x.id}">${x.prompt}</div><button class="ver-mais" onclick="alternarPrompt(${x.id},this)">Ver Skill completa</button><div class="acoes"><button class="copiar" onclick='copiar(${JSON.stringify(x.prompt)})'>📋 Copiar</button><button onclick='abrirChat(${JSON.stringify(x.prompt)})'>🤖 ChatGPT</button></div></article>`).join(''):'<div class="empty">🔎 Nenhuma Skill encontrada.</div>'}document.getElementById('busca').addEventListener('input',render);criarFiltros();render();</script></body></html>
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skills de IA | Delta Prompts</title><meta name="description" content="Skills de IA prontas para copiar e usar."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>:root{--p:#4f46e5;--p2:#7c3aed;--soft:#eef2ff;--text:#172033;--muted:#667085;--border:#e5e7eb}.compact-head{margin-bottom:12px}.compact-head h1{margin:0 0 5px;font-size:clamp(25px,5vw,36px)}.compact-head p{margin:0;color:var(--muted);font-size:15px}.advanced{display:flex;gap:9px;padding:11px 14px;margin:12px 0;border:1px solid #fde68a;border-radius:13px;background:#fffbeb;font-size:13px;color:#785d16}.advanced strong{color:#684d0b}.info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 18px}.info-box{border:1px solid var(--border);border-radius:13px;background:#fff;overflow:hidden}.info-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 14px;border:0;background:#fff;font:inherit;font-weight:800;text-align:left;cursor:pointer}.info-btn span{color:var(--p);transition:.2s}.info-box.open .info-btn span{transform:rotate(180deg)}.info-content{display:none;padding:0 14px 14px;color:var(--muted);font-size:14px;line-height:1.55}.info-box.open .info-content{display:block}.mini-steps{margin:0;padding-left:20px}.mini-steps li{margin:6px 0}.explorar{scroll-margin-top:15px}.explorar h2{margin:8px 0 2px}.explorar>.sub{margin:0 0 10px;color:var(--muted);font-size:14px}.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:14px 0}.top-bar input{flex:1;min-width:220px;box-sizing:border-box;padding:14px;border:1px solid var(--border);border-radius:14px;font-size:15px}#lista{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}.skill-card{display:flex;flex-direction:column;padding:20px;border:1px solid var(--border);border-radius:20px;background:#fff}.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.tag,.comando{font-size:12px;font-weight:800;padding:6px 9px;border-radius:999px;background:var(--soft);color:var(--p)}.comando{font-family:monospace}.skill-card h3{margin:13px 0 5px}.quando{color:var(--muted);margin:0 0 12px}.prompt-text{white-space:pre-wrap;background:#f8fafc;padding:14px;border-radius:12px;color:#475467;font-size:14px;max-height:90px;overflow:hidden}.prompt-text.aberto{max-height:none}.ver-mais{margin:8px 0 0 auto;border:0;background:none;color:var(--p);font-weight:800;cursor:pointer}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:14px}.acoes button{flex:1;min-width:105px;border:0;border-radius:11px;padding:11px;font-weight:800;background:var(--soft);color:var(--p);cursor:pointer}.acoes .copiar{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff}.acoes .favoritar.is-fav{background:#fff1f2;color:#be123c}.empty{text-align:center;grid-column:1/-1;padding:30px}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}.toast.show{opacity:1;transform:translate(-50%,0)}@media(max-width:760px){main{padding-top:16px!important}.compact-head h1{font-size:27px}.info-row{grid-template-columns:1fr}.advanced{margin:10px 0}.info-btn{padding:12px 14px}#lista{grid-template-columns:1fr}.acoes{flex-wrap:wrap}.acoes button{min-width:130px}}</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js"></script><main>
+
+<header class="compact-head"><h1>🧠 Skills de IA</h1><p>Habilidades prontas e reutilizáveis para dar funções específicas à IA.</p></header>
+
+<div class="advanced">⚡ <div><strong>Área avançada:</strong> recomendada para quem já conhece o básico de prompts. Iniciantes também podem copiar e usar as Skills prontas.</div></div>
+
+<div class="info-row">
+<section class="info-box"><button class="info-btn" onclick="toggleInfo(this)">🤔 O que é uma Skill?<span>⌄</span></button><div class="info-content">É um conjunto de instruções reutilizáveis que ensina a IA a executar uma tarefa seguindo regras específicas.</div></section>
+<section class="info-box"><button class="info-btn" onclick="toggleInfo(this)">🛠️ Como usar?<span>⌄</span></button><div class="info-content">Escolha uma Skill, copie e cole no ChatGPT ou em outro assistente. Depois envie o conteúdo que deseja trabalhar.</div></section>
+<section class="info-box"><button class="info-btn" onclick="toggleInfo(this)">🚀 Como funciona?<span>⌄</span></button><div class="info-content"><ol class="mini-steps"><li><strong>Escolha:</strong> encontre a Skill.</li><li><strong>Copie:</strong> copie a instrução completa.</li><li><strong>Use:</strong> cole no seu assistente de IA.</li></ol></div></section>
+</div>
+
+<section class="explorar" id="explorar">
+  <h2>🔎 Encontre uma Skill</h2>
+  <p class="sub">Pesquise, filtre por nível de dificuldade ou escolha uma categoria.</p>
+
+  <div class="top-bar">
+    <input id="busca" type="search" aria-label="Buscar Skill" placeholder="O que você quer fazer?">
+    <span class="contador" id="contador"></span>
+  </div>
+
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtros" id="filtrosNivel">
+    <button class="ativo" data-nivel="todos">Todos</button>
+    <button data-nivel="basico">🟢 Básico</button>
+    <button data-nivel="intermediario">🟡 Intermediário</button>
+    <button data-nivel="avancado">🔴 Avançado</button>
+  </div>
+
+  <div class="filtro-titulo">🗂️ Categoria</div>
+  <div class="filtros" id="filtrosCategoria"></div>
+
+  <div id="lista"></div>
+</section>
+
+</main><div class="toast" id="toast">✓ Skill copiada!</div><script>
+const dados=[
+  ['✍️ Corretor de Português','Texto','basico','Corrigir mensagens mantendo seu jeito natural','/corrigir','Sempre que eu enviar um texto após /corrigir, corrija ortografia, pontuação, concordância e erros de digitação. Preserve meu jeito natural de falar, não deixe excessivamente formal, não altere o significado e entregue somente o texto corrigido, salvo se eu pedir explicações.'],
+  ['✨ Melhorador de Texto','Texto','basico','Deixar qualquer texto mais claro e bem escrito','/melhorar','Quando eu usar /melhorar, preserve minha intenção, corrija o português, organize ideias confusas e torne o texto mais claro, natural e adequado ao contexto. Não invente informações. Entregue a versão melhorada pronta para uso.'],
+  ['📋 Resumidor Inteligente','Estudo','basico','Transformar conteúdo longo em algo fácil de entender','/resumir','Quando eu usar /resumir, transforme o conteúdo em: 1) resumo principal, 2) pontos mais importantes e 3) o que merece atenção. Elimine repetições e priorize o que é realmente útil.'],
+  ['🧠 Organizador de Ideias','Pessoal','intermediario','Organizar pensamentos enviados de forma solta','/organizar','Quando eu usar /organizar, identifique o que estou tentando comunicar e organize em situação, objetivo, problemas, ideias e próximos passos quando essas divisões fizerem sentido. Preserve minha intenção original.'],
+  ['🎓 Professor Simples','Estudo','basico','Explicar qualquer assunto para iniciantes','/explicar','Quando eu usar /explicar, ensine em cinco partes: explicação simples, analogia cotidiana, exemplo prático, aplicação na vida real e resumo em uma frase. Comece simples e aprofunde apenas quando necessário.'],
+  ['❓ Questionador 5X','Raciocínio','intermediario','Descobrir pontos que faltam em uma ideia','/questionador','Analise o conteúdo enviado e faça exatamente 5 perguntas específicas e relevantes para descobrir informações ausentes, riscos, objetivos e pontos não considerados. Não responda às perguntas por mim.'],
+  ['⚖️ Assistente de Decisão','Pessoal','intermediario','Organizar decisões sem decidir cegamente por você','/decidir','Analise situação, fatos, sentimentos, opções, vantagens, desvantagens, riscos e consequências. Mostre o que ainda falta saber e indique qual opção parece mais coerente com as informações disponíveis, explicando o motivo.'],
+  ['🔍 Crítico Construtivo','Raciocínio','avancado','Testar uma ideia antes de executar','/criticar','Analise minha ideia sem concordar automaticamente. Mostre pontos fortes, pontos fracos, riscos, contradições, informações ausentes e melhorias possíveis. Seja claro e construtivo.'],
+  ['💡 Gerador de Ideias','Criatividade','basico','Criar possibilidades novas e práticas','/ideias','Gere ideias a partir do tema enviado. Organize das mais simples e práticas para as mais criativas e diferentes. Evite sugestões repetitivas ou genéricas.'],
+  ['📱 WhatsApp Natural','Comunicação','basico','Transformar texto em mensagem pronta para WhatsApp','/whatsapp','Transforme o conteúdo em uma mensagem de WhatsApp clara, humana e direta, sem parecer escrita por IA. Preserve meu jeito de falar e adapte automaticamente entre contexto pessoal e profissional.']
+].map((x,i)=>({id:'skill-'+i,titulo:x[0],categoria:x[1],nivel:x[2],quando:x[3],comando:x[4],prompt:x[5]}));
+
+let categoriaAtiva='Todos', nivelAtivo='todos';
+
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+
+function toggleInfo(b){b.parentElement.classList.toggle('open');b.setAttribute('aria-expanded',b.parentElement.classList.contains('open'))}
+
+function mostrarToast(texto='✓ Skill copiada!'){const t=document.getElementById('toast');t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+async function copiar(t){try{await navigator.clipboard.writeText(t);mostrarToast()}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+
+async function abrirChat(t){try{await navigator.clipboard.writeText(t)}catch(e){}mostrarToast('✓ Copiada! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+
+async function abrirGemini(t){try{await navigator.clipboard.writeText(t)}catch(e){}mostrarToast('✓ Copiada! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(t),'_blank'),300)}
+
+function alternarPrompt(id,b){const el=document.getElementById('prompt-'+id);el.classList.toggle('aberto');b.textContent=el.classList.contains('aberto')?'Mostrar menos':'Ver Skill completa'}
+
+// ===== FAVORITOS (mesmo formato usado em favoritos.html) =====
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const skill=dados.find(d=>d.id===id);if(!skill)return;let lista=_loadFav();const idx=lista.findIndex(f=>f.id===id);if(idx===-1){lista.unshift({id,titulo:skill.titulo,texto:skill.prompt,categoria:'Skills',createdAt:Date.now()});_saveFav(lista);mostrarToast('💖 Skill salva nos favoritos!')}else{lista.splice(idx,1);_saveFav(lista);mostrarToast('🤍 Removida dos favoritos')}atualizarBtnFav(id,btn);window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function criarFiltrosCategoria(){
+  const cats=['Todos',...new Set(dados.map(x=>x.categoria))];
+  document.getElementById('filtrosCategoria').innerHTML=cats.map(c=>`<button class="${c===categoriaAtiva?'ativo':''}" data-categoria="${c}">${c}</button>`).join('');
+  document.getElementById('filtrosCategoria').querySelectorAll('button').forEach(b=>b.onclick=()=>{categoriaAtiva=b.dataset.categoria;criarFiltrosCategoria();render()});
+}
+
+document.getElementById('filtrosNivel').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  nivelAtivo=b.dataset.nivel;
+  document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));
+  b.classList.add('ativo');
+  render();
+});
+
+function render(){
+  const q=document.getElementById('busca').value.toLowerCase().trim();
+  const f=dados.filter(x=>
+    (categoriaAtiva==='Todos'||x.categoria===categoriaAtiva) &&
+    (nivelAtivo==='todos'||x.nivel===nivelAtivo) &&
+    (x.titulo+' '+x.categoria+' '+x.quando+' '+x.comando+' '+x.prompt).toLowerCase().includes(q)
+  );
+  document.getElementById('contador').textContent=f.length+' Skill'+(f.length===1?'':'s')+' encontrada'+(f.length===1?'':'s');
+  document.getElementById('lista').innerHTML=f.length?f.map(x=>`
+    <article class="skill-card" data-nivel="${x.nivel}">
+      <div class="card-top">
+        <span class="nivel nivel-${x.nivel}">${nivelLabel(x.nivel)}</span>
+        <span class="comando">${x.comando}</span>
+      </div>
+      <span class="tag">${x.categoria}</span>
+      <h3>${x.titulo}</h3>
+      <p class="quando">💡 <strong>Quando usar:</strong> ${x.quando}</p>
+      <div class="prompt-text" id="prompt-${x.id}">${x.prompt}</div>
+      <button class="ver-mais" onclick="alternarPrompt('${x.id}',this)">Ver Skill completa</button>
+      <div class="acoes">
+        <button class="copiar" onclick='copiar(${JSON.stringify(x.prompt)})'>📋 Copiar</button>
+        <button class="favoritar" onclick="favoritar('${x.id}',this)">🤍 Favoritar</button>
+        <button onclick='abrirChat(${JSON.stringify(x.prompt)})'>🤖 ChatGPT</button>
+        <button onclick='abrirGemini(${JSON.stringify(x.prompt)})'>🔷 Gemini</button>
+      </div>
+    </article>
+  `).join(''):'<div class="empty">🔎 Nenhuma Skill encontrada.</div>';
+
+  document.querySelectorAll('.acoes .favoritar').forEach(btn=>{
+    const card=btn.closest('.skill-card');
+    const id=card.querySelector('.prompt-text').id.replace('prompt-','');
+    atualizarBtnFav(id,btn);
+  });
+}
+
+document.getElementById('busca').addEventListener('input',render);
+criarFiltrosCategoria();
+render();
+</script></body></html>
