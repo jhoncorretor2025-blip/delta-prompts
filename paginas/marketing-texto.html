@@ -1,5 +1,85 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Marketing Texto & Campanhas | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:15px;align-items:center;margin:20px 0;flex-wrap:wrap}.top-bar input{flex:1;padding:14px;border-radius:10px;border:1px solid #e5e7eb}.contador{font-size:14px;opacity:.75}.filtros-container{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}.filtro-botoes{display:flex;flex-wrap:wrap;gap:8px}.filtro-botoes button{padding:8px 15px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}.filtro-botoes button.ativo{background:#22c55e;color:#fff;border-color:#22c55e}.secao-categoria{background:#fff;border-radius:12px;padding:20px;margin-bottom:35px;border:1px solid #f1f5f9}.secao-titulo{font-size:22px;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}.grid-prompts{display:flex;flex-direction:column;gap:20px}pre{white-space:pre-wrap;font:14px inherit;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb}</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260805"></script><main><h1>📣 Marketing Texto & Campanhas</h1><p>Prompts estratégicos para criar campanhas, textos persuasivos, conteúdo de autoridade e estratégias de conversão.</p><section class="card"><h3>🎯 Objetivo</h3><p>Ajudar você a transformar ideias, produtos e serviços em textos e campanhas mais claros, estratégicos e persuasivos.</p></section><section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul><li><strong>✍️ Conteúdo:</strong> divulgação e posicionamento.</li><li><strong>🎯 Conversão:</strong> campanhas e copy de venda.</li><li><strong>📖 Storytelling:</strong> conexão através de histórias.</li><li><strong>🚀 Estratégia:</strong> funis, lançamentos e sequências.</li></ul></section><div class="top-bar"><input id="busca" placeholder="🔎 Buscar modelo de marketing..." oninput="filtrar()"><div id="contador" class="contador"></div></div><div class="filtros-container"><div id="categorias" class="filtro-botoes filtro-categoria"></div><div class="filtro-botoes filtro-nivel"><button class="ativo" onclick="setNivel(event,'todos')">🌐 Todos os Níveis</button><button onclick="setNivel(event,'basico')">🟢 Básico</button><button onclick="setNivel(event,'intermediario')">🟡 Intermediário</button><button onclick="setNivel(event,'avancado')">🔴 Avançado</button></div></div><div id="lista-prompts"></div><section class="card" style="text-align:center;margin-top:40px"><h2>🎨 Precisa criar os criativos da campanha?</h2><p>Depois de estruturar seu texto e sua estratégia, avance para a criação de imagens, folders, banners e anúncios visuais.</p><a href="/delta-prompts/paginas/marketing-campanha.html" style="display:inline-block;margin-top:15px;padding:14px 28px;background:#5b5ce2;color:#fff;font-weight:600;border-radius:12px;text-decoration:none">🚀 Ir para Marketing Visual & Imagens</a></section></main><script>
-const ordem=['✍️ Conteúdo & Posicionamento','🎯 Conversão & Copy','📖 Storytelling','🚀 Estratégia & Funis'];const prompts=[
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Marketing Texto & Campanhas | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;margin:20px 0;flex-wrap:wrap}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:10px;border:1px solid #e5e7eb}.top-bar select{padding:12px 10px;border-radius:10px;border:1px solid #e5e7eb;font-size:14px;background:#fff;cursor:pointer}.contador{font-size:14px;opacity:.75}.filtros-container{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}.filtro-botoes{display:flex;flex-wrap:wrap;gap:8px}.filtro-botoes button{padding:8px 15px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}.filtro-botoes button.ativo{background:#22c55e;color:#fff;border-color:#22c55e}.secao-categoria{background:#fff;border-radius:12px;padding:20px;margin-bottom:35px;border:1px solid #f1f5f9}.secao-titulo{font-size:22px;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}.grid-prompts{display:flex;flex-direction:column;gap:20px}pre{white-space:pre-wrap;font:14px inherit;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb}.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#f0fdf4;color:#15803d}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#f7fdf9}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#16a34a;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1;min-width:105px;border:0;border-radius:11px;padding:11px;font-weight:800;background:#f0fdf4;color:#16a34a;cursor:pointer}
+.acoes .favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes .compartilhar{background:#eef2ff;color:#4f46e5}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#f0fdf4;color:#16a34a;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #16a34a;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-botoes button,[data-theme="dark"] .toolbar-extra button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:720px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260806"></script><main>
+
+<h1>📣 Marketing Texto & Campanhas</h1>
+<p>Prompts estratégicos para criar campanhas, textos persuasivos, conteúdo de autoridade e estratégias de conversão.</p>
+
+<section class="card"><h3>🎯 Objetivo</h3><p>Ajudar você a transformar ideias, produtos e serviços em textos e campanhas mais claros, estratégicos e persuasivos.</p></section>
+<section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul><li><strong>✍️ Conteúdo:</strong> divulgação e posicionamento.</li><li><strong>🎯 Conversão:</strong> campanhas e copy de venda.</li><li><strong>📖 Storytelling:</strong> conexão através de histórias.</li><li><strong>🚀 Estratégia:</strong> funis, lançamentos e sequências.</li></ul></section>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" placeholder="🔎 Buscar modelo de marketing...">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <div id="contador" class="contador"></div>
+</div>
+
+<div class="filtros-container">
+  <div id="categorias" class="filtro-botoes filtro-categoria"></div>
+  <div class="filtro-botoes filtro-nivel"><button class="ativo" onclick="setNivel(event,'todos')">🌐 Todos os Níveis</button><button onclick="setNivel(event,'basico')">🟢 Básico</button><button onclick="setNivel(event,'intermediario')">🟡 Intermediário</button><button onclick="setNivel(event,'avancado')">🔴 Avançado</button></div>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo de texto/campanha que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+<section class="card" style="text-align:center;margin-top:40px"><h2>🎨 Precisa criar os criativos da campanha?</h2><p>Depois de estruturar seu texto e sua estratégia, avance para a criação de imagens, folders, banners e anúncios visuais.</p><a href="/delta-prompts/paginas/marketing-campanha.html" style="display:inline-block;margin-top:15px;padding:14px 28px;background:#5b5ce2;color:#fff;font-weight:600;border-radius:12px;text-decoration:none">🚀 Ir para Marketing Visual & Imagens</a></section>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const ordem=['✍️ Conteúdo & Posicionamento','🎯 Conversão & Copy','📖 Storytelling','🚀 Estratégia & Funis'];
+
+const dadosBrutos=[
 {c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📢 Post Simples de Divulgação',q:'Para divulgar produto ou serviço rapidamente.',p:`Crie um post simples e direto para divulgar:\n[PRODUTO OU SERVIÇO]\n\nPúblico: [PÚBLICO]\nCanal: [REDE OU CANAL]\n\nInclua:\n• Benefício principal\n• Diferencial relevante\n• Chamada para ação clara\n\nUse linguagem objetiva e não invente benefícios ou informações.`},
 {c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📝 Descrição Comercial Curta',q:'Para bio, WhatsApp ou anúncio rápido.',p:`Crie uma descrição comercial curta para:\n[PRODUTO, SERVIÇO OU NEGÓCIO]\n\nDestaque:\n• O que é oferecido\n• Principal benefício\n• Diferencial real\n• Chamada para ação, se fizer sentido\n\nCrie 3 versões com estilos diferentes.`},
 {c:'🎯 Conversão & Copy',n:'intermediario',t:'🚀 Campanha Direta de Venda',q:'Quando quiser uma campanha focada em conversão.',p:`Crie uma campanha de venda para:\n[PRODUTO OU SERVIÇO]\n\nPúblico: [PÚBLICO]\nOferta: [OFERTA]\nCanal: [CANAL]\n\nEstruture:\n• Gancho\n• Problema ou necessidade\n• Benefícios\n• Diferenciais\n• Provas reais disponíveis\n• Oferta\n• CTA\n\nNão invente prova social, urgência ou escassez.`},
@@ -12,5 +92,143 @@ const ordem=['✍️ Conteúdo & Posicionamento','🎯 Conversão & Copy','📖 
 {c:'📖 Storytelling',n:'intermediario',t:'🎭 Storytelling Estratégico com 3 Versões',q:'Para testar diferentes narrativas antes da oferta.',p:`Crie 3 abordagens de storytelling para promover:\n[PRODUTO]\n\nUse somente estes fatos reais como base:\n[FATOS]\n\nCrie:\n1. História de problema e transformação\n2. História de descoberta\n3. História centrada no cliente\n\nConecte cada narrativa naturalmente à oferta sem inventar acontecimentos.`},
 {c:'🚀 Estratégia & Funis',n:'avancado',t:'🔻 Funil Completo de Alta Conversão',q:'Para estruturar uma jornada completa de marketing.',p:`Crie um funil completo para:\n[PRODUTO]\n\nPúblico: [PÚBLICO]\nObjetivo: [OBJETIVO]\nOrçamento e canais: [CONTEXTO]\n\nOrganize em etapas de topo, meio e fundo. Para cada etapa defina:\n• Objetivo\n• Conteúdo ou ação\n• CTA\n• Canal\n• Métrica principal\n\nInclua oferta, recuperação de interessados e sugestões de testes.`},
 {c:'🚀 Estratégia & Funis',n:'avancado',t:'📲 Sequência Estratégica de WhatsApp',q:'Para conduzir uma conversa comercial até o próximo passo.',p:`Crie uma sequência de 5 mensagens de WhatsApp para:\n[PRODUTO OU SERVIÇO]\n\nPerfil do cliente: [PERFIL]\nEtapa atual: [ETAPA]\nObjetivo: [OBJETIVO]\nObjeções conhecidas: [OBJEÇÕES]\n\nCrie mensagens curtas e naturais, com progressão lógica. Inclua valor, resposta a objeções, oferta e CTA sem pressionar o cliente.`}
-];let nivel='todos',categoria='todas';const cats=document.getElementById('categorias'),lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador');cats.innerHTML='<button class="ativo" onclick="setCat(event,\'todas\')">🌐 Todas as Categorias</button>'+ordem.map(x=>`<button onclick="setCat(event,'${x}')">${x}</button>`).join('');function render(a){lista.innerHTML='';contador.textContent=`📚 Total: ${a.length} modelo${a.length!==1?'s':''}`;ordem.forEach(c=>{const g=a.filter(x=>x.c===c);if(!g.length)return;const s=document.createElement('section');s.className='secao-categoria';s.innerHTML=`<h2 class="secao-titulo">${c}</h2><div class="grid-prompts"></div>`;const grid=s.querySelector('.grid-prompts');g.forEach(x=>{const d=document.createElement('div');d.className='card';d.dataset.prompt=x.p;d.dataset.titulo=x.t;d.innerHTML=`<div class="nivel nivel-${x.n}">${x.n==='avancado'?'🔴 Avançado':x.n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}</div><h3>${x.t}</h3><p><strong>📌 Quando usar:</strong> ${x.q}</p><pre>${x.p}</pre><div class="acoes"><button onclick="copiar(this)">📋 Copiar</button><button onclick="favoritar(this)">⭐ Favoritar</button><button onclick="abrir(this,'chatgpt')">🤖 ChatGPT</button><button onclick="abrir(this,'gemini')">✨ Gemini</button></div>`;grid.appendChild(d)});lista.appendChild(s)})}function filtrar(){const q=busca.value.toLowerCase();render(prompts.filter(x=>(x.t+' '+x.c+' '+x.q+' '+x.p).toLowerCase().includes(q)&&(nivel==='todos'||x.n===nivel)&&(categoria==='todas'||x.c===categoria)))}function setCat(e,c){document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');categoria=c;filtrar()}function setNivel(e,n){document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');nivel=n;filtrar()}function card(b){return b.closest('.card')}function copiar(b){navigator.clipboard.writeText(card(b).dataset.prompt);alert('📋 Prompt copiado!')}function favoritar(b){const c=card(b),a=JSON.parse(localStorage.getItem('deltaPrompts'))||[];a.push({id:Date.now(),titulo:c.dataset.titulo,categoria:'Marketing Texto',conteudo:c.dataset.prompt,favorito:true});localStorage.setItem('deltaPrompts',JSON.stringify(a));alert('⭐ Adicionado aos favoritos!')}function abrir(b,ia){const p=encodeURIComponent(card(b).dataset.prompt);window.open(ia==='chatgpt'?'https://chat.openai.com/?prompt='+p:'https://gemini.google.com/app?prompt='+p,'_blank')}render(prompts);
+];
+
+const prompts=dadosBrutos.map((x,i)=>{
+  const obj={id:'mktxt-'+i,categoria:x.c,nivel:x.n,titulo:x.t,quando:x.q,prompt:x.p,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+let nivel='todos',categoria='todas';
+const cats=document.getElementById('categorias'),lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),ordenarSelect=document.getElementById('ordenar');
+cats.innerHTML='<button class="ativo" onclick="setCat(event,\'todas\')">🌐 Todas as Categorias</button>'+ordem.map(x=>`<button onclick="setCat(event,'${x}')">${x}</button>`).join('');
+
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+// ===== TOAST =====
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+// ===== FAVORITOS =====
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Marketing Texto',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+// ===== POPULARIDADE =====
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaMktTextoUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaMktTextoUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+// ===== CAMPOS EDITÁVEIS =====
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=p.prompt;(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+// ===== AÇÕES =====
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+
+// ===== COMPARTILHAR =====
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📣 '+p.titulo+'\n\nConfira esse modelo de marketing no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+// ===== RELACIONADOS / NAVEGAÇÃO =====
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){nivel='todos';categoria='todas';busca.value='';ordenarSelect.value='padrao';document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo',b.textContent.trim()==='🌐 Todos os Níveis'));document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.toggle('ativo',b.textContent.trim()==='🌐 Todas as Categorias'));filtrar();requestAnimationFrame(()=>destacarCard(id))}
+
+// ===== EXPORTAR =====
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📣 MARKETING TEXTO & CAMPANHAS — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-marketing-texto.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+// ===== SUGERIR =====
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de marketing para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+// ===== ESTATÍSTICAS =====
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Marketing Texto').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 📣 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+// ===== TEMA =====
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+// ===== ORDENAÇÃO =====
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+// ===== CARD =====
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionadas=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const d=document.createElement('div');
+  d.className='card';
+  d.id='card-'+p.id;
+  d.innerHTML=`
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre>${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+    </div>
+    ${relacionadas.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionadas.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,d.querySelector('.favoritar'));
+  return d;
+}
+
+function render(a){
+  lista.innerHTML='';
+  contador.textContent=`📚 Total: ${a.length} modelo${a.length!==1?'s':''}`;
+  if(ordenarSelect.value==='padrao'){
+    ordem.forEach(c=>{
+      const g=a.filter(x=>x.categoria===c);
+      if(!g.length)return;
+      const s=document.createElement('section');
+      s.className='secao-categoria';
+      s.innerHTML=`<h2 class="secao-titulo">${c}</h2><div class="grid-prompts"></div>`;
+      const grid=s.querySelector('.grid-prompts');
+      g.forEach(x=>grid.appendChild(criarCard(x)));
+      lista.appendChild(s);
+    });
+  }else{
+    a.forEach(x=>lista.appendChild(criarCard(x)));
+  }
+}
+
+function filtrar(){
+  const q=busca.value.toLowerCase();
+  let f=prompts.filter(x=>(x.titulo+' '+x.categoria+' '+x.quando+' '+x.prompt).toLowerCase().includes(q)&&(nivel==='todos'||x.nivel===nivel)&&(categoria==='todas'||x.categoria===categoria));
+  f=ordenarLista(f);
+  render(f);
+}
+function setCat(e,c){document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');categoria=c;filtrar()}
+function setNivel(e,n){document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');nivel=n;filtrar()}
+
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+});
+
+busca.addEventListener('input',filtrar);
+ordenarSelect.addEventListener('change',filtrar);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+filtrar();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
 </script></body></html>
