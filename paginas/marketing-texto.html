@@ -1,6 +1,17 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Marketing Texto & Campanhas | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;margin:20px 0;flex-wrap:wrap}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:10px;border:1px solid #e5e7eb}.top-bar select{padding:12px 10px;border-radius:10px;border:1px solid #e5e7eb;font-size:14px;background:#fff;cursor:pointer}.contador{font-size:14px;opacity:.75}.filtros-container{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}.filtro-botoes{display:flex;flex-wrap:wrap;gap:8px}.filtro-botoes button{padding:8px 15px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}.filtro-botoes button.ativo{background:#22c55e;color:#fff;border-color:#22c55e}.secao-categoria{background:#fff;border-radius:12px;padding:20px;margin-bottom:35px;border:1px solid #f1f5f9}.secao-titulo{font-size:22px;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}.grid-prompts{display:flex;flex-direction:column;gap:20px}pre{white-space:pre-wrap;font:14px inherit;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb}.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Marketing Texto & Campanhas | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;margin:20px 0;flex-wrap:wrap}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:10px;border:1px solid #e5e7eb}.top-bar select{padding:12px 10px;border-radius:10px;border:1px solid #e5e7eb;font-size:14px;background:#fff;cursor:pointer}.contador{font-size:14px;opacity:.75}.filtros-container{display:flex;flex-direction:column;gap:4px;margin-bottom:20px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:12px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtro-botoes{display:flex;flex-wrap:wrap;gap:8px}.filtro-botoes button{display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}.filtro-botoes button.ativo{background:#22c55e;color:#fff;border-color:#22c55e}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(22,163,74,.12);color:#16a34a}.filtro-botoes button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#16a34a;color:#fff;border-color:#16a34a}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#16a34a;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.secao-categoria{background:#fff;border-radius:12px;padding:20px;margin-bottom:35px;border:1px solid #f1f5f9}.secao-titulo{font-size:22px;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}.grid-prompts{display:flex;flex-direction:column;gap:20px}pre{white-space:pre-wrap;font:14px inherit;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb}.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
-.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.seg-badge{font-size:11px;font-weight:800;color:#0369a1;background:#e0f2fe;padding:4px 8px;border-radius:999px}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+.stats-bar .stats-detalhe{font-size:12px;font-weight:600;color:#8a92a6}
 .toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
 .toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
 .toolbar-extra button:hover{background:#f0fdf4;color:#15803d}
@@ -16,6 +27,12 @@
 .acoes button{flex:1;min-width:105px;border:0;border-radius:11px;padding:11px;font-weight:800;background:#f0fdf4;color:#16a34a;cursor:pointer}
 .acoes .favoritar.is-fav{background:#fff1f2;color:#be123c}
 .acoes .compartilhar{background:#eef2ff;color:#4f46e5}
+.acoes .idioma{background:#fef9c3;color:#854d0e}
+.acoes .idioma.ativo-en{background:#16a34a;color:#fff}
+.acoes .criar-imagem{background:#5b5ce2;color:#fff;flex-basis:100%}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#f0fdf4;border-color:#16a34a;color:#16a34a}
 .relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
 .relacionadas strong{color:#172033;display:block;margin-bottom:6px}
 .chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#f0fdf4;color:#16a34a;font-weight:700;font-size:12px;cursor:pointer;border:0}
@@ -24,12 +41,12 @@
 .toast.show{opacity:1;transform:translate(-50%,0)}
 [data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
-[data-theme="dark"] .filtro-botoes button,[data-theme="dark"] .toolbar-extra button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .filtro-botoes button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
 [data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
-[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{color:#a0a0a0}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .stats-bar .stats-detalhe,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
 [data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
 @media(max-width:720px){.theme-toggle{bottom:90px}}
-</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260809"></script><main>
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260810"></script><main>
 
 <h1>📣 Marketing Texto & Campanhas</h1>
 <p>Prompts estratégicos para criar campanhas, textos persuasivos, conteúdo de autoridade e estratégias de conversão.</p>
@@ -47,12 +64,18 @@
     <option value="recentes">🆕 Mais recentes</option>
     <option value="populares">🔥 Mais usados</option>
   </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
   <div id="contador" class="contador"></div>
 </div>
 
-<div class="filtros-container">
+<div class="filtros-container" id="filtrosContainer" style="display:none">
+  <div class="filtro-titulo">🧭 Segmento de negócio</div>
+  <div id="segmentos" class="filtro-botoes filtro-segmento"></div>
+  <div class="filtro-titulo">🗂️ Tipo de texto</div>
   <div id="categorias" class="filtro-botoes filtro-categoria"></div>
+  <div class="filtro-titulo">📊 Nível</div>
   <div class="filtro-botoes filtro-nivel"><button class="ativo" onclick="setNivel(event,'todos')">🌐 Todos os Níveis</button><button onclick="setNivel(event,'basico')">🟢 Básico</button><button onclick="setNivel(event,'intermediario')">🟡 Intermediário</button><button onclick="setNivel(event,'avancado')">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
 </div>
 
 <div class="toolbar-extra">
@@ -77,39 +100,51 @@
 <button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
 <script>
 
-const ordem=['✍️ Conteúdo & Posicionamento','🎯 Conversão & Copy','📖 Storytelling','🚀 Estratégia & Funis','💄 Beleza & Cosméticos'];
+const ordem=['✍️ Conteúdo & Posicionamento','🎯 Conversão & Copy','📖 Storytelling','🚀 Estratégia & Funis'];
+const ordemSegmentos=['🌐 Geral','💄 Beleza & Cosméticos'];
 
 const dadosBrutos=[
-{c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📢 Post Simples de Divulgação',q:'Para divulgar produto ou serviço rapidamente.',p:`Crie um post simples e direto para divulgar:\n[PRODUTO OU SERVIÇO]\n\nPúblico: [PÚBLICO]\nCanal: [REDE OU CANAL]\n\nInclua:\n• Benefício principal\n• Diferencial relevante\n• Chamada para ação clara\n\nUse linguagem objetiva e não invente benefícios ou informações.`},
-{c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📝 Descrição Comercial Curta',q:'Para bio, WhatsApp ou anúncio rápido.',p:`Crie uma descrição comercial curta para:\n[PRODUTO, SERVIÇO OU NEGÓCIO]\n\nDestaque:\n• O que é oferecido\n• Principal benefício\n• Diferencial real\n• Chamada para ação, se fizer sentido\n\nCrie 3 versões com estilos diferentes.`},
-{c:'🎯 Conversão & Copy',n:'intermediario',t:'🚀 Campanha Direta de Venda',q:'Quando quiser uma campanha focada em conversão.',p:`Crie uma campanha de venda para:\n[PRODUTO OU SERVIÇO]\n\nPúblico: [PÚBLICO]\nOferta: [OFERTA]\nCanal: [CANAL]\n\nEstruture:\n• Gancho\n• Problema ou necessidade\n• Benefícios\n• Diferenciais\n• Provas reais disponíveis\n• Oferta\n• CTA\n\nNão invente prova social, urgência ou escassez.`},
-{c:'📖 Storytelling',n:'intermediario',t:'📖 Storytelling Persuasivo',q:'Para gerar conexão antes de apresentar uma oferta.',p:`Crie um storytelling para promover:\n[PRODUTO OU SERVIÇO]\n\nContexto real da história: [CONTEXTO]\n\nEstruture:\n• Situação inicial\n• Problema ou conflito\n• Descoberta\n• Transformação\n• Conexão natural com a solução\n• Chamada para ação\n\nPreserve os fatos fornecidos e não invente depoimentos.`},
-{c:'✍️ Conteúdo & Posicionamento',n:'intermediario',t:'🏆 Posicionamento de Autoridade',q:'Para fortalecer a imagem profissional.',p:`Crie um texto de posicionamento profissional sobre:\n[TEMA]\n\nMinha experiência real: [EXPERIÊNCIA]\nMeu diferencial: [DIFERENCIAL]\nPúblico: [PÚBLICO]\n\nInclua uma visão clara, aprendizados práticos e uma conclusão marcante sem exagerar credenciais ou resultados.`},
-{c:'🎯 Conversão & Copy',n:'avancado',t:'🎬 Estrutura de VSL',q:'Para criar um roteiro estruturado de vídeo de vendas.',p:`Crie um roteiro de VSL para:\n[PRODUTO OU SERVIÇO]\n\nPúblico: [PÚBLICO]\nOferta: [OFERTA]\nProvas disponíveis: [PROVAS REAIS]\n\nEstruture:\n• Gancho inicial\n• Problema\n• Nova perspectiva\n• Apresentação da solução\n• Benefícios\n• Provas\n• Oferta\n• Garantia, somente se existir\n• CTA\n\nNão invente resultados, garantias ou escassez.`},
-{c:'🚀 Estratégia & Funis',n:'avancado',t:'🚀 Funil de Lançamento Estratégico',q:'Para estruturar um lançamento completo.',p:`Crie um plano de lançamento para:\n[PRODUTO]\n\nPúblico: [PÚBLICO]\nObjetivo: [OBJETIVO]\nCanais disponíveis: [CANAIS]\n\nOrganize em:\n• Aquecimento\n• Conteúdo pré-lançamento\n• Captação\n• Oferta principal\n• Sequência de mensagens ou e-mails\n• Fechamento\n• Pós-lançamento\n\nInclua métricas para acompanhar cada etapa.`},
-{c:'🎯 Conversão & Copy',n:'avancado',t:'🔍 Análise e Melhoria de Copy',q:'Para otimizar um texto de venda existente.',p:`Analise esta copy:\n[COPY]\n\nAvalie:\n• Clareza\n• Gancho\n• Proposta de valor\n• Benefícios\n• Credibilidade\n• Objeções\n• CTA\n• Fricções\n\nMostre os principais problemas, explique por que prejudicam a conversão e apresente uma versão melhorada preservando apenas informações verdadeiras.`},
-{c:'🎯 Conversão & Copy',n:'intermediario',t:'🧪 Campanha Direta com 3 Variações',q:'Para testar diferentes abordagens de uma mesma oferta.',p:`Crie 3 versões realmente diferentes de uma campanha para:\n[PRODUTO]\n\nPúblico: [PÚBLICO]\nBenefício principal: [BENEFÍCIO]\nOferta: [OFERTA]\n\nVersão 1: foco no benefício\nVersão 2: foco no problema\nVersão 3: foco na oportunidade\n\nCada versão deve ter gancho, desenvolvimento e CTA. Use urgência apenas se for verdadeira.`},
-{c:'📖 Storytelling',n:'intermediario',t:'🎭 Storytelling Estratégico com 3 Versões',q:'Para testar diferentes narrativas antes da oferta.',p:`Crie 3 abordagens de storytelling para promover:\n[PRODUTO]\n\nUse somente estes fatos reais como base:\n[FATOS]\n\nCrie:\n1. História de problema e transformação\n2. História de descoberta\n3. História centrada no cliente\n\nConecte cada narrativa naturalmente à oferta sem inventar acontecimentos.`},
-{c:'🚀 Estratégia & Funis',n:'avancado',t:'🔻 Funil Completo de Alta Conversão',q:'Para estruturar uma jornada completa de marketing.',p:`Crie um funil completo para:\n[PRODUTO]\n\nPúblico: [PÚBLICO]\nObjetivo: [OBJETIVO]\nOrçamento e canais: [CONTEXTO]\n\nOrganize em etapas de topo, meio e fundo. Para cada etapa defina:\n• Objetivo\n• Conteúdo ou ação\n• CTA\n• Canal\n• Métrica principal\n\nInclua oferta, recuperação de interessados e sugestões de testes.`},
-{c:'🚀 Estratégia & Funis',n:'avancado',t:'📲 Sequência Estratégica de WhatsApp',q:'Para conduzir uma conversa comercial até o próximo passo.',p:`Crie uma sequência de 5 mensagens de WhatsApp para:\n[PRODUTO OU SERVIÇO]\n\nPerfil do cliente: [PERFIL]\nEtapa atual: [ETAPA]\nObjetivo: [OBJETIVO]\nObjeções conhecidas: [OBJEÇÕES]\n\nCrie mensagens curtas e naturais, com progressão lógica. Inclua valor, resposta a objeções, oferta e CTA sem pressionar o cliente.`},
-{c:'💄 Beleza & Cosméticos',n:'basico',t:'📝 Descrição de Produto de Beleza',q:'Para escrever a descrição de shampoo, perfume, maquiagem ou creme na loja online.',p:`Crie uma descrição de produto persuasiva para:\n[PRODUTO: SHAMPOO, CONDICIONADOR, PERFUME, MAQUIAGEM OU CREME]\n\nInclua:\n• Principais benefícios\n• Para quem é indicado\n• Modo de uso resumido\n• Fechamento que incentive a compra\n\nUse linguagem sensorial (cheiro, textura, sensação) quando fizer sentido. Não invente resultados clínicos ou promessas que o produto não comprove.`},
-{c:'💄 Beleza & Cosméticos',n:'basico',t:'💬 Legenda de Lançamento de Produto',q:'Para anunciar um novo produto de beleza nas redes sociais.',p:`Crie 3 versões de legenda para o lançamento de:\n[NOVO PRODUTO DE BELEZA]\n\nPúblico: [PÚBLICO]\n\nUse um gancho que gere curiosidade, destaque o diferencial do produto e feche com uma chamada para ação (ex: "já está disponível", "garanta o seu"). Evite exageros e promessas não comprovadas.`},
-{c:'💄 Beleza & Cosméticos',n:'intermediario',t:'🎁 Campanha de Kit Promocional',q:'Para divulgar um combo de produtos de beleza (ex: shampoo + condicionador + creme).',p:`Crie uma campanha para divulgar o kit:\n[PRODUTOS DO KIT, EX: SHAMPOO + CONDICIONADOR + CREME]\n\nPúblico: [PÚBLICO]\n\nEstruture em:\n• Gancho\n• Vantagem de comprar o kit (economia, praticidade)\n• Benefícios de cada produto\n• Chamada para ação\n\nGere uma versão curta para Instagram e outra mais detalhada para WhatsApp.`},
-{c:'💄 Beleza & Cosméticos',n:'intermediario',t:'📖 Storytelling de Transformação',q:'Para criar conexão emocional com base num resultado real de uso.',p:`Crie um storytelling para:\n[PRODUTO DE BELEZA]\n\nContexto real disponível: [CONTEXTO OU RELATO DO CLIENTE]\n\nEstruture em:\n• Situação inicial (ex: cabelo ressecado, pele sensível)\n• Desafio\n• Descoberta do produto\n• Resultado\n• Conexão natural com a oferta\n\nUse apenas fatos reais fornecidos, sem inventar depoimentos.`},
-{c:'💄 Beleza & Cosméticos',n:'intermediario',t:'📲 WhatsApp para Recompra e Cross-sell',q:'Para reengajar uma cliente que já comprou e sugerir um produto complementar.',p:`Crie uma sequência de 4 mensagens de WhatsApp para reengajar uma cliente que já comprou:\n[PRODUTO OU CATEGORIA, EX: PERFUME, LINHA CAPILAR]\n\nOrganize em:\n• Mensagem de acompanhamento\n• Dica de uso do produto\n• Sugestão de produto complementar (ex: quem comprou shampoo pode gostar do condicionador da mesma linha)\n• Oferta especial de recompra\n\nTom acolhedor, sem parecer insistente.`},
-{c:'💄 Beleza & Cosméticos',n:'basico',t:'🏷️ Campanha para Data Comemorativa',q:'Para divulgar produtos de beleza em datas como Dia das Mães ou Black Friday.',p:`Crie uma campanha de texto para a data:\n[DATA COMEMORATIVA]\n\nDivulgando: [PRODUTOS DE BELEZA]\nPúblico: [PÚBLICO]\n\nInclua:\n• Gancho relacionado à data\n• Oferta especial\n• Senso de urgência real, com prazo verdadeiro\n• Chamada para ação\n\nEvite criar urgência falsa ou prazos inventados.`},
-{c:'💄 Beleza & Cosméticos',n:'avancado',t:'⭐ Posicionamento da Marca de Cosméticos',q:'Para deixar mais clara a identidade da sua marca ou loja de beleza.',p:`Ajude a definir o posicionamento da marca de cosméticos:\n[NOME DA MARCA/LOJA]\n\nUsando estas informações: [CONTEXTO, EX: PRODUTOS PRÓPRIOS OU REVENDA, PÚBLICO-ALVO, DIFERENCIAL]\n\nOrganize em:\n• Público prioritário\n• Problema que a marca resolve\n• Proposta de valor\n• Diferenciais reais\n• Tom de comunicação\n• Mensagens-chave\n\nFaça perguntas quando faltarem informações essenciais.`}
+{seg:'🌐 Geral',c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📢 Post Simples de Divulgação',q:'Para divulgar produto ou serviço rapidamente.',p:`Crie um post simples e direto para divulgar:\n[PRODUTO OU SERVIÇO]\n\nPúblico: [PÚBLICO]\nCanal: [REDE OU CANAL]\n\nInclua:\n• Benefício principal\n• Diferencial relevante\n• Chamada para ação clara\n\nUse linguagem objetiva e não invente benefícios ou informações.`,en:`Create a simple, direct post to promote:\n[PRODUCT OR SERVICE]\n\nAudience: [AUDIENCE]\nChannel: [NETWORK OR CHANNEL]\n\nInclude:\n• Main benefit\n• Relevant differentiator\n• Clear call to action\n\nUse objective language and do not invent benefits or information.`},
+{seg:'🌐 Geral',c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📝 Descrição Comercial Curta',q:'Para bio, WhatsApp ou anúncio rápido.',p:`Crie uma descrição comercial curta para:\n[PRODUTO, SERVIÇO OU NEGÓCIO]\n\nDestaque:\n• O que é oferecido\n• Principal benefício\n• Diferencial real\n• Chamada para ação, se fizer sentido\n\nCrie 3 versões com estilos diferentes.`,en:`Create a short commercial description for:\n[PRODUCT, SERVICE OR BUSINESS]\n\nHighlight:\n• What is offered\n• Main benefit\n• Real differentiator\n• Call to action, if it makes sense\n\nCreate 3 versions with different styles.`},
+{seg:'🌐 Geral',c:'🎯 Conversão & Copy',n:'intermediario',t:'🚀 Campanha Direta de Venda',q:'Quando quiser uma campanha focada em conversão.',p:`Crie uma campanha de venda para:\n[PRODUTO OU SERVIÇO]\n\nPúblico: [PÚBLICO]\nOferta: [OFERTA]\nCanal: [CANAL]\n\nEstruture:\n• Gancho\n• Problema ou necessidade\n• Benefícios\n• Diferenciais\n• Provas reais disponíveis\n• Oferta\n• CTA\n\nNão invente prova social, urgência ou escassez.`,en:`Create a sales campaign for:\n[PRODUCT OR SERVICE]\n\nAudience: [AUDIENCE]\nOffer: [OFFER]\nChannel: [CHANNEL]\n\nStructure:\n• Hook\n• Problem or need\n• Benefits\n• Differentiators\n• Available real proof\n• Offer\n• CTA\n\nDo not invent social proof, urgency, or scarcity.`},
+{seg:'🌐 Geral',c:'📖 Storytelling',n:'intermediario',t:'📖 Storytelling Persuasivo',q:'Para gerar conexão antes de apresentar uma oferta.',p:`Crie um storytelling para promover:\n[PRODUTO OU SERVIÇO]\n\nContexto real da história: [CONTEXTO]\n\nEstruture:\n• Situação inicial\n• Problema ou conflito\n• Descoberta\n• Transformação\n• Conexão natural com a solução\n• Chamada para ação\n\nPreserve os fatos fornecidos e não invente depoimentos.`,en:`Create a storytelling piece to promote:\n[PRODUCT OR SERVICE]\n\nReal context of the story: [CONTEXT]\n\nStructure:\n• Initial situation\n• Problem or conflict\n• Discovery\n• Transformation\n• Natural connection to the solution\n• Call to action\n\nPreserve the facts provided and do not invent testimonials.`},
+{seg:'🌐 Geral',c:'✍️ Conteúdo & Posicionamento',n:'intermediario',t:'🏆 Posicionamento de Autoridade',q:'Para fortalecer a imagem profissional.',p:`Crie um texto de posicionamento profissional sobre:\n[TEMA]\n\nMinha experiência real: [EXPERIÊNCIA]\nMeu diferencial: [DIFERENCIAL]\nPúblico: [PÚBLICO]\n\nInclua uma visão clara, aprendizados práticos e uma conclusão marcante sem exagerar credenciais ou resultados.`,en:`Create a professional positioning text about:\n[TOPIC]\n\nMy real experience: [EXPERIENCE]\nMy differentiator: [DIFFERENTIATOR]\nAudience: [AUDIENCE]\n\nInclude a clear point of view, practical lessons, and a strong conclusion without exaggerating credentials or results.`},
+{seg:'🌐 Geral',c:'🎯 Conversão & Copy',n:'avancado',t:'🎬 Estrutura de VSL',q:'Para criar um roteiro estruturado de vídeo de vendas.',p:`Crie um roteiro de VSL para:\n[PRODUTO OU SERVIÇO]\n\nPúblico: [PÚBLICO]\nOferta: [OFERTA]\nProvas disponíveis: [PROVAS REAIS]\n\nEstruture:\n• Gancho inicial\n• Problema\n• Nova perspectiva\n• Apresentação da solução\n• Benefícios\n• Provas\n• Oferta\n• Garantia, somente se existir\n• CTA\n\nNão invente resultados, garantias ou escassez.`,en:`Create a VSL (video sales letter) script for:\n[PRODUCT OR SERVICE]\n\nAudience: [AUDIENCE]\nOffer: [OFFER]\nAvailable proof: [REAL PROOF]\n\nStructure:\n• Opening hook\n• Problem\n• New perspective\n• Solution presentation\n• Benefits\n• Proof\n• Offer\n• Guarantee, only if it exists\n• CTA\n\nDo not invent results, guarantees, or scarcity.`},
+{seg:'🌐 Geral',c:'🚀 Estratégia & Funis',n:'avancado',t:'🚀 Funil de Lançamento Estratégico',q:'Para estruturar um lançamento completo.',p:`Crie um plano de lançamento para:\n[PRODUTO]\n\nPúblico: [PÚBLICO]\nObjetivo: [OBJETIVO]\nCanais disponíveis: [CANAIS]\n\nOrganize em:\n• Aquecimento\n• Conteúdo pré-lançamento\n• Captação\n• Oferta principal\n• Sequência de mensagens ou e-mails\n• Fechamento\n• Pós-lançamento\n\nInclua métricas para acompanhar cada etapa.`,en:`Create a launch plan for:\n[PRODUCT]\n\nAudience: [AUDIENCE]\nGoal: [GOAL]\nAvailable channels: [CHANNELS]\n\nOrganize into:\n• Warm-up\n• Pre-launch content\n• Lead capture\n• Main offer\n• Message or email sequence\n• Closing\n• Post-launch\n\nInclude metrics to track each stage.`},
+{seg:'🌐 Geral',c:'🎯 Conversão & Copy',n:'avancado',t:'🔍 Análise e Melhoria de Copy',q:'Para otimizar um texto de venda existente.',p:`Analise esta copy:\n[COPY]\n\nAvalie:\n• Clareza\n• Gancho\n• Proposta de valor\n• Benefícios\n• Credibilidade\n• Objeções\n• CTA\n• Fricções\n\nMostre os principais problemas, explique por que prejudicam a conversão e apresente uma versão melhorada preservando apenas informações verdadeiras.`,en:`Analyze this copy:\n[COPY]\n\nEvaluate:\n• Clarity\n• Hook\n• Value proposition\n• Benefits\n• Credibility\n• Objections\n• CTA\n• Friction points\n\nShow the main problems, explain why they hurt conversion, and present an improved version keeping only true information.`},
+{seg:'🌐 Geral',c:'🎯 Conversão & Copy',n:'intermediario',t:'🧪 Campanha Direta com 3 Variações',q:'Para testar diferentes abordagens de uma mesma oferta.',p:`Crie 3 versões realmente diferentes de uma campanha para:\n[PRODUTO]\n\nPúblico: [PÚBLICO]\nBenefício principal: [BENEFÍCIO]\nOferta: [OFERTA]\n\nVersão 1: foco no benefício\nVersão 2: foco no problema\nVersão 3: foco na oportunidade\n\nCada versão deve ter gancho, desenvolvimento e CTA. Use urgência apenas se for verdadeira.`,en:`Create 3 truly different versions of a campaign for:\n[PRODUCT]\n\nAudience: [AUDIENCE]\nMain benefit: [BENEFIT]\nOffer: [OFFER]\n\nVersion 1: focus on the benefit\nVersion 2: focus on the problem\nVersion 3: focus on the opportunity\n\nEach version should have a hook, development, and CTA. Use urgency only if it's real.`},
+{seg:'🌐 Geral',c:'📖 Storytelling',n:'intermediario',t:'🎭 Storytelling Estratégico com 3 Versões',q:'Para testar diferentes narrativas antes da oferta.',p:`Crie 3 abordagens de storytelling para promover:\n[PRODUTO]\n\nUse somente estes fatos reais como base:\n[FATOS]\n\nCrie:\n1. História de problema e transformação\n2. História de descoberta\n3. História centrada no cliente\n\nConecte cada narrativa naturalmente à oferta sem inventar acontecimentos.`,en:`Create 3 storytelling approaches to promote:\n[PRODUCT]\n\nUse only these real facts as a base:\n[FACTS]\n\nCreate:\n1. Problem-and-transformation story\n2. Discovery story\n3. Customer-centered story\n\nConnect each narrative naturally to the offer without inventing events.`},
+{seg:'🌐 Geral',c:'🚀 Estratégia & Funis',n:'avancado',t:'🔻 Funil Completo de Alta Conversão',q:'Para estruturar uma jornada completa de marketing.',p:`Crie um funil completo para:\n[PRODUTO]\n\nPúblico: [PÚBLICO]\nObjetivo: [OBJETIVO]\nOrçamento e canais: [CONTEXTO]\n\nOrganize em etapas de topo, meio e fundo. Para cada etapa defina:\n• Objetivo\n• Conteúdo ou ação\n• CTA\n• Canal\n• Métrica principal\n\nInclua oferta, recuperação de interessados e sugestões de testes.`,en:`Create a complete funnel for:\n[PRODUCT]\n\nAudience: [AUDIENCE]\nGoal: [GOAL]\nBudget and channels: [CONTEXT]\n\nOrganize into top, middle, and bottom stages. For each stage define:\n• Goal\n• Content or action\n• CTA\n• Channel\n• Main metric\n\nInclude offer, lead recovery, and testing suggestions.`},
+{seg:'🌐 Geral',c:'🚀 Estratégia & Funis',n:'avancado',t:'📲 Sequência Estratégica de WhatsApp',q:'Para conduzir uma conversa comercial até o próximo passo.',p:`Crie uma sequência de 5 mensagens de WhatsApp para:\n[PRODUTO OU SERVIÇO]\n\nPerfil do cliente: [PERFIL]\nEtapa atual: [ETAPA]\nObjetivo: [OBJETIVO]\nObjeções conhecidas: [OBJEÇÕES]\n\nCrie mensagens curtas e naturais, com progressão lógica. Inclua valor, resposta a objeções, oferta e CTA sem pressionar o cliente.`,en:`Create a sequence of 5 WhatsApp messages for:\n[PRODUCT OR SERVICE]\n\nCustomer profile: [PROFILE]\nCurrent stage: [STAGE]\nGoal: [GOAL]\nKnown objections: [OBJECTIONS]\n\nCreate short, natural messages with a logical progression. Include value, objection handling, offer, and CTA without pressuring the customer.`},
+{seg:'💄 Beleza & Cosméticos',c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📝 Descrição de Produto de Beleza',q:'Para escrever a descrição de shampoo, perfume, maquiagem ou creme na loja online.',p:`Crie uma descrição de produto persuasiva para:\n[PRODUTO: SHAMPOO, CONDICIONADOR, PERFUME, MAQUIAGEM OU CREME]\n\nInclua:\n• Principais benefícios\n• Para quem é indicado\n• Modo de uso resumido\n• Fechamento que incentive a compra\n\nUse linguagem sensorial (cheiro, textura, sensação) quando fizer sentido. Não invente resultados clínicos ou promessas que o produto não comprove.`,en:`Create a persuasive product description for:\n[PRODUCT: SHAMPOO, CONDITIONER, PERFUME, MAKEUP OR CREAM]\n\nInclude:\n• Main benefits\n• Who it's recommended for\n• Brief usage instructions\n• Closing that encourages the purchase\n\nUse sensory language (scent, texture, feel) when it makes sense. Do not invent clinical results or promises the product can't back up.`},
+{seg:'💄 Beleza & Cosméticos',c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'💬 Legenda de Lançamento de Produto',q:'Para anunciar um novo produto de beleza nas redes sociais.',p:`Crie 3 versões de legenda para o lançamento de:\n[NOVO PRODUTO DE BELEZA]\n\nPúblico: [PÚBLICO]\n\nUse um gancho que gere curiosidade, destaque o diferencial do produto e feche com uma chamada para ação (ex: "já está disponível", "garanta o seu"). Evite exageros e promessas não comprovadas.`,en:`Create 3 caption versions for the launch of:\n[NEW BEAUTY PRODUCT]\n\nAudience: [AUDIENCE]\n\nUse a hook that sparks curiosity, highlight the product's differentiator, and close with a call to action (e.g., "now available", "get yours"). Avoid exaggeration and unproven claims.`},
+{seg:'💄 Beleza & Cosméticos',c:'🎯 Conversão & Copy',n:'intermediario',t:'🎁 Campanha de Kit Promocional',q:'Para divulgar um combo de produtos de beleza (ex: shampoo + condicionador + creme).',p:`Crie uma campanha para divulgar o kit:\n[PRODUTOS DO KIT, EX: SHAMPOO + CONDICIONADOR + CREME]\n\nPúblico: [PÚBLICO]\n\nEstruture em:\n• Gancho\n• Vantagem de comprar o kit (economia, praticidade)\n• Benefícios de cada produto\n• Chamada para ação\n\nGere uma versão curta para Instagram e outra mais detalhada para WhatsApp.`,en:`Create a campaign to promote the kit:\n[KIT PRODUCTS, E.G., SHAMPOO + CONDITIONER + CREAM]\n\nAudience: [AUDIENCE]\n\nStructure into:\n• Hook\n• Advantage of buying the kit (savings, convenience)\n• Benefits of each product\n• Call to action\n\nGenerate a short version for Instagram and a more detailed one for WhatsApp.`},
+{seg:'💄 Beleza & Cosméticos',c:'📖 Storytelling',n:'intermediario',t:'📖 Storytelling de Transformação',q:'Para criar conexão emocional com base num resultado real de uso.',p:`Crie um storytelling para:\n[PRODUTO DE BELEZA]\n\nContexto real disponível: [CONTEXTO OU RELATO DO CLIENTE]\n\nEstruture em:\n• Situação inicial (ex: cabelo ressecado, pele sensível)\n• Desafio\n• Descoberta do produto\n• Resultado\n• Conexão natural com a oferta\n\nUse apenas fatos reais fornecidos, sem inventar depoimentos.`,en:`Create a storytelling piece for:\n[BEAUTY PRODUCT]\n\nReal context available: [CONTEXT OR CUSTOMER ACCOUNT]\n\nStructure into:\n• Initial situation (e.g., dry hair, sensitive skin)\n• Challenge\n• Product discovery\n• Result\n• Natural connection to the offer\n\nUse only real facts provided, without inventing testimonials.`},
+{seg:'💄 Beleza & Cosméticos',c:'🚀 Estratégia & Funis',n:'intermediario',t:'📲 WhatsApp para Recompra e Cross-sell',q:'Para reengajar uma cliente que já comprou e sugerir um produto complementar.',p:`Crie uma sequência de 4 mensagens de WhatsApp para reengajar uma cliente que já comprou:\n[PRODUTO OU CATEGORIA, EX: PERFUME, LINHA CAPILAR]\n\nOrganize em:\n• Mensagem de acompanhamento\n• Dica de uso do produto\n• Sugestão de produto complementar (ex: quem comprou shampoo pode gostar do condicionador da mesma linha)\n• Oferta especial de recompra\n\nTom acolhedor, sem parecer insistente.`,en:`Create a sequence of 4 WhatsApp messages to re-engage a customer who already bought:\n[PRODUCT OR CATEGORY, E.G., PERFUME, HAIR CARE LINE]\n\nOrganize into:\n• Follow-up message\n• Product usage tip\n• Complementary product suggestion (e.g., someone who bought shampoo might like the conditioner from the same line)\n• Special repurchase offer\n\nWelcoming tone, without sounding pushy.`},
+{seg:'💄 Beleza & Cosméticos',c:'🎯 Conversão & Copy',n:'basico',t:'🏷️ Campanha para Data Comemorativa',q:'Para divulgar produtos de beleza em datas como Dia das Mães ou Black Friday.',p:`Crie uma campanha de texto para a data:\n[DATA COMEMORATIVA]\n\nDivulgando: [PRODUTOS DE BELEZA]\nPúblico: [PÚBLICO]\n\nInclua:\n• Gancho relacionado à data\n• Oferta especial\n• Senso de urgência real, com prazo verdadeiro\n• Chamada para ação\n\nEvite criar urgência falsa ou prazos inventados.`,en:`Create a text campaign for the date:\n[HOLIDAY OR OCCASION]\n\nPromoting: [BEAUTY PRODUCTS]\nAudience: [AUDIENCE]\n\nInclude:\n• Hook related to the date\n• Special offer\n• Real sense of urgency, with a true deadline\n• Call to action\n\nAvoid creating false urgency or made-up deadlines.`},
+{seg:'💄 Beleza & Cosméticos',c:'✍️ Conteúdo & Posicionamento',n:'avancado',t:'⭐ Posicionamento da Marca de Cosméticos',q:'Para deixar mais clara a identidade da sua marca ou loja de beleza.',p:`Ajude a definir o posicionamento da marca de cosméticos:\n[NOME DA MARCA/LOJA]\n\nUsando estas informações: [CONTEXTO, EX: PRODUTOS PRÓPRIOS OU REVENDA, PÚBLICO-ALVO, DIFERENCIAL]\n\nOrganize em:\n• Público prioritário\n• Problema que a marca resolve\n• Proposta de valor\n• Diferenciais reais\n• Tom de comunicação\n• Mensagens-chave\n\nFaça perguntas quando faltarem informações essenciais.`,en:`Help define the positioning of the cosmetics brand:\n[BRAND/STORE NAME]\n\nUsing this information: [CONTEXT, E.G., OWN PRODUCTS OR RESALE, TARGET AUDIENCE, DIFFERENTIATOR]\n\nOrganize into:\n• Priority audience\n• Problem the brand solves\n• Value proposition\n• Real differentiators\n• Communication tone\n• Key messages\n\nAsk questions when essential information is missing.`}
 ];
 
 const prompts=dadosBrutos.map((x,i)=>{
-  const obj={id:'mktxt-'+i,categoria:x.c,nivel:x.n,titulo:x.t,quando:x.q,prompt:x.p,novo:i===0||i>=12};
+  const obj={id:'mktxt-'+i,segmento:x.seg,categoria:x.c,nivel:x.n,titulo:x.t,quando:x.q,prompt:x.p,promptEn:x.en,novo:i===0||i>=12};
   obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
   return obj;
 });
 
-let nivel='todos',categoria='todas';
-const cats=document.getElementById('categorias'),lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),ordenarSelect=document.getElementById('ordenar');
-cats.innerHTML='<button class="ativo" onclick="setCat(event,\'todas\')">🌐 Todas as Categorias</button>'+ordem.map(x=>`<button onclick="setCat(event,'${x}')">${x}</button>`).join('');
+let nivel='todos',categoria='todas',segmentoAtivo='todos';
+const idiomaAtivo={};
+const segs=document.getElementById('segmentos'),cats=document.getElementById('categorias'),lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),ordenarSelect=document.getElementById('ordenar');
+
+function montarFiltroSegmento(){
+  const total=prompts.length;
+  segs.innerHTML='<button class="'+(segmentoAtivo==='todos'?'ativo':'')+'" onclick="setSeg(event,\'todos\')">🌎 Todos <span class="count-badge">'+total+'</span></button>'+
+    ordemSegmentos.map(s=>{const n=prompts.filter(p=>p.segmento===s).length;return `<button class="${segmentoAtivo===s?'ativo':''}" onclick="setSeg(event,'${s}')">${s} <span class="count-badge">${n}</span></button>`}).join('');
+}
+function montarFiltroCategoria(){
+  const base=segmentoAtivo==='todos'?prompts:prompts.filter(p=>p.segmento===segmentoAtivo);
+  cats.innerHTML='<button class="'+(categoria==='todas'?'ativo':'')+'" onclick="setCat(event,\'todas\')">🗂️ Todos os Tipos <span class="count-badge">'+base.length+'</span></button>'+
+    ordem.map(x=>{const n=base.filter(p=>p.categoria===x).length;if(n===0)return'';return `<button class="${categoria===x?'ativo':''}" onclick="setCat(event,'${x}')">${x} <span class="count-badge">${n}</span></button>`}).join('');
+}
 
 function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
 function getItem(id){return prompts.find(p=>p.id===id)}
@@ -122,15 +157,42 @@ function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos')
 function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
 function isFav(id){return _loadFav().some(f=>f.id===id)}
 function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
-function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Marketing Texto',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Marketing Texto',segmento:p.segmento,createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
 
 // ===== POPULARIDADE =====
 function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaMktTextoUsos'))||{}}catch(e){return{}}}
 function _saveUsos(o){try{localStorage.setItem('deltaMktTextoUsos',JSON.stringify(o))}catch(e){}}
 function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
 
+// ===== FEEDBACK =====
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaMktTextoFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaMktTextoFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;
+  if(!fb[id])fb[id]={up:0,down:0,voto:null};
+  if(atual===tipo){fb[id][tipo]=Math.max(0,fb[id][tipo]-1);fb[id].voto=null}
+  else{if(atual)fb[id][atual]=Math.max(0,fb[id][atual]-1);fb[id][tipo]=(fb[id][tipo]||0)+1;fb[id].voto=tipo}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{up:0,down:0,voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up){up.textContent='👍 '+fb.up;up.classList.toggle('marcado',fb.voto==='up')}
+  if(down){down.textContent='👎 '+fb.down;down.classList.toggle('marcado',fb.voto==='down')}
+}
+
+// ===== IDIOMA =====
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){
+  idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';
+  const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);
+  if(pre)pre.textContent=textoBase(id);
+  if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}
+}
+
 // ===== CAMPOS EDITÁVEIS =====
-function textoFinal(id){const p=getItem(id);if(!p)return'';let t=p.prompt;(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
 
 // ===== AÇÕES =====
 async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
@@ -140,19 +202,29 @@ async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)
 // ===== COMPARTILHAR =====
 function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📣 '+p.titulo+'\n\nConfira esse modelo de marketing no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
 
+// ===== IR CRIAR IMAGEM =====
+function criarImagem(id){const p=getItem(id);if(!p)return;mostrarToast('🎨 Abrindo Marketing Visual...');setTimeout(()=>window.open('/delta-prompts/paginas/marketing-campanha.html','_blank'),300)}
+
 // ===== RELACIONADOS / NAVEGAÇÃO =====
 function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
-function irPara(id){nivel='todos';categoria='todas';busca.value='';ordenarSelect.value='padrao';document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo',b.textContent.trim()==='🌐 Todos os Níveis'));document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.toggle('ativo',b.textContent.trim()==='🌐 Todas as Categorias'));filtrar();requestAnimationFrame(()=>destacarCard(id))}
+function irPara(id){nivel='todos';categoria='todas';segmentoAtivo='todos';busca.value='';ordenarSelect.value='padrao';document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo',b.textContent.trim()==='🌐 Todos os Níveis'));montarFiltroSegmento();montarFiltroCategoria();filtrar();requestAnimationFrame(()=>destacarCard(id))}
 
 // ===== EXPORTAR =====
-function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📣 MARKETING TEXTO & CAMPANHAS — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-marketing-texto.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nSegmento: '+p.segmento+' | Tipo: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📣 MARKETING TEXTO & CAMPANHAS — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-marketing-texto.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
 
 // ===== SUGERIR =====
 function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
 function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de marketing para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
 
 // ===== ESTATÍSTICAS =====
-function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Marketing Texto').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 📣 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+function atualizarStats(){
+  const favs=_loadFav().filter(f=>f.categoria==='Marketing Texto');
+  const box=document.getElementById('statsBar');
+  let html='⭐ Você já favoritou <strong>'+favs.length+'</strong> modelo'+(favs.length===1?'':'s')+' · 📣 <strong>'+prompts.length+'</strong> modelos disponíveis';
+  const porSeg=ordemSegmentos.map(s=>({s,n:favs.filter(f=>f.segmento===s).length})).filter(x=>x.n>0);
+  if(porSeg.length){html+='<span class="stats-detalhe">('+porSeg.map(x=>x.s+': '+x.n).join(' · ')+')</span>'}
+  box.innerHTML=html;
+}
 
 // ===== TEMA =====
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
@@ -168,21 +240,25 @@ function criarCard(p){
   d.className='card';
   d.id='card-'+p.id;
   d.innerHTML=`
-    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="seg-badge">${p.segmento}</span><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
     <h3>${p.titulo}</h3>
     <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
     ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
-    <pre>${p.prompt}</pre>
+    <pre id="pre-${p.id}">${p.prompt}</pre>
     <div class="acoes">
       <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
       <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
       <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
       <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
       <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+      <button class="criar-imagem" data-acao="criarimagem" data-id="${p.id}">🎨 Agora crie a imagem para esse texto →</button>
     </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
     ${relacionadas.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionadas.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
   `;
   atualizarBtnFav(p.id,d.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
   return d;
 }
 
@@ -205,13 +281,30 @@ function render(a){
   }
 }
 
+function contarFiltrosAtivos(){let n=0;if(segmentoAtivo!=='todos')n++;if(categoria!=='todas')n++;if(nivel!=='todos')n++;return n}
+function atualizarBadgeFiltros(){
+  const n=contarFiltrosAtivos();
+  const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');
+  if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}
+  else{badge.style.display='none';btn.classList.remove('ativo')}
+}
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){
+  segmentoAtivo='todos';categoria='todas';nivel='todos';busca.value='';
+  document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo',b.textContent.trim()==='🌐 Todos os Níveis'));
+  montarFiltroSegmento();montarFiltroCategoria();filtrar();
+  mostrarToast('✕ Filtros limpos');
+}
+
 function filtrar(){
   const q=busca.value.toLowerCase();
-  let f=prompts.filter(x=>(x.titulo+' '+x.categoria+' '+x.quando+' '+x.prompt).toLowerCase().includes(q)&&(nivel==='todos'||x.nivel===nivel)&&(categoria==='todas'||x.categoria===categoria));
+  let f=prompts.filter(x=>(x.titulo+' '+x.categoria+' '+x.segmento+' '+x.quando+' '+x.prompt).toLowerCase().includes(q)&&(nivel==='todos'||x.nivel===nivel)&&(categoria==='todas'||x.categoria===categoria)&&(segmentoAtivo==='todos'||x.segmento===segmentoAtivo));
   f=ordenarLista(f);
   render(f);
+  atualizarBadgeFiltros();
 }
-function setCat(e,c){document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');categoria=c;filtrar()}
+function setSeg(e,s){segmentoAtivo=s;categoria='todas';montarFiltroSegmento();montarFiltroCategoria();filtrar()}
+function setCat(e,c){categoria=c;montarFiltroCategoria();filtrar()}
 function setNivel(e,n){document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');nivel=n;filtrar()}
 
 lista.addEventListener('click',e=>{
@@ -224,6 +317,10 @@ lista.addEventListener('click',e=>{
   else if(acao==='favoritar')favoritar(id,btn);
   else if(acao==='compartilhar')compartilhar(id);
   else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+  else if(acao==='criarimagem')criarImagem(id);
 });
 
 busca.addEventListener('input',filtrar);
@@ -231,9 +328,13 @@ ordenarSelect.addEventListener('change',filtrar);
 document.getElementById('btnExportar').addEventListener('click',exportarTodas);
 document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
 document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+montarFiltroSegmento();
+montarFiltroCategoria();
 atualizarStats();
 filtrar();
 window.addEventListener('delta:favoritos-updated',atualizarStats);
