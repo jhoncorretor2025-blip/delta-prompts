@@ -1,15 +1,246 @@
-<!DOCTYPE html>
-<html lang="pt-br"><head><meta charset="UTF-8"><title>Marketing Visual & Imagens | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.info-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}.info-mini{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#fff}.info-mini button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:15px 17px;border:0;background:transparent;font:inherit;font-weight:800;text-align:left;cursor:pointer}.info-body{display:none;padding:0 17px 17px;color:#667085;line-height:1.6}.info-mini.open .info-body{display:block}.top-bar{display:flex;gap:15px;align-items:center;margin:20px 0;flex-wrap:wrap}.top-bar input{flex:1;padding:14px;border-radius:10px;border:1px solid #e5e7eb}.contador{font-size:14px;font-weight:800}.filtros-container{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}.filtro-botoes{display:flex;flex-wrap:wrap;gap:8px}.filtro-botoes button{padding:8px 15px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}.filtro-botoes button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}.secao-categoria{background:#fff;border-radius:12px;padding:20px;margin-bottom:35px;border:1px solid #f1f5f9;box-shadow:0 4px 6px -1px rgba(0,0,0,.05)}.secao-titulo{font-size:22px;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}.grid-prompts{display:flex;flex-direction:column;gap:20px}pre{white-space:pre-wrap;font-size:14px;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb;font-family:inherit}@media(max-width:720px){.info-row{grid-template-columns:1fr}}</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260803"></script><main><h1>🎨 Marketing Visual & Imagens</h1><p>Crie artes que vendem antes mesmo da pessoa ler o texto. Prompts estratégicos para folders, banners, posts, vitrines e anúncios de alto impacto.</p><div class="info-row"><section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Objetivo <span>⌄</span></button><div class="info-body">Ajudar você a criar imagens estratégicas para campanhas, lojas físicas, e-commerce e redes sociais.</div></section><section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🔥 O que você pode criar aqui <span>⌄</span></button><div class="info-body">📦 Folder promocional profissional<br>🛍️ Banner separado para loja física ou digital<br>📱 Criativo para Instagram<br>🖼️ Imagem para tráfego pago<br>🏷️ Arte para oferta com desconto<br>🛒 Vitrine digital para e-commerce</div></section></div><div class="top-bar"><input id="busca" type="text" placeholder="🔎 Buscar modelo de criativo..." oninput="atualizarFiltros()"><div id="contador" class="contador"></div></div><div class="filtros-container"><div id="botoes-categoria" class="filtro-botoes filtro-categoria"></div><div class="filtro-botoes filtro-nivel"><button class="ativo" onclick="filtrarNivel(event,'todos')">🌐 Todos os Níveis</button><button onclick="filtrarNivel(event,'basico')">🟢 Básico</button><button onclick="filtrarNivel(event,'intermediario')">🟡 Intermediário</button><button onclick="filtrarNivel(event,'avancado')">🔴 Avançado</button></div></div><div id="lista-prompts"></div><section class="card" style="text-align:center;margin-top:40px"><h2>📝 Precisa estruturar o texto da campanha?</h2><p>Volte para a parte estratégica e alinhe copy + visual para máxima conversão.</p><a href="marketing-texto.html" style="display:inline-block;margin-top:15px;padding:14px 28px;background:#5b5ce2;color:#fff;font-weight:600;border-radius:12px;text-decoration:none">📣 Ir para Marketing Texto & Campanhas</a></section></main><script>
-const ordemCategorias=['📢 Banners & Promoções','📱 Redes Sociais & Anúncios','🎨 Campanhas & Direção de Arte','🛒 E-commerce & Vitrines'];
-const prompts=[
-{categoria:'📢 Banners & Promoções',nivel:'basico',titulo:'📷 Imagem Promocional Simples',quando:'Para criar uma arte rápida de oferta.',conteudo:`Crie uma imagem promocional para:\n[PRODUTO]\n\nInclua:\n• Destaque no produto\n• Texto curto e chamativo\n• Fundo atrativo\n• Estilo moderno\n\nIMPORTANTE: entregue a imagem promocional como uma peça visual separada, vista de frente e pronta para uso. Não coloque a arte dentro de celular, computador, loja, outdoor, moldura ou mockup.`},
-{categoria:'📢 Banners & Promoções',nivel:'basico',titulo:'📢 Banner Promocional Separado',quando:'Para criar um banner próprio para loja física, site ou campanha digital.',conteudo:`Crie um banner promocional separado para:\n[PRODUTO OU PROMOÇÃO]\n\nInclua:\n• Oferta clara\n• Cores chamativas e coerentes\n• Elemento visual forte\n• Destaque para preço ou condição\n• Chamada principal de fácil leitura\n\nIMPORTANTE: crie o banner como uma peça visual separada e independente. Não coloque o banner dentro de uma foto de loja, celular, computador, outdoor, moldura ou mockup. Entregue somente a arte final do banner, vista de frente e pronta para uso.`},
-{categoria:'📢 Banners & Promoções',nivel:'intermediario',titulo:'🖼️ Folder Profissional',quando:'Para campanhas mais estruturadas e materiais de divulgação.',conteudo:`Crie um folder profissional para:\n[PRODUTO]\n\nInclua:\n• Layout organizado\n• Hierarquia visual clara\n• Destaque para oferta\n• Elementos gráficos estratégicos\n\nIMPORTANTE: crie o folder como uma peça separada, vista de frente e pronta para divulgação. Não apresente em mockup.`},
-{categoria:'📱 Redes Sociais & Anúncios',nivel:'intermediario',titulo:'📱 Criativo para Instagram Ads',quando:'Para criar uma peça visual para anúncio patrocinado.',conteudo:`Crie um criativo visual para Instagram Ads:\n[PRODUTO]\n\nInclua:\n• Impacto visual imediato\n• Foco no principal benefício\n• CTA visual estratégico\n• Composição adequada para redes sociais\n\nIMPORTANTE: entregue somente a arte do anúncio, separada e pronta para publicação, sem mockup de celular.`},
-{categoria:'🎨 Campanhas & Direção de Arte',nivel:'intermediario',titulo:'🎉 Campanha Sazonal',quando:'Para criar uma arte especial para datas comemorativas.',conteudo:`Crie uma peça visual para campanha sazonal:\n[PRODUTO]\n[DATA OU OCASIÃO]\n\nInclua:\n• Elementos temáticos\n• Oferta especial\n• Estilo chamativo\n• Mensagem principal clara\n\nIMPORTANTE: entregue a arte final separada e pronta para uso, sem aplicação em mockups.`},
-{categoria:'🎨 Campanhas & Direção de Arte',nivel:'avancado',titulo:'🎨 Direção de Arte Completa',quando:'Para desenvolver uma identidade visual estratégica para a campanha.',conteudo:`Crie uma direção visual completa para:\n[PRODUTO]\n\nInclua:\n• Conceito criativo\n• Paleta de cores\n• Tipografia\n• Aplicação em diferentes formatos\n\nApresente primeiro a direção de arte e depois crie cada peça visual separadamente, sem juntar todos os formatos em um único mockup.`},
-{categoria:'📱 Redes Sociais & Anúncios',nivel:'avancado',titulo:'🚀 Criativo de Alta Conversão',quando:'Para campanhas de tráfego pago com foco em impacto e clareza.',conteudo:`Crie um criativo visual de alta conversão para:\n[PRODUTO]\n\nInclua:\n• Elemento de impacto imediato\n• Destaque do principal benefício\n• Mensagem curta e fácil de entender\n• CTA visual claro\n• Urgência visual somente se a oferta realmente tiver prazo\n\nIMPORTANTE: crie a peça separada, sem mockup, pronta para ser usada diretamente no anúncio.`},
-{categoria:'🛒 E-commerce & Vitrines',nivel:'avancado',titulo:'🛒 Vitrine Premium para Loja Online',quando:'Para destacar produtos em e-commerce com aparência sofisticada.',conteudo:`Crie uma vitrine digital premium para:\n[PRODUTO]\n\nInclua:\n• Composição elegante\n• Iluminação estratégica\n• Estilo sofisticado\n• Produto como protagonista\n\nIMPORTANTE: entregue a composição visual final separada e pronta para uso no e-commerce.`}
+<!DOCTYPE HTML>
+<html lang="pt-br"><head><meta charset="UTF-8"><title>Marketing Visual & Imagens | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.info-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}.info-mini{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#fff}.info-mini button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:15px 17px;border:0;background:transparent;font:inherit;font-weight:800;text-align:left;cursor:pointer}.info-body{display:none;padding:0 17px 17px;color:#667085;line-height:1.6}.info-mini.open .info-body{display:block}.top-bar{display:flex;gap:12px;align-items:center;margin:20px 0;flex-wrap:wrap}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:10px;border:1px solid #e5e7eb}.top-bar select{padding:12px 10px;border-radius:10px;border:1px solid #e5e7eb;font-size:14px;background:#fff;cursor:pointer}.contador{font-size:14px;font-weight:800}.filtros-container{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}.filtro-botoes{display:flex;flex-wrap:wrap;gap:8px}.filtro-botoes button{padding:8px 15px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}.filtro-botoes button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}.secao-categoria{background:#fff;border-radius:12px;padding:20px;margin-bottom:35px;border:1px solid #f1f5f9;box-shadow:0 4px 6px -1px rgba(0,0,0,.05)}.secao-titulo{font-size:22px;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}.grid-prompts{display:flex;flex-direction:column;gap:20px}pre{white-space:pre-wrap;font-size:14px;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb;font-family:inherit}.preview{width:100%;height:200px;object-fit:cover;border-radius:12px;margin-bottom:14px;background:#eef2ff}.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1;min-width:105px;border:0;border-radius:11px;padding:11px;font-weight:800;background:#eef2ff;color:#5b5ce2;cursor:pointer}
+.acoes .favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes .compartilhar{background:#f0fdf4;color:#15803d}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#5b5ce2;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #5b5ce2;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .info-mini{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-botoes button,[data-theme="dark"] .toolbar-extra button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:720px){.info-row{grid-template-columns:1fr}.theme-toggle{bottom:90px}}</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260804"></script><main>
+
+<h1>🎨 Marketing Visual & Imagens</h1>
+<p>Crie artes que vendem antes mesmo da pessoa ler o texto. Prompts estratégicos para folders, banners, posts, cartão de visita, WhatsApp e campanhas de alto impacto.</p>
+
+<div class="info-row">
+<section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Objetivo <span>⌄</span></button><div class="info-body">Ajudar você a criar imagens estratégicas para campanhas, lojas físicas, e-commerce, redes sociais e materiais impressos do seu negócio.</div></section>
+<section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🔥 O que você pode criar aqui <span>⌄</span></button><div class="info-body">📦 Folder promocional profissional<br>💳 Cartão de visita<br>📱 Post para Instagram e Facebook<br>💬 Arte para WhatsApp<br>🎯 Campanha para atrair e fidelizar clientes<br>🛒 Vitrine digital para e-commerce</div></section>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="text" placeholder="🔎 Buscar modelo de criativo...">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <div id="contador" class="contador"></div>
+</div>
+
+<div class="filtros-container">
+  <div id="botoes-categoria" class="filtro-botoes filtro-categoria"></div>
+  <div class="filtro-botoes filtro-nivel"><button class="ativo" onclick="filtrarNivel(event,'todos')">🌐 Todos os Níveis</button><button onclick="filtrarNivel(event,'basico')">🟢 Básico</button><button onclick="filtrarNivel(event,'intermediario')">🟡 Intermediário</button><button onclick="filtrarNivel(event,'avancado')">🔴 Avançado</button></div>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva a peça de marketing que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+<section class="card" style="text-align:center;margin-top:40px"><h2>📝 Precisa estruturar o texto da campanha?</h2><p>Volte para a parte estratégica e alinhe copy + visual para máxima conversão.</p><a href="marketing-texto.html" style="display:inline-block;margin-top:15px;padding:14px 28px;background:#5b5ce2;color:#fff;font-weight:600;border-radius:12px;text-decoration:none">📣 Ir para Marketing Texto & Campanhas</a></section>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const ordemCategorias=['📢 Banners & Promoções','📱 Redes Sociais & Anúncios','💳 Identidade & Papelaria','💬 WhatsApp Business','🎯 Aquisição & Fidelização','🎨 Campanhas & Direção de Arte','🛒 E-commerce & Vitrines'];
+
+const dadosBrutos=[
+{categoria:'📢 Banners & Promoções',nivel:'basico',titulo:'📷 Imagem Promocional Simples',quando:'Para criar uma arte rápida de oferta.',conteudo:`Crie uma imagem promocional para:\n[PRODUTO]\n\nInclua:\n• Destaque no produto\n• Texto curto e chamativo\n• Fundo atrativo\n• Estilo moderno\n\nIMPORTANTE: entregue a imagem promocional como uma peça visual separada, vista de frente e pronta para uso. Não coloque a arte dentro de celular, computador, loja, outdoor, moldura ou mockup.`,imagem:'photo-1533750349088-cd871a92f312'},
+{categoria:'📢 Banners & Promoções',nivel:'basico',titulo:'📢 Banner Promocional Separado',quando:'Para criar um banner próprio para loja física, site ou campanha digital.',conteudo:`Crie um banner promocional separado para:\n[PRODUTO OU PROMOÇÃO]\n\nInclua:\n• Oferta clara\n• Cores chamativas e coerentes\n• Elemento visual forte\n• Destaque para preço ou condição\n• Chamada principal de fácil leitura\n\nIMPORTANTE: crie o banner como uma peça visual separada e independente. Não coloque o banner dentro de uma foto de loja, celular, computador, outdoor, moldura ou mockup. Entregue somente a arte final do banner, vista de frente e pronta para uso.`,imagem:'photo-1557838923-2985c318be48'},
+{categoria:'📢 Banners & Promoções',nivel:'intermediario',titulo:'🖼️ Folder Profissional',quando:'Para campanhas mais estruturadas e materiais de divulgação.',conteudo:`Crie um folder profissional para:\n[PRODUTO]\n\nInclua:\n• Layout organizado\n• Hierarquia visual clara\n• Destaque para oferta\n• Elementos gráficos estratégicos\n\nIMPORTANTE: crie o folder como uma peça separada, vista de frente e pronta para divulgação. Não apresente em mockup.`,imagem:'photo-1586953208448-b95a79798f07'},
+{categoria:'📱 Redes Sociais & Anúncios',nivel:'intermediario',titulo:'📱 Criativo para Instagram Ads',quando:'Para criar uma peça visual para anúncio patrocinado.',conteudo:`Crie um criativo visual para Instagram Ads:\n[PRODUTO]\n\nInclua:\n• Impacto visual imediato\n• Foco no principal benefício\n• CTA visual estratégico\n• Composição adequada para redes sociais\n\nIMPORTANTE: entregue somente a arte do anúncio, separada e pronta para publicação, sem mockup de celular.`,imagem:'photo-1611262588024-d12430b98920'},
+{categoria:'📱 Redes Sociais & Anúncios',nivel:'basico',titulo:'📘 Post para Facebook',quando:'Para divulgar produtos ou serviços no feed do Facebook.',conteudo:`Crie uma arte para post de Facebook divulgando:\n[PRODUTO OU SERVIÇO]\n\nInclua:\n• Formato horizontal adequado ao feed\n• Texto principal direto e legível mesmo em telas pequenas\n• Elemento visual que capture atenção rapidamente\n• Espaço reservado para chamada de ação\n\nIMPORTANTE: entregue a imagem como peça separada e pronta para publicação, sem mockup de celular ou computador.`,imagem:'photo-1611162617213-7d7a39e9b1d7'},
+{categoria:'📱 Redes Sociais & Anúncios',nivel:'avancado',titulo:'🚀 Criativo de Alta Conversão',quando:'Para campanhas de tráfego pago com foco em impacto e clareza.',conteudo:`Crie um criativo visual de alta conversão para:\n[PRODUTO]\n\nInclua:\n• Elemento de impacto imediato\n• Destaque do principal benefício\n• Mensagem curta e fácil de entender\n• CTA visual claro\n• Urgência visual somente se a oferta realmente tiver prazo\n\nIMPORTANTE: crie a peça separada, sem mockup, pronta para ser usada diretamente no anúncio.`,imagem:'photo-1533750349088-cd871a92f312'},
+{categoria:'💳 Identidade & Papelaria',nivel:'basico',titulo:'💳 Cartão de Visita Profissional',quando:'Para criar um cartão de visita elegante para você ou sua empresa.',conteudo:`Crie um cartão de visita profissional para:\n[NOME DA EMPRESA OU PROFISSIONAL]\n\nInclua:\n• Frente: nome, cargo ou ramo de atuação e logotipo (ou espaço reservado para logotipo)\n• Verso: telefone, e-mail, site e redes sociais\n• Paleta de cores: [CORES DA MARCA]\n• Tipografia elegante e legível\n• Acabamento moderno e profissional\n\nIMPORTANTE: mostre a frente e o verso do cartão como peças separadas, vistas de frente, sem mockup de mesa, mão ou celular.`,imagem:'photo-1589041127631-6a5f0f45c7ba'},
+{categoria:'💳 Identidade & Papelaria',nivel:'intermediario',titulo:'📦 Papelaria Básica da Empresa',quando:'Para padronizar a identidade visual em materiais do dia a dia.',conteudo:`Crie um conjunto básico de papelaria para:\n[NOME DA EMPRESA]\n\nInclua:\n• Papel timbrado\n• Envelope\n• Etiqueta de embalagem\n• Mesma identidade visual (cores, tipografia e logotipo) em todas as peças\n\nIMPORTANTE: apresente cada peça separadamente, vista de frente, sem mockup.`,imagem:'photo-1586339949916-3e9457bef6d3'},
+{categoria:'💬 WhatsApp Business',nivel:'basico',titulo:'💬 Banner para Status do WhatsApp',quando:'Para divulgar produtos ou promoções no status do WhatsApp Business.',conteudo:`Crie uma imagem para status do WhatsApp Business divulgando:\n[PRODUTO OU PROMOÇÃO]\n\nInclua:\n• Formato vertical (proporção 9:16)\n• Texto curto e direto, visível mesmo em miniatura\n• Destaque para a oferta ou informação principal\n• Cores chamativas e coerentes com a marca\n\nIMPORTANTE: entregue a peça separada, pronta para ser postada, sem mockup de celular.`,imagem:'photo-1611606063065-ee7946f0787a'},
+{categoria:'💬 WhatsApp Business',nivel:'basico',titulo:'📲 Card para Grupos de WhatsApp',quando:'Para compartilhar uma divulgação rápida em grupos.',conteudo:`Crie uma imagem quadrada para compartilhar em grupos de WhatsApp divulgando:\n[PRODUTO OU SERVIÇO]\n\nInclua:\n• Chamada principal em destaque\n• Contato ou link de forma clara\n• Visual chamativo, porém objetivo\n• Boa legibilidade em tela pequena\n\nIMPORTANTE: entregue como peça separada, pronta para envio, sem mockup.`,imagem:'photo-1587825140708-dfaf72ae4b04'},
+{categoria:'🎯 Aquisição & Fidelização',nivel:'avancado',titulo:'🎯 Campanha para Atrair Novos Clientes',quando:'Para conquistar quem ainda não conhece o seu negócio.',conteudo:`Crie uma peça visual de campanha para atrair novos clientes para:\n[NOME DA EMPRESA OU PRODUTO]\n\nInclua:\n• Oferta de boas-vindas ou benefício claro para quem ainda não é cliente\n• Senso de urgência real, sem exagero\n• Elemento visual que gere confiança\n• Chamada de ação direta\n\nIMPORTANTE: entregue a peça final separada, pronta para uso em redes sociais ou impressos, sem mockup.`,imagem:'photo-1552664730-d307ca884978'},
+{categoria:'🎯 Aquisição & Fidelização',nivel:'avancado',titulo:'💖 Campanha de Fidelização de Clientes',quando:'Para valorizar e reter quem já compra com você.',conteudo:`Crie uma peça visual de campanha de fidelização para clientes que já compraram de:\n[NOME DA EMPRESA]\n\nInclua:\n• Tom de agradecimento e valorização\n• Benefício exclusivo para quem já é cliente (desconto, brinde ou pontos)\n• Visual acolhedor, sem parecer forçado\n• Chamada de ação clara\n\nIMPORTANTE: entregue a peça final separada, pronta para uso, sem mockup.`,imagem:'photo-1556740758-90de374c12ad'},
+{categoria:'🎨 Campanhas & Direção de Arte',nivel:'intermediario',titulo:'🎉 Campanha Sazonal',quando:'Para criar uma arte especial para datas comemorativas.',conteudo:`Crie uma peça visual para campanha sazonal:\n[PRODUTO]\n[DATA OU OCASIÃO]\n\nInclua:\n• Elementos temáticos\n• Oferta especial\n• Estilo chamativo\n• Mensagem principal clara\n\nIMPORTANTE: entregue a arte final separada e pronta para uso, sem aplicação em mockups.`,imagem:'photo-1607082349566-187342175e2f'},
+{categoria:'🎨 Campanhas & Direção de Arte',nivel:'avancado',titulo:'🎨 Direção de Arte Completa',quando:'Para desenvolver uma identidade visual estratégica para a campanha.',conteudo:`Crie uma direção visual completa para:\n[PRODUTO]\n\nInclua:\n• Conceito criativo\n• Paleta de cores\n• Tipografia\n• Aplicação em diferentes formatos\n\nApresente primeiro a direção de arte e depois crie cada peça visual separadamente, sem juntar todos os formatos em um único mockup.`,imagem:'photo-1626785774573-4b799315345d'},
+{categoria:'🛒 E-commerce & Vitrines',nivel:'avancado',titulo:'🛒 Vitrine Premium para Loja Online',quando:'Para destacar produtos em e-commerce com aparência sofisticada.',conteudo:`Crie uma vitrine digital premium para:\n[PRODUTO]\n\nInclua:\n• Composição elegante\n• Iluminação estratégica\n• Estilo sofisticado\n• Produto como protagonista\n\nIMPORTANTE: entregue a composição visual final separada e pronta para uso no e-commerce.`,imagem:'photo-1441986300917-64674bd600d8'}
 ];
-const cat=document.getElementById('botoes-categoria'),lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador');let nivel='todos',categoria='todas';cat.innerHTML='<button class="ativo" onclick="filtrarCategoria(event,\'todas\')">🌐 Todas as Categorias</button>'+ordemCategorias.map(c=>`<button onclick="filtrarCategoria(event,'${c}')">${c}</button>`).join('');function renderizar(arr){lista.innerHTML='';contador.textContent=`🎨 Total: ${arr.length} modelo${arr.length!==1?'s':''}`;ordemCategorias.forEach(c=>{const grupo=arr.filter(p=>p.categoria===c);if(!grupo.length)return;const sec=document.createElement('section');sec.className='secao-categoria';sec.innerHTML=`<h2 class="secao-titulo">${c}</h2><div class="grid-prompts"></div>`;const grid=sec.querySelector('.grid-prompts');grupo.forEach(p=>{const card=document.createElement('div');card.className='card';card.dataset.prompt=p.conteudo;card.dataset.titulo=p.titulo;card.innerHTML=`<div class="nivel nivel-${p.nivel}">${p.nivel==='avancado'?'🔴 Avançado':p.nivel==='intermediario'?'🟡 Intermediário':'🟢 Básico'}</div><h3>${p.titulo}</h3><p><strong>📌 Quando usar:</strong> ${p.quando}</p><pre>${p.conteudo}</pre><div class="acoes"><button onclick="copiar(this)">📋 Copiar</button><button onclick="favoritar(this)">⭐ Favoritar</button><button onclick="abrirIA(this,'chatgpt')">🤖 ChatGPT</button><button onclick="abrirIA(this,'gemini')">✨ Gemini</button></div>`;grid.appendChild(card)});lista.appendChild(sec)})}function atualizarFiltros(){const q=busca.value.toLowerCase();renderizar(prompts.filter(p=>(p.titulo+' '+p.categoria+' '+p.quando+' '+p.conteudo).toLowerCase().includes(q)&&(nivel==='todos'||p.nivel===nivel)&&(categoria==='todas'||p.categoria===categoria)))}function filtrarCategoria(e,c){document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');categoria=c;atualizarFiltros()}function filtrarNivel(e,n){document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');nivel=n;atualizarFiltros()}function card(btn){return btn.closest('.card')}function copiar(btn){navigator.clipboard.writeText(card(btn).dataset.prompt);alert('📋 Prompt copiado!')}function favoritar(btn){const c=card(btn),itens=JSON.parse(localStorage.getItem('deltaPrompts'))||[];itens.push({id:Date.now(),titulo:c.dataset.titulo,categoria:'Marketing Imagem',conteudo:c.dataset.prompt,favorito:true});localStorage.setItem('deltaPrompts',JSON.stringify(itens));alert('⭐ Adicionado aos favoritos!')}function abrirIA(btn,ia){const p=encodeURIComponent(card(btn).dataset.prompt);window.open(ia==='chatgpt'?'https://chat.openai.com/?prompt='+p:'https://gemini.google.com/app?prompt='+p,'_blank')}renderizar(prompts);
+
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'mkt-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.conteudo,imagem:p.imagem,novo:i===4||i===6||i===7||i===8||i===9||i===10||i===11};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const P='https://images.unsplash.com/';const Q='?auto=format&fit=crop&w=700&q=70';
+
+const cat=document.getElementById('botoes-categoria'),lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),ordenarSelect=document.getElementById('ordenar');
+let nivel='todos',categoriaAtiva='todas';
+
+cat.innerHTML='<button class="ativo" onclick="filtrarCategoria(event,\'todas\')">🌐 Todas as Categorias</button>'+ordemCategorias.map(c=>`<button onclick="filtrarCategoria(event,'${c}')">${c}</button>`).join('');
+
+function esc(v){return String(v).replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+// ===== TOAST =====
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+// ===== FAVORITOS (mesmo formato usado em favoritos.html) =====
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Marketing Visual',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+// ===== POPULARIDADE =====
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaMarketingUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaMarketingUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+// ===== CAMPOS EDITÁVEIS =====
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=p.prompt;(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+// ===== AÇÕES =====
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+
+// ===== COMPARTILHAR =====
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='🎨 '+p.titulo+'\n\nConfira esse modelo de marketing visual no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+// ===== RELACIONADOS / NAVEGAÇÃO =====
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){nivel='todos';categoriaAtiva='todas';busca.value='';ordenarSelect.value='padrao';document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo',b.textContent.trim()==='🌐 Todos os Níveis'));document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.toggle('ativo',b.textContent.trim()==='🌐 Todas as Categorias'));atualizarFiltros();requestAnimationFrame(()=>destacarCard(id))}
+
+// ===== EXPORTAR =====
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='🎨 MARKETING VISUAL & IMAGENS — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-marketing-visual.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+// ===== SUGERIR =====
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de peça de marketing para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+// ===== ESTATÍSTICAS =====
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Marketing Visual').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🎨 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+// ===== TEMA =====
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+// ===== ORDENAÇÃO =====
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+// ===== CARD =====
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionadas=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <img class="preview" src="${P}${p.imagem}${Q}" alt="Prévia de ${esc(p.titulo)}" loading="lazy" data-acao="img">
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre>${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+    </div>
+    ${relacionadas.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionadas.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  card.querySelectorAll('img[data-acao="img"]').forEach(img=>img.addEventListener('error',()=>{img.style.display='none'}));
+  return card;
+}
+
+function renderizar(arr){
+  lista.innerHTML='';
+  contador.textContent=`🎨 Total: ${arr.length} modelo${arr.length!==1?'s':''}`;
+  if(ordenarSelect.value==='padrao'){
+    ordemCategorias.forEach(c=>{
+      const grupo=arr.filter(p=>p.categoria===c);
+      if(!grupo.length)return;
+      const sec=document.createElement('section');
+      sec.className='secao-categoria';
+      sec.innerHTML=`<h2 class="secao-titulo">${c}</h2><div class="grid-prompts"></div>`;
+      const grid=sec.querySelector('.grid-prompts');
+      grupo.forEach(p=>grid.appendChild(criarCard(p)));
+      lista.appendChild(sec);
+    });
+  }else{
+    arr.forEach(p=>lista.appendChild(criarCard(p)));
+  }
+}
+
+function atualizarFiltros(){
+  const q=busca.value.toLowerCase();
+  let filtrados=prompts.filter(p=>(p.titulo+' '+p.categoria+' '+p.quando+' '+p.prompt).toLowerCase().includes(q)&&(nivel==='todos'||p.nivel===nivel)&&(categoriaAtiva==='todas'||p.categoria===categoriaAtiva));
+  filtrados=ordenarLista(filtrados);
+  renderizar(filtrados);
+}
+function filtrarCategoria(e,c){document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');categoriaAtiva=c;atualizarFiltros()}
+function filtrarNivel(e,n){document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');nivel=n;atualizarFiltros()}
+
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+});
+
+busca.addEventListener('input',atualizarFiltros);
+ordenarSelect.addEventListener('change',atualizarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+atualizarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
 </script></body></html>
