@@ -68,7 +68,11 @@
 <script>
 const P='https://images.unsplash.com/';const Q='?auto=format&fit=crop&w=700&q=70';
 
-const instrucaoRosto=' Mantenha fielmente as mesmas características faciais da pessoa na foto original (formato do rosto, olhos, nariz, boca, sobrancelhas e tom de pele), preservando a identidade e o reconhecimento da pessoa. Não altere as feições nem gere um rosto diferente do original.';
+function instrucaoManterRosto(){
+  // ⬇️ Este é o ÚNICO lugar do código que controla essa instrução.
+  // Mudou o texto aqui? Muda automaticamente em TODOS os prompts de imagem, sem precisar editar um por um.
+  return ' Mantenha fielmente as mesmas características faciais da pessoa na foto original (formato do rosto, olhos, nariz, boca, sobrancelhas e tom de pele), preservando a identidade e o reconhecimento da pessoa. Não altere as feições nem gere um rosto diferente do original.';
+}
 
 const dadosBrutos=[
   ['avancado','Criativo','🏛️ Império Romano','Transportar o sujeito para uma civilização histórica monumental.','Transforme [sujeito] em personagem da Roma Antiga, arquitetura monumental, colunas de mármore, figurino histórico sofisticado, luz solar épica, multidão sutil ao fundo e aparência de superprodução cinematográfica.','photo-1552832230-c0197dd311b5'],
@@ -101,7 +105,9 @@ const dadosBrutos=[
 ];
 
 const prompts=dadosBrutos.map((p,i)=>{
-  const obj={id:'img-'+i,nivel:p[0],categoria:p[1],titulo:p[2],quando:p[3],prompt:p[4]+instrucaoRosto,imagemId:p[5],novo:i===0};
+  // Aqui: o texto específico de cada estilo (p[4]) + a função compartilhada, puxada uma vez para cada prompt.
+  const promptCompleto = p[4] + instrucaoManterRosto();
+  const obj={id:'img-'+i,nivel:p[0],categoria:p[1],titulo:p[2],quando:p[3],prompt:promptCompleto,imagemId:p[5],novo:i===0};
   obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
   return obj;
 });
