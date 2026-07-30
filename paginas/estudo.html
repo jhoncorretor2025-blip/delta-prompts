@@ -45,8 +45,12 @@
     <li><strong>📚 Estruturação:</strong> Organizar o conteúdo em módulos.</li>
     <li><strong>🎓 Didática:</strong> Entender o conteúdo com clareza.</li>
     <li><strong>🧠 Memorização:</strong> Fixar e consolidar o aprendizado.</li>
+    <li><strong>🔄 Revisão:</strong> Reforçar o que já foi aprendido.</li>
+    <li><strong>🧪 Prática:</strong> Exercitar com perguntas e desafios.</li>
     <li><strong>📊 Avaliação:</strong> Testar conhecimento e simular provas.</li>
-    <li><strong>🚀 Aprimoramento:</strong> Evoluir após identificar erros.</li>
+    <li><strong>🧠 Aprimoramento:</strong> Evoluir após identificar erros.</li>
+    <li><strong>🚀 Aplicação:</strong> Usar o aprendizado em projetos reais.</li>
+    <li><strong>🤖 IA Avançada:</strong> Transformar a IA em professor particular.</li>
   </ul>
 
   <p style="margin-top:15px;">
@@ -111,9 +115,12 @@ const ordemCategorias = [
 "📚 Estruturação",
 "🎓 Didática",
 "🧠 Memorização",
+"🔄 Revisão",
+"🧪 Prática",
 "📊 Avaliação",
 "🧠 Aprimoramento",
-"🚀 Aplicação Profissional com IA"
+"🚀 Aplicação",
+"🤖 IA Avançada"
 ];
 
 const promptsEstudo = [
@@ -234,7 +241,7 @@ Explique o raciocínio por trás das melhorias sugeridas.`
 },
 
 {
-categoria: "🎓 Didática",
+categoria: "🔄 Revisão",
   nivel: "intermediario",
 titulo: "Explicação com Técnica de Feynman",
 quando: "Para garantir que realmente entendeu um conceito.",
@@ -300,7 +307,7 @@ Seja extremamente claro e didático.`
 },
 
 {
-categoria: "📊 Avaliação",
+categoria: "🧪 Prática",
   nivel: "intermediario",
 titulo: "Gerador de Perguntas para Fixação",
 quando: "Para revisar conteúdo e testar conhecimento.",
@@ -354,7 +361,7 @@ Organize de forma prática e realista.`
 },
 
 {
-categoria: "🧠 Memorização",
+categoria: "🔄 Revisão",
   nivel: "avancado",
 titulo: "Aprender com Mais Eficiência",
 quando: "Para acelerar o processo de aprendizado.",
@@ -456,7 +463,7 @@ Inclua:
 },
 
 {
-categoria:"🎓 Didática",
+categoria:"🤖 IA Avançada",
 nivel:"avancado",
 titulo:"🤖👨‍🏫 Professor IA Personalizado",
 quando:"Quando quiser transformar a IA em um professor particular.",
@@ -489,8 +496,12 @@ const instrucoesPorCategoria = {
   "📚 Estruturação": `\n\n## Estrutura do aprendizado\n- Mostre dependências entre os módulos e indique o que estudar primeiro.\n- Sugira materiais ou tipos de exercício adequados a cada etapa.`,
   "🎓 Didática": `\n\n## Ensino claro\n- Vá do simples ao complexo, verificando a compreensão em cada etapa.\n- Use um exemplo cotidiano e outro aplicado à área do tema.`,
   "🧠 Memorização": `\n\n## Retenção de longo prazo\n- Priorize recuperação ativa em vez de releitura passiva.\n- Proponha um calendário de revisão espaçada para 1, 3, 7 e 14 dias.`,
+  "🔄 Revisão": `\n\n## Revisão eficaz\n- Foque no que ainda não está bem consolidado, sem repetir o que já está dominado.\n- Use recuperação ativa (perguntas, não releitura) para checar a compreensão real.`,
+  "🧪 Prática": `\n\n## Prática ativa\n- Proponha exercícios que exijam aplicar o conteúdo, não apenas reconhecê-lo.\n- Dê feedback específico sobre o que foi respondido certo, errado e por quê.`,
   "📊 Avaliação": `\n\n## Avaliação útil\n- Distribua as questões em níveis progressivos de dificuldade.\n- No gabarito, explique por que a correta é adequada e por que as demais não são.`,
-  "🧠 Aprimoramento": `\n\n## Melhoria prática\n- Priorize as sugestões por impacto e esforço.\n- Apresente uma primeira ação concreta para executar nas próximas 24 horas.`
+  "🧠 Aprimoramento": `\n\n## Melhoria prática\n- Priorize as sugestões por impacto e esforço.\n- Apresente uma primeira ação concreta para executar nas próximas 24 horas.`,
+  "🚀 Aplicação": `\n\n## Aplicação real\n- Conecte o conteúdo estudado a uma situação prática ou projeto concreto.\n- Aponte o que muda entre a teoria e a execução no mundo real.`,
+  "🤖 IA Avançada": `\n\n## IA como tutor\n- Adapte o ritmo e a profundidade ao nível demonstrado nas respostas.\n- Faça perguntas antes de avançar, em vez de despejar todo o conteúdo de uma vez.`
 };
 
 promptsEstudo.forEach((item, i) => {
