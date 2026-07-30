@@ -54,6 +54,9 @@
   </p>
 </section>
 
+  <!-- ⭐ ESTATÍSTICAS -->
+  <div class="stats-bar" id="statsBar"></div>
+
   <!-- 4️⃣ BUSCA -->
   <div class="top-bar">
     <input
@@ -62,6 +65,12 @@
       placeholder="🔎 Buscar modelo de estudo..."
       oninput="filtrarPrompts()"
     >
+    <select id="ordenar" aria-label="Ordenar modelos">
+      <option value="padrao">↕️ Padrão</option>
+      <option value="az">🔤 A-Z</option>
+      <option value="recentes">🆕 Mais recentes</option>
+      <option value="populares">🔥 Mais usados</option>
+    </select>
     <div class="contador" id="contador"></div>
   </div>
 
@@ -73,10 +82,27 @@
   <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
 </div>
 
+  <!-- 🛠️ FERRAMENTAS EXTRAS -->
+  <div class="toolbar-extra">
+    <button id="btnExportar">📥 Exportar todos</button>
+    <button id="btnSugerir">💡 Sugerir um modelo</button>
+  </div>
+
+  <div class="sugerir-box" id="sugerirBox" style="display:none">
+    <textarea id="sugestaoTexto" placeholder="Descreva o modelo de estudo que você gostaria de ver aqui..."></textarea>
+    <div class="sugerir-acoes">
+      <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+      <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+    </div>
+  </div>
+
   <!-- 5️⃣ CARDS -->
   <div id="lista-prompts"></div>
 
 </main>
+
+<div class="toast" id="toast">✓ Prompt copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
 
 <script>
 
@@ -467,125 +493,213 @@ const instrucoesPorCategoria = {
   "🧠 Aprimoramento": `\n\n## Melhoria prática\n- Priorize as sugestões por impacto e esforço.\n- Apresente uma primeira ação concreta para executar nas próximas 24 horas.`
 };
 
-promptsEstudo.forEach((item) => {
+promptsEstudo.forEach((item, i) => {
+  item.id = 'estudo-' + i;
   item.prompt = item.prompt.trim() + instrucoesBase + (instrucoesPorCategoria[item.categoria] || "");
+  item.placeholders = [...new Set((item.prompt.match(/\[([^\]]+)\]/g) || []).map(s => s.slice(1, -1)))];
 });
 
 const lista = document.getElementById("lista-prompts");
 const contador = document.getElementById("contador");
 const busca = document.getElementById("busca");
+const ordenarSelect = document.getElementById("ordenar");
+
+let nivelAtivo = "todos";
+
+// ===== TOAST =====
+function mostrarToast(texto = '✓ Prompt copiado!') {
+  const t = document.getElementById('toast');
+  t.textContent = texto;
+  t.classList.add('show');
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ===== FAVORITOS (mesmo formato usado em favoritos.html) =====
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function getItem(id){return promptsEstudo.find(d=>d.id===id)}
+function favoritar(id,btn){
+  const p=getItem(id); if(!p) return;
+  let lista2=_loadFav();
+  const idx=lista2.findIndex(f=>f.id===id);
+  if(idx===-1){lista2.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Estudo',createdAt:Date.now()});_saveFav(lista2);mostrarToast('💖 Adicionado aos favoritos!')}
+  else{lista2.splice(idx,1);_saveFav(lista2);mostrarToast('🤍 Removido dos favoritos')}
+  atualizarBtnFav(id,btn);
+  atualizarStats();
+  window.dispatchEvent(new CustomEvent('delta:favoritos-updated'));
+}
+
+// ===== POPULARIDADE (contador de uso) =====
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaEstudoUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaEstudoUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+// ===== CAMPOS EDITÁVEIS =====
+function textoFinal(id){
+  const p=getItem(id);if(!p)return'';
+  let t=p.prompt;
+  (p.placeholders||[]).forEach((ph,idx)=>{
+    const el=document.getElementById('campo-'+id+'-'+idx);
+    const val=el?el.value.trim():'';
+    if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}
+  });
+  return t;
+}
+
+// ===== AÇÕES =====
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+
+function copiarPorId(id){registrarUso(id);copiarPrompt(textoFinal(id))}
+function chatPorId(id){registrarUso(id);abrirChatGPT(textoFinal(id))}
+function geminiPorId(id){registrarUso(id);abrirGemini(textoFinal(id))}
+
+// ===== COMPARTILHAR =====
+function compartilhar(id){
+  const p=getItem(id);if(!p)return;
+  const url=location.origin+location.pathname+'#'+p.id;
+  const texto='📚 '+p.titulo+'\n\nConfira esse modelo de estudo pronto no Delta Prompts:\n'+url;
+  if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}
+  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}
+}
+
+// ===== RELACIONADOS / NAVEGAÇÃO =====
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){
+  nivelAtivo='todos';
+  busca.value='';
+  ordenarSelect.value='padrao';
+  document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo', b.textContent.trim()==='Todos'));
+  filtrarPrompts();
+  requestAnimationFrame(()=>destacarCard(id));
+}
+
+// ===== EXPORTAR TODOS =====
+function exportarTodas(){
+  const linhas=promptsEstudo.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+(p.nivel==='avancado'?'🔴 Avançado':p.nivel==='intermediario'?'🟡 Intermediário':'🟢 Básico')+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));
+  const conteudo='📚 ESTUDO ESTRATÉGICO COM IA — DELTA PROMPTS\n\n'+linhas.join('\n\n');
+  const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='delta-prompts-estudo.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  mostrarToast('📥 Arquivo baixado!');
+}
+
+// ===== SUGERIR MODELO =====
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de estudo para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+// ===== ESTATÍSTICAS =====
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Estudo').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 📚 <strong>'+promptsEstudo.length+'</strong> modelos disponíveis'}
+
+// ===== TEMA CLARO/ESCURO =====
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+// ===== ORDENAÇÃO =====
+function ordenarLista(arr){
+  const modo=ordenarSelect.value;
+  const arr2=[...arr];
+  if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));
+  else if(modo==='recentes')arr2.reverse();
+  else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}
+  return arr2;
+}
+
+// ===== CRIAÇÃO DO CARD =====
+function criarCard(p){
+  const usos=_loadUsos();
+  const usoCount=usos[p.id]||0;
+  const relacionados=promptsEstudo.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.setAttribute('data-nivel', p.nivel || 'basico');
+
+  card.innerHTML=`
+  <div class="card-top-row">
+    <div class="nivel nivel-${p.nivel || 'basico'}">
+      ${p.nivel === 'avancado' ? '🔴 Avançado' : p.nivel === 'intermediario' ? '🟡 Intermediário' : '🟢 Básico'}
+    </div>
+    <span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span>
+  </div>
+  <span class="tag-categoria">${p.categoria}</span>
+  <h3>${p.titulo}</h3>
+  <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+  ${p.placeholders.length ? `<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>` : ''}
+  <pre>${p.prompt}</pre>
+
+  <div class="acoes">
+    <button onclick="copiarPorId('${p.id}')">📋 Copiar</button>
+    <button class="favoritar" onclick="favoritar('${p.id}',this)">🤍 Favoritar</button>
+    <button onclick="chatPorId('${p.id}')">💬 ChatGPT</button>
+    <button onclick="geminiPorId('${p.id}')">🔷 Gemini</button>
+    <button class="compartilhar" onclick="compartilhar('${p.id}')">🔗 Compartilhar</button>
+  </div>
+  ${relacionados.length ? `<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" onclick="irPara('${r.id}')">${r.titulo}</button>`).join('')}</div>` : ''}
+  `;
+
+  atualizarBtnFav(p.id, card.querySelector('.favoritar'));
+  return card;
+}
 
 function renderizar(arr) {
 
   lista.innerHTML = "";
   contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
 
-  ordemCategorias.forEach(cat => {
-
-    const grupo = arr.filter(p => p.categoria === cat);
-
-    if (grupo.length === 0) return;
-
-    // 🔹 Título VISÍVEL da seção
-    const tituloSecao = document.createElement("h2");
-    tituloSecao.className = "secao-titulo";
-    tituloSecao.innerText = cat;
-    lista.appendChild(tituloSecao);
-
-    grupo.forEach(p => {
-
-    const card = document.createElement("div");
-card.className = "card";
-card.setAttribute("data-nivel", p.nivel || "basico");
-
-   card.innerHTML = `
-  <div class="nivel nivel-${p.nivel || 'basico'}">
-    ${p.nivel === 'avancado' ? '🔴 Avançado' :
-      p.nivel === 'intermediario' ? '🟡 Intermediário' :
-      '🟢 Básico'}
-  </div>
-
-  <h3>${p.titulo}</h3>
-        <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-        <pre>${p.prompt}</pre>
-
-        <div class="acoes">
-          <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-          <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-          <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-          <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-        </div>
-      `;
-
-      lista.appendChild(card);
-
+  if (ordenarSelect.value === 'padrao') {
+    ordemCategorias.forEach(cat => {
+      const grupo = arr.filter(p => p.categoria === cat);
+      if (grupo.length === 0) return;
+      const tituloSecao = document.createElement("h2");
+      tituloSecao.className = "secao-titulo";
+      tituloSecao.innerText = cat;
+      lista.appendChild(tituloSecao);
+      grupo.forEach(p => lista.appendChild(criarCard(p)));
     });
-
-  });
-
+  } else {
+    arr.forEach(p => lista.appendChild(criarCard(p)));
+  }
 }
 
 function filtrarPrompts() {
   const termo = busca.value.toLowerCase();
-  const filtrados = promptsEstudo.filter(p =>
-    p.titulo.toLowerCase().includes(termo) ||
+  let filtrados = promptsEstudo.filter(p =>
+    (nivelAtivo === 'todos' || p.nivel === nivelAtivo) &&
+    (p.titulo.toLowerCase().includes(termo) ||
     p.prompt.toLowerCase().includes(termo) ||
-    p.categoria.toLowerCase().includes(termo)
+    p.categoria.toLowerCase().includes(termo))
   );
+  filtrados = ordenarLista(filtrados);
   renderizar(filtrados);
 }
 
-function copiarPrompt(texto) {
-  navigator.clipboard.writeText(texto);
-  alert("📋 Prompt copiado!");
-}
-
-function favoritarPrompt(titulo, conteudo) {
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  prompts.push({
-    id: Date.now(),
-    titulo,
-    categoria: "Estudo",
-    conteudo,
-    favorito: true
-  });
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  alert("⭐ Adicionado aos favoritos!");
-}
-
-function abrirChatGPT(texto) {
-  const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
-}
-
-function abrirGemini(texto) {
-  const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
-  window.open(url, "_blank");
-}
-
-  function filtrarNivel(event, nivel) {
-
+function filtrarNivel(event, nivel) {
+  nivelAtivo = nivel;
   const botoes = document.querySelectorAll(".filtro-nivel button");
   botoes.forEach(btn => btn.classList.remove("ativo"));
   event.target.classList.add("ativo");
-
-  const cards = document.querySelectorAll("#lista-prompts .card");
-
-  cards.forEach(card => {
-
-    if (nivel === "todos") {
-      card.style.display = "block";
-    } else {
-      card.style.display =
-        card.dataset.nivel === nivel ? "block" : "none";
-    }
-
-  });
+  filtrarPrompts();
 }
 
-renderizar(promptsEstudo);
+document.getElementById('ordenar').addEventListener('change', filtrarPrompts);
+document.getElementById('btnExportar').addEventListener('click', exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click', toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click', copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const atual = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  aplicarTema(atual);
+});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+filtrarPrompts();
+window.addEventListener('delta:favoritos-updated', atualizarStats);
+if (location.hash) { setTimeout(() => destacarCard(location.hash.slice(1)), 400); }
 
 </script>
 
@@ -603,6 +717,15 @@ renderizar(promptsEstudo);
   padding: 14px;
   border-radius: 10px;
   border: 1px solid #e5e7eb;
+}
+
+.top-bar select {
+  padding: 13px 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
 }
 
 .contador {
@@ -624,21 +747,41 @@ pre {
   opacity: 0.7;
   margin-bottom: 8px;
 }
+
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#4f46e5}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#4f46e5;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.tag-categoria{display:inline-block;font-size:12px;font-weight:800;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;margin:8px 0 0}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1;min-width:105px;border:0;border-radius:11px;padding:11px;font-weight:800;background:#eef2ff;color:#4f46e5;cursor:pointer}
+.acoes .favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes .compartilhar{background:#f0fdf4;color:#15803d}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #4f46e5;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .toolbar-extra button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .campos-preenchimento{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:760px){.theme-toggle{bottom:90px}}
 </style>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
