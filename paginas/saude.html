@@ -137,6 +137,20 @@ pre {
 [data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador,[data-theme="dark"] .secao-titulo{color:#a0a0a0}
 [data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
 [data-theme="dark"] .collapse-icon{color:#86efac}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#16a34a;color:#fff;border-color:#16a34a}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#16a34a;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(22,163,74,.12);color:#16a34a}
+.filtro-botoes button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#f0fdf4;border-color:#16a34a;color:#16a34a}
+[data-theme="dark"] .btn-mais-filtros,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
 @media(max-width:760px){.theme-toggle{bottom:90px}}
 </style>
 
@@ -145,7 +159,7 @@ pre {
 <body>
 
 <div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js?v=20260811"></script>
+<script src="/delta-prompts/menu-loader.js?v=20260812"></script>
 
 <main>
 
@@ -196,19 +210,23 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
   <option value="recentes">🆕 Mais recentes</option>
   <option value="populares">🔥 Mais usados</option>
 </select>
+<button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
 <div class="contador" id="contador"></div>
 </div>
 
-<div class="filtros-container">
+<div class="filtros-container" id="filtrosContainer" style="display:none">
     
+    <div class="filtro-titulo">🗂️ Categoria</div>
     <div class="filtro-botoes filtro-categoria" id="botoes-categoria"></div>
 
+    <div class="filtro-titulo">📊 Nível</div>
     <div class="filtro-botoes filtro-nivel">
         <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
         <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
         <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
         <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
     </div>
+    <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
 
 </div>
 
@@ -553,6 +571,58 @@ function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaSaudeUsos'
 function _saveUsos(o){try{localStorage.setItem('deltaSaudeUsos',JSON.stringify(o))}catch(e){}}
 function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
 
+// ===== FEEDBACK =====
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaSaudeFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaSaudeFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;
+  if(!fb[id])fb[id]={up:0,down:0,voto:null};
+  if(atual===tipo){fb[id][tipo]=Math.max(0,fb[id][tipo]-1);fb[id].voto=null}
+  else{if(atual)fb[id][atual]=Math.max(0,fb[id][atual]-1);fb[id][tipo]=(fb[id][tipo]||0)+1;fb[id].voto=tipo}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{up:0,down:0,voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up){up.textContent='👍 '+fb.up;up.classList.toggle('marcado',fb.voto==='up')}
+  if(down){down.textContent='👎 '+fb.down;down.classList.toggle('marcado',fb.voto==='down')}
+}
+
+// ===== PAINEL MAIS FILTROS =====
+function contarFiltrosAtivosSaude(){let n=0;if(estadoFiltroNivel!=='todos')n++;if(estadoFiltroCategoria!=='todas')n++;return n}
+function atualizarBadgeFiltrosSaude(){
+  const n=contarFiltrosAtivosSaude();
+  const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');
+  if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}
+  else{badge.style.display='none';btn.classList.remove('ativo')}
+}
+function toggleMaisFiltrosSaude(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltrosSaude(){
+  estadoFiltroNivel='todos';estadoFiltroCategoria='todas';busca.value='';
+  document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo', (b.dataset.label||b.textContent.trim())==='Todos os Níveis'));
+  document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.toggle('ativo', (b.dataset.label||b.textContent.trim())==='Todas as Categorias'));
+  atualizarFiltros();
+  mostrarToast('✕ Filtros limpos');
+}
+function atualizarContadoresFiltrosSaude(){
+  const termo=busca.value.toLowerCase();
+  const base=promptsSaude.filter(p=>p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo));
+  document.querySelectorAll('.filtro-categoria button').forEach(btn=>{
+    if(!btn.dataset.label)btn.dataset.label=btn.textContent.trim();
+    const cat=btn.dataset.label==='Todas as Categorias'?null:btn.dataset.label;
+    const n=cat?base.filter(p=>p.categoria===cat).length:base.length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
+  document.querySelectorAll('.filtro-nivel button').forEach(btn=>{
+    if(!btn.dataset.label)btn.dataset.label=btn.textContent.trim();
+    const map={'Todos os Níveis':null,'🟢 Básico':'basico','🟡 Intermediário':'intermediario','🔴 Avançado':'avancado'};
+    const niv=map[btn.dataset.label];
+    const n=niv?base.filter(p=>p.nivel===niv).length:base.length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
+}
+
 // ===== CAMPOS EDITÁVEIS =====
 function textoFinal(id){
   const p=getItem(id);if(!p)return'';
@@ -590,8 +660,8 @@ function irPara(id){
   estadoFiltroCategoria='todas';
   busca.value='';
   ordenarSelect.value='padrao';
-  document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo', b.textContent.trim()==='Todos os Níveis'));
-  document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.toggle('ativo', b.textContent.trim()==='Todas as Categorias'));
+  document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo', (b.dataset.label||b.textContent.trim())==='Todos os Níveis'));
+  document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.toggle('ativo', (b.dataset.label||b.textContent.trim())==='Todas as Categorias'));
   atualizarFiltros();
   requestAnimationFrame(()=>destacarCard(id));
 }
@@ -655,10 +725,12 @@ function criarCard(p){
           <button onclick="geminiPorId('${p.id}')">🔷 Gemini</button>
           <button class="compartilhar" onclick="compartilhar('${p.id}')">🔗 Compartilhar</button>
       </div>
+      <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" onclick="darFeedback('${p.id}','up')">👍 0</button><button id="fbdown-${p.id}" onclick="darFeedback('${p.id}','down')">👎 0</button></div>
       ${relacionados.length ? `<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" onclick="irPara('${r.id}')">${r.titulo}</button>`).join('')}</div>` : ''}
   `;
 
   atualizarBtnFav(p.id, card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
   return card;
 }
 
@@ -709,6 +781,8 @@ function atualizarFiltros() {
 
     filtrados = ordenarLista(filtrados);
     renderizar(filtrados);
+    atualizarContadoresFiltrosSaude();
+    atualizarBadgeFiltrosSaude();
 }
 
 function filtrarCategoria(event, categoria) {
@@ -729,6 +803,8 @@ document.getElementById('ordenar').addEventListener('change', atualizarFiltros);
 document.getElementById('btnExportar').addEventListener('click', exportarTodas);
 document.getElementById('btnSugerir').addEventListener('click', toggleSugerir);
 document.getElementById('btnCopiarSugestao').addEventListener('click', copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click', toggleMaisFiltrosSaude);
+document.getElementById('btnLimparFiltros').addEventListener('click', limparFiltrosSaude);
 document.getElementById('themeToggle').addEventListener('click', () => {
   const atual = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   aplicarTema(atual);
