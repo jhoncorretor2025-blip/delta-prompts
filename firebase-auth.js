@@ -14,4 +14,4 @@ async function login(){try{const result=await signInWithPopup(auth,provider);awa
 getRedirectResult(auth).then(r=>r&&saveProfile(r.user)).catch(console.error);
 onAuthStateChanged(auth,user=>{window.deltaUser=user||null;window.dispatchEvent(new CustomEvent('delta-auth-changed',{detail:{user}}));render(user);if(user)saveProfile(user).catch(console.error)});
 window.deltaAuth={login,logout:()=>signOut(auth),auth,db,getUser:()=>auth.currentUser};
-const observer=new MutationObserver(()=>{if(document.querySelector('#menu .sidebar'))render(auth.currentUser)});observer.observe(document.documentElement,{childList:true,subtree:true});
+const observer=new MutationObserver(()=>{if(document.querySelector('#menu .sidebar')){observer.disconnect();render(auth.currentUser)}});observer.observe(document.documentElement,{childList:true,subtree:true});
