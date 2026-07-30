@@ -97,6 +97,13 @@ pre {
 
 /* --- NOVAS FUNCIONALIDADES --- */
 .stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.collapse-card{padding:0;overflow:hidden}
+.collapse-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;border:0;background:transparent;font:inherit;text-align:left;cursor:pointer}
+.collapse-toggle h3{margin:0}
+.collapse-icon{font-size:18px;color:#16a34a;transition:transform .2s;flex:0 0 auto}
+.collapse-card.aberto .collapse-icon{transform:rotate(180deg)}
+.collapse-body{display:none;padding:0 20px 20px}
+.collapse-card.aberto .collapse-body{display:block}
 .toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
 .toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
 .toolbar-extra button:hover{background:#f0fdf4;color:#16a34a}
@@ -129,6 +136,7 @@ pre {
 [data-theme="dark"] .campos-preenchimento{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
 [data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador,[data-theme="dark"] .secao-titulo{color:#a0a0a0}
 [data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+[data-theme="dark"] .collapse-icon{color:#86efac}
 @media(max-width:760px){.theme-toggle{bottom:90px}}
 </style>
 
@@ -137,7 +145,7 @@ pre {
 <body>
 
 <div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js?v=20260806"></script>
+<script src="/delta-prompts/menu-loader.js?v=20260807"></script>
 
 <main>
 
@@ -153,21 +161,29 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
   <p>Em caso de sintomas graves ou súbitos, como dificuldade intensa para respirar, dor no peito, desmaio, confusão mental, sinais de AVC, convulsão, intoxicação ou risco de suicídio, procure atendimento de urgência. No Brasil, o SAMU atende pelo 192.</p>
 </section>
 
-<section class="card">
-  <h3>🎯 Objetivo</h3>
+<section class="card collapse-card">
+  <button type="button" class="collapse-toggle" onclick="this.closest('.collapse-card').classList.toggle('aberto')">
+    <h3>🎯 Objetivo</h3><span class="collapse-icon">⌄</span>
+  </button>
+  <div class="collapse-body">
   <p>
     Ajudar você a melhorar sua saúde física e mental através de organização, análise e planejamento estruturado.
   </p>
+  </div>
 </section>
 
-<section class="card">
-  <h3>🗺️ Jornada da Saúde</h3>
+<section class="card collapse-card">
+  <button type="button" class="collapse-toggle" onclick="this.closest('.collapse-card').classList.toggle('aberto')">
+    <h3>🗺️ Jornada da Saúde</h3><span class="collapse-icon">⌄</span>
+  </button>
+  <div class="collapse-body">
   <ul style="line-height:1.6;">
     <li><strong>🔎 Autoconhecimento:</strong> Entender seu estado atual.</li>
     <li><strong>📋 Planejamento:</strong> Criar plano saudável e realista.</li>
     <li><strong>💪 Execução:</strong> Implementar hábitos consistentes.</li>
     <li><strong>📊 Monitoramento:</strong> Avaliar evolução e ajustar.</li>
   </ul>
+  </div>
 </section>
 
 <div class="stats-bar" id="statsBar"></div>

@@ -14,7 +14,7 @@
 <body>
 
 <div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js?v=20260806"></script>
+<script src="/delta-prompts/menu-loader.js?v=20260807"></script>
 
 <main>
 
@@ -27,15 +27,22 @@
   </p>
 
   <!-- 3️⃣ OBJETIVO -->
-  <section class="card">
-    <h3>🎯 Objetivo</h3>
+  <section class="card collapse-card">
+    <button type="button" class="collapse-toggle" onclick="this.closest('.collapse-card').classList.toggle('aberto')">
+      <h3>🎯 Objetivo</h3><span class="collapse-icon">⌄</span>
+    </button>
+    <div class="collapse-body">
     <p>
       Ajudar estudantes e profissionais a estudar de forma mais estruturada, eficiente e estratégica.
     </p>
+    </div>
   </section>
 
-  <section class="card">
-  <h3>🗺️ Como Funciona a Jornada de Estudo</h3>
+  <section class="card collapse-card">
+  <button type="button" class="collapse-toggle" onclick="this.closest('.collapse-card').classList.toggle('aberto')">
+    <h3>🗺️ Como Funciona a Jornada de Estudo</h3><span class="collapse-icon">⌄</span>
+  </button>
+  <div class="collapse-body">
   <p>
     Esta página está organizada em etapas estratégicas para maximizar seu aprendizado.
   </p>
@@ -56,6 +63,7 @@
   <p style="margin-top:15px;">
     Siga as etapas na ordem para obter o melhor resultado.
   </p>
+  </div>
 </section>
 
   <!-- ⭐ ESTATÍSTICAS -->
@@ -760,6 +768,13 @@ pre {
 }
 
 .stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.collapse-card{padding:0;overflow:hidden}
+.collapse-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;border:0;background:transparent;font:inherit;text-align:left;cursor:pointer}
+.collapse-toggle h3{margin:0}
+.collapse-icon{font-size:18px;color:#4f46e5;transition:transform .2s;flex:0 0 auto}
+.collapse-card.aberto .collapse-icon{transform:rotate(180deg)}
+.collapse-body{display:none;padding:0 20px 20px}
+.collapse-card.aberto .collapse-body{display:block}
 .toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
 .toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
 .toolbar-extra button:hover{background:#eef2ff;color:#4f46e5}
@@ -791,6 +806,7 @@ pre {
 [data-theme="dark"] .campos-preenchimento{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
 [data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{color:#a0a0a0}
 [data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+[data-theme="dark"] .collapse-icon{color:#a5b4fc}
 @media(max-width:760px){.theme-toggle{bottom:90px}}
 </style>
 
