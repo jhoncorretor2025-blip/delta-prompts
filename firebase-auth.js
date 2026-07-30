@@ -10,8 +10,13 @@ function box(){const nav=document.querySelector('#menu .sidebar');if(!nav)return
 function render(user){css();const el=box();if(!el)return;if(user){el.innerHTML=`<div class="delta-user"><img src="${user.photoURL||''}" alt=""><div class="delta-user-info"><strong>${escapeHtml(user.displayName||'Minha conta')}</strong><small>${escapeHtml(user.email||'')}</small></div></div><button class="delta-logout-btn" id="delta-logout">Sair da conta</button>`;document.getElementById('delta-logout').onclick=()=>signOut(auth)}else{el.innerHTML=`<button class="delta-login-btn" id="delta-login"><span>G</span> Entrar com Google</button><div class="delta-auth-status">Sincronize sua conta e seus dados pessoais.</div>`;document.getElementById('delta-login').onclick=login}}
 function escapeHtml(v){return String(v).replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
 async function saveProfile(user){if(!user)return;await setDoc(doc(db,'users',user.uid),{name:user.displayName||'',email:user.email||'',photoURL:user.photoURL||'',lastLoginAt:serverTimestamp()},{merge:true})}
-async function login(){try{const result=await signInWithPopup(auth,provider);await saveProfile(result.user)}catch(e){if(['auth/popup-blocked','auth/cancelled-popup-request','auth/operation-not-supported-in-this-environment'].includes(e.code)){await signInWithRedirect(auth,provider);return}console.error('Erro no login Google:',e);alert('Não foi possível entrar com o Google. Tente novamente.') }}
-getRedirectResult(auth).then(r=>r&&saveProfile(r.user)).catch(console.error);
-onAuthStateChanged(auth,user=>{window.deltaUser=user||null;window.dispatchEvent(new CustomEvent('delta-auth-changed',{detail:{user}}));render(user);if(user)saveProfile(user).catch(console.error)});
-window.deltaAuth={login,logout:()=>signOut(auth),auth,db,getUser:()=>auth.currentUser};
-const observer=new MutationObserver(()=>{if(document.querySelector('#menu .sidebar')){observer.disconnect();render(auth.currentUser)}});observer.observe(document.documentElement,{childList:true,subtree:true});
+
+export async function login(){try{const result=await signInWithPopup(auth,provider);await saveProfile(result.user)}catch(e){if(['auth/popup-blocked','auth/cancelled-popup-request','auth/operation-not-supported-in-this-environment'].includes(e.code)){await signInWithRedirect(auth,provider);return}console.error('Erro no login Google:',e);alert('Não foi possível entrar com o Google. Tente novamente.')}}
+export function logout(){return signOut(auth)}
+export function getUser(){return auth.currentUser}
+
+// Chamado uma unica vez, DEPOIS que o menu ja existe no DOM (sem MutationObserver, sem loop).
+export function initAuthWatcher(){
+  getRedirectResult(auth).then(r=>r&&saveProfile(r.user)).catch(console.error);
+  onAuthStateChanged(auth,user=>{window.deltaUser=user||null;window.dispatchEvent(new CustomEvent('delta-auth-changed',{detail:{user}}));render(user);if(user)saveProfile(user).catch(console.error)});
+}
