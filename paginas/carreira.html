@@ -1,15 +1,263 @@
-<!DOCTYPE html>
-<html lang="pt-br"><head><meta charset="UTF-8"><title>Carreira | Delta Prompts</title><meta name="description" content="Prompts estratégicos para analisar sua trajetória, melhorar currículo, preparar entrevistas e tomar decisões profissionais com mais clareza."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:15px;align-items:center;margin:20px 0;flex-wrap:wrap}.top-bar input{flex:1;padding:14px;border-radius:10px;border:1px solid #e5e7eb}.contador{font-size:14px;opacity:.75}.filtros-container{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}.filtro-botoes{display:flex;flex-wrap:wrap;gap:8px}.filtro-botoes button{padding:8px 15px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}.filtro-botoes button.ativo{background:#22c55e;color:#fff;border-color:#22c55e}.secao-categoria{background:#fff;border-radius:12px;padding:20px;margin-bottom:35px;border:1px solid #f1f5f9;box-shadow:0 4px 6px -1px rgba(0,0,0,.05)}.secao-titulo{font-size:22px;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}.grid-prompts{display:flex;flex-direction:column;gap:20px}pre{white-space:pre-wrap;font-size:14px;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb;font-family:inherit}</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260816"></script><main><h1>💼 Carreira com IA</h1><p>Prompts estratégicos para analisar sua trajetória, melhorar currículo, preparar entrevistas e tomar decisões profissionais com mais clareza.</p><section class="card"><h3>🎯 Objetivo</h3><p>Usar a IA como apoio para compreender sua situação profissional, identificar oportunidades e transformar objetivos de carreira em próximos passos práticos.</p></section><section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>🧭 Direção:</strong> análise de carreira e mudança de área.</li><li><strong>📄 Oportunidades:</strong> currículo e entrevistas.</li><li><strong>🚀 Desenvolvimento:</strong> crescimento e habilidades.</li><li><strong>⚖️ Decisões:</strong> comparação de oportunidades e conversas profissionais.</li></ul></section><div class="top-bar"><input id="busca" type="text" placeholder="🔎 Buscar modelo de carreira..." oninput="atualizarFiltros()"><div id="contador" class="contador"></div></div><div class="filtros-container"><div id="botoes-categoria" class="filtro-botoes filtro-categoria"></div><div class="filtro-botoes filtro-nivel"><button class="ativo" onclick="filtrarNivel(event,'todos')">Todos os Níveis</button><button onclick="filtrarNivel(event,'basico')">🟢 Básico</button><button onclick="filtrarNivel(event,'intermediario')">🟡 Intermediário</button><button onclick="filtrarNivel(event,'avancado')">🔴 Avançado</button></div></div><div id="lista-prompts"></div></main><script>
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Carreira | Delta Prompts</title><meta name="description" content="Prompts estratégicos para analisar sua trajetória, melhorar currículo, preparar entrevistas e tomar decisões profissionais com mais clareza."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtro-nivel{display:flex;gap:8px;flex-wrap:wrap}.filtro-nivel button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtro-nivel button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(91,92,226,.12);color:#5b5ce2}.filtro-nivel button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#5b5ce2;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.secao-titulo{font-size:22px;margin:30px 0 15px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e5e7eb;margin:15px 0}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;background:#eef2ff;color:#5b5ce2;cursor:pointer}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#5b5ce2;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #5b5ce2;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-nivel button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:700px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260816"></script><main>
+
+<h1>💼 Carreira com IA</h1>
+<p>Prompts estratégicos para analisar sua trajetória, melhorar currículo, preparar entrevistas e tomar decisões profissionais com mais clareza.</p>
+
+<section class="card"><h3>🎯 Objetivo</h3><p>Usar a IA como apoio para compreender sua situação profissional, identificar oportunidades e transformar objetivos de carreira em próximos passos práticos.</p></section>
+<section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>🧭 Direção:</strong> análise de carreira e mudança de área.</li><li><strong>📄 Oportunidades:</strong> currículo e entrevistas.</li><li><strong>🚀 Desenvolvimento:</strong> crescimento e habilidades.</li><li><strong>⚖️ Decisões:</strong> comparação de oportunidades e conversas profissionais.</li></ul></section>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar modelo de carreira..." oninput="aplicarFiltros()">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <div class="contador" id="contador"></div>
+</div>
+
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtro-nivel" id="filtrosNivel"><button class="ativo" data-nivel="todos">Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo de carreira que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
 const ordemCategorias=['🧭 Direção Profissional','📄 Oportunidades','🚀 Desenvolvimento','⚖️ Decisões Profissionais'];
-const prompts=[
-{id:1,categoria:'🧭 Direção Profissional',nivel:'intermediario',titulo:'🧭 Analisar Minha Carreira',quando:'Quando quiser entender melhor sua situação profissional atual.',conteudo:`Analise minha situação profissional atual:\n[CONTEXTO]\n\nConsidere:\n• Minha experiência e habilidades\n• Pontos fortes\n• Limitações ou lacunas\n• Oportunidades possíveis\n• Riscos e obstáculos\n\nAo final, apresente meus próximos passos em ordem de prioridade. Seja realista e não presuma informações que eu não forneci.`},
-{id:2,categoria:'📄 Oportunidades',nivel:'intermediario',titulo:'📄 Melhorar Currículo',quando:'Quando quiser adaptar seu currículo para uma oportunidade.',conteudo:`Revise meu currículo para a vaga de [VAGA].\n\nCurrículo:\n[COLAR CURRÍCULO]\n\nDescrição da vaga:\n[COLAR DESCRIÇÃO]\n\nMelhore:\n• Clareza e organização\n• Destaque das experiências mais relevantes\n• Palavras-chave compatíveis com a vaga\n• Resumo profissional\n• Descrição das atividades e resultados\n\nPreserve somente informações verdadeiras e não invente experiências, habilidades ou resultados.`},
-{id:3,categoria:'📄 Oportunidades',nivel:'intermediario',titulo:'🎤 Preparar Entrevista',quando:'Antes de uma entrevista de emprego ou processo seletivo.',conteudo:`Prepare-me para uma entrevista para a vaga de [VAGA].\n\nEmpresa: [EMPRESA]\nMeu perfil: [PERFIL]\nDescrição da vaga: [DESCRIÇÃO]\n\nCrie:\n• Perguntas prováveis\n• O que o recrutador busca em cada resposta\n• Sugestões para estruturar minhas respostas\n• Perguntas que eu posso fazer ao entrevistador\n• Pontos do meu perfil que devo destacar\n\nDepois, simule uma entrevista comigo uma pergunta por vez.`},
-{id:4,categoria:'🚀 Desenvolvimento',nivel:'intermediario',titulo:'🚀 Plano de Crescimento',quando:'Quando tiver um objetivo profissional e precisar de um caminho para alcançá-lo.',conteudo:`Crie um plano de desenvolvimento profissional para eu evoluir de:\n[SITUAÇÃO ATUAL]\n\nAté:\n[OBJETIVO]\n\nOrganize em etapas e inclua:\n• Habilidades prioritárias\n• Conhecimentos necessários\n• Experiências práticas\n• Metas de curto, médio e longo prazo\n• Como acompanhar minha evolução\n\nPriorize ações de maior impacto e explique a ordem recomendada.`},
-{id:5,categoria:'⚖️ Decisões Profissionais',nivel:'avancado',titulo:'⚖️ Comparar Oportunidades',quando:'Quando estiver escolhendo entre empregos, propostas ou caminhos profissionais.',conteudo:`Compare estas oportunidades profissionais:\n[OPÇÕES]\n\nMeu contexto e prioridades:\n[CONTEXTO]\n\nAnalise cada opção considerando:\n• Remuneração e benefícios\n• Potencial de crescimento\n• Estabilidade\n• Aprendizado\n• Rotina e qualidade de vida\n• Compatibilidade com meus objetivos\n• Riscos\n\nMonte uma comparação clara e indique em quais cenários cada opção seria a melhor escolha.`},
-{id:6,categoria:'🚀 Desenvolvimento',nivel:'intermediario',titulo:'🧠 Descobrir Habilidades que Faltam',quando:'Quando quiser identificar o que precisa aprender para avançar profissionalmente.',conteudo:`Meu objetivo profissional é:\n[OBJETIVO]\n\nMeu perfil atual:\n[PERFIL, EXPERIÊNCIAS E HABILIDADES]\n\nIdentifique:\n• Habilidades que já possuo e são úteis\n• Habilidades que preciso desenvolver\n• Lacunas mais importantes\n• O que devo aprender primeiro\n• Como praticar cada habilidade\n\nCrie uma ordem de prioridade baseada no impacto para alcançar meu objetivo.`},
-{id:7,categoria:'⚖️ Decisões Profissionais',nivel:'intermediario',titulo:'💬 Conversa Profissional Difícil',quando:'Para preparar uma conversa delicada no ambiente profissional.',conteudo:`Ajude-me a preparar uma conversa profissional sobre:\n[SITUAÇÃO]\n\nCom:\n[PESSOA OU FUNÇÃO]\n\nMeu objetivo é:\n[OBJETIVO]\n\nCrie uma abordagem clara, respeitosa e objetiva. Inclua:\n• Como iniciar a conversa\n• Como apresentar os fatos\n• Como explicar meu ponto de vista\n• Possíveis reações da outra pessoa\n• Como responder sem aumentar o conflito\n• Como buscar um próximo passo concreto.`},
-{id:8,categoria:'🧭 Direção Profissional',nivel:'avancado',titulo:'🔄 Mudar de Área',quando:'Quando estiver considerando uma transição de carreira.',conteudo:`Quero considerar uma mudança profissional de:\n[ÁREA ATUAL]\n\nPara:\n[NOVA ÁREA]\n\nMeu contexto:\n[EXPERIÊNCIA, HABILIDADES E LIMITAÇÕES]\n\nAnalise:\n• Habilidades transferíveis\n• Lacunas de conhecimento\n• Barreiras de entrada\n• Riscos financeiros e profissionais\n• Formas de testar a nova área antes de uma mudança definitiva\n• Caminho gradual de transição\n\nCrie um plano realista em etapas e indique quais informações ainda preciso descobrir antes de decidir.`}
+
+const dadosBrutos=[
+{categoria:'🧭 Direção Profissional',nivel:'intermediario',titulo:'🧭 Analisar Minha Carreira',quando:'Quando quiser entender melhor sua situação profissional atual.',prompt:`Analise minha situação profissional atual:\n[CONTEXTO]\n\nConsidere:\n• Minha experiência e habilidades\n• Pontos fortes\n• Limitações ou lacunas\n• Oportunidades possíveis\n• Riscos e obstáculos\n\nAo final, apresente meus próximos passos em ordem de prioridade. Seja realista e não presuma informações que eu não forneci.`,en:`Analyze my current professional situation:\n[CONTEXT]\n\nConsider:\n• My experience and skills\n• Strengths\n• Limitations or gaps\n• Possible opportunities\n• Risks and obstacles\n\nAt the end, present my next steps in order of priority. Be realistic and do not assume information I haven't provided.`},
+{categoria:'📄 Oportunidades',nivel:'intermediario',titulo:'📄 Melhorar Currículo',quando:'Quando quiser adaptar seu currículo para uma oportunidade.',prompt:`Revise meu currículo para a vaga de [VAGA].\n\nCurrículo:\n[COLAR CURRÍCULO]\n\nDescrição da vaga:\n[COLAR DESCRIÇÃO]\n\nMelhore:\n• Clareza e organização\n• Destaque das experiências mais relevantes\n• Palavras-chave compatíveis com a vaga\n• Resumo profissional\n• Descrição das atividades e resultados\n\nPreserve somente informações verdadeiras e não invente experiências, habilidades ou resultados.`,en:`Review my resume for the position of [JOB TITLE].\n\nResume:\n[PASTE RESUME]\n\nJob description:\n[PASTE DESCRIPTION]\n\nImprove:\n• Clarity and organization\n• Highlighting the most relevant experiences\n• Keywords matching the job\n• Professional summary\n• Description of activities and results\n\nKeep only true information and do not invent experiences, skills, or results.`},
+{categoria:'📄 Oportunidades',nivel:'intermediario',titulo:'🎤 Preparar Entrevista',quando:'Antes de uma entrevista de emprego ou processo seletivo.',prompt:`Prepare-me para uma entrevista para a vaga de [VAGA].\n\nEmpresa: [EMPRESA]\nMeu perfil: [PERFIL]\nDescrição da vaga: [DESCRIÇÃO]\n\nCrie:\n• Perguntas prováveis\n• O que o recrutador busca em cada resposta\n• Sugestões para estruturar minhas respostas\n• Perguntas que eu posso fazer ao entrevistador\n• Pontos do meu perfil que devo destacar\n\nDepois, simule uma entrevista comigo uma pergunta por vez.`,en:`Prepare me for an interview for the position of [JOB TITLE].\n\nCompany: [COMPANY]\nMy profile: [PROFILE]\nJob description: [DESCRIPTION]\n\nCreate:\n• Likely questions\n• What the recruiter is looking for in each answer\n• Suggestions to structure my answers\n• Questions I can ask the interviewer\n• Points of my profile I should highlight\n\nThen, simulate an interview with me, one question at a time.`},
+{categoria:'🚀 Desenvolvimento',nivel:'intermediario',titulo:'🚀 Plano de Crescimento',quando:'Quando tiver um objetivo profissional e precisar de um caminho para alcançá-lo.',prompt:`Crie um plano de desenvolvimento profissional para eu evoluir de:\n[SITUAÇÃO ATUAL]\n\nAté:\n[OBJETIVO]\n\nOrganize em etapas e inclua:\n• Habilidades prioritárias\n• Conhecimentos necessários\n• Experiências práticas\n• Metas de curto, médio e longo prazo\n• Como acompanhar minha evolução\n\nPriorize ações de maior impacto e explique a ordem recomendada.`,en:`Create a professional development plan for me to grow from:\n[CURRENT SITUATION]\n\nTo:\n[GOAL]\n\nOrganize into stages and include:\n• Priority skills\n• Necessary knowledge\n• Practical experiences\n• Short, medium, and long-term goals\n• How to track my progress\n\nPrioritize the highest-impact actions and explain the recommended order.`},
+{categoria:'⚖️ Decisões Profissionais',nivel:'avancado',titulo:'⚖️ Comparar Oportunidades',quando:'Quando estiver escolhendo entre empregos, propostas ou caminhos profissionais.',prompt:`Compare estas oportunidades profissionais:\n[OPÇÕES]\n\nMeu contexto e prioridades:\n[CONTEXTO]\n\nAnalise cada opção considerando:\n• Remuneração e benefícios\n• Potencial de crescimento\n• Estabilidade\n• Aprendizado\n• Rotina e qualidade de vida\n• Compatibilidade com meus objetivos\n• Riscos\n\nMonte uma comparação clara e indique em quais cenários cada opção seria a melhor escolha.`,en:`Compare these professional opportunities:\n[OPTIONS]\n\nMy context and priorities:\n[CONTEXT]\n\nAnalyze each option considering:\n• Compensation and benefits\n• Growth potential\n• Stability\n• Learning\n• Routine and quality of life\n• Compatibility with my goals\n• Risks\n\nBuild a clear comparison and indicate in which scenarios each option would be the best choice.`},
+{categoria:'🚀 Desenvolvimento',nivel:'intermediario',titulo:'🧠 Descobrir Habilidades que Faltam',quando:'Quando quiser identificar o que precisa aprender para avançar profissionalmente.',prompt:`Meu objetivo profissional é:\n[OBJETIVO]\n\nMeu perfil atual:\n[PERFIL, EXPERIÊNCIAS E HABILIDADES]\n\nIdentifique:\n• Habilidades que já possuo e são úteis\n• Habilidades que preciso desenvolver\n• Lacunas mais importantes\n• O que devo aprender primeiro\n• Como praticar cada habilidade\n\nCrie uma ordem de prioridade baseada no impacto para alcançar meu objetivo.`,en:`My professional goal is:\n[GOAL]\n\nMy current profile:\n[PROFILE, EXPERIENCE, AND SKILLS]\n\nIdentify:\n• Skills I already have that are useful\n• Skills I need to develop\n• Most important gaps\n• What I should learn first\n• How to practice each skill\n\nCreate a priority order based on impact toward reaching my goal.`},
+{categoria:'⚖️ Decisões Profissionais',nivel:'intermediario',titulo:'💬 Conversa Profissional Difícil',quando:'Para preparar uma conversa delicada no ambiente profissional.',prompt:`Ajude-me a preparar uma conversa profissional sobre:\n[SITUAÇÃO]\n\nCom:\n[PESSOA OU FUNÇÃO]\n\nMeu objetivo é:\n[OBJETIVO]\n\nCrie uma abordagem clara, respeitosa e objetiva. Inclua:\n• Como iniciar a conversa\n• Como apresentar os fatos\n• Como explicar meu ponto de vista\n• Possíveis reações da outra pessoa\n• Como responder sem aumentar o conflito\n• Como buscar um próximo passo concreto.`,en:`Help me prepare a professional conversation about:\n[SITUATION]\n\nWith:\n[PERSON OR ROLE]\n\nMy goal is:\n[GOAL]\n\nCreate a clear, respectful, and objective approach. Include:\n• How to start the conversation\n• How to present the facts\n• How to explain my point of view\n• Possible reactions from the other person\n• How to respond without escalating conflict\n• How to seek a concrete next step.`},
+{categoria:'🧭 Direção Profissional',nivel:'avancado',titulo:'🔄 Mudar de Área',quando:'Quando estiver considerando uma transição de carreira.',prompt:`Quero considerar uma mudança profissional de:\n[ÁREA ATUAL]\n\nPara:\n[NOVA ÁREA]\n\nMeu contexto:\n[EXPERIÊNCIA, HABILIDADES E LIMITAÇÕES]\n\nAnalise:\n• Habilidades transferíveis\n• Lacunas de conhecimento\n• Barreiras de entrada\n• Riscos financeiros e profissionais\n• Formas de testar a nova área antes de uma mudança definitiva\n• Caminho gradual de transição\n\nCrie um plano realista em etapas e indique quais informações ainda preciso descobrir antes de decidir.`,en:`I'm considering a professional change from:\n[CURRENT AREA]\n\nTo:\n[NEW AREA]\n\nMy context:\n[EXPERIENCE, SKILLS, AND LIMITATIONS]\n\nAnalyze:\n• Transferable skills\n• Knowledge gaps\n• Barriers to entry\n• Financial and professional risks\n• Ways to test the new area before a definitive change\n• Gradual transition path\n\nCreate a realistic step-by-step plan and indicate what information I still need to find out before deciding.`}
 ];
-const cat=document.getElementById('botoes-categoria');cat.innerHTML='<button class="ativo" onclick="filtrarCategoria(event,\'todas\')">Todas as Categorias</button>'+ordemCategorias.map(c=>`<button onclick="filtrarCategoria(event,'${c}')">${c}</button>`).join('');const lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador');let nivel='todos',categoria='todas';function renderizar(arr){lista.innerHTML='';contador.textContent=`Total: ${arr.length} modelo${arr.length!==1?'s':''}`;ordemCategorias.forEach(c=>{const grupo=arr.filter(p=>p.categoria===c);if(!grupo.length)return;const sec=document.createElement('section');sec.className='secao-categoria';sec.innerHTML=`<h2 class="secao-titulo">${c}</h2><div class="grid-prompts"></div>`;const grid=sec.querySelector('.grid-prompts');grupo.forEach(p=>{const card=document.createElement('div');card.className='card';card.dataset.prompt=p.conteudo;card.dataset.titulo=p.titulo;card.innerHTML=`<div class="nivel nivel-${p.nivel}">${p.nivel==='avancado'?'🔴 Avançado':p.nivel==='intermediario'?'🟡 Intermediário':'🟢 Básico'}</div><h3>${p.titulo}</h3><p><strong>📌 Quando usar:</strong> ${p.quando}</p><pre>${p.conteudo}</pre><div class="acoes"><button onclick="copiar(this)">📋 Copiar</button><button onclick="favoritar(this)">⭐ Favoritar</button><button onclick="abrirIA(this,'chatgpt')">💬 ChatGPT</button><button onclick="abrirIA(this,'gemini')">🔷 Gemini</button></div>`;grid.appendChild(card)});lista.appendChild(sec)})}function atualizarFiltros(){const q=busca.value.toLowerCase();renderizar(prompts.filter(p=>(p.titulo+' '+p.categoria+' '+p.quando+' '+p.conteudo).toLowerCase().includes(q)&&(nivel==='todos'||p.nivel===nivel)&&(categoria==='todas'||p.categoria===categoria)))}function filtrarCategoria(e,c){document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');categoria=c;atualizarFiltros()}function filtrarNivel(e,n){document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');nivel=n;atualizarFiltros()}function card(btn){return btn.closest('.card')}function copiar(btn){navigator.clipboard.writeText(card(btn).dataset.prompt);alert('📋 Prompt copiado!')}function favoritar(btn){const c=card(btn),itens=JSON.parse(localStorage.getItem('deltaPrompts'))||[];itens.push({id:Date.now(),titulo:c.dataset.titulo,categoria:'Carreira',conteudo:c.dataset.prompt,favorito:true});localStorage.setItem('deltaPrompts',JSON.stringify(itens));alert('⭐ Adicionado aos favoritos!')}function abrirIA(btn,ia){const p=encodeURIComponent(card(btn).dataset.prompt);window.open(ia==='chatgpt'?'https://chat.openai.com/?prompt='+p:'https://gemini.google.com/app?prompt='+p,'_blank')}renderizar(prompts);
+
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'carreira-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.prompt,promptEn:p.en,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const lista=document.getElementById("lista-prompts"),contador=document.getElementById("contador"),busca=document.getElementById("busca"),ordenarSelect=document.getElementById("ordenar");
+const idiomaAtivo={};
+
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Carreira',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaCarreiraUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaCarreiraUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaCarreiraFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaCarreiraFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={up:0,down:0,voto:null};if(atual===tipo){fb[id][tipo]=Math.max(0,fb[id][tipo]-1);fb[id].voto=null}else{if(atual)fb[id][atual]=Math.max(0,fb[id][atual]-1);fb[id][tipo]=(fb[id][tipo]||0)+1;fb[id].voto=tipo}_saveFeedback(fb);atualizarFeedbackUI(id);mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!')}
+function atualizarFeedbackUI(id){const fb=_loadFeedback()[id]||{up:0,down:0,voto:null};const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);if(up){up.textContent='👍 '+fb.up;up.classList.toggle('marcado',fb.voto==='up')}if(down){down.textContent='👎 '+fb.down;down.classList.toggle('marcado',fb.voto==='down')}}
+
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
+
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📊 '+p.titulo+'\n\nConfira esse modelo de análise no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';ordenarSelect.value='padrao';aplicarFiltros();requestAnimationFrame(()=>destacarCard(id))}
+
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📊 CARREIRA — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-carreira.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de carreira para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Carreira').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 💼 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre id="pre-${p.id}">${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">💬 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">🔷 Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
+}
+
+function renderizar(arr){
+  lista.innerHTML="";
+  contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+  if(ordenarSelect.value==='padrao'){
+    ordemCategorias.forEach(cat=>{
+      const grupo=arr.filter(p=>p.categoria===cat);
+      if(grupo.length===0)return;
+      const tituloSecao=document.createElement("h2");
+      tituloSecao.className="secao-titulo";
+      tituloSecao.innerText=cat;
+      lista.appendChild(tituloSecao);
+      grupo.forEach(p=>lista.appendChild(criarCard(p)));
+    });
+  }else{
+    arr.forEach(p=>lista.appendChild(criarCard(p)));
+  }
+}
+
+function contarFiltrosAtivos(){const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';return nivel!=='todos'?1:0}
+function atualizarBadgeFiltros(){const n=contarFiltrosAtivos();const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}else{badge.style.display='none';btn.classList.remove('ativo')}}
+function atualizarContadoresNivel(){
+  const termo=busca.value.toLowerCase();
+  const base=prompts.filter(p=>(p.titulo+p.prompt+p.categoria).toLowerCase().includes(termo));
+  document.querySelectorAll('#filtrosNivel button').forEach(btn=>{
+    const n=btn.dataset.nivel==='todos'?base.length:base.filter(p=>p.nivel===btn.dataset.nivel).length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
+}
+
+function aplicarFiltros(){
+  const termo=busca.value.toLowerCase();
+  const nivelAtivo=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';
+  let filtrados=prompts.filter(p=>(p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo))&&(nivelAtivo==='todos'||p.nivel===nivelAtivo));
+  filtrados=ordenarLista(filtrados);
+  renderizar(filtrados);
+  atualizarContadoresNivel();
+  atualizarBadgeFiltros();
+}
+
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';aplicarFiltros();mostrarToast('✕ Filtros limpos')}
+
+document.querySelectorAll('#filtrosNivel button').forEach(b=>{b.dataset.label=b.textContent.trim();b.addEventListener('click',()=>{document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()})});
+
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+ordenarSelect.addEventListener('change',aplicarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+aplicarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
 </script></body></html>
