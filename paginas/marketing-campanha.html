@@ -144,8 +144,18 @@ const dadosBrutos=[
 {segmento:'🌐 Geral',categoria:'🏪 Marca & Institucional',nivel:'intermediario',titulo:'🌟 Depoimento Institucional de Cliente',quando:'Para reforçar a reputação da loja através de um depoimento, sem citar produto.',conteudo:`Crie uma peça de depoimento institucional para a loja:\n[NOME]\n\nUsando este relato real: [DEPOIMENTO DO CLIENTE]\n\nInclua:\n• Destaque para o depoimento\n• Tom de confiança e gratidão\n• Foco na experiência com a loja, não em um produto específico\n\nIMPORTANTE: use apenas depoimentos reais fornecidos, nunca invente. Entregue como peça separada, sem mockup.`,en:`Create an institutional testimonial piece for the store:\n[NAME]\n\nUsing this real account: [CLIENT TESTIMONIAL]\n\nInclude:\n• Highlight for the testimonial\n• Tone of trust and gratitude\n• Focus on the experience with the store, not a specific product\n\nIMPORTANT: use only real testimonials provided, never invent. Deliver as a separate piece, no mockup.`,imagem:'photo-1556740758-90de374c12ad'}
 ];
 
+function instrucaoManterProduto(){
+  return ' IMPORTANTE: use a foto do produto enviada como referência exata. Preserve fielmente a embalagem, o rótulo, a marca, o logotipo, as cores, o formato e todos os textos e informações visíveis no produto original. Não invente um produto diferente, não altere o design da embalagem nem troque cores, fontes ou o nome da marca. O produto no resultado final precisa ser claramente reconhecível como o mesmo produto da foto enviada, apenas inserido no novo contexto, cenário ou composição descritos acima.';
+}
+function instrucaoManterProdutoEN(){
+  return ' IMPORTANT: use the uploaded product photo as an exact reference. Faithfully preserve the packaging, label, brand, logo, colors, shape, and all text and information visible on the original product. Do not invent a different product, do not change the packaging design, and do not swap colors, fonts, or the brand name. The product in the final result must be clearly recognizable as the same product from the uploaded photo, only placed in the new context, scene, or composition described above.';
+}
 const prompts=dadosBrutos.map((p,i)=>{
-  const obj={id:'mkt-'+i,segmento:p.segmento,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.conteudo,promptEn:p.en,imagem:p.imagem,novo:i>=15};
+  const categoriasProduto=['📢 Banners & Promoções','📱 Redes Sociais & Anúncios','💬 WhatsApp Business','🎯 Aquisição & Fidelização','🎨 Campanhas & Direção de Arte','🛒 E-commerce & Vitrines'];
+  const ehProduto=(p.segmento==='💄 Beleza & Cosméticos'&&p.titulo!=='💅 Antes e Depois de Resultado de Beleza')||(p.segmento==='🌐 Geral'&&categoriasProduto.includes(p.categoria));
+  const promptPt=ehProduto?p.conteudo+instrucaoManterProduto():p.conteudo;
+  const promptEn=ehProduto?p.en+instrucaoManterProdutoEN():p.en;
+  const obj={id:'mkt-'+i,segmento:p.segmento,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:promptPt,promptEn:promptEn,imagem:p.imagem,novo:i>=15};
   obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
   return obj;
 });
