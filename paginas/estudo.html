@@ -14,7 +14,7 @@
 <body>
 
 <div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js?v=20260813"></script>
+<script src="/delta-prompts/menu-loader.js?v=20260814"></script>
 
 <main>
 
@@ -589,8 +589,8 @@ function atualizarBadgeFiltrosEstudo(){
   else{badge.style.display='none';btn.classList.remove('ativo')}
 }
 function atualizarContadoresFiltrosEstudo(){
-  const termo=busca.value.toLowerCase();
-  const base=promptsEstudo.filter(p=>p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo));
+  const termo=norm(busca.value);
+  const base=promptsEstudo.filter(p=>norm(p.titulo).includes(termo)||norm(p.prompt).includes(termo)||norm(p.quando).includes(termo)||norm(p.categoria).includes(termo));
   document.querySelectorAll('.filtro-nivel button').forEach(btn=>{
     if(!btn.dataset.label)btn.dataset.label=btn.textContent.trim();
     const map={'Todos':null,'🟢 Básico':'basico','🟡 Intermediário':'intermediario','🔴 Avançado':'avancado'};
@@ -738,13 +738,15 @@ function renderizar(arr) {
   }
 }
 
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function filtrarPrompts() {
-  const termo = busca.value.toLowerCase();
+  const termo = norm(busca.value);
   let filtrados = promptsEstudo.filter(p =>
     (nivelAtivo === 'todos' || p.nivel === nivelAtivo) &&
-    (p.titulo.toLowerCase().includes(termo) ||
-    p.prompt.toLowerCase().includes(termo) ||
-    p.categoria.toLowerCase().includes(termo))
+    (norm(p.titulo).includes(termo) ||
+    norm(p.prompt).includes(termo) ||
+    norm(p.quando).includes(termo) ||
+    norm(p.categoria).includes(termo))
   );
   filtrados = ordenarLista(filtrados);
   renderizar(filtrados);

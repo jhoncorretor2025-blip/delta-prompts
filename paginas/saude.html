@@ -159,7 +159,7 @@ pre {
 <body>
 
 <div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js?v=20260813"></script>
+<script src="/delta-prompts/menu-loader.js?v=20260814"></script>
 
 <main>
 
@@ -395,7 +395,7 @@ Grau de confiança`
 categoria:"🔎 Autoconhecimento",
 nivel:"intermediario",
 titulo:"🤒🔍 Investigação Estruturada de Sintomas",
-quando:"Quando estiver com sintomas e quiser organizar hipóteses.",
+quando:"Quando estiver com sintomas e quiser organizar hipóteses (ex: dor de estômago, ardência ao urinar, dor de cabeça, tontura).",
 prompt:`Tenho os seguintes sintomas:
 
 [DESCREVER]
@@ -419,7 +419,7 @@ Não conclua cedo demais e indique limitações.`
 categoria:"📋 Planejamento",
 nivel:"intermediario",
 titulo:"📚🦠 Pesquisa Profunda de Doença",
-quando:"Para estudar doenças ou condições médicas.",
+quando:"Para estudar qualquer doença ou condição, como gastrite, infecção urinária, enxaqueca, ansiedade, hipertensão, diabetes, entre outras.",
 prompt:`Quero estudar:
 
 [DOENÇA]
@@ -461,7 +461,7 @@ Priorize transparência e limitações.`
 categoria:"📋 Planejamento",
 nivel:"basico",
 titulo:"💊🧪 Entender Medicamentos e Exames",
-quando:"Para entender exames e medicamentos em linguagem simples.",
+quando:"Para entender exames e medicamentos em linguagem simples (ex: bula de um remédio, exame de sangue, ultrassom).",
 prompt:`Explique:
 
 [MEDICAMENTO OU EXAME]
@@ -606,8 +606,8 @@ function limparFiltrosSaude(){
   mostrarToast('✕ Filtros limpos');
 }
 function atualizarContadoresFiltrosSaude(){
-  const termo=busca.value.toLowerCase();
-  const base=promptsSaude.filter(p=>p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo));
+  const termo=norm(busca.value);
+  const base=promptsSaude.filter(p=>norm(p.titulo).includes(termo)||norm(p.prompt).includes(termo)||norm(p.quando).includes(termo)||norm(p.categoria).includes(termo));
   document.querySelectorAll('.filtro-categoria button').forEach(btn=>{
     if(!btn.dataset.label)btn.dataset.label=btn.textContent.trim();
     const cat=btn.dataset.label==='Todas as Categorias'?null:btn.dataset.label;
@@ -765,13 +765,15 @@ function renderizar(arr){
     }
 }
 
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function atualizarFiltros() {
-    estadoFiltroTexto = busca.value.toLowerCase();
+    estadoFiltroTexto = norm(busca.value);
     
     let filtrados = promptsSaude.filter(p => {
-        const matchTexto = p.titulo.toLowerCase().includes(estadoFiltroTexto) ||
-                           p.prompt.toLowerCase().includes(estadoFiltroTexto) ||
-                           p.categoria.toLowerCase().includes(estadoFiltroTexto);
+        const matchTexto = norm(p.titulo).includes(estadoFiltroTexto) ||
+                           norm(p.prompt).includes(estadoFiltroTexto) ||
+                           norm(p.quando).includes(estadoFiltroTexto) ||
+                           norm(p.categoria).includes(estadoFiltroTexto);
         
         const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
         const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria === estadoFiltroCategoria;
