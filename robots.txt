@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jhoncorretor2025-blip.github.io/delta-prompts/sitemap.xml
