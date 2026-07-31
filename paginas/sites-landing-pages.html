@@ -1,1 +1,309 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sites & Landing Pages | Delta Prompts</title><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.page-head p,.quando,.info-body{color:#667085}.info-mini{margin:14px 0;border:1px solid #e5e7eb;border-radius:14px;background:#fff;overflow:hidden}.info-mini button{width:100%;display:flex;justify-content:space-between;padding:14px 16px;border:0;background:transparent;font:inherit;font-weight:800;text-align:left}.info-body{display:none;padding:0 16px 16px}.info-mini.open .info-body{display:block}.journey{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.journey button{padding:16px;border:1px solid #e5e7eb;border-radius:15px;background:#fff;text-align:left;font:inherit;cursor:pointer}.journey button.ativo{border-color:#5b5ce2;background:#f3f3ff}.journey strong,.journey small{display:block}.journey small{margin-top:4px;color:#667085}.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0 14px}.top-bar input{flex:1;min-width:220px;padding:14px;border:1px solid #e6e8f0;border-radius:12px}.contador,.filter-label{font-weight:900}.filter-group{margin-bottom:15px}.filter-label{display:block;margin-bottom:8px}.filtros{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px}.filtros button{white-space:nowrap;padding:9px 13px;border:1px solid #e6e8f0;border-radius:999px;background:#fff;font-weight:800}.filtros .ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}#lista-prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.prompt-card{display:flex;flex-direction:column;padding:20px;border:1px solid #e5e7eb;border-radius:18px;background:#fff}.meta{display:flex;gap:7px;flex-wrap:wrap}.tag{padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800}.prompt-text{white-space:pre-wrap;background:#f8fafc;border:1px solid #e6e8f0;border-radius:12px;padding:14px;font-size:14px;line-height:1.55;max-height:105px;overflow:hidden}.prompt-text.aberto{max-height:none}.ver{align-self:flex-end;margin-top:8px;border:0;background:none;color:#4f46e5;font-weight:800}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:14px}.acoes button{flex:1;padding:11px;border:0;border-radius:11px;font-weight:800;background:#eef2ff;color:#4f46e5}.acoes .copiar{background:#5b5ce2;color:#fff}@media(max-width:720px){#lista-prompts,.journey{grid-template-columns:1fr}}</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260814"></script><main><header class="page-head"><h1>🌐 Sites & Landing Pages</h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header><section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Qual caminho escolher? <span>⌄</span></button><div class="info-body"><b>🟢 Criando do zero:</b> para quem ainda vai começar. <b>🟡 Site em andamento:</b> para quem já tem a página inicial ou parte do projeto e travou. <b>🔴 Site pronto:</b> para quem quer melhorar UX, visual, navegação, conversão e estrutura.</div></section><div class="journey" id="journey"><button data-fase="todos" class="ativo"><strong>✨ Todos</strong><small>Ver os 36 prompts</small></button><button data-fase="inicio"><strong>🟢 Criando do zero</strong><small>Planejar e construir</small></button><button data-fase="andamento"><strong>🟡 Site em andamento</strong><small>Continuar e melhorar</small></button><button data-fase="pronto"><strong>🔴 Site pronto</strong><small>Otimizar e profissionalizar</small></button></div><div class="top-bar"><input id="busca" type="search" placeholder="🔎 Buscar melhorias, visual, navegação, mobile..."><span id="contador" class="contador"></span></div><div class="filter-group"><span class="filter-label">🎯 Filtrar por tema</span><div class="filtros" id="temas"></div></div><div id="lista-prompts"></div></main><script>const P=(fase,categoria,titulo,quando,prompt)=>({fase,categoria,titulo,quando,prompt});const prompts=[P('andamento','Melhorias','Melhorar Meu Site Atual','Para começar pelas melhorias mais importantes do que já existe.','Analise meu site atual: [LINK, PRINTS OU CÓDIGO]. Primeiro identifique o que já existe e o que está funcionando. Depois proponha melhorias priorizadas em conteúdo, visual, navegação, organização, celular e computador. Não refaça tudo sem necessidade e não sugira recursos que o site já possui.'),P('andamento','Visual','Deixar Meu Site Mais Visual e Profissional','Para adaptar a aparência ao público certo.','Atue como especialista em UX/UI e design digital. Analise meu site: [LINK/PRINT]. Público principal: [PÚBLICO]. Objetivo: [OBJETIVO]. Sugira melhorias visuais e profissionais em cores, tipografia, espaçamento, imagens, cards, ícones, hierarquia e consistência. Preserve o que já funciona e explique as mudanças de maior impacto.'),P('inicio','Começar','Criar Meu Primeiro Site do Zero','Para quem ainda não sabe por onde começar.','Quero criar um site do zero para [PROJETO/NEGÓCIO]. Público: [PÚBLICO]. Objetivo: [OBJETIVO]. Guie-me passo a passo, começando pela estrutura mais simples possível. Defina páginas, seções da página inicial, navegação, conteúdo necessário e ordem de construção.'),P('inicio','Começar','Planejar Antes de Criar','Para definir o projeto antes de escrever código.','Ajude-me a planejar um site para [PROJETO]. Faça perguntas essenciais sobre objetivo, público, conteúdo e funcionalidades. Depois crie um plano simples com estrutura, prioridades e primeira versão mínima.'),P('inicio','Estrutura','Criar a Página Inicial','Para montar uma boa index.html.','Planeje uma página inicial para [NEGÓCIO]. Público: [PÚBLICO]. Objetivo principal: [OBJETIVO]. Organize as seções em ordem lógica, indique o conteúdo de cada uma, CTAs e navegação para celular e computador.'),P('inicio','Estrutura','Mapa Completo do Site','Para decidir quais páginas serão necessárias.','Crie um mapa de site para [PROJETO]. Sugira somente páginas realmente úteis, explique a função de cada uma e mostre como devem se conectar pelo menu.'),P('inicio','Visual','Definir Estilo Visual','Para criar uma direção visual coerente.','Crie uma direção visual para um site de [TIPO] voltado para [PÚBLICO]. Sugira estilo, cores, tipografia, imagens, formato dos cards e sensação que a interface deve transmitir.'),P('inicio','Navegação','Criar o Menu Inicial','Para começar com uma navegação simples.','Crie o menu ideal para um site de [PROJETO] com estas páginas ou recursos: [LISTA]. Organize para celular e computador sem deixar o menu grande ou confuso.'),P('inicio','Conteúdo','Criar Textos do Site','Para preencher as primeiras páginas.','Escreva os textos essenciais para meu site de [NEGÓCIO]. Público: [PÚBLICO]. Tom: [TOM]. Crie textos claros para início, sobre, serviços/produtos e contato sem inventar informações.'),P('inicio','Landing Pages','Landing Page Simples','Para criar uma página focada em uma ação.','Crie uma landing page para [PRODUTO/SERVIÇO]. Público: [PÚBLICO]. Objetivo: [OBJETIVO]. Estruture headline, benefícios, como funciona, prova quando disponível, CTA e FAQ.'),P('inicio','Mobile','Pensar o Site Primeiro no Celular','Para construir uma base mobile desde o início.','Planeje meu site [PROJETO] com abordagem mobile-first. Explique como organizar menu, seções, botões, textos, imagens e ações para funcionar bem com uma mão e depois adaptar ao computador.'),P('andamento','Continuação','Tenho Só a Index e Travei','Para quem criou a Home e não sabe o próximo passo.','Já tenho a página inicial deste site: [LINK/CÓDIGO]. Analise o que já foi feito e me diga exatamente o que construir depois. Crie uma sequência de próximos passos, páginas e recursos por prioridade, sem recomeçar o projeto do zero.'),P('andamento','Continuação','Criar as Próximas Páginas','Para expandir um site que já começou.','Analise minha página inicial: [LINK/CÓDIGO]. Com base no objetivo [OBJETIVO], recomende as próximas páginas e explique conteúdo, função e ligação de cada uma com a Home.'),P('andamento','Melhorias','20 Coisas que Faltam no Meu Site','Para descobrir oportunidades sem repetir o que já existe.','Analise meu site completo: [LINK/PROJETO]. Primeiro liste o que já existe. Depois mostre exatamente 20 coisas úteis que ainda faltam. Para cada item informe benefício, prioridade e dificuldade. Não sugira recursos repetidos.'),P('andamento','Navegação','Como Está a Navegação do Meu Site?','Para descobrir se o usuário encontra o que procura.','Audite a navegação deste site: [LINK/PRINTS/CÓDIGO]. Analise menu, categorias, nomes, caminhos, busca, filtros e consistência. Mostre o que funciona, confusões e melhorias prioritárias.'),P('andamento','Navegação','Organizar Menu sem Ficar Grande','Para sites que começaram a ganhar muitas páginas.','Analise as páginas e opções deste site: [LINK/LISTA]. Reorganize o menu em grupos intuitivos. Mostre o que fica visível e o que deve virar submenu no celular e computador.'),P('andamento','Mobile','Melhorar Meu Site no Celular','Para corrigir a experiência mobile.','Analise meu site no celular: [LINK/PRINTS]. Avalie menu, busca, cards, textos, botões, rolagem, filtros e uso com uma mão. Entregue melhorias em ordem de prioridade.'),P('andamento','Desktop','Melhorar Meu Site no Computador','Para aproveitar melhor telas maiores.','Analise meu site no computador: [LINK/PRINTS]. Avalie largura, colunas, menu, hierarquia, espaço, filtros e legibilidade. Sugira melhorias sem prejudicar o mobile.'),P('andamento','Consistência','Padronizar Todas as Páginas','Para sites onde cada página parece diferente.','Analise as páginas deste site: [LINKS/CÓDIGO]. Crie um padrão único para cabeçalhos, filtros, cards, botões, espaçamentos, cores e navegação. Liste as inconsistências e como corrigir.'),P('andamento','Conteúdo','Melhorar Clareza dos Textos','Para deixar o conteúdo mais fácil de entender.','Revise os textos deste site: [LINK/TEXTO]. Público: [PÚBLICO]. Identifique trechos confusos, longos ou genéricos e proponha versões mais claras sem alterar informações verdadeiras.'),P('andamento','UX/UI','Melhorar Cards e Componentes','Para profissionalizar os elementos repetidos.','Analise os cards e componentes desta interface: [PRINT/CÓDIGO]. Sugira um padrão visual e funcional consistente para títulos, descrições, tags, botões, estados e versão mobile.'),P('andamento','Conversão','Melhorar Chamadas para Ação','Para deixar claro o próximo passo do usuário.','Analise os CTAs deste site: [LINK]. Identifique páginas sem ação clara, botões genéricos ou excesso de opções. Sugira textos, posições e hierarquia melhores.'),P('andamento','Estrutura','Encontrar Páginas que Devem Ser Unidas','Para simplificar sites que cresceram desorganizados.','Analise a estrutura deste site: [LINK/LISTA]. Identifique páginas com funções semelhantes que poderiam ser unidas, mantendo filtros ou categorias internas. Explique o que unir, manter separado ou renomear.'),P('pronto','Auditoria','Auditoria Completa do Site','Para avaliar um projeto já desenvolvido.','Atue como equipe sênior de produto, UX/UI, conteúdo e conversão. Analise meu site completo: [LINK/PROJETO]. Avalie arquitetura, navegação, visual, consistência, conteúdo, confiança, acessibilidade, mobile e desktop. Entregue melhorias priorizadas sem repetir recursos existentes.'),P('pronto','UX/UI','Auditoria Profissional de UX/UI','Para encontrar atritos na experiência.','Revise este site: [LINK/PRINT/CÓDIGO]. Usuário: [PÚBLICO]. Tarefa principal: [TAREFA]. Analise clareza, atritos, hierarquia, navegação, feedback, acessibilidade e mobile. Finalize com 5 mudanças rápidas de alto impacto.'),P('pronto','Navegação','Navegação Avançada Mobile e Desktop','Para redesenhar a arquitetura de navegação.','Analise separadamente a navegação no CELULAR e COMPUTADOR deste site: [LINK]. Proponha uma estrutura completa para cada dispositivo, mantendo consistência e reduzindo passos desnecessários.'),P('pronto','Conversão','20 Melhorias para uma Página','Para uma análise detalhada de uma página específica.','Analise esta página: [LINK/PRINT/CÓDIGO]. Entregue exatamente 20 melhorias priorizadas com problema, mudança, benefício, prioridade e implementação simples. Avalie visual, CTA, confiança, navegação, responsividade e acessibilidade.'),P('pronto','Conversão','Auditoria de Conversão','Para melhorar uma página orientada a resultados.','Analise esta página: [LINK]. Contexto: [PRODUTO]. Público: [PÚBLICO]. Objetivo: [OBJETIVO]. Avalie CTA, hierarquia, copy, confiança, fricções e responsividade. Entregue 10 melhorias priorizadas.'),P('pronto','SEO','SEO Essencial','Para melhorar a estrutura de busca.','Crie um plano de SEO on-page para [PÁGINA/TEMA]. Sugira title, meta description, H1, H2, intenção de busca, conteúdo, links internos e FAQ sem inventar dados de volume.'),P('pronto','Acessibilidade','Revisão de Acessibilidade','Para tornar o site utilizável por mais pessoas.','Revise a acessibilidade deste site: [LINK/CÓDIGO]. Analise contraste, títulos, teclado, foco, textos alternativos, formulários, botões e mensagens de erro. Priorize por impacto.'),P('pronto','Estratégia','Jornada do Usuário','Para entender o caminho ideal até a conversão.','Mapeie a jornada do usuário deste site: [LINK]. Comece pela entrada, mostre as etapas de navegação, possíveis dúvidas, pontos de atrito e o caminho mais curto até a ação desejada.'),P('pronto','Análise','Comparar Antes e Depois','Para validar uma reformulação.','Compare a versão A [ANTIGA] e B [NOVA]. Analise navegação, clareza, visual, conteúdo, mobile, desktop e acessibilidade. Mostre o que melhorou, piorou e ainda precisa ser ajustado.'),P('pronto','Estratégia','Plano de Evolução do Site','Para transformar análise em execução.','Com base neste site ou auditoria: [LINK/CONTEÚDO], crie um plano dividido em correções urgentes, melhorias rápidas, mudanças estruturais e recursos futuros. Informe impacto, esforço e ordem.'),P('pronto','Landing Pages','Landing Page de Alta Conversão','Para projetos mais maduros e campanhas.','Crie uma landing page completa para [PRODUTO]. Público: [PÚBLICO]. Oferta: [OFERTA]. Inclua proposta de valor, benefícios, objeções, provas disponíveis, CTAs, FAQ e hipóteses de teste sem inventar resultados.'),P('pronto','Navegação','Menu Inteligente com Submenus','Para revisar menus do site atual e deixar a navegação mais clara.','Analise o menu atual do site e identifique o que está funcionando, o que está confuso e o que está faltando. Depois proponha 4 categorias principais separadas, com submenus bem organizados para cada uma. Para cada categoria, explique o objetivo, o que deve entrar nela e quais páginas ou links devem ficar dentro do submenu. Finalize com 5 dicas práticas para melhorar a navegação, a clareza dos nomes e o acesso rápido ao que o usuário procura.')];let fase='todos',tema='Todos';const lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),temas=document.getElementById('temas');function faseLabel(f){return f==='inicio'?'🟢 Criando do zero':f==='andamento'?'🟡 Em andamento':'🔴 Site pronto'}function criarTemas(){const ts=['Todos',...new Set(prompts.map(x=>x.categoria))];temas.innerHTML=ts.map(t=>`<button class="${t===tema?'ativo':''}" data-t="${t}">${t}</button>`).join('');temas.querySelectorAll('button').forEach(b=>b.onclick=()=>{tema=b.dataset.t;criarTemas();render()})}function copiar(t,b){navigator.clipboard.writeText(t).then(()=>{let a=b.textContent;b.textContent='✓ Copiado';setTimeout(()=>b.textContent=a,1200)})}function abrir(t,u){navigator.clipboard.writeText(t).finally(()=>window.open(u,'_blank'))}function render(){const q=busca.value.toLowerCase(),f=prompts.filter(x=>(fase==='todos'||x.fase===fase)&&(tema==='Todos'||x.categoria===tema)&&(x.titulo+' '+x.quando+' '+x.prompt).toLowerCase().includes(q));contador.textContent=f.length+' de '+prompts.length+' prompts';lista.innerHTML=f.map(x=>`<article class="prompt-card"><div class="meta"><span class="tag">${faseLabel(x.fase)}</span><span class="tag">${x.categoria}</span></div><h3>${x.titulo}</h3><p class="quando">💡 ${x.quando}</p><div class="prompt-text">${x.prompt}</div><button class="ver" onclick="let p=this.previousElementSibling;p.classList.toggle('aberto');this.textContent=p.classList.contains('aberto')?'Mostrar menos':'Ver prompt completo'">Ver prompt completo</button><div class="acoes"><button class="copiar" onclick='copiar(${JSON.stringify(x.prompt)},this)'>📋 Copiar</button><button onclick='abrir(${JSON.stringify(x.prompt)},"https://chatgpt.com/")'>🤖 ChatGPT</button><button onclick='abrir(${JSON.stringify(x.prompt)},"https://gemini.google.com/")'>✨ Gemini</button></div></article>`).join('')||'<p>Nenhum prompt encontrado.</p>'}document.querySelectorAll('#journey button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#journey button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');fase=b.dataset.fase;render()});busca.oninput=render;criarTemas();render();</script></body></html>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sites & Landing Pages | Delta Prompts</title><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.page-head p,.quando,.info-body{color:#667085}.info-mini{margin:14px 0;border:1px solid #e5e7eb;border-radius:14px;background:#fff;overflow:hidden}.info-mini button{width:100%;display:flex;justify-content:space-between;padding:14px 16px;border:0;background:transparent;font:inherit;font-weight:800;text-align:left;cursor:pointer}.info-body{display:none;padding:0 16px 16px}.info-mini.open .info-body{display:block}.journey{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.journey button{padding:16px;border:1px solid #e5e7eb;border-radius:15px;background:#fff;text-align:left;font:inherit;cursor:pointer;position:relative}.journey button.ativo{border-color:#5b5ce2;background:#f3f3ff}.journey strong,.journey small{display:block}.journey small{margin-top:4px;color:#667085}.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0 14px}.top-bar input{flex:1;min-width:220px;padding:14px;border:1px solid #e6e8f0;border-radius:12px}.contador,.filter-label{font-weight:900}.filter-group{margin-bottom:15px}.filter-label{display:block;margin-bottom:8px}.filtros{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px;flex-wrap:wrap}.filtros button{white-space:nowrap;padding:9px 13px;border:1px solid #e6e8f0;border-radius:999px;background:#fff;font-weight:800;cursor:pointer}.filtros .ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}#lista-prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.prompt-card{display:flex;flex-direction:column;padding:20px;border:1px solid #e5e7eb;border-radius:18px;background:#fff}.meta{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.tag,.uso-badge{padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800}.uso-badge{background:#fef3c7;color:#b45309}.prompt-text{white-space:pre-wrap;background:#f8fafc;border:1px solid #e6e8f0;border-radius:12px;padding:14px;font-size:14px;line-height:1.55;max-height:105px;overflow:hidden}.prompt-text.aberto{max-height:none}.ver{align-self:flex-end;margin-top:8px;border:0;background:none;color:#4f46e5;font-weight:800;cursor:pointer}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:14px}.acoes button{flex:1;min-width:100px;padding:11px;border:0;border-radius:11px;font-weight:800;background:#eef2ff;color:#4f46e5;cursor:pointer}.acoes .copiar{background:#5b5ce2;color:#fff}.acoes .favoritar.is-fav{background:#fff1f2;color:#be123c}.acoes .compartilhar{background:#f0fdf4;color:#15803d}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(79,70,229,.12);color:#4f46e5}
+.filtros .ativo .count-badge,.journey button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.journey .count-badge{position:absolute;top:12px;right:14px}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e6e8f0;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#4f46e5}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #e6e8f0;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#4f46e5;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.sugerir-box{border:1px solid #e6e8f0;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e6e8f0;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:0 0 12px;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e6e8f0}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e6e8f0;border-radius:9px;font-size:13.5px;font-family:inherit}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e6e8f0;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #4f46e5;outline-offset:3px}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e6e8f0;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#4f46e5;color:#4f46e5}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] .info-mini,[data-theme="dark"] .journey button,[data-theme="dark"] .prompt-card,[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .prompt-text{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .btn-mais-filtros,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:720px){#lista-prompts,.journey{grid-template-columns:1fr}.theme-toggle{bottom:90px}}</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260815"></script><main>
+
+<header class="page-head"><h1>🌐 Sites & Landing Pages</h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
+
+<section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Qual caminho escolher? <span>⌄</span></button><div class="info-body"><b>🟢 Criando do zero:</b> para quem ainda vai começar. <b>🟡 Site em andamento:</b> para quem já tem a página inicial ou parte do projeto e travou. <b>🔴 Site pronto:</b> para quem quer melhorar UX, visual, navegação, conversão e estrutura.</div></section>
+
+<div class="journey" id="journey">
+  <button data-fase="todos" class="ativo"><strong>✨ Todos</strong><small>Ver todos os prompts</small></button>
+  <button data-fase="inicio"><strong>🟢 Criando do zero</strong><small>Planejar e construir</small></button>
+  <button data-fase="andamento"><strong>🟡 Site em andamento</strong><small>Continuar e melhorar</small></button>
+  <button data-fase="pronto"><strong>🔴 Site pronto</strong><small>Otimizar e profissionalizar</small></button>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="🔎 Buscar melhorias, visual, navegação, mobile...">
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <span id="contador" class="contador"></span>
+</div>
+
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filter-group"><span class="filter-label">🎯 Filtrar por tema</span><div class="filtros" id="temas"></div></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um prompt</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o prompt de site/landing page que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+const D=(fase,categoria,titulo,quando,prompt)=>({fase,categoria,titulo,quando,prompt});
+const dadosBrutos=[D('andamento','Melhorias','Melhorar Meu Site Atual','Para começar pelas melhorias mais importantes do que já existe.','Analise meu site atual: [LINK, PRINTS OU CÓDIGO]. Primeiro identifique o que já existe e o que está funcionando. Depois proponha melhorias priorizadas em conteúdo, visual, navegação, organização, celular e computador. Não refaça tudo sem necessidade e não sugira recursos que o site já possui.'),
+D('andamento','Visual','Deixar Meu Site Mais Visual e Profissional','Para adaptar a aparência ao público certo.','Atue como especialista em UX/UI e design digital. Analise meu site: [LINK/PRINT]. Público principal: [PÚBLICO]. Objetivo: [OBJETIVO]. Sugira melhorias visuais e profissionais em cores, tipografia, espaçamento, imagens, cards, ícones, hierarquia e consistência. Preserve o que já funciona e explique as mudanças de maior impacto.'),
+D('inicio','Começar','Criar Meu Primeiro Site do Zero','Para quem ainda não sabe por onde começar.','Quero criar um site do zero para [PROJETO/NEGÓCIO]. Público: [PÚBLICO]. Objetivo: [OBJETIVO]. Guie-me passo a passo, começando pela estrutura mais simples possível. Defina páginas, seções da página inicial, navegação, conteúdo necessário e ordem de construção.'),
+D('inicio','Começar','Planejar Antes de Criar','Para definir o projeto antes de escrever código.','Ajude-me a planejar um site para [PROJETO]. Faça perguntas essenciais sobre objetivo, público, conteúdo e funcionalidades. Depois crie um plano simples com estrutura, prioridades e primeira versão mínima.'),
+D('inicio','Estrutura','Criar a Página Inicial','Para montar uma boa index.html.','Planeje uma página inicial para [NEGÓCIO]. Público: [PÚBLICO]. Objetivo principal: [OBJETIVO]. Organize as seções em ordem lógica, indique o conteúdo de cada uma, CTAs e navegação para celular e computador.'),
+D('inicio','Estrutura','Mapa Completo do Site','Para decidir quais páginas serão necessárias.','Crie um mapa de site para [PROJETO]. Sugira somente páginas realmente úteis, explique a função de cada uma e mostre como devem se conectar pelo menu.'),
+D('inicio','Visual','Definir Estilo Visual','Para criar uma direção visual coerente.','Crie uma direção visual para um site de [TIPO] voltado para [PÚBLICO]. Sugira estilo, cores, tipografia, imagens, formato dos cards e sensação que a interface deve transmitir.'),
+D('inicio','Navegação','Criar o Menu Inicial','Para começar com uma navegação simples.','Crie o menu ideal para um site de [PROJETO] com estas páginas ou recursos: [LISTA]. Organize para celular e computador sem deixar o menu grande ou confuso.'),
+D('inicio','Conteúdo','Criar Textos do Site','Para preencher as primeiras páginas.','Escreva os textos essenciais para meu site de [NEGÓCIO]. Público: [PÚBLICO]. Tom: [TOM]. Crie textos claros para início, sobre, serviços/produtos e contato sem inventar informações.'),
+D('inicio','Landing Pages','Landing Page Simples','Para criar uma página focada em uma ação.','Crie uma landing page para [PRODUTO/SERVIÇO]. Público: [PÚBLICO]. Objetivo: [OBJETIVO]. Estruture headline, benefícios, como funciona, prova quando disponível, CTA e FAQ.'),
+D('inicio','Mobile','Pensar o Site Primeiro no Celular','Para construir uma base mobile desde o início.','Planeje meu site [PROJETO] com abordagem mobile-first. Explique como organizar menu, seções, botões, textos, imagens e ações para funcionar bem com uma mão e depois adaptar ao computador.'),
+D('andamento','Continuação','Tenho Só a Index e Travei','Para quem criou a Home e não sabe o próximo passo.','Já tenho a página inicial deste site: [LINK/CÓDIGO]. Analise o que já foi feito e me diga exatamente o que construir depois. Crie uma sequência de próximos passos, páginas e recursos por prioridade, sem recomeçar o projeto do zero.'),
+D('andamento','Continuação','Continuar um Projeto Parcial','Para retomar um site que ficou pela metade.','Este é o estado atual do meu site: [LINK/CÓDIGO/DESCRIÇÃO]. Identifique o que falta para ficar utilizável, organize em etapas e sugira o que priorizar primeiro.'),
+D('andamento','Mobile','Melhorar Meu Site no Celular','Para revisar a experiência mobile.','Analise meu site no celular: [LINK/PRINTS]. Avalie menu, busca, cards, textos, botões, rolagem, filtros e uso com uma mão. Entregue melhorias em ordem de prioridade.'),
+D('andamento','Desktop','Melhorar Meu Site no Computador','Para aproveitar melhor telas maiores.','Analise meu site no computador: [LINK/PRINTS]. Avalie largura, colunas, menu, hierarquia, espaço, filtros e legibilidade. Sugira melhorias sem prejudicar o mobile.'),
+D('andamento','Consistência','Padronizar Todas as Páginas','Para sites onde cada página parece diferente.','Analise as páginas deste site: [LINKS/CÓDIGO]. Crie um padrão único para cabeçalhos, filtros, cards, botões, espaçamentos, cores e navegação. Liste as inconsistências e como corrigir.'),
+D('andamento','Conteúdo','Melhorar Clareza dos Textos','Para deixar o conteúdo mais fácil de entender.','Revise os textos deste site: [LINK/TEXTO]. Público: [PÚBLICO]. Identifique trechos confusos, longos ou genéricos e proponha versões mais claras sem alterar informações verdadeiras.'),
+D('andamento','UX/UI','Melhorar Cards e Componentes','Para profissionalizar os elementos repetidos.','Analise os cards e componentes desta interface: [PRINT/CÓDIGO]. Sugira um padrão visual e funcional consistente para títulos, descrições, tags, botões, estados e versão mobile.'),
+D('andamento','Conversão','Melhorar Chamadas para Ação','Para deixar claro o próximo passo do usuário.','Analise os CTAs deste site: [LINK]. Identifique páginas sem ação clara, botões genéricos ou excesso de opções. Sugira textos, posições e hierarquia melhores.'),
+D('andamento','Estrutura','Encontrar Páginas que Devem Ser Unidas','Para simplificar sites que cresceram desorganizados.','Analise a estrutura deste site: [LINK/LISTA]. Identifique páginas com funções semelhantes que poderiam ser unidas, mantendo filtros ou categorias internas. Explique o que unir, manter separado ou renomear.'),
+D('pronto','Auditoria','Auditoria Completa do Site','Para avaliar um projeto já desenvolvido.','Atue como equipe sênior de produto, UX/UI, conteúdo e conversão. Analise meu site completo: [LINK/PROJETO]. Avalie arquitetura, navegação, visual, consistência, conteúdo, confiança, acessibilidade, mobile e desktop. Entregue melhorias priorizadas sem repetir recursos existentes.'),
+D('pronto','UX/UI','Auditoria Profissional de UX/UI','Para encontrar atritos na experiência.','Revise este site: [LINK/PRINT/CÓDIGO]. Usuário: [PÚBLICO]. Tarefa principal: [TAREFA]. Analise clareza, atritos, hierarquia, navegação, feedback, acessibilidade e mobile. Finalize com 5 mudanças rápidas de alto impacto.'),
+D('pronto','Navegação','Navegação Avançada Mobile e Desktop','Para redesenhar a arquitetura de navegação.','Analise separadamente a navegação no CELULAR e COMPUTADOR deste site: [LINK]. Proponha uma estrutura completa para cada dispositivo, mantendo consistência e reduzindo passos desnecessários.'),
+D('pronto','Conversão','20 Melhorias para uma Página','Para uma análise detalhada de uma página específica.','Analise esta página: [LINK/PRINT/CÓDIGO]. Entregue exatamente 20 melhorias priorizadas com problema, mudança, benefício, prioridade e implementação simples. Avalie visual, CTA, confiança, navegação, responsividade e acessibilidade.'),
+D('pronto','Conversão','Auditoria de Conversão','Para melhorar uma página orientada a resultados.','Analise esta página: [LINK]. Contexto: [PRODUTO]. Público: [PÚBLICO]. Objetivo: [OBJETIVO]. Avalie CTA, hierarquia, copy, confiança, fricções e responsividade. Entregue 10 melhorias priorizadas.'),
+D('pronto','SEO','SEO Essencial','Para melhorar a estrutura de busca.','Crie um plano de SEO on-page para [PÁGINA/TEMA]. Sugira title, meta description, H1, H2, intenção de busca, conteúdo, links internos e FAQ sem inventar dados de volume.'),
+D('pronto','Acessibilidade','Revisão de Acessibilidade','Para tornar o site utilizável por mais pessoas.','Revise a acessibilidade deste site: [LINK/CÓDIGO]. Analise contraste, títulos, teclado, foco, textos alternativos, formulários, botões e mensagens de erro. Priorize por impacto.'),
+D('pronto','Estratégia','Jornada do Usuário','Para entender o caminho ideal até a conversão.','Mapeie a jornada do usuário deste site: [LINK]. Comece pela entrada, mostre as etapas de navegação, possíveis dúvidas, pontos de atrito e o caminho mais curto até a ação desejada.'),
+D('pronto','Análise','Comparar Antes e Depois','Para validar uma reformulação.','Compare a versão A [ANTIGA] e B [NOVA]. Analise navegação, clareza, visual, conteúdo, mobile, desktop e acessibilidade. Mostre o que melhorou, piorou e ainda precisa ser ajustado.'),
+D('pronto','Estratégia','Plano de Evolução do Site','Para transformar análise em execução.','Com base neste site ou auditoria: [LINK/CONTEÚDO], crie um plano dividido em correções urgentes, melhorias rápidas, mudanças estruturais e recursos futuros. Informe impacto, esforço e ordem.'),
+D('pronto','Landing Pages','Landing Page de Alta Conversão','Para projetos mais maduros e campanhas.','Crie uma landing page completa para [PRODUTO]. Público: [PÚBLICO]. Oferta: [OFERTA]. Inclua proposta de valor, benefícios, objeções, provas disponíveis, CTAs, FAQ e hipóteses de teste sem inventar resultados.'),
+D('pronto','Navegação','Menu Inteligente com Submenus','Para revisar menus do site atual e deixar a navegação mais clara.','Analise o menu atual do site e identifique o que está funcionando, o que está confuso e o que está faltando. Depois proponha 4 categorias principais separadas, com submenus bem organizados para cada uma. Para cada categoria, explique o objetivo, o que deve entrar nela e quais páginas ou links devem ficar dentro do submenu. Finalize com 5 dicas práticas para melhorar a navegação, a clareza dos nomes e o acesso rápido ao que o usuário procura.')];
+
+const prompts=dadosBrutos.map((x,i)=>{
+  const obj={id:'site-'+i,fase:x.fase,categoria:x.categoria,titulo:x.titulo,quando:x.quando,prompt:x.prompt,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+let fase='todos',tema='Todos';
+const lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),temas=document.getElementById('temas');
+
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function faseLabel(f){return f==='inicio'?'🟢 Criando do zero':f==='andamento'?'🟡 Em andamento':'🔴 Site pronto'}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+// ===== TOAST =====
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+// ===== FAVORITOS =====
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Sites & Landing Pages',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+// ===== POPULARIDADE =====
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaSitesUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaSitesUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+// ===== FEEDBACK =====
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaSitesFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaSitesFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;
+  if(!fb[id])fb[id]={up:0,down:0,voto:null};
+  if(atual===tipo){fb[id][tipo]=Math.max(0,fb[id][tipo]-1);fb[id].voto=null}
+  else{if(atual)fb[id][atual]=Math.max(0,fb[id][atual]-1);fb[id][tipo]=(fb[id][tipo]||0)+1;fb[id].voto=tipo}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{up:0,down:0,voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up){up.textContent='👍 '+fb.up;up.classList.toggle('marcado',fb.voto==='up')}
+  if(down){down.textContent='👎 '+fb.down;down.classList.toggle('marcado',fb.voto==='down')}
+}
+
+// ===== CAMPOS EDITÁVEIS =====
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=p.prompt;(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+// ===== AÇÕES =====
+async function copiarTexto(t){try{await navigator.clipboard.writeText(t);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChat(t){try{await navigator.clipboard.writeText(t)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(t){try{await navigator.clipboard.writeText(t)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(t),'_blank'),300)}
+function alternarPrompt(id){const el=document.getElementById('prompt-'+id);const btn=document.querySelector('#card-'+id+' .ver');if(!el||!btn)return;el.classList.toggle('aberto');btn.textContent=el.classList.contains('aberto')?'Mostrar menos':'Ver prompt completo'}
+
+// ===== COMPARTILHAR =====
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='🌐 '+p.titulo+'\n\nConfira esse prompt de site/landing page no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+// ===== RELACIONADOS / NAVEGAÇÃO =====
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){fase='todos';tema='Todos';busca.value='';document.querySelectorAll('#journey button').forEach(b=>b.classList.toggle('ativo',b.dataset.fase==='todos'));criarTemas();render();requestAnimationFrame(()=>destacarCard(id))}
+
+// ===== EXPORTAR =====
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nFase: '+faseLabel(p.fase)+' | Tema: '+p.categoria+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='🌐 SITES & LANDING PAGES — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-sites.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+// ===== SUGERIR =====
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de prompt de site/landing page para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+// ===== ESTATÍSTICAS =====
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Sites & Landing Pages').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> prompt'+(favs===1?'':'s')+' · 🌐 <strong>'+prompts.length+'</strong> prompts disponíveis'}
+
+// ===== TEMA =====
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+// ===== PAINEL MAIS FILTROS =====
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function atualizarBadgeFiltros(){
+  const n=(fase!=='todos'?1:0)+(tema!=='Todos'?1:0);
+  const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');
+  if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}
+  else{badge.style.display='none';btn.classList.remove('ativo')}
+}
+function limparFiltros(){
+  fase='todos';tema='Todos';busca.value='';
+  document.querySelectorAll('#journey button').forEach(b=>b.classList.toggle('ativo',b.dataset.fase==='todos'));
+  criarTemas();render();
+  mostrarToast('✕ Filtros limpos');
+}
+
+function criarTemas(){
+  const base=fase==='todos'?prompts:prompts.filter(p=>p.fase===fase);
+  const ts=['Todos',...new Set(prompts.map(x=>x.categoria))];
+  temas.innerHTML=ts.map(t=>{
+    const n=t==='Todos'?base.length:base.filter(p=>p.categoria===t).length;
+    return `<button class="${t===tema?'ativo':''}" data-t="${t}">${t} <span class="count-badge">${n}</span></button>`;
+  }).join('');
+  temas.querySelectorAll('button').forEach(b=>b.onclick=()=>{tema=b.dataset.t;criarTemas();render()});
+}
+function atualizarContadoresJourney(){
+  const q=norm(busca.value);
+  const base=prompts.filter(x=>!q||norm(x.titulo+' '+x.quando+' '+x.prompt).includes(q));
+  document.querySelectorAll('#journey button').forEach(btn=>{
+    const f=btn.dataset.fase;
+    const n=f==='todos'?base.length:base.filter(p=>p.fase===f).length;
+    const small=btn.querySelector('small');
+    if(!btn.dataset.desc)btn.dataset.desc=small.textContent;
+    small.textContent=btn.dataset.desc;
+    let badge=btn.querySelector('.count-badge');
+    if(!badge){badge=document.createElement('span');badge.className='count-badge';btn.appendChild(badge)}
+    badge.textContent=n;
+  });
+}
+
+// ===== CARD =====
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('article');
+  card.className='prompt-card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="meta"><span class="tag">${faseLabel(p.fase)}</span><span class="tag">${p.categoria}</span><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p class="quando">💡 ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
+    <button class="ver" type="button" data-acao="ver" data-id="${p.id}">Ver prompt completo</button>
+    <div class="acoes">
+      <button class="copiar" data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse prompt te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Prompts relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
+}
+
+function render(){
+  const q=norm(busca.value);
+  const f=prompts.filter(x=>(fase==='todos'||x.fase===fase)&&(tema==='Todos'||x.categoria===tema)&&(!q||norm(x.titulo+' '+x.quando+' '+x.prompt+' '+x.categoria).includes(q)));
+  contador.textContent=f.length+' de '+prompts.length+' prompts';
+  lista.innerHTML='';
+  if(!f.length){lista.innerHTML='<p>🔎 Nenhum prompt encontrado.</p>'}
+  else{f.forEach(p=>lista.appendChild(criarCard(p)))}
+  atualizarContadoresJourney();
+  atualizarBadgeFiltros();
+}
+
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='ver')alternarPrompt(id);
+  else if(acao==='copiar'){registrarUso(id);copiarTexto(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChat(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+document.querySelectorAll('#journey button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#journey button').forEach(x=>x.classList.remove('ativo'));
+  b.classList.add('ativo');
+  fase=b.dataset.fase;
+  tema='Todos';
+  criarTemas();
+  render();
+}));
+
+busca.addEventListener('input',render);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+criarTemas();
+atualizarStats();
+render();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+</script></body></html>
