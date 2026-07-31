@@ -1,258 +1,258 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Análise Estratégica | Delta Prompts</title><meta name="description" content="Prompts profissionais para analisar cenários, dados, decisões e estratégias com visão crítica e estruturada.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="/delta-prompts/style.css">
-<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
-
-</head>
-
-<body>
-
-<div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js?v=20260816"></script>
-
-<main>
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Análise Estratégica | Delta Prompts</title><meta name="description" content="Prompts profissionais para analisar cenários, dados, decisões e estratégias com visão crítica e estruturada."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtro-nivel{display:flex;gap:8px;flex-wrap:wrap}.filtro-nivel button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtro-nivel button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(91,92,226,.12);color:#5b5ce2}.filtro-nivel button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#5b5ce2;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.secao-titulo{font-size:22px;margin:30px 0 15px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e5e7eb;margin:15px 0}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;background:#eef2ff;color:#5b5ce2;cursor:pointer}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#5b5ce2;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #5b5ce2;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-nivel button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:700px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260816"></script><main>
 
 <h1>📊 Análise Estratégica com IA</h1>
+<p>Prompts profissionais para analisar cenários, dados, decisões e estratégias com visão crítica e estruturada.</p>
 
-<p>
-Prompts profissionais para analisar cenários, dados, decisões e estratégias
-com visão crítica e estruturada.
-</p>
+<section class="card"><h3>🎯 Objetivo</h3><p>Ajudar na tomada de decisão através de análises estruturadas, identificação de riscos e geração de insights estratégicos.</p></section>
 
-<section class="card">
-<h3>🎯 Objetivo</h3>
-<p>
-Ajudar na tomada de decisão através de análises estruturadas,
-identificação de riscos e geração de insights estratégicos.
-</p>
-</section>
+<div class="stats-bar" id="statsBar"></div>
 
 <div class="top-bar">
-<input
-type="text"
-id="busca"
-placeholder="🔎 Buscar modelo de análise..."
-oninput="filtrarPrompts()"
->
-<div class="contador" id="contador"></div>
+  <input type="text" id="busca" placeholder="🔎 Buscar modelo de análise..." oninput="aplicarFiltros()">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <div class="contador" id="contador"></div>
 </div>
 
-<div class="filtro-nivel" style="margin-bottom:20px;">
-<button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos</button>
-<button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
-<button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
-<button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtro-nivel" id="filtrosNivel"><button class="ativo" data-nivel="todos">Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo de análise que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
 </div>
 
 <div id="lista-prompts"></div>
 
 </main>
-
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
 <script>
 
-const ordemCategorias = [
-"📊 Análise de Cenário",
-"⚖️ Tomada de Decisão",
-"📈 Estratégia Competitiva",
-"🔍 Diagnóstico Profundo"
+const ordemCategorias=["📊 Análise de Cenário","⚖️ Tomada de Decisão","📈 Estratégia Competitiva","🔍 Diagnóstico Profundo"];
+
+const dadosBrutos=[
+{categoria:"📊 Análise de Cenário",nivel:"basico",titulo:"📊 Análise Simples de Situação",quando:"Quando precisar entender rapidamente um cenário antes de decidir.",prompt:`Analise a seguinte situação:\n\n[DESCREVA O CENÁRIO]\n\nOrganize a resposta em:\n- Contexto geral\n- Principais fatores envolvidos\n- Pontos positivos\n- Pontos de risco\n- Conclusão objetiva`,en:`Analyze the following situation:\n\n[DESCRIBE THE SCENARIO]\n\nOrganize the response into:\n- General context\n- Main factors involved\n- Positive points\n- Risk points\n- Objective conclusion`},
+{categoria:"⚖️ Tomada de Decisão",nivel:"intermediario",titulo:"⚖️ Matriz de Decisão Estratégica",quando:"Quando precisar escolher entre duas ou mais opções.",prompt:`Analise as seguintes opções:\n\n[OPÇÃO 1]\n[OPÇÃO 2]\n[OPÇÃO 3]\n\nCrie uma matriz comparativa considerando:\n- Riscos\n- Benefícios\n- Custo\n- Impacto de longo prazo\n- Probabilidade de sucesso\n\nFinalize com recomendação estratégica justificada.`,en:`Analyze the following options:\n\n[OPTION 1]\n[OPTION 2]\n[OPTION 3]\n\nCreate a comparison matrix considering:\n- Risks\n- Benefits\n- Cost\n- Long-term impact\n- Probability of success\n\nFinish with a justified strategic recommendation.`},
+{categoria:"📈 Estratégia Competitiva",nivel:"intermediario",titulo:"📈 Análise SWOT Estratégica",quando:"Para avaliar negócio, projeto ou carreira.",prompt:`Realize uma análise SWOT sobre:\n\n[TEMA OU NEGÓCIO]\n\nEstruture em:\n- Forças\n- Fraquezas\n- Oportunidades\n- Ameaças\n\nInclua interpretação estratégica dos pontos identificados.`,en:`Perform a SWOT analysis on:\n\n[TOPIC OR BUSINESS]\n\nStructure into:\n- Strengths\n- Weaknesses\n- Opportunities\n- Threats\n\nInclude a strategic interpretation of the points identified.`},
+{categoria:"🔍 Diagnóstico Profundo",nivel:"avancado",titulo:"🔍 Diagnóstico Estratégico Completo",quando:"Quando precisar de análise aprofundada antes de decisão importante.",prompt:`Atue como analista estratégico sênior.\n\nAnalise profundamente o seguinte cenário:\n\n[DESCREVA DETALHADAMENTE]\n\nEstruture sua resposta em:\n\n1. Contexto e enquadramento\n2. Variáveis críticas\n3. Riscos de curto, médio e longo prazo\n4. Oportunidades ocultas\n5. Cenários possíveis (otimista, realista, pessimista)\n6. Recomendação estratégica detalhada\n\nSeja objetivo, crítico e estratégico.`,en:`Act as a senior strategic analyst.\n\nDeeply analyze the following scenario:\n\n[DESCRIBE IN DETAIL]\n\nStructure your response into:\n\n1. Context and framing\n2. Critical variables\n3. Short, medium, and long-term risks\n4. Hidden opportunities\n5. Possible scenarios (optimistic, realistic, pessimistic)\n6. Detailed strategic recommendation\n\nBe objective, critical, and strategic.`}
 ];
 
-const promptsAnalise = [
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'analise-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.prompt,promptEn:p.en,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
 
-{
-categoria: "📊 Análise de Cenário",
-nivel: "basico",
-titulo: "📊 Análise Simples de Situação",
-quando: "Quando precisar entender rapidamente um cenário antes de decidir.",
-prompt: `Analise a seguinte situação:
+const lista=document.getElementById("lista-prompts"),contador=document.getElementById("contador"),busca=document.getElementById("busca"),ordenarSelect=document.getElementById("ordenar");
+const idiomaAtivo={};
 
-[DESCREVA O CENÁRIO]
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
 
-Organize a resposta em:
-- Contexto geral
-- Principais fatores envolvidos
-- Pontos positivos
-- Pontos de risco
-- Conclusão objetiva`
-},
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
 
-{
-categoria: "⚖️ Tomada de Decisão",
-nivel: "intermediario",
-titulo: "⚖️ Matriz de Decisão Estratégica",
-quando: "Quando precisar escolher entre duas ou mais opções.",
-prompt: `Analise as seguintes opções:
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Análise',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
 
-[OPÇÃO 1]
-[OPÇÃO 2]
-[OPÇÃO 3]
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaAnaliseUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaAnaliseUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
 
-Crie uma matriz comparativa considerando:
-- Riscos
-- Benefícios
-- Custo
-- Impacto de longo prazo
-- Probabilidade de sucesso
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaAnaliseFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaAnaliseFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={up:0,down:0,voto:null};if(atual===tipo){fb[id][tipo]=Math.max(0,fb[id][tipo]-1);fb[id].voto=null}else{if(atual)fb[id][atual]=Math.max(0,fb[id][atual]-1);fb[id][tipo]=(fb[id][tipo]||0)+1;fb[id].voto=tipo}_saveFeedback(fb);atualizarFeedbackUI(id);mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!')}
+function atualizarFeedbackUI(id){const fb=_loadFeedback()[id]||{up:0,down:0,voto:null};const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);if(up){up.textContent='👍 '+fb.up;up.classList.toggle('marcado',fb.voto==='up')}if(down){down.textContent='👎 '+fb.down;down.classList.toggle('marcado',fb.voto==='down')}}
 
-Finalize com recomendação estratégica justificada.`
-},
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
 
-{
-categoria: "📈 Estratégia Competitiva",
-nivel: "intermediario",
-titulo: "📈 Análise SWOT Estratégica",
-quando: "Para avaliar negócio, projeto ou carreira.",
-prompt: `Realize uma análise SWOT sobre:
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
 
-[TEMA OU NEGÓCIO]
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📊 '+p.titulo+'\n\nConfira esse modelo de análise no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
 
-Estruture em:
-- Forças
-- Fraquezas
-- Oportunidades
-- Ameaças
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';ordenarSelect.value='padrao';aplicarFiltros();requestAnimationFrame(()=>destacarCard(id))}
 
-Inclua interpretação estratégica dos pontos identificados.`
-},
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📊 ANÁLISE ESTRATÉGICA — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-analise.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
 
-{
-categoria: "🔍 Diagnóstico Profundo",
-nivel: "avancado",
-titulo: "🔍 Diagnóstico Estratégico Completo",
-quando: "Quando precisar de análise aprofundada antes de decisão importante.",
-prompt: `Atue como analista estratégico sênior.
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de análise para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
 
-Analise profundamente o seguinte cenário:
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Análise').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 📊 <strong>'+prompts.length+'</strong> modelos disponíveis'}
 
-[DESCREVA DETALHADAMENTE]
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 
-Estruture sua resposta em:
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
 
-1. Contexto e enquadramento
-2. Variáveis críticas
-3. Riscos de curto, médio e longo prazo
-4. Oportunidades ocultas
-5. Cenários possíveis (otimista, realista, pessimista)
-6. Recomendação estratégica detalhada
-
-Seja objetivo, crítico e estratégico.`
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre id="pre-${p.id}">${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">💬 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">🔷 Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
 }
-
-];
-
-const lista = document.getElementById("lista-prompts");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
 
 function renderizar(arr){
+  lista.innerHTML="";
+  contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+  if(ordenarSelect.value==='padrao'){
+    ordemCategorias.forEach(cat=>{
+      const grupo=arr.filter(p=>p.categoria===cat);
+      if(grupo.length===0)return;
+      const tituloSecao=document.createElement("h2");
+      tituloSecao.className="secao-titulo";
+      tituloSecao.innerText=cat;
+      lista.appendChild(tituloSecao);
+      grupo.forEach(p=>lista.appendChild(criarCard(p)));
+    });
+  }else{
+    arr.forEach(p=>lista.appendChild(criarCard(p)));
+  }
+}
 
-lista.innerHTML = "";
-contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+function contarFiltrosAtivos(){const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';return nivel!=='todos'?1:0}
+function atualizarBadgeFiltros(){const n=contarFiltrosAtivos();const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}else{badge.style.display='none';btn.classList.remove('ativo')}}
+function atualizarContadoresNivel(){
+  const termo=busca.value.toLowerCase();
+  const base=prompts.filter(p=>(p.titulo+p.prompt+p.categoria).toLowerCase().includes(termo));
+  document.querySelectorAll('#filtrosNivel button').forEach(btn=>{
+    const n=btn.dataset.nivel==='todos'?base.length:base.filter(p=>p.nivel===btn.dataset.nivel).length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
+}
 
-ordemCategorias.forEach(cat => {
+function aplicarFiltros(){
+  const termo=busca.value.toLowerCase();
+  const nivelAtivo=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';
+  let filtrados=prompts.filter(p=>(p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo))&&(nivelAtivo==='todos'||p.nivel===nivelAtivo));
+  filtrados=ordenarLista(filtrados);
+  renderizar(filtrados);
+  atualizarContadoresNivel();
+  atualizarBadgeFiltros();
+}
 
-const grupo = arr.filter(p => p.categoria === cat);
-if(grupo.length === 0) return;
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';aplicarFiltros();mostrarToast('✕ Filtros limpos')}
 
-const tituloSecao = document.createElement("h2");
-tituloSecao.className = "secao-titulo";
-tituloSecao.innerText = cat;
-lista.appendChild(tituloSecao);
+document.querySelectorAll('#filtrosNivel button').forEach(b=>{b.dataset.label=b.textContent.trim();b.addEventListener('click',()=>{document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()})});
 
-grupo.forEach(p => {
-
-const card = document.createElement("div");
-card.className = "card";
-card.setAttribute("data-nivel", p.nivel);
-
-card.innerHTML = `
-<div class="nivel nivel-${p.nivel}">
-${p.nivel === 'avancado' ? '🔴 Avançado' :
-p.nivel === 'intermediario' ? '🟡 Intermediário' :
-'🟢 Básico'}
-</div>
-
-<h3>${p.titulo}</h3>
-<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-<pre>${p.prompt}</pre>
-
-<div class="acoes">
-<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-<button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-</div>
-`;
-
-lista.appendChild(card);
-
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
 });
 
-});
+ordenarSelect.addEventListener('change',aplicarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
 
-}
-
-function filtrarPrompts(){
-const termo = busca.value.toLowerCase();
-const filtrados = promptsAnalise.filter(p =>
-p.titulo.toLowerCase().includes(termo) ||
-p.prompt.toLowerCase().includes(termo) ||
-p.categoria.toLowerCase().includes(termo)
-);
-renderizar(filtrados);
-}
-
-function filtrarNivel(event, nivel){
-const botoes = document.querySelectorAll(".filtro-nivel button");
-botoes.forEach(btn => btn.classList.remove("ativo"));
-event.target.classList.add("ativo");
-
-const cards = document.querySelectorAll("#lista-prompts .card");
-
-cards.forEach(card=>{
-if(nivel === "todos"){
-card.style.display = "block";
-}else{
-card.style.display =
-card.dataset.nivel === nivel ? "block" : "none";
-}
-});
-}
-
-function copiarPrompt(texto){
-navigator.clipboard.writeText(texto);
-alert("📋 Prompt copiado!");
-}
-
-function favoritarPrompt(titulo, conteudo){
-const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-prompts.push({
-id: Date.now(),
-titulo,
-categoria: "Análise",
-conteudo,
-favorito: true
-});
-localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-alert("⭐ Adicionado aos favoritos!");
-}
-
-function abrirChatGPT(texto){
-window.open("https://chat.openai.com/?prompt=" + encodeURIComponent(texto));
-}
-
-function abrirGemini(texto){
-window.open("https://gemini.google.com/app?prompt=" + encodeURIComponent(texto));
-}
-
-renderizar(promptsAnalise);
-
-</script>
-
-</body>
-</html>
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+aplicarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+</script></body></html>
