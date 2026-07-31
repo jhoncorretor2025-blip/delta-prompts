@@ -1,22 +1,305 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sistemas com IA | Delta Prompts</title><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.info-mini{margin:16px 0;border:1px solid #e5e7eb;border-radius:14px;background:#fff;overflow:hidden}.info-mini>button{width:100%;display:flex;justify-content:space-between;padding:15px 17px;border:0;background:transparent;font:inherit;font-weight:800;text-align:left}.info-body{display:none;padding:0 17px 17px;color:#667085;line-height:1.6}.info-mini.open .info-body{display:block}.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.journey button{padding:16px;border:1px solid #e5e7eb;border-radius:15px;background:#fff;text-align:left;font:inherit}.journey button.ativo{border-color:#5b5ce2;background:#f3f3ff}.journey strong,.journey small{display:block}.journey small{margin-top:5px;color:#667085}.top-bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:230px;padding:14px;border:1px solid #e5e7eb;border-radius:12px}.contador,.filter-label{font-weight:800}.contador{color:#4f46e5}.filter-group{margin-bottom:15px}.filter-label{display:block;margin-bottom:8px}.filtros{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px}.filtros button{white-space:nowrap;padding:9px 14px;border:1px solid #e5e7eb;border-radius:999px;background:#fff;font-weight:800}.filtros button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}#lista-prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.prompt-card{display:flex;flex-direction:column;padding:20px;border:1px solid #e5e7eb;border-radius:18px;background:#fff}.meta{display:flex;gap:7px;flex-wrap:wrap}.tag{padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800}.quando{color:#667085}.prompt-text{white-space:pre-wrap;background:#f8fafc;border:1px solid #e6e8f0;border-radius:12px;padding:14px;font-size:14px;line-height:1.55;max-height:105px;overflow:hidden}.prompt-text.aberto{max-height:none}.ver{align-self:flex-end;margin-top:8px;border:0;background:none;color:#4f46e5;font-weight:800}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:14px}.acoes button{flex:1;min-width:95px;padding:11px;border:0;border-radius:11px;font-weight:800;background:#eef2ff;color:#4f46e5}.acoes .copiar{background:#5b5ce2;color:#fff}.empty{grid-column:1/-1;text-align:center;padding:30px;color:#667085}@media(max-width:850px){.journey{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){#lista-prompts,.journey{grid-template-columns:1fr}}</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260815"></script><main><h1>🧩 Sistemas com IA</h1><p>Do planejamento ao sistema pronto: encontre prompts para criar, desenvolver, revisar e evoluir aplicativos, dashboards e produtos digitais.</p><section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">💡 Como usar <span>⌄</span></button><div class="info-body">Escolha a fase do seu projeto, filtre por categoria e abra o prompt completo. Os prompts adaptados de Sites & Landing Pages foram reescritos para sistemas e aplicativos, evitando repetir recursos que você já possui.</div></section><div class="journey" id="journey"><button data-fase="todos" class="ativo"><strong>✨ Todos</strong><small>Ver os 20 prompts</small></button><button data-fase="inicio"><strong>🟢 Criando do zero</strong><small>Planejar e construir</small></button><button data-fase="andamento"><strong>🟡 Em desenvolvimento</strong><small>Continuar e melhorar</small></button><button data-fase="pronto"><strong>🔴 Sistema pronto</strong><small>Revisar e evoluir</small></button></div><div class="top-bar"><input id="busca" type="search" placeholder="🔎 Buscar recursos, UX, mobile, bugs, código..."><span id="contador" class="contador"></span></div><div class="filter-group"><span class="filter-label">🎯 Filtrar por categoria</span><div id="categorias" class="filtros"></div></div><div class="filter-group"><span class="filter-label">📊 Filtrar por nível</span><div id="niveis" class="filtros"><button class="ativo" data-nivel="todos">🌐 Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div></div><div id="lista-prompts"></div></main><script>const P=(fase,categoria,nivel,titulo,quando,prompt)=>({fase,categoria,nivel,titulo,quando,prompt});const prompts=[
-P('inicio','Planejamento','basico','🚀 Criar meu primeiro sistema do zero','Para transformar uma ideia em uma primeira versão organizada.',`Quero criar um sistema para [OBJETIVO]. Público: [USUÁRIOS]. Problema: [PROBLEMA]. Planeje a versão mínima do produto. Defina telas, funções essenciais, fluxo principal, dados necessários e ordem de desenvolvimento. Não adicione recursos sem necessidade.`),
-P('inicio','Planejamento','intermediario','🗺️ Arquitetura completa do sistema','Para definir módulos e conexões antes de desenvolver.',`Planeje a arquitetura funcional de um sistema para [OBJETIVO]. Liste módulos, telas, permissões, dados, integrações e relações entre áreas. Separe o que pertence ao MVP do que pode ficar para versões futuras.`),
-P('inicio','Studio IA','basico','🤖 Briefing completo para Studio IA','Para pedir que uma IA construa uma tela ou sistema com contexto suficiente.',`Atue como gerente de produto, designer UX/UI e desenvolvedor. Crie [SISTEMA/TELA]. Produto: [FUNÇÃO]. Usuário: [PÚBLICO]. Ação principal: [AÇÃO]. Estilo: [ESTILO]. Antes de gerar, identifique ambiguidades. Depois entregue estrutura, componentes, estados, responsividade, acessibilidade e implementação organizada.`),
-P('inicio','Navegação','basico','🧭 Criar menu e navegação do sistema','Para organizar módulos sem deixar o menu confuso.',`Crie a navegação ideal para este sistema: [DESCRIÇÃO E RECURSOS]. Organize menu, submenus e atalhos para celular e computador. Agrupe funções relacionadas, reduza excesso de opções e explique a lógica da estrutura.`),
-P('inicio','Design visual','intermediario','🧱 Criar sistema visual e componentes','Para começar com uma interface consistente.',`Crie um design system inicial para [TIPO DE SISTEMA]. Defina cores, tipografia, espaçamentos, botões, campos, tabelas, cards, alertas, modais, estados e regras responsivas. Priorize consistência, legibilidade e reutilização.`),
-P('andamento','Produto e design','basico','🛠️ Melhorar meu sistema atual','Para descobrir o que melhorar sem refazer o que já funciona.',`Analise meu sistema atual: [LINK, PRINTS, DESCRIÇÃO OU CÓDIGO]. Primeiro identifique tudo que já existe e o que funciona bem. Depois proponha melhorias priorizadas em recursos, visual, navegação, organização, celular e computador. Não refaça tudo sem necessidade e não sugira recursos já existentes.`),
-P('andamento','Recursos','intermediario','🧩 20 coisas que faltam no meu sistema','Para encontrar oportunidades sem repetir funcionalidades.',`Analise este sistema: [DESCRIÇÃO/LINK/CÓDIGO]. Primeiro liste os recursos que já existem. Depois sugira exatamente 20 melhorias ou recursos úteis que ainda faltam. Para cada item informe benefício, prioridade, dificuldade e dependências. Não repita funcionalidades existentes.`),
-P('andamento','Produto e design','intermediario','🎨 Auditoria UX/UI de tela','Para revisar uma tela, dashboard ou fluxo.',`Revise esta tela ou fluxo: [PRINT/LINK/CÓDIGO]. Usuário: [PÚBLICO]. Tarefa: [TAREFA]. Analise clareza, hierarquia, navegação, feedback, acessibilidade e responsividade. Preserve o que funciona e entregue 5 mudanças rápidas de alto impacto.`),
-P('andamento','Navegação','intermediario','📂 Organizar menu sem ficar grande','Para sistemas que ganharam muitos módulos e páginas.',`Analise as páginas, módulos e funções deste sistema: [LISTA/LINK]. Reorganize o menu em grupos intuitivos. Mostre o que deve ficar visível, virar submenu, atalho ou busca. Crie versões específicas para celular e computador.`),
-P('andamento','Mobile','intermediario','📱 Melhorar o sistema no celular','Para corrigir problemas de uso em telas pequenas.',`Analise meu sistema no celular: [LINK/PRINTS/CÓDIGO]. Avalie menu, busca, tabelas, cards, filtros, formulários, botões, modais e uso com uma mão. Entregue melhorias por prioridade sem prejudicar a versão desktop.`),
-P('andamento','Design visual','intermediario','🧩 Padronizar todas as telas','Para quando cada parte do sistema parece ter sido criada de um jeito.',`Analise estas telas do sistema: [LINKS/PRINTS/CÓDIGO]. Crie um padrão único para cabeçalhos, menus, filtros, cards, tabelas, formulários, botões, espaçamentos e feedbacks. Liste inconsistências e como corrigir sem quebrar funcionalidades.`),
-P('andamento','Recursos','intermediario','🔎 Recursos que faltam no sistema','Para priorizar novas funcionalidades com critério.',`Sistema atual: [DESCREVA]. Usuários: [PÚBLICO]. Problema resolvido: [PROBLEMA]. Sugira 12 recursos relevantes. Para cada um informe necessidade, benefício, complexidade, prioridade, dependências e risco. Evite ideias genéricas.`),
-P('andamento','Jornada do usuário','avancado','🔄 Melhorar um fluxo específico','Para simplificar cadastro, compra, atendimento ou outra tarefa.',`Analise este fluxo: [DESCREVA ETAPAS]. Objetivo do usuário: [OBJETIVO]. Identifique passos desnecessários, dúvidas, erros possíveis e pontos de abandono. Proponha um fluxo ideal com estados de sucesso, erro, vazio, carregamento e recuperação.`),
-P('andamento','Código e qualidade','avancado','🏗️ Revisar estrutura antes de continuar','Para evitar crescer sobre uma base desorganizada.',`Analise a estrutura atual do projeto: [ÁRVORE DE ARQUIVOS/CÓDIGO]. Explique o que está bem organizado, repetições, acoplamentos e riscos. Proponha uma reorganização gradual, preservando o funcionamento atual e priorizando mudanças pequenas e seguras.`),
-P('pronto','Jornada do usuário','avancado','🗺️ Mapa de jornada e fluxos críticos','Para encontrar atritos em um sistema já utilizável.',`Mapeie a jornada principal deste sistema: [DESCRIÇÃO]. Objetivo do usuário: [OBJETIVO]. Mostre etapas, dúvidas, pontos de abandono, fluxo ideal, mensagens, CTAs, cenários de erro e métricas. Finalize com as 3 melhorias de maior impacto.`),
-P('pronto','Código e qualidade','avancado','💻 Revisão técnica completa','Para revisar manutenção, segurança e desempenho.',`Revise este sistema: [CÓDIGO/ARQUITETURA]. Tecnologias: [STACK]. Analise organização, duplicações, validação, erros, segurança, desempenho, acessibilidade e testes. Liste problemas por prioridade e proponha correções incrementais.`),
-P('pronto','Qualidade','intermediario','🧪 Cenários de teste e bugs escondidos','Para testar antes de publicar ou após grandes mudanças.',`Crie um plano de testes para [SISTEMA/FUNÇÃO]. Cubra fluxo feliz, dados inválidos, estados vazios, erros de rede, lentidão, permissões, celular, computador, teclado e casos de borda. Organize por prioridade e indique os 5 bugs mais prováveis.`),
-P('pronto','Acessibilidade','intermediario','♿ Revisão de acessibilidade do sistema','Para tornar a interface utilizável por mais pessoas.',`Revise a acessibilidade deste sistema: [LINK/CÓDIGO/PRINTS]. Analise contraste, foco, teclado, títulos, labels, formulários, mensagens de erro, ícones, modais e leitores de tela. Priorize as correções por impacto e dificuldade.`),
-P('pronto','Performance','avancado','⚡ Auditoria de desempenho','Para sistemas lentos ou pesados.',`Analise o desempenho deste sistema: [LINK/CÓDIGO/ARQUITETURA]. Identifique gargalos em carregamento, imagens, scripts, consultas, renderização e chamadas de rede. Separe evidências de hipóteses e proponha melhorias priorizadas, começando pelas de menor risco.`),
-P('pronto','Produto e dados','avancado','📈 Roadmap de evolução do produto','Para decidir o que desenvolver depois do lançamento.',`Produto atual: [DESCREVA]. Objetivo dos próximos 90 dias: [OBJETIVO]. Problemas e ideias: [LISTA]. Equipe e limitações: [CONTEXTO]. Monte um roadmap com melhorias rápidas, funcionalidades, métricas, riscos e dependências, priorizando impacto, esforço e urgência.`)
-];let fase='todos',categoria='todas',nivel='todos';const lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),cats=document.getElementById('categorias');const icons={'Planejamento':'🗺️','Studio IA':'🤖','Navegação':'🧭','Design visual':'🎨','Produto e design':'🛠️','Recursos':'🧩','Mobile':'📱','Jornada do usuário':'🔄','Código e qualidade':'💻','Qualidade':'🧪','Acessibilidade':'♿','Performance':'⚡','Produto e dados':'📈'};function montarCats(){const a=[...new Set(prompts.map(p=>p.categoria))];cats.innerHTML='<button data-cat="todas" class="'+(categoria==='todas'?'ativo':'')+'">🌐 Todas</button>'+a.map(c=>'<button data-cat="'+c+'" class="'+(categoria===c?'ativo':'')+'">'+(icons[c]||'📂')+' '+c+'</button>').join('');cats.querySelectorAll('button').forEach(b=>b.onclick=()=>{categoria=b.dataset.cat;montarCats();render()})}function render(){const q=busca.value.toLowerCase();const f=prompts.filter(p=>(fase==='todos'||p.fase===fase)&&(categoria==='todas'||p.categoria===categoria)&&(nivel==='todos'||p.nivel===nivel)&&(p.titulo+' '+p.categoria+' '+p.quando+' '+p.prompt).toLowerCase().includes(q));contador.textContent=f.length+' de '+prompts.length+' prompts';lista.innerHTML=f.length?f.map(p=>'<article class="prompt-card"><div class="meta"><span class="tag">'+(p.nivel==='avancado'?'🔴 Avançado':p.nivel==='intermediario'?'🟡 Intermediário':'🟢 Básico')+'</span><span class="tag">'+(icons[p.categoria]||'📂')+' '+p.categoria+'</span></div><h3>'+p.titulo+'</h3><p class="quando"><strong>📌 Quando usar:</strong> '+p.quando+'</p><div class="prompt-text"></div><button class="ver">👁️ Ver prompt completo</button><div class="acoes"><button class="copiar">📋 Copiar</button><button class="favoritar">☆ Favoritar</button><button class="chat">🤖 ChatGPT</button><button class="gemini">✨ Gemini</button></div></article>').join(''):'<div class="empty">🔎 Nenhum prompt encontrado.</div>';lista.querySelectorAll('.prompt-card').forEach((c,i)=>{c.querySelector('.prompt-text').textContent=f[i].prompt;c._p=f[i]})}document.querySelectorAll('#journey button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#journey button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');fase=b.dataset.fase;render()});document.querySelectorAll('#niveis button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#niveis button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');nivel=b.dataset.nivel;render()});busca.oninput=render;lista.onclick=async e=>{const b=e.target.closest('button'),c=b?.closest('.prompt-card');if(!c)return;const p=c._p;if(b.classList.contains('ver')){const t=c.querySelector('.prompt-text');t.classList.toggle('aberto');b.textContent=t.classList.contains('aberto')?'🙈 Mostrar menos':'👁️ Ver prompt completo'}if(b.classList.contains('copiar')){await navigator.clipboard.writeText(p.prompt);b.textContent='✓ Copiado';setTimeout(()=>b.textContent='📋 Copiar',1200)}if(b.classList.contains('favoritar')){const a=JSON.parse(localStorage.getItem('deltaPrompts'))||[];a.push({id:Date.now(),titulo:p.titulo,categoria:'Sistemas com IA',conteudo:p.prompt,favorito:true});localStorage.setItem('deltaPrompts',JSON.stringify(a));b.textContent='⭐ Salvo'}if(b.classList.contains('chat'))window.open('https://chat.openai.com/?q='+encodeURIComponent(p.prompt),'_blank');if(b.classList.contains('gemini'))window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(p.prompt),'_blank')};montarCats();render();</script></body></html>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sistemas com IA | Delta Prompts</title><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.info-mini{margin:16px 0;border:1px solid #e5e7eb;border-radius:14px;background:#fff;overflow:hidden}.info-mini>button{width:100%;display:flex;justify-content:space-between;padding:15px 17px;border:0;background:transparent;font:inherit;font-weight:800;text-align:left;cursor:pointer}.info-body{display:none;padding:0 17px 17px;color:#667085;line-height:1.6}.info-mini.open .info-body{display:block}.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.journey button{padding:16px;border:1px solid #e5e7eb;border-radius:15px;background:#fff;text-align:left;font:inherit;cursor:pointer;position:relative}.journey button.ativo{border-color:#5b5ce2;background:#f3f3ff}.journey strong,.journey small{display:block}.journey small{margin-top:5px;color:#667085}.top-bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:230px;padding:14px;border:1px solid #e5e7eb;border-radius:12px}.contador,.filter-label{font-weight:800}.contador{color:#4f46e5}.filter-group{margin-bottom:15px}.filter-label{display:block;margin-bottom:8px}.filtros{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px;flex-wrap:wrap}.filtros button{white-space:nowrap;padding:9px 14px;border:1px solid #e5e7eb;border-radius:999px;background:#fff;font-weight:800;cursor:pointer}.filtros button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}#lista-prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.prompt-card{display:flex;flex-direction:column;padding:20px;border:1px solid #e5e7eb;border-radius:18px;background:#fff}.meta{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.tag,.uso-badge{padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800}.uso-badge{background:#fef3c7;color:#b45309}.quando{color:#667085}.prompt-text{white-space:pre-wrap;background:#f8fafc;border:1px solid #e6e8f0;border-radius:12px;padding:14px;font-size:14px;line-height:1.55;max-height:105px;overflow:hidden}.prompt-text.aberto{max-height:none}.ver{align-self:flex-end;margin-top:8px;border:0;background:none;color:#4f46e5;font-weight:800;cursor:pointer}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:14px}.acoes button{flex:1;min-width:95px;padding:11px;border:0;border-radius:11px;font-weight:800;background:#eef2ff;color:#4f46e5;cursor:pointer}.acoes .copiar{background:#5b5ce2;color:#fff}.acoes .favoritar.is-fav{background:#fff1f2;color:#be123c}.acoes .compartilhar{background:#f0fdf4;color:#15803d}.empty{grid-column:1/-1;text-align:center;padding:30px;color:#667085}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(79,70,229,.12);color:#4f46e5}
+.filtros button.ativo .count-badge,.journey button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.journey .count-badge{position:absolute;top:12px;right:14px}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#4f46e5}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #e5e7eb;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#4f46e5;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:0 0 12px;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #4f46e5;outline-offset:3px}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#4f46e5;color:#4f46e5}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] .info-mini,[data-theme="dark"] .journey button,[data-theme="dark"] .prompt-card,[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .prompt-text{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .btn-mais-filtros,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:850px){.journey{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){#lista-prompts,.journey{grid-template-columns:1fr}.theme-toggle{bottom:90px}}</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260816"></script><main>
+
+<h1>🧩 Sistemas com IA</h1>
+<p>Do planejamento ao sistema pronto: encontre prompts para criar, desenvolver, revisar e evoluir aplicativos, dashboards e produtos digitais.</p>
+
+<section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">💡 Como usar <span>⌄</span></button><div class="info-body">Escolha a fase do seu projeto, filtre por categoria e nível, e abra o prompt completo. Os campos entre colchetes viram campinhos pra preencher antes de copiar.</div></section>
+
+<div class="journey" id="journey">
+  <button data-fase="todos" class="ativo"><strong>✨ Todos</strong><small>Ver todos os prompts</small></button>
+  <button data-fase="inicio"><strong>🟢 Criando do zero</strong><small>Planejar e construir</small></button>
+  <button data-fase="andamento"><strong>🟡 Em desenvolvimento</strong><small>Continuar e melhorar</small></button>
+  <button data-fase="pronto"><strong>🔴 Sistema pronto</strong><small>Revisar e evoluir</small></button>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="🔎 Buscar recursos, UX, mobile, bugs, código...">
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <span id="contador" class="contador"></span>
+</div>
+
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filter-group"><span class="filter-label">🎯 Filtrar por categoria</span><div id="categorias" class="filtros"></div></div>
+  <div class="filter-group"><span class="filter-label">📊 Filtrar por nível</span><div id="niveis" class="filtros"><button class="ativo" data-nivel="todos">🌐 Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um prompt</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o prompt de sistema/produto digital que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+const D=(fase,categoria,nivel,titulo,quando,prompt)=>({fase,categoria,nivel,titulo,quando,prompt});
+const dadosBrutos=[
+D('inicio','Planejamento','basico','🚀 Criar meu primeiro sistema do zero','Para transformar uma ideia em uma primeira versão organizada.',`Quero criar um sistema para [OBJETIVO]. Público: [USUÁRIOS]. Problema: [PROBLEMA]. Planeje a versão mínima do produto. Defina telas, funções essenciais, fluxo principal, dados necessários e ordem de desenvolvimento. Não adicione recursos sem necessidade.`),
+D('inicio','Planejamento','intermediario','🗺️ Arquitetura completa do sistema','Para definir módulos e conexões antes de desenvolver.',`Planeje a arquitetura funcional de um sistema para [OBJETIVO]. Liste módulos, telas, permissões, dados, integrações e relações entre áreas. Separe o que pertence ao MVP do que pode ficar para versões futuras.`),
+D('inicio','Studio IA','basico','🤖 Briefing completo para Studio IA','Para pedir que uma IA construa uma tela ou sistema com contexto suficiente.',`Atue como gerente de produto, designer UX/UI e desenvolvedor. Crie [SISTEMA/TELA]. Produto: [FUNÇÃO]. Usuário: [PÚBLICO]. Ação principal: [AÇÃO]. Estilo: [ESTILO]. Antes de gerar, identifique ambiguidades. Depois entregue estrutura, componentes, estados, responsividade, acessibilidade e implementação organizada.`),
+D('inicio','Navegação','basico','🧭 Criar menu e navegação do sistema','Para organizar módulos sem deixar o menu confuso.',`Crie a navegação ideal para este sistema: [DESCRIÇÃO E RECURSOS]. Organize menu, submenus e atalhos para celular e computador. Agrupe funções relacionadas, reduza excesso de opções e explique a lógica da estrutura.`),
+D('inicio','Design visual','intermediario','🧱 Criar sistema visual e componentes','Para começar com uma interface consistente.',`Crie um design system inicial para [TIPO DE SISTEMA]. Defina cores, tipografia, espaçamentos, botões, campos, tabelas, cards, alertas, modais, estados e regras responsivas. Priorize consistência, legibilidade e reutilização.`),
+D('andamento','Produto e design','basico','🛠️ Melhorar meu sistema atual','Para descobrir o que melhorar sem refazer o que já funciona.',`Analise meu sistema atual: [LINK, PRINTS, DESCRIÇÃO OU CÓDIGO]. Primeiro identifique tudo que já existe e o que funciona bem. Depois proponha melhorias priorizadas em recursos, visual, navegação, organização, celular e computador. Não refaça tudo sem necessidade e não sugira recursos já existentes.`),
+D('andamento','Recursos','intermediario','🧩 20 coisas que faltam no meu sistema','Para encontrar oportunidades sem repetir funcionalidades.',`Analise este sistema: [DESCRIÇÃO/LINK/CÓDIGO]. Primeiro liste os recursos que já existem. Depois sugira exatamente 20 melhorias ou recursos úteis que ainda faltam. Para cada item informe benefício, prioridade, dificuldade e dependências. Não repita funcionalidades existentes.`),
+D('andamento','Produto e design','intermediario','🎨 Auditoria UX/UI de tela','Para revisar uma tela, dashboard ou fluxo.',`Revise esta tela ou fluxo: [PRINT/LINK/CÓDIGO]. Usuário: [PÚBLICO]. Tarefa: [TAREFA]. Analise clareza, hierarquia, navegação, feedback, acessibilidade e responsividade. Preserve o que funciona e entregue 5 mudanças rápidas de alto impacto.`),
+D('andamento','Navegação','intermediario','📂 Organizar menu sem ficar grande','Para sistemas que ganharam muitos módulos e páginas.',`Analise as páginas, módulos e funções deste sistema: [LISTA/LINK]. Reorganize o menu em grupos intuitivos. Mostre o que deve ficar visível, virar submenu, atalho ou busca. Crie versões específicas para celular e computador.`),
+D('andamento','Mobile','intermediario','📱 Melhorar o sistema no celular','Para corrigir problemas de uso em telas pequenas.',`Analise meu sistema no celular: [LINK/PRINTS/CÓDIGO]. Avalie menu, busca, tabelas, cards, filtros, formulários, botões, modais e uso com uma mão. Entregue melhorias por prioridade sem prejudicar a versão desktop.`),
+D('andamento','Design visual','intermediario','🧩 Padronizar todas as telas','Para quando cada parte do sistema parece ter sido criada de um jeito.',`Analise estas telas do sistema: [LINKS/PRINTS/CÓDIGO]. Crie um padrão único para cabeçalhos, menus, filtros, cards, tabelas, formulários, botões, espaçamentos e feedbacks. Liste inconsistências e como corrigir sem quebrar funcionalidades.`),
+D('andamento','Recursos','intermediario','🔎 Recursos que faltam no sistema','Para priorizar novas funcionalidades com critério.',`Sistema atual: [DESCREVA]. Usuários: [PÚBLICO]. Problema resolvido: [PROBLEMA]. Sugira 12 recursos relevantes. Para cada um informe necessidade, benefício, complexidade, prioridade, dependências e risco. Evite ideias genéricas.`),
+D('andamento','Jornada do usuário','avancado','🔄 Melhorar um fluxo específico','Para simplificar cadastro, compra, atendimento ou outra tarefa.',`Analise este fluxo: [DESCREVA ETAPAS]. Objetivo do usuário: [OBJETIVO]. Identifique passos desnecessários, dúvidas, erros possíveis e pontos de abandono. Proponha um fluxo ideal com estados de sucesso, erro, vazio, carregamento e recuperação.`),
+D('andamento','Código e qualidade','avancado','🏗️ Revisar estrutura antes de continuar','Para evitar crescer sobre uma base desorganizada.',`Analise a estrutura atual do projeto: [ÁRVORE DE ARQUIVOS/CÓDIGO]. Explique o que está bem organizado, repetições, acoplamentos e riscos. Proponha uma reorganização gradual, preservando o funcionamento atual e priorizando mudanças pequenas e seguras.`),
+D('pronto','Jornada do usuário','avancado','🗺️ Mapa de jornada e fluxos críticos','Para encontrar atritos em um sistema já utilizável.',`Mapeie a jornada principal deste sistema: [DESCRIÇÃO]. Objetivo do usuário: [OBJETIVO]. Mostre etapas, dúvidas, pontos de abandono, fluxo ideal, mensagens, CTAs, cenários de erro e métricas. Finalize com as 3 melhorias de maior impacto.`),
+D('pronto','Código e qualidade','avancado','💻 Revisão técnica completa','Para revisar manutenção, segurança e desempenho.',`Revise este sistema: [CÓDIGO/ARQUITETURA]. Tecnologias: [STACK]. Analise organização, duplicações, validação, erros, segurança, desempenho, acessibilidade e testes. Liste problemas por prioridade e proponha correções incrementais.`),
+D('pronto','Qualidade','intermediario','🧪 Cenários de teste e bugs escondidos','Para testar antes de publicar ou após grandes mudanças.',`Crie um plano de testes para [SISTEMA/FUNÇÃO]. Cubra fluxo feliz, dados inválidos, estados vazios, erros de rede, lentidão, permissões, celular, computador, teclado e casos de borda. Organize por prioridade e indique os 5 bugs mais prováveis.`),
+D('pronto','Acessibilidade','intermediario','♿ Revisão de acessibilidade do sistema','Para tornar a interface utilizável por mais pessoas.',`Revise a acessibilidade deste sistema: [LINK/CÓDIGO/PRINTS]. Analise contraste, foco, teclado, títulos, labels, formulários, mensagens de erro, ícones, modais e leitores de tela. Priorize as correções por impacto e dificuldade.`),
+D('pronto','Performance','avancado','⚡ Auditoria de desempenho','Para sistemas lentos ou pesados.',`Analise o desempenho deste sistema: [LINK/CÓDIGO/ARQUITETURA]. Identifique gargalos em carregamento, imagens, scripts, consultas, renderização e chamadas de rede. Separe evidências de hipóteses e proponha melhorias priorizadas, começando pelas de menor risco.`),
+D('pronto','Produto e dados','avancado','📈 Roadmap de evolução do produto','Para decidir o que desenvolver depois do lançamento.',`Produto atual: [DESCREVA]. Objetivo dos próximos 90 dias: [OBJETIVO]. Problemas e ideias: [LISTA]. Equipe e limitações: [CONTEXTO]. Monte um roadmap com melhorias rápidas, funcionalidades, métricas, riscos e dependências, priorizando impacto, esforço e urgência.`)
+];
+
+const icons={'Planejamento':'🗺️','Studio IA':'🤖','Navegação':'🧭','Design visual':'🎨','Produto e design':'🛠️','Recursos':'🧩','Mobile':'📱','Jornada do usuário':'🔄','Código e qualidade':'💻','Qualidade':'🧪','Acessibilidade':'♿','Performance':'⚡','Produto e dados':'📈'};
+
+const prompts=dadosBrutos.map((x,i)=>{
+  const obj={id:'sys-'+i,fase:x.fase,categoria:x.categoria,nivel:x.nivel,titulo:x.titulo,quando:x.quando,prompt:x.prompt,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+let fase='todos',categoria='todas',nivel='todos';
+const lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),cats=document.getElementById('categorias');
+
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+// ===== TOAST =====
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+// ===== FAVORITOS =====
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Sistemas com IA',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+// ===== POPULARIDADE =====
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaSistemasUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaSistemasUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+// ===== FEEDBACK =====
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaSistemasFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaSistemasFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;
+  if(!fb[id])fb[id]={up:0,down:0,voto:null};
+  if(atual===tipo){fb[id][tipo]=Math.max(0,fb[id][tipo]-1);fb[id].voto=null}
+  else{if(atual)fb[id][atual]=Math.max(0,fb[id][atual]-1);fb[id][tipo]=(fb[id][tipo]||0)+1;fb[id].voto=tipo}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{up:0,down:0,voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up){up.textContent='👍 '+fb.up;up.classList.toggle('marcado',fb.voto==='up')}
+  if(down){down.textContent='👎 '+fb.down;down.classList.toggle('marcado',fb.voto==='down')}
+}
+
+// ===== CAMPOS EDITÁVEIS =====
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=p.prompt;(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+// ===== AÇÕES =====
+async function copiarTexto(t){try{await navigator.clipboard.writeText(t);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChat(t){try{await navigator.clipboard.writeText(t)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(t){try{await navigator.clipboard.writeText(t)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(t),'_blank'),300)}
+function alternarPrompt(id){const el=document.getElementById('prompt-'+id);const btn=document.querySelector('#card-'+id+' .ver');if(!el||!btn)return;el.classList.toggle('aberto');btn.textContent=el.classList.contains('aberto')?'🙈 Mostrar menos':'👁️ Ver prompt completo'}
+
+// ===== COMPARTILHAR =====
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='🧩 '+p.titulo+'\n\nConfira esse prompt de sistemas com IA no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+// ===== RELACIONADOS / NAVEGAÇÃO =====
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){fase='todos';categoria='todas';nivel='todos';busca.value='';document.querySelectorAll('#journey button').forEach(b=>b.classList.toggle('ativo',b.dataset.fase==='todos'));document.querySelectorAll('#niveis button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));montarCats();render();requestAnimationFrame(()=>destacarCard(id))}
+
+// ===== EXPORTAR =====
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='🧩 SISTEMAS COM IA — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-sistemas-ia.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+// ===== SUGERIR =====
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de prompt de sistemas com IA para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+// ===== ESTATÍSTICAS =====
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Sistemas com IA').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> prompt'+(favs===1?'':'s')+' · 🧩 <strong>'+prompts.length+'</strong> prompts disponíveis'}
+
+// ===== TEMA =====
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+// ===== PAINEL MAIS FILTROS =====
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function atualizarBadgeFiltros(){
+  const n=(categoria!=='todas'?1:0)+(nivel!=='todos'?1:0);
+  const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');
+  if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}
+  else{badge.style.display='none';btn.classList.remove('ativo')}
+}
+function limparFiltros(){
+  categoria='todas';nivel='todos';busca.value='';
+  document.querySelectorAll('#niveis button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));
+  montarCats();render();
+  mostrarToast('✕ Filtros limpos');
+}
+
+function montarCats(){
+  const base=fase==='todos'?prompts:prompts.filter(p=>p.fase===fase);
+  const a=[...new Set(prompts.map(p=>p.categoria))];
+  cats.innerHTML='<button data-cat="todas" class="'+(categoria==='todas'?'ativo':'')+'">🌐 Todas <span class="count-badge">'+base.length+'</span></button>'+
+    a.map(c=>{const n=base.filter(p=>p.categoria===c).length;if(n===0)return'';return '<button data-cat="'+c+'" class="'+(categoria===c?'ativo':'')+'">'+(icons[c]||'📂')+' '+c+' <span class="count-badge">'+n+'</span></button>'}).join('');
+  cats.querySelectorAll('button').forEach(b=>b.onclick=()=>{categoria=b.dataset.cat;montarCats();render()});
+}
+function atualizarContadoresJourney(){
+  const q=norm(busca.value);
+  const base=prompts.filter(p=>!q||norm(p.titulo+' '+p.quando+' '+p.prompt).includes(q));
+  document.querySelectorAll('#journey button').forEach(btn=>{
+    const f=btn.dataset.fase;
+    const n=f==='todos'?base.length:base.filter(p=>p.fase===f).length;
+    let badge=btn.querySelector('.count-badge');
+    if(!badge){badge=document.createElement('span');badge.className='count-badge';btn.appendChild(badge)}
+    badge.textContent=n;
+  });
+}
+
+// ===== CARD =====
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('article');
+  card.className='prompt-card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="meta"><span class="tag">${nivelLabel(p.nivel)}</span><span class="tag">${icons[p.categoria]||'📂'} ${p.categoria}</span><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p class="quando"><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
+    <button class="ver" type="button" data-acao="ver" data-id="${p.id}">👁️ Ver prompt completo</button>
+    <div class="acoes">
+      <button class="copiar" data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse prompt te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Prompts relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
+}
+
+function render(){
+  const q=norm(busca.value);
+  const f=prompts.filter(p=>(fase==='todos'||p.fase===fase)&&(categoria==='todas'||p.categoria===categoria)&&(nivel==='todos'||p.nivel===nivel)&&(!q||norm(p.titulo+' '+p.categoria+' '+p.quando+' '+p.prompt).includes(q)));
+  contador.textContent=f.length+' de '+prompts.length+' prompts';
+  lista.innerHTML='';
+  if(!f.length){lista.innerHTML='<div class="empty">🔎 Nenhum prompt encontrado.</div>'}
+  else{f.forEach(p=>lista.appendChild(criarCard(p)))}
+  atualizarContadoresJourney();
+  atualizarBadgeFiltros();
+}
+
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='ver')alternarPrompt(id);
+  else if(acao==='copiar'){registrarUso(id);copiarTexto(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChat(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+document.querySelectorAll('#journey button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#journey button').forEach(x=>x.classList.remove('ativo'));
+  b.classList.add('ativo');
+  fase=b.dataset.fase;
+  categoria='todas';
+  montarCats();
+  render();
+}));
+document.querySelectorAll('#niveis button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#niveis button').forEach(x=>x.classList.remove('ativo'));
+  b.classList.add('ativo');
+  nivel=b.dataset.nivel;
+  render();
+}));
+
+busca.addEventListener('input',render);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+montarCats();
+atualizarStats();
+render();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+</script></body></html>
