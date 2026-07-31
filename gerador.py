@@ -1,0 +1,185 @@
+import json, re
+
+TEMPLATE = '''<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="{descricao}"><title>{titulo_pagina} | Delta Prompts</title><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.page-head h1{{margin-bottom:6px}}.page-head p{{margin-top:0;color:#667085}}.info-row{{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}}.info-mini{{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#fff}}.info-mini button{{width:100%;display:flex;justify-content:space-between;padding:14px 16px;border:0;background:transparent;font:inherit;font-weight:800;text-align:left;cursor:pointer}}.info-body{{display:none;padding:0 16px 16px;color:#667085;line-height:1.55}}.info-mini.open .info-body{{display:block}}.top-bar{{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0 14px}}.top-bar input{{flex:1;min-width:220px;min-height:48px;padding:12px 14px;border:1px solid #e6e8f0;border-radius:12px;font:inherit}}.top-bar select{{padding:12px 10px;border-radius:12px;border:1px solid #e6e8f0;font-size:14px;background:#fff;cursor:pointer}}.contador{{font-weight:800}}.filter-group{{margin-bottom:15px}}.filter-label{{display:block;margin-bottom:8px;font-size:14px;font-weight:900;color:#344054}}.filtros{{display:flex;gap:8px;overflow-x:auto;padding:2px 0 5px}}.filtros button{{white-space:nowrap;padding:9px 13px;border:1px solid #e6e8f0;border-radius:999px;background:#fff;font:inherit;font-weight:800;cursor:pointer}}.filtros button.ativo{{background:#5b5ce2;border-color:#5b5ce2;color:#fff}}#lista-prompts{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}.prompt-card{{display:flex;flex-direction:column;padding:20px;border:1px solid #e5e7eb;border-radius:18px;background:#fff}}.meta{{display:flex;gap:7px;flex-wrap:wrap;align-items:center}}.tag,.uso-badge{{padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800}}.uso-badge{{background:#fef3c7;color:#b45309}}.nivel-basico{{background:#ecfdf3;color:#027a48}}.nivel-intermediario{{background:#fffaeb;color:#b54708}}.nivel-avancado{{background:#fef3f2;color:#b42318}}.prompt-card h3{{margin:12px 0 5px}}.quando{{margin:0 0 12px;color:#667085}}.campos-preenchimento{{display:flex;flex-direction:column;gap:8px;margin:0 0 12px;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e6e8f0}}.campo-label{{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}}.campo-label input{{padding:9px 10px;border:1px solid #e6e8f0;border-radius:9px;font-size:13.5px;font-family:inherit}}.prompt-text{{white-space:pre-wrap;overflow-wrap:anywhere;background:#f8fafc;border:1px solid #e6e8f0;border-radius:12px;padding:14px;font-size:14px;line-height:1.55;max-height:105px;overflow:hidden}}.prompt-text.aberto{{max-height:none}}.ver-mais{{align-self:flex-end;margin-top:8px;border:0;background:none;color:#4f46e5;font-weight:800;cursor:pointer}}.acoes{{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:14px}}.acoes button{{flex:1;min-width:100px;padding:11px;border:0;border-radius:11px;font-weight:800;cursor:pointer;background:#eef2ff;color:#4f46e5}}.acoes .copiar{{background:#5b5ce2;color:#fff}}.acoes .fav-btn.favorito{{background:#fff1f2;color:#be123c}}.acoes .compartilhar{{background:#f0fdf4;color:#15803d}}.relacionadas{{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e6e8f0;font-size:12.5px;color:#667085}}.relacionadas strong{{color:#172033;display:block;margin-bottom:6px}}.chip-relacionada{{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-weight:700;font-size:12px;cursor:pointer;border:0}}.destacado{{outline:3px solid #4f46e5;outline-offset:3px}}.empty{{grid-column:1/-1;text-align:center;padding:30px;color:#667085}}
+.stats-bar{{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}}
+.toolbar-extra{{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}}
+.toolbar-extra button{{border:1px solid #e6e8f0;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}}
+.toolbar-extra button:hover{{background:#eef2ff;color:#4f46e5}}
+.sugerir-box{{border:1px solid #e6e8f0;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}}
+.sugerir-box textarea{{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e6e8f0;border-radius:10px;padding:10px;font:inherit;resize:vertical}}
+.sugerir-acoes{{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}}
+.sugerir-acoes button{{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}}
+.sugerir-dica{{font-size:12px;color:#667085}}
+.toast{{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}}
+.toast.show{{opacity:1;transform:translate(-50%,0)}}
+[data-theme="dark"] .info-mini,[data-theme="dark"] .prompt-card{{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}}
+[data-theme="dark"] .prompt-text{{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button{{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{{color:#a0a0a0}}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{{color:#f1f5f9}}
+@media(max-width:720px){{.info-row,#lista-prompts{{grid-template-columns:1fr}}.page-head h1{{font-size:28px}}.prompt-card{{padding:17px}}.theme-toggle{{bottom:90px}}}}</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260816"></script><main>
+
+<header class="page-head"><h1>{titulo_h1}</h1><p>{intro}</p></header>
+
+<div class="info-row">
+<section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Objetivo<span>⌄</span></button><div class="info-body">{objetivo}</div></section>
+<section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🛠️ Como usar?<span>⌄</span></button><div class="info-body">{como_usar}</div></section>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="{busca_placeholder}">
+  <select id="ordenar" aria-label="Ordenar prompts">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <span class="contador" id="contador"></span>
+</div>
+
+<div class="filter-group"><span class="filter-label">🎯 Filtrar por tema</span><div class="filtros" id="temas"></div></div>
+<div class="filter-group"><span class="filter-label">📊 Filtrar por nível de conhecimento</span><div class="filtros" id="niveis"><button class="ativo" data-nivel="todos">🌐 Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div></div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const dadosBrutos={dados_json};
+
+const prompts=dadosBrutos.map((p,i)=>{{
+  const obj={{...p,novo:i>={indice_novo}}};
+  obj.placeholders=[...new Set((obj.prompt.match(/\\[([^\\]]+)\\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+}});
+
+let temaAtual='Todos',nivelAtual='todos';
+const lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),temas=document.getElementById('temas'),ordenarSelect=document.getElementById('ordenar');
+
+function nivelLabel(n){{return n==='basico'?'🟢 Básico':n==='intermediario'?'🟡 Intermediário':'🔴 Avançado'}}
+const temaIcons={tema_icons_json};
+function temaLabel(t){{return (temaIcons[t]||'📌')+' '+t}}
+function criarTemas(){{const itens=['Todos',...new Set(prompts.map(x=>x.tema))];temas.innerHTML=itens.map(t=>`<button class="${{t===temaAtual?'ativo':''}}" data-tema="${{t}}">${{temaLabel(t)}}</button>`).join('');temas.querySelectorAll('button').forEach(b=>b.onclick=()=>{{temaAtual=b.dataset.tema;criarTemas();render()}})}}
+function getItem(id){{return prompts.find(p=>p.id===id)}}
+
+// ===== TOAST =====
+function mostrarToast(texto){{const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}}
+
+// ===== POPULARIDADE =====
+function _loadUsos(){{try{{return JSON.parse(localStorage.getItem('{storage_uso}'))||{{}}}}catch(e){{return{{}}}}}}
+function _saveUsos(o){{try{{localStorage.setItem('{storage_uso}',JSON.stringify(o))}}catch(e){{}}}}
+function registrarUso(id){{const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){{badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}}}
+
+// ===== CAMPOS EDITÁVEIS =====
+function textoFinal(id){{const p=getItem(id);if(!p)return'';let t=p.prompt;(p.placeholders||[]).forEach((ph,idx)=>{{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){{const re=new RegExp('\\\\['+ph.replace(/[.*+?^${{}}()|[\\]\\\\]/g,'\\\\$&')+'\\\\]','g');t=t.replace(re,val)}}}});return t}}
+
+// ===== AÇÕES =====
+async function copiarPorId(id){{registrarUso(id);const texto=textoFinal(id);try{{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}}catch(e){{mostrarToast('Não foi possível copiar automaticamente')}}}}
+async function abrirChat(id){{registrarUso(id);const texto=textoFinal(id);try{{await navigator.clipboard.writeText(texto)}}catch(e){{}}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}}
+async function abrirGemini(id){{registrarUso(id);const texto=textoFinal(id);try{{await navigator.clipboard.writeText(texto)}}catch(e){{}}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}}
+
+// ===== COMPARTILHAR =====
+function compartilhar(id){{const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='{emoji_share} '+p.titulo+'\\n\\nConfira esse modelo no Delta Prompts:\\n'+url;if(navigator.share){{navigator.share({{title:p.titulo,text:texto,url:url}}).catch(()=>{{}})}}else{{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}}}
+
+// ===== RELACIONADOS / NAVEGAÇÃO =====
+function destacarCard(id){{const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({{behavior:'smooth',block:'center'}});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}}
+function irPara(id){{temaAtual='Todos';nivelAtual='todos';busca.value='';ordenarSelect.value='padrao';criarTemas();document.querySelectorAll('#niveis button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));render();requestAnimationFrame(()=>destacarCard(id))}}
+
+// ===== EXPORTAR =====
+function exportarTodas(){{const linhas=prompts.map(p=>p.titulo+'\\nTema: '+p.tema+' | Nível: '+nivelLabel(p.nivel)+'\\nQuando usar: '+p.quando+'\\n\\n'+p.prompt+'\\n\\n'+'─'.repeat(40));const conteudo='{emoji_share} {titulo_export} — DELTA PROMPTS\\n\\n'+linhas.join('\\n\\n');const blob=new Blob([conteudo],{{type:'text/plain;charset=utf-8'}});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='{arquivo_export}';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}}
+
+// ===== SUGERIR =====
+function toggleSugerir(){{const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}}
+function copiarSugestao(){{const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){{mostrarToast('Escreva sua ideia antes de copiar 🙂');return}}navigator.clipboard.writeText('💡 Sugestão para o Delta Prompts:\\n\\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}}
+
+// ===== ESTATÍSTICAS (usa o sistema global de favoritos do menu-loader.js) =====
+function atualizarStats(){{const favs=(window.getFavoritos?window.getFavoritos():[]).filter(f=>f.categoria==='{favoritos_categoria}').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · {emoji_share} <strong>'+prompts.length+'</strong> modelos disponíveis'}}
+
+// ===== TEMA =====
+function aplicarTema(t){{document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{{localStorage.setItem('deltaTheme',t)}}catch(e){{}}}}
+
+// ===== ORDENAÇÃO =====
+function ordenarLista(arr){{const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){{const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}}return arr2}}
+
+function render(){{
+  const q=busca.value.toLowerCase().trim();
+  let f=prompts.filter(x=>(temaAtual==='Todos'||x.tema===temaAtual)&&(nivelAtual==='todos'||x.nivel===nivelAtual)&&(x.titulo+' '+x.tema+' '+x.quando+' '+x.prompt).toLowerCase().includes(q));
+  f=ordenarLista(f);
+  const usos=_loadUsos();
+  contador.textContent=f.length+' de '+prompts.length+' prompts';
+  lista.innerHTML=f.length?f.map(x=>{{
+    const usoCount=usos[x.id]||0;
+    const relacionadas=prompts.filter(d=>d.tema===x.tema&&d.id!==x.id).slice(0,3);
+    return `<article class="prompt-card" id="card-${{x.id}}">
+      <div class="meta"><span class="tag nivel-${{x.nivel}}">${{nivelLabel(x.nivel)}}</span><span class="tag">${{temaLabel(x.tema)}}</span><span class="uso-badge" id="uso-${{x.id}}" style="${{usoCount>0?'':'display:none'}}">🔥 Usado ${{usoCount}}x</span></div>
+      <h3>${{x.titulo}}</h3>
+      <p class="quando">💡 ${{x.quando}}</p>
+      ${{x.placeholders.length?`<div class="campos-preenchimento">${{x.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${{ph}}<input type="text" id="campo-${{x.id}}-${{idx}}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}}</div>`:''}}
+      <div class="prompt-text">${{x.prompt}}</div>
+      <button class="ver-mais" onclick="const p=this.previousElementSibling;p.classList.toggle('aberto');this.textContent=p.classList.contains('aberto')?'Mostrar menos':'👁️ Ver prompt completo'">👁️ Ver prompt completo</button>
+      <div class="acoes">
+        <button class="fav-btn" data-id="${{x.id}}" data-titulo="${{x.titulo}}" data-texto="${{x.prompt.replace(/"/g,'&quot;')}}" data-categoria="{favoritos_categoria}">🤍</button>
+        <button class="copiar" onclick="copiarPorId('${{x.id}}')">📋 Copiar</button>
+        <button onclick="abrirChat('${{x.id}}')">🤖 ChatGPT</button>
+        <button onclick="abrirGemini('${{x.id}}')">✨ Gemini</button>
+        <button class="compartilhar" onclick="compartilhar('${{x.id}}')">🔗 Compartilhar</button>
+      </div>
+      ${{relacionadas.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${{relacionadas.map(r=>`<button class="chip-relacionada" onclick="irPara('${{r.id}}')">${{r.titulo}}</button>`).join('')}}</div>`:''}}
+    </article>`;
+  }}).join(''):'<div class="empty">🔎 Nenhum prompt encontrado com esses filtros.</div>';
+  document.querySelectorAll('.fav-btn').forEach(btn=>{{if(window.updateFavButtonUI)window.updateFavButtonUI(btn)}});
+}}
+
+busca.addEventListener('input',render);
+ordenarSelect.addEventListener('change',render);
+document.querySelectorAll('#niveis button').forEach(b=>b.onclick=()=>{{document.querySelectorAll('#niveis button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');nivelAtual=b.dataset.nivel;render()}});
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)}});
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+
+aplicarTema((function(){{try{{return localStorage.getItem('deltaTheme')||'light'}}catch(e){{return'light'}}}})());
+criarTemas();
+atualizarStats();
+render();
+if(location.hash){{setTimeout(()=>destacarCard(location.hash.slice(1)),400)}}
+</script></body></html>
+'''
+
+def gerar_pagina(saida, titulo_pagina, titulo_h1, intro, objetivo, como_usar, busca_placeholder,
+                  favoritos_categoria, storage_uso, emoji_share, titulo_export, arquivo_export,
+                  itens, tema_icons, descricao):
+    dados_json = json.dumps(itens, ensure_ascii=False)
+    tema_icons_json = json.dumps(tema_icons, ensure_ascii=False)
+    indice_novo = max(0, len(itens) - 2)
+    html = TEMPLATE.format(
+        descricao=descricao.replace('"','&quot;'),
+        titulo_pagina=titulo_pagina, titulo_h1=titulo_h1, intro=intro,
+        objetivo=objetivo, como_usar=como_usar, busca_placeholder=busca_placeholder,
+        dados_json=dados_json, indice_novo=indice_novo, tema_icons_json=tema_icons_json,
+        storage_uso=storage_uso, emoji_share=emoji_share, favoritos_categoria=favoritos_categoria,
+        titulo_export=titulo_export, arquivo_export=arquivo_export
+    )
+    with open(saida, 'w', encoding='utf-8') as f:
+        f.write(html)
+    print(f'Gerado: {saida} ({len(itens)} prompts)')
