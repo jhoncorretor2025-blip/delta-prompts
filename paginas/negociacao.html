@@ -1,12 +1,263 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Negociação | Delta Prompts</title><meta name="description" content="Prompts estratégicos para preparar negociações, analisar propostas, responder objeções e construir acordos melhores."><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:15px;align-items:center;margin:20px 0;flex-wrap:wrap}.top-bar input{flex:1;padding:14px;border-radius:10px;border:1px solid #e5e7eb}.contador{font-size:14px;opacity:.75}.filtros-container{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}.filtro-botoes{display:flex;flex-wrap:wrap;gap:8px}.filtro-botoes button{padding:8px 15px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}.filtro-botoes button.ativo{background:#22c55e;color:#fff;border-color:#22c55e}.secao-categoria{background:#fff;border-radius:12px;padding:20px;margin-bottom:35px;border:1px solid #f1f5f9}.secao-titulo{font-size:22px;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}.grid-prompts{display:flex;flex-direction:column;gap:20px}pre{white-space:pre-wrap;font:14px inherit;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb}</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260816"></script><main><h1>🤝 Negociação com IA</h1><p>Prompts estratégicos para preparar negociações, analisar propostas, responder objeções e construir acordos melhores.</p><section class="card"><h3>🎯 Objetivo</h3><p>Usar a IA como apoio para preparar argumentos, compreender os interesses envolvidos e negociar com mais clareza, estratégia e equilíbrio.</p></section><section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul><li><strong>🎯 Preparação:</strong> estratégia antes da conversa.</li><li><strong>💬 Argumentação:</strong> contrapropostas e objeções.</li><li><strong>⚖️ Análise:</strong> avaliação de propostas e preços.</li><li><strong>🤝 Acordos:</strong> soluções e negociação imobiliária.</li></ul></section><div class="top-bar"><input id="busca" placeholder="🔎 Buscar modelo de negociação..." oninput="filtrar()"><div id="contador" class="contador"></div></div><div class="filtros-container"><div id="categorias" class="filtro-botoes filtro-categoria"></div><div class="filtro-botoes filtro-nivel"><button class="ativo" onclick="setNivel(event,'todos')">Todos os Níveis</button><button onclick="setNivel(event,'basico')">🟢 Básico</button><button onclick="setNivel(event,'intermediario')">🟡 Intermediário</button><button onclick="setNivel(event,'avancado')">🔴 Avançado</button></div></div><div id="lista-prompts"></div></main><script>
-const ordem=['🎯 Preparação','💬 Argumentação','⚖️ Análise','🤝 Acordos'];const prompts=[
-{c:'🎯 Preparação',n:'intermediario',t:'🎯 Preparar uma Negociação',q:'Antes de iniciar uma negociação importante.',p:`Ajude-me a preparar esta negociação:\n[CONTEXTO]\n\nOrganize:\n• Meu objetivo principal\n• Resultado mínimo aceitável\n• Interesses prováveis da outra parte\n• Meus limites\n• Concessões possíveis\n• Alternativas caso não haja acordo\n• Perguntas que devo fazer\n\nCrie uma estratégia de abordagem em etapas e não invente informações sobre a outra parte.`},
-{c:'🎯 Preparação',n:'avancado',t:'🧠 Simular a Outra Parte',q:'Quando quiser praticar antes de uma negociação.',p:`Assuma o papel de [OUTRA PARTE] nesta negociação:\n[CONTEXTO]\n\nSeu objetivo provável é: [OBJETIVO, SE CONHECIDO].\n\nFaça uma simulação realista comigo, apresentando uma objeção ou contraproposta por vez. Após cada resposta minha, avalie brevemente minha abordagem e continue a negociação. Não facilite o acordo artificialmente.`},
-{c:'💬 Argumentação',n:'intermediario',t:'💬 Responder uma Contraproposta',q:'Quando receber uma proposta diferente da que esperava.',p:`Recebi esta contraproposta:\n[TEXTO]\n\nMeu objetivo é:\n[OBJETIVO]\n\nAnalise:\n• Pontos positivos\n• Riscos\n• O que mudou em relação à proposta anterior\n• Pontos que ainda podem ser negociados\n\nDepois, crie uma resposta firme, respeitosa e clara que preserve meus interesses sem fechar desnecessariamente a negociação.`},
-{c:'⚖️ Análise',n:'intermediario',t:'⚖️ Avaliar uma Proposta',q:'Antes de aceitar, recusar ou fazer uma contraproposta.',p:`Analise esta proposta:\n[PROPOSTA]\n\nMeu contexto e prioridades:\n[CONTEXTO]\n\nMostre:\n• Benefícios\n• Custos e compromissos\n• Riscos\n• Pontos negociáveis\n• Informações que ainda preciso confirmar\n• Possíveis alternativas\n\nAo final, apresente os principais fatores que devem orientar minha decisão.`},
-{c:'💬 Argumentação',n:'intermediario',t:'🛡️ Lidar com Objeções',q:'Quando a outra parte apresentar uma resistência ou preocupação.',p:`Estou negociando [OBJETIVO] e recebi esta objeção:\n[OBJEÇÃO]\n\nAjude-me a:\n• Entender o que pode estar por trás da objeção\n• Fazer perguntas para esclarecer a preocupação\n• Responder com argumentos legítimos\n• Apresentar alternativas quando necessário\n\nCrie 3 formas naturais de responder, sem pressão, manipulação ou informações inventadas.`},
-{c:'🤝 Acordos',n:'avancado',t:'🏠 Negociação Imobiliária',q:'Para preparar negociações de compra, venda ou locação de imóveis.',p:`Ajude-me a conduzir esta negociação imobiliária:\n[IMÓVEL E SITUAÇÃO]\n\nPartes envolvidas: [COMPRADOR/VENDEDOR/LOCADOR/LOCATÁRIO]\nProposta atual: [PROPOSTA]\nObjetivo: [OBJETIVO]\n\nAnalise os interesses de cada parte, os pontos de possível acordo, objeções prováveis e concessões possíveis. Crie caminhos para aproximar as partes sem inventar dados do imóvel, condições ou intenções.`},
-{c:'⚖️ Análise',n:'basico',t:'💰 Negociar Preço',q:'Quando quiser negociar o valor de um produto ou serviço.',p:`Quero negociar o preço de [PRODUTO/SERVIÇO].\n\nValor atual: [VALOR]\nMeu objetivo: [OBJETIVO]\nMeu contexto: [CONTEXTO]\n\nAjude-me a montar:\n• Argumentos legítimos\n• Perguntas úteis\n• Faixa de negociação\n• Estratégia de concessões\n• Uma abordagem inicial\n\nEvite argumentos falsos ou técnicas manipulativas.`},
-{c:'🤝 Acordos',n:'intermediario',t:'🤝 Buscar um Acordo',q:'Quando uma negociação estiver em um impasse.',p:`Existe este impasse:\n[SITUAÇÃO]\n\nInteresses de cada lado, se conhecidos:\n[INTERESSES]\n\nIdentifique:\n• Interesses em comum\n• Pontos realmente incompatíveis\n• Possíveis trocas ou concessões\n• Opções de acordo\n\nApresente pelo menos 3 caminhos realistas e explique os benefícios e riscos de cada um.`}
-];let nivel='todos',categoria='todas';const cats=document.getElementById('categorias'),lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador');cats.innerHTML='<button class="ativo" onclick="setCat(event,\'todas\')">Todas as Categorias</button>'+ordem.map(x=>`<button onclick="setCat(event,'${x}')">${x}</button>`).join('');function render(a){lista.innerHTML='';contador.textContent=`Total: ${a.length} modelo${a.length!==1?'s':''}`;ordem.forEach(c=>{const g=a.filter(x=>x.c===c);if(!g.length)return;const s=document.createElement('section');s.className='secao-categoria';s.innerHTML=`<h2 class="secao-titulo">${c}</h2><div class="grid-prompts"></div>`;const grid=s.querySelector('.grid-prompts');g.forEach(x=>{const d=document.createElement('div');d.className='card';d.dataset.prompt=x.p;d.dataset.titulo=x.t;d.innerHTML=`<div class="nivel nivel-${x.n}">${x.n==='avancado'?'🔴 Avançado':x.n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}</div><h3>${x.t}</h3><p><strong>📌 Quando usar:</strong> ${x.q}</p><pre>${x.p}</pre><div class="acoes"><button onclick="copiar(this)">📋 Copiar</button><button onclick="favoritar(this)">⭐ Favoritar</button><button onclick="abrir(this,'chatgpt')">💬 ChatGPT</button><button onclick="abrir(this,'gemini')">🔷 Gemini</button></div>`;grid.appendChild(d)});lista.appendChild(s)})}function filtrar(){const q=busca.value.toLowerCase();render(prompts.filter(x=>(x.t+' '+x.c+' '+x.q+' '+x.p).toLowerCase().includes(q)&&(nivel==='todos'||x.n===nivel)&&(categoria==='todas'||x.c===categoria)))}function setCat(e,c){document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');categoria=c;filtrar()}function setNivel(e,n){document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');nivel=n;filtrar()}function card(b){return b.closest('.card')}function copiar(b){navigator.clipboard.writeText(card(b).dataset.prompt);alert('📋 Prompt copiado!')}function favoritar(b){const c=card(b),a=JSON.parse(localStorage.getItem('deltaPrompts'))||[];a.push({id:Date.now(),titulo:c.dataset.titulo,categoria:'Negociação',conteudo:c.dataset.prompt,favorito:true});localStorage.setItem('deltaPrompts',JSON.stringify(a));alert('⭐ Adicionado aos favoritos!')}function abrir(b,ia){const p=encodeURIComponent(card(b).dataset.prompt);window.open(ia==='chatgpt'?'https://chat.openai.com/?prompt='+p:'https://gemini.google.com/app?prompt='+p,'_blank')}render(prompts);
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Negociação | Delta Prompts</title><meta name="description" content="Prompts estratégicos para preparar negociações, analisar propostas, responder objeções e construir acordos melhores."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtro-nivel{display:flex;gap:8px;flex-wrap:wrap}.filtro-nivel button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtro-nivel button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(91,92,226,.12);color:#5b5ce2}.filtro-nivel button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#5b5ce2;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.secao-titulo{font-size:22px;margin:30px 0 15px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e5e7eb;margin:15px 0}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;background:#eef2ff;color:#5b5ce2;cursor:pointer}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#5b5ce2;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #5b5ce2;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-nivel button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:700px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260816"></script><main>
+
+<h1>🤝 Negociação com IA</h1>
+<p>Prompts estratégicos para preparar negociações, analisar propostas, responder objeções e construir acordos melhores.</p>
+
+<section class="card"><h3>🎯 Objetivo</h3><p>Usar a IA como apoio para preparar argumentos, compreender os interesses envolvidos e negociar com mais clareza, estratégia e equilíbrio.</p></section>
+<section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>🎯 Preparação:</strong> estratégia antes da conversa.</li><li><strong>💬 Argumentação:</strong> contrapropostas e objeções.</li><li><strong>⚖️ Análise:</strong> avaliação de propostas e preços.</li><li><strong>🤝 Acordos:</strong> soluções e negociação imobiliária.</li></ul></section>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar modelo de negociação..." oninput="aplicarFiltros()">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <div class="contador" id="contador"></div>
+</div>
+
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtro-nivel" id="filtrosNivel"><button class="ativo" data-nivel="todos">Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo de negociação que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const ordemCategorias=['🎯 Preparação','💬 Argumentação','⚖️ Análise','🤝 Acordos'];
+
+const dadosBrutos=[
+{categoria:'🎯 Preparação',nivel:'intermediario',titulo:'🎯 Preparar uma Negociação',quando:'Antes de iniciar uma negociação importante.',prompt:`Ajude-me a preparar esta negociação:\n[CONTEXTO]\n\nOrganize:\n• Meu objetivo principal\n• Resultado mínimo aceitável\n• Interesses prováveis da outra parte\n• Meus limites\n• Concessões possíveis\n• Alternativas caso não haja acordo\n• Perguntas que devo fazer\n\nCrie uma estratégia de abordagem em etapas e não invente informações sobre a outra parte.`,en:`Help me prepare for this negotiation:\n[CONTEXT]\n\nOrganize:\n• My main goal\n• Minimum acceptable outcome\n• The other party's likely interests\n• My limits\n• Possible concessions\n• Alternatives if there's no agreement\n• Questions I should ask\n\nCreate a step-by-step approach strategy and do not invent information about the other party.`},
+{categoria:'🎯 Preparação',nivel:'avancado',titulo:'🧠 Simular a Outra Parte',quando:'Quando quiser praticar antes de uma negociação.',prompt:`Assuma o papel de [OUTRA PARTE] nesta negociação:\n[CONTEXTO]\n\nSeu objetivo provável é: [OBJETIVO, SE CONHECIDO].\n\nFaça uma simulação realista comigo, apresentando uma objeção ou contraproposta por vez. Após cada resposta minha, avalie brevemente minha abordagem e continue a negociação. Não facilite o acordo artificialmente.`,en:`Take on the role of [OTHER PARTY] in this negotiation:\n[CONTEXT]\n\nTheir likely goal is: [GOAL, IF KNOWN].\n\nRun a realistic simulation with me, presenting one objection or counteroffer at a time. After each of my responses, briefly assess my approach and continue the negotiation. Do not artificially make the agreement easy.`},
+{categoria:'💬 Argumentação',nivel:'intermediario',titulo:'💬 Responder uma Contraproposta',quando:'Quando receber uma proposta diferente da que esperava.',prompt:`Recebi esta contraproposta:\n[TEXTO]\n\nMeu objetivo é:\n[OBJETIVO]\n\nAnalise:\n• Pontos positivos\n• Riscos\n• O que mudou em relação à proposta anterior\n• Pontos que ainda podem ser negociados\n\nDepois, crie uma resposta firme, respeitosa e clara que preserve meus interesses sem fechar desnecessariamente a negociação.`,en:`I received this counteroffer:\n[TEXT]\n\nMy goal is:\n[GOAL]\n\nAnalyze:\n• Positive points\n• Risks\n• What changed compared to the previous proposal\n• Points that can still be negotiated\n\nThen, create a firm, respectful, and clear response that protects my interests without unnecessarily closing off the negotiation.`},
+{categoria:'⚖️ Análise',nivel:'intermediario',titulo:'⚖️ Avaliar uma Proposta',quando:'Antes de aceitar, recusar ou fazer uma contraproposta.',prompt:`Analise esta proposta:\n[PROPOSTA]\n\nMeu contexto e prioridades:\n[CONTEXTO]\n\nMostre:\n• Benefícios\n• Custos e compromissos\n• Riscos\n• Pontos negociáveis\n• Informações que ainda preciso confirmar\n• Possíveis alternativas\n\nAo final, apresente os principais fatores que devem orientar minha decisão.`,en:`Analyze this proposal:\n[PROPOSAL]\n\nMy context and priorities:\n[CONTEXT]\n\nShow:\n• Benefits\n• Costs and commitments\n• Risks\n• Negotiable points\n• Information I still need to confirm\n• Possible alternatives\n\nAt the end, present the main factors that should guide my decision.`},
+{categoria:'💬 Argumentação',nivel:'intermediario',titulo:'🛡️ Lidar com Objeções',quando:'Quando a outra parte apresentar uma resistência ou preocupação.',prompt:`Estou negociando [OBJETIVO] e recebi esta objeção:\n[OBJEÇÃO]\n\nAjude-me a:\n• Entender o que pode estar por trás da objeção\n• Fazer perguntas para esclarecer a preocupação\n• Responder com argumentos legítimos\n• Apresentar alternativas quando necessário\n\nCrie 3 formas naturais de responder, sem pressão, manipulação ou informações inventadas.`,en:`I'm negotiating [GOAL] and received this objection:\n[OBJECTION]\n\nHelp me:\n• Understand what might be behind the objection\n• Ask questions to clarify the concern\n• Respond with legitimate arguments\n• Present alternatives when needed\n\nCreate 3 natural ways to respond, without pressure, manipulation, or invented information.`},
+{categoria:'🤝 Acordos',nivel:'avancado',titulo:'🏠 Negociação Imobiliária',quando:'Para preparar negociações de compra, venda ou locação de imóveis.',prompt:`Ajude-me a conduzir esta negociação imobiliária:\n[IMÓVEL E SITUAÇÃO]\n\nPartes envolvidas: [COMPRADOR/VENDEDOR/LOCADOR/LOCATÁRIO]\nProposta atual: [PROPOSTA]\nObjetivo: [OBJETIVO]\n\nAnalise os interesses de cada parte, os pontos de possível acordo, objeções prováveis e concessões possíveis. Crie caminhos para aproximar as partes sem inventar dados do imóvel, condições ou intenções.`,en:`Help me conduct this real estate negotiation:\n[PROPERTY AND SITUATION]\n\nParties involved: [BUYER/SELLER/LANDLORD/TENANT]\nCurrent offer: [OFFER]\nGoal: [GOAL]\n\nAnalyze each party's interests, possible points of agreement, likely objections, and possible concessions. Create paths to bring the parties closer without inventing details about the property, terms, or intentions.`},
+{categoria:'⚖️ Análise',nivel:'basico',titulo:'💰 Negociar Preço',quando:'Quando quiser negociar o valor de um produto ou serviço.',prompt:`Quero negociar o preço de [PRODUTO/SERVIÇO].\n\nValor atual: [VALOR]\nMeu objetivo: [OBJETIVO]\nMeu contexto: [CONTEXTO]\n\nAjude-me a montar:\n• Argumentos legítimos\n• Perguntas úteis\n• Faixa de negociação\n• Estratégia de concessões\n• Uma abordagem inicial\n\nEvite argumentos falsos ou técnicas manipulativas.`,en:`I want to negotiate the price of [PRODUCT/SERVICE].\n\nCurrent value: [VALUE]\nMy goal: [GOAL]\nMy context: [CONTEXT]\n\nHelp me put together:\n• Legitimate arguments\n• Useful questions\n• Negotiation range\n• Concession strategy\n• An opening approach\n\nAvoid false arguments or manipulative techniques.`},
+{categoria:'🤝 Acordos',nivel:'intermediario',titulo:'🤝 Buscar um Acordo',quando:'Quando uma negociação estiver em um impasse.',prompt:`Existe este impasse:\n[SITUAÇÃO]\n\nInteresses de cada lado, se conhecidos:\n[INTERESSES]\n\nIdentifique:\n• Interesses em comum\n• Pontos realmente incompatíveis\n• Possíveis trocas ou concessões\n• Opções de acordo\n\nApresente pelo menos 3 caminhos realistas e explique os benefícios e riscos de cada um.`,en:`There's this deadlock:\n[SITUATION]\n\nEach side's interests, if known:\n[INTERESTS]\n\nIdentify:\n• Common interests\n• Truly incompatible points\n• Possible trades or concessions\n• Agreement options\n\nPresent at least 3 realistic paths and explain the benefits and risks of each.`}
+];
+
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'negociacao-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.prompt,promptEn:p.en,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const lista=document.getElementById("lista-prompts"),contador=document.getElementById("contador"),busca=document.getElementById("busca"),ordenarSelect=document.getElementById("ordenar");
+const idiomaAtivo={};
+
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Negociação',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaNegociacaoUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaNegociacaoUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaNegociacaoFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaNegociacaoFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={up:0,down:0,voto:null};if(atual===tipo){fb[id][tipo]=Math.max(0,fb[id][tipo]-1);fb[id].voto=null}else{if(atual)fb[id][atual]=Math.max(0,fb[id][atual]-1);fb[id][tipo]=(fb[id][tipo]||0)+1;fb[id].voto=tipo}_saveFeedback(fb);atualizarFeedbackUI(id);mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!')}
+function atualizarFeedbackUI(id){const fb=_loadFeedback()[id]||{up:0,down:0,voto:null};const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);if(up){up.textContent='👍 '+fb.up;up.classList.toggle('marcado',fb.voto==='up')}if(down){down.textContent='👎 '+fb.down;down.classList.toggle('marcado',fb.voto==='down')}}
+
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
+
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📊 '+p.titulo+'\n\nConfira esse modelo de análise no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';ordenarSelect.value='padrao';aplicarFiltros();requestAnimationFrame(()=>destacarCard(id))}
+
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📊 NEGOCIAÇÃO — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-negociacao.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de negociação para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Negociação').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🤝 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre id="pre-${p.id}">${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">💬 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">🔷 Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
+}
+
+function renderizar(arr){
+  lista.innerHTML="";
+  contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+  if(ordenarSelect.value==='padrao'){
+    ordemCategorias.forEach(cat=>{
+      const grupo=arr.filter(p=>p.categoria===cat);
+      if(grupo.length===0)return;
+      const tituloSecao=document.createElement("h2");
+      tituloSecao.className="secao-titulo";
+      tituloSecao.innerText=cat;
+      lista.appendChild(tituloSecao);
+      grupo.forEach(p=>lista.appendChild(criarCard(p)));
+    });
+  }else{
+    arr.forEach(p=>lista.appendChild(criarCard(p)));
+  }
+}
+
+function contarFiltrosAtivos(){const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';return nivel!=='todos'?1:0}
+function atualizarBadgeFiltros(){const n=contarFiltrosAtivos();const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}else{badge.style.display='none';btn.classList.remove('ativo')}}
+function atualizarContadoresNivel(){
+  const termo=busca.value.toLowerCase();
+  const base=prompts.filter(p=>(p.titulo+p.prompt+p.categoria).toLowerCase().includes(termo));
+  document.querySelectorAll('#filtrosNivel button').forEach(btn=>{
+    const n=btn.dataset.nivel==='todos'?base.length:base.filter(p=>p.nivel===btn.dataset.nivel).length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
+}
+
+function aplicarFiltros(){
+  const termo=busca.value.toLowerCase();
+  const nivelAtivo=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';
+  let filtrados=prompts.filter(p=>(p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo))&&(nivelAtivo==='todos'||p.nivel===nivelAtivo));
+  filtrados=ordenarLista(filtrados);
+  renderizar(filtrados);
+  atualizarContadoresNivel();
+  atualizarBadgeFiltros();
+}
+
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';aplicarFiltros();mostrarToast('✕ Filtros limpos')}
+
+document.querySelectorAll('#filtrosNivel button').forEach(b=>{b.dataset.label=b.textContent.trim();b.addEventListener('click',()=>{document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()})});
+
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+ordenarSelect.addEventListener('change',aplicarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+aplicarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
 </script></body></html>
