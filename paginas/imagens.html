@@ -156,17 +156,20 @@ function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaImagen
 function _saveFeedback(o){try{localStorage.setItem('deltaImagensFeedback',JSON.stringify(o))}catch(e){}}
 function darFeedback(id,tipo){
   const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;
-  if(!fb[id])fb[id]={up:0,down:0,voto:null};
-  if(atual===tipo){fb[id][tipo]=Math.max(0,fb[id][tipo]-1);fb[id].voto=null}
-  else{if(atual)fb[id][atual]=Math.max(0,fb[id][atual]-1);fb[id][tipo]=(fb[id][tipo]||0)+1;fb[id].voto=tipo}
+  if(!fb[id])fb[id]={voto:null};
+  const g=window.deltaAuth;
+  if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}
+  else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}
   _saveFeedback(fb);atualizarFeedbackUI(id);
   mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
 }
 function atualizarFeedbackUI(id){
-  const fb=_loadFeedback()[id]||{up:0,down:0,voto:null};
+  const fb=_loadFeedback()[id]||{voto:null};
   const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
-  if(up){up.textContent='👍 '+fb.up;up.classList.toggle('marcado',fb.voto==='up')}
-  if(down){down.textContent='👎 '+fb.down;down.classList.toggle('marcado',fb.voto==='down')}
+  if(up)up.classList.toggle('marcado',fb.voto==='up');
+  if(down)down.classList.toggle('marcado',fb.voto==='down');
+  const g=window.deltaAuth;
+  if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
 }
 
 // ===== IDIOMA =====
@@ -325,6 +328,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   atualizarStats();
   aplicarFiltros();
   window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
   if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
 });
 </script></body></html>
