@@ -1,272 +1,265 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Criar Títulos | Delta Prompts</title><meta name="description" content="Prompts profissionais para criar títulos com alto CTR, curiosidade e potencial de clique.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Criar Títulos | Delta Prompts</title><meta name="description" content="Prompts profissionais para criar títulos com alto CTR, curiosidade e potencial de clique."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#dc2626;color:#fff;border-color:#dc2626}
+.filtros-ativos-badge{background:#5b5ce2;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtros{display:flex;gap:8px;flex-wrap:wrap}.filtros button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtros button.ativo{background:#dc2626;color:#fff;border-color:#dc2626}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(220,38,38,.12);color:#dc2626}.filtros button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#dc2626;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e5e7eb;margin:15px 0}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.tag{display:inline-block;font-size:12px;font-weight:800;padding:5px 9px;border-radius:999px;background:#fef2f2;color:#dc2626}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#fef2f2;color:#dc2626}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fffafa}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#dc2626;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;background:#fef2f2;color:#dc2626;cursor:pointer}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#dc2626;color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#fef2f2;border-color:#dc2626;color:#dc2626}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#fef2f2;color:#dc2626;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #dc2626;outline-offset:3px}
+.vazio{text-align:center;padding:30px;opacity:.7}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:700px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260817"></script><main>
 
-<link rel="stylesheet" href="/delta-prompts/style.css">
-</head>
+<h1>🎯 Criador Estratégico de Títulos para YouTube</h1>
+<p>Prompts profissionais para criar títulos com alto CTR, curiosidade e potencial de clique.</p>
 
-<body>
+<section class="card"><h3>🎯 Objetivo</h3><p>Ajudar criadores a desenvolver títulos magnéticos que aumentem taxa de cliques e alcance orgânico.</p></section>
 
-<div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js?v=20260817"></script>
+<div class="stats-bar" id="statsBar"></div>
 
-<main>
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar tipo de título..." oninput="aplicarFiltros()">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <div class="contador" id="contador"></div>
+</div>
 
-  <!-- 1. TÍTULO FORTE -->
-  <h1>🎯 Criador Estratégico de Títulos para YouTube</h1>
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filtro-titulo">🗂️ Categoria</div>
+  <div class="filtros" id="filtrosCategoria"></div>
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtros" id="filtrosNivel"><button class="ativo" data-nivel="todos">Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
 
-  <!-- 2. INTRODUÇÃO -->
-  <p>
-    Prompts profissionais para criar títulos com alto CTR, curiosidade e potencial de clique.
-  </p>
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
 
-  <!-- 3. OBJETIVO -->
-  <section class="card">
-    <h3>🎯 Objetivo</h3>
-    <p>
-      Ajudar criadores a desenvolver títulos magnéticos que aumentem taxa de cliques e alcance orgânico.
-    </p>
-  </section>
-
-  <!-- 4. BUSCA -->
-  <div class="top-bar">
-    <input
-      type="text"
-      id="busca"
-      placeholder="🔎 Buscar tipo de título..."
-      oninput="filtrarPrompts()"
-    >
-    <div class="contador" id="contador"></div>
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o tipo de título que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
   </div>
+</div>
 
-  <!-- 5. CARDS -->
-  <div id="lista-prompts"></div>
+<div id="lista-prompts"></div>
 
 </main>
-
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
 <script>
 
-const promptsTitulos = [
-
-{
-categoria: "🔥 Curiosidade",
-titulo: "Títulos com Curiosidade Estratégica",
-quando: "Quando quiser aumentar o CTR usando curiosidade.",
-prompt: `Você é especialista em copy para YouTube.
-
-Gere 20 títulos altamente chamativos para o tema: [INSIRA O TEMA].
-
-Regras:
-- Máximo 60 caracteres
-- Use gatilhos de curiosidade
-- Evite títulos genéricos
-- Foque em aumentar CTR
-- Não use clickbait enganoso
-
-Explique rapidamente a lógica estratégica por trás dos melhores 3 títulos.`
-},
-
-{
-categoria: "📊 Alta Performance",
-titulo: "Títulos Baseados em Dados",
-quando: "Quando quiser títulos mais racionais e fortes.",
-prompt: `Atue como estrategista de crescimento no YouTube.
-
-Crie 15 títulos baseados em:
-- Números
-- Resultados
-- Promessas específicas
-- Transformação clara
-
-Tema: [INSIRA O TEMA]
-
-Organize em lista numerada.
-Foque em clareza e impacto.`
-},
-
-{
-categoria: "💥 Impacto",
-titulo: "Títulos com Promessa Forte",
-quando: "Para vídeos com promessa clara e direta.",
-prompt: `Você é especialista em marketing digital.
-
-Crie 15 títulos com promessa forte para o tema: [INSIRA TEMA].
-
-Estratégia:
-- Resultado desejado
-- Tempo ou esforço reduzido
-- Benefício claro
-- Linguagem simples
-
-Evite exageros irreais.`
-},
-
-{
-categoria: "⚡ Polêmico",
-titulo: "Títulos Polêmicos Estratégicos",
-quando: "Para gerar debate e comentários.",
-prompt: `Atue como estrategista de engajamento.
-
-Crie 15 títulos estratégicos para gerar debate sobre: [INSIRA TEMA].
-
-Inclua:
-- Perguntas provocativas
-- Afirmações fortes
-- Quebra de padrão
-
-Foque em engajamento e comentários.`
-},
-
-{
-categoria: "🎯 Nichado",
-titulo: "Títulos Ultra Nichados",
-quando: "Quando quiser falar com público específico.",
-prompt: `Você é especialista em posicionamento de nicho.
-
-Crie 15 títulos ultra específicos para:
-
-Nicho: [INSIRA NICHO]
-Público: [DESCREVA O PÚBLICO]
-
-Os títulos devem:
-- Falar diretamente com o público
-- Mostrar entendimento da dor
-- Ser claros e estratégicos`
-},
-
-{
-categoria: "🚀 Shorts",
-titulo: "Títulos para YouTube Shorts",
-quando: "Para vídeos curtos com impacto rápido.",
-prompt: `Você é especialista em Shorts.
-
-Crie 20 títulos curtos e impactantes para o tema: [INSIRA TEMA].
-
-Regras:
-- Máximo 45 caracteres
-- Diretos e fortes
-- Foco em curiosidade
-- Alta taxa de clique
-
-Organize em lista numerada.`
-}
-
+const dadosBrutos=[
+{categoria:'🔥 Curiosidade',nivel:'basico',titulo:'🔥 Títulos com Curiosidade Estratégica',quando:'Quando quiser aumentar o CTR usando curiosidade.',prompt:`Você é especialista em copy para YouTube.\n\nGere 20 títulos altamente chamativos para o tema: [INSIRA O TEMA].\n\nRegras:\n- Máximo 60 caracteres\n- Use gatilhos de curiosidade\n- Evite títulos genéricos\n- Foque em aumentar CTR\n- Não use clickbait enganoso\n\nExplique rapidamente a lógica estratégica por trás dos melhores 3 títulos.`,en:`You are a YouTube copywriting specialist.\n\nGenerate 20 highly attention-grabbing titles for the topic: [INSERT TOPIC].\n\nRules:\n- Maximum 60 characters\n- Use curiosity triggers\n- Avoid generic titles\n- Focus on increasing CTR\n- Do not use misleading clickbait\n\nBriefly explain the strategic logic behind the top 3 titles.`},
+{categoria:'📊 Alta Performance',nivel:'intermediario',titulo:'📊 Títulos Baseados em Dados',quando:'Quando quiser títulos mais racionais e fortes.',prompt:`Atue como estrategista de crescimento no YouTube.\n\nCrie 15 títulos baseados em:\n- Números\n- Resultados\n- Promessas específicas\n- Transformação clara\n\nTema: [INSIRA O TEMA]\n\nOrganize em lista numerada.\nFoque em clareza e impacto.`,en:`Act as a YouTube growth strategist.\n\nCreate 15 titles based on:\n- Numbers\n- Results\n- Specific promises\n- Clear transformation\n\nTopic: [INSERT TOPIC]\n\nOrganize into a numbered list.\nFocus on clarity and impact.`},
+{categoria:'💥 Impacto',nivel:'basico',titulo:'💥 Títulos com Promessa Forte',quando:'Para vídeos com promessa clara e direta.',prompt:`Você é especialista em marketing digital.\n\nCrie 15 títulos com promessa forte para o tema: [INSIRA TEMA].\n\nEstratégia:\n- Resultado desejado\n- Tempo ou esforço reduzido\n- Benefício claro\n- Linguagem simples\n\nEvite exageros irreais.`,en:`You are a digital marketing specialist.\n\nCreate 15 titles with a strong promise for the topic: [INSERT TOPIC].\n\nStrategy:\n- Desired result\n- Reduced time or effort\n- Clear benefit\n- Simple language\n\nAvoid unrealistic exaggeration.`},
+{categoria:'⚡ Polêmico',nivel:'intermediario',titulo:'⚡ Títulos Polêmicos Estratégicos',quando:'Para gerar debate e comentários.',prompt:`Atue como estrategista de engajamento.\n\nCrie 15 títulos estratégicos para gerar debate sobre: [INSIRA TEMA].\n\nInclua:\n- Perguntas provocativas\n- Afirmações fortes\n- Quebra de padrão\n\nFoque em engajamento e comentários.`,en:`Act as an engagement strategist.\n\nCreate 15 strategic titles to spark debate about: [INSERT TOPIC].\n\nInclude:\n- Provocative questions\n- Strong statements\n- Pattern breaks\n\nFocus on engagement and comments.`},
+{categoria:'🎯 Nichado',nivel:'intermediario',titulo:'🎯 Títulos Ultra Nichados',quando:'Quando quiser falar com público específico.',prompt:`Você é especialista em posicionamento de nicho.\n\nCrie 15 títulos ultra específicos para:\n\nNicho: [INSIRA NICHO]\nPúblico: [DESCREVA O PÚBLICO]\n\nOs títulos devem:\n- Falar diretamente com o público\n- Mostrar entendimento da dor\n- Ser claros e estratégicos`,en:`You are a niche positioning specialist.\n\nCreate 15 ultra-specific titles for:\n\nNiche: [INSERT NICHE]\nAudience: [DESCRIBE THE AUDIENCE]\n\nThe titles should:\n- Speak directly to the audience\n- Show understanding of their pain point\n- Be clear and strategic`},
+{categoria:'🚀 Shorts',nivel:'basico',titulo:'🚀 Títulos para YouTube Shorts',quando:'Para vídeos curtos com impacto rápido.',prompt:`Você é especialista em Shorts.\n\nCrie 20 títulos curtos e impactantes para o tema: [INSIRA TEMA].\n\nRegras:\n- Máximo 45 caracteres\n- Diretos e fortes\n- Foco em curiosidade\n- Alta taxa de clique\n\nOrganize em lista numerada.`,en:`You are a Shorts specialist.\n\nCreate 20 short, impactful titles for the topic: [INSERT TOPIC].\n\nRules:\n- Maximum 45 characters\n- Direct and strong\n- Focus on curiosity\n- High click-through rate\n\nOrganize into a numbered list.`}
 ];
 
-const lista = document.getElementById("lista-prompts");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'titulos-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.prompt,promptEn:p.en,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
 
-function renderizar(arr) {
-  lista.innerHTML = "";
-  contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
+const idiomaAtivo={};
 
-  arr.forEach(p => {
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
 
-    const card = document.createElement("div");
-    card.className = "card";
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
 
-    card.innerHTML = `
-      <div class="meta">${p.categoria}</div>
-      <h3>${p.titulo}</h3>
-      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-      <pre>${p.prompt}</pre>
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Títulos YouTube',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
 
-      <div class="acoes">
-        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
-        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-      </div>
-    `;
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaTitulosUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaTitulosUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
 
-    lista.appendChild(card);
-  });
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaTitulosFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaTitulosFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;
+  if(!fb[id])fb[id]={voto:null};
+  const g=window.deltaAuth;
+  if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}
+  else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up)up.classList.toggle('marcado',fb.voto==='up');
+  if(down)down.classList.toggle('marcado',fb.voto==='down');
+  const g=window.deltaAuth;
+  if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
 }
 
-function filtrarPrompts() {
-  const termo = busca.value.toLowerCase();
-  const filtrados = promptsTitulos.filter(p =>
-    p.titulo.toLowerCase().includes(termo) ||
-    p.prompt.toLowerCase().includes(termo) ||
-    p.categoria.toLowerCase().includes(termo)
-  );
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
+
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+async function copiarTexto(t){try{await navigator.clipboard.writeText(t);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChat(t){try{await navigator.clipboard.writeText(t)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(t){try{await navigator.clipboard.writeText(t)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(t),'_blank'),300)}
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📝 '+p.titulo+'\n\nConfira esse modelo no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));document.querySelectorAll('#filtrosCategoria button').forEach(b=>b.classList.toggle('ativo',b.dataset.categoria==='todos'));document.getElementById('busca').value='';document.getElementById('ordenar').value='padrao';aplicarFiltros();requestAnimationFrame(()=>destacarCard(id))}
+
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📝 TÍTULOS PARA YOUTUBE — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-titulos-youtube.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Títulos YouTube').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 📝 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function ordenarLista(arr){const modo=document.getElementById('ordenar').value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+function card(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  return `<div class="card" id="card-${p.id}">
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="tag">${p.categoria}</span><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre id="pre-${p.id}">${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">💬 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">🔷 Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  </div>`;
+}
+
+function renderizar(lista){
+  const container=document.getElementById('lista-prompts');
+  container.innerHTML=lista.length?lista.map(card).join(''):'<div class="vazio">🔎 Nenhum prompt encontrado.</div>';
+  lista.forEach(p=>{atualizarBtnFav(p.id,document.querySelector('#card-'+p.id+' .favoritar'));atualizarFeedbackUI(p.id)});
+}
+
+function contarFiltrosAtivos(){const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';const categoria=document.querySelector('#filtrosCategoria .ativo')?.dataset.categoria||'todos';let n=0;if(nivel!=='todos')n++;if(categoria!=='todos')n++;return n}
+function atualizarBadgeFiltros(){const n=contarFiltrosAtivos();const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}else{badge.style.display='none';btn.classList.remove('ativo')}}
+
+function montarFiltroCategoria(){
+  const cont=document.getElementById('filtrosCategoria');
+  const categorias=[...new Set(prompts.map(p=>p.categoria))];
+  const ativa=cont.querySelector('.ativo')?.dataset.categoria||'todos';
+  cont.innerHTML='<button class="'+(ativa==='todos'?'ativo':'')+'" data-categoria="todos">Todas <span class="count-badge">'+prompts.length+'</span></button>'+
+    categorias.map(c=>{const n=prompts.filter(p=>p.categoria===c).length;return `<button class="${ativa===c?'ativo':''}" data-categoria="${c}">${c} <span class="count-badge">${n}</span></button>`}).join('');
+  cont.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{cont.querySelectorAll('button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()}));
+}
+
+function aplicarFiltros(){
+  const termo=norm(document.getElementById('busca').value);
+  const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';
+  const categoria=document.querySelector('#filtrosCategoria .ativo')?.dataset.categoria||'todos';
+  let filtrados=prompts.filter(p=>{
+    const texto=norm([p.titulo,p.quando,p.prompt,p.categoria].join(' '));
+    return (!termo||texto.includes(termo))&&(nivel==='todos'||p.nivel===nivel)&&(categoria==='todos'||p.categoria===categoria);
+  });
+  filtrados=ordenarLista(filtrados);
+  document.getElementById('contador').textContent=filtrados.length+' de '+prompts.length+' prompts';
   renderizar(filtrados);
+  atualizarBadgeFiltros();
 }
 
-function copiarPrompt(texto) {
-  navigator.clipboard.writeText(texto);
-  alert("📋 Prompt copiado!");
-}
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));document.querySelectorAll('#filtrosCategoria button').forEach(b=>b.classList.toggle('ativo',b.dataset.categoria==='todos'));document.getElementById('busca').value='';aplicarFiltros();mostrarToast('✕ Filtros limpos')}
 
-function favoritarPrompt(titulo, conteudo) {
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
+document.getElementById('filtrosNivel').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()}));
 
-  prompts.push({
-    id: Date.now(),
-    titulo,
-    categoria: "YouTube",
-    conteudo,
-    favorito: true
-  });
+document.getElementById('lista-prompts').addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarTexto(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChat(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
 
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  alert("⭐ Adicionado aos favoritos!");
-}
+document.getElementById('ordenar').addEventListener('change',aplicarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
 
-function abrirChatGPT(texto) {
-  navigator.clipboard.writeText(texto);
-  window.open("https://chat.openai.com/", "_blank");
-}
-
-function abrirGemini(texto) {
-  navigator.clipboard.writeText(texto);
-  window.open("https://gemini.google.com/app", "_blank");
-}
-
-renderizar(promptsTitulos);
-
-</script>
-
-<style>
-.top-bar {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  margin: 20px 0;
-  flex-wrap: wrap;
-}
-
-.top-bar input {
-  flex: 1;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-}
-
-.contador {
-  font-size: 14px;
-  opacity: 0.75;
-}
-
-pre {
-  white-space: pre-wrap;
-  font-size: 14px;
-  background: #f9fafb;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-}
-
-.meta {
-  font-size: 13px;
-  opacity: 0.7;
-  margin-bottom: 8px;
-}
-</style>
-
-</body>
-</html>
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+montarFiltroCategoria();
+atualizarStats();
+aplicarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+</script></body></html>
