@@ -1,362 +1,272 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Outros Prompts | Delta Prompts</title><meta name="description" content="Modelos versáteis para situações diversas que não se encaixam em categorias específicas.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Outros Prompts | Delta Prompts</title><meta name="description" content="Modelos versáteis para organização pessoal, criatividade, decisões, produtividade e rotina do dia a dia."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtro-nivel{display:flex;gap:8px;flex-wrap:wrap}.filtro-nivel button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtro-nivel button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(91,92,226,.12);color:#5b5ce2}.filtro-nivel button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#5b5ce2;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.secao-titulo{font-size:22px;margin:30px 0 15px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e5e7eb;margin:15px 0}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;background:#eef2ff;color:#5b5ce2;cursor:pointer}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#5b5ce2;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #5b5ce2;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-nivel button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:700px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260818"></script><main>
 
-<link rel="stylesheet" href="/delta-prompts/style.css">
-<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+<h1>🧩 Outros Prompts Estratégicos</h1>
+<p>Modelos versáteis para organização pessoal, criatividade, decisões, produtividade e rotina do dia a dia.</p>
 
-<style>
-/* --- ESTILOS PADRONIZADOS DA NAVEGAÇÃO E FILTROS --- */
-.top-bar {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    margin: 20px 0;
-    flex-wrap: wrap;
-}
-.top-bar input {
-    flex: 1;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-}
-.contador {
-    font-size: 14px;
-    opacity: 0.75;
-}
-pre {
-    white-space: pre-wrap;
-    font-size: 14px;
-    background: #f9fafb;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-}
-.filtros-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-.filtro-botoes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-.filtro-botoes button {
-    padding: 8px 15px;
-    border: 1px solid #ddd;
-    background: #fff;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.filtro-botoes button:hover {
-    background: #f0f0f0;
-}
-.filtro-botoes button.ativo {
-    background: #6366f1;
-    color: white;
-    border-color: #6366f1;
-}
+<section class="card"><h3>🎯 Objetivo</h3><p>Oferecer prompts úteis para organização pessoal, criatividade, tomada de decisão, produtividade e rotina, incluindo apoio pra quando a motivação está baixa.</p></section>
+<section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>🧠 Organização:</strong> clareza mental e estrutura.</li><li><strong>🎨 Criatividade:</strong> ideias fora do padrão.</li><li><strong>⚖️ Decisão:</strong> análises estratégicas.</li><li><strong>🚀 Produtividade:</strong> otimização de tempo.</li><li><strong>🔋 Rotina & Motivação:</strong> recomeçar, reorganizar o dia e ideias sem gastar dinheiro.</li></ul></section>
 
-/* --- ESTILO DAS CATEGORIAS SEPARADAS POR BLOCOS --- */
-.secao-categoria {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 35px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    border: 1px solid #f1f5f9;
-}
-.secao-titulo {
-    font-size: 22px;
-    font-weight: 700;
-    color: #1e293b;
-    margin-top: 0;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e2e8f0;
-}
-.grid-prompts {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-</style>
-
-</head>
-
-<body>
-
-<div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js?v=20260818"></script>
-
-<main>
-
-<h1>🧩✨ Outros Prompts Estratégicos</h1>
-
-<p>
-Modelos versáteis para situações diversas que não se encaixam em categorias específicas.
-</p>
-
-<section class="card">
-  <h3>🎯 Objetivo</h3>
-  <p>
-    Oferecer prompts úteis para organização pessoal, criatividade, tomada de decisão e situações do dia a dia.
-  </p>
-</section>
-
-<section class="card">
-  <h3>🗺️ Organização da Página</h3>
-  <ul style="line-height:1.6;">
-    <li><strong>🧠 Organização:</strong> Clareza mental e estrutura.</li>
-    <li><strong>🎨 Criatividade:</strong> Ideias fora do padrão.</li>
-    <li><strong>⚖️ Decisão:</strong> Análises estratégicas.</li>
-    <li><strong>🚀 Produtividade:</strong> Otimização de tempo.</li>
-  </ul>
-</section>
+<div class="stats-bar" id="statsBar"></div>
 
 <div class="top-bar">
-<input type="text" id="busca" placeholder="🔎 Buscar modelo estratégico..." oninput="atualizarFiltros()">
-<div class="contador" id="contador"></div>
+  <input type="text" id="busca" placeholder="🔎 Buscar modelo estratégico..." oninput="aplicarFiltros()">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <div class="contador" id="contador"></div>
 </div>
 
-<div class="filtros-container">
-    
-    <div class="filtro-botoes filtro-categoria" id="botoes-categoria"></div>
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtro-nivel" id="filtrosNivel"><button class="ativo" data-nivel="todos">Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
 
-    <div class="filtro-botoes filtro-nivel">
-        <button onclick="filtrarNivel(event, 'todos')" class="ativo">Todos os Níveis</button>
-        <button onclick="filtrarNivel(event, 'basico')">🟢 Básico</button>
-        <button onclick="filtrarNivel(event, 'intermediario')">🟡 Intermediário</button>
-        <button onclick="filtrarNivel(event, 'avancado')">🔴 Avançado</button>
-    </div>
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
 
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
 </div>
 
 <div id="lista-prompts"></div>
 
 </main>
-
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
 <script>
 
-const ordemCategorias = [
-    "🧠 Organização",
-    "🎨 Criatividade",
-    "⚖️ Decisão",
-    "🚀 Produtividade"
+const ordemCategorias=['🧠 Organização','🎨 Criatividade','⚖️ Decisão','🚀 Produtividade','🔋 Rotina & Motivação'];
+
+const dadosBrutos=[
+{categoria:'🧠 Organização',nivel:'basico',titulo:'📋 Organizar Ideias Confusas',quando:'Quando estiver com muitas ideias e pouca clareza.',prompt:`Organize as seguintes ideias:\n\n[DESCREVA]\n\nEstruture em:\n• 📌 Prioridades\n• 🗂️ Categorias\n• 🎯 Próximos passos`,en:`Organize the following ideas:\n\n[DESCRIBE]\n\nStructure into:\n• 📌 Priorities\n• 🗂️ Categories\n• 🎯 Next steps`},
+{categoria:'🧠 Organização',nivel:'avancado',titulo:'🔎 Reflexão Profunda da Fase Atual',quando:'Quando quiser entender melhor sua fase atual da vida.',prompt:`Conduza uma reflexão profunda sobre minha fase atual da vida.\n\nAnalise:\n\n🔁 Padrões recorrentes\n🚧 Bloqueios internos\n🌱 Oportunidades de crescimento\n⚠️ Decisões que precisam ser tomadas\n\nSeja estruturado, estratégico e evite respostas superficiais.`,en:`Lead a deep reflection on my current phase of life.\n\nAnalyze:\n\n🔁 Recurring patterns\n🚧 Internal blocks\n🌱 Growth opportunities\n⚠️ Decisions that need to be made\n\nBe structured, strategic, and avoid superficial answers.`},
+{categoria:'🎨 Criatividade',nivel:'basico',titulo:'✈️ Planejamento de Viagem Econômica',quando:'Para montar roteiros turísticos focados em economia e cultura local.',prompt:`Crie um roteiro de viagem de 5 dias para:\n\n📍 [CIDADE/PAÍS]\n\nCom foco em:\n\n💸 Pontos turísticos gratuitos\n🍽️ Restaurantes de comida local\n🏛️ Experiências culturais autênticas\n🚌 Sugestões de transporte econômico\n\nOrganize por dia e inclua breve descrição de cada atividade.`,en:`Create a 5-day travel itinerary for:\n\n📍 [CITY/COUNTRY]\n\nFocused on:\n\n💸 Free tourist attractions\n🍽️ Local food restaurants\n🏛️ Authentic cultural experiences\n🚌 Budget transportation suggestions\n\nOrganize by day and include a brief description of each activity.`},
+{categoria:'🎨 Criatividade',nivel:'basico',titulo:'🎧 Criação de Playlist Personalizada',quando:'Para encontrar músicas ideais para atividades específicas.',prompt:`Sugira uma playlist com 10 músicas para:\n\n🎯 Atividade: [EX: FOCAR NO TRABALHO / TREINAR NA ACADEMIA / RELAXAR]\n🎶 Baseada no estilo de: [ARTISTA OU GÊNERO]\n\nInclua:\n\n🎼 Nome da música\n🎤 Artista\n⚡ Energia ou clima da música\n🧠 Por que combina com a atividade\n\nOrganize de forma clara e envolvente.`,en:`Suggest a playlist with 10 songs for:\n\n🎯 Activity: [E.G., FOCUSING ON WORK / WORKING OUT / RELAXING]\n🎶 Based on the style of: [ARTIST OR GENRE]\n\nInclude:\n\n🎼 Song name\n🎤 Artist\n⚡ Energy or mood of the song\n🧠 Why it fits the activity\n\nOrganize it clearly and engagingly.`},
+{categoria:'🎨 Criatividade',nivel:'intermediario',titulo:'💡 Gerador de Ideias Criativas',quando:'Quando precisar sair do padrão.',prompt:`Gere 10 ideias criativas sobre:\n\n[TEMA]\n\nInclua:\n• 🚀 Ideia principal\n• 📈 Aplicação prática\n• 🎯 Público ideal`,en:`Generate 10 creative ideas about:\n\n[TOPIC]\n\nInclude:\n• 🚀 Main idea\n• 📈 Practical application\n• 🎯 Ideal audience`},
+{categoria:'🎨 Criatividade',nivel:'intermediario',titulo:'🎨 Brainstorm Estratégico por Categorias',quando:'Quando precisar gerar muitas ideias organizadas.',prompt:`Faça um brainstorm criativo sobre:\n\n[TEMA]\n\nGere no mínimo 20 ideias originais, divididas por categorias estratégicas.\n\nPara cada categoria inclua:\n\n📌 Tipo de aplicação\n🎯 Público ideal\n🚀 Potencial de impacto\n\nOrganize de forma clara e estruturada.`,en:`Do a creative brainstorm about:\n\n[TOPIC]\n\nGenerate at least 20 original ideas, divided into strategic categories.\n\nFor each category include:\n\n📌 Type of application\n🎯 Ideal audience\n🚀 Potential impact\n\nOrganize it clearly and in a structured way.`},
+{categoria:'⚖️ Decisão',nivel:'intermediario',titulo:'📊 Análise de Decisão Estratégica',quando:'Quando precisar tomar decisão importante.',prompt:`Analise a seguinte decisão:\n\n[DESCREVA SITUAÇÃO]\n\nDivida em:\n• ✅ Vantagens\n• ❌ Desvantagens\n• ⚠️ Riscos\n• 📈 Impacto a longo prazo`,en:`Analyze the following decision:\n\n[DESCRIBE THE SITUATION]\n\nDivide into:\n• ✅ Advantages\n• ❌ Disadvantages\n• ⚠️ Risks\n• 📈 Long-term impact`},
+{categoria:'⚖️ Decisão',nivel:'avancado',titulo:'📈 Análise Estratégica de Problema',quando:'Quando precisar resolver um problema importante.',prompt:`Analise o seguinte problema:\n\n[DESCREVA O PROBLEMA]\n\nApresente:\n\n1️⃣ Cinco soluções criativas\n2️⃣ Vantagens de cada solução\n3️⃣ Riscos envolvidos\n4️⃣ Melhor alternativa estratégica\n\nExplique de forma clara e estruturada.`,en:`Analyze the following problem:\n\n[DESCRIBE THE PROBLEM]\n\nPresent:\n\n1️⃣ Five creative solutions\n2️⃣ Advantages of each solution\n3️⃣ Risks involved\n4️⃣ Best strategic alternative\n\nExplain it clearly and in a structured way.`},
+{categoria:'🚀 Produtividade',nivel:'intermediario',titulo:'🎯 Planejamento Semanal Estratégico',quando:'Quando quiser organizar sua semana com foco e equilíbrio.',prompt:`Crie um planejamento semanal estratégico baseado nas minhas prioridades:\n\n[DESCREVA SUAS PRIORIDADES]\n\nInclua:\n\n🎯 Metas principais\n📌 Tarefas secundárias\n⏳ Distribuição equilibrada de tempo\n2️⃣ Momentos de descanso\n📊 Critério de avaliação da semana\n\nOrganize de forma clara e prática.`,en:`Create a strategic weekly plan based on my priorities:\n\n[DESCRIBE YOUR PRIORITIES]\n\nInclude:\n\n🎯 Main goals\n📌 Secondary tasks\n⏳ Balanced time distribution\n2️⃣ Rest moments\n📊 Criteria for evaluating the week\n\nOrganize it clearly and practically.`},
+{categoria:'🚀 Produtividade',nivel:'intermediario',titulo:'🏆 Metas de Curto, Médio e Longo Prazo',quando:'Para estruturar objetivos com visão estratégica.',prompt:`Crie uma lista de metas estratégicas divididas em:\n\n1️⃣ Curto prazo\n2️⃣ Médio prazo\n3️⃣ Longo prazo\n\nPara cada meta, inclua:\n\n🎯 Objetivo claro\n🛠️ Plano de ação\n⏳ Prazo estimado\n📈 Indicador de progresso\n\nSeja organizado e estratégico.`,en:`Create a list of strategic goals divided into:\n\n1️⃣ Short term\n2️⃣ Medium term\n3️⃣ Long term\n\nFor each goal, include:\n\n🎯 Clear objective\n🛠️ Action plan\n⏳ Estimated deadline\n📈 Progress indicator\n\nBe organized and strategic.`},
+{categoria:'🚀 Produtividade',nivel:'avancado',titulo:'🚀 Plano de Alta Produtividade',quando:'Quando quiser aumentar rendimento diário.',prompt:`Crie um plano estratégico para aumentar minha produtividade.\n\nInclua:\n• 📅 Organização do dia\n• 🎯 Priorização\n• 🔄 Método de foco\n• 📊 Monitoramento semanal`,en:`Create a strategic plan to increase my productivity.\n\nInclude:\n• 📅 Organizing the day\n• 🎯 Prioritization\n• 🔄 Focus method\n• 📊 Weekly monitoring`},
+{categoria:'🔋 Rotina & Motivação',nivel:'basico',titulo:'🔋 Recomeçar Quando Está sem Motivação',quando:'Quando não tem vontade de fazer nada e precisa recomeçar aos poucos.',prompt:`Estou sem vontade de fazer nada e preciso recomeçar minha rotina.\n\nMinha situação atual: [DESCREVA COMO VOCÊ ESTÁ SE SENTINDO E O QUE PRECISA FAZER]\n\nMe ajude a:\n• Identificar a menor tarefa possível pra eu começar agora\n• Organizar o resto do dia de forma leve, sem cobrança excessiva\n• Sugerir uma ordem realista considerando meu cansaço atual\n\nSeja gentil e prático, sem discurso de produtividade tóxica.`,en:`I don't feel like doing anything and I need to restart my routine.\n\nMy current situation: [DESCRIBE HOW YOU'RE FEELING AND WHAT YOU NEED TO DO]\n\nHelp me:\n• Identify the smallest possible task to start with right now\n• Organize the rest of the day in a light way, without excessive pressure\n• Suggest a realistic order considering my current tiredness\n\nBe gentle and practical, without toxic productivity talk.`},
+{categoria:'🔋 Rotina & Motivação',nivel:'basico',titulo:'🗓️ Reorganizar Minha Rotina Com Base no que Já Faço',quando:'Para reorganizar seu dia a dia a partir do que você já faz de verdade.',prompt:`Aqui está o que eu já faço no meu dia a dia:\n[LISTE SUAS ATIVIDADES ATUAIS, HORÁRIOS E COMPROMISSOS]\n\nAnalise minha rotina atual e sugira:\n• O que pode ser reorganizado pra ganhar tempo\n• Hábitos que estão sobrecarregando meu dia\n• Uma nova ordem mais equilibrada\n\nNão invente compromissos que eu não mencionei.`,en:`Here's what I already do in my day-to-day life:\n[LIST YOUR CURRENT ACTIVITIES, SCHEDULE, AND COMMITMENTS]\n\nAnalyze my current routine and suggest:\n• What can be reorganized to save time\n• Habits that are overloading my day\n• A new, more balanced order\n\nDo not invent commitments I haven't mentioned.`},
+{categoria:'🔋 Rotina & Motivação',nivel:'basico',titulo:'💸 Coisas para Fazer sem Gastar Dinheiro',quando:'Para encontrar atividades boas e gratuitas ou de baixo custo.',prompt:`Quero sugestões de atividades para fazer sem gastar dinheiro.\n\nMeu contexto: [CIDADE OU REGIÃO, TEMPO DISPONÍVEL, O QUE VOCÊ GOSTA DE FAZER]\n\nSugira:\n• Atividades gratuitas ou de baixo custo\n• Ideias pra fazer sozinho(a) ou com outras pessoas\n• Uma opção pra hoje e outra pra planejar com antecedência`,en:`I want suggestions for activities I can do without spending money.\n\nMy context: [CITY OR REGION, AVAILABLE TIME, WHAT YOU ENJOY DOING]\n\nSuggest:\n• Free or low-cost activities\n• Ideas to do alone or with other people\n• One option for today and another to plan ahead`},
+{categoria:'🔋 Rotina & Motivação',nivel:'intermediario',titulo:'🎯 Pequenos Passos Pra Sair da Inércia',quando:'Quando estiver procrastinando uma tarefa importante.',prompt:`Estou procrastinando em: [TAREFA OU OBJETIVO]\n\nMe ajude a quebrar isso em passos tão pequenos que fique fácil começar. Para cada passo, diga quanto tempo leva e o que fazer literalmente primeiro.\n\nEvite passos genéricos como "apenas comece" — seja bem específico.`,en:`I'm procrastinating on: [TASK OR GOAL]\n\nHelp me break this down into steps so small that it becomes easy to start. For each step, say how long it takes and what to literally do first.\n\nAvoid generic steps like "just start" — be very specific.`},
+{categoria:'🔋 Rotina & Motivação',nivel:'basico',titulo:'🧘 Dia Mais Leve Quando Está Cansado(a)',quando:'Em dias de pouca energia, mas com coisas que ainda precisam ser feitas.',prompt:`Hoje estou muito cansado(a) e sem energia, mas ainda preciso resolver:\n[O QUE PRECISA SER FEITO HOJE]\n\nMe ajude a montar uma versão simplificada do meu dia, priorizando o essencial e adiando com consciência o que pode esperar, sem culpa.`,en:`Today I'm very tired and have no energy, but I still need to handle:\n[WHAT NEEDS TO BE DONE TODAY]\n\nHelp me put together a simplified version of my day, prioritizing what's essential and consciously postponing what can wait, without guilt.`}
 ];
 
-const promptsOutros = [
-    {
-        categoria: "🧠 Organização",
-        nivel: "basico",
-        titulo: "📋🧠 Organizar Ideias Confusas",
-        quando: "Quando estiver com muitas ideias e pouca clareza.",
-        prompt: `Organize as seguintes ideias:\n\n[DESCREVA]\n\nEstruture em:\n• 📌 Prioridades\n• 🗂️ Categorias\n• 🎯 Próximos passos`
-    },
-    {
-        categoria: "🧠 Organização",
-        nivel: "avancado",
-        titulo: "🧠🔎 Reflexão Profunda da Fase Atual",
-        quando: "Quando quiser entender melhor sua fase atual da vida.",
-        prompt: `Conduza uma reflexão profunda sobre minha fase atual da vida.\n\nAnalise:\n\n🔁 Padrões recorrentes  \n🚧 Bloqueios internos  \n🌱 Oportunidades de crescimento  \n⚠️ Decisões que precisam ser tomadas  \n\nSeja estruturado, estratégico e evite respostas superficiais.`
-    },
-    {
-        categoria: "🎨 Criatividade",
-        nivel: "basico",
-        titulo: "✈️🗺️ Planejamento de Viagem Econômica",
-        quando: "Para montar roteiros turísticos focados em economia e cultura local.",
-        prompt: `Crie um roteiro de viagem de 5 dias para:\n\n📍 [CIDADE/PAÍS]\n\nCom foco em:\n\n💸 Pontos turísticos gratuitos  \n🍽️ Restaurantes de comida local  \n🏛️ Experiências culturais autênticas  \n🚌 Sugestões de transporte econômico  \n\nOrganize por dia e inclua breve descrição de cada atividade.`
-    },
-    {
-        categoria: "🎨 Criatividade",
-        nivel: "basico",
-        titulo: "🎵🎧 Criação de Playlist Personalizada",
-        quando: "Para encontrar músicas ideais para atividades específicas.",
-        prompt: `Sugira uma playlist com 10 músicas para:\n\n🎯 Atividade: [Ex: focar no trabalho / treinar na academia / relaxar]\n🎶 Baseada no estilo de: [ARTISTA OU GÊNERO]\n\nInclua:\n\n🎼 Nome da música  \n🎤 Artista  \n⚡ Energia ou clima da música  \n🧠 Por que combina com a atividade  \n\nOrganize de forma clara e envolvendo.`
-    },
-    {
-        categoria: "🎨 Criatividade",
-        nivel: "intermediario",
-        titulo: "💡🎨 Gerador de Ideias Criativas",
-        quando: "Quando precisar sair do padrão.",
-        prompt: `Gere 10 ideias criativas sobre:\n\n[TEMA]\n\nInclua:\n• 🚀 Ideia principal\n• 📈 Aplicação prática\n• 🎯 Público ideal`
-    },
-    {
-        categoria: "🎨 Criatividade",
-        nivel: "intermediario",
-        titulo: "💡🎨 Brainstorm Estratégico por Categorias",
-        quando: "Quando precisar gerar muitas ideias organizadas.",
-        prompt: `Faça um brainstorm criativo sobre:\n\n[TEMA]\n\nGere no mínimo 20 ideias originais, divididas por categorias estratégicas.\n\nPara cada categoria inclua:\n\n📌 Tipo de aplicação  \n🎯 Público ideal  \n🚀 Potencial de impacto  \n\nOrganize de forma clara e estruturada.`
-    },
-    {
-        categoria: "⚖️ Decisão",
-        nivel: "intermediario",
-        titulo: "⚖️📊 Análise de Decisão Estratégica",
-        quando: "Quando precisar tomar decisão importante.",
-        prompt: `Analise a seguinte decisão:\n\n[DESCREVA SITUAÇÃO]\n\nDivida em:\n• ✅ Vantagens\n• ❌ Desvantagens\n• ⚠️ Riscos\n• 📈 Impacto a longo prazo`
-    },
-    {
-        categoria: "⚖️ Decisão",
-        nivel: "avancado",
-        titulo: "⚖️📈 Análise Estratégica de Problema",
-        quando: "Quando precisar resolver um problema importante.",
-        prompt: `Analise o seguinte problema:\n\n[DESCREVA O PROBLEMA]\n\nApresente:\n\n1️⃣ Cinco soluções criativas  \n2️⃣ Vantagens de cada solução  \n3️⃣ Riscos envolvidos  \n4️⃣ Melhor alternativa estratégica  \n\nExplique de forma clara e estruturada.`
-    },
-    {
-        categoria: "🚀 Produtividade",
-        nivel: "intermediario",
-        titulo: "📅🎯 Planejamento Semanal Estratégico",
-        quando: "Quando quiser organizar sua semana com foco e equilíbrio.",
-        prompt: `Crie um planejamento semanal estratégico baseado nas minhas prioridades:\n\n[DESCREVA SUAS PRIORIDADES]\n\nInclua:\n\n🎯 Metas principais  \n📌 Tarefas secundárias  \n⏳ Distribuição equilibrada de tempo  \n2️⃣ Momentos de descanso  \n📊 Critério de avaliação da semana  \n\nOrganize de forma clara e prática.`
-    },
-    {
-        categoria: "🚀 Produtividade",
-        nivel: "intermediario",
-        titulo: "🏆📊 Metas Estratégicas de Curto, Médio e Longo Prazo",
-        quando: "Para estruturar objetivos com visão estratégica.",
-        prompt: `Crie uma lista de metas estratégicas divididas em:\n\n1️⃣ Curto prazo  \n2️⃣ Médio prazo  \n3️⃣ Longo prazo  \n\nPara cada meta, inclua:\n\n🎯 Objetivo claro  \n🛠️ Plano de ação  \n⏳ Prazo estimado  \n📈 Indicador de progresso  \n\nSeja organizado e estratégico.`
-    },
-    {
-        categoria: "🚀 Produtividade",
-        nivel: "avancado",
-        titulo: "⏳🚀 Plano de Alta Produtividade",
-        quando: "Quando quiser aumentar rendimento diário.",
-        prompt: `Crie um plano estratégico para aumentar minha produtividade.\n\nInclua:\n• 📅 Organização do dia\n• 🎯 Priorização\n• 🔄 Método de foco\n• 📊 Monitoramento semanal`
-    }
-];
-
-// Injeção dinâmica dos botões de filtro de categoria
-const containerCategorias = document.getElementById("botoes-categoria");
-let htmlCategorias = '<button onclick="filtrarCategoria(event, \'todas\')" class="ativo">Todas as Categorias</button>';
-
-ordemCategorias.forEach(cat => {
-    htmlCategorias += `<button onclick="filtrarCategoria(event, '${cat}')">${cat}</button>`;
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'outros-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.prompt,promptEn:p.en,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
 });
-containerCategorias.innerHTML = htmlCategorias;
 
-const lista = document.getElementById("lista-prompts");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
+const lista=document.getElementById("lista-prompts"),contador=document.getElementById("contador"),busca=document.getElementById("busca"),ordenarSelect=document.getElementById("ordenar");
+const idiomaAtivo={};
 
-let estadoFiltroTexto = "";
-let estadoFiltroNivel = "todos";
-let estadoFiltroCategoria = "todas";
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
 
-// --- RENDERIZAÇÃO EM BLOCOS DE CATEGORIAS SEPARADAS ---
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Outros',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaOutrosUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaOutrosUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaOutrosFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaOutrosFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};const g=window.deltaAuth;if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}_saveFeedback(fb);atualizarFeedbackUI(id);mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!')}
+function atualizarFeedbackUI(id){const fb=_loadFeedback()[id]||{voto:null};const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);if(up)up.classList.toggle('marcado',fb.voto==='up');if(down)down.classList.toggle('marcado',fb.voto==='down');const g=window.deltaAuth;if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}}
+
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
+
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📊 '+p.titulo+'\n\nConfira esse modelo de análise no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';ordenarSelect.value='padrao';aplicarFiltros();requestAnimationFrame(()=>destacarCard(id))}
+
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📊 OUTROS PROMPTS — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-outros.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Outros').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🧩 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre id="pre-${p.id}">${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">💬 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">🔷 Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
+}
+
 function renderizar(arr){
-    lista.innerHTML = "";
-    contador.innerText = `Total: ${arr.length} modelo${arr.length !== 1 ? "s" : ""}`;
-
-    ordemCategorias.forEach(cat => {
-        const grupo = arr.filter(p => p.categoria === cat);
-        if(grupo.length === 0) return;
-
-        const blocoCategoria = document.createElement("section");
-        blocoCategoria.className = "secao-categoria";
-
-        const tituloSecao = document.createElement("h2");
-        tituloSecao.className = "secao-titulo";
-        tituloSecao.innerText = cat;
-        blocoCategoria.appendChild(tituloSecao);
-
-        const gridPrompts = document.createElement("div");
-        gridPrompts.className = "grid-prompts";
-
-        grupo.forEach(p => {
-            const card = document.createElement("div");
-            card.className = "card";
-            
-            card.innerHTML = `
-                <div class="nivel nivel-${p.nivel || 'basico'}">
-                    ${p.nivel === 'avancado' ? '🔴 Avançado' : p.nivel === 'intermediario' ? '🟡 Intermediário' : '🟢 Básico'}
-                </div>
-                <h3>${p.titulo}</h3>
-                <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-                <pre>${p.prompt}</pre>
-                <div class="acoes">
-                    <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-                    <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-                    <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-                    <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-                </div>
-            `;
-            gridPrompts.appendChild(card);
-        });
-
-        blocoCategoria.appendChild(gridPrompts);
-        lista.appendChild(blocoCategoria);
+  lista.innerHTML="";
+  contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+  if(ordenarSelect.value==='padrao'){
+    ordemCategorias.forEach(cat=>{
+      const grupo=arr.filter(p=>p.categoria===cat);
+      if(grupo.length===0)return;
+      const tituloSecao=document.createElement("h2");
+      tituloSecao.className="secao-titulo";
+      tituloSecao.innerText=cat;
+      lista.appendChild(tituloSecao);
+      grupo.forEach(p=>lista.appendChild(criarCard(p)));
     });
+  }else{
+    arr.forEach(p=>lista.appendChild(criarCard(p)));
+  }
 }
 
-function atualizarFiltros() {
-    estadoFiltroTexto = busca.value.toLowerCase();
-    
-    const filtrados = promptsOutros.filter(p => {
-        const matchTexto = p.titulo.toLowerCase().includes(estadoFiltroTexto) ||
-                           p.prompt.toLowerCase().includes(estadoFiltroTexto) ||
-                           p.categoria.toLowerCase().includes(estadoFiltroTexto);
-        
-        const matchNivel = estadoFiltroNivel === "todos" || p.nivel === estadoFiltroNivel;
-        const matchCategoria = estadoFiltroCategoria === "todas" || p.categoria === estadoFiltroCategoria;
-
-        return matchTexto && matchNivel && matchCategoria;
-    });
-
-    renderizar(filtrados);
+function contarFiltrosAtivos(){const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';return nivel!=='todos'?1:0}
+function atualizarBadgeFiltros(){const n=contarFiltrosAtivos();const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}else{badge.style.display='none';btn.classList.remove('ativo')}}
+function atualizarContadoresNivel(){
+  const termo=busca.value.toLowerCase();
+  const base=prompts.filter(p=>(p.titulo+p.prompt+p.categoria).toLowerCase().includes(termo));
+  document.querySelectorAll('#filtrosNivel button').forEach(btn=>{
+    const n=btn.dataset.nivel==='todos'?base.length:base.filter(p=>p.nivel===btn.dataset.nivel).length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
 }
 
-function filtrarCategoria(event, categoria) {
-    document.querySelectorAll(".filtro-categoria button").forEach(btn => btn.classList.remove("ativo"));
-    event.target.classList.add("ativo");
-    estadoFiltroCategoria = categoria;
-    atualizarFiltros();
+function aplicarFiltros(){
+  const termo=busca.value.toLowerCase();
+  const nivelAtivo=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';
+  let filtrados=prompts.filter(p=>(p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo))&&(nivelAtivo==='todos'||p.nivel===nivelAtivo));
+  filtrados=ordenarLista(filtrados);
+  renderizar(filtrados);
+  atualizarContadoresNivel();
+  atualizarBadgeFiltros();
 }
 
-function filtrarNivel(event, nivel) {
-    document.querySelectorAll(".filtro-nivel button").forEach(btn => btn.classList.remove("ativo"));
-    event.target.classList.add("ativo");
-    estadoFiltroNivel = nivel;
-    atualizarFiltros();
-}
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';aplicarFiltros();mostrarToast('✕ Filtros limpos')}
 
-function copiarPrompt(texto){
-    navigator.clipboard.writeText(texto);
-    alert("📋 Prompt copiado!");
-}
+document.querySelectorAll('#filtrosNivel button').forEach(b=>{b.dataset.label=b.textContent.trim();b.addEventListener('click',()=>{document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()})});
 
-function favoritarPrompt(titulo, conteudo){
-    const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-    prompts.push({
-        id: Date.now(),
-        titulo,
-        categoria: "Outros",
-        conteudo,
-        favorito: true
-    });
-    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-    alert("⭐ Adicionado aos favoritos!");
-}
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
 
-function abrirChatGPT(texto){
-    const url = "https://chat.openai.com/?prompt=" + encodeURIComponent(texto);
-    window.open(url,"_blank");
-}
+ordenarSelect.addEventListener('change',aplicarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
 
-function abrirGemini(texto){
-    const url = "https://gemini.google.com/app?prompt=" + encodeURIComponent(texto);
-    window.open(url,"_blank");
-}
-
-// Inicializa a renderização
-renderizar(promptsOutros);
-
-</script>
-
-</body>
-</html>
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+aplicarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+</script></body></html>
