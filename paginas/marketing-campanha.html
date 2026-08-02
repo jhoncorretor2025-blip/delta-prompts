@@ -99,7 +99,7 @@
 <script>
 
 const ordemCategorias=['📢 Banners & Promoções','📱 Redes Sociais & Anúncios','💳 Identidade & Papelaria','💬 WhatsApp Business','🎯 Aquisição & Fidelização','🎨 Campanhas & Direção de Arte','🛒 E-commerce & Vitrines','🏪 Marca & Institucional'];
-const ordemSegmentos=['🌐 Geral','💄 Beleza & Cosméticos','🏡 Imobiliário'];
+const ordemSegmentos=['🌐 Geral','💄 Beleza & Cosméticos','🏡 Imobiliário','👗 Moda & Vestuário','🏋️ Academia & Personal'];
 
 const dadosBrutos=[
 {segmento:'🌐 Geral',categoria:'📢 Banners & Promoções',nivel:'basico',titulo:'📷 Imagem Promocional Simples',quando:'Para criar uma arte rápida de oferta.',conteudo:`Crie uma imagem promocional para:\n[PRODUTO]\n\nInclua:\n• Destaque no produto\n• Texto curto e chamativo\n• Fundo atrativo\n• Estilo moderno\n\nIMPORTANTE: entregue a imagem promocional como uma peça visual separada, vista de frente e pronta para uso. Não coloque a arte dentro de celular, computador, loja, outdoor, moldura ou mockup.`,en:`Create a promotional image for:\n[PRODUCT]\n\nInclude:\n• Product highlight\n• Short, catchy text\n• Attractive background\n• Modern style\n\nIMPORTANT: deliver the promotional image as a separate, front-facing visual piece, ready to use. Do not place the artwork inside a phone, computer, store, billboard, frame, or mockup.`,imagem:'photo-1533750349088-cd871a92f312'},
@@ -142,6 +142,259 @@ const dadosBrutos=[
 {segmento:'🌐 Geral',categoria:'🏪 Marca & Institucional',nivel:'intermediario',titulo:'🏆 Celebrando uma Conquista da Marca',quando:'Para comemorar um marco da loja (aniversário, número de clientes), sem citar produto.',conteudo:`Crie uma peça comemorativa para celebrar:\n[CONQUISTA DA LOJA, EX: X ANOS DE MERCADO, X CLIENTES ATENDIDOS]\n\nInclua:\n• Elemento visual de celebração\n• Tom de gratidão ao público\n• Foco na marca, não em produtos\n\nIMPORTANTE: use apenas números e fatos reais fornecidos, sem inventar. Entregue como peça separada, sem mockup.`,en:`Create a commemorative piece to celebrate:\n[STORE ACHIEVEMENT, E.G., X YEARS IN BUSINESS, X CLIENTS SERVED]\n\nInclude:\n• Celebration visual element\n• Tone of gratitude to the audience\n• Focus on the brand, not products\n\nIMPORTANT: use only real numbers and facts provided, do not invent. Deliver as a separate piece, no mockup.`,imagem:'photo-1552664730-d307ca884978'},
 {segmento:'🌐 Geral',categoria:'🏪 Marca & Institucional',nivel:'basico',titulo:'💬 Convite para Conhecer a Loja',quando:'Para convidar o público a visitar ou seguir a loja, sem oferta de produto.',conteudo:`Crie uma peça convidando o público a conhecer ou seguir a loja:\n[NOME]\n\nInclua:\n• Convite acolhedor (visitar, seguir nas redes sociais)\n• Elemento visual que represente a identidade da marca\n• Sem mencionar produtos específicos ou promoções\n\nIMPORTANTE: entregue como peça separada, sem mockup.`,en:`Create a piece inviting the public to visit or follow the store:\n[NAME]\n\nInclude:\n• Welcoming invitation (visit, follow on social media)\n• Visual element that represents the brand identity\n• No mention of specific products or promotions\n\nIMPORTANT: deliver as a separate piece, no mockup.`,imagem:'photo-1441986300917-64674bd600d8'},
 {segmento:'🌐 Geral',categoria:'🏪 Marca & Institucional',nivel:'intermediario',titulo:'🌟 Depoimento Institucional de Cliente',quando:'Para reforçar a reputação da loja através de um depoimento, sem citar produto.',conteudo:`Crie uma peça de depoimento institucional para a loja:\n[NOME]\n\nUsando este relato real: [DEPOIMENTO DO CLIENTE]\n\nInclua:\n• Destaque para o depoimento\n• Tom de confiança e gratidão\n• Foco na experiência com a loja, não em um produto específico\n\nIMPORTANTE: use apenas depoimentos reais fornecidos, nunca invente. Entregue como peça separada, sem mockup.`,en:`Create an institutional testimonial piece for the store:\n[NAME]\n\nUsing this real account: [CLIENT TESTIMONIAL]\n\nInclude:\n• Highlight for the testimonial\n• Tone of trust and gratitude\n• Focus on the experience with the store, not a specific product\n\nIMPORTANT: use only real testimonials provided, never invent. Deliver as a separate piece, no mockup.`,imagem:'photo-1556740758-90de374c12ad'}
+,
+{segmento:'👗 Moda & Vestuário',categoria:'🛒 E-commerce & Vitrines',nivel:'basico',titulo:'👗 Vitrine de Nova Coleção',quando:'Para apresentar uma coleção nova de roupas de forma atrativa.',conteudo:`Crie uma vitrine visual para a nova coleção:
+[NOME DA COLEÇÃO OU TIPO DE PEÇAS]
+
+Inclua:
+• Composição elegante das peças
+• Paleta de cores da coleção em destaque
+• Fundo clean que valorize as roupas
+• Espaço para o nome da coleção
+
+IMPORTANTE: entregue a imagem como peça separada, vista de frente, pronta para uso, sem manequim genérico de mockup.`,en:`Create a visual showcase for the new collection:
+[COLLECTION NAME OR TYPE OF PIECES]
+
+Include:
+• Elegant composition of the pieces
+• Collection's color palette highlighted
+• Clean background that showcases the clothes
+• Space for the collection name
+
+IMPORTANT: deliver the image as a separate piece, front view, ready to use, no generic mockup mannequin.`,imagem:'photo-1441984904996-e0b6ba687e04'},
+{segmento:'👗 Moda & Vestuário',categoria:'📱 Redes Sociais & Anúncios',nivel:'basico',titulo:'📱 Post de Look do Dia',quando:'Para divulgar uma combinação de peças no Instagram.',conteudo:`Crie uma arte para post de redes sociais divulgando o look:
+[DESCRIÇÃO DO LOOK: PEÇAS, ESTILO, OCASIÃO]
+
+Inclua:
+• Composição atrativa das peças combinadas
+• Texto principal com o estilo do look (ex: casual, elegante, despojado)
+• Chamada para conferir a loja
+
+IMPORTANTE: entregue como peça separada, pronta para publicação, sem mockup de celular.`,en:`Create an artwork for a social media post promoting the outfit:
+[OUTFIT DESCRIPTION: PIECES, STYLE, OCCASION]
+
+Include:
+• Attractive composition of the matched pieces
+• Main text with the outfit's style (e.g., casual, elegant, laid-back)
+• Call to check out the store
+
+IMPORTANT: deliver as a separate piece, ready for publication, no phone mockup.`,imagem:'photo-1490481651871-ab68de25d43d'},
+{segmento:'👗 Moda & Vestuário',categoria:'📢 Banners & Promoções',nivel:'basico',titulo:'🏷️ Banner de Liquidação',quando:'Para divulgar promoção ou liquidação de estoque.',conteudo:`Crie um banner promocional para a liquidação de:
+[TIPO DE PEÇAS OU COLEÇÃO]
+
+Inclua:
+• Destaque para o desconto ou condição
+• Cores chamativas e coerentes com a marca
+• Elemento visual de urgência, apenas se a promoção realmente tiver prazo
+• Chamada principal de fácil leitura
+
+IMPORTANTE: use apenas condições reais fornecidas. Entregue como peça separada, sem mockup.`,en:`Create a promotional banner for the sale of:
+[TYPE OF PIECES OR COLLECTION]
+
+Include:
+• Highlight for the discount or condition
+• Eye-catching colors coherent with the brand
+• Urgency visual element, only if the promotion genuinely has a deadline
+• Easy-to-read main headline
+
+IMPORTANT: use only real conditions provided. Deliver as a separate piece, no mockup.`,imagem:'photo-1445205170230-053b83016050'},
+{segmento:'👗 Moda & Vestuário',categoria:'📢 Banners & Promoções',nivel:'intermediario',titulo:'🎁 Combo de Peças (Look Completo)',quando:'Para divulgar um kit ou combo de peças com desconto.',conteudo:`Crie uma imagem promocional para o combo:
+[PEÇAS DO COMBO, EX: BLUSA + CALÇA + ACESSÓRIO]
+
+Inclua:
+• Composição harmoniosa das peças juntas
+• Destaque para a vantagem de comprar o combo
+• Fundo atrativo e coerente com a marca
+• Chamada clara para a promoção
+
+IMPORTANTE: entregue a peça separada, vista de frente, pronta para divulgação, sem mockup.`,en:`Create a promotional image for the combo:
+[COMBO PIECES, E.G., TOP + PANTS + ACCESSORY]
+
+Include:
+• Harmonious composition of the pieces together
+• Highlight for the advantage of buying the combo
+• Attractive background coherent with the brand
+• Clear call for the promotion
+
+IMPORTANT: deliver the piece separately, front view, ready for release, no mockup.`,imagem:'photo-1516762689617-e1cffcef479d'},
+{segmento:'👗 Moda & Vestuário',categoria:'📱 Redes Sociais & Anúncios',nivel:'basico',titulo:'✨ Post de Lançamento de Peça',quando:'Para anunciar a chegada de uma peça nova na loja.',conteudo:`Crie uma arte de lançamento para a nova peça:
+[NOME E TIPO DA PEÇA]
+
+Inclua:
+• Elemento visual de novidade (selo, brilho ou destaque de "lançamento")
+• Peça em destaque, bem iluminada
+• Texto anunciando a chegada
+• Estilo alinhado à identidade da marca
+
+IMPORTANTE: entregue como peça separada, pronta para publicação, sem mockup.`,en:`Create a launch artwork for the new piece:
+[PIECE NAME AND TYPE]
+
+Include:
+• Visual element of novelty (seal, glow, or "new arrival" highlight)
+• Piece in the spotlight, well lit
+• Text announcing the arrival
+• Style aligned with the brand identity
+
+IMPORTANT: deliver as a separate piece, ready for publication, no mockup.`,imagem:'photo-1489987707025-afc232f7ea0f'},
+{segmento:'👗 Moda & Vestuário',categoria:'🎨 Campanhas & Direção de Arte',nivel:'intermediario',titulo:'📏 Guia de Tamanhos / Como Vestir',quando:'Para ajudar o cliente a escolher o tamanho ou combinar peças certo.',conteudo:`Crie uma peça educativa sobre:
+[TEMA: GUIA DE TAMANHOS OU COMO COMBINAR UMA PEÇA]
+
+Inclua:
+• Layout organizado e fácil de entender
+• Ícones ou elementos visuais que ajudem na leitura rápida
+• Tom acolhedor, sem parecer regra rígida
+
+IMPORTANTE: use apenas as medidas ou informações reais fornecidas. Entregue como peça separada, sem mockup.`,en:`Create an educational piece about:
+[TOPIC: SIZE GUIDE OR HOW TO STYLE A PIECE]
+
+Include:
+• Organized, easy-to-understand layout
+• Icons or visual elements that help quick reading
+• Welcoming tone, without feeling like a rigid rule
+
+IMPORTANT: use only the real measurements or information provided. Deliver as a separate piece, no mockup.`,imagem:'photo-1558769132-cb1aea458c5e'},
+{segmento:'👗 Moda & Vestuário',categoria:'💬 WhatsApp Business',nivel:'basico',titulo:'💬 Card de Novidades para WhatsApp',quando:'Para avisar clientes sobre chegada de peças novas.',conteudo:`Crie uma imagem para status ou grupo de WhatsApp divulgando:
+[NOVIDADES OU PEÇAS QUE CHEGARAM]
+
+Inclua:
+• Formato vertical (proporção 9:16)
+• Texto curto e direto, visível mesmo em miniatura
+• Destaque para a novidade principal
+• Cores chamativas e coerentes com a marca
+
+IMPORTANTE: entregue a peça separada, pronta para ser postada, sem mockup de celular.`,en:`Create an image for WhatsApp status or group promoting:
+[NEW ARRIVALS OR PIECES THAT JUST CAME IN]
+
+Include:
+• Vertical format (9:16 ratio)
+• Short, direct text, visible even as a thumbnail
+• Highlight for the main novelty
+• Eye-catching colors coherent with the brand
+
+IMPORTANT: deliver the piece separately, ready to be posted, no phone mockup.`,imagem:'photo-1483985988355-763728e1935b'},
+{segmento:'🏋️ Academia & Personal',categoria:'🎨 Campanhas & Direção de Arte',nivel:'avancado',titulo:'💪 Antes e Depois de Aluno',quando:'Para mostrar o resultado real de um aluno na academia.',conteudo:`Crie uma peça visual de "antes e depois" ilustrativa para o resultado de:
+[TIPO DE RESULTADO: EX: GANHO DE MASSA, EMAGRECIMENTO, CONDICIONAMENTO]
+
+Inclua:
+• Divisão clara entre as duas versões
+• Iluminação consistente entre elas
+• Indicação de "resultado real do aluno" ou "resultado ilustrativo", conforme o caso
+
+IMPORTANTE: use apenas resultados reais e autorizados pelo aluno — nunca invente ou prometa resultado padrão. Entregue como peça separada, sem mockup.`,en:`Create an illustrative "before and after" visual piece for the result of:
+[TYPE OF RESULT: E.G., MUSCLE GAIN, WEIGHT LOSS, CONDITIONING]
+
+Include:
+• Clear division between the two versions
+• Consistent lighting between them
+• Indication of "real student result" or "illustrative result", as applicable
+
+IMPORTANT: use only real results authorized by the student — never invent or promise a standard result. Deliver as a separate piece, no mockup.`,imagem:'photo-1571019613454-1cb2f99b2d8b'},
+{segmento:'🏋️ Academia & Personal',categoria:'📢 Banners & Promoções',nivel:'basico',titulo:'🏋️ Divulgação de Aula Experimental Gratuita',quando:'Para atrair novos alunos com uma aula grátis.',conteudo:`Crie uma peça promocional para divulgar aula experimental gratuita de:
+[MODALIDADE, EX: MUSCULAÇÃO, FUNCIONAL, LUTA]
+
+Inclua:
+• Chamada clara sobre a aula gratuita
+• Elemento visual que transmita energia e movimento
+• Informação de como agendar
+• Chamada de ação direta
+
+IMPORTANTE: use apenas condições reais fornecidas. Entregue como peça separada, sem mockup.`,en:`Create a promotional piece to advertise a free trial class of:
+[MODALITY, E.G., WEIGHT TRAINING, FUNCTIONAL, COMBAT SPORTS]
+
+Include:
+• Clear call about the free class
+• Visual element that conveys energy and movement
+• Information on how to schedule
+• Direct call to action
+
+IMPORTANT: use only real conditions provided. Deliver as a separate piece, no mockup.`,imagem:'photo-1517836357463-d25dfeac3438'},
+{segmento:'🏋️ Academia & Personal',categoria:'📱 Redes Sociais & Anúncios',nivel:'basico',titulo:'📅 Post de Novo Horário/Turma',quando:'Para avisar sobre uma nova turma ou horário disponível.',conteudo:`Crie uma arte para post de redes sociais divulgando:
+[NOVO HORÁRIO OU TURMA]
+
+Inclua:
+• Informação clara do dia e horário
+• Elemento visual energético
+• Chamada para garantir a vaga
+
+IMPORTANTE: entregue como peça separada, pronta para publicação, sem mockup de celular.`,en:`Create an artwork for a social media post announcing:
+[NEW SCHEDULE OR CLASS]
+
+Include:
+• Clear information on day and time
+• Energetic visual element
+• Call to secure a spot
+
+IMPORTANT: deliver as a separate piece, ready for publication, no phone mockup.`,imagem:'photo-1534438327276-14e5300c3a48'},
+{segmento:'🏋️ Academia & Personal',categoria:'📢 Banners & Promoções',nivel:'intermediario',titulo:'🎯 Card de Plano Promocional',quando:'Para divulgar um plano ou pacote com condição especial.',conteudo:`Crie uma peça destacando as condições do plano:
+[NOME DO PLANO]
+
+Inclua:
+• Condições reais: [PREÇO, DURAÇÃO, BENEFÍCIOS]
+• Elemento visual que transmita oportunidade sem parecer forçado
+• Chamada para ação clara
+
+IMPORTANTE: use apenas condições reais fornecidas. Entregue como peça separada, sem mockup.`,en:`Create a piece highlighting the conditions of the plan:
+[PLAN NAME]
+
+Include:
+• Real conditions: [PRICE, DURATION, BENEFITS]
+• Visual element that conveys opportunity without feeling forced
+• Clear call to action
+
+IMPORTANT: use only real conditions provided. Deliver as a separate piece, no mockup.`,imagem:'photo-1571902943202-507ec2618e8f'},
+{segmento:'🏋️ Academia & Personal',categoria:'🏪 Marca & Institucional',nivel:'intermediario',titulo:'🥇 Post de Conquista/Resultado da Semana',quando:'Para celebrar uma conquista de aluno ou marco da academia.',conteudo:`Crie uma peça comemorativa para celebrar:
+[CONQUISTA: EX: RESULTADO DE ALUNO, MARCO DA ACADEMIA]
+
+Inclua:
+• Elemento visual de celebração
+• Tom de orgulho e motivação
+• Foco na conquista, sem exagerar ou prometer resultado padrão para outros
+
+IMPORTANTE: use apenas fatos reais e autorizados. Entregue como peça separada, sem mockup.`,en:`Create a commemorative piece to celebrate:
+[ACHIEVEMENT: E.G., STUDENT RESULT, GYM MILESTONE]
+
+Include:
+• Celebration visual element
+• Tone of pride and motivation
+• Focus on the achievement, without exaggerating or promising a standard result for others
+
+IMPORTANT: use only real, authorized facts. Deliver as a separate piece, no mockup.`,imagem:'photo-1517963879433-6ad2b056d712'},
+{segmento:'🏋️ Academia & Personal',categoria:'💬 WhatsApp Business',nivel:'basico',titulo:'💬 Convite para Aula Experimental via WhatsApp',quando:'Para convidar um contato a experimentar a academia.',conteudo:`Crie uma imagem para status do WhatsApp convidando para uma aula experimental de:
+[MODALIDADE]
+
+Inclua:
+• Formato vertical (proporção 9:16)
+• Texto curto e convidativo
+• Informação de como agendar
+• Cores energéticas coerentes com a marca
+
+IMPORTANTE: entregue a peça separada, pronta para ser postada, sem mockup de celular.`,en:`Create an image for WhatsApp status inviting people to a free trial class of:
+[MODALITY]
+
+Include:
+• Vertical format (9:16 ratio)
+• Short, inviting text
+• Information on how to schedule
+• Energetic colors coherent with the brand
+
+IMPORTANT: deliver the piece separately, ready to be posted, no phone mockup.`,imagem:'photo-1571019613454-1cb2f99b2d8b'},
+{segmento:'🏋️ Academia & Personal',categoria:'🛒 E-commerce & Vitrines',nivel:'basico',titulo:'🛒 Vitrine de Planos da Academia',quando:'Para apresentar os planos disponíveis de forma clara.',conteudo:`Crie uma vitrine visual apresentando os planos de:
+[NOME DA ACADEMIA]
+
+Inclua:
+• Planos disponíveis: [LISTA DE PLANOS E CONDIÇÕES]
+• Composição organizada e fácil de comparar
+• Elemento visual que transmita energia e resultado
+
+IMPORTANTE: use apenas condições reais fornecidas. Entregue como peça separada, vista de frente, pronta para uso, sem mockup.`,en:`Create a visual showcase presenting the plans of:
+[GYM NAME]
+
+Include:
+• Available plans: [LIST OF PLANS AND CONDITIONS]
+• Organized composition, easy to compare
+• Visual element that conveys energy and results
+
+IMPORTANT: use only real conditions provided. Deliver as a separate piece, front view, ready to use, no mockup.`,imagem:'photo-1534438327276-14e5300c3a48'}
 ];
 
 function instrucaoManterProduto(){
