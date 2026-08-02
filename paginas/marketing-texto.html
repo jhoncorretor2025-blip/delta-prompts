@@ -101,7 +101,7 @@
 <script>
 
 const ordem=['✍️ Conteúdo & Posicionamento','🎯 Conversão & Copy','📖 Storytelling','🚀 Estratégia & Funis'];
-const ordemSegmentos=['🌐 Geral','💄 Beleza & Cosméticos'];
+const ordemSegmentos=['🌐 Geral','💄 Beleza & Cosméticos','👗 Moda & Vestuário','🏋️ Academia & Personal'];
 
 const dadosBrutos=[
 {seg:'🌐 Geral',c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📢 Post Simples de Divulgação',q:'Para divulgar produto ou serviço rapidamente.',p:`Crie um post simples e direto para divulgar:\n[PRODUTO OU SERVIÇO]\n\nPúblico: [PÚBLICO]\nCanal: [REDE OU CANAL]\n\nInclua:\n• Benefício principal\n• Diferencial relevante\n• Chamada para ação clara\n\nUse linguagem objetiva e não invente benefícios ou informações.`,en:`Create a simple, direct post to promote:\n[PRODUCT OR SERVICE]\n\nAudience: [AUDIENCE]\nChannel: [NETWORK OR CHANNEL]\n\nInclude:\n• Main benefit\n• Relevant differentiator\n• Clear call to action\n\nUse objective language and do not invent benefits or information.`},
@@ -123,6 +123,303 @@ const dadosBrutos=[
 {seg:'💄 Beleza & Cosméticos',c:'🚀 Estratégia & Funis',n:'intermediario',t:'📲 WhatsApp para Recompra e Cross-sell',q:'Para reengajar uma cliente que já comprou e sugerir um produto complementar.',p:`Crie uma sequência de 4 mensagens de WhatsApp para reengajar uma cliente que já comprou:\n[PRODUTO OU CATEGORIA, EX: PERFUME, LINHA CAPILAR]\n\nOrganize em:\n• Mensagem de acompanhamento\n• Dica de uso do produto\n• Sugestão de produto complementar (ex: quem comprou shampoo pode gostar do condicionador da mesma linha)\n• Oferta especial de recompra\n\nTom acolhedor, sem parecer insistente.`,en:`Create a sequence of 4 WhatsApp messages to re-engage a customer who already bought:\n[PRODUCT OR CATEGORY, E.G., PERFUME, HAIR CARE LINE]\n\nOrganize into:\n• Follow-up message\n• Product usage tip\n• Complementary product suggestion (e.g., someone who bought shampoo might like the conditioner from the same line)\n• Special repurchase offer\n\nWelcoming tone, without sounding pushy.`},
 {seg:'💄 Beleza & Cosméticos',c:'🎯 Conversão & Copy',n:'basico',t:'🏷️ Campanha para Data Comemorativa',q:'Para divulgar produtos de beleza em datas como Dia das Mães ou Black Friday.',p:`Crie uma campanha de texto para a data:\n[DATA COMEMORATIVA]\n\nDivulgando: [PRODUTOS DE BELEZA]\nPúblico: [PÚBLICO]\n\nInclua:\n• Gancho relacionado à data\n• Oferta especial\n• Senso de urgência real, com prazo verdadeiro\n• Chamada para ação\n\nEvite criar urgência falsa ou prazos inventados.`,en:`Create a text campaign for the date:\n[HOLIDAY OR OCCASION]\n\nPromoting: [BEAUTY PRODUCTS]\nAudience: [AUDIENCE]\n\nInclude:\n• Hook related to the date\n• Special offer\n• Real sense of urgency, with a true deadline\n• Call to action\n\nAvoid creating false urgency or made-up deadlines.`},
 {seg:'💄 Beleza & Cosméticos',c:'✍️ Conteúdo & Posicionamento',n:'avancado',t:'⭐ Posicionamento da Marca de Cosméticos',q:'Para deixar mais clara a identidade da sua marca ou loja de beleza.',p:`Ajude a definir o posicionamento da marca de cosméticos:\n[NOME DA MARCA/LOJA]\n\nUsando estas informações: [CONTEXTO, EX: PRODUTOS PRÓPRIOS OU REVENDA, PÚBLICO-ALVO, DIFERENCIAL]\n\nOrganize em:\n• Público prioritário\n• Problema que a marca resolve\n• Proposta de valor\n• Diferenciais reais\n• Tom de comunicação\n• Mensagens-chave\n\nFaça perguntas quando faltarem informações essenciais.`,en:`Help define the positioning of the cosmetics brand:\n[BRAND/STORE NAME]\n\nUsing this information: [CONTEXT, E.G., OWN PRODUCTS OR RESALE, TARGET AUDIENCE, DIFFERENTIATOR]\n\nOrganize into:\n• Priority audience\n• Problem the brand solves\n• Value proposition\n• Real differentiators\n• Communication tone\n• Key messages\n\nAsk questions when essential information is missing.`}
+,
+{seg:'👗 Moda & Vestuário',c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📝 Descrição de Peça de Roupa',q:'Para escrever a descrição de uma peça na loja online.',p:`Crie uma descrição de produto persuasiva para:
+[PEÇA: BLUSA, CALÇA, VESTIDO, ACESSÓRIO, ETC.]
+
+Inclua:
+• Principais características (tecido, caimento, estilo)
+• Para quem é indicada
+• Sugestão de combinação com outras peças
+• Fechamento que incentive a compra
+
+Use linguagem que desperte desejo, sem inventar características que o produto não tenha.`,en:`Create a persuasive product description for:
+[PIECE: TOP, PANTS, DRESS, ACCESSORY, ETC.]
+
+Include:
+• Main characteristics (fabric, fit, style)
+• Who it's recommended for
+• Suggestion for pairing with other pieces
+• Closing that encourages the purchase
+
+Use language that sparks desire, without inventing features the product doesn't have.`},
+{seg:'👗 Moda & Vestuário',c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'💬 Legenda de Lançamento de Coleção',q:'Para anunciar uma coleção nova nas redes sociais.',p:`Crie 3 versões de legenda para o lançamento de:
+[NOVA COLEÇÃO OU PEÇA]
+
+Público: [PÚBLICO]
+
+Use um gancho que gere curiosidade, destaque o estilo da coleção e feche com uma chamada para ação (ex: "já chegou", "confira agora"). Evite exageros e promessas não comprovadas.`,en:`Create 3 caption versions for the launch of:
+[NEW COLLECTION OR PIECE]
+
+Audience: [AUDIENCE]
+
+Use a hook that sparks curiosity, highlight the collection's style, and close with a call to action (e.g., "just arrived", "check it out now"). Avoid exaggeration and unproven claims.`},
+{seg:'👗 Moda & Vestuário',c:'🎯 Conversão & Copy',n:'intermediario',t:'🎁 Campanha de Combo de Peças',q:'Para divulgar um look completo ou kit de peças com desconto.',p:`Crie uma campanha para divulgar o combo:
+[PEÇAS DO COMBO, EX: BLUSA + CALÇA + ACESSÓRIO]
+
+Público: [PÚBLICO]
+
+Estruture em:
+• Gancho
+• Vantagem de comprar o combo (economia, praticidade, look pronto)
+• Benefícios de cada peça
+• Chamada para ação
+
+Gere uma versão curta para Instagram e outra mais detalhada para WhatsApp.`,en:`Create a campaign to promote the combo:
+[COMBO PIECES, E.G., TOP + PANTS + ACCESSORY]
+
+Audience: [AUDIENCE]
+
+Structure into:
+• Hook
+• Advantage of buying the combo (savings, convenience, ready-to-wear look)
+• Benefits of each piece
+• Call to action
+
+Generate a short version for Instagram and a more detailed one for WhatsApp.`},
+{seg:'👗 Moda & Vestuário',c:'📖 Storytelling',n:'intermediario',t:'📖 Storytelling de Estilo',q:'Para criar conexão emocional em torno do estilo da marca.',p:`Crie um storytelling para:
+[PEÇA OU COLEÇÃO]
+
+Contexto real disponível: [INSPIRAÇÃO DA COLEÇÃO OU RELATO DE CLIENTE]
+
+Estruture em:
+• Situação inicial (ex: dificuldade em achar uma peça versátil)
+• Descoberta da peça/marca
+• Transformação no visual ou na confiança
+• Conexão natural com a oferta
+
+Use apenas fatos reais fornecidos, sem inventar depoimentos.`,en:`Create a storytelling piece for:
+[PIECE OR COLLECTION]
+
+Real context available: [COLLECTION INSPIRATION OR CUSTOMER ACCOUNT]
+
+Structure into:
+• Initial situation (e.g., difficulty finding a versatile piece)
+• Discovery of the piece/brand
+• Transformation in look or confidence
+• Natural connection to the offer
+
+Use only real facts provided, without inventing testimonials.`},
+{seg:'👗 Moda & Vestuário',c:'🚀 Estratégia & Funis',n:'intermediario',t:'📲 WhatsApp para Recompra e Cross-sell',q:'Para reengajar uma cliente que já comprou e sugerir uma peça complementar.',p:`Crie uma sequência de 4 mensagens de WhatsApp para reengajar uma cliente que já comprou:
+[PEÇA OU CATEGORIA]
+
+Organize em:
+• Mensagem de acompanhamento
+• Dica de como usar/combinar a peça
+• Sugestão de peça complementar
+• Oferta especial de recompra
+
+Tom acolhedor, sem parecer insistente.`,en:`Create a sequence of 4 WhatsApp messages to re-engage a customer who already bought:
+[PIECE OR CATEGORY]
+
+Organize into:
+• Follow-up message
+• Tip on how to wear/style the piece
+• Complementary piece suggestion
+• Special repurchase offer
+
+Welcoming tone, without sounding pushy.`},
+{seg:'👗 Moda & Vestuário',c:'🎯 Conversão & Copy',n:'basico',t:'🏷️ Campanha para Liquidação/Data Comemorativa',q:'Para divulgar promoções em datas como Black Friday ou troca de estação.',p:`Crie uma campanha de texto para a data/ocasião:
+[DATA OU OCASIÃO, EX: BLACK FRIDAY, TROCA DE ESTAÇÃO]
+
+Divulgando: [PEÇAS OU COLEÇÃO]
+Público: [PÚBLICO]
+
+Inclua:
+• Gancho relacionado à data
+• Oferta especial
+• Senso de urgência real, com prazo verdadeiro
+• Chamada para ação
+
+Evite criar urgência falsa ou prazos inventados.`,en:`Create a text campaign for the date/occasion:
+[DATE OR OCCASION, E.G., BLACK FRIDAY, SEASON CHANGE]
+
+Promoting: [PIECES OR COLLECTION]
+Audience: [AUDIENCE]
+
+Include:
+• Hook related to the date
+• Special offer
+• Real sense of urgency, with a true deadline
+• Call to action
+
+Avoid creating false urgency or made-up deadlines.`},
+{seg:'👗 Moda & Vestuário',c:'✍️ Conteúdo & Posicionamento',n:'avancado',t:'⭐ Posicionamento da Marca de Moda',q:'Para deixar mais clara a identidade da sua marca ou loja de roupas.',p:`Ajude a definir o posicionamento da marca de moda:
+[NOME DA MARCA/LOJA]
+
+Usando estas informações: [CONTEXTO, EX: ESTILO, PÚBLICO-ALVO, DIFERENCIAL]
+
+Organize em:
+• Público prioritário
+• Problema que a marca resolve (ex: praticidade, estilo, preço)
+• Proposta de valor
+• Diferenciais reais
+• Tom de comunicação
+• Mensagens-chave
+
+Faça perguntas quando faltarem informações essenciais.`,en:`Help define the positioning of the fashion brand:
+[BRAND/STORE NAME]
+
+Using this information: [CONTEXT, E.G., STYLE, TARGET AUDIENCE, DIFFERENTIATOR]
+
+Organize into:
+• Priority audience
+• Problem the brand solves (e.g., convenience, style, price)
+• Value proposition
+• Real differentiators
+• Communication tone
+• Key messages
+
+Ask questions when essential information is missing.`},
+{seg:'🏋️ Academia & Personal',c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'📝 Descrição de Plano/Modalidade',q:'Para explicar um plano ou modalidade de treino no site ou redes sociais.',p:`Crie uma descrição persuasiva para:
+[PLANO OU MODALIDADE: MUSCULAÇÃO, FUNCIONAL, LUTA, PILATES, ETC.]
+
+Inclua:
+• Principais benefícios
+• Para quem é indicado
+• O que está incluso no plano
+• Fechamento que incentive a matrícula
+
+Não invente resultados garantidos nem promessas que não podem ser cumpridas.`,en:`Create a persuasive description for:
+[PLAN OR MODALITY: WEIGHT TRAINING, FUNCTIONAL, COMBAT SPORTS, PILATES, ETC.]
+
+Include:
+• Main benefits
+• Who it's recommended for
+• What's included in the plan
+• Closing that encourages enrollment
+
+Do not invent guaranteed results or promises that can't be kept.`},
+{seg:'🏋️ Academia & Personal',c:'✍️ Conteúdo & Posicionamento',n:'basico',t:'💬 Legenda de Divulgação de Aula Experimental',q:'Para anunciar aula grátis nas redes sociais.',p:`Crie 3 versões de legenda divulgando a aula experimental gratuita de:
+[MODALIDADE]
+
+Público: [PÚBLICO]
+
+Use um gancho que gere vontade de experimentar, destaque que é gratuita e sem compromisso, e feche com uma chamada para ação clara (ex: "agende sua aula"). Evite exageros.`,en:`Create 3 caption versions promoting the free trial class of:
+[MODALITY]
+
+Audience: [AUDIENCE]
+
+Use a hook that makes people want to try it, highlight that it's free with no commitment, and close with a clear call to action (e.g., "book your class"). Avoid exaggeration.`},
+{seg:'🏋️ Academia & Personal',c:'🎯 Conversão & Copy',n:'intermediario',t:'🎁 Campanha de Plano Promocional',q:'Para divulgar um plano com condição especial de matrícula.',p:`Crie uma campanha para divulgar o plano:
+[NOME DO PLANO E CONDIÇÃO]
+
+Público: [PÚBLICO]
+
+Estruture em:
+• Gancho
+• Vantagem da condição especial
+• Benefícios do plano
+• Chamada para ação
+
+Gere uma versão curta para Instagram e outra mais detalhada para WhatsApp.`,en:`Create a campaign to promote the plan:
+[PLAN NAME AND CONDITION]
+
+Audience: [AUDIENCE]
+
+Structure into:
+• Hook
+• Advantage of the special condition
+• Plan benefits
+• Call to action
+
+Generate a short version for Instagram and a more detailed one for WhatsApp.`},
+{seg:'🏋️ Academia & Personal',c:'📖 Storytelling',n:'intermediario',t:'📖 Storytelling de Transformação de Aluno',q:'Para criar conexão emocional com base num resultado real.',p:`Crie um storytelling para:
+[MODALIDADE OU PLANO]
+
+Contexto real disponível: [RELATO DO ALUNO OU RESULTADO]
+
+Estruture em:
+• Situação inicial (ex: falta de disposição, objetivo não alcançado)
+• Desafio
+• Processo de treino
+• Resultado
+• Conexão natural com a oferta
+
+Use apenas fatos reais e autorizados pelo aluno, sem inventar depoimentos.`,en:`Create a storytelling piece for:
+[MODALITY OR PLAN]
+
+Real context available: [STUDENT ACCOUNT OR RESULT]
+
+Structure into:
+• Initial situation (e.g., lack of motivation, unmet goal)
+• Challenge
+• Training process
+• Result
+• Natural connection to the offer
+
+Use only real facts authorized by the student, without inventing testimonials.`},
+{seg:'🏋️ Academia & Personal',c:'🚀 Estratégia & Funis',n:'intermediario',t:'📲 WhatsApp de Acompanhamento de Aluno',q:'Para manter contato e engajamento com alunos matriculados.',p:`Crie uma sequência de 4 mensagens de WhatsApp para acompanhar um aluno matriculado em:
+[MODALIDADE OU PLANO]
+
+Organize em:
+• Mensagem de boas-vindas/acompanhamento
+• Dica prática relacionada ao treino
+• Incentivo para manter a frequência
+• Oferta de indicação ou upgrade de plano
+
+Tom motivador e próximo, sem parecer cobrança.`,en:`Create a sequence of 4 WhatsApp messages to follow up with a student enrolled in:
+[MODALITY OR PLAN]
+
+Organize into:
+• Welcome/follow-up message
+• Practical training-related tip
+• Encouragement to keep attendance consistent
+• Referral or plan upgrade offer
+
+Motivating, close tone, without sounding like pressure.`},
+{seg:'🏋️ Academia & Personal',c:'🎯 Conversão & Copy',n:'basico',t:'🏷️ Campanha para Início de Ano/Verão',q:'Para aproveitar datas de pico de matrícula (janeiro, pré-verão).',p:`Crie uma campanha de texto para a época:
+[DATA OU OCASIÃO, EX: JANEIRO, PRÉ-VERÃO]
+
+Divulgando: [PLANO OU MODALIDADE]
+Público: [PÚBLICO]
+
+Inclua:
+• Gancho relacionado à época
+• Oferta especial
+• Senso de urgência real, com prazo verdadeiro
+• Chamada para ação
+
+Evite criar urgência falsa ou prazos inventados.`,en:`Create a text campaign for the season:
+[DATE OR OCCASION, E.G., JANUARY, PRE-SUMMER]
+
+Promoting: [PLAN OR MODALITY]
+Audience: [AUDIENCE]
+
+Include:
+• Hook related to the season
+• Special offer
+• Real sense of urgency, with a true deadline
+• Call to action
+
+Avoid creating false urgency or made-up deadlines.`},
+{seg:'🏋️ Academia & Personal',c:'✍️ Conteúdo & Posicionamento',n:'avancado',t:'⭐ Posicionamento da Academia/Personal',q:'Para deixar mais clara a identidade da academia ou do personal trainer.',p:`Ajude a definir o posicionamento de:
+[NOME DA ACADEMIA OU PERSONAL TRAINER]
+
+Usando estas informações: [CONTEXTO, EX: ESPECIALIDADE, PÚBLICO-ALVO, DIFERENCIAL]
+
+Organize em:
+• Público prioritário
+• Problema que resolve (ex: falta de tempo, resultado, acompanhamento)
+• Proposta de valor
+• Diferenciais reais
+• Tom de comunicação
+• Mensagens-chave
+
+Faça perguntas quando faltarem informações essenciais.`,en:`Help define the positioning of:
+[GYM OR PERSONAL TRAINER NAME]
+
+Using this information: [CONTEXT, E.G., SPECIALTY, TARGET AUDIENCE, DIFFERENTIATOR]
+
+Organize into:
+• Priority audience
+• Problem it solves (e.g., lack of time, results, guidance)
+• Value proposition
+• Real differentiators
+• Communication tone
+• Key messages
+
+Ask questions when essential information is missing.`}
 ];
 
 const prompts=dadosBrutos.map((x,i)=>{
