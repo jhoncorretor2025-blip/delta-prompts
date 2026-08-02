@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Página não encontrada | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="robots" content="noindex"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.notfound-wrap{min-height:70vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.notfound-box{max-width:520px;text-align:center}
+.notfound-emoji{font-size:64px;margin-bottom:10px}
+.notfound-box h1{font-size:30px;margin:0 0 10px}
+.notfound-box p{color:#667085;font-size:16px;line-height:1.6;margin:0 0 24px}
+.notfound-acoes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.notfound-acoes a{display:inline-block;padding:14px 24px;border-radius:12px;font-weight:700;text-decoration:none}
+.notfound-primaria{background:#5b5ce2;color:#fff}
+.notfound-secundaria{background:#eef2ff;color:#5b5ce2}
+.notfound-busca{margin-top:26px}
+.notfound-busca input{width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid #e5e7eb;font-size:15px}
+[data-theme="dark"] .notfound-box p{color:#a0a0a0}
+[data-theme="dark"] .notfound-box h1{color:#f1f5f9}
+[data-theme="dark"] .notfound-busca input{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260822"></script><main>
+
+<div class="notfound-wrap">
+  <div class="notfound-box">
+    <div class="notfound-emoji">🔎🤔</div>
+    <h1>Essa página não foi encontrada</h1>
+    <p>O link pode estar quebrado, ter mudado de endereço, ou a página não existe (ainda!). Vamos te ajudar a achar o que precisa.</p>
+    <div class="notfound-acoes">
+      <a href="/delta-prompts/index.html" class="notfound-primaria">🏠 Ir para a Página Inicial</a>
+      <a href="/delta-prompts/ajuda.html" class="notfound-secundaria">❓ Ver a Página de Ajuda</a>
+    </div>
+    <div class="notfound-busca">
+      <input type="text" id="buscaRapida" placeholder="🔎 Ou digite o que você procura e aperte Enter...">
+    </div>
+  </div>
+</div>
+
+</main>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+document.getElementById('buscaRapida').addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.value.trim()){
+    window.location.href='/delta-prompts/index.html?busca='+encodeURIComponent(e.target.value.trim());
+  }
+});
+</script>
+</body></html>

@@ -37,7 +37,7 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260821"></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260822"></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
@@ -275,6 +275,7 @@ function buscar(v,scroll=true){
 function limparBusca(){input.value='';sug.classList.remove('active');document.getElementById('search-results').classList.remove('active');input.focus()}
 input.addEventListener('input',()=>{const r=matches(input.value).slice(0,5);sug.innerHTML=r.map(x=>`<a href="${x.l}">${x.i}<span><strong>${x.n}</strong><br><small>${x.d}</small></span></a>`).join('');sug.classList.toggle('active',!!input.value.trim()&&r.length>0)});
 input.addEventListener('keydown',e=>{if(e.key==='Enter')buscar(input.value)});
+(function(){try{const params=new URLSearchParams(location.search);const q=params.get('busca');if(q){input.value=q;buscar(q)}}catch(e){}})();
 document.querySelectorAll('[data-search]').forEach(b=>b.onclick=()=>{input.value=b.dataset.search;buscar(input.value)});
 document.addEventListener('click',e=>{if(!e.target.closest('.search'))sug.classList.remove('active')});
 
