@@ -1,4 +1,18 @@
 /* ===================================== */
+/* MODO LEITURA — aumenta o texto dos prompts para ler melhor */
+/* ===================================== */
+[data-modo-leitura="true"] pre,[data-modo-leitura="true"] .prompt-text{font-size:19px!important;line-height:1.85!important}
+
+/* ===================================== */
+/* FILTROS MAIS COMPACTOS NO MOBILE (rolagem horizontal em vez de quebrar em varias linhas) */
+/* ===================================== */
+@media(max-width:700px){
+  .filtros,.filtro-nivel,.filtro-categoria,.filtro-segmento,.filtro-botoes{flex-wrap:nowrap!important;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .filtros button,.filtro-nivel button,.filtro-categoria button,.filtro-segmento button,.filtro-botoes button{flex:0 0 auto;white-space:nowrap}
+  .top-bar{gap:8px}
+}
+
+/* ===================================== */
 /* MODO SIMPLES — letras maiores e alvos de toque maiores para iniciantes/idosos */
 /* ===================================== */
 [data-modo-simples="true"]{font-size:118%}
@@ -31,5 +45,5 @@ body:has(#filtrosNivel) .top-bar input{height:46px!important;border:1px solid #d
 body:has(#filtrosNivel) .contador{padding:7px 10px!important;border-radius:999px!important;background:#eef2ff!important;color:#4f46e5!important;font-size:12px!important;white-space:nowrap}
 @media(max-width:700px){.info-collapsible .info-toggle{padding:15px 16px}.info-collapsible .info-toggle strong{font-size:1rem}.info-collapsible .info-body{padding:0 16px 16px}#filtrosNivel,#filtrosCategoria,#filtrosObjetivo{flex-wrap:nowrap!important;overflow-x:auto!important;padding:1px 0 7px!important;scrollbar-width:none}#filtrosNivel::-webkit-scrollbar,#filtrosCategoria::-webkit-scrollbar,#filtrosObjetivo::-webkit-scrollbar{display:none}#filtrosNivel button,#filtrosCategoria button,#filtrosObjetivo button{flex:0 0 auto!important}body:has(#filtrosNivel) .top-bar{padding:12px!important}body:has(#filtrosNivel) .contador{width:100%;text-align:center}}
 .delta-bottom-nav{display:none}
-@media(max-width:760px){.delta-bottom-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:1000;left:10px;right:10px;bottom:10px;background:#fff;border:1px solid #e5e7eb;border-radius:17px;box-shadow:0 12px 35px rgba(25,28,65,.18);overflow:hidden}.delta-bottom-nav a,.delta-bottom-nav button{border:0;background:#fff;padding:10px 4px;text-align:center;text-decoration:none;color:#202236;font-size:11px;font-weight:800;font-family:inherit;cursor:pointer}.delta-bottom-nav span{display:block;font-size:20px;margin-bottom:2px}body:has(.delta-bottom-nav){padding-bottom:78px}.theme-toggle{bottom:90px}#deltaModoSimplesBtn{bottom:90px;font-size:12px;padding:9px 14px}}
+@media(max-width:760px){.delta-bottom-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:1000;left:10px;right:10px;bottom:10px;background:#fff;border:1px solid #e5e7eb;border-radius:17px;box-shadow:0 12px 35px rgba(25,28,65,.18);overflow:hidden}.delta-bottom-nav a,.delta-bottom-nav button{border:0;background:#fff;padding:10px 4px;text-align:center;text-decoration:none;color:#202236;font-size:11px;font-weight:800;font-family:inherit;cursor:pointer}.delta-bottom-nav span{display:block;font-size:20px;margin-bottom:2px}body:has(.delta-bottom-nav){padding-bottom:78px}.theme-toggle{bottom:90px}#deltaModoSimplesBtn{bottom:90px;font-size:12px;padding:9px 14px}#deltaModoLeituraBtn{bottom:135px;font-size:12px;padding:9px 14px}}
 [data-theme="dark"] .delta-bottom-nav,[data-theme="dark"] .delta-bottom-nav a,[data-theme="dark"] .delta-bottom-nav button{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.12);color:var(--text-primary,#eaeaea)}

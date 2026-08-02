@@ -1,57 +1,105 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajuda - Como usar o Delta Prompts</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .gradient-text { background: linear-gradient(90deg, #4f46e5, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Ajuda — O que é o Delta Prompts | Delta Prompts</title><meta name="description" content="Entenda o que é o Delta Prompts e como usar o site, mesmo se você nunca usou inteligência artificial antes."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.ajuda-hero{padding:26px;background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #dbeafe;border-radius:20px;margin-bottom:22px}
+.ajuda-hero h1{margin:0 0 8px}
+.ajuda-hero p{margin:0;color:#475467;font-size:16px}
+.passos-simples{display:flex;flex-direction:column;gap:12px;margin:18px 0}
+.passo-simples{display:flex;gap:14px;align-items:flex-start;padding:16px;background:#fff;border:1px solid #e5e7eb;border-radius:14px}
+.passo-numero{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#5b5ce2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px}
+.passo-simples strong{display:block;margin-bottom:3px;font-size:16px}
+.passo-simples span{color:#667085;font-size:14.5px;line-height:1.5}
+.glossario{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
+.termo{padding:14px;background:#f8fafc;border-radius:12px;border:1px solid #e5e7eb}
+.termo strong{display:block;margin-bottom:4px}
+.termo span{font-size:14px;color:#667085}
+.faq-item{border:1px solid #e5e7eb;border-radius:14px;margin-bottom:10px;overflow:hidden}
+.faq-pergunta{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px;border:0;background:#fff;font:inherit;font-weight:800;text-align:left;cursor:pointer}
+.faq-icone{color:#5b5ce2;transition:transform .2s;flex:0 0 auto}
+.faq-item.aberto .faq-icone{transform:rotate(180deg)}
+.faq-resposta{display:none;padding:0 18px 16px;color:#475467;line-height:1.6}
+.faq-item.aberto .faq-resposta{display:block}
+.dica-bonus{padding:18px;border-left:4px solid #5b5ce2;background:#f8fafc;border-radius:10px;margin:22px 0}
+.formula-cria{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.formula-item{padding:12px;background:#fff;border-radius:10px;border:1px solid #e5e7eb;font-size:14px}
+.formula-item strong{color:#5b5ce2}
+[data-theme="dark"] .ajuda-hero{background:linear-gradient(135deg,#1e2140,#1a1836);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .ajuda-hero p{color:#a0a0a0}
+[data-theme="dark"] .passo-simples,[data-theme="dark"] .termo,[data-theme="dark"] .faq-item,[data-theme="dark"] .formula-item{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .passo-simples span,[data-theme="dark"] .termo span,[data-theme="dark"] .faq-resposta{color:#a0a0a0}
+[data-theme="dark"] .faq-pergunta{background:transparent;color:#eaeaea}
+[data-theme="dark"] .dica-bonus{background:rgba(255,255,255,.04)}
+@media(max-width:700px){.glossario,.formula-cria{grid-template-columns:1fr}.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260821"></script><main>
 
-    <div class="max-w-4xl mx-auto py-12 px-6">
-        <a href="index.html" class="text-indigo-600 font-semibold mb-6 block">&larr; Voltar para o início</a>
-        
-        <h1 class="text-4xl font-bold mb-8">Como dominar a IA em segundos</h1>
+<section class="ajuda-hero">
+  <h1>❓ O que é o Delta Prompts?</h1>
+  <p>Se você nunca usou inteligência artificial antes, essa página é pra você. Vamos explicar tudo com calma, sem termo técnico difícil.</p>
+</section>
 
-        <section class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 mb-8">
-            <h2 class="text-2xl font-semibold mb-4 text-indigo-700">A Arte de Pedir</h2>
-            <p class="leading-relaxed text-gray-600 italic">
-                "A IA é como um estagiário brilhante, mas que não conhece o seu negócio. Se você pedir 'uma descrição', ele fará o básico. Se você pedir 'uma descrição persuasiva, focada em famílias, destacando a sacada gourmet', você terá um resultado profissional."
-            </p>
-        </section>
+<section class="card">
+  <h3>🎯 Em resumo</h3>
+  <p>O <strong>Delta Prompts</strong> é uma biblioteca de "textos prontos" (chamados de <strong>prompts</strong>) pra você usar em ferramentas de inteligência artificial, como o <strong>ChatGPT</strong> ou o <strong>Gemini</strong>. Em vez de você ter que pensar do zero o que escrever pra IA te ajudar, a gente já deixou o texto pronto — você só copia, cola e preenche as suas informações.</p>
+</section>
 
-        <section class="bg-indigo-900 text-white p-8 rounded-2xl mb-8">
-            <h2 class="text-2xl font-semibold mb-6">A Fórmula Mestra: C.R.I.A.</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div><strong class="text-indigo-300">C - Contexto:</strong> Quem a IA deve ser? (Corretor, Redator...)</div>
-                <div><strong class="text-indigo-300">R - Regra:</strong> Qual a tarefa exata?</div>
-                <div><strong class="text-indigo-300">I - Informação:</strong> Quais os dados brutos?</div>
-                <div><strong class="text-indigo-300">A - Ajuste:</strong> Qual o tom? (Entusiasmado, formal...)</div>
-            </div>
-        </section>
+<section class="card">
+  <h3>🤔 Mas o que é um "prompt"?</h3>
+  <p><strong>Prompt</strong> é só o nome técnico pro "pedido" que você faz pra uma inteligência artificial. É como pedir algo pra uma pessoa: quanto mais claro e detalhado o pedido, melhor a resposta. Os prompts deste site já vêm bem escritos e detalhados, prontos pra dar um resultado bom.</p>
+</section>
 
-        <section class="mb-8">
-            <h2 class="text-2xl font-semibold mb-6">Como utilizar os prompts:</h2>
-            <ol class="space-y-4">
-                <li class="bg-white p-4 rounded-lg shadow-sm"><strong>1. Escolha:</strong> Navegue pelas categorias ou use a busca para achar o prompt ideal.</li>
-                <li class="bg-white p-4 rounded-lg shadow-sm"><strong>2. Copie:</strong> Clique no botão "Copiar" abaixo do prompt escolhido.</li>
-                <li class="bg-white p-4 rounded-lg shadow-sm"><strong>3. Cole & Edite:</strong> Cole no seu Gemini/ChatGPT e preencha os dados entre colchetes <strong>[COMO ESTE]</strong>.</li>
-                <li class="bg-white p-4 rounded-lg shadow-sm"><strong>4. Ajuste:</strong> Se precisar, peça para a IA: "deixe mais curto" ou "mude o tom".</li>
-            </ol>
-        </section>
+<section class="card">
+  <h3>🚀 Como usar o site em 4 passos</h3>
+  <div class="passos-simples">
+    <div class="passo-simples"><div class="passo-numero">1</div><div><strong>Escolha</strong><span>Navegue pelas categorias no menu do lado (ou use a busca) até achar um prompt que combine com o que você precisa.</span></div></div>
+    <div class="passo-simples"><div class="passo-numero">2</div><div><strong>Copie</strong><span>Clique no botão <strong>"📋 Copiar"</strong> abaixo do prompt escolhido.</span></div></div>
+    <div class="passo-simples"><div class="passo-numero">3</div><div><strong>Cole</strong><span>Abra o ChatGPT ou o Gemini (ou clique direto no botão <strong>"🤖 ChatGPT"</strong> / <strong>"✨ Gemini"</strong> do prompt, que já abre pra você) e cole o texto lá.</span></div></div>
+    <div class="passo-simples"><div class="passo-numero">4</div><div><strong>Preencha e envie</strong><span>Troque o que estiver entre colchetes, tipo <strong>[SEU NOME]</strong>, pelas suas informações reais, e envie. Pronto!</span></div></div>
+  </div>
+</section>
 
-        <section class="border-t border-gray-200 pt-8 mt-8">
-            <div class="bg-blue-50 p-6 rounded-2xl border-l-4 border-blue-500">
-                <h3 class="font-bold text-blue-800 text-lg">💡 Dica do Jhon (Otimização)</h3>
-                <p class="text-blue-700 mt-2">
-                    Quer resultados ainda mais potentes? Carregue os manuais e normas da Delta Imóveis no seu <strong>NotebookLM</strong> e use os prompts daqui em cima dos documentos da própria agência!
-                </p>
-            </div>
-        </section>
-    </div>
+<section class="card">
+  <h3>🧭 Palavras que você vai ver pelo site</h3>
+  <div class="glossario">
+    <div class="termo"><strong>🧠 Skills</strong><span>Instruções curtas que "ensinam" a IA a fazer uma tarefa específica sempre do mesmo jeito.</span></div>
+    <div class="termo"><strong>🤖 Agentes de IA</strong><span>Prompts mais completos que transformam a IA num "especialista" (tipo um professor, um mecânico, um médico de referência).</span></div>
+    <div class="termo"><strong>📦 Packs Prontos</strong><span>Vários prompts que trabalham em sequência, um depois do outro, pra tarefas maiores.</span></div>
+    <div class="termo"><strong>🔌 Conectores</strong><span>Recurso mais avançado que liga a IA direto no seu Gmail, Google Drive, etc.</span></div>
+    <div class="termo"><strong>⭐ Favoritos</strong><span>Prompts que você salvou pra achar rápido depois, sem precisar procurar de novo.</span></div>
+    <div class="termo"><strong>📦 Biblioteca</strong><span>Onde ficam os prompts que <em>você mesmo</em> criou e cadastrou no site.</span></div>
+    <div class="termo"><strong>🟢🟡🔴 Nível</strong><span>Mostra se o prompt é fácil (🟢 Básico), médio (🟡 Intermediário) ou mais avançado (🔴 Avançado).</span></div>
+    <div class="termo"><strong>🧓 Modo Simples</strong><span>Um botão que deixa as letras maiores e mostra só o essencial — ótimo pra quem está começando agora.</span></div>
+  </div>
+</section>
 
-</body>
-</html>
+<section class="card">
+  <h3>💬 Perguntas frequentes</h3>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Preciso pagar alguma coisa pra usar o Delta Prompts?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Não. O site é gratuito. Você só vai precisar de uma conta no ChatGPT ou Gemini (que também têm versão gratuita) pra usar os prompts.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Preciso saber programar ou entender de tecnologia?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Não! Os prompts já vêm prontos. Você só copia, cola e preenche suas informações. Se quiser algo ainda mais simples, use o "🧓 Modo Simples" (o botão fica no canto da tela).</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">O que são aqueles colchetes [ASSIM] dentro do prompt?<span class="faq-icone">⌄</span></button><div class="faq-resposta">São espaços reservados pra você preencher com a sua informação. Por exemplo, <strong>[NOME DA EMPRESA]</strong> deve virar o nome real da sua empresa. Em muitos prompts, você já consegue preencher isso direto na página, num campinho, antes de copiar.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Posso confiar 100% no que a IA responder?<span class="faq-icone">⌄</span></button><div class="faq-resposta">A IA é uma ótima ferramenta de apoio, mas pode errar. Sempre revise o resultado antes de usar, principalmente em assuntos de saúde, dinheiro ou decisões importantes — nesses casos, use como ponto de partida e confirme com um profissional.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Como eu salvo um prompt pra usar depois?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Clique no botão <strong>"🤍 Favoritar"</strong> em qualquer prompt. Ele fica salvo na sua página de <strong>❤️ Favoritos</strong> (no menu). Se você fizer login com o Google, seus favoritos ficam salvos e aparecem em qualquer aparelho que você usar.</div></div>
+</section>
+
+<section class="dica-bonus">
+  <h3 style="margin-top:0">💡 Dica bônus: como escrever seus próprios pedidos pra IA</h3>
+  <p>Se um dia você quiser escrever um pedido do zero (sem usar um prompt pronto daqui), lembre da fórmula <strong>C.R.I.A.</strong>:</p>
+  <div class="formula-cria">
+    <div class="formula-item"><strong>C — Contexto:</strong> quem a IA deve "ser"? (ex: um corretor, um redator)</div>
+    <div class="formula-item"><strong>R — Regra:</strong> qual é a tarefa exata que você quer?</div>
+    <div class="formula-item"><strong>I — Informação:</strong> quais dados reais você vai dar pra ela usar?</div>
+    <div class="formula-item"><strong>A — Ajuste:</strong> qual tom você quer? (formal, animado, direto...)</div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h3>🚀 Pronto pra começar?</h3>
+  <p>Volte pra página inicial e escolha seu primeiro prompt.</p>
+  <a href="/delta-prompts/index.html" style="display:inline-block;margin-top:10px;padding:14px 28px;background:#5b5ce2;color:#fff;font-weight:700;border-radius:12px;text-decoration:none">🏠 Ir para a Página Inicial</a>
+</section>
+
+</main>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+</script>
+</body></html>

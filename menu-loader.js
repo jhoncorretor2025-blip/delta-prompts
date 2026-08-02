@@ -2,7 +2,98 @@
 // MENU LOADER + CONTROLES
 // ==============================
 (function(){try{var p=location.pathname;var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';if(!isIndex){localStorage.setItem('deltaUltimaPagina',JSON.stringify({path:p,ts:Date.now()}))}}catch(e){}})();
-// ===== MODO SIMPLES (letras maiores, so o essencial, filtra nivel basico automaticamente) =====
+// ===== BARRA DE PROGRESSO DE LEITURA =====
+(function(){
+  function montar(){
+    if(document.getElementById('deltaProgressBar'))return;
+    var bar=document.createElement('div');
+    bar.id='deltaProgressBar';
+    bar.style.cssText='position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,#5b5ce2,#7a5bff);width:0%;z-index:2000;transition:width .12s linear;pointer-events:none';
+    document.body.appendChild(bar);
+  }
+  function atualizar(){
+    var bar=document.getElementById('deltaProgressBar');
+    if(!bar)return;
+    var alturaTotal=document.documentElement.scrollHeight-window.innerHeight;
+    var progresso=alturaTotal>0?(window.scrollY/alturaTotal)*100:0;
+    bar.style.width=Math.min(100,Math.max(0,progresso))+'%';
+  }
+  if(document.body)montar();else document.addEventListener('DOMContentLoaded',montar,{once:true});
+  window.addEventListener('scroll',atualizar,{passive:true});
+  window.addEventListener('resize',atualizar);
+  document.addEventListener('DOMContentLoaded',atualizar);
+  setTimeout(atualizar,500);
+})();
+
+// ===== MODO LEITURA (aumenta a fonte dos prompts para ler melhor) =====
+(function(){
+  function lerAtivo(){try{return localStorage.getItem('deltaModoLeitura')==='true'}catch(e){return false}}
+  function aplicar(ativo){document.documentElement.setAttribute('data-modo-leitura',ativo?'true':'false');try{localStorage.setItem('deltaModoLeitura',ativo?'true':'false')}catch(e){}}
+  aplicar(lerAtivo());
+  function criarBotao(){
+    if(document.getElementById('deltaModoLeituraBtn'))return;
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.id='deltaModoLeituraBtn';
+    btn.title='Modo Leitura: aumenta o texto dos prompts para ler melhor';
+    function atualizarTexto(){var lig=lerAtivo();btn.textContent=lig?'🔍 Leitura: Ligado':'🔍 Modo Leitura';btn.style.background=lig?'#0891b2':'#fff';btn.style.color=lig?'#fff':'#172033'}
+    btn.style.cssText='position:fixed;left:14px;bottom:66px;z-index:1400;border:1px solid #e5e7eb;border-radius:999px;padding:9px 15px;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 8px 20px rgba(20,20,40,.14)';
+    atualizarTexto();
+    btn.onclick=function(){aplicar(!lerAtivo());atualizarTexto()};
+    document.body.appendChild(btn);
+  }
+  if(document.body)criarBotao();else document.addEventListener('DOMContentLoaded',criarBotao,{once:true});
+})();
+
+// ===== FIXAR PROMPT NO TOPO (funciona em qualquer pagina com botao de favoritar) =====
+(function(){
+  function _loadPins(){try{return JSON.parse(localStorage.getItem('deltaPins'))||[]}catch(e){return[]}}
+  function _savePins(l){try{localStorage.setItem('deltaPins',JSON.stringify(l))}catch(e){}}
+  function isPinned(id){return _loadPins().indexOf(id)!==-1}
+  function estiloBotao(b,fixado){b.textContent=fixado?'📌 Fixado':'📌 Fixar';b.style.background=fixado?'#fef3c7':'#f1f5f9';b.style.color=fixado?'#b45309':'#475467'}
+  function togglePin(id){var l=_loadPins();var idx=l.indexOf(id);if(idx===-1)l.unshift(id);else l.splice(idx,1);_savePins(l)}
+  function criarBotaoPin(id){
+    var b=document.createElement('button');
+    b.type='button';b.className='delta-pin-btn';b.dataset.pinId=id;
+    b.style.cssText='flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;cursor:pointer;font-size:inherit';
+    estiloBotao(b,isPinned(id));
+    b.onclick=function(){togglePin(id);estiloBotao(b,isPinned(id));reordenar()};
+    return b;
+  }
+  function injetarBotoes(){
+    document.querySelectorAll('[data-acao="favoritar"]').forEach(function(favBtn){
+      var acoes=favBtn.closest('.acoes');
+      if(!acoes||acoes.querySelector('.delta-pin-btn'))return;
+      var id=favBtn.dataset.id;
+      if(!id)return;
+      acoes.insertBefore(criarBotaoPin(id),favBtn.nextSibling);
+    });
+  }
+  function reordenar(){
+    var pins=_loadPins();
+    if(!pins.length)return;
+    var vistos=[];
+    document.querySelectorAll('.delta-pin-btn').forEach(function(btn){
+      var card=btn.closest('.card')||btn.closest('[id^="card-"]');
+      if(!card||!card.parentElement)return;
+      if(vistos.indexOf(card.parentElement)!==-1)return;
+      vistos.push(card.parentElement);
+    });
+    vistos.forEach(function(cont){
+      var filhosComPin=[].slice.call(cont.children).filter(function(el){return el.querySelector&&el.querySelector('.delta-pin-btn')});
+      var fixados=filhosComPin.filter(function(el){var b=el.querySelector('.delta-pin-btn');return pins.indexOf(b.dataset.pinId)!==-1});
+      var ordemFixados=fixados.slice().sort(function(a,b){var ba=a.querySelector('.delta-pin-btn').dataset.pinId,bb=b.querySelector('.delta-pin-btn').dataset.pinId;return pins.indexOf(ba)-pins.indexOf(bb)});
+      ordemFixados.slice().reverse().forEach(function(el){cont.prepend(el)});
+    });
+  }
+  function rodar(){injetarBotoes();reordenar()}
+  var t=null;
+  function agendarRodada(delay){clearTimeout(t);t=setTimeout(rodar,delay||300)}
+  setTimeout(rodar,900);
+  document.addEventListener('click',function(){agendarRodada(250)},true);
+  document.addEventListener('change',function(){agendarRodada(250)},true);
+  document.addEventListener('input',function(){agendarRodada(450)},true);
+})();
 (function(){
   function lerModoSimples(){try{return localStorage.getItem('deltaModoSimples')==='true'}catch(e){return false}}
   function aplicar(ativo){document.documentElement.setAttribute('data-modo-simples',ativo?'true':'false');try{localStorage.setItem('deltaModoSimples',ativo?'true':'false')}catch(e){}}
@@ -44,7 +135,7 @@
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-20260820-menu-v34';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260811').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal};mod.initAuthWatcher();return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null});window.addEventListener('delta:favoritos-updated',function(){if(!deltaUid||!window.deltaAuth||!window.deltaAuth.pushFavoritos)return;clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){window.deltaAuth.pushFavoritos(deltaUid)},600)});fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth()}).catch(err=>console.error(err))})();
+(function(){function getMenuCandidates(){const version='delta-prompts-20260821-menu-v35';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260811').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal};mod.initAuthWatcher();return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null});window.addEventListener('delta:favoritos-updated',function(){if(!deltaUid||!window.deltaAuth||!window.deltaAuth.pushFavoritos)return;clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){window.deltaAuth.pushFavoritos(deltaUid)},600)});fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth()}).catch(err=>console.error(err))})();
 (function(){function enhanceCategoryPage(){const hasPromptCards=document.querySelector('.prompt-text, pre.prompt-text, #lista, #lista-prompts');const hasCategoryHeading=document.querySelector('main > h1');if(hasPromptCards&&hasCategoryHeading)document.body.classList.add('category-page')}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enhanceCategoryPage,{once:true});else enhanceCategoryPage()})();
 (function(){function load(){if(window.gtag)return;const GA_ID='G-1YF2VY4HXW',script=document.createElement('script');script.async=true;script.src=`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;document.head.appendChild(script);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',GA_ID)}if('requestIdleCallback'in window)requestIdleCallback(load,{timeout:4000});else setTimeout(load,2500)})();
 (function(){const API='https://api.counterapi.dev/v1',NAMESPACE='delta-prompts-jhoncorretor2025';function key(){return(window.location.pathname.replace(/^\/delta-prompts\/?/,'').replace(/\/$/,'')||'inicio').replace(/\.html$/,'').replace(/[^a-zA-Z0-9_-]+/g,'-').toLowerCase()}function start(){const main=document.querySelector('main'),h1=main&&main.querySelector('h1');if(!h1||document.getElementById('page-view-counter'))return;const badge=document.createElement('div');badge.id='page-view-counter';badge.className='page-view-counter';badge.innerHTML='<span>👁️</span> <strong>—</strong> visualizações';h1.insertAdjacentElement('afterend',badge);const controller=new AbortController();setTimeout(()=>controller.abort(),3500);fetch(`${API}/${NAMESPACE}/${key()}/up`,{cache:'no-store',signal:controller.signal}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{const n=Number(d.count??d.value??d.data?.count??d.data?.value??d.data);if(Number.isFinite(n))badge.querySelector('strong').textContent=new Intl.NumberFormat('pt-BR').format(n);else badge.remove()}).catch(()=>badge.remove())}const style=document.createElement('style');style.textContent='.page-view-counter{display:inline-flex;align-items:center;gap:5px;margin:6px 0 14px;padding:7px 11px;border:1px solid #e5e7eb;border-radius:999px;background:#fff;color:#667085;font-size:13px}.page-view-counter strong{color:#4f46e5}';document.head.appendChild(style);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start()})();
