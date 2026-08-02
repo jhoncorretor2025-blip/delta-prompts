@@ -458,6 +458,8 @@ body.category-page .prompt-text {
     transition: transform 260ms cubic-bezier(.2, .9, .3, 1);
     box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
     -webkit-overflow-scrolling: touch;
+    z-index: 2600;
+    background: #fff;
   }
 
   #menu .sidebar.active {
