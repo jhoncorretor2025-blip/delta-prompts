@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Meus Números | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="robots" content="noindex"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.numeros-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}
+.numero-card{padding:22px;border-radius:18px;border:1px solid #e5e7eb;background:#fff;text-align:center}
+.numero-valor{font-size:38px;font-weight:900;color:var(--delta-accent,#5b5ce2);line-height:1}
+.numero-label{margin-top:8px;font-size:14px;color:#667085;font-weight:700}
+.numero-emoji{font-size:26px;margin-bottom:6px}
+.categoria-favorita-box{padding:20px;border-radius:16px;background:#f8fafc;border:1px dashed var(--delta-accent,#5b5ce2);text-align:center;margin:20px 0}
+.vazio-numeros{text-align:center;padding:40px 20px;color:#667085}
+[data-theme="dark"] .numero-card{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .numero-label{color:#a0a0a0}
+[data-theme="dark"] .categoria-favorita-box{background:var(--bg-card,#16213e)}
+@media(max-width:600px){.numeros-grid{grid-template-columns:1fr}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260823"></script><main>
+
+<h1>📊 Meus Números</h1>
+<p>Um resumo de como você tem usado o Delta Prompts. Tudo calculado só com informações salvas no seu próprio navegador.</p>
+
+<div class="numeros-grid">
+  <div class="numero-card"><div class="numero-emoji">🔥</div><div class="numero-valor" id="numStreak">0</div><div class="numero-label">Dias seguidos usando o site</div></div>
+  <div class="numero-card"><div class="numero-emoji">🏆</div><div class="numero-valor" id="numRecorde">0</div><div class="numero-label">Seu recorde de dias seguidos</div></div>
+  <div class="numero-card"><div class="numero-emoji">⭐</div><div class="numero-valor" id="numFavoritos">0</div><div class="numero-label">Prompts favoritados</div></div>
+  <div class="numero-card"><div class="numero-emoji">📋</div><div class="numero-valor" id="numCopiados">0</div><div class="numero-label">Prompts copiados/usados</div></div>
+</div>
+
+<div class="categoria-favorita-box" id="categoriaFavoritaBox" style="display:none">
+  <div style="font-size:22px;margin-bottom:6px">🗂️</div>
+  <div style="font-weight:800;font-size:16px">Sua categoria favorita</div>
+  <div id="categoriaFavoritaNome" style="font-size:20px;font-weight:900;color:var(--delta-accent,#5b5ce2);margin-top:6px"></div>
+</div>
+
+<div class="vazio-numeros" id="vazioAviso" style="display:none">
+  Você ainda não copiou nenhum prompt nem favoritou nada por aqui. Assim que começar a usar o site, seus números vão aparecer aqui! 🚀
+</div>
+
+<section class="card" style="text-align:center">
+  <h3>🚀 Continue explorando</h3>
+  <a href="/delta-prompts/index.html" style="display:inline-block;margin-top:10px;padding:14px 28px;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:700;border-radius:12px;text-decoration:none">🏠 Voltar para a Página Inicial</a>
+</section>
+
+</main>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+
+function calcularStreak(){
+  let dias=[];
+  try{dias=JSON.parse(localStorage.getItem('deltaVisitDates'))||[]}catch(e){}
+  if(!dias.length)return{atual:0,recorde:0};
+  const datas=[...new Set(dias)].sort();
+  let recorde=1,atualSeq=1;
+  for(let i=1;i<datas.length;i++){
+    const anterior=new Date(datas[i-1]),atual=new Date(datas[i]);
+    const diffDias=Math.round((atual-anterior)/86400000);
+    if(diffDias===1){atualSeq++;recorde=Math.max(recorde,atualSeq)}
+    else{atualSeq=1}
+  }
+  // streak atual: conta dias consecutivos terminando hoje ou ontem
+  const hoje=new Date().toISOString().slice(0,10);
+  let atual=0;
+  let cursor=new Date(hoje);
+  const setDatas=new Set(datas);
+  // se o ultimo dia salvo nao for hoje nem ontem, streak atual = 0
+  const ultimoDia=datas[datas.length-1];
+  const diffUltimo=Math.round((new Date(hoje)-new Date(ultimoDia))/86400000);
+  if(diffUltimo>1)return{atual:0,recorde};
+  cursor=new Date(ultimoDia);
+  while(setDatas.has(cursor.toISOString().slice(0,10))){
+    atual++;
+    cursor.setDate(cursor.getDate()-1);
+  }
+  return{atual,recorde};
+}
+
+function contarUsos(){
+  let total=0;
+  try{
+    Object.keys(localStorage).forEach(chave=>{
+      if(/^delta.*Usos$/.test(chave)){
+        try{
+          const obj=JSON.parse(localStorage.getItem(chave))||{};
+          Object.values(obj).forEach(v=>{if(typeof v==='number')total+=v});
+        }catch(e){}
+      }
+    });
+  }catch(e){}
+  return total;
+}
+
+function categoriaMaisFrequente(favoritos){
+  const contagem={};
+  favoritos.forEach(f=>{if(f.categoria)contagem[f.categoria]=(contagem[f.categoria]||0)+1});
+  let melhor=null,max=0;
+  Object.keys(contagem).forEach(c=>{if(contagem[c]>max){max=contagem[c];melhor=c}});
+  return melhor;
+}
+
+(function(){
+  let favoritos=[];
+  try{favoritos=JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){}
+
+  const streak=calcularStreak();
+  document.getElementById('numStreak').textContent=streak.atual;
+  document.getElementById('numRecorde').textContent=streak.recorde;
+  document.getElementById('numFavoritos').textContent=favoritos.length;
+
+  const totalUsos=contarUsos();
+  document.getElementById('numCopiados').textContent=totalUsos;
+
+  const catFav=categoriaMaisFrequente(favoritos);
+  if(catFav){
+    document.getElementById('categoriaFavoritaBox').style.display='block';
+    document.getElementById('categoriaFavoritaNome').textContent=catFav;
+  }
+
+  if(favoritos.length===0&&totalUsos===0){
+    document.getElementById('vazioAviso').style.display='block';
+  }
+})();
+</script>
+</body></html>

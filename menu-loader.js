@@ -2,6 +2,67 @@
 // MENU LOADER + CONTROLES
 // ==============================
 (function(){try{var p=location.pathname;var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';if(!isIndex){localStorage.setItem('deltaUltimaPagina',JSON.stringify({path:p,ts:Date.now()}))}}catch(e){}})();
+// ===== REGISTRO DE VISITAS (para o painel Meus Numeros) =====
+(function(){
+  try{
+    var hoje=new Date().toISOString().slice(0,10);
+    var dias=JSON.parse(localStorage.getItem('deltaVisitDates')||'[]');
+    if(dias[dias.length-1]!==hoje){
+      dias.push(hoje);
+      if(dias.length>120)dias=dias.slice(-120);
+      localStorage.setItem('deltaVisitDates',JSON.stringify(dias));
+    }
+  }catch(e){}
+})();
+
+// ===== COR DE DESTAQUE PERSONALIZADA =====
+(function(){
+  var CORES={roxo:'#5b5ce2',verde:'#16a34a',azul:'#2563eb',rosa:'#e11d48',laranja:'#ea580c'};
+  function lerCor(){try{return localStorage.getItem('deltaCorDestaque')||'roxo'}catch(e){return'roxo'}}
+  function aplicarCor(nome){
+    var hex=CORES[nome]||CORES.roxo;
+    document.documentElement.style.setProperty('--delta-accent',hex);
+    try{localStorage.setItem('deltaCorDestaque',nome)}catch(e){}
+    var toggle=document.querySelector('.theme-toggle');
+    if(toggle)toggle.style.setProperty('background',hex,'important');
+    var barra=document.getElementById('deltaProgressBar');
+    if(barra)barra.style.background='linear-gradient(90deg,'+hex+','+hex+')';
+    var ms=document.getElementById('deltaModoSimplesBtn');
+    if(ms&&ms.textContent.indexOf('Ligado')!==-1)ms.style.setProperty('background',hex,'important');
+  }
+  aplicarCor(lerCor());
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){aplicarCor(lerCor())},{once:true})}
+  else{setTimeout(function(){aplicarCor(lerCor())},50)}
+  function criarSeletor(){
+    if(document.getElementById('deltaCorBtn'))return;
+    var wrap=document.createElement('div');
+    wrap.id='deltaCorWrap';
+    wrap.style.cssText='position:fixed;right:30px;bottom:210px;z-index:1400';
+    var btn=document.createElement('button');
+    btn.type='button';btn.id='deltaCorBtn';btn.title='Escolher cor de destaque';btn.textContent='🎨';
+    btn.style.cssText='width:44px;height:44px;border-radius:50%;border:1px solid #e5e7eb;background:#fff;font-size:18px;cursor:pointer;box-shadow:0 8px 20px rgba(20,20,40,.14)';
+    var painel=document.createElement('div');
+    painel.style.cssText='display:none;position:absolute;bottom:52px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:10px;box-shadow:0 12px 30px rgba(20,20,40,.18);gap:8px;flex-wrap:wrap;width:150px';
+    Object.keys(CORES).forEach(function(nome){
+      var sw=document.createElement('button');
+      sw.type='button';sw.title=nome;
+      sw.style.cssText='width:28px;height:28px;border-radius:50%;border:2px solid #fff;outline:2px solid #e5e7eb;background:'+CORES[nome]+';cursor:pointer;margin:3px';
+      sw.onclick=function(){aplicarCor(nome);painel.style.display='none'};
+      painel.appendChild(sw);
+    });
+    painel.style.display='flex';
+    var painelOculto=document.createElement('div');
+    painelOculto.appendChild(painel);
+    btn.onclick=function(){painel.style.display=(painel.style.display==='none')?'flex':'none'};
+    painel.style.display='none';
+    wrap.appendChild(btn);
+    wrap.appendChild(painel);
+    document.body.appendChild(wrap);
+    document.addEventListener('click',function(e){if(!wrap.contains(e.target))painel.style.display='none'});
+  }
+  if(document.body)criarSeletor();else document.addEventListener('DOMContentLoaded',criarSeletor,{once:true});
+})();
+
 // ===== VOLTAR AO TOPO =====
 (function(){
   function criarBotao(){
@@ -72,6 +133,129 @@
     document.body.appendChild(btn);
   }
   if(document.body)criarBotao();else document.addEventListener('DOMContentLoaded',criarBotao,{once:true});
+})();
+
+// ===== PREENCHER POR VOZ (nos campos editaveis dos prompts) =====
+(function(){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR)return; // navegador sem suporte, nao adiciona o botao
+  function criarBotaoMic(input){
+    if(input.dataset.micAdicionado)return;
+    input.dataset.micAdicionado='1';
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.title='Preencher por voz';
+    btn.textContent='🎤';
+    btn.style.cssText='border:1px solid #e5e7eb;background:#fff;border-radius:9px;padding:0 12px;cursor:pointer;font-size:15px;flex:0 0 auto;margin-left:6px';
+    var linha=document.createElement('div');
+    linha.style.cssText='display:flex;align-items:center;gap:0';
+    input.parentNode.insertBefore(linha,input);
+    linha.appendChild(input);
+    linha.appendChild(btn);
+    btn.addEventListener('click',function(){
+      var rec=new SR();
+      rec.lang='pt-BR';
+      rec.interimResults=false;
+      btn.textContent='🔴';
+      btn.disabled=true;
+      rec.onresult=function(ev){
+        var texto=ev.results[0][0].transcript;
+        input.value=input.value?input.value+' '+texto:texto;
+        input.dispatchEvent(new Event('input',{bubbles:true}));
+      };
+      rec.onerror=function(){btn.textContent='🎤';btn.disabled=false};
+      rec.onend=function(){btn.textContent='🎤';btn.disabled=false};
+      try{rec.start()}catch(e){btn.textContent='🎤';btn.disabled=false}
+    });
+  }
+  function escanear(){document.querySelectorAll('.campo-label input').forEach(criarBotaoMic)}
+  var t=null;
+  function agendar(delay){clearTimeout(t);t=setTimeout(escanear,delay||300)}
+  setTimeout(escanear,900);
+  document.addEventListener('click',function(){agendar(300)},true);
+  document.addEventListener('input',function(){agendar(500)},true);
+})();
+
+// ===== EXPORTAR PROMPT EM PDF (por card, em qualquer pagina) =====
+(function(){
+  var jsPDFPromise=null;
+  function carregarJsPDF(){
+    if(jsPDFPromise)return jsPDFPromise;
+    jsPDFPromise=new Promise(function(resolve,reject){
+      if(window.jspdf&&window.jspdf.jsPDF){resolve(window.jspdf.jsPDF);return}
+      var script=document.createElement('script');
+      script.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      script.onload=function(){resolve(window.jspdf.jsPDF)};
+      script.onerror=reject;
+      document.head.appendChild(script);
+    });
+    return jsPDFPromise;
+  }
+  function gerarPDF(titulo,texto,btn){
+    var textoOriginal=btn.textContent;
+    btn.textContent='⏳';
+    carregarJsPDF().then(function(jsPDF){
+      var doc=new jsPDF({unit:'pt',format:'a4'});
+      var margem=48,largura=595-margem*2,y=0;
+      doc.setFillColor(91,92,226);
+      doc.rect(0,0,595,70,'F');
+      doc.setTextColor(255,255,255);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(18);
+      doc.text('Δ Delta Prompts',margem,44);
+      y=110;
+      doc.setTextColor(20,20,30);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(15);
+      var linhasTitulo=doc.splitTextToSize(titulo.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,'').trim(),largura);
+      doc.text(linhasTitulo,margem,y);
+      y+=linhasTitulo.length*20+16;
+      doc.setDrawColor(230,230,235);
+      doc.line(margem,y,595-margem,y);
+      y+=26;
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(11);
+      doc.setTextColor(50,50,60);
+      var linhas=doc.splitTextToSize(texto,largura);
+      linhas.forEach(function(linha){
+        if(y>780){doc.addPage();y=48}
+        doc.text(linha,margem,y);
+        y+=15;
+      });
+      doc.setFontSize(9);
+      doc.setTextColor(150,150,160);
+      doc.text('jhoncorretor2025-blip.github.io/delta-prompts',margem,820);
+      var nomeArquivo=titulo.replace(/[^a-zA-Z0-9]+/g,'-').toLowerCase().slice(0,50)+'.pdf';
+      doc.save(nomeArquivo);
+      btn.textContent=textoOriginal;
+    }).catch(function(){btn.textContent=textoOriginal;alert('Não foi possível gerar o PDF agora. Tente novamente.')});
+  }
+  function criarBotaoPDF(favBtn){
+    var acoes=favBtn.closest('.acoes');
+    if(!acoes||acoes.querySelector('.delta-pdf-btn'))return;
+    var id=favBtn.dataset.id;
+    if(!id)return;
+    var b=document.createElement('button');
+    b.type='button';b.className='delta-pdf-btn';
+    b.style.cssText='flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;cursor:pointer;font-size:inherit;background:#fee2e2;color:#b91c1c';
+    b.textContent='📄 PDF';
+    b.addEventListener('click',function(){
+      var card=favBtn.closest('.card')||favBtn.closest('[id^="card-"]');
+      if(!card)return;
+      var h=card.querySelector('h3');
+      var texto=card.querySelector('.prompt-text,pre');
+      if(!h||!texto)return;
+      gerarPDF(h.textContent.trim(),texto.textContent.trim(),b);
+    });
+    acoes.appendChild(b);
+  }
+  function escanearPDF(){document.querySelectorAll('[data-acao="favoritar"]').forEach(criarBotaoPDF)}
+  var tp=null;
+  function agendarPDF(delay){clearTimeout(tp);tp=setTimeout(escanearPDF,delay||300)}
+  setTimeout(escanearPDF,950);
+  document.addEventListener('click',function(){agendarPDF(300)},true);
+  document.addEventListener('change',function(){agendarPDF(300)},true);
+  document.addEventListener('input',function(){agendarPDF(450)},true);
 })();
 
 // ===== FIXAR PROMPT NO TOPO (funciona em qualquer pagina com botao de favoritar) =====
@@ -164,7 +348,7 @@
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-20260822-menu-v36';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260811').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal};mod.initAuthWatcher();return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null});window.addEventListener('delta:favoritos-updated',function(){if(!deltaUid||!window.deltaAuth||!window.deltaAuth.pushFavoritos)return;clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){window.deltaAuth.pushFavoritos(deltaUid)},600)});fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth()}).catch(err=>console.error(err))})();
+(function(){function getMenuCandidates(){const version='delta-prompts-20260823-menu-v37';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260811').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal};mod.initAuthWatcher();return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null});window.addEventListener('delta:favoritos-updated',function(){if(!deltaUid||!window.deltaAuth||!window.deltaAuth.pushFavoritos)return;clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){window.deltaAuth.pushFavoritos(deltaUid)},600)});fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth()}).catch(err=>console.error(err))})();
 (function(){function enhanceCategoryPage(){const hasPromptCards=document.querySelector('.prompt-text, pre.prompt-text, #lista, #lista-prompts');const hasCategoryHeading=document.querySelector('main > h1');if(hasPromptCards&&hasCategoryHeading)document.body.classList.add('category-page')}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enhanceCategoryPage,{once:true});else enhanceCategoryPage()})();
 (function(){function load(){if(window.gtag)return;const GA_ID='G-1YF2VY4HXW',script=document.createElement('script');script.async=true;script.src=`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;document.head.appendChild(script);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',GA_ID)}if('requestIdleCallback'in window)requestIdleCallback(load,{timeout:4000});else setTimeout(load,2500)})();
 (function(){const API='https://api.counterapi.dev/v1',NAMESPACE='delta-prompts-jhoncorretor2025';function key(){return(window.location.pathname.replace(/^\/delta-prompts\/?/,'').replace(/\/$/,'')||'inicio').replace(/\.html$/,'').replace(/[^a-zA-Z0-9_-]+/g,'-').toLowerCase()}function start(){const main=document.querySelector('main'),h1=main&&main.querySelector('h1');if(!h1||document.getElementById('page-view-counter'))return;const badge=document.createElement('div');badge.id='page-view-counter';badge.className='page-view-counter';badge.innerHTML='<span>👁️</span> <strong>—</strong> visualizações';h1.insertAdjacentElement('afterend',badge);const controller=new AbortController();setTimeout(()=>controller.abort(),3500);fetch(`${API}/${NAMESPACE}/${key()}/up`,{cache:'no-store',signal:controller.signal}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{const n=Number(d.count??d.value??d.data?.count??d.data?.value??d.data);if(Number.isFinite(n))badge.querySelector('strong').textContent=new Intl.NumberFormat('pt-BR').format(n);else badge.remove()}).catch(()=>badge.remove())}const style=document.createElement('style');style.textContent='.page-view-counter{display:inline-flex;align-items:center;gap:5px;margin:6px 0 14px;padding:7px 11px;border:1px solid #e5e7eb;border-radius:999px;background:#fff;color:#667085;font-size:13px}.page-view-counter strong{color:#4f46e5}';document.head.appendChild(style);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start()})();
