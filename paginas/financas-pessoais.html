@@ -1,270 +1,456 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>💰 Finanças Pessoais | Delta Prompts</title><meta name="description" content="Prompts para organização financeira, investimentos, orçamento, economia e crescimento financeiro pessoal. 10 prompts profissionais disponíveis.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Finanças Pessoais | Delta Prompts</title><meta name="description" content="Prompts para organizar orçamento, quitar dívidas, planejar investimentos, aposentadoria e grandes objetivos financeiros com a ajuda da IA."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtro-nivel{display:flex;gap:8px;flex-wrap:wrap}.filtro-nivel button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtro-nivel button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(91,92,226,.12);color:#5b5ce2}.filtro-nivel button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#5b5ce2;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.secao-titulo{font-size:22px;margin:30px 0 15px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e5e7eb;margin:15px 0}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;background:#eef2ff;color:#5b5ce2;cursor:pointer}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#5b5ce2;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #5b5ce2;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-nivel button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:700px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260822"></script><main>
 
-<link rel="stylesheet" href="/delta-prompts/style.css">
-<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+<h1>💰 Finanças Pessoais com IA</h1>
+<p>Prompts para organizar orçamento, quitar dívidas, planejar investimentos, aposentadoria e grandes objetivos financeiros.</p>
 
-<style>
+<section class="card"><h3>🎯 Objetivo</h3><p>Ajudar você a controlar dinheiro, quitar dívidas, planejar investimentos e tomar decisões financeiras mais inteligentes com apoio da IA. Isto não substitui um planejador financeiro certificado para decisões de investimento complexas.</p></section>
+<section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>📋 Orçamento & Controle:</strong> planejamento mensal e diagnóstico.</li><li><strong>💳 Dívidas & Crédito:</strong> quitar dívidas e usar cartão com equilíbrio.</li><li><strong>💰 Economia:</strong> reduzir gastos e reserva de emergência.</li><li><strong>📈 Investimentos:</strong> começar a investir e comparar opções.</li><li><strong>🎯 Metas & Grandes Compras:</strong> objetivos concretos.</li><li><strong>🧓 Longo Prazo:</strong> estratégia patrimonial e aposentadoria.</li><li><strong>💼 Situações Especiais:</strong> autônomo, imposto de renda e educação financeira dos filhos.</li></ul></section>
 
-pre{
-white-space: pre-wrap;
-background:#f9fafb;
-padding:15px;
-border-radius:10px;
-border:1px solid #e5e7eb;
-margin:15px 0;
-font-size:14px;
-}
+<div class="stats-bar" id="statsBar"></div>
 
-#busca{
-width:100%;
-padding:14px;
-border-radius:10px;
-border:1px solid #ddd;
-margin:20px 0;
-}
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar por orçamento, dívidas, investimentos..." oninput="aplicarFiltros()">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <div class="contador" id="contador"></div>
+</div>
 
-select{
-padding:12px;
-border-radius:10px;
-border:1px solid #ddd;
-margin-bottom:25px;
-}
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtro-nivel" id="filtrosNivel"><button class="ativo" data-nivel="todos">Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
 
-</style>
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
 
-</head>
-
-<body>
-
-<div id="menu"></div>
-
-<script src="/delta-prompts/menu-loader.js?v=20260822"></script>
-<script src="/delta-prompts/js/funcoes.js"></script>
-
-<main>
-
-<h1>💰 Finanças Pessoais</h1>
-
-<p>
-Prompts para organização financeira, investimentos, orçamento,
-economia e crescimento financeiro pessoal.
-10 prompts profissionais disponíveis.
-</p>
-
-<section class="card">
-<h3>Objetivo</h3>
-
-<p>
-Ajudar você a controlar dinheiro, criar estratégias financeiras,
-planejar investimentos e tomar decisões mais inteligentes com IA.
-</p>
-
-</section>
-
-<input
-id="busca"
-placeholder="Buscar prompts..."
-onkeyup="renderizar()"
->
-
-<br>
-
-<select id="nivelFiltro" onchange="renderizar()">
-
-<option value="todos">Todos níveis</option>
-<option value="basico">Básico</option>
-<option value="intermediario">Intermediário</option>
-<option value="avancado">Avançado</option>
-
-</select>
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo de finanças que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
 
 <div id="lista-prompts"></div>
 
 </main>
-
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
 <script>
 
-const prompts = [
+const ordemCategorias=['📋 Orçamento & Controle', '💳 Dívidas & Crédito', '💰 Economia & Reserva', '📈 Investimentos', '🎯 Metas & Grandes Compras', '🧓 Longo Prazo', '💼 Situações Especiais'];
 
-{
-categoria:"Finanças Pessoais",
-nivel:"basico",
-titulo:"Planejamento Financeiro Mensal",
-quando:"Controle financeiro",
-prompt:`Crie um planejamento financeiro mensal simples usando receitas, despesas fixas e variáveis. Organize em categorias e sugira melhorias.`
-},
+const dadosBrutos=[
+{categoria:'📋 Orçamento & Controle',nivel:'basico',titulo:'📋 Planejamento Financeiro Mensal',quando:'Para organizar receitas e despesas do mês.',prompt:`Crie um planejamento financeiro mensal simples usando:
+[RECEITAS, DESPESAS FIXAS E VARIÁVEIS]
 
-{
-categoria:"Finanças Pessoais",
-nivel:"intermediario",
-titulo:"Redução de Gastos",
-quando:"Economizar dinheiro",
-prompt:`Analise meus gastos mensais e identifique oportunidades de economia sem reduzir qualidade de vida.`
-},
+Organize em categorias claras e sugira melhorias no equilíbrio entre elas.`,en:`Create a simple monthly financial plan using:
+[INCOME, FIXED AND VARIABLE EXPENSES]
 
-{
-categoria:"Finanças Pessoais",
-nivel:"avancado",
-titulo:"Plano Financeiro Estratégico",
-quando:"Construção patrimonial",
-prompt:`Monte uma estratégia financeira de longo prazo considerando reserva de emergência, investimentos, metas e crescimento patrimonial.`
-},
+Organize into clear categories and suggest improvements in the balance between them.`},
+{categoria:'📋 Orçamento & Controle',nivel:'intermediario',titulo:'📊 Orçamento Detalhado (Regra 50/30/20)',quando:'Para um planejamento mensal mais completo e estruturado.',prompt:`Atue como consultor financeiro pessoal. Crie um orçamento mensal detalhado considerando:
 
-{
-categoria:"Finanças Pessoais",
-nivel:"intermediario",
-titulo:"Organizar Dívidas",
-quando:"Quitar dívidas",
-prompt:`Crie um plano estruturado para quitar dívidas priorizando juros maiores e melhorando fluxo de caixa.`
-},
+Renda líquida: [VALOR]
+Despesas fixas: [LISTA]
+Despesas variáveis: [LISTA]
+Metas financeiras: [METAS]
 
-{
-categoria:"Finanças Pessoais",
-nivel:"basico",
-titulo:"Reserva de Emergência",
-quando:"Segurança financeira",
-prompt:`Explique quanto devo guardar para reserva financeira e monte um plano simples para construir essa reserva.`
-},
+Distribua seguindo a regra 50/30/20 (necessidades, desejos, objetivos). Inclua categorias detalhadas, valores sugeridos, alertas para gastos excessivos e dicas de economia.`,en:`Act as a personal financial consultant. Create a detailed monthly budget considering:
 
-{
-categoria:"Finanças Pessoais",
-nivel:"intermediario",
-titulo:"Orçamento Detalhado",
-quando:"Planejamento mensal",
-prompt:`Atue como consultor financeiro pessoal. Crie um orçamento mensal detalhado considerando renda líquida, despesas fixas, variáveis e metas financeiras. Distribua seguindo a regra 50/30/20 (necessidades, desejos, objetivos). Inclua categorias detalhadas, valores sugeridos, alertas para gastos excessivos e dicas de economia.`
-},
+Net income: [AMOUNT]
+Fixed expenses: [LIST]
+Variable expenses: [LIST]
+Financial goals: [GOALS]
 
-{
-categoria:"Finanças Pessoais",
-nivel:"intermediario",
-titulo:"Cronograma de Investimentos",
-quando:"Começar a investir",
-prompt:`Crie um plano de investimentos inicial considerando perfil (conservador/moderado/arriscado), objetivo financeiro, prazo e valor disponível. Inclua: reserva de emergência, diversificação por classe de ativo, porcentagens sugeridas, ativos específicos para o perfil e alertas sobre riscos.`
-},
+Distribute following the 50/30/20 rule (needs, wants, goals). Include detailed categories, suggested amounts, alerts for excessive spending, and savings tips.`},
+{categoria:'📋 Orçamento & Controle',nivel:'intermediario',titulo:'🩺 Diagnóstico de Saúde Financeira',quando:'Para avaliar sua situação financeira atual como um todo.',prompt:`Faça um diagnóstico completo da minha saúde financeira baseado em:
 
-{
-categoria:"Finanças Pessoais",
-nivel:"avancado",
-titulo:"Metas Financeiras Específicas",
-quando:"Objetivos concretos",
-prompt:`Desenvolva um plano detalhado para alcançar uma meta financeira específica. Calcule o valor mensal necessário, estratégias de economia, fontes de renda extra, opções de investimento, marcos trimestrais e plano de contingência para imprevistos.`
-},
+Renda: [VALOR]
+Despesas: [VALOR]
+Dívidas: [SE HOUVER]
+Investimentos: [SE HOUVER]
+Reserva de emergência: [SE HOUVER]
 
-{
-categoria:"Finanças Pessoais",
-nivel:"intermediario",
-titulo:"Diagnóstico de Saúde Financeira",
-quando:"Avaliar situação atual",
-prompt:`Faça um diagnóstico completo da saúde financeira baseado em renda, despesas, dívidas, investimentos e reserva de emergência. Analise índice de comprometimento, meses de emergência, nível de endividamento e capacidade de poupança. Forneça nota de 0-10, 3 pontos fortes, 3 pontos de atenção e 5 recomendações prioritárias.`
-},
+Analise índice de comprometimento, meses de emergência, nível de endividamento e capacidade de poupança. Forneça uma nota de 0 a 10, 3 pontos fortes, 3 pontos de atenção e 5 recomendações prioritárias.`,en:`Perform a complete diagnosis of my financial health based on:
 
-{
-categoria:"Finanças Pessoais",
-nivel:"avancado",
-titulo:"Estratégia de Aposentadoria",
-quando:"Planejamento de longo prazo",
-prompt:`Monte uma estratégia de aposentadoria completa considerando aposentadoria complementar. Calcule o valor necessário acumulado, aporte mensal ideal considerando diferentes idades de início, diversificação de investimentos para longo prazo, estratégias de otimização fiscal e marcos intermediários para acompanhar progresso.`
-}
+Income: [AMOUNT]
+Expenses: [AMOUNT]
+Debts: [IF ANY]
+Investments: [IF ANY]
+Emergency fund: [IF ANY]
 
+Analyze the debt-to-income ratio, months of emergency coverage, debt level, and savings capacity. Provide a score from 0 to 10, 3 strengths, 3 points of attention, and 5 priority recommendations.`},
+{categoria:'📋 Orçamento & Controle',nivel:'basico',titulo:'📱 Escolher App ou Planilha de Controle',quando:'Para decidir a melhor forma de acompanhar suas finanças no dia a dia.',prompt:`Ajude-me a escolher uma forma de acompanhar minhas finanças pessoais.
+
+Meu perfil: [PREFIRO ALGO SIMPLES OU DETALHADO / APP OU PLANILHA]
+
+Sugira opções, os principais recursos que devo procurar, e como criar o hábito de atualizar isso regularmente sem abandonar depois de duas semanas.`,en:`Help me choose a way to track my personal finances.
+
+My profile: [I PREFER SOMETHING SIMPLE OR DETAILED / APP OR SPREADSHEET]
+
+Suggest options, the main features to look for, and how to build the habit of updating it regularly without giving up after two weeks.`},
+{categoria:'💳 Dívidas & Crédito',nivel:'intermediario',titulo:'💳 Organizar Dívidas',quando:'Para quitar dívidas de forma estratégica.',prompt:`Crie um plano estruturado para quitar estas dívidas:
+[LISTE AS DÍVIDAS, VALORES E JUROS]
+
+Priorize por juros maiores e melhore o fluxo de caixa ao longo do processo.`,en:`Create a structured plan to pay off these debts:
+[LIST THE DEBTS, AMOUNTS, AND INTEREST RATES]
+
+Prioritize higher interest rates and improve cash flow throughout the process.`},
+{categoria:'💳 Dívidas & Crédito',nivel:'basico',titulo:'💳 Organizar Uso do Cartão de Crédito',quando:'Para usar o cartão a seu favor, sem cair na armadilha do rotativo.',prompt:`Ajude-me a organizar o uso do meu cartão de crédito.
+
+Minha situação: [LIMITE, GASTO MÉDIO MENSAL, SE JÁ CAIU NO ROTATIVO]
+
+Sugira: como evitar cair no rotativo, como usar o cartão estrategicamente (pontos, cashback), e um sistema simples para acompanhar os gastos por data de vencimento.`,en:`Help me organize the use of my credit card.
+
+My situation: [LIMIT, AVERAGE MONTHLY SPENDING, WHETHER I'VE FALLEN INTO REVOLVING CREDIT]
+
+Suggest: how to avoid falling into revolving credit, how to use the card strategically (rewards, cashback), and a simple system to track spending by due date.`},
+{categoria:'💳 Dívidas & Crédito',nivel:'intermediario',titulo:'🤝 Negociar Dívida com Credor',quando:'Para se preparar antes de ligar pra negociar uma dívida.',prompt:`Ajude-me a me preparar para negociar uma dívida com: [CREDOR/BANCO]
+
+Minha situação: [VALOR DEVIDO, O QUE CONSIGO PAGAR HOJE]
+
+Sugira argumentos, uma proposta realista, e perguntas que devo fazer antes de aceitar qualquer acordo.`,en:`Help me prepare to negotiate a debt with: [CREDITOR/BANK]
+
+My situation: [AMOUNT OWED, WHAT I CAN CURRENTLY PAY]
+
+Suggest arguments, a realistic proposal, and questions I should ask before accepting any agreement.`},
+{categoria:'💰 Economia & Reserva',nivel:'intermediario',titulo:'✂️ Redução de Gastos',quando:'Para economizar sem cortar qualidade de vida.',prompt:`Analise meus gastos mensais:
+[LISTE SEUS GASTOS]
+
+Identifique oportunidades de economia sem reduzir minha qualidade de vida.`,en:`Analyze my monthly expenses:
+[LIST YOUR EXPENSES]
+
+Identify savings opportunities without reducing my quality of life.`},
+{categoria:'💰 Economia & Reserva',nivel:'basico',titulo:'🛟 Reserva de Emergência',quando:'Para construir sua rede de segurança financeira.',prompt:`Explique quanto devo guardar para reserva de emergência considerando:
+[RENDA, DESPESAS FIXAS, ESTABILIDADE DE EMPREGO]
+
+Monte um plano simples e realista para construir essa reserva.`,en:`Explain how much I should save for an emergency fund considering:
+[INCOME, FIXED EXPENSES, JOB STABILITY]
+
+Create a simple, realistic plan to build this fund.`},
+{categoria:'📈 Investimentos',nivel:'intermediario',titulo:'📈 Cronograma de Investimentos',quando:'Para dar os primeiros passos como investidor.',prompt:`Crie um plano de investimentos inicial considerando:
+
+Perfil: [CONSERVADOR/MODERADO/ARRISCADO]
+Objetivo financeiro: [OBJETIVO]
+Prazo: [PRAZO]
+Valor disponível: [VALOR]
+
+Inclua: reserva de emergência, diversificação por classe de ativo, porcentagens sugeridas, ativos específicos para o perfil e alertas sobre riscos.`,en:`Create an initial investment plan considering:
+
+Profile: [CONSERVATIVE/MODERATE/AGGRESSIVE]
+Financial goal: [GOAL]
+Timeframe: [TIMEFRAME]
+Available amount: [AMOUNT]
+
+Include: emergency fund, diversification by asset class, suggested percentages, specific assets for the profile, and risk warnings.`},
+{categoria:'📈 Investimentos',nivel:'avancado',titulo:'⚖️ Comparar Renda Fixa vs Variável',quando:'Para entender onde alocar seu dinheiro de forma equilibrada.',prompt:`Compare investimentos de renda fixa e renda variável para o meu perfil:
+[CONSERVADOR/MODERADO/ARROJADO]
+
+Objetivo e prazo: [OBJETIVO E PRAZO]
+
+Mostre risco, retorno esperado, liquidez, e uma sugestão de alocação entre os dois.`,en:`Compare fixed income and variable income investments for my profile:
+[CONSERVATIVE/MODERATE/AGGRESSIVE]
+
+Goal and timeframe: [GOAL AND TIMEFRAME]
+
+Show risk, expected return, liquidity, and a suggested allocation between the two.`},
+{categoria:'📈 Investimentos',nivel:'intermediario',titulo:'🏠 Financiamento vs Consórcio',quando:'Para decidir a melhor forma de adquirir um imóvel ou veículo.',prompt:`Compare financiamento e consórcio para adquirir:
+[IMÓVEL OU VEÍCULO]
+
+Meu contexto: [VALOR, PRAZO, URGÊNCIA]
+
+Mostre vantagens, desvantagens, custo total, e em qual cenário cada opção faz mais sentido.`,en:`Compare financing and a consortium (group buying pool) for acquiring:
+[PROPERTY OR VEHICLE]
+
+My context: [VALUE, TIMEFRAME, URGENCY]
+
+Show pros, cons, total cost, and in which scenario each option makes more sense.`},
+{categoria:'🎯 Metas & Grandes Compras',nivel:'avancado',titulo:'🎯 Metas Financeiras Específicas',quando:'Para transformar um objetivo em plano de ação.',prompt:`Desenvolva um plano detalhado para alcançar esta meta financeira:
+[DESCREVA A META E O VALOR]
+
+Calcule o valor mensal necessário, estratégias de economia, fontes de renda extra, opções de investimento, marcos trimestrais e um plano de contingência para imprevistos.`,en:`Develop a detailed plan to reach this financial goal:
+[DESCRIBE THE GOAL AND AMOUNT]
+
+Calculate the monthly amount needed, savings strategies, extra income sources, investment options, quarterly milestones, and a contingency plan for unforeseen events.`},
+{categoria:'🎯 Metas & Grandes Compras',nivel:'basico',titulo:'🧳 Planejar uma Grande Compra',quando:'Para viagens, casamentos, festas ou qualquer compra grande.',prompt:`Ajude-me a planejar esta compra: [DESCREVA A COMPRA, EX: VIAGEM, CASAMENTO, CARRO]
+
+Meu orçamento disponível: [ORÇAMENTO]
+Prazo desejado: [PRAZO]
+
+Detalhe: quanto guardar por mês, formas de reduzir o custo da própria compra, e alertas caso isso comprometa outras metas financeiras.`,en:`Help me plan for this purchase: [DESCRIBE THE PURCHASE, E.G., TRIP, WEDDING, CAR]
+
+My available budget: [BUDGET]
+Desired timeframe: [TIMEFRAME]
+
+Detail: how much to save monthly, ways to cut costs on the purchase itself, and alerts if it compromises other financial goals.`},
+{categoria:'🎯 Metas & Grandes Compras',nivel:'avancado',titulo:'🏡 Planejar Compra de Imóvel',quando:'Para se preparar financeiramente para comprar a casa própria.',prompt:`Ajude-me a planejar a compra de um imóvel.
+
+Meu contexto: [RENDA, VALOR JÁ POUPADO, VALOR DO IMÓVEL DESEJADO]
+
+Analise: entrada ideal, opções de financiamento, impacto no meu orçamento mensal, e um cronograma realista até alcançar a meta.`,en:`Help me plan the purchase of a property.
+
+My context: [INCOME, SAVINGS AVAILABLE, DESIRED PROPERTY VALUE]
+
+Analyze: ideal down payment, financing options, impact on my monthly budget, and a realistic timeline to reach the goal.`},
+{categoria:'🧓 Longo Prazo',nivel:'avancado',titulo:'🧭 Plano Financeiro Estratégico',quando:'Para construção patrimonial de longo prazo.',prompt:`Monte uma estratégia financeira de longo prazo considerando:
+[RESERVA DE EMERGÊNCIA, INVESTIMENTOS ATUAIS, METAS, PRAZO]
+
+Inclua crescimento patrimonial, diversificação e marcos de acompanhamento.`,en:`Build a long-term financial strategy considering:
+[EMERGENCY FUND, CURRENT INVESTMENTS, GOALS, TIMEFRAME]
+
+Include wealth growth, diversification, and milestones to track progress.`},
+{categoria:'🧓 Longo Prazo',nivel:'avancado',titulo:'🌅 Estratégia de Aposentadoria',quando:'Para planejar o longo prazo com antecedência.',prompt:`Monte uma estratégia de aposentadoria completa considerando aposentadoria complementar.
+
+Minha idade atual: [IDADE]
+Idade desejada para se aposentar: [IDADE]
+Renda mensal desejada na aposentadoria: [VALOR]
+
+Calcule o valor total necessário acumulado, aporte mensal ideal, diversificação de investimentos para longo prazo, estratégias de otimização fiscal e marcos intermediários para acompanhar o progresso.`,en:`Build a complete retirement strategy considering supplementary retirement.
+
+My current age: [AGE]
+Desired retirement age: [AGE]
+Desired monthly income in retirement: [AMOUNT]
+
+Calculate the total amount needed, ideal monthly contribution, long-term investment diversification, tax optimization strategies, and intermediate milestones to track progress.`},
+{categoria:'💼 Situações Especiais',nivel:'intermediario',titulo:'💼 Finanças para Freelancer/Autônomo',quando:'Para lidar bem com renda variável.',prompt:`Ajude-me a organizar minhas finanças como freelancer/autônomo.
+
+Meu tipo de trabalho: [DESCREVA]
+Variação média da renda mensal: [DESCREVA A VARIAÇÃO]
+
+Sugira: como lidar com renda irregular, quanto reservar para impostos, e como construir uma rede de segurança para os meses mais fracos.`,en:`Help me organize my finances as a freelancer/self-employed professional.
+
+My type of work: [DESCRIBE]
+Average monthly income variation: [DESCRIBE THE VARIATION]
+
+Suggest: how to handle irregular income, how much to set aside for taxes, and how to build a safety net for slower months.`},
+{categoria:'💼 Situações Especiais',nivel:'intermediario',titulo:'🧾 Organizar Documentos para Imposto de Renda',quando:'Para chegar organizado na hora da declaração.',prompt:`Ajude-me a organizar o que preciso para a declaração de imposto de renda.
+
+Minha situação: [TIPO DE RENDA, GASTOS QUE PODEM SER DEDUZIDOS]
+
+Crie uma checklist dos documentos e informações que preciso reunir. IMPORTANTE: não dê orientação jurídica ou tributária formal — apenas apoio de organização. Recomende um contador para a declaração em si.`,en:`Help me organize what I need for my income tax filing.
+
+My situation: [TYPE OF INCOME, EXPENSES THAT MIGHT BE DEDUCTIBLE]
+
+Create a checklist of documents and information I need to gather. IMPORTANT: do not give formal legal or tax advice — just organizational support. Recommend an accountant for the actual filing.`},
+{categoria:'💼 Situações Especiais',nivel:'basico',titulo:'👨‍👩‍👧 Educação Financeira para os Filhos',quando:'Para ensinar as crianças a lidar bem com dinheiro desde cedo.',prompt:`Sugira formas de ensinar educação financeira para meu(s) filho(s).
+
+Idade: [IDADE]
+
+Sugira atividades práticas adequadas à idade, conceitos simples para introduzir, e como usar a mesada (se for o caso) como ferramenta de ensino.`,en:`Suggest ways to teach financial education to my child(ren).
+
+Age: [AGE]
+
+Suggest age-appropriate practical activities, simple concepts to introduce, and how to use an allowance (if applicable) as a teaching tool.`}
 ];
 
-const ordemCategorias = [
-"Finanças Pessoais"
-];
-
-function renderizar(){
-
-const lista = document.getElementById("lista-prompts");
-
-const busca =
-document.getElementById("busca")
-.value
-.toLowerCase();
-
-const nivel =
-document.getElementById("nivelFiltro")
-.value;
-
-lista.innerHTML="";
-
-prompts
-.filter(p => {
-
-const buscaOk =
-p.titulo.toLowerCase().includes(busca) ||
-p.prompt.toLowerCase().includes(busca);
-
-const nivelOk =
-nivel === "todos" ||
-p.nivel === nivel;
-
-return buscaOk && nivelOk;
-
-})
-
-.forEach(p => {
-
-const card =
-document.createElement("div");
-
-card.className="card";
-
-card.setAttribute(
-"data-nivel",
-p.nivel
-);
-
-card.innerHTML = `
-
-<div class="nivel nivel-${p.nivel}">
-${p.nivel}
-</div>
-
-<h3>${p.titulo}</h3>
-
-<p><strong>Quando usar:</strong> ${p.quando}</p>
-
-<pre class="prompt-text">${p.prompt}</pre>
-
-<div class="acoes">
-
-<button onclick="copiar(this)">
-📋 Copiar
-</button>
-
-<button onclick="chat(this)">
-🤖 ChatGPT
-</button>
-
-<button onclick="gemini(this)">
-✨ Gemini
-</button>
-
-<button
-class="btn-favorito"
-onclick="favoritar(this)"
->
-☆ Favoritar
-</button>
-
-</div>
-
-`;
-
-lista.appendChild(card);
-
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'financas-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.prompt,promptEn:p.en,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
 });
 
+const lista=document.getElementById("lista-prompts"),contador=document.getElementById("contador"),busca=document.getElementById("busca"),ordenarSelect=document.getElementById("ordenar");
+const idiomaAtivo={};
+
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Finanças Pessoais',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaFinancasUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaFinancasUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaFinancasFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaFinancasFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};const g=window.deltaAuth;if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}_saveFeedback(fb);atualizarFeedbackUI(id);mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!')}
+function atualizarFeedbackUI(id){const fb=_loadFeedback()[id]||{voto:null};const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);if(up)up.classList.toggle('marcado',fb.voto==='up');if(down)down.classList.toggle('marcado',fb.voto==='down');const g=window.deltaAuth;if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}}
+
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
+
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📊 '+p.titulo+'\n\nConfira esse modelo de análise no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';ordenarSelect.value='padrao';aplicarFiltros();requestAnimationFrame(()=>destacarCard(id))}
+
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📊 FINANÇAS PESSOAIS — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-financas.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de finanças para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Finanças Pessoais').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 💰 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre id="pre-${p.id}">${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">💬 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">🔷 Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
 }
 
-renderizar();
+function renderizar(arr){
+  lista.innerHTML="";
+  contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+  if(ordenarSelect.value==='padrao'){
+    ordemCategorias.forEach(cat=>{
+      const grupo=arr.filter(p=>p.categoria===cat);
+      if(grupo.length===0)return;
+      const tituloSecao=document.createElement("h2");
+      tituloSecao.className="secao-titulo";
+      tituloSecao.innerText=cat;
+      lista.appendChild(tituloSecao);
+      grupo.forEach(p=>lista.appendChild(criarCard(p)));
+    });
+  }else{
+    arr.forEach(p=>lista.appendChild(criarCard(p)));
+  }
+}
 
-</script>
+function contarFiltrosAtivos(){const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';return nivel!=='todos'?1:0}
+function atualizarBadgeFiltros(){const n=contarFiltrosAtivos();const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}else{badge.style.display='none';btn.classList.remove('ativo')}}
+function atualizarContadoresNivel(){
+  const termo=busca.value.toLowerCase();
+  const base=prompts.filter(p=>(p.titulo+p.prompt+p.categoria).toLowerCase().includes(termo));
+  document.querySelectorAll('#filtrosNivel button').forEach(btn=>{
+    const n=btn.dataset.nivel==='todos'?base.length:base.filter(p=>p.nivel===btn.dataset.nivel).length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
+}
 
-</body>
-</html>
+function aplicarFiltros(){
+  const termo=busca.value.toLowerCase();
+  const nivelAtivo=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';
+  let filtrados=prompts.filter(p=>(p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo))&&(nivelAtivo==='todos'||p.nivel===nivelAtivo));
+  filtrados=ordenarLista(filtrados);
+  renderizar(filtrados);
+  atualizarContadoresNivel();
+  atualizarBadgeFiltros();
+}
+
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';aplicarFiltros();mostrarToast('✕ Filtros limpos')}
+
+document.querySelectorAll('#filtrosNivel button').forEach(b=>{b.dataset.label=b.textContent.trim();b.addEventListener('click',()=>{document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()})});
+
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+ordenarSelect.addEventListener('change',aplicarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+aplicarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+</script></body></html>
