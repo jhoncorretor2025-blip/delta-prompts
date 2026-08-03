@@ -740,6 +740,7 @@ function ordenarLista(arr){
   if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));
   else if(modo==='recentes')arr2.reverse();
   else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}
+  else if(modo==='padrao'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}
   return arr2;
 }
 

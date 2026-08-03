@@ -274,6 +274,8 @@ function criarCard(p){
 function render(){
   const q=norm(busca.value);
   const f=prompts.filter(x=>(fase==='todos'||x.fase===fase)&&(tema==='Todos'||x.categoria===tema)&&(!q||norm(x.titulo+' '+x.quando+' '+x.prompt+' '+x.categoria).includes(q)));
+  const usos=_loadUsos();
+  f.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0));
   contador.textContent=f.length+' de '+prompts.length+' prompts';
   lista.innerHTML='';
   if(!f.length){lista.innerHTML='<p>🔎 Nenhum prompt encontrado.</p>'}
