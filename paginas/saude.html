@@ -97,10 +97,13 @@ pre {
 
 /* --- NOVAS FUNCIONALIDADES --- */
 .stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
-.jornada-perfis{position:fixed;top:110px;right:18px;width:300px;max-width:calc(100vw - 36px);max-height:75vh;overflow-y:auto;z-index:950;box-shadow:0 14px 36px rgba(20,20,40,.18)}
+.topo-com-sidebar{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+.topo-principal{min-width:0}
+.jornada-perfis{position:sticky;top:16px;grid-column:2;grid-row:1}
 .fechar-jornada{position:absolute;top:12px;right:12px;border:0;background:#f1f5f9;color:#475467;font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px;cursor:pointer}
-.reabrir-jornada{position:fixed;top:110px;right:18px;z-index:950;width:48px;height:48px;border-radius:50%;border:0;background:#16a34a;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 10px 24px rgba(22,163,74,.35);display:none;align-items:center;justify-content:center}
-@media(max-width:1100px){.jornada-perfis{position:static;width:auto;max-width:none;max-height:none;box-shadow:none;margin-top:20px}.fechar-jornada{position:static;margin-bottom:10px;display:inline-block}.reabrir-jornada{display:none!important}.jornada-perfis .perfis-financas{grid-template-columns:repeat(3,1fr)}}
+.reabrir-jornada{width:100%;border:2px dashed #16a34a;background:#f0fdf4;color:#16a34a;font-weight:800;font-size:14px;padding:16px;border-radius:14px;cursor:pointer;position:sticky;top:16px;display:none;grid-column:2;grid-row:1}
+@media(max-width:1100px){.topo-com-sidebar{grid-template-columns:1fr}.jornada-perfis,.reabrir-jornada{position:static;grid-column:1;grid-row:auto}.jornada-perfis .perfis-financas{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.jornada-perfis .perfis-financas{grid-template-columns:1fr}}
 .jornada-perfis .perfis-financas{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
 .perfil-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px;border:2px solid #e5e7eb;border-radius:14px;background:#fff;cursor:pointer;font:inherit}
 .perfil-card:hover{border-color:#16a34a;background:#f0fdf4}
@@ -195,6 +198,8 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
   <p>Em caso de sintomas graves ou súbitos, como dificuldade intensa para respirar, dor no peito, desmaio, confusão mental, sinais de AVC, convulsão, intoxicação ou risco de suicídio, procure atendimento de urgência. No Brasil, o SAMU atende pelo 192.</p>
 </section>
 
+<div class="topo-com-sidebar">
+<div class="topo-principal">
 <section class="card collapse-card">
   <button type="button" class="collapse-toggle" onclick="this.closest('.collapse-card').classList.toggle('aberto')">
     <h3>🎯 Objetivo</h3><span class="collapse-icon">⌄</span>
@@ -219,6 +224,7 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
   </ul>
   </div>
 </section>
+</div>
 
 <section class="card jornada-perfis" id="jornadaPerfis">
   <button type="button" class="fechar-jornada" id="fecharJornada" title="Pular, não preciso de orientação">✕ Pular</button>
@@ -243,7 +249,8 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
   </div>
   <div id="recomendacaoPerfil" class="recomendacao-perfil" style="display:none"></div>
 </section>
-<button type="button" class="reabrir-jornada" id="reabrirJornada" title="Ver orientação de por onde começar">🧭</button>
+<button type="button" class="reabrir-jornada" id="reabrirJornada" title="Ver orientação de por onde começar">🧭 Ver "por onde começar"</button>
+</div>
 
 <div class="stats-bar" id="statsBar"></div>
 
@@ -884,7 +891,7 @@ const reabrirBtn=document.getElementById('reabrirJornada');
 const fecharBtn=document.getElementById('fecharJornada');
 function aplicarEstadoJornada(escondido){
   jornadaBox.style.display=escondido?'none':'';
-  reabrirBtn.style.display=escondido?'flex':'none';
+  reabrirBtn.style.display=escondido?'block':'none';
   try{localStorage.setItem('deltaJornadaSkipSaude',escondido?'true':'false')}catch(e){}
 }
 fecharBtn.addEventListener('click',()=>aplicarEstadoJornada(true));
