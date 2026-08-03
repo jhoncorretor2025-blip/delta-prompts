@@ -97,7 +97,11 @@ pre {
 
 /* --- NOVAS FUNCIONALIDADES --- */
 .stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
-.jornada-perfis .perfis-financas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.jornada-perfis{position:fixed;top:110px;right:18px;width:300px;max-width:calc(100vw - 36px);max-height:75vh;overflow-y:auto;z-index:950;box-shadow:0 14px 36px rgba(20,20,40,.18)}
+.fechar-jornada{position:absolute;top:12px;right:12px;border:0;background:#f1f5f9;color:#475467;font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px;cursor:pointer}
+.reabrir-jornada{position:fixed;top:110px;right:18px;z-index:950;width:48px;height:48px;border-radius:50%;border:0;background:#16a34a;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 10px 24px rgba(22,163,74,.35);display:none;align-items:center;justify-content:center}
+@media(max-width:1100px){.jornada-perfis{position:static;width:auto;max-width:none;max-height:none;box-shadow:none;margin-top:20px}.fechar-jornada{position:static;margin-bottom:10px;display:inline-block}.reabrir-jornada{display:none!important}.jornada-perfis .perfis-financas{grid-template-columns:repeat(3,1fr)}}
+.jornada-perfis .perfis-financas{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
 .perfil-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px;border:2px solid #e5e7eb;border-radius:14px;background:#fff;cursor:pointer;font:inherit}
 .perfil-card:hover{border-color:#16a34a;background:#f0fdf4}
 .perfil-card.ativo{border-color:#16a34a;background:#ecfdf5}
@@ -216,7 +220,8 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
   </div>
 </section>
 
-<section class="card jornada-perfis">
+<section class="card jornada-perfis" id="jornadaPerfis">
+  <button type="button" class="fechar-jornada" id="fecharJornada" title="Pular, não preciso de orientação">✕ Pular</button>
   <h3>🧭 Por onde eu começo?</h3>
   <p>Escolha a opção que mais parece com você agora — a gente já indica os primeiros 3 prompts certos pra sua situação.</p>
   <div class="perfis-financas">
@@ -238,6 +243,7 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
   </div>
   <div id="recomendacaoPerfil" class="recomendacao-perfil" style="display:none"></div>
 </section>
+<button type="button" class="reabrir-jornada" id="reabrirJornada" title="Ver orientação de por onde começar">🧭</button>
 
 <div class="stats-bar" id="statsBar"></div>
 
@@ -871,6 +877,19 @@ function mostrarTrilhaSaude(perfil){
   box.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 document.querySelectorAll('.perfil-card').forEach(b=>b.addEventListener('click',()=>mostrarTrilhaSaude(b.dataset.perfil)));
+
+// ===== PULAR / REABRIR A ORIENTAÇÃO =====
+const jornadaBox=document.getElementById('jornadaPerfis');
+const reabrirBtn=document.getElementById('reabrirJornada');
+const fecharBtn=document.getElementById('fecharJornada');
+function aplicarEstadoJornada(escondido){
+  jornadaBox.style.display=escondido?'none':'';
+  reabrirBtn.style.display=escondido?'flex':'none';
+  try{localStorage.setItem('deltaJornadaSkipSaude',escondido?'true':'false')}catch(e){}
+}
+fecharBtn.addEventListener('click',()=>aplicarEstadoJornada(true));
+reabrirBtn.addEventListener('click',()=>aplicarEstadoJornada(false));
+aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSkipSaude')==='true'}catch(e){return false}})());
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 atualizarStats();
