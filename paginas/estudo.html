@@ -67,7 +67,30 @@
 </section>
 
   <!-- ⭐ ESTATÍSTICAS -->
-  <div class="stats-bar" id="statsBar"></div>
+  <section class="card jornada-perfis">
+  <h3>🧭 Por onde eu começo?</h3>
+  <p>Escolha a opção que mais parece com você agora — a gente já indica os primeiros 3 prompts certos pra sua situação.</p>
+  <div class="perfis-financas">
+    <button type="button" class="perfil-card" data-perfil="iniciante">
+      <span class="perfil-emoji">🌱</span>
+      <strong>Não sei nem por onde começar</strong>
+      <span>Preciso de explicações bem simples pra entender o assunto primeiro.</span>
+    </button>
+    <button type="button" class="perfil-card" data-perfil="organizado">
+      <span class="perfil-emoji">📚</span>
+      <strong>Já estudo, mas sem organização</strong>
+      <span>Já estudo, mas de forma bagunçada — quero um plano estruturado.</span>
+    </button>
+    <button type="button" class="perfil-card" data-perfil="avancado">
+      <span class="perfil-emoji">🎯</span>
+      <strong>Já sei estudar, quero otimizar</strong>
+      <span>Já tenho uma rotina de estudo e quero focar em prova ou resultado.</span>
+    </button>
+  </div>
+  <div id="recomendacaoPerfil" class="recomendacao-perfil" style="display:none"></div>
+</section>
+
+<div class="stats-bar" id="statsBar"></div>
 
   <!-- 4️⃣ BUSCA -->
   <div class="top-bar">
@@ -776,6 +799,24 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   aplicarTema(atual);
 });
 
+// ===== JORNADA: POR ONDE COMEÇAR (por perfil) =====
+const trilhasPerfilEstudo={
+  iniciante:{titulo:'🌱 Comece por aqui — entenda o assunto primeiro',texto:'Você não sabe nem por onde começar? Siga esses 3 prompts nessa ordem:',passos:['🧒📖 Explicação Simples (5 anos)','Explicação Didática Passo a Passo','Resumo Estruturado de Conteúdo']},
+  organizado:{titulo:'📚 Você já estuda — hora de organizar melhor',texto:'Você já estuda, mas sem muito método? Esses prompts trazem estrutura:',passos:['Definição Estratégica do Tema','Divisão do Tema em Módulos','📅🧠 Plano de Estudos Semanal']},
+  avancado:{titulo:'🎯 Você já sabe estudar — hora de otimizar resultado',texto:'Você já tem rotina de estudo? Esses prompts focam no resultado final:',passos:['📝🎯 Simulado para Prova','Simulado Inteligente','🤖👨‍🏫 Professor IA Personalizado']}
+};
+function irParaPorTituloEstudo(tit){const p=promptsEstudo.find(x=>x.titulo===tit);if(p)irPara(p.id)}
+function mostrarTrilhaEstudo(perfil){
+  document.querySelectorAll('.perfil-card').forEach(b=>b.classList.toggle('ativo',b.dataset.perfil===perfil));
+  const trilha=trilhasPerfilEstudo[perfil];
+  const box=document.getElementById('recomendacaoPerfil');
+  box.style.display='block';
+  box.innerHTML=`<h4>${trilha.titulo}</h4><p style="margin:0 0 10px;color:#667085">${trilha.texto}</p><ol>${trilha.passos.map(t=>`<li><button type="button" data-ir="${t.replace(/"/g,'&quot;')}">${t} →</button></li>`).join('')}</ol>`;
+  box.querySelectorAll('[data-ir]').forEach(b=>b.addEventListener('click',()=>irParaPorTituloEstudo(b.dataset.ir)));
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+document.querySelectorAll('.perfil-card').forEach(b=>b.addEventListener('click',()=>mostrarTrilhaEstudo(b.dataset.perfil)));
+
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 atualizarStats();
 filtrarPrompts();
@@ -831,6 +872,22 @@ pre {
 }
 
 .stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.jornada-perfis .perfis-financas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.perfil-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px;border:2px solid #e5e7eb;border-radius:14px;background:#fff;cursor:pointer;font:inherit}
+.perfil-card:hover{border-color:#4f46e5;background:#f5f5ff}
+.perfil-card.ativo{border-color:#4f46e5;background:#eef2ff}
+.perfil-emoji{font-size:26px}
+.perfil-card strong{font-size:15px}
+.perfil-card span{font-size:13px;color:#667085;line-height:1.4}
+.recomendacao-perfil{margin-top:16px;padding:16px;border-radius:14px;background:#f8fafc;border:1px dashed #4f46e5}
+.recomendacao-perfil h4{margin:0 0 10px}
+.recomendacao-perfil ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.recomendacao-perfil button{background:none;border:0;color:#4f46e5;font-weight:800;cursor:pointer;padding:0;font-size:14.5px;text-align:left}
+[data-theme="dark"] .perfil-card{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.15)}
+[data-theme="dark"] .perfil-card.ativo{background:#1e2140}
+[data-theme="dark"] .perfil-card span{color:#a0a0a0}
+[data-theme="dark"] .recomendacao-perfil{background:var(--bg-card,#16213e)}
+@media(max-width:700px){.jornada-perfis .perfis-financas{grid-template-columns:1fr}}
 .collapse-card{padding:0;overflow:hidden}
 .collapse-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;border:0;background:transparent;font:inherit;text-align:left;cursor:pointer}
 .collapse-toggle h3{margin:0}

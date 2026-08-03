@@ -97,6 +97,22 @@ pre {
 
 /* --- NOVAS FUNCIONALIDADES --- */
 .stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.jornada-perfis .perfis-financas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.perfil-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px;border:2px solid #e5e7eb;border-radius:14px;background:#fff;cursor:pointer;font:inherit}
+.perfil-card:hover{border-color:#16a34a;background:#f0fdf4}
+.perfil-card.ativo{border-color:#16a34a;background:#ecfdf5}
+.perfil-emoji{font-size:26px}
+.perfil-card strong{font-size:15px}
+.perfil-card span{font-size:13px;color:#667085;line-height:1.4}
+.recomendacao-perfil{margin-top:16px;padding:16px;border-radius:14px;background:#f8fafc;border:1px dashed #16a34a}
+.recomendacao-perfil h4{margin:0 0 10px}
+.recomendacao-perfil ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.recomendacao-perfil button{background:none;border:0;color:#16a34a;font-weight:800;cursor:pointer;padding:0;font-size:14.5px;text-align:left}
+[data-theme="dark"] .perfil-card{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.15)}
+[data-theme="dark"] .perfil-card.ativo{background:#132a1e}
+[data-theme="dark"] .perfil-card span{color:#a0a0a0}
+[data-theme="dark"] .recomendacao-perfil{background:var(--bg-card,#16213e)}
+@media(max-width:700px){.jornada-perfis .perfis-financas{grid-template-columns:1fr}}
 .collapse-card{padding:0;overflow:hidden}
 .collapse-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;border:0;background:transparent;font:inherit;text-align:left;cursor:pointer}
 .collapse-toggle h3{margin:0}
@@ -198,6 +214,29 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
     <li><strong>📊 Monitoramento:</strong> Avaliar evolução e ajustar.</li>
   </ul>
   </div>
+</section>
+
+<section class="card jornada-perfis">
+  <h3>🧭 Por onde eu começo?</h3>
+  <p>Escolha a opção que mais parece com você agora — a gente já indica os primeiros 3 prompts certos pra sua situação.</p>
+  <div class="perfis-financas">
+    <button type="button" class="perfil-card" data-perfil="iniciante">
+      <span class="perfil-emoji">🌱</span>
+      <strong>Nunca me organizei com saúde</strong>
+      <span>Não tenho rotina, não sei nem por onde começar a cuidar de mim.</span>
+    </button>
+    <button type="button" class="perfil-card" data-perfil="organizado">
+      <span class="perfil-emoji">📋</span>
+      <strong>Já tenho uma rotina</strong>
+      <span>Já me cuido um pouco, mas quero organizar melhor alimentação e exercício.</span>
+    </button>
+    <button type="button" class="perfil-card" data-perfil="avancado">
+      <span class="perfil-emoji">📊</span>
+      <strong>Já me cuido bem</strong>
+      <span>Já tenho uma boa rotina e quero monitorar e otimizar meus resultados.</span>
+    </button>
+  </div>
+  <div id="recomendacaoPerfil" class="recomendacao-perfil" style="display:none"></div>
 </section>
 
 <div class="stats-bar" id="statsBar"></div>
@@ -814,6 +853,24 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   const atual = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   aplicarTema(atual);
 });
+
+// ===== JORNADA: POR ONDE COMEÇAR (por perfil) =====
+const trilhasPerfilSaude={
+  iniciante:{titulo:'🌱 Comece por aqui — do zero até criar uma rotina',texto:'Você nunca se organizou com a saúde? Siga esses 3 prompts nessa ordem:',passos:['🧠🔍 Avaliação de Hábitos Atuais','🌅💚 Rotina Diária para Saúde Física e Mental','🏋️‍♀️📅 Plano Semanal para Iniciantes']},
+  organizado:{titulo:'📋 Você já tem uma base — hora de organizar melhor',texto:'Você já se cuida um pouco? Esses prompts deixam sua rotina mais estruturada:',passos:['📅🥗 Plano Alimentar Estratégico','🏋️‍♂️💪 Plano de Exercícios Personalizado','🧘‍♂️🧠 Plano para Reduzir Estresse']},
+  avancado:{titulo:'📊 Você já se cuida bem — hora de monitorar e otimizar',texto:'Você já tem uma boa rotina? Esses prompts ajudam a ir além:',passos:['📈🧠 Sistema de Acompanhamento de Saúde','🏆🔥 Plano de Alta Performance Física','🛡️📊 Plano de Saúde Preventiva']}
+};
+function irParaPorTituloSaude(tit){const p=promptsSaude.find(x=>x.titulo===tit);if(p)irPara(p.id)}
+function mostrarTrilhaSaude(perfil){
+  document.querySelectorAll('.perfil-card').forEach(b=>b.classList.toggle('ativo',b.dataset.perfil===perfil));
+  const trilha=trilhasPerfilSaude[perfil];
+  const box=document.getElementById('recomendacaoPerfil');
+  box.style.display='block';
+  box.innerHTML=`<h4>${trilha.titulo}</h4><p style="margin:0 0 10px;color:#667085">${trilha.texto}</p><ol>${trilha.passos.map(t=>`<li><button type="button" data-ir="${t.replace(/"/g,'&quot;')}">${t} →</button></li>`).join('')}</ol>`;
+  box.querySelectorAll('[data-ir]').forEach(b=>b.addEventListener('click',()=>irParaPorTituloSaude(b.dataset.ir)));
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+document.querySelectorAll('.perfil-card').forEach(b=>b.addEventListener('click',()=>mostrarTrilhaSaude(b.dataset.perfil)));
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 atualizarStats();
