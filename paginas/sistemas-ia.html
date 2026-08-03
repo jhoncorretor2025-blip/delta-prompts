@@ -3,6 +3,25 @@
 .filtros button.ativo .count-badge,.journey button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
 .journey .count-badge{position:absolute;top:12px;right:14px}
 .stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.jornada-perfis .perfis-financas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.perfil-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px;border:2px solid #e5e7eb;border-radius:14px;background:#fff;cursor:pointer;font:inherit}
+.perfil-card:hover{border-color:#5b5ce2;background:#f8f8ff}
+.perfil-card.ativo{border-color:#5b5ce2;background:#eef2ff}
+.perfil-emoji{font-size:26px}
+.perfil-card strong{font-size:15px}
+.perfil-card span{font-size:13px;color:#667085;line-height:1.4}
+.recomendacao-perfil{margin-top:16px;padding:16px;border-radius:14px;background:#f8fafc;border:1px dashed #5b5ce2}
+.recomendacao-perfil h4{margin:0 0 10px}
+.recomendacao-perfil ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.recomendacao-perfil button{background:none;border:0;color:#5b5ce2;font-weight:800;cursor:pointer;padding:0;font-size:14.5px;text-align:left}
+.jornada-perfis{position:relative}
+.fechar-jornada{position:absolute;top:12px;right:12px;border:0;background:#f1f5f9;color:#475467;font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px;cursor:pointer}
+.reabrir-jornada{width:100%;border:2px dashed #5b5ce2;background:#f8f8ff;color:#5b5ce2;font-weight:800;font-size:14px;padding:16px;border-radius:14px;cursor:pointer;display:none;margin-bottom:20px}
+[data-theme="dark"] .perfil-card{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.15)}
+[data-theme="dark"] .perfil-card.ativo{background:#1e2140}
+[data-theme="dark"] .perfil-card span{color:#a0a0a0}
+[data-theme="dark"] .recomendacao-perfil{background:var(--bg-card,#16213e)}
+@media(max-width:700px){.jornada-perfis .perfis-financas{grid-template-columns:1fr}}
 .toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
 .toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
 .toolbar-extra button:hover{background:#eef2ff;color:#4f46e5}
@@ -49,6 +68,31 @@
   <button data-fase="andamento"><strong>🟡 Em desenvolvimento</strong><small>Continuar e melhorar</small></button>
   <button data-fase="pronto"><strong>🔴 Sistema pronto</strong><small>Revisar e evoluir</small></button>
 </div>
+
+<section class="card jornada-perfis" id="jornadaPerfis">
+  <button type="button" class="fechar-jornada" id="fecharJornada" title="Pular, não preciso de orientação">✕ Pular</button>
+  <h3>🧭 Por onde eu começo?</h3>
+  <p>Escolha a opção que mais parece com você agora — a gente já indica os primeiros 3 prompts certos pra sua situação.</p>
+  <div class="perfis-financas">
+    <button type="button" class="perfil-card" data-perfil="iniciante">
+      <span class="perfil-emoji">🌱</span>
+      <strong>Nunca criei um sistema</strong>
+      <span>Tenho uma ideia, mas não sei nem por onde começar a estruturar.</span>
+    </button>
+    <button type="button" class="perfil-card" data-perfil="andamento">
+      <span class="perfil-emoji">🛠️</span>
+      <strong>Já tenho um sistema, quero melhorar</strong>
+      <span>Já existe algo funcionando, mas precisa de ajustes e novos recursos.</span>
+    </button>
+    <button type="button" class="perfil-card" data-perfil="pronto">
+      <span class="perfil-emoji">🚀</span>
+      <strong>Meu sistema já está pronto</strong>
+      <span>Quero revisar qualidade, performance e planejar os próximos passos.</span>
+    </button>
+  </div>
+  <div id="recomendacaoPerfil" class="recomendacao-perfil" style="display:none"></div>
+</section>
+<button type="button" class="reabrir-jornada" id="reabrirJornada" title="Ver orientação de por onde começar">🧭 Ver "por onde começar"</button>
 
 <div class="stats-bar" id="statsBar"></div>
 
@@ -298,6 +342,37 @@ document.getElementById('btnExportar').addEventListener('click',exportarTodas);
 document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
 document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+// ===== JORNADA: POR ONDE COMEÇAR (por perfil) =====
+const trilhasPerfilSistemas={
+  iniciante:{titulo:'🌱 Comece por aqui — do zero até a primeira versão',texto:'Você nunca criou um sistema? Siga esses 3 prompts nessa ordem:',passos:['🚀 Criar meu primeiro sistema do zero','🤖 Briefing completo para Studio IA','🧭 Criar menu e navegação do sistema']},
+  andamento:{titulo:'🛠️ Você já tem uma base — hora de evoluir',texto:'Seu sistema já existe? Esses prompts ajudam a melhorar com critério:',passos:['🛠️ Melhorar meu sistema atual','🧩 20 coisas que faltam no meu sistema','🎨 Auditoria UX/UI de tela']},
+  pronto:{titulo:'🚀 Seu sistema está pronto — hora de revisar e evoluir',texto:'Seu sistema já está no ar? Esses prompts levam pro próximo nível:',passos:['💻 Revisão técnica completa','⚡ Auditoria de desempenho','📈 Roadmap de evolução do produto']}
+};
+function irParaPorTituloSistemas(tit){const p=prompts.find(x=>x.titulo===tit);if(p)irPara(p.id)}
+function mostrarTrilhaSistemas(perfil){
+  document.querySelectorAll('.perfil-card').forEach(b=>b.classList.toggle('ativo',b.dataset.perfil===perfil));
+  const trilha=trilhasPerfilSistemas[perfil];
+  const box=document.getElementById('recomendacaoPerfil');
+  box.style.display='block';
+  box.innerHTML=`<h4>${trilha.titulo}</h4><p style="margin:0 0 10px;color:#667085">${trilha.texto}</p><ol>${trilha.passos.map(t=>`<li><button type="button" data-ir="${t.replace(/"/g,'&quot;')}">${t} →</button></li>`).join('')}</ol>`;
+  box.querySelectorAll('[data-ir]').forEach(b=>b.addEventListener('click',()=>irParaPorTituloSistemas(b.dataset.ir)));
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+document.querySelectorAll('.perfil-card').forEach(b=>b.addEventListener('click',()=>mostrarTrilhaSistemas(b.dataset.perfil)));
+
+// ===== PULAR / REABRIR A ORIENTAÇÃO =====
+const jornadaBox=document.getElementById('jornadaPerfis');
+const reabrirBtn=document.getElementById('reabrirJornada');
+const fecharBtn=document.getElementById('fecharJornada');
+function aplicarEstadoJornada(escondido){
+  jornadaBox.style.display=escondido?'none':'';
+  reabrirBtn.style.display=escondido?'block':'none';
+  try{localStorage.setItem('deltaJornadaSkipSistemas',escondido?'true':'false')}catch(e){}
+}
+fecharBtn.addEventListener('click',()=>aplicarEstadoJornada(true));
+reabrirBtn.addEventListener('click',()=>aplicarEstadoJornada(false));
+aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSkipSistemas')==='true'}catch(e){return false}})());
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 montarCats();
