@@ -1,11 +1,7 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Finanças Pessoais | Delta Prompts</title><meta name="description" content="Prompts para organizar orçamento, quitar dívidas, planejar investimentos, aposentadoria e grandes objetivos financeiros com a ajuda da IA."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.topo-com-sidebar{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
-.topo-principal{min-width:0}
-.jornada-financas{position:sticky;top:16px;grid-column:2;grid-row:1}
-.fechar-jornada{position:absolute;top:12px;right:12px;border:0;background:#f1f5f9;color:#475467;font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px;cursor:pointer}
-.reabrir-jornada{width:100%;border:2px dashed #5b5ce2;background:#f8f8ff;color:#5b5ce2;font-weight:800;font-size:14px;padding:16px;border-radius:14px;cursor:pointer;position:sticky;top:16px;display:none;grid-column:2;grid-row:1}
-@media(max-width:1000px){.topo-com-sidebar{grid-template-columns:1fr}.jornada-financas,.reabrir-jornada{position:static;grid-column:1;grid-row:auto}.jornada-financas .perfis-financas{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:700px){.jornada-financas .perfis-financas{grid-template-columns:1fr}}
-.jornada-financas .perfis-financas{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}.perfil-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px;border:2px solid #e5e7eb;border-radius:14px;background:#fff;cursor:pointer;font:inherit}.perfil-card:hover{border-color:#5b5ce2;background:#f8f8ff}.perfil-card.ativo{border-color:#5b5ce2;background:#eef2ff}.perfil-emoji{font-size:26px}.perfil-card strong{font-size:15px}.perfil-card span{font-size:13px;color:#667085;line-height:1.4}.recomendacao-perfil{margin-top:16px;padding:16px;border-radius:14px;background:#f8fafc;border:1px dashed #5b5ce2}.recomendacao-perfil h4{margin:0 0 10px}.recomendacao-perfil ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}.recomendacao-perfil button{background:none;border:0;color:#5b5ce2;font-weight:800;cursor:pointer;padding:0;font-size:14.5px;text-align:left}
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Finanças Pessoais | Delta Prompts</title><meta name="description" content="Prompts para organizar orçamento, quitar dívidas, planejar investimentos, aposentadoria e grandes objetivos financeiros com a ajuda da IA."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.fechar-jornada{position:absolute;top:12px;right:12px;border:0;background:#f1f5f9;color:#475467;font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px;cursor:pointer}
+.reabrir-jornada{width:100%;border:2px dashed #5b5ce2;background:#f8f8ff;color:#5b5ce2;font-weight:800;font-size:14px;padding:16px;border-radius:14px;cursor:pointer;display:none;margin-bottom:20px}
+.jornada-financas .perfis-financas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+@media(max-width:700px){.jornada-financas .perfis-financas{grid-template-columns:1fr}}.perfil-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px;border:2px solid #e5e7eb;border-radius:14px;background:#fff;cursor:pointer;font:inherit}.perfil-card:hover{border-color:#5b5ce2;background:#f8f8ff}.perfil-card.ativo{border-color:#5b5ce2;background:#eef2ff}.perfil-emoji{font-size:26px}.perfil-card strong{font-size:15px}.perfil-card span{font-size:13px;color:#667085;line-height:1.4}.recomendacao-perfil{margin-top:16px;padding:16px;border-radius:14px;background:#f8fafc;border:1px dashed #5b5ce2}.recomendacao-perfil h4{margin:0 0 10px}.recomendacao-perfil ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}.recomendacao-perfil button{background:none;border:0;color:#5b5ce2;font-weight:800;cursor:pointer;padding:0;font-size:14.5px;text-align:left}
 [data-theme="dark"] .perfil-card{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.15)}
 [data-theme="dark"] .perfil-card.ativo{background:#1e2140}
 [data-theme="dark"] .perfil-card span{color:#a0a0a0}
@@ -69,8 +65,6 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
 @media(max-width:700px){.theme-toggle{bottom:90px}}
 </style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260822"></script><main>
 
-<div class="topo-com-sidebar">
-<div class="topo-principal">
 <h1>💰 Finanças Pessoais com IA</h1>
 <p>Prompts para organizar orçamento, quitar dívidas, planejar investimentos, aposentadoria e grandes objetivos financeiros.</p>
 
@@ -91,7 +85,6 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
   <ul style="line-height:1.6"><li><strong>📋 Orçamento & Controle:</strong> planejamento mensal e diagnóstico.</li><li><strong>💳 Dívidas & Crédito:</strong> quitar dívidas e usar cartão com equilíbrio.</li><li><strong>💰 Economia:</strong> reduzir gastos e reserva de emergência.</li><li><strong>📈 Investimentos:</strong> começar a investir e comparar opções.</li><li><strong>🎯 Metas & Grandes Compras:</strong> objetivos concretos.</li><li><strong>🧓 Longo Prazo:</strong> estratégia patrimonial e aposentadoria.</li><li><strong>💼 Situações Especiais:</strong> autônomo, imposto de renda e educação financeira dos filhos.</li></ul>
   </div>
 </section>
-</div>
 
 <section class="card jornada-financas" id="jornadaPerfis">
   <button type="button" class="fechar-jornada" id="fecharJornada" title="Pular, não preciso de orientação">✕ Pular</button>
@@ -117,7 +110,6 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
   <div id="recomendacaoPerfil" class="recomendacao-perfil" style="display:none"></div>
 </section>
 <button type="button" class="reabrir-jornada" id="reabrirJornada" title="Ver orientação de por onde começar">🧭 Ver "por onde começar"</button>
-</div>
 
 <div class="stats-bar" id="statsBar"></div>
 
