@@ -41,11 +41,27 @@
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Qual caminho escolher? <span>⌄</span></button><div class="info-body"><b>🟢 Criando do zero:</b> para quem ainda vai começar. <b>🟡 Site em andamento:</b> para quem já tem a página inicial ou parte do projeto e travou. <b>🔴 Site pronto:</b> para quem quer melhorar UX, visual, navegação, conversão e estrutura.</div></section>
 
+<section class="card" id="linkPadraoCard">
+  <h3>🔗 Cole o link do seu site aqui uma vez</h3>
+  <p style="margin:0 0 12px;color:#667085;font-size:14px">A gente já preenche automaticamente todo campo <strong>[LINK]</strong> dos prompts abaixo com esse endereço, sem precisar digitar de novo toda vez.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <input type="text" id="linkPadraoInput" placeholder="https://meusite.com.br" style="flex:1;min-width:220px;padding:12px 14px;border-radius:10px;border:1px solid #e6e8f0;font:inherit">
+    <button type="button" id="linkPadraoSalvar" style="border:0;background:#5b5ce2;color:#fff;font-weight:800;border-radius:10px;padding:12px 20px;cursor:pointer">💾 Salvar</button>
+  </div>
+</section>
+
 <div class="journey" id="journey">
   <button data-fase="todos" class="ativo"><strong>✨ Todos</strong><small>Ver todos os prompts</small></button>
   <button data-fase="inicio"><strong>🟢 Criando do zero</strong><small>Planejar e construir</small></button>
   <button data-fase="andamento"><strong>🟡 Site em andamento</strong><small>Continuar e melhorar</small></button>
   <button data-fase="pronto"><strong>🔴 Site pronto</strong><small>Otimizar e profissionalizar</small></button>
+</div>
+
+<button type="button" id="btnModoGuiado" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed #5b5ce2;background:#f8f8ff;color:#5b5ce2;font-weight:800;font-size:15px;padding:16px;border-radius:14px;cursor:pointer;margin:16px 0">🎯 Modo Guiado: Meu Primeiro Site (passo a passo)</button>
+
+<div id="modalGuiado" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:3000;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:26px;position:relative" id="modalGuiadoConteudo">
+  </div>
 </div>
 
 <div class="stats-bar" id="statsBar"></div>
@@ -252,7 +268,7 @@ function criarCard(p){
     <div class="meta"><span class="tag">${faseLabel(p.fase)}</span><span class="tag">${p.categoria}</span><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
     <h3>${p.titulo}</h3>
     <p class="quando">💡 ${p.quando}</p>
-    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/LINK/i.test(ph)?(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
     <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
     <button class="ver" type="button" data-acao="ver" data-id="${p.id}">Ver prompt completo</button>
     <div class="acoes">
@@ -316,6 +332,53 @@ document.getElementById('btnExportar').addEventListener('click',exportarTodas);
 document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
 document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+// ===== MODO GUIADO: MEU PRIMEIRO SITE =====
+(function(){
+  const passos=prompts.filter(p=>p.fase==='inicio');
+  let passoAtual=0;
+  const modal=document.getElementById('modalGuiado');
+  const conteudo=document.getElementById('modalGuiadoConteudo');
+  function renderPasso(){
+    const p=passos[passoAtual];
+    const total=passos.length;
+    conteudo.innerHTML=`
+      <button type="button" id="fecharGuiado" style="position:absolute;top:16px;right:16px;border:0;background:#f1f5f9;border-radius:999px;width:32px;height:32px;cursor:pointer;font-size:15px">✕</button>
+      <div style="font-size:12px;font-weight:800;color:#5b5ce2;margin-bottom:6px">PASSO ${passoAtual+1} DE ${total}</div>
+      <div style="display:flex;gap:4px;margin-bottom:16px">${passos.map((_,i)=>`<span style="flex:1;height:5px;border-radius:999px;background:${i<=passoAtual?'#5b5ce2':'#e5e7eb'}"></span>`).join('')}</div>
+      <h3 style="margin:0 0 8px">${p.titulo}</h3>
+      <p style="color:#667085;margin:0 0 14px;font-size:14px">💡 ${p.quando}</p>
+      <div style="white-space:pre-wrap;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px;font-size:13.5px;max-height:220px;overflow-y:auto">${p.prompt}</div>
+      <div style="display:flex;gap:10px;margin-top:18px">
+        <button type="button" id="guiadoCopiar" style="flex:1;border:0;background:#5b5ce2;color:#fff;font-weight:800;padding:12px;border-radius:10px;cursor:pointer">📋 Copiar este prompt</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px">
+        <button type="button" id="guiadoAnterior" ${passoAtual===0?'disabled':''} style="border:0;background:none;color:${passoAtual===0?'#c8ccd6':'#5b5ce2'};font-weight:800;cursor:${passoAtual===0?'default':'pointer'}">← Anterior</button>
+        <button type="button" id="guiadoProximo" style="border:0;background:none;color:#5b5ce2;font-weight:800;cursor:pointer">${passoAtual===total-1?'Finalizar ✓':'Próximo →'}</button>
+      </div>
+    `;
+    document.getElementById('fecharGuiado').addEventListener('click',fecharModal);
+    document.getElementById('guiadoCopiar').addEventListener('click',()=>{registrarUso(p.id);navigator.clipboard.writeText(p.prompt).then(()=>mostrarToast('📋 Prompt copiado!'))});
+    document.getElementById('guiadoAnterior').addEventListener('click',()=>{if(passoAtual>0){passoAtual--;renderPasso()}});
+    document.getElementById('guiadoProximo').addEventListener('click',()=>{if(passoAtual<total-1){passoAtual++;renderPasso()}else{fecharModal()}});
+  }
+  function abrirModal(){passoAtual=0;modal.style.display='flex';renderPasso()}
+  function fecharModal(){modal.style.display='none'}
+  document.getElementById('btnModoGuiado').addEventListener('click',abrirModal);
+  modal.addEventListener('click',e=>{if(e.target===modal)fecharModal()});
+})();
+
+// ===== LINK PADRAO (auto-preenche todo campo [LINK]) =====
+(function(){
+  const input=document.getElementById('linkPadraoInput');
+  const btn=document.getElementById('linkPadraoSalvar');
+  try{input.value=localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){}
+  btn.addEventListener('click',()=>{
+    try{localStorage.setItem('deltaSiteLinkPadrao',input.value.trim())}catch(e){}
+    mostrarToast('🔗 Link salvo! Já preenchido nos prompts.');
+    render();
+  });
+})();
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 criarTemas();

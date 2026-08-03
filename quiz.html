@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Qual prompt eu uso? | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="description" content="Responda 2 perguntas rápidas e descubra qual prompt usar para o seu site ou sistema agora."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.quiz-box{max-width:640px;margin:0 auto}
+.quiz-progresso{display:flex;gap:6px;margin-bottom:22px}
+.quiz-progresso span{flex:1;height:6px;border-radius:999px;background:#e5e7eb}
+.quiz-progresso span.ativo{background:#5b5ce2}
+.quiz-pergunta{font-size:22px;font-weight:900;margin-bottom:18px}
+.quiz-opcoes{display:flex;flex-direction:column;gap:12px}
+.quiz-opcao{display:flex;align-items:center;gap:14px;text-align:left;padding:18px;border:2px solid #e5e7eb;border-radius:16px;background:#fff;cursor:pointer;font:inherit}
+.quiz-opcao:hover{border-color:#5b5ce2;background:#f8f8ff}
+.quiz-opcao-emoji{font-size:26px;flex:0 0 auto}
+.quiz-opcao strong{display:block;font-size:15.5px}
+.quiz-opcao span{font-size:13.5px;color:#667085}
+.quiz-voltar{margin-top:18px;background:none;border:0;color:#667085;font-weight:700;cursor:pointer;font-size:14px}
+.quiz-resultado{text-align:center;padding:20px 0}
+.quiz-resultado-emoji{font-size:52px;margin-bottom:10px}
+.quiz-resultado h2{margin:0 0 8px}
+.quiz-resultado p{color:#667085;margin:0 0 22px}
+.quiz-resultado-acoes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.quiz-resultado-acoes a,.quiz-resultado-acoes button{display:inline-block;padding:14px 24px;border-radius:12px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:14px}
+.quiz-primaria{background:#5b5ce2;color:#fff}
+.quiz-secundaria{background:#eef2ff;color:#5b5ce2}
+[data-theme="dark"] .quiz-opcao{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.15)}
+[data-theme="dark"] .quiz-opcao span{color:#a0a0a0}
+[data-theme="dark"] .quiz-progresso span{background:rgba(255,255,255,.15)}
+@media(max-width:600px){.quiz-pergunta{font-size:19px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260823"></script><main>
+
+<h1>🧭 Qual prompt eu uso?</h1>
+<p>Responda 2 perguntas rápidas e a gente te leva direto pro prompt certo — sem precisar procurar na lista inteira.</p>
+
+<section class="card quiz-box">
+  <div class="quiz-progresso" id="quizProgresso"><span class="ativo"></span><span></span></div>
+  <div id="quizConteudo"></div>
+</section>
+
+</main>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+
+const conteudo=document.getElementById('quizConteudo');
+const progresso=document.getElementById('quizProgresso');
+
+const PERGUNTA1={
+  texto:'Como está seu site ou sistema hoje?',
+  opcoes:[
+    {emoji:'🌱',titulo:'Ainda não existe',desc:'Tenho uma ideia, mas não comecei a construir.',valor:'inicio'},
+    {emoji:'🛠️',titulo:'Já existe, mas está incompleto',desc:'Tem algo no ar ou em construção, só que travado ou faltando coisa.',valor:'andamento'},
+    {emoji:'✅',titulo:'Já está pronto e no ar',desc:'Funciona, e agora eu quero melhorar ou evoluir.',valor:'pronto'}
+  ]
+};
+
+const PERGUNTA2={
+  inicio:{texto:'O que você mais precisa agora?',opcoes:[
+    {emoji:'🤔',titulo:'Não sei nem por onde começar',desc:'Preciso organizar as ideias antes de tudo.',id:'site-3'},
+    {emoji:'🏠',titulo:'Quero montar a página inicial',desc:'Já sei mais ou menos o que quero mostrar.',id:'site-4'},
+    {emoji:'🎨',titulo:'Preciso definir o visual',desc:'Cores, estilo, tipografia — a cara do site.',id:'site-6'},
+    {emoji:'🧭',titulo:'Preciso organizar o menu',desc:'Quais páginas terei e como conectar.',id:'site-7'}
+  ]},
+  andamento:{texto:'Qual é o maior problema agora?',opcoes:[
+    {emoji:'🧱',titulo:'Travei e não sei o próximo passo',desc:'Já fiz a home, mas não sei o que vem depois.',id:'site-11'},
+    {emoji:'✨',titulo:'Está feio ou pouco profissional',desc:'Funciona, mas visualmente precisa melhorar.',id:'site-1'},
+    {emoji:'📱',titulo:'Não funciona bem no celular',desc:'No computador tá ok, no celular nem tanto.',id:'site-13'},
+    {emoji:'🧩',titulo:'As páginas parecem desconectadas',desc:'Cada parte parece que foi feita de um jeito diferente.',id:'site-15'}
+  ]},
+  pronto:{texto:'O que você quer fazer agora?',opcoes:[
+    {emoji:'🔎',titulo:'Quero uma auditoria completa',desc:'Uma revisão geral de tudo, de ponta a ponta.',id:'site-20'},
+    {emoji:'🎯',titulo:'Quero melhorar a conversão',desc:'Fazer o site vender ou converter mais.',id:'site-24'},
+    {emoji:'💡',titulo:'Quero ideias de novos recursos',desc:'Descobrir o que mais posso adicionar.',id:'site-34'},
+    {emoji:'🗺️',titulo:'Quero um plano de evolução',desc:'Organizar os próximos passos em etapas.',id:'site-29'}
+  ]}
+};
+
+let resposta1=null;
+
+function renderPergunta1(){
+  progresso.innerHTML='<span class="ativo"></span><span></span>';
+  conteudo.innerHTML=`<div class="quiz-pergunta">${PERGUNTA1.texto}</div><div class="quiz-opcoes">${PERGUNTA1.opcoes.map(o=>`<button type="button" class="quiz-opcao" data-valor="${o.valor}"><span class="quiz-opcao-emoji">${o.emoji}</span><span><strong>${o.titulo}</strong><span>${o.desc}</span></span></button>`).join('')}</div>`;
+  conteudo.querySelectorAll('.quiz-opcao').forEach(b=>b.addEventListener('click',()=>{resposta1=b.dataset.valor;renderPergunta2()}));
+}
+
+function renderPergunta2(){
+  progresso.innerHTML='<span class="ativo"></span><span class="ativo"></span>';
+  const p2=PERGUNTA2[resposta1];
+  conteudo.innerHTML=`<div class="quiz-pergunta">${p2.texto}</div><div class="quiz-opcoes">${p2.opcoes.map(o=>`<button type="button" class="quiz-opcao" data-id="${o.id}"><span class="quiz-opcao-emoji">${o.emoji}</span><span><strong>${o.titulo}</strong><span>${o.desc}</span></span></button>`).join('')}</div><button type="button" class="quiz-voltar" id="quizVoltar">← Voltar</button>`;
+  conteudo.querySelectorAll('.quiz-opcao').forEach(b=>b.addEventListener('click',()=>renderResultado(b.dataset.id)));
+  document.getElementById('quizVoltar').addEventListener('click',renderPergunta1);
+}
+
+function renderResultado(id){
+  progresso.innerHTML='<span class="ativo"></span><span class="ativo"></span>';
+  conteudo.innerHTML=`<div class="quiz-resultado"><div class="quiz-resultado-emoji">🎯</div><h2>Achamos o prompt certo pra você!</h2><p>Clique abaixo pra ir direto até ele.</p><div class="quiz-resultado-acoes"><a class="quiz-primaria" href="/delta-prompts/paginas/sites-landing-pages.html#${id}">🚀 Ver o prompt</a><button type="button" class="quiz-secundaria" id="quizRefazer">🔄 Refazer o quiz</button></div></div>`;
+  document.getElementById('quizRefazer').addEventListener('click',()=>{resposta1=null;renderPergunta1()});
+}
+
+renderPergunta1();
+</script>
+</body></html>
