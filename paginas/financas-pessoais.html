@@ -1,4 +1,10 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Finanças Pessoais | Delta Prompts</title><meta name="description" content="Prompts para organizar orçamento, quitar dívidas, planejar investimentos, aposentadoria e grandes objetivos financeiros com a ajuda da IA."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Finanças Pessoais | Delta Prompts</title><meta name="description" content="Prompts para organizar orçamento, quitar dívidas, planejar investimentos, aposentadoria e grandes objetivos financeiros com a ajuda da IA."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.jornada-financas .perfis-financas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.perfil-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px;border:2px solid #e5e7eb;border-radius:14px;background:#fff;cursor:pointer;font:inherit}.perfil-card:hover{border-color:#5b5ce2;background:#f8f8ff}.perfil-card.ativo{border-color:#5b5ce2;background:#eef2ff}.perfil-emoji{font-size:26px}.perfil-card strong{font-size:15px}.perfil-card span{font-size:13px;color:#667085;line-height:1.4}.recomendacao-perfil{margin-top:16px;padding:16px;border-radius:14px;background:#f8fafc;border:1px dashed #5b5ce2}.recomendacao-perfil h4{margin:0 0 10px}.recomendacao-perfil ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}.recomendacao-perfil button{background:none;border:0;color:#5b5ce2;font-weight:800;cursor:pointer;padding:0;font-size:14.5px;text-align:left}
+[data-theme="dark"] .perfil-card{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.15)}
+[data-theme="dark"] .perfil-card.ativo{background:#1e2140}
+[data-theme="dark"] .perfil-card span{color:#a0a0a0}
+[data-theme="dark"] .recomendacao-perfil{background:var(--bg-card,#16213e)}
+@media(max-width:700px){.jornada-financas .perfis-financas{grid-template-columns:1fr}}
+.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
 .btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
 .btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
 .filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
@@ -53,6 +59,29 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
 
 <section class="card"><h3>🎯 Objetivo</h3><p>Ajudar você a controlar dinheiro, quitar dívidas, planejar investimentos e tomar decisões financeiras mais inteligentes com apoio da IA. Isto não substitui um planejador financeiro certificado para decisões de investimento complexas.</p></section>
 <section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>📋 Orçamento & Controle:</strong> planejamento mensal e diagnóstico.</li><li><strong>💳 Dívidas & Crédito:</strong> quitar dívidas e usar cartão com equilíbrio.</li><li><strong>💰 Economia:</strong> reduzir gastos e reserva de emergência.</li><li><strong>📈 Investimentos:</strong> começar a investir e comparar opções.</li><li><strong>🎯 Metas & Grandes Compras:</strong> objetivos concretos.</li><li><strong>🧓 Longo Prazo:</strong> estratégia patrimonial e aposentadoria.</li><li><strong>💼 Situações Especiais:</strong> autônomo, imposto de renda e educação financeira dos filhos.</li></ul></section>
+
+<section class="card jornada-financas">
+  <h3>🧭 Por onde eu começo?</h3>
+  <p>Escolha a opção que mais parece com você agora — a gente já indica os primeiros 3 prompts certos pra sua situação.</p>
+  <div class="perfis-financas">
+    <button type="button" class="perfil-card" data-perfil="iniciante">
+      <span class="perfil-emoji">🌱</span>
+      <strong>Nunca mexi com isso</strong>
+      <span>Nunca organizei minhas finanças, não sei nem por onde olhar.</span>
+    </button>
+    <button type="button" class="perfil-card" data-perfil="organizado">
+      <span class="perfil-emoji">📊</span>
+      <strong>Já me organizo</strong>
+      <span>Já tenho uma planilha ou controle básico, mas quero evoluir.</span>
+    </button>
+    <button type="button" class="perfil-card" data-perfil="investidor">
+      <span class="perfil-emoji">🚀</span>
+      <strong>Já invisto</strong>
+      <span>Já tenho investimentos e quero ir além, com estratégia de longo prazo.</span>
+    </button>
+  </div>
+  <div id="recomendacaoPerfil" class="recomendacao-perfil" style="display:none"></div>
+</section>
 
 <div class="stats-bar" id="statsBar"></div>
 
@@ -446,6 +475,24 @@ document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSuge
 document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
 document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+// ===== JORNADA: POR ONDE COMEÇAR (por perfil) =====
+const trilhasPerfil={
+  iniciante:{titulo:'🌱 Comece por aqui — do zero até se sentir no controle',texto:'Você nunca organizou suas finanças? Sem problema. Siga esses 3 prompts nessa ordem:',passos:['🩺 Diagnóstico de Saúde Financeira','📋 Planejamento Financeiro Mensal','🛟 Reserva de Emergência']},
+  organizado:{titulo:'📊 Você já tem uma base — hora de evoluir',texto:'Você já se organiza no básico? Esses prompts levam sua organização pro próximo nível:',passos:['📊 Orçamento Detalhado (Regra 50/30/20)','💳 Organizar Dívidas','📈 Cronograma de Investimentos']},
+  investidor:{titulo:'🚀 Você já investe — hora de pensar estratégia',texto:'Você já tem investimentos? Esses prompts ajudam a pensar mais longe:',passos:['⚖️ Comparar Renda Fixa vs Variável','🧭 Plano Financeiro Estratégico','🌅 Estratégia de Aposentadoria']}
+};
+function irParaPorTitulo(tit){const p=prompts.find(x=>x.titulo===tit);if(p)irPara(p.id)}
+function mostrarTrilha(perfil){
+  document.querySelectorAll('.perfil-card').forEach(b=>b.classList.toggle('ativo',b.dataset.perfil===perfil));
+  const trilha=trilhasPerfil[perfil];
+  const box=document.getElementById('recomendacaoPerfil');
+  box.style.display='block';
+  box.innerHTML=`<h4>${trilha.titulo}</h4><p style="margin:0 0 10px;color:#667085">${trilha.texto}</p><ol>${trilha.passos.map(t=>`<li><button type="button" data-ir="${t.replace(/"/g,'&quot;')}">${t} →</button></li>`).join('')}</ol>`;
+  box.querySelectorAll('[data-ir]').forEach(b=>b.addEventListener('click',()=>irParaPorTitulo(b.dataset.ir)));
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+document.querySelectorAll('.perfil-card').forEach(b=>b.addEventListener('click',()=>mostrarTrilha(b.dataset.perfil)));
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 atualizarStats();
