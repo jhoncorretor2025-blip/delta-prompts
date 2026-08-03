@@ -24,6 +24,14 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
 .uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
 .card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.collapse-card{padding:0;overflow:hidden}
+.collapse-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;border:0;background:transparent;font:inherit;text-align:left;cursor:pointer}
+.collapse-toggle h3{margin:0}
+.collapse-icon{font-size:18px;color:#5b5ce2;transition:transform .2s;flex:0 0 auto}
+.collapse-card.aberto .collapse-icon{transform:rotate(180deg)}
+.collapse-body{display:none;padding:0 20px 20px}
+.collapse-card.aberto .collapse-body{display:block}
+[data-theme="dark"] .collapse-icon{color:#a5b4fc}
 .toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
 .toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
 .toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
@@ -62,8 +70,23 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
 <h1>💰 Finanças Pessoais com IA</h1>
 <p>Prompts para organizar orçamento, quitar dívidas, planejar investimentos, aposentadoria e grandes objetivos financeiros.</p>
 
-<section class="card"><h3>🎯 Objetivo</h3><p>Ajudar você a controlar dinheiro, quitar dívidas, planejar investimentos e tomar decisões financeiras mais inteligentes com apoio da IA. Isto não substitui um planejador financeiro certificado para decisões de investimento complexas.</p></section>
-<section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>📋 Orçamento & Controle:</strong> planejamento mensal e diagnóstico.</li><li><strong>💳 Dívidas & Crédito:</strong> quitar dívidas e usar cartão com equilíbrio.</li><li><strong>💰 Economia:</strong> reduzir gastos e reserva de emergência.</li><li><strong>📈 Investimentos:</strong> começar a investir e comparar opções.</li><li><strong>🎯 Metas & Grandes Compras:</strong> objetivos concretos.</li><li><strong>🧓 Longo Prazo:</strong> estratégia patrimonial e aposentadoria.</li><li><strong>💼 Situações Especiais:</strong> autônomo, imposto de renda e educação financeira dos filhos.</li></ul></section>
+<section class="card collapse-card">
+  <button type="button" class="collapse-toggle" onclick="this.closest('.collapse-card').classList.toggle('aberto')">
+    <h3>🎯 Objetivo</h3><span class="collapse-icon">⌄</span>
+  </button>
+  <div class="collapse-body">
+  <p>Ajudar você a controlar dinheiro, quitar dívidas, planejar investimentos e tomar decisões financeiras mais inteligentes com apoio da IA. Isto não substitui um planejador financeiro certificado para decisões de investimento complexas.</p>
+  </div>
+</section>
+
+<section class="card collapse-card">
+  <button type="button" class="collapse-toggle" onclick="this.closest('.collapse-card').classList.toggle('aberto')">
+    <h3>🗺️ Como os prompts estão organizados</h3><span class="collapse-icon">⌄</span>
+  </button>
+  <div class="collapse-body">
+  <ul style="line-height:1.6"><li><strong>📋 Orçamento & Controle:</strong> planejamento mensal e diagnóstico.</li><li><strong>💳 Dívidas & Crédito:</strong> quitar dívidas e usar cartão com equilíbrio.</li><li><strong>💰 Economia:</strong> reduzir gastos e reserva de emergência.</li><li><strong>📈 Investimentos:</strong> começar a investir e comparar opções.</li><li><strong>🎯 Metas & Grandes Compras:</strong> objetivos concretos.</li><li><strong>🧓 Longo Prazo:</strong> estratégia patrimonial e aposentadoria.</li><li><strong>💼 Situações Especiais:</strong> autônomo, imposto de renda e educação financeira dos filhos.</li></ul>
+  </div>
+</section>
 
 <section class="card jornada-financas" id="jornadaPerfis">
   <button type="button" class="fechar-jornada" id="fecharJornada" title="Pular, não preciso de orientação">✕ Pular</button>
