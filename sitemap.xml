@@ -2,218 +2,356 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/ajuda.html</loc>
-    <priority>0.5</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/biblioteca.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/cadastro.html</loc>
-    <priority>0.5</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/favoritos.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/</loc>
+    <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/index.html</loc>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/meus-numeros.html</loc>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/agentes-ia.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/analise.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/aprender-idiomas.html</loc>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/automacao-ia.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/carreira.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/codex-chatgpt.html</loc>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/comunicacao.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/conectores-ia.html</loc>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/criadores_de_conteudo/crescimento.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/criadores_de_conteudo/descricao.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/criadores_de_conteudo/ideias.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/criadores_de_conteudo/metricas.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/criadores_de_conteudo/planejamento.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/criadores_de_conteudo/roteiros.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/criadores_de_conteudo/thumbnail.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/criadores_de_conteudo/titulos.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/desenvolvimento-profissional.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/empreendedorismo.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/estrategia.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/estudo.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/financas-pessoais.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/games.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/gestao-negocios.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/imagens.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/imobiliario.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/marketing-campanha.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/marketing-texto.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/marketing.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/negociacao.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/notbooklm.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/outros.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/packs-prompts.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/pesquisa-profunda.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/planejamento.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/processos-operacoes.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/programacao-nocode.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/redes-sociais.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/renda_extra/ideias_praticas_de_rendaextra.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/renda_extra/ideias_renda_extra.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/renda_extra/produtos_fisicos.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/renda_extra/servicos_digitais.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/saude.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/sistemas-ia.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/sites-landing-pages.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/skills.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/tomada-de-decisao.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/trabalho.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/treino-fitness.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/trend.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/vendas-conversao.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/paginas/whatsapp-profissional.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/prompt_pro.html</loc>
-    <priority>0.5</priority>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jhoncorretor2025-blip.github.io/delta-prompts/quiz.html</loc>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

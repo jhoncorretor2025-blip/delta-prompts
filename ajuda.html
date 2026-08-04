@@ -27,25 +27,29 @@
 [data-theme="dark"] .passo-simples span,[data-theme="dark"] .termo span,[data-theme="dark"] .faq-resposta{color:#a0a0a0}
 [data-theme="dark"] .faq-pergunta{background:transparent;color:#eaeaea}
 [data-theme="dark"] .dica-bonus{background:rgba(255,255,255,.04)}
+.busca-ajuda{width:100%;box-sizing:border-box;padding:14px 16px;border-radius:14px;border:1px solid #e5e7eb;font-size:15px;margin:16px 0}
+.faq-sem-resultado{text-align:center;padding:30px 10px;color:#667085;display:none}
+[data-theme="dark"] .busca-ajuda{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 @media(max-width:700px){.glossario,.formula-cria{grid-template-columns:1fr}.theme-toggle{bottom:90px}}
 </style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260829"></script><main>
 
 <section class="ajuda-hero">
-  <h1>❓ O que é o Delta Prompts?</h1>
-  <p>Se você nunca usou inteligência artificial antes, essa página é pra você. Vamos explicar tudo com calma, sem termo técnico difícil.</p>
+  <h1>❓ Central de Ajuda</h1>
+  <p>Se você nunca usou inteligência artificial antes, essa página é pra você. Busque sua dúvida ou navegue pelas perguntas frequentes.</p>
+  <input type="text" id="buscaAjuda" class="busca-ajuda" placeholder="🔎 Digite sua dúvida... (ex: pdf, favoritos, voz, cor)">
 </section>
 
-<section class="card">
+<section class="card" id="cardResumo">
   <h3>🎯 Em resumo</h3>
   <p>O <strong>Delta Prompts</strong> é uma biblioteca de "textos prontos" (chamados de <strong>prompts</strong>) pra você usar em ferramentas de inteligência artificial, como o <strong>ChatGPT</strong> ou o <strong>Gemini</strong>. Em vez de você ter que pensar do zero o que escrever pra IA te ajudar, a gente já deixou o texto pronto — você só copia, cola e preenche as suas informações.</p>
 </section>
 
-<section class="card">
+<section class="card" id="cardPrompt">
   <h3>🤔 Mas o que é um "prompt"?</h3>
   <p><strong>Prompt</strong> é só o nome técnico pro "pedido" que você faz pra uma inteligência artificial. É como pedir algo pra uma pessoa: quanto mais claro e detalhado o pedido, melhor a resposta. Os prompts deste site já vêm bem escritos e detalhados, prontos pra dar um resultado bom.</p>
 </section>
 
-<section class="card">
+<section class="card" id="cardPassos">
   <h3>🚀 Como usar o site em 4 passos</h3>
   <div class="passos-simples">
     <div class="passo-simples"><div class="passo-numero">1</div><div><strong>Escolha</strong><span>Navegue pelas categorias no menu do lado (ou use a busca) até achar um prompt que combine com o que você precisa.</span></div></div>
@@ -55,7 +59,7 @@
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="cardGlossario">
   <h3>🧭 Palavras que você vai ver pelo site</h3>
   <div class="glossario">
     <div class="termo"><strong>🧠 Skills</strong><span>Instruções curtas que "ensinam" a IA a fazer uma tarefa específica sempre do mesmo jeito.</span></div>
@@ -71,11 +75,25 @@
 
 <section class="card">
   <h3>💬 Perguntas frequentes</h3>
+  <div id="listaFaq">
   <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Preciso pagar alguma coisa pra usar o Delta Prompts?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Não. O site é gratuito. Você só vai precisar de uma conta no ChatGPT ou Gemini (que também têm versão gratuita) pra usar os prompts.</div></div>
   <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Preciso saber programar ou entender de tecnologia?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Não! Os prompts já vêm prontos. Você só copia, cola e preenche suas informações. Se quiser algo ainda mais simples, use o "🧓 Modo Simples" (o botão fica no canto da tela).</div></div>
   <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">O que são aqueles colchetes [ASSIM] dentro do prompt?<span class="faq-icone">⌄</span></button><div class="faq-resposta">São espaços reservados pra você preencher com a sua informação. Por exemplo, <strong>[NOME DA EMPRESA]</strong> deve virar o nome real da sua empresa. Em muitos prompts, você já consegue preencher isso direto na página, num campinho, antes de copiar.</div></div>
   <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Posso confiar 100% no que a IA responder?<span class="faq-icone">⌄</span></button><div class="faq-resposta">A IA é uma ótima ferramenta de apoio, mas pode errar. Sempre revise o resultado antes de usar, principalmente em assuntos de saúde, dinheiro ou decisões importantes — nesses casos, use como ponto de partida e confirme com um profissional.</div></div>
   <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Como eu salvo um prompt pra usar depois?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Clique no botão <strong>"🤍 Favoritar"</strong> em qualquer prompt. Ele fica salvo na sua página de <strong>❤️ Favoritos</strong> (no menu). Se você fizer login com o Google, seus favoritos ficam salvos e aparecem em qualquer aparelho que você usar.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Fiz login, mas meus favoritos não aparecem em outro aparelho. O que fazer?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Confira se fez login com a <strong>mesma conta Google</strong> nos dois aparelhos. Se sim, tente favoritar algo de novo pra "forçar" a sincronização, feche e abra o site de novo no outro aparelho. Se ainda não funcionar, pode ser uma instabilidade temporária — tente de novo em alguns minutos.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">O que é o "📌 Fixar" nos prompts?<span class="faq-icone">⌄</span></button><div class="faq-resposta">É diferente de favoritar: quando você fixa um prompt, ele passa a aparecer <strong>sempre no topo da lista</strong> daquela página, na frente dos outros — bom pra prompts que você usa toda semana.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Como funciona o "📄 PDF" nos prompts?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Clicando nesse botão, o site gera um arquivo PDF com o prompt completo (já com os campos que você preencheu), pronto pra imprimir ou mandar pra alguém.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Dá pra preencher os campos falando, sem digitar?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Sim! Em campos editáveis dos prompts, aparece um botão de microfone 🎤. Clique, fale, e o texto é preenchido sozinho. Funciona melhor no navegador Chrome.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Dá pra mudar a cor do site?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Sim! Tem um botão 🎨 flutuante no canto da tela com 5 opções de cor. Sua escolha fica salva pras próximas visitas.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">O que é o "🔍 Modo Leitura"?<span class="faq-icone">⌄</span></button><div class="faq-resposta">É um botão que aumenta o tamanho da letra dos prompts, pra ficar mais fácil de ler — útil em telas menores ou pra quem prefere letras maiores.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">O que é a página "📊 Meus Números"?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Um resumo de como você usa o site: quantos dias seguidos você acessa, quantos prompts já copiou, quantos favoritou, e sua categoria favorita. Fica no menu, em "Minha Biblioteca".</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Pra que servem os botões 👍👎 embaixo dos prompts?<span class="faq-icone">⌄</span></button><div class="faq-resposta">É o feedback: você avalia se aquele prompt te ajudou. O número mostrado é a soma de <strong>todos os usuários</strong> do site, não só o seu — ajuda a saber quais prompts realmente funcionam bem.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Por que a ordem do menu lateral muda?<span class="faq-icone">⌄</span></button><div class="faq-resposta">O menu é inteligente: os grupos grandes (Pessoal, Carreira, Empresa, IA Avançada) se reorganizam sozinhos, colocando no topo o que você mais usa. Cada navegador guarda isso separadamente.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Não sei qual prompt usar. Tem alguma ajuda?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Sim! Use o <strong>"🧭 Qual prompt eu uso?"</strong> no menu — é um quiz rápido de 2 perguntas que te leva direto pro prompt certo pra sua situação.</div></div>
+  <div class="faq-item"><button type="button" class="faq-pergunta" onclick="this.closest('.faq-item').classList.toggle('aberto')">Dá pra navegar pelo site usando o teclado?<span class="faq-icone">⌄</span></button><div class="faq-resposta">Sim! Use as setas ↑↓←→ pra passar de um prompt pro outro, e Enter pra copiar o que estiver selecionado.</div></div>
+  </div>
+  <div class="faq-sem-resultado" id="faqSemResultado">🔎 Nenhuma pergunta encontrada. Tente outra palavra.</div>
 </section>
 
 <section class="dica-bonus">
@@ -101,5 +119,30 @@
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+
+function normalizar(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+const buscaInput=document.getElementById('buscaAjuda');
+const faqItens=[...document.querySelectorAll('#listaFaq .faq-item')];
+const semResultado=document.getElementById('faqSemResultado');
+const outrosCards=[document.getElementById('cardResumo'),document.getElementById('cardPrompt'),document.getElementById('cardPassos'),document.getElementById('cardGlossario')];
+
+buscaInput.addEventListener('input',()=>{
+  const termo=normalizar(buscaInput.value);
+  if(!termo){
+    faqItens.forEach(el=>el.style.display='');
+    outrosCards.forEach(el=>el&&(el.style.display=''));
+    semResultado.style.display='none';
+    return;
+  }
+  outrosCards.forEach(el=>el&&(el.style.display='none'));
+  let algumVisivel=false;
+  faqItens.forEach(el=>{
+    const visivel=normalizar(el.textContent).includes(termo);
+    el.style.display=visivel?'':'none';
+    if(visivel)algumVisivel=true;
+  });
+  semResultado.style.display=algumVisivel?'none':'block';
+});
+
 </script>
 </body></html>

@@ -85,6 +85,12 @@
   Você ainda não copiou nenhum prompt nem favoritou nada por aqui. Assim que começar a usar o site, seus números vão aparecer aqui! 🚀
 </div>
 
+<section class="card" id="cardIndicacao" style="text-align:center">
+  <h3>🎁 Convide um amigo</h3>
+  <p style="color:#667085;margin:0 0 14px">Conhece alguém que também usa IA no dia a dia? Manda o Delta Prompts pra essa pessoa.</p>
+  <button type="button" id="btnConvidar" style="border:0;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:800;padding:14px 26px;border-radius:12px;cursor:pointer;font-size:15px">📲 Convidar pelo WhatsApp ou compartilhar</button>
+</section>
+
 <section class="card" style="text-align:center">
   <h3>🚀 Continue explorando</h3>
   <a href="/delta-prompts/index.html" style="display:inline-block;margin-top:10px;padding:14px 28px;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:700;border-radius:12px;text-decoration:none">🏠 Voltar para a Página Inicial</a>
@@ -275,6 +281,22 @@ function compartilharNumeros(){
 
 document.querySelectorAll('#periodoSeletor button').forEach(b=>b.addEventListener('click',()=>renderizarNumeros(b.dataset.periodo)));
 document.getElementById('btnCompartilharNumeros').addEventListener('click',compartilharNumeros);
+
+// ===== CONVIDAR UM AMIGO =====
+document.getElementById('btnConvidar').addEventListener('click',()=>{
+  const texto='🤖 Eu uso o Delta Prompts pra ter prompts de IA prontos pra qualquer coisa — saúde, estudo, trabalho, marketing e muito mais. É de graça, dá uma olhada:';
+  const url='https://jhoncorretor2025-blip.github.io/delta-prompts/index.html';
+  if(navigator.share){
+    navigator.share({title:'Delta Prompts',text:texto,url}).catch(()=>{});
+  }else{
+    navigator.clipboard.writeText(texto+'\n'+url).then(()=>{
+      const btn=document.getElementById('btnConvidar');
+      const original=btn.textContent;
+      btn.textContent='✅ Copiado! Cole onde quiser compartilhar';
+      setTimeout(()=>btn.textContent=original,2500);
+    });
+  }
+});
 
 // ===== ESPERA A CONTA GOOGLE CARREGAR/SINCRONIZAR ANTES DE MOSTRAR OS NUMEROS =====
 function mostrarStatusSync(estado,user){
