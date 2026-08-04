@@ -1,251 +1,270 @@
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>💻 Serviços Digitais | Delta Prompts</title><meta name="description" content="Prompts estratégicos para criar e vender serviços digitais com profissionalismo e posicionamento forte.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="/delta-prompts/style.css">
-<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
-</head>
-
-<body>
-
-<div id="menu"></div>
-<script src="/delta-prompts/menu-loader.js?v=20260827"></script>
-
-<main>
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Serviços Digitais e Infoprodutos | Delta Prompts</title><meta name="description" content="Prompts estratégicos para criar e vender serviços digitais e infoprodutos com profissionalismo e posicionamento forte."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtro-nivel{display:flex;gap:8px;flex-wrap:wrap}.filtro-nivel button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtro-nivel button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(91,92,226,.12);color:#5b5ce2}.filtro-nivel button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#5b5ce2;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.secao-titulo{font-size:22px;margin:30px 0 15px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e5e7eb;margin:15px 0}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;background:#eef2ff;color:#5b5ce2;cursor:pointer}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#5b5ce2;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #5b5ce2;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-nivel button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:700px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260827"></script><main>
 
 <h1>💻🚀 Serviços Digitais e Infoprodutos</h1>
+<p>Prompts estratégicos para criar e vender serviços digitais e infoprodutos com profissionalismo e posicionamento forte.</p>
 
-<p>
-Prompts estratégicos para criar e vender serviços digitais com profissionalismo e posicionamento forte.
-</p>
+<section class="card"><h3>🎯 Objetivo</h3><p>Ajudar você a estruturar, precificar e divulgar serviços digitais e infoprodutos com padrão profissional.</p></section>
+<section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>💡 Ideação:</strong> criar peças e materiais de design.</li><li><strong>🛠️ Execução:</strong> serviços de currículo, site, vídeo, redes e mais.</li><li><strong>📦 Infoprodutos:</strong> e-books, cursos e templates pra vender.</li><li><strong>💰 Precificação & Vendas:</strong> preço e proposta comercial.</li><li><strong>📣 Divulgação:</strong> como anunciar o serviço novo.</li></ul></section>
 
-<section class="card">
-  <h3>🎯 Objetivo</h3>
-  <p>
-    Ajudar você a estruturar serviços digitais como criação de currículo, design gráfico e desenvolvimento de sites.
-  </p>
-</section>
-
-<section class="card">
-  <h3>🗺️ Jornada dos Serviços Digitais</h3>
-  <ul style="line-height:1.6;">
-    <li><strong>💡 Ideação:</strong> Definir o serviço e proposta de valor.</li>
-    <li><strong>🛠️ Execução:</strong> Criar o material com padrão profissional.</li>
-  </ul>
-</section>
+<div class="stats-bar" id="statsBar"></div>
 
 <div class="top-bar">
-<input type="text" id="busca" placeholder="🔎 Buscar modelo..." oninput="filtrarPrompts()">
-<div class="contador" id="contador"></div>
+  <input type="text" id="busca" placeholder="🔎 Buscar modelo de serviço digital..." oninput="aplicarFiltros()">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <div class="contador" id="contador"></div>
 </div>
 
-<div class="filtro-nivel" style="margin-bottom:20px;">
-<button onclick="filtrarNivel(event,'todos')" class="ativo">Todos</button>
-<button onclick="filtrarNivel(event,'basico')">🟢 Básico</button>
-<button onclick="filtrarNivel(event,'intermediario')">🟡 Intermediário</button>
-<button onclick="filtrarNivel(event,'avancado')">🔴 Avançado</button>
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtro-nivel" id="filtrosNivel"><button class="ativo" data-nivel="todos">Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo de serviço digital que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
 </div>
 
 <div id="lista-prompts"></div>
 
 </main>
-
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
 <script>
 
-const ordemCategorias = [
-"💡 Ideação",
-"🛠️ Execução"
+const ordemCategorias=['💡 Ideação','🛠️ Execução','📦 Infoprodutos','💰 Precificação & Vendas','📣 Divulgação'];
+
+const dadosBrutos=[
+{categoria:'💡 Ideação',nivel:'basico',titulo:'💳🎨 Serviço de Criação de Cartão de Visita',quando:'Quando quiser oferecer design para pequenos negócios.',prompt:`Você é um designer profissional.\n\nCrie um modelo estratégico de cartão de visita para:\n[DESCREVA O PROFISSIONAL OU EMPRESA]\n\nInclua:\n🎨 Estilo visual\n📌 Informações essenciais\n🧠 Posicionamento visual\n📱 Versão digital\n🖨️ Orientação para impressão`,en:`You are a professional designer.\n\nCreate a strategic business card model for:\n[DESCRIBE THE PROFESSIONAL OR COMPANY]\n\nInclude:\n🎨 Visual style\n📌 Essential information\n🧠 Visual positioning\n📱 Digital version\n🖨️ Print guidance`},
+{categoria:'💡 Ideação',nivel:'basico',titulo:'📄📢 Serviço de Criação de Folder',quando:'Para divulgar empresas e serviços locais.',prompt:`Você é especialista em design e marketing.\n\nCrie a estrutura de um folder profissional para:\n[DESCREVA O NEGÓCIO]\n\nInclua:\n🎯 Objetivo\n📌 Estrutura de conteúdo\n🧠 Estratégia persuasiva\n📷 Sugestão de imagens\n📞 Chamada para ação`,en:`You are a design and marketing specialist.\n\nCreate the structure of a professional flyer for:\n[DESCRIBE THE BUSINESS]\n\nInclude:\n🎯 Objective\n📌 Content structure\n🧠 Persuasive strategy\n📷 Image suggestions\n📞 Call to action`},
+{categoria:'🛠️ Execução',nivel:'intermediario',titulo:'📑🚀 Criação de Currículo Profissional',quando:'Quando quiser oferecer serviço de currículo estratégico.',prompt:`Você é especialista em recrutamento.\n\nCrie um currículo estratégico para:\n[DESCREVA O PERFIL]\n\nInclua:\n🎯 Resumo impactante\n💼 Experiência organizada\n🏆 Competências\n📈 Resultados\n✨ Diferencial competitivo`,en:`You are a recruitment specialist.\n\nCreate a strategic resume for:\n[DESCRIBE THE PROFILE]\n\nInclude:\n🎯 Impactful summary\n💼 Organized experience\n🏆 Skills\n📈 Results\n✨ Competitive edge`},
+{categoria:'🛠️ Execução',nivel:'avancado',titulo:'🌐🚀 Criação de Site Profissional',quando:'Quando quiser estruturar um site completo.',prompt:`Você é especialista em UX e conversão.\n\nCrie a estrutura completa de um site para:\n[DESCREVA O NEGÓCIO]\n\nInclua:\n🏠 Página inicial\n📄 Páginas internas\n🎯 Estratégia de conversão\n🧠 Copy estratégica\n📱 Responsividade\n📈 Elementos de autoridade`,en:`You are a UX and conversion specialist.\n\nCreate the complete structure of a website for:\n[DESCRIBE THE BUSINESS]\n\nInclude:\n🏠 Home page\n📄 Internal pages\n🎯 Conversion strategy\n🧠 Strategic copy\n📱 Responsiveness\n📈 Authority elements`},
+{categoria:'📦 Infoprodutos',nivel:'intermediario',titulo:'📚 Criar um E-book para Vender',quando:'Para transformar conhecimento em um produto digital pronto pra vender.',prompt:`Você é especialista em criação de infoprodutos.\n\nCrie a estrutura completa de um e-book sobre:\n[TEMA DO E-BOOK]\n\nPúblico-alvo: [PÚBLICO]\n\nInclua:\n📑 Sumário com capítulos\n🎯 Promessa principal de cada capítulo\n💡 Ideia de bônus ou material extra\n📖 Sugestão de título e subtítulo\n💰 Faixa de preço sugerida com justificativa`,en:`You are an info-product creation specialist.\n\nCreate the complete structure of an e-book about:\n[E-BOOK TOPIC]\n\nTarget audience: [AUDIENCE]\n\nInclude:\n📑 Table of contents with chapters\n🎯 Main promise of each chapter\n💡 Bonus or extra material idea\n📖 Suggested title and subtitle\n💰 Suggested price range with reasoning`},
+{categoria:'📦 Infoprodutos',nivel:'avancado',titulo:'🎓 Estruturar um Mini-Curso Online',quando:'Para transformar um conhecimento em curso vendável.',prompt:`Você é especialista em criação de cursos online.\n\nEstruture um mini-curso sobre:\n[TEMA DO CURSO]\n\nPúblico-alvo: [PÚBLICO]\nDuração desejada: [EX: 2 HORAS, 5 AULAS]\n\nInclua:\n🎬 Nome e promessa do curso\n📚 Módulos e aulas em ordem lógica\n🎯 Objetivo de aprendizado de cada aula\n📝 Ideia de exercício prático\n🏆 Certificado ou entrega final`,en:`You are an online course creation specialist.\n\nStructure a mini-course about:\n[COURSE TOPIC]\n\nTarget audience: [AUDIENCE]\nDesired length: [E.G., 2 HOURS, 5 LESSONS]\n\nInclude:\n🎬 Course name and promise\n📚 Modules and lessons in logical order\n🎯 Learning objective for each lesson\n📝 Practical exercise idea\n🏆 Certificate or final deliverable`},
+{categoria:'📦 Infoprodutos',nivel:'basico',titulo:'📋 Criar Templates/Planilhas para Vender',quando:'Para transformar uma ferramenta útil num produto digital.',prompt:`Você é especialista em produtos digitais.\n\nCrie a estrutura de um template/planilha para vender sobre:\n[TEMA, EX: CONTROLE FINANCEIRO, PLANEJAMENTO DE CONTEÚDO]\n\nInclua:\n📊 Campos e seções que a planilha deve ter\n🎯 Problema real que ela resolve\n💡 Diferencial em relação a templates gratuitos\n📦 Como entregar (Google Sheets, Excel, Notion)\n💰 Faixa de preço sugerida`,en:`You are a digital products specialist.\n\nCreate the structure of a template/spreadsheet to sell about:\n[TOPIC, E.G., FINANCIAL TRACKING, CONTENT PLANNING]\n\nInclude:\n📊 Fields and sections the spreadsheet should have\n🎯 Real problem it solves\n💡 What sets it apart from free templates\n📦 How to deliver it (Google Sheets, Excel, Notion)\n💰 Suggested price range`},
+{categoria:'💰 Precificação & Vendas',nivel:'intermediario',titulo:'💰 Precificar um Serviço Digital',quando:'Quando não souber quanto cobrar por um serviço.',prompt:`Ajude-me a precificar meu serviço digital.\n\nServiço: [DESCREVA O SERVIÇO]\nTempo estimado para entregar: [TEMPO]\nMinha experiência: [INICIANTE, INTERMEDIÁRIO OU EXPERIENTE]\nRegião/mercado: [REGIÃO]\n\nConsidere custo do meu tempo, valor percebido pelo cliente, e preços praticados no mercado. Sugira uma faixa de preço (inicial, médio e premium) e explique o raciocínio.`,en:`Help me price my digital service.\n\nService: [DESCRIBE THE SERVICE]\nEstimated delivery time: [TIME]\nMy experience level: [BEGINNER, INTERMEDIATE OR EXPERIENCED]\nRegion/market: [REGION]\n\nConsider the cost of my time, the value perceived by the client, and market rates. Suggest a price range (entry, mid, and premium) and explain the reasoning.`},
+{categoria:'💰 Precificação & Vendas',nivel:'intermediario',titulo:'📝 Criar Proposta Comercial para Cliente',quando:'Para enviar uma proposta profissional depois do primeiro contato.',prompt:`Crie uma proposta comercial profissional para o serviço:\n[DESCREVA O SERVIÇO]\n\nCliente: [NOME/CONTEXTO DO CLIENTE]\nValor combinado: [VALOR]\nPrazo de entrega: [PRAZO]\n\nInclua:\n📋 Resumo do que será entregue\n✅ O que está incluso (e o que não está)\n💳 Forma de pagamento\n📅 Cronograma\n✍️ Fechamento profissional`,en:`Create a professional commercial proposal for the service:\n[DESCRIBE THE SERVICE]\n\nClient: [CLIENT NAME/CONTEXT]\nAgreed price: [PRICE]\nDelivery deadline: [DEADLINE]\n\nInclude:\n📋 Summary of what will be delivered\n✅ What's included (and what's not)\n💳 Payment method\n📅 Timeline\n✍️ Professional closing`},
+{categoria:'📣 Divulgação',nivel:'basico',titulo:'📣 Divulgar um Serviço Novo nas Redes',quando:'Para anunciar um serviço que você está começando a oferecer.',prompt:`Crie 3 posts para divulgar meu novo serviço:\n[DESCREVA O SERVIÇO]\n\nPúblico-alvo: [PÚBLICO]\n\nCrie:\n1️⃣ Um post de apresentação do serviço\n2️⃣ Um post mostrando um exemplo/resultado\n3️⃣ Um post com chamada direta para contratar\n\nTom natural, sem parecer propaganda forçada.`,en:`Create 3 posts to promote my new service:\n[DESCRIBE THE SERVICE]\n\nTarget audience: [AUDIENCE]\n\nCreate:\n1️⃣ An introductory post about the service\n2️⃣ A post showing an example/result\n3️⃣ A post with a direct call to hire you\n\nNatural tone, without sounding like a forced ad.`},
+{categoria:'🛠️ Execução',nivel:'intermediario',titulo:'🎬 Serviço de Edição de Vídeo/Reels',quando:'Para oferecer edição de vídeos curtos para redes sociais.',prompt:`Você é editor de vídeo profissional especializado em conteúdo para redes sociais.\n\nCrie um roteiro de edição para o vídeo:\n[DESCREVA O VÍDEO OU MATERIAL BRUTO]\n\nInclua:\n✂️ Sugestão de cortes e ritmo\n🎵 Estilo de trilha sonora\n💬 Onde inserir legendas/textos\n🎯 Gancho nos primeiros 3 segundos\n📐 Formato recomendado (9:16, 1:1, etc.)`,en:`You are a professional video editor specialized in social media content.\n\nCreate an editing script for the video:\n[DESCRIBE THE VIDEO OR RAW FOOTAGE]\n\nInclude:\n✂️ Suggested cuts and pacing\n🎵 Soundtrack style\n💬 Where to add captions/text\n🎯 Hook in the first 3 seconds\n📐 Recommended format (9:16, 1:1, etc.)`},
+{categoria:'🛠️ Execução',nivel:'intermediario',titulo:'📱 Serviço de Gestão de Redes Sociais',quando:'Para oferecer gestão mensal de redes sociais para um cliente.',prompt:`Você é gestor de redes sociais profissional.\n\nCrie um plano de gestão mensal de redes sociais para:\n[DESCREVA O NEGÓCIO DO CLIENTE]\n\nInclua:\n📅 Frequência de postagens sugerida\n🗂️ Tipos de conteúdo (educativo, venda, bastidor, etc.)\n📊 Métricas que serão acompanhadas\n📋 O que está incluso no serviço\n💰 Como estruturar o relatório mensal para o cliente`,en:`You are a professional social media manager.\n\nCreate a monthly social media management plan for:\n[DESCRIBE THE CLIENT'S BUSINESS]\n\nInclude:\n📅 Suggested posting frequency\n🗂️ Content types (educational, sales, behind-the-scenes, etc.)\n📊 Metrics that will be tracked\n📋 What's included in the service\n💰 How to structure the monthly report for the client`},
+{categoria:'🛠️ Execução',nivel:'basico',titulo:'✍️ Serviço de Copywriting/Redação',quando:'Para oferecer redação de textos persuasivos para clientes.',prompt:`Você é copywriter profissional.\n\nCrie um texto persuasivo para:\n[TIPO DE TEXTO: ANÚNCIO, DESCRIÇÃO DE PRODUTO, E-MAIL, ETC.]\n\nSobre: [DESCREVA O PRODUTO/SERVIÇO DO CLIENTE]\nPúblico-alvo: [PÚBLICO]\nTom desejado: [FORMAL, DESCONTRAÍDO, URGENTE, ETC.]\n\nUse gatilhos éticos e não invente características que o produto não tenha.`,en:`You are a professional copywriter.\n\nCreate a persuasive text for:\n[TYPE OF TEXT: AD, PRODUCT DESCRIPTION, EMAIL, ETC.]\n\nAbout: [DESCRIBE THE CLIENT'S PRODUCT/SERVICE]\nTarget audience: [AUDIENCE]\nDesired tone: [FORMAL, CASUAL, URGENT, ETC.]\n\nUse ethical triggers and do not invent features the product doesn't have.`},
+{categoria:'🛠️ Execução',nivel:'intermediario',titulo:'🖼️ Serviço de Criação de Apresentações/Slides',quando:'Para oferecer criação de slides profissionais para clientes.',prompt:`Você é especialista em design de apresentações.\n\nCrie a estrutura de uma apresentação profissional para:\n[DESCREVA O OBJETIVO: PITCH, TREINAMENTO, PROPOSTA COMERCIAL, ETC.]\n\nInclua:\n📐 Estrutura de slides recomendada (ordem e quantidade)\n🎨 Sugestão de estilo visual\n📊 Onde usar gráficos ou dados\n💬 Texto-chave para os slides principais\n🎯 Slide de fechamento com chamada para ação`,en:`You are a presentation design specialist.\n\nCreate the structure of a professional presentation for:\n[DESCRIBE THE GOAL: PITCH, TRAINING, COMMERCIAL PROPOSAL, ETC.]\n\nInclude:\n📐 Recommended slide structure (order and count)\n🎨 Visual style suggestion\n📊 Where to use charts or data\n💬 Key text for the main slides\n🎯 Closing slide with a call to action`}
 ];
 
-const prompts = [
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'servicosdigitais-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.prompt,promptEn:p.en,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
 
-{
-categoria:"💡 Ideação",
-nivel:"basico",
-titulo:"💳🎨 Serviço de Criação de Cartão de Visita",
-quando:"Quando quiser oferecer design para pequenos negócios.",
-prompt:`Você é um designer profissional.
+const lista=document.getElementById("lista-prompts"),contador=document.getElementById("contador"),busca=document.getElementById("busca"),ordenarSelect=document.getElementById("ordenar");
+const idiomaAtivo={};
 
-Crie um modelo estratégico de cartão de visita para:
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
 
-[DESCREVA O PROFISSIONAL OU EMPRESA]
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
 
-Inclua:
-🎨 Estilo visual
-📌 Informações essenciais
-🧠 Posicionamento visual
-📱 Versão digital
-🖨️ Orientação para impressão`
-},
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Serviços Digitais',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
 
-{
-categoria:"💡 Ideação",
-nivel:"basico",
-titulo:"📄📢 Serviço de Criação de Folder",
-quando:"Para divulgar empresas e serviços locais.",
-prompt:`Você é especialista em design e marketing.
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaServicosDigitaisUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaServicosDigitaisUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
 
-Crie a estrutura de um folder profissional para:
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaServicosDigitaisFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaServicosDigitaisFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};const g=window.deltaAuth;if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}_saveFeedback(fb);atualizarFeedbackUI(id);mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!')}
+function atualizarFeedbackUI(id){const fb=_loadFeedback()[id]||{voto:null};const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);if(up)up.classList.toggle('marcado',fb.voto==='up');if(down)down.classList.toggle('marcado',fb.voto==='down');const g=window.deltaAuth;if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}}
 
-[DESCREVA O NEGÓCIO]
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
 
-Inclua:
-🎯 Objetivo
-📌 Estrutura de conteúdo
-🧠 Estratégia persuasiva
-📷 Sugestão de imagens
-📞 Chamada para ação`
-},
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
 
-{
-categoria:"🛠️ Execução",
-nivel:"intermediario",
-titulo:"📑🚀 Criação de Currículo Profissional",
-quando:"Quando quiser oferecer serviço de currículo estratégico.",
-prompt:`Você é especialista em recrutamento.
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📊 '+p.titulo+'\n\nConfira esse modelo de análise no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
 
-Crie um currículo estratégico para:
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';ordenarSelect.value='padrao';aplicarFiltros();requestAnimationFrame(()=>destacarCard(id))}
 
-[DESCREVA O PERFIL]
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📊 SERVIÇOS DIGITAIS — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-servicos-digitais.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
 
-Inclua:
-🎯 Resumo impactante
-💼 Experiência organizada
-🏆 Competências
-📈 Resultados
-✨ Diferencial competitivo`
-},
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de serviço digital para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
 
-{
-categoria:"🛠️ Execução",
-nivel:"avancado",
-titulo:"🌐🚀 Criação de Site Profissional",
-quando:"Quando quiser estruturar um site completo.",
-prompt:`Você é especialista em UX e conversão.
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Serviços Digitais').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 💻 <strong>'+prompts.length+'</strong> modelos disponíveis'}
 
-Crie a estrutura completa de um site para:
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 
-[DESCREVA O NEGÓCIO]
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
 
-Inclua:
-🏠 Página inicial
-📄 Páginas internas
-🎯 Estratégia de conversão
-🧠 Copy estratégica
-📱 Responsividade
-📈 Elementos de autoridade`
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre id="pre-${p.id}">${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">💬 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">🔷 Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
 }
-
-];
-
-const lista = document.getElementById("lista-prompts");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
 
 function renderizar(arr){
+  lista.innerHTML="";
+  contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+  if(ordenarSelect.value==='padrao'){
+    ordemCategorias.forEach(cat=>{
+      const grupo=arr.filter(p=>p.categoria===cat);
+      if(grupo.length===0)return;
+      const tituloSecao=document.createElement("h2");
+      tituloSecao.className="secao-titulo";
+      tituloSecao.innerText=cat;
+      lista.appendChild(tituloSecao);
+      grupo.forEach(p=>lista.appendChild(criarCard(p)));
+    });
+  }else{
+    arr.forEach(p=>lista.appendChild(criarCard(p)));
+  }
+}
 
-lista.innerHTML="";
-contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+function contarFiltrosAtivos(){const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';return nivel!=='todos'?1:0}
+function atualizarBadgeFiltros(){const n=contarFiltrosAtivos();const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}else{badge.style.display='none';btn.classList.remove('ativo')}}
+function atualizarContadoresNivel(){
+  const termo=busca.value.toLowerCase();
+  const base=prompts.filter(p=>(p.titulo+p.prompt+p.categoria).toLowerCase().includes(termo));
+  document.querySelectorAll('#filtrosNivel button').forEach(btn=>{
+    const n=btn.dataset.nivel==='todos'?base.length:base.filter(p=>p.nivel===btn.dataset.nivel).length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
+}
 
-ordemCategorias.forEach(cat=>{
+function aplicarFiltros(){
+  const termo=busca.value.toLowerCase();
+  const nivelAtivo=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';
+  let filtrados=prompts.filter(p=>(p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo))&&(nivelAtivo==='todos'||p.nivel===nivelAtivo));
+  filtrados=ordenarLista(filtrados);
+  renderizar(filtrados);
+  atualizarContadoresNivel();
+  atualizarBadgeFiltros();
+}
 
-const grupo = arr.filter(p=>p.categoria===cat);
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';aplicarFiltros();mostrarToast('✕ Filtros limpos')}
 
-if(grupo.length===0) return;
+document.querySelectorAll('#filtrosNivel button').forEach(b=>{b.dataset.label=b.textContent.trim();b.addEventListener('click',()=>{document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()})});
 
-const tituloSecao=document.createElement("h2");
-tituloSecao.className="secao-titulo";
-tituloSecao.innerText=cat;
-lista.appendChild(tituloSecao);
-
-grupo.forEach(p=>{
-
-const card=document.createElement("div");
-card.className="card";
-card.dataset.nivel=p.nivel;
-
-card.innerHTML=`
-<div class="nivel nivel-${p.nivel}">
-${p.nivel==="avancado"?"🔴 Avançado":
-p.nivel==="intermediario"?"🟡 Intermediário":"🟢 Básico"}
-</div>
-
-<h3>${p.titulo}</h3>
-<p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-<pre>${p.prompt}</pre>
-
-<div class="acoes">
-<button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar</button>
-<button onclick="favoritarPrompt('${p.titulo}',\`${p.prompt}\`)">⭐ Favoritar</button>
-<button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-<button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-</div>
-`;
-
-lista.appendChild(card);
-
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
 });
 
-});
+ordenarSelect.addEventListener('change',aplicarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
 
-}
-
-function filtrarPrompts(){
-const termo=busca.value.toLowerCase();
-const filtrados=prompts.filter(p=>
-p.titulo.toLowerCase().includes(termo)||
-p.prompt.toLowerCase().includes(termo)||
-p.categoria.toLowerCase().includes(termo)
-);
-renderizar(filtrados);
-}
-
-function filtrarNivel(event,nivel){
-
-document.querySelectorAll(".filtro-nivel button")
-.forEach(btn=>btn.classList.remove("ativo"));
-event.target.classList.add("ativo");
-
-const filtrados = nivel==="todos"
-? prompts
-: prompts.filter(p=>p.nivel===nivel);
-
-renderizar(filtrados);
-}
-
-function copiarPrompt(texto){
-navigator.clipboard.writeText(texto);
-alert("📋 Copiado!");
-}
-
-function favoritarPrompt(titulo,conteudo){
-const salvos=JSON.parse(localStorage.getItem("deltaPrompts"))||[];
-salvos.push({
-id:Date.now(),
-titulo,
-categoria:"Serviços Digitais",
-conteudo,
-favorito:true
-});
-localStorage.setItem("deltaPrompts",JSON.stringify(salvos));
-alert("⭐ Favoritado!");
-}
-
-function abrirChatGPT(texto){
-window.open("https://chat.openai.com/?prompt="+encodeURIComponent(texto),"_blank");
-}
-
-function abrirGemini(texto){
-window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
-}
-
-renderizar(prompts);
-
-</script>
-
-</body>
-</html>
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+aplicarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+</script></body></html>
