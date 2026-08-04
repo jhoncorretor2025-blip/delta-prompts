@@ -1,19 +1,54 @@
 <!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Meus Números | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="robots" content="noindex"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.periodo-seletor{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
+.periodo-seletor button{border:1px solid #e5e7eb;background:#fff;padding:9px 16px;border-radius:999px;font-weight:700;font-size:13.5px;cursor:pointer}
+.periodo-seletor button.ativo{background:var(--delta-accent,#5b5ce2);color:#fff;border-color:var(--delta-accent,#5b5ce2)}
 .numeros-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}
 .numero-card{padding:22px;border-radius:18px;border:1px solid #e5e7eb;background:#fff;text-align:center}
 .numero-valor{font-size:38px;font-weight:900;color:var(--delta-accent,#5b5ce2);line-height:1}
 .numero-label{margin-top:8px;font-size:14px;color:#667085;font-weight:700}
 .numero-emoji{font-size:26px;margin-bottom:6px}
-.categoria-favorita-box{padding:20px;border-radius:16px;background:#f8fafc;border:1px dashed var(--delta-accent,#5b5ce2);text-align:center;margin:20px 0}
+.categoria-favorita-box{padding:20px;border-radius:16px;background:#f8fafc;border:1px dashed var(--delta-accent,#5b5ce2);margin:20px 0}
+.categoria-favorita-box h3{margin:0 0 14px}
+.cat-linha{margin-bottom:12px}
+.cat-linha-topo{display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;margin-bottom:5px}
+.cat-barra-fundo{height:10px;border-radius:999px;background:#e5e7eb;overflow:hidden}
+.cat-barra-preenchida{height:100%;border-radius:999px;background:var(--delta-accent,#5b5ce2)}
+.grafico-box{padding:20px;border-radius:16px;border:1px solid #e5e7eb;background:#fff;margin:20px 0}
+.grafico-box h3{margin:0 0 16px}
+.grafico-barras{display:flex;align-items:flex-end;gap:8px;height:140px}
+.grafico-coluna{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.grafico-valor{font-size:11px;font-weight:800;color:var(--delta-accent,#5b5ce2);margin-bottom:4px}
+.grafico-barra{width:100%;max-width:36px;border-radius:8px 8px 0 0;background:var(--delta-accent,#5b5ce2);min-height:3px;transition:height .3s}
+.grafico-dia{font-size:11px;color:#667085;font-weight:700;margin-top:6px}
+.top5-box{padding:20px;border-radius:16px;border:1px solid #e5e7eb;background:#fff;margin:20px 0}
+.top5-box h3{margin:0 0 14px}
+.top5-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f1f5f9;text-decoration:none;color:inherit}
+.top5-item:last-child{border-bottom:0}
+.top5-posicao{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:#eef2ff;color:var(--delta-accent,#5b5ce2);font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center}
+.top5-titulo{flex:1;font-weight:700;font-size:14.5px}
+.top5-contagem{flex:0 0 auto;font-size:13px;color:#667085;font-weight:700}
+.btn-compartilhar-numeros{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:12px 22px;border:0;border-radius:12px;background:#15803d;color:#fff;font-weight:800;font-size:14px;cursor:pointer}
 .vazio-numeros{text-align:center;padding:40px 20px;color:#667085}
-[data-theme="dark"] .numero-card{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+.vazio-mini{text-align:center;padding:20px;color:#8a92a6;font-size:13.5px}
+.toast-numeros{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast-numeros.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] .numero-card,[data-theme="dark"] .grafico-box,[data-theme="dark"] .top5-box{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .numero-label{color:#a0a0a0}
 [data-theme="dark"] .categoria-favorita-box{background:var(--bg-card,#16213e)}
+[data-theme="dark"] .periodo-seletor button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .top5-item{border-color:rgba(255,255,255,.08)}
+[data-theme="dark"] .grafico-dia,[data-theme="dark"] .top5-contagem{color:#a0a0a0}
 @media(max-width:600px){.numeros-grid{grid-template-columns:1fr}}
-</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260824"></script><main>
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260825"></script><main>
 
 <h1>📊 Meus Números</h1>
 <p>Um resumo de como você tem usado o Delta Prompts. Tudo calculado só com informações salvas no seu próprio navegador.</p>
+
+<div class="periodo-seletor" id="periodoSeletor">
+  <button data-periodo="semana">📅 Esta semana</button>
+  <button data-periodo="mes">🗓️ Este mês</button>
+  <button data-periodo="tudo" class="ativo">♾️ Tudo</button>
+</div>
 
 <div class="numeros-grid">
   <div class="numero-card"><div class="numero-emoji">🔥</div><div class="numero-valor" id="numStreak">0</div><div class="numero-label">Dias seguidos usando o site</div></div>
@@ -22,10 +57,19 @@
   <div class="numero-card"><div class="numero-emoji">📋</div><div class="numero-valor" id="numCopiados">0</div><div class="numero-label">Prompts copiados/usados</div></div>
 </div>
 
+<div class="grafico-box">
+  <h3>📊 Atividade dos últimos 7 dias</h3>
+  <div class="grafico-barras" id="graficoBarras"></div>
+</div>
+
+<div class="top5-box">
+  <h3>🏆 Top 5 prompts mais usados <span style="font-weight:400;font-size:12.5px;color:#8a92a6">(de todos os tempos)</span></h3>
+  <div id="top5Lista"></div>
+</div>
+
 <div class="categoria-favorita-box" id="categoriaFavoritaBox" style="display:none">
-  <div style="font-size:22px;margin-bottom:6px">🗂️</div>
-  <div style="font-weight:800;font-size:16px">Sua categoria favorita</div>
-  <div id="categoriaFavoritaNome" style="font-size:20px;font-weight:900;color:var(--delta-accent,#5b5ce2);margin-top:6px"></div>
+  <h3>🗂️ Suas categorias favoritas</h3>
+  <div id="categoriasTop3"></div>
 </div>
 
 <div class="vazio-numeros" id="vazioAviso" style="display:none">
@@ -35,14 +79,19 @@
 <section class="card" style="text-align:center">
   <h3>🚀 Continue explorando</h3>
   <a href="/delta-prompts/index.html" style="display:inline-block;margin-top:10px;padding:14px 28px;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:700;border-radius:12px;text-decoration:none">🏠 Voltar para a Página Inicial</a>
+  <br>
+  <button type="button" class="btn-compartilhar-numeros" id="btnCompartilharNumeros">🔗 Compartilhar meus números</button>
 </section>
 
 </main>
+<div class="toast-numeros" id="toastNumeros"></div>
 <button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
 <script>
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+
+function mostrarToast(texto){const t=document.getElementById('toastNumeros');t.textContent=texto;t.classList.add('show');clearTimeout(window._toastT);window._toastT=setTimeout(()=>t.classList.remove('show'),2200)}
 
 function calcularStreak(){
   let dias=[];
@@ -56,12 +105,10 @@ function calcularStreak(){
     if(diffDias===1){atualSeq++;recorde=Math.max(recorde,atualSeq)}
     else{atualSeq=1}
   }
-  // streak atual: conta dias consecutivos terminando hoje ou ontem
   const hoje=new Date().toISOString().slice(0,10);
   let atual=0;
   let cursor=new Date(hoje);
   const setDatas=new Set(datas);
-  // se o ultimo dia salvo nao for hoje nem ontem, streak atual = 0
   const ultimoDia=datas[datas.length-1];
   const diffUltimo=Math.round((new Date(hoje)-new Date(ultimoDia))/86400000);
   if(diffUltimo>1)return{atual:0,recorde};
@@ -73,7 +120,7 @@ function calcularStreak(){
   return{atual,recorde};
 }
 
-function contarUsos(){
+function contarUsosTotal(){
   let total=0;
   try{
     Object.keys(localStorage).forEach(chave=>{
@@ -88,35 +135,140 @@ function contarUsos(){
   return total;
 }
 
-function categoriaMaisFrequente(favoritos){
-  const contagem={};
-  favoritos.forEach(f=>{if(f.categoria)contagem[f.categoria]=(contagem[f.categoria]||0)+1});
-  let melhor=null,max=0;
-  Object.keys(contagem).forEach(c=>{if(contagem[c]>max){max=contagem[c];melhor=c}});
-  return melhor;
+function lerAtividadeDiaria(){try{return JSON.parse(localStorage.getItem('deltaAtividadeDiaria'))||{}}catch(e){return{}}}
+
+function somaAtividadePeriodo(dias){
+  const ativ=lerAtividadeDiaria();
+  let total=0;
+  const hoje=new Date();
+  for(let i=0;i<dias;i++){
+    const d=new Date(hoje);d.setDate(d.getDate()-i);
+    const chave=d.toISOString().slice(0,10);
+    total+=ativ[chave]||0;
+  }
+  return total;
 }
 
-(function(){
-  let favoritos=[];
-  try{favoritos=JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){}
+function lerFavoritos(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
 
+function favoritosNoPeriodo(favoritos,dias){
+  if(dias===null)return favoritos;
+  const limite=Date.now()-dias*86400000;
+  return favoritos.filter(f=>(f.createdAt||0)>=limite);
+}
+
+function categoriasTop3(favoritos){
+  const contagem={};
+  favoritos.forEach(f=>{if(f.categoria)contagem[f.categoria]=(contagem[f.categoria]||0)+1});
+  const arr=Object.keys(contagem).map(c=>({categoria:c,count:contagem[c]}));
+  arr.sort((a,b)=>b.count-a.count);
+  const total=favoritos.length||1;
+  return arr.slice(0,3).map(x=>({categoria:x.categoria,count:x.count,pct:Math.round(x.count/total*100)}));
+}
+
+function top5MaisUsados(){
+  const todos={};
+  try{
+    Object.keys(localStorage).forEach(chave=>{
+      if(/^delta.*Usos$/.test(chave)){
+        const obj=JSON.parse(localStorage.getItem(chave))||{};
+        Object.keys(obj).forEach(id=>{todos[id]=(todos[id]||0)+(obj[id]||0)});
+      }
+    });
+  }catch(e){}
+  let mapaTitulos={};
+  try{mapaTitulos=JSON.parse(localStorage.getItem('deltaTituloPorId'))||{}}catch(e){}
+  const lista=Object.keys(todos).map(id=>({
+    id,count:todos[id],
+    titulo:(mapaTitulos[id]&&mapaTitulos[id].titulo)||null,
+    url:(mapaTitulos[id]&&mapaTitulos[id].url)||null
+  })).filter(x=>x.titulo&&x.count>0);
+  lista.sort((a,b)=>b.count-a.count);
+  return lista.slice(0,5);
+}
+
+function renderizarGrafico(){
+  const ativ=lerAtividadeDiaria();
+  const dias=[];
+  const hoje=new Date();
+  for(let i=6;i>=0;i--){
+    const d=new Date(hoje);d.setDate(d.getDate()-i);
+    dias.push({chave:d.toISOString().slice(0,10),label:d.toLocaleDateString('pt-BR',{weekday:'short'}).replace('.','')});
+  }
+  const valores=dias.map(d=>ativ[d.chave]||0);
+  const max=Math.max(...valores,1);
+  const box=document.getElementById('graficoBarras');
+  if(valores.every(v=>v===0)){
+    box.innerHTML='<div class="vazio-mini">Ainda não temos atividade recente registrada. Continue usando prompts que o gráfico vai se preencher! 📈</div>';
+    return;
+  }
+  box.innerHTML=dias.map((d,i)=>{
+    const altura=Math.max(4,Math.round((valores[i]/max)*110));
+    return `<div class="grafico-coluna"><div class="grafico-valor">${valores[i]||''}</div><div class="grafico-barra" style="height:${altura}px"></div><div class="grafico-dia">${d.label}</div></div>`;
+  }).join('');
+}
+
+function renderizarTop5(){
+  const top5=top5MaisUsados();
+  const box=document.getElementById('top5Lista');
+  if(!top5.length){
+    box.innerHTML='<div class="vazio-mini">Ainda não sabemos os nomes dos seus prompts mais usados — continue usando que essa lista aparece aqui! 🚀</div>';
+    return;
+  }
+  box.innerHTML=top5.map((p,i)=>{
+    const conteudo=`<span class="top5-posicao">${i+1}</span><span class="top5-titulo">${p.titulo}</span><span class="top5-contagem">🔥 ${p.count}x</span>`;
+    return p.url?`<a class="top5-item" href="${p.url}">${conteudo}</a>`:`<div class="top5-item">${conteudo}</div>`;
+  }).join('');
+}
+
+function renderizarCategorias(favoritosFiltrados){
+  const top3=categoriasTop3(favoritosFiltrados);
+  const box=document.getElementById('categoriaFavoritaBox');
+  if(!top3.length){box.style.display='none';return}
+  box.style.display='block';
+  document.getElementById('categoriasTop3').innerHTML=top3.map(c=>`
+    <div class="cat-linha">
+      <div class="cat-linha-topo"><span>${c.categoria}</span><span>${c.count} · ${c.pct}%</span></div>
+      <div class="cat-barra-fundo"><div class="cat-barra-preenchida" style="width:${c.pct}%"></div></div>
+    </div>`).join('');
+}
+
+function renderizarNumeros(periodo){
+  document.querySelectorAll('#periodoSeletor button').forEach(b=>b.classList.toggle('ativo',b.dataset.periodo===periodo));
+
+  const favoritos=lerFavoritos();
   const streak=calcularStreak();
   document.getElementById('numStreak').textContent=streak.atual;
   document.getElementById('numRecorde').textContent=streak.recorde;
-  document.getElementById('numFavoritos').textContent=favoritos.length;
 
-  const totalUsos=contarUsos();
+  let favFiltrados,totalUsos;
+  if(periodo==='semana'){favFiltrados=favoritosNoPeriodo(favoritos,7);totalUsos=somaAtividadePeriodo(7)}
+  else if(periodo==='mes'){favFiltrados=favoritosNoPeriodo(favoritos,30);totalUsos=somaAtividadePeriodo(30)}
+  else{favFiltrados=favoritos;totalUsos=contarUsosTotal()}
+
+  document.getElementById('numFavoritos').textContent=favFiltrados.length;
   document.getElementById('numCopiados').textContent=totalUsos;
 
-  const catFav=categoriaMaisFrequente(favoritos);
-  if(catFav){
-    document.getElementById('categoriaFavoritaBox').style.display='block';
-    document.getElementById('categoriaFavoritaNome').textContent=catFav;
-  }
+  renderizarCategorias(favFiltrados);
 
-  if(favoritos.length===0&&totalUsos===0){
+  if(favoritos.length===0&&contarUsosTotal()===0){
     document.getElementById('vazioAviso').style.display='block';
+  }else{
+    document.getElementById('vazioAviso').style.display='none';
   }
-})();
+}
+
+function compartilharNumeros(){
+  const texto='🔥 Já uso o Delta Prompts há '+document.getElementById('numStreak').textContent+' dias seguidos e já usei '+contarUsosTotal()+' prompts! Confira: '+location.origin+'/delta-prompts/index.html';
+  if(navigator.share){navigator.share({text:texto}).catch(()=>{})}
+  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Texto copiado! Cole onde quiser compartilhar.'))}
+}
+
+document.querySelectorAll('#periodoSeletor button').forEach(b=>b.addEventListener('click',()=>renderizarNumeros(b.dataset.periodo)));
+document.getElementById('btnCompartilharNumeros').addEventListener('click',compartilharNumeros);
+
+renderizarNumeros('tudo');
+renderizarGrafico();
+renderizarTop5();
 </script>
 </body></html>
