@@ -1,4 +1,11 @@
 <!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Meus Números | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="robots" content="noindex"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.sync-status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-radius:12px;background:#f8fafc;border:1px solid #e5e7eb;font-size:13.5px;font-weight:700;color:#475467;margin-top:14px}
+.sync-status.sincronizado{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
+.sync-status.deslogado{background:#fffbeb;border-color:#fde68a;color:#92400e}
+.sync-status button{border:0;background:var(--delta-accent,#5b5ce2);color:#fff;padding:8px 14px;border-radius:999px;font-weight:800;font-size:12.5px;cursor:pointer;margin-left:auto}
+[data-theme="dark"] .sync-status{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1);color:#cbd5e1}
+[data-theme="dark"] .sync-status.sincronizado{background:#0f2a1a;border-color:#166534;color:#4ade80}
+[data-theme="dark"] .sync-status.deslogado{background:#2a2410;border-color:#92400e;color:#fbbf24}
 .periodo-seletor{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
 .periodo-seletor button{border:1px solid #e5e7eb;background:#fff;padding:9px 16px;border-radius:999px;font-weight:700;font-size:13.5px;cursor:pointer}
 .periodo-seletor button.ativo{background:var(--delta-accent,#5b5ce2);color:#fff;border-color:var(--delta-accent,#5b5ce2)}
@@ -43,6 +50,8 @@
 
 <h1>📊 Meus Números</h1>
 <p>Um resumo de como você tem usado o Delta Prompts. Tudo calculado só com informações salvas no seu próprio navegador.</p>
+
+<div class="sync-status" id="syncStatus">🔄 Carregando...</div>
 
 <div class="periodo-seletor" id="periodoSeletor">
   <button data-periodo="semana">📅 Esta semana</button>
@@ -267,8 +276,62 @@ function compartilharNumeros(){
 document.querySelectorAll('#periodoSeletor button').forEach(b=>b.addEventListener('click',()=>renderizarNumeros(b.dataset.periodo)));
 document.getElementById('btnCompartilharNumeros').addEventListener('click',compartilharNumeros);
 
-renderizarNumeros('tudo');
-renderizarGrafico();
-renderizarTop5();
+// ===== ESPERA A CONTA GOOGLE CARREGAR/SINCRONIZAR ANTES DE MOSTRAR OS NUMEROS =====
+function mostrarStatusSync(estado,user){
+  const box=document.getElementById('syncStatus');
+  box.className='sync-status';
+  if(estado==='carregando'){
+    box.textContent='🔄 Carregando seus dados...';
+  }else if(estado==='sincronizando'){
+    box.classList.add('sincronizado');
+    box.textContent='🔄 Sincronizando com sua conta Google ('+(user&&user.email||'')+')...';
+  }else if(estado==='sincronizado'){
+    box.classList.add('sincronizado');
+    box.textContent='✅ Dados sincronizados com sua conta Google ('+(user&&user.email||'')+')';
+  }else{
+    box.classList.add('deslogado');
+    box.innerHTML='📴 Você não está logado — esses números são só deste navegador.';
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.textContent='🔑 Entrar com Google';
+    btn.addEventListener('click',()=>{if(window.deltaAuth&&window.deltaAuth.login)window.deltaAuth.login()});
+    box.appendChild(btn);
+  }
+}
+
+function aguardarMudancaAuth(){
+  return new Promise(resolve=>{
+    window.addEventListener('delta-auth-changed',function ouvir(e){
+      window.removeEventListener('delta-auth-changed',ouvir);
+      resolve(e.detail&&e.detail.user?e.detail.user:null);
+    });
+  });
+}
+
+async function iniciar(){
+  mostrarStatusSync('carregando');
+  if(!window.deltaLoadAuth){
+    mostrarStatusSync('deslogado');
+    renderizarNumeros('tudo');renderizarGrafico();renderizarTop5();
+    return;
+  }
+  const promessaAuth=aguardarMudancaAuth();
+  await window.deltaLoadAuth();
+  const user=await promessaAuth;
+  if(user){
+    mostrarStatusSync('sincronizando',user);
+    try{
+      if(window.deltaAuth.syncFavoritos)await window.deltaAuth.syncFavoritos(user.uid);
+      if(window.deltaAuth.syncUsos)await window.deltaAuth.syncUsos(user.uid);
+    }catch(e){console.error('Erro ao sincronizar meus numeros:',e)}
+    mostrarStatusSync('sincronizado',user);
+  }else{
+    mostrarStatusSync('deslogado');
+  }
+  renderizarNumeros('tudo');
+  renderizarGrafico();
+  renderizarTop5();
+}
+iniciar();
 </script>
 </body></html>
