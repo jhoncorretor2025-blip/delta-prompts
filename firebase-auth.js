@@ -17,6 +17,18 @@ async function saveProfile(user){if(!user)return;await setDoc(doc(db,'users',use
 function _lerFavoritosLocais(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
 function _gravarFavoritosLocais(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
 
+function _avisarErroSync(){
+  try{
+    if(sessionStorage.getItem('deltaAvisoSyncMostrado'))return;
+    sessionStorage.setItem('deltaAvisoSyncMostrado','1');
+    var el=document.createElement('div');
+    el.textContent='⚠️ Não conseguimos salvar seus favoritos na nuvem agora. Eles continuam salvos neste aparelho.';
+    el.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#7c2d12;color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;font-weight:700;z-index:9999;max-width:90vw;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.25)';
+    document.body.appendChild(el);
+    setTimeout(function(){el.remove()},6000);
+  }catch(e){}
+}
+
 export async function syncFavoritosFromCloud(uid){
   if(!uid)return;
   try{
@@ -29,13 +41,13 @@ export async function syncFavoritosFromCloud(uid){
     _gravarFavoritosLocais(mesclado);
     await setDoc(doc(db,'users',uid),{favoritos:mesclado},{merge:true});
     window.dispatchEvent(new CustomEvent('delta:favoritos-updated'));
-  }catch(e){console.error('Erro ao sincronizar favoritos:',e)}
+  }catch(e){console.error('Erro ao sincronizar favoritos:',e);_avisarErroSync()}
 }
 
 export async function pushFavoritosToCloud(uid){
   if(!uid)return;
   try{await setDoc(doc(db,'users',uid),{favoritos:_lerFavoritosLocais()},{merge:true})}
-  catch(e){console.error('Erro ao enviar favoritos para a nuvem:',e)}
+  catch(e){console.error('Erro ao enviar favoritos para a nuvem:',e);_avisarErroSync()}
 }
 
 // ===== FEEDBACK GLOBAL (útil / não útil de todos os usuários, agregado) =====
@@ -124,7 +136,10 @@ export function logout(){return signOut(auth)}
 export function getUser(){return auth.currentUser}
 
 // Chamado uma unica vez, DEPOIS que o menu ja existe no DOM (sem MutationObserver, sem loop).
+let _resolverAuthPronto;
+export const authPronto=new Promise(r=>{_resolverAuthPronto=r});
 export function initAuthWatcher(){
   getRedirectResult(auth).then(r=>r&&saveProfile(r.user)).catch(console.error);
-  onAuthStateChanged(auth,user=>{window.deltaUser=user||null;window.dispatchEvent(new CustomEvent('delta-auth-changed',{detail:{user}}));render(user);if(user){saveProfile(user).catch(console.error);syncFavoritosFromCloud(user.uid);syncUsosFromCloud(user.uid)}});
+  let primeiraVez=true;
+  onAuthStateChanged(auth,user=>{window.deltaUser=user||null;window.dispatchEvent(new CustomEvent('delta-auth-changed',{detail:{user}}));render(user);if(user){saveProfile(user).catch(console.error);syncFavoritosFromCloud(user.uid);syncUsosFromCloud(user.uid)}if(primeiraVez){primeiraVez=false;_resolverAuthPronto(user)}});
 }
