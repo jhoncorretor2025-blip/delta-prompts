@@ -1,13 +1,73 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
 import { getFirestore, doc, setDoc, getDoc, serverTimestamp, increment, collection, query, orderBy, where, limit, getDocs } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 
 const firebaseConfig={apiKey:'AIzaSyAFMCGldhbqzcHqem-Nm8bPqSLHTf04UKc',authDomain:'delta-prompts.firebaseapp.com',projectId:'delta-prompts',storageBucket:'delta-prompts.firebasestorage.app',messagingSenderId:'755389200448',appId:'1:755389200448:web:0affd073b7c607169dc7a5',measurementId:'G-29MLGRJW66'};
 const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getFirestore(app);const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});
 
-function css(){if(document.getElementById('delta-auth-style'))return;const s=document.createElement('style');s.id='delta-auth-style';s.textContent=`.delta-auth-box{margin:12px 8px 8px;padding:12px;border:1px solid #e6e8f0;border-radius:14px;background:linear-gradient(135deg,#fafbff,#f5f3ff)}.delta-login-btn,.delta-logout-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;border:1px solid #d9dce7;border-radius:10px;background:#fff;color:#344054;font-weight:800;cursor:pointer}.delta-login-btn:hover{border-color:#818cf8;background:#f8f7ff}.delta-user{display:flex;align-items:center;gap:9px;margin-bottom:9px}.delta-user img{width:34px;height:34px;border-radius:50%;object-fit:cover}.delta-user-info{min-width:0}.delta-user-info strong,.delta-user-info small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.delta-user-info small{font-size:11px;color:#667085}.delta-logout-btn{padding:7px;font-size:12px}.delta-auth-status{margin-top:7px;font-size:11px;color:#667085;text-align:center}`;document.head.appendChild(s)}
+function css(){if(document.getElementById('delta-auth-style'))return;const s=document.createElement('style');s.id='delta-auth-style';s.textContent=`.delta-auth-box{margin:12px 8px 8px;padding:12px;border:1px solid #e6e8f0;border-radius:14px;background:linear-gradient(135deg,#fafbff,#f5f3ff)}.delta-login-btn,.delta-logout-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;border:1px solid #d9dce7;border-radius:10px;background:#fff;color:#344054;font-weight:800;cursor:pointer}.delta-login-btn:hover{border-color:#818cf8;background:#f8f7ff}.delta-user{display:flex;align-items:center;gap:9px;margin-bottom:9px}.delta-user img{width:34px;height:34px;border-radius:50%;object-fit:cover}.delta-user-info{min-width:0}.delta-user-info strong,.delta-user-info small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.delta-user-info small{font-size:11px;color:#667085}.delta-logout-btn{padding:7px;font-size:12px}.delta-auth-status{margin-top:7px;font-size:11px;color:#667085;text-align:center}.delta-auth-divisor{display:flex;align-items:center;gap:8px;margin:9px 0;font-size:10.5px;color:#98a2b3;text-transform:uppercase;font-weight:800}.delta-auth-divisor::before,.delta-auth-divisor::after{content:'';flex:1;height:1px;background:#e6e8f0}.delta-email-toggle{width:100%;background:none;border:0;color:#5b5ce2;font-weight:800;font-size:12px;cursor:pointer;padding:4px 0}.delta-email-form{display:flex;flex-direction:column;gap:7px;margin-top:8px}.delta-email-form input{width:100%;box-sizing:border-box;padding:9px 10px;border:1px solid #d9dce7;border-radius:9px;font-size:12.5px;font-family:inherit}.delta-email-submit{width:100%;padding:9px;border:0;border-radius:9px;background:#5b5ce2;color:#fff;font-weight:800;font-size:12.5px;cursor:pointer}.delta-email-links{display:flex;justify-content:space-between;font-size:11px;margin-top:2px}.delta-email-links button{background:none;border:0;color:#5b5ce2;font-weight:700;cursor:pointer;padding:0}.delta-email-erro{font-size:11px;color:#b91c1c;margin-top:4px}`;document.head.appendChild(s)}
 function box(){const nav=document.querySelector('#menu .sidebar');if(!nav)return null;let el=document.getElementById('delta-auth-box');if(!el){el=document.createElement('div');el.id='delta-auth-box';el.className='delta-auth-box';const brand=nav.querySelector('.menu-brand');brand?brand.insertAdjacentElement('afterend',el):nav.prepend(el)}return el}
-function render(user){css();const el=box();if(!el)return;if(user){el.innerHTML=`<div class="delta-user"><img src="${user.photoURL||''}" alt=""><div class="delta-user-info"><strong>${escapeHtml(user.displayName||'Minha conta')}</strong><small>${escapeHtml(user.email||'')}</small></div></div><button class="delta-logout-btn" id="delta-logout">Sair da conta</button>`;document.getElementById('delta-logout').onclick=()=>signOut(auth)}else{el.innerHTML=`<button class="delta-login-btn" id="delta-login"><span>G</span> Entrar com Google</button><div class="delta-auth-status">Sincronize sua conta e seus dados pessoais.</div>`;document.getElementById('delta-login').onclick=login}}
+let modoEmail=null; // null | 'entrar' | 'criar'
+function render(user){
+  css();
+  const el=box();
+  if(!el)return;
+  if(user){
+    el.innerHTML=`<div class="delta-user"><img src="${user.photoURL||''}" alt=""><div class="delta-user-info"><strong>${escapeHtml(user.displayName||'Minha conta')}</strong><small>${escapeHtml(user.email||'')}</small></div></div><button class="delta-logout-btn" id="delta-logout">Sair da conta</button>`;
+    document.getElementById('delta-logout').onclick=()=>signOut(auth);
+    return;
+  }
+  if(!modoEmail){
+    el.innerHTML=`<button class="delta-login-btn" id="delta-login"><span>G</span> Entrar com Google</button><div class="delta-auth-divisor">ou</div><button type="button" class="delta-email-toggle" id="delta-email-toggle">✉️ Entrar com e-mail e senha</button><div class="delta-auth-status">Sincronize sua conta e seus dados pessoais.</div>`;
+    document.getElementById('delta-login').onclick=login;
+    document.getElementById('delta-email-toggle').onclick=()=>{modoEmail='entrar';render()};
+    return;
+  }
+  const criando=modoEmail==='criar';
+  el.innerHTML=`<button class="delta-login-btn" id="delta-login"><span>G</span> Entrar com Google</button><div class="delta-auth-divisor">ou</div><form class="delta-email-form" id="delta-email-form"><input type="email" id="delta-email-input" placeholder="Seu e-mail" required autocomplete="email">${criando?'<input type="text" id="delta-nome-input" placeholder="Seu nome" required autocomplete="name">':''}<input type="password" id="delta-senha-input" placeholder="Sua senha" required minlength="6" autocomplete="${criando?'new-password':'current-password'}"><button type="submit" class="delta-email-submit">${criando?'✉️ Criar conta':'✉️ Entrar'}</button><div class="delta-email-links"><button type="button" id="delta-alternar-modo">${criando?'Já tenho conta':'Criar conta nova'}</button>${criando?'':'<button type="button" id=\"delta-esqueci\">Esqueci a senha</button>'}</div><div class="delta-email-erro" id="delta-email-erro" style="display:none"></div></form>`;
+  document.getElementById('delta-login').onclick=login;
+  document.getElementById('delta-alternar-modo').onclick=()=>{modoEmail=criando?'entrar':'criar';render()};
+  const btnEsqueci=document.getElementById('delta-esqueci');
+  if(btnEsqueci)btnEsqueci.onclick=async()=>{
+    const email=document.getElementById('delta-email-input').value.trim();
+    const erroEl=document.getElementById('delta-email-erro');
+    if(!email){erroEl.textContent='Digite seu e-mail primeiro.';erroEl.style.display='block';return}
+    try{await sendPasswordResetEmail(auth,email);erroEl.style.color='#15803d';erroEl.textContent='📧 E-mail de recuperação enviado! Confira sua caixa de entrada.';erroEl.style.display='block'}
+    catch(e){erroEl.style.color='#b91c1c';erroEl.textContent=mensagemErroAuth(e);erroEl.style.display='block'}
+  };
+  document.getElementById('delta-email-form').onsubmit=async(ev)=>{
+    ev.preventDefault();
+    const email=document.getElementById('delta-email-input').value.trim();
+    const senha=document.getElementById('delta-senha-input').value;
+    const erroEl=document.getElementById('delta-email-erro');
+    erroEl.style.display='none';
+    try{
+      if(criando){
+        const nome=document.getElementById('delta-nome-input').value.trim();
+        const cred=await createUserWithEmailAndPassword(auth,email,senha);
+        if(nome)await updateProfile(cred.user,{displayName:nome});
+        await saveProfile(cred.user);
+      }else{
+        await signInWithEmailAndPassword(auth,email,senha);
+      }
+      modoEmail=null;
+    }catch(e){
+      erroEl.style.color='#b91c1c';
+      erroEl.textContent=mensagemErroAuth(e);
+      erroEl.style.display='block';
+    }
+  };
+}
+function mensagemErroAuth(e){
+  const c=e&&e.code||'';
+  if(c==='auth/email-already-in-use')return'Esse e-mail já tem conta. Tente entrar em vez de criar.';
+  if(c==='auth/invalid-email')return'E-mail inválido.';
+  if(c==='auth/weak-password')return'A senha precisa ter pelo menos 6 caracteres.';
+  if(c==='auth/wrong-password'||c==='auth/invalid-credential')return'E-mail ou senha incorretos.';
+  if(c==='auth/user-not-found')return'Não achamos conta com esse e-mail. Que tal criar uma?';
+  if(c==='auth/too-many-requests')return'Muitas tentativas. Aguarde um pouco e tente de novo.';
+  return'Não foi possível concluir. Tente novamente.';
+}
 function escapeHtml(v){return String(v).replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
 async function saveProfile(user){if(!user)return;await setDoc(doc(db,'users',user.uid),{name:user.displayName||'',email:user.email||'',photoURL:user.photoURL||'',lastLoginAt:serverTimestamp()},{merge:true})}
 
