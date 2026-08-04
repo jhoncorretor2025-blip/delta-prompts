@@ -1,13 +1,270 @@
-<!DOCTYPE html>
-<html lang="pt-br"><head><meta charset="UTF-8"><title>Comunicação | Delta Prompts</title><meta name="description" content="Prompts estratégicos para melhorar sua comunicação em vendas, trabalho, liderança, redes sociais e conversas difíceis."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:15px;align-items:center;margin:20px 0;flex-wrap:wrap}.top-bar input{flex:1;padding:14px;border-radius:10px;border:1px solid #e5e7eb}.contador{font-size:14px;opacity:.75}.filtros-container{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}.filtro-botoes{display:flex;flex-wrap:wrap;gap:8px}.filtro-botoes button{padding:8px 15px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}.filtro-botoes button.ativo{background:#22c55e;color:#fff;border-color:#22c55e}.secao-categoria{background:#fff;border-radius:12px;padding:20px;margin-bottom:35px;border:1px solid #f1f5f9;box-shadow:0 4px 6px -1px rgba(0,0,0,.05)}.secao-titulo{font-size:22px;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #e2e8f0}.grid-prompts{display:flex;flex-direction:column;gap:20px}pre{white-space:pre-wrap;font-size:14px;background:#f9fafb;padding:15px;border-radius:10px;border:1px solid #e5e7eb;font-family:inherit}</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260827"></script><main><h1>🗣️ Comunicação Profissional com IA</h1><p>Prompts estratégicos para melhorar sua comunicação em vendas, trabalho, liderança, redes sociais e conversas difíceis.</p><section class="card"><h3>🎯 Objetivo</h3><p>Ajudar você a se comunicar com mais clareza, persuasão e estratégia, usando IA para estruturar mensagens profissionais.</p></section><section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>📢 Persuasão:</strong> vendas e mensagens que geram ação.</li><li><strong>💼 Profissional:</strong> e-mails e comunicação de trabalho.</li><li><strong>🤝 Relacionamento:</strong> negociação e conversas delicadas.</li><li><strong>📣 Conteúdo:</strong> redes sociais e apresentações.</li></ul></section><div class="top-bar"><input id="busca" type="text" placeholder="🔎 Buscar modelo de comunicação..." oninput="atualizarFiltros()"><div id="contador" class="contador"></div></div><div class="filtros-container"><div id="botoes-categoria" class="filtro-botoes filtro-categoria"></div><div class="filtro-botoes filtro-nivel"><button class="ativo" onclick="filtrarNivel(event,'todos')">Todos os Níveis</button><button onclick="filtrarNivel(event,'basico')">🟢 Básico</button><button onclick="filtrarNivel(event,'intermediario')">🟡 Intermediário</button><button onclick="filtrarNivel(event,'avancado')">🔴 Avançado</button></div></div><div id="lista-prompts"></div></main><script>
-const ordemCategorias=['📢 Comunicação Persuasiva','💼 Comunicação Corporativa','🧠 Conversas Difíceis','🤝 Negociação','📱 Redes Sociais','🎤 Apresentações'];
-const prompts=[
-{id:1,nivel:'intermediario',categoria:'📢 Comunicação Persuasiva',titulo:'Mensagem de Venda Estratégica',quando:'Quando precisar enviar proposta ou abordagem comercial.',conteudo:`Você é um especialista em copywriting persuasivo.\n\nCrie uma mensagem de venda clara e profissional.\n\nContexto:\n[Descreva o produto/serviço]\n\nObjetivo:\nGerar interesse e estimular uma resposta.\n\nEstruture:\n• Abertura estratégica\n• Identificação do problema ou necessidade\n• Apresentação da solução\n• Benefícios claros\n• Chamada para ação\n\nTom: confiante, profissional e direto.`},
-{id:2,nivel:'basico',categoria:'💼 Comunicação Corporativa',titulo:'E-mail Profissional Claro',quando:'Para enviar mensagens formais no trabalho.',conteudo:`Você é um consultor de comunicação corporativa.\n\nReescreva o texto abaixo tornando-o mais claro, objetivo e profissional.\n\nTexto base:\n[COLAR MENSAGEM]\n\nEstruture:\n• Introdução objetiva\n• Ponto principal\n• Detalhes organizados\n• Ação esperada, se houver\n• Encerramento educado\n\nPreserve as informações importantes e evite formalidade ou informalidade excessivas.`},
-{id:3,nivel:'intermediario',categoria:'🧠 Conversas Difíceis',titulo:'Estrutura para Conversa Delicada',quando:'Para dar feedback ou tratar conflitos.',conteudo:`Você é especialista em comunicação respeitosa e resolução de conflitos.\n\nMonte um roteiro para esta conversa delicada:\n[SITUAÇÃO]\n\nInclua:\n• Como iniciar sem gerar defesa desnecessária\n• Como apresentar os fatos sem acusações\n• Como explicar meu ponto de vista\n• Perguntas para entender o outro lado\n• Como propor uma solução\n• Como encerrar com próximos passos claros\n\nTom: equilibrado, firme e respeitoso.`},
-{id:4,nivel:'intermediario',categoria:'📱 Redes Sociais',titulo:'Post Estratégico de Autoridade',quando:'Para posicionamento profissional nas redes sociais.',conteudo:`Você é especialista em comunicação e posicionamento digital.\n\nCrie um post estratégico sobre:\n[TEMA]\n\nPúblico:\n[PÚBLICO]\n\nObjetivo:\n[OBJETIVO]\n\nEstruture com:\n• Gancho forte\n• Desenvolvimento claro\n• Insight ou aprendizado útil\n• Exemplo prático quando fizer sentido\n• Conclusão\n• Chamada para interação\n\nAdapte a linguagem para a rede social: [REDE SOCIAL].`},
-{id:5,nivel:'avancado',categoria:'🤝 Negociação',titulo:'Estratégia de Argumentação',quando:'Para defender preço, condições ou uma proposta.',conteudo:`Você é especialista em negociação estratégica.\n\nAjude-me a preparar argumentos para esta negociação:\n[CENÁRIO]\n\nMeu objetivo:\n[OBJETIVO]\n\nAnalise e apresente:\n• Interesses de cada lado\n• Pontos fortes da minha proposta\n• Objeções prováveis\n• Respostas para cada objeção\n• Concessões possíveis sem perder valor\n• Argumentos de valor\n• Estratégia de fechamento\n\nEvite manipulação e não invente informações.`},
-{id:6,nivel:'intermediario',categoria:'🎤 Apresentações',titulo:'Roteiro de Apresentação Impactante',quando:'Para reuniões, apresentações ou palestras.',conteudo:`Você é especialista em apresentações claras e envolventes.\n\nCrie um roteiro para uma apresentação sobre:\n[TEMA]\n\nPúblico:\n[PÚBLICO]\n\nObjetivo:\n[OBJETIVO]\n\nTempo disponível:\n[TEMPO]\n\nEstruture:\n• Abertura que desperte interesse\n• Contexto e problema\n• Ideias principais em ordem lógica\n• Exemplos práticos\n• Solução ou conclusão\n• Próxima ação esperada\n• Encerramento memorável\n\nMantenha o conteúdo adequado ao tempo disponível.`}
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Comunicação | Delta Prompts</title><meta name="description" content="Prompts estratégicos para melhorar comunicação, vendas, negociação, apresentações e treinar oratória com a ajuda da IA."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtro-nivel{display:flex;gap:8px;flex-wrap:wrap}.filtro-nivel button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtro-nivel button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(91,92,226,.12);color:#5b5ce2}.filtro-nivel button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#5b5ce2;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.secao-titulo{font-size:22px;margin:30px 0 15px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e5e7eb;margin:15px 0}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;background:#eef2ff;color:#5b5ce2;cursor:pointer}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#5b5ce2;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #5b5ce2;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-nivel button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:700px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260827"></script><main>
+
+<h1>🗣️ Comunicação Profissional com IA</h1>
+<p>Prompts estratégicos para melhorar sua comunicação em vendas, trabalho, negociação, apresentações e treinar sua oratória com apoio da IA.</p>
+
+<section class="card"><h3>🎯 Objetivo</h3><p>Ajudar você a se comunicar com mais clareza, persuasão e confiança — inclusive treinando sua fala em público com simulações e feedback da IA.</p></section>
+<section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>📢 Persuasão:</strong> vendas e mensagens que geram ação.</li><li><strong>💼 Profissional:</strong> e-mails e comunicação de trabalho.</li><li><strong>🧠 Conversas Difíceis:</strong> feedback e conflitos.</li><li><strong>🤝 Negociação:</strong> argumentação e defesa de proposta.</li><li><strong>📱 Redes Sociais:</strong> posicionamento digital.</li><li><strong>🎤 Apresentações:</strong> roteiros para reuniões e palestras.</li><li><strong>🎙️ Oratória & Fala em Público:</strong> treino de discurso, simulações de plateia e redução de ansiedade.</li></ul></section>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar modelo de comunicação..." oninput="aplicarFiltros()">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <div class="contador" id="contador"></div>
+</div>
+
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtro-nivel" id="filtrosNivel"><button class="ativo" data-nivel="todos">Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo de comunicação que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const ordemCategorias=['📢 Comunicação Persuasiva','💼 Comunicação Corporativa','🧠 Conversas Difíceis','🤝 Negociação','📱 Redes Sociais','🎤 Apresentações','🎙️ Oratória & Fala em Público'];
+
+const dadosBrutos=[
+{categoria:'📢 Comunicação Persuasiva',nivel:'intermediario',titulo:'💰 Mensagem de Venda Estratégica',quando:'Quando precisar enviar proposta ou abordagem comercial.',prompt:`Você é um especialista em copywriting persuasivo.\n\nCrie uma mensagem de venda clara e profissional.\n\nContexto: [DESCREVA O PRODUTO/SERVIÇO]\n\nObjetivo: gerar interesse e estimular uma resposta.\n\nEstruture:\n• Abertura estratégica\n• Identificação do problema ou necessidade\n• Apresentação da solução\n• Benefícios claros\n• Chamada para ação\n\nTom: confiante, profissional e direto.`,en:`You are a persuasive copywriting specialist.\n\nCreate a clear, professional sales message.\n\nContext: [DESCRIBE THE PRODUCT/SERVICE]\n\nGoal: generate interest and prompt a reply.\n\nStructure:\n• Strategic opening\n• Identifying the problem or need\n• Presenting the solution\n• Clear benefits\n• Call to action\n\nTone: confident, professional, and direct.`},
+{categoria:'💼 Comunicação Corporativa',nivel:'basico',titulo:'📧 E-mail Profissional Claro',quando:'Para enviar mensagens formais no trabalho.',prompt:`Você é um consultor de comunicação corporativa.\n\nReescreva o texto abaixo tornando-o mais claro, objetivo e profissional.\n\nTexto base: [COLAR MENSAGEM]\n\nEstruture:\n• Introdução objetiva\n• Ponto principal\n• Detalhes organizados\n• Ação esperada, se houver\n• Encerramento educado\n\nPreserve as informações importantes e evite formalidade ou informalidade excessivas.`,en:`You are a corporate communication consultant.\n\nRewrite the text below to make it clearer, more objective, and more professional.\n\nOriginal text: [PASTE MESSAGE]\n\nStructure:\n• Objective introduction\n• Main point\n• Organized details\n• Expected action, if any\n• Polite closing\n\nPreserve the important information and avoid excessive formality or informality.`},
+{categoria:'🧠 Conversas Difíceis',nivel:'intermediario',titulo:'💬 Estrutura para Conversa Delicada',quando:'Para dar feedback ou tratar conflitos.',prompt:`Você é especialista em comunicação respeitosa e resolução de conflitos.\n\nMonte um roteiro para esta conversa delicada: [SITUAÇÃO]\n\nInclua:\n• Como iniciar sem gerar defesa desnecessária\n• Como apresentar os fatos sem acusações\n• Como explicar meu ponto de vista\n• Perguntas para entender o outro lado\n• Como propor uma solução\n• Como encerrar com próximos passos claros\n\nTom: equilibrado, firme e respeitoso.`,en:`You are a specialist in respectful communication and conflict resolution.\n\nBuild a script for this delicate conversation: [SITUATION]\n\nInclude:\n• How to start without triggering unnecessary defensiveness\n• How to present the facts without accusations\n• How to explain my point of view\n• Questions to understand the other side\n• How to propose a solution\n• How to close with clear next steps\n\nTone: balanced, firm, and respectful.`},
+{categoria:'📱 Redes Sociais',nivel:'intermediario',titulo:'📣 Post Estratégico de Autoridade',quando:'Para posicionamento profissional nas redes sociais.',prompt:`Você é especialista em comunicação e posicionamento digital.\n\nCrie um post estratégico sobre: [TEMA]\n\nPúblico: [PÚBLICO]\nObjetivo: [OBJETIVO]\nRede social: [REDE SOCIAL]\n\nEstruture com:\n• Gancho forte\n• Desenvolvimento claro\n• Insight ou aprendizado útil\n• Exemplo prático quando fizer sentido\n• Conclusão\n• Chamada para interação\n\nAdapte a linguagem para a rede social escolhida.`,en:`You are a communication and digital positioning specialist.\n\nCreate a strategic post about: [TOPIC]\n\nAudience: [AUDIENCE]\nGoal: [GOAL]\nSocial network: [SOCIAL NETWORK]\n\nStructure with:\n• Strong hook\n• Clear development\n• Useful insight or takeaway\n• Practical example when it makes sense\n• Conclusion\n• Call to engage\n\nAdapt the language to the chosen social network.`},
+{categoria:'🤝 Negociação',nivel:'avancado',titulo:'⚖️ Estratégia de Argumentação',quando:'Para defender preço, condições ou uma proposta.',prompt:`Você é especialista em negociação estratégica.\n\nAjude-me a preparar argumentos para esta negociação: [CENÁRIO]\n\nMeu objetivo: [OBJETIVO]\n\nAnalise e apresente:\n• Interesses de cada lado\n• Pontos fortes da minha proposta\n• Objeções prováveis\n• Respostas para cada objeção\n• Concessões possíveis sem perder valor\n• Argumentos de valor\n• Estratégia de fechamento\n\nEvite manipulação e não invente informações.`,en:`You are a strategic negotiation specialist.\n\nHelp me prepare arguments for this negotiation: [SCENARIO]\n\nMy goal: [GOAL]\n\nAnalyze and present:\n• Each side's interests\n• Strengths of my proposal\n• Likely objections\n• Responses to each objection\n• Possible concessions without losing value\n• Value-based arguments\n• Closing strategy\n\nAvoid manipulation and do not invent information.`},
+{categoria:'🎤 Apresentações',nivel:'intermediario',titulo:'📊 Roteiro de Apresentação Impactante',quando:'Para reuniões, apresentações ou palestras.',prompt:`Você é especialista em apresentações claras e envolventes.\n\nCrie um roteiro para uma apresentação sobre: [TEMA]\n\nPúblico: [PÚBLICO]\nObjetivo: [OBJETIVO]\nTempo disponível: [TEMPO]\n\nEstruture:\n• Abertura que desperte interesse\n• Contexto e problema\n• Ideias principais em ordem lógica\n• Exemplos práticos\n• Solução ou conclusão\n• Próxima ação esperada\n• Encerramento memorável\n\nMantenha o conteúdo adequado ao tempo disponível.`,en:`You are a specialist in clear, engaging presentations.\n\nCreate a script for a presentation about: [TOPIC]\n\nAudience: [AUDIENCE]\nGoal: [GOAL]\nAvailable time: [TIME]\n\nStructure:\n• Opening that sparks interest\n• Context and problem\n• Main ideas in logical order\n• Practical examples\n• Solution or conclusion\n• Expected next action\n• Memorable closing\n\nKeep the content appropriate for the available time.`},
+{categoria:'🎙️ Oratória & Fala em Público',nivel:'intermediario',titulo:'🎯 Avaliação Completa de um Discurso',quando:'Para receber uma nota e feedback detalhado antes de apresentar de verdade.',prompt:`Você é um treinador de oratória experiente.\n\nAvalie o discurso/apresentação abaixo:\n[COLE O TEXTO DO SEU DISCURSO OU DESCREVA O QUE VOCÊ PRETENDE FALAR]\n\nContexto: [PARA QUEM É, QUANTO TEMPO, QUAL O OBJETIVO]\n\nDê uma nota de 0 a 10 para: clareza, estrutura, ritmo, persuasão e confiança transmitida pelo texto. Aponte 3 pontos fortes, 3 pontos de atenção, e sugestões práticas para melhorar antes da apresentação real.`,en:`You are an experienced public speaking coach.\n\nEvaluate the speech/presentation below:\n[PASTE YOUR SPEECH TEXT OR DESCRIBE WHAT YOU PLAN TO SAY]\n\nContext: [WHO IT'S FOR, HOW LONG, WHAT THE GOAL IS]\n\nGive a score from 0 to 10 for: clarity, structure, pacing, persuasiveness, and confidence conveyed by the text. Point out 3 strengths, 3 points of attention, and practical suggestions to improve before the real presentation.`},
+{categoria:'🎙️ Oratória & Fala em Público',nivel:'avancado',titulo:'🙋 Simular uma Plateia Fazendo Perguntas',quando:'Para treinar como reagir a perguntas do público em tempo real.',prompt:`Simule uma plateia de [DESCREVA O PÚBLICO, EX: INVESTIDORES, ALUNOS, EQUIPE] ouvindo minha apresentação sobre: [TEMA]\n\nDepois que eu apresentar cada parte, faça 1 ou 2 perguntas difíceis que essa plateia realmente faria, uma de cada vez. Espere minha resposta antes de continuar, e dê um feedback rápido de como eu me saí em cada resposta.`,en:`Simulate an audience of [DESCRIBE THE AUDIENCE, E.G., INVESTORS, STUDENTS, TEAM] listening to my presentation about: [TOPIC]\n\nAfter I present each part, ask 1 or 2 tough questions that this audience would realistically ask, one at a time. Wait for my answer before continuing, and give quick feedback on how I did with each answer.`},
+{categoria:'🎙️ Oratória & Fala em Público',nivel:'avancado',titulo:'🧑‍💼 Simular uma Reunião com Interrupções',quando:'Para treinar apresentações corporativas realistas, com objeções no meio da fala.',prompt:`Assuma o papel de um gestor cético numa reunião de trabalho. Vou apresentar esta proposta: [DESCREVA A PROPOSTA]\n\nInterrompa minha fala com perguntas, pedidos de dados e objeções realistas, como aconteceria numa reunião de verdade. Ao final, avalie minha argumentação, clareza e como lidei com as interrupções.`,en:`Take on the role of a skeptical manager in a work meeting. I'm going to present this proposal: [DESCRIBE THE PROPOSAL]\n\nInterrupt my talk with realistic questions, requests for data, and objections, as would happen in a real meeting. At the end, evaluate my argumentation, clarity, and how I handled the interruptions.`},
+{categoria:'🎙️ Oratória & Fala em Público',nivel:'avancado',titulo:'🎓 Simular uma Banca Avaliadora',quando:'Para treinar defesa de TCC, concurso ou apresentação acadêmica.',prompt:`Atue como uma banca avaliadora de [TCC, CONCURSO OU APRESENTAÇÃO ACADÊMICA — ESCOLHA UMA]\n\nTema da apresentação: [TEMA]\n\nFaça perguntas técnicas que uma banca real faria, uma de cada vez, e depois de cada resposta minha, avalie o domínio do assunto e a clareza da explicação.`,en:`Act as an evaluation panel for a [THESIS DEFENSE, EXAM BOARD, OR ACADEMIC PRESENTATION — PICK ONE]\n\nPresentation topic: [TOPIC]\n\nAsk technical questions that a real panel would ask, one at a time, and after each of my answers, evaluate my command of the subject and clarity of explanation.`},
+{categoria:'🎙️ Oratória & Fala em Público',nivel:'basico',titulo:'🧩 Reorganizar um Discurso Bagunçado',quando:'Quando as ideias estão soltas e sem sequência lógica.',prompt:`Aqui está o rascunho de um discurso/apresentação que fiz de forma bagunçada, sem seguir uma ordem lógica:\n[COLE O TEXTO]\n\nReorganize numa sequência mais lógica e fácil de acompanhar, mantendo todas as minhas ideias originais. Explique o que mudou e por quê.`,en:`Here's a draft of a speech/presentation I wrote in a disorganized way, without a logical order:\n[PASTE THE TEXT]\n\nReorganize it into a more logical, easy-to-follow sequence, keeping all of my original ideas. Explain what changed and why.`},
+{categoria:'🎙️ Oratória & Fala em Público',nivel:'basico',titulo:'😰 Reduzir a Ansiedade Antes de Falar em Público',quando:'Quando o nervosismo está atrapalhando a preparação.',prompt:`Estou ansioso(a) para uma apresentação sobre: [TEMA]\n\nQuando será: [QUANDO]\nO que mais me preocupa: [DESCREVA O MEDO OU PREOCUPAÇÃO ESPECÍFICA]\n\nMe dê 5 estratégias práticas para reduzir a ansiedade antes de falar, e um pequeno roteiro do que fazer nos 10 minutos antes de começar.`,en:`I'm anxious about a presentation on: [TOPIC]\n\nWhen it is: [WHEN]\nWhat worries me most: [DESCRIBE THE SPECIFIC FEAR OR CONCERN]\n\nGive me 5 practical strategies to reduce anxiety before speaking, and a short routine for what to do in the 10 minutes before starting.`},
+{categoria:'🎙️ Oratória & Fala em Público',nivel:'intermediario',titulo:'🎬 Roteiro com Pausas e Ênfases',quando:'Para marcar onde respirar, pausar e dar ênfase no texto.',prompt:`Leia o roteiro do meu discurso abaixo:\n[COLE O ROTEIRO]\n\nIndique, dentro do próprio texto, onde eu deveria fazer pausas, onde dar ênfase, e onde variar o tom de voz para tornar a apresentação mais envolvente. Explique brevemente o motivo de cada sugestão.`,en:`Read my speech script below:\n[PASTE THE SCRIPT]\n\nIndicate, within the text itself, where I should pause, where to add emphasis, and where to vary my tone of voice to make the presentation more engaging. Briefly explain the reasoning behind each suggestion.`},
+{categoria:'🎙️ Oratória & Fala em Público',nivel:'intermediario',titulo:'⚡ Treinar Respostas Rápidas',quando:'Para não travar diante de perguntas inesperadas.',prompt:`Vou treinar como responder perguntas inesperadas sobre: [TEMA OU ÁREA]\n\nMe faça 5 perguntas difíceis ou fora do previsto sobre esse assunto, uma de cada vez. Depois de cada resposta minha, avalie se fui claro(a), direto(a) e se realmente respondi a pergunta, sem enrolar.`,en:`I want to practice answering unexpected questions about: [TOPIC OR AREA]\n\nAsk me 5 tough or unexpected questions about this subject, one at a time. After each of my answers, evaluate whether I was clear, direct, and actually answered the question, without rambling.`}
 ];
-const cat=document.getElementById('botoes-categoria');cat.innerHTML='<button class="ativo" onclick="filtrarCategoria(event,\'todas\')">Todas as Categorias</button>'+ordemCategorias.map(c=>`<button onclick="filtrarCategoria(event,'${c}')">${c}</button>`).join('');const lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador');let nivel='todos',categoria='todas';function renderizar(arr){lista.innerHTML='';contador.textContent=`Total: ${arr.length} modelo${arr.length!==1?'s':''}`;ordemCategorias.forEach(c=>{const grupo=arr.filter(p=>p.categoria===c);if(!grupo.length)return;const sec=document.createElement('section');sec.className='secao-categoria';sec.innerHTML=`<h2 class="secao-titulo">${c}</h2><div class="grid-prompts"></div>`;const grid=sec.querySelector('.grid-prompts');grupo.forEach(p=>{const card=document.createElement('div');card.className='card';card.dataset.prompt=p.conteudo;card.dataset.titulo=p.titulo;card.innerHTML=`<div class="nivel nivel-${p.nivel}">${p.nivel==='avancado'?'🔴 Avançado':p.nivel==='intermediario'?'🟡 Intermediário':'🟢 Básico'}</div><h3>${p.titulo}</h3><p><strong>📌 Quando usar:</strong> ${p.quando}</p><pre>${p.conteudo}</pre><div class="acoes"><button onclick="copiar(this)">📋 Copiar</button><button onclick="favoritar(this)">⭐ Favoritar</button><button onclick="abrirIA(this,'chatgpt')">💬 ChatGPT</button><button onclick="abrirIA(this,'gemini')">🔷 Gemini</button></div>`;grid.appendChild(card)});lista.appendChild(sec)})}function atualizarFiltros(){const q=busca.value.toLowerCase();renderizar(prompts.filter(p=>(p.titulo+' '+p.categoria+' '+p.quando+' '+p.conteudo).toLowerCase().includes(q)&&(nivel==='todos'||p.nivel===nivel)&&(categoria==='todas'||p.categoria===categoria)))}function filtrarCategoria(e,c){document.querySelectorAll('.filtro-categoria button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');categoria=c;atualizarFiltros()}function filtrarNivel(e,n){document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.remove('ativo'));e.currentTarget.classList.add('ativo');nivel=n;atualizarFiltros()}function card(btn){return btn.closest('.card')}function copiar(btn){navigator.clipboard.writeText(card(btn).dataset.prompt);alert('📋 Prompt copiado!')}function favoritar(btn){const c=card(btn),itens=JSON.parse(localStorage.getItem('deltaPrompts'))||[];itens.push({id:Date.now(),titulo:c.dataset.titulo,categoria:'Comunicação',conteudo:c.dataset.prompt,favorito:true});localStorage.setItem('deltaPrompts',JSON.stringify(itens));alert('⭐ Adicionado aos favoritos!')}function abrirIA(btn,ia){const p=encodeURIComponent(card(btn).dataset.prompt);window.open(ia==='chatgpt'?'https://chat.openai.com/?prompt='+p:'https://gemini.google.com/app?prompt='+p,'_blank')}renderizar(prompts);
+
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'comunicacao-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.prompt,promptEn:p.en,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const lista=document.getElementById("lista-prompts"),contador=document.getElementById("contador"),busca=document.getElementById("busca"),ordenarSelect=document.getElementById("ordenar");
+const idiomaAtivo={};
+
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Comunicação',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaComunicacaoUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaComunicacaoUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaComunicacaoFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaComunicacaoFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};const g=window.deltaAuth;if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}_saveFeedback(fb);atualizarFeedbackUI(id);mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!')}
+function atualizarFeedbackUI(id){const fb=_loadFeedback()[id]||{voto:null};const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);if(up)up.classList.toggle('marcado',fb.voto==='up');if(down)down.classList.toggle('marcado',fb.voto==='down');const g=window.deltaAuth;if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}}
+
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
+
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📊 '+p.titulo+'\n\nConfira esse modelo de análise no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';ordenarSelect.value='padrao';aplicarFiltros();requestAnimationFrame(()=>destacarCard(id))}
+
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📊 COMUNICAÇÃO — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-comunicacao.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de comunicação para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Comunicação').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🗣️ <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre id="pre-${p.id}">${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">💬 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">🔷 Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
+}
+
+function renderizar(arr){
+  lista.innerHTML="";
+  contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+  if(ordenarSelect.value==='padrao'){
+    ordemCategorias.forEach(cat=>{
+      const grupo=arr.filter(p=>p.categoria===cat);
+      if(grupo.length===0)return;
+      const tituloSecao=document.createElement("h2");
+      tituloSecao.className="secao-titulo";
+      tituloSecao.innerText=cat;
+      lista.appendChild(tituloSecao);
+      grupo.forEach(p=>lista.appendChild(criarCard(p)));
+    });
+  }else{
+    arr.forEach(p=>lista.appendChild(criarCard(p)));
+  }
+}
+
+function contarFiltrosAtivos(){const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';return nivel!=='todos'?1:0}
+function atualizarBadgeFiltros(){const n=contarFiltrosAtivos();const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}else{badge.style.display='none';btn.classList.remove('ativo')}}
+function atualizarContadoresNivel(){
+  const termo=busca.value.toLowerCase();
+  const base=prompts.filter(p=>(p.titulo+p.prompt+p.categoria).toLowerCase().includes(termo));
+  document.querySelectorAll('#filtrosNivel button').forEach(btn=>{
+    const n=btn.dataset.nivel==='todos'?base.length:base.filter(p=>p.nivel===btn.dataset.nivel).length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
+}
+
+function aplicarFiltros(){
+  const termo=busca.value.toLowerCase();
+  const nivelAtivo=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';
+  let filtrados=prompts.filter(p=>(p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo))&&(nivelAtivo==='todos'||p.nivel===nivelAtivo));
+  filtrados=ordenarLista(filtrados);
+  renderizar(filtrados);
+  atualizarContadoresNivel();
+  atualizarBadgeFiltros();
+}
+
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';aplicarFiltros();mostrarToast('✕ Filtros limpos')}
+
+document.querySelectorAll('#filtrosNivel button').forEach(b=>{b.dataset.label=b.textContent.trim();b.addEventListener('click',()=>{document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()})});
+
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+ordenarSelect.addEventListener('change',aplicarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+aplicarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
 </script></body></html>
