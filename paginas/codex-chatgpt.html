@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Codex do ChatGPT | Delta Prompts</title><meta name="description" content="Prompts para usar o Codex, o agente de programação do ChatGPT: criar, corrigir, revisar e documentar código com a ajuda da IA."><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}.top-bar select{padding:12px 10px;border:1px solid #ddd;border-radius:12px;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}
+.btn-mais-filtros{position:relative;display:inline-flex;align-items:center;gap:6px;padding:12px 16px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-mais-filtros.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filtros-ativos-badge{background:#ef4444;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:2px}
+.filtros-container{display:none;flex-direction:column;gap:2px;margin-bottom:10px;animation:filtrosAbre .18s ease}
+@keyframes filtrosAbre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
+.filtro-nivel{display:flex;gap:8px;flex-wrap:wrap}.filtro-nivel button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}.filtro-nivel button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(91,92,226,.12);color:#5b5ce2}.filtro-nivel button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#5b5ce2;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;align-self:flex-start}
+.secao-titulo{font-size:22px;margin:30px 0 15px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-radius:10px;border:1px solid #e5e7eb;margin:15px 0}
+.uso-badge{font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:999px}
+.card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#5b5ce2}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;background:#eef2ff;color:#5b5ce2;cursor:pointer}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e5e7eb;font-size:12.5px;color:#667085}
+.relacionadas strong{color:#172033;display:block;margin-bottom:6px}
+.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#5b5ce2;font-weight:700;font-size:12px;cursor:pointer;border:0}
+.destacado{outline:3px solid #5b5ce2;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] pre{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtro-nivel button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .btn-mais-filtros{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .filtro-titulo{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:700px){.theme-toggle{bottom:90px}}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260827"></script><main>
+
+<h1>🧑‍💻 Codex do ChatGPT</h1>
+<p>Prompts para usar o Codex, o agente de programação do ChatGPT: criar, corrigir, revisar e documentar código com a ajuda da IA.</p>
+
+<section class="card"><h3>🧠 O que é o Codex?</h3><p>O Codex é o <strong>agente de programação da OpenAI</strong>, disponível dentro dos planos do ChatGPT (inclusive no gratuito, com limites menores). Ele consegue escrever código, corrigir bugs, revisar mudanças, responder perguntas sobre um projeto inteiro e até propor alterações prontas — tudo a partir de um pedido em português simples.</p></section>
+<section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>🚀 Primeiros Passos:</strong> entender um projeto que você não conhece.</li><li><strong>🐛 Correção & Manutenção:</strong> corrigir bugs e refatorar código antigo.</li><li><strong>✨ Criação:</strong> novas funcionalidades e projetos do zero.</li><li><strong>🔍 Revisão & Qualidade:</strong> revisar pull requests, testes e segurança.</li><li><strong>📄 Documentação:</strong> documentar código automaticamente.</li><li><strong>🔄 Automação:</strong> scripts para tarefas repetitivas.</li></ul></section>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input type="text" id="busca" placeholder="🔎 Buscar por bug, refatorar, testes, script..." oninput="aplicarFiltros()">
+  <select id="ordenar" aria-label="Ordenar modelos">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares">🔥 Mais usados</option>
+  </select>
+  <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
+  <div class="contador" id="contador"></div>
+</div>
+
+<div class="filtros-container" id="filtrosContainer">
+  <div class="filtro-titulo">📊 Nível</div>
+  <div class="filtro-nivel" id="filtrosNivel"><button class="ativo" data-nivel="todos">Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div>
+  <button type="button" id="btnLimparFiltros" class="btn-limpar-filtros">✕ Limpar filtros</button>
+</div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo de Codex que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const ordemCategorias=['🚀 Primeiros Passos','🐛 Correção & Manutenção','✨ Criação','🔍 Revisão & Qualidade','📄 Documentação','🔄 Automação'];
+
+const dadosBrutos=[
+{categoria:'🚀 Primeiros Passos',nivel:'basico',titulo:'🧭 Entender um Projeto do Zero',quando:'Quando você vai trabalhar num código que não conhece bem.',prompt:`Estou usando o Codex para trabalhar num projeto que não conheço bem.\n\nProjeto: [DESCREVA OU COLE O LINK DO REPOSITÓRIO]\n\nPeça ao Codex:\n- Explicar a estrutura geral do projeto\n- Quais são os arquivos e pastas mais importantes\n- Como as principais partes se conectam\n- Por onde eu deveria começar se quiser fazer uma pequena alteração segura`,en:`I'm using Codex to work on a project I don't know well.\n\nProject: [DESCRIBE OR PASTE THE REPOSITORY LINK]\n\nAsk Codex to:\n- Explain the overall project structure\n- Which files and folders are most important\n- How the main parts connect to each other\n- Where I should start if I want to make a small, safe change`},
+{categoria:'🐛 Correção & Manutenção',nivel:'basico',titulo:'🐛 Corrigir um Bug Específico',quando:'Quando algo no seu código está dando erro.',prompt:`Encontrei um bug no meu código.\n\nDescrição do problema: [O QUE ESTÁ ACONTECENDO DE ERRADO]\nMensagem de erro (se houver): [COLE O ERRO]\nArquivo ou trecho relevante: [DESCREVA OU INDIQUE ONDE PROVAVELMENTE ESTÁ]\n\nPeça ao Codex pra investigar a causa, propor uma correção, e explicar por que o bug estava acontecendo antes de aplicar a mudança.`,en:`I found a bug in my code.\n\nProblem description: [WHAT'S GOING WRONG]\nError message (if any): [PASTE THE ERROR]\nRelevant file or snippet: [DESCRIBE OR INDICATE WHERE IT LIKELY IS]\n\nAsk Codex to investigate the cause, propose a fix, and explain why the bug was happening before applying the change.`},
+{categoria:'✨ Criação',nivel:'intermediario',titulo:'✨ Criar uma Funcionalidade Nova',quando:'Para adicionar algo novo a um projeto que já existe.',prompt:`Quero adicionar uma nova funcionalidade ao meu projeto.\n\nFuncionalidade desejada: [DESCREVA O QUE VOCÊ QUER QUE FAÇA]\nTecnologia usada no projeto: [EX: REACT, PYTHON, NODE]\n\nPeça ao Codex pra implementar a funcionalidade seguindo o padrão de código já existente no projeto, e pra explicar as principais decisões tomadas.`,en:`I want to add a new feature to my project.\n\nDesired feature: [DESCRIBE WHAT YOU WANT IT TO DO]\nTechnology used in the project: [E.G., REACT, PYTHON, NODE]\n\nAsk Codex to implement the feature following the existing code patterns in the project, and to explain the main decisions made.`},
+{categoria:'🔍 Revisão & Qualidade',nivel:'intermediario',titulo:'🔍 Revisar um Pull Request',quando:'Antes de mandar uma mudança para a equipe revisar.',prompt:`Tenho um pull request pronto e quero uma revisão antes de mandar pra equipe.\n\nO que foi alterado: [DESCREVA AS MUDANÇAS OU COLE O DIFF]\n\nPeça ao Codex pra revisar como um revisor de código sênior: apontar riscos, sugerir melhorias, verificar se os padrões do projeto foram seguidos, e avaliar se falta algum teste.`,en:`I have a pull request ready and want a review before sending it to the team.\n\nWhat was changed: [DESCRIBE THE CHANGES OR PASTE THE DIFF]\n\nAsk Codex to review it like a senior code reviewer: point out risks, suggest improvements, check if the project's standards were followed, and assess whether any tests are missing.`},
+{categoria:'🔍 Revisão & Qualidade',nivel:'intermediario',titulo:'🧪 Escrever Testes Automatizados',quando:'Para cobrir uma funcionalidade com testes, sem esquecer casos importantes.',prompt:`Quero cobrir esta parte do código com testes automatizados.\n\nCódigo ou funcionalidade: [DESCREVA OU COLE O CÓDIGO]\nFramework de testes usado no projeto: [EX: JEST, PYTEST, ETC., SE SOUBER]\n\nPeça ao Codex pra escrever testes cobrindo os casos principais, incluindo casos extremos (edge cases) que podem estar sendo esquecidos.`,en:`I want to cover this part of the code with automated tests.\n\nCode or feature: [DESCRIBE OR PASTE THE CODE]\nTesting framework used in the project: [E.G., JEST, PYTEST, ETC., IF KNOWN]\n\nAsk Codex to write tests covering the main cases, including edge cases that might be getting overlooked.`},
+{categoria:'🐛 Correção & Manutenção',nivel:'intermediario',titulo:'🔄 Refatorar Código Antigo',quando:'Quando um código funciona, mas está difícil de manter.',prompt:`Tenho um trecho de código antigo que funciona, mas está difícil de manter.\n\nCódigo: [COLE O TRECHO OU DESCREVA]\nMotivo da refatoração: [EX: DIFÍCIL DE LER, DUPLICADO, LENTO]\n\nPeça ao Codex pra refatorar mantendo o mesmo comportamento, explicando cada mudança significativa e os riscos de quebrar algo.`,en:`I have a piece of old code that works but is hard to maintain.\n\nCode: [PASTE THE SNIPPET OR DESCRIBE IT]\nReason for refactoring: [E.G., HARD TO READ, DUPLICATED, SLOW]\n\nAsk Codex to refactor it while keeping the same behavior, explaining each significant change and the risks of breaking something.`},
+{categoria:'📄 Documentação',nivel:'basico',titulo:'📄 Gerar Documentação',quando:'Quando um projeto ou função não tem documentação nenhuma.',prompt:`Meu projeto/função não tem documentação e preciso criar uma.\n\nO que precisa ser documentado: [DESCREVA A FUNÇÃO, MÓDULO OU PROJETO]\n\nPeça ao Codex pra gerar documentação clara, incluindo como usar, parâmetros esperados, exemplos práticos, e o que evitar.`,en:`My project/function has no documentation and I need to create one.\n\nWhat needs to be documented: [DESCRIBE THE FUNCTION, MODULE, OR PROJECT]\n\nAsk Codex to generate clear documentation, including how to use it, expected parameters, practical examples, and what to avoid.`},
+{categoria:'✨ Criação',nivel:'avancado',titulo:'🌐 Criar um Projeto do Zero',quando:'Para começar algo novo com a estrutura já organizada desde o início.',prompt:`Quero começar um projeto novo do zero com a ajuda do Codex.\n\nIdeia do projeto: [DESCREVA O QUE VOCÊ QUER CONSTRUIR]\nTecnologias preferidas (se souber): [EX: PYTHON, REACT, ETC., OU "SEM PREFERÊNCIA"]\n\nPeça ao Codex pra sugerir uma estrutura inicial de pastas e arquivos, e pra criar a primeira versão funcional básica.`,en:`I want to start a new project from scratch with Codex's help.\n\nProject idea: [DESCRIBE WHAT YOU WANT TO BUILD]\nPreferred technologies (if known): [E.G., PYTHON, REACT, ETC., OR "NO PREFERENCE"]\n\nAsk Codex to suggest an initial folder and file structure, and to create the first basic working version.`},
+{categoria:'🔄 Automação',nivel:'basico',titulo:'🔁 Automatizar uma Tarefa Repetitiva',quando:'Quando você faz a mesma coisa manualmente toda hora e quer um script pra isso.',prompt:`Faço uma tarefa repetitiva manualmente e quero automatizar com um script.\n\nTarefa: [DESCREVA O QUE VOCÊ FAZ HOJE MANUALMENTE, PASSO A PASSO]\n\nPeça ao Codex pra criar um script simples que automatize isso, explicando como rodar e o que cada parte faz.`,en:`I do a repetitive task manually and want to automate it with a script.\n\nTask: [DESCRIBE WHAT YOU CURRENTLY DO MANUALLY, STEP BY STEP]\n\nAsk Codex to create a simple script that automates this, explaining how to run it and what each part does.`},
+{categoria:'🔍 Revisão & Qualidade',nivel:'avancado',titulo:'🔒 Verificar Segurança do Código',quando:'Antes de publicar algo, pra pegar falhas de segurança comuns.',prompt:`Quero uma checagem básica de segurança no meu código antes de publicar.\n\nCódigo ou projeto: [DESCREVA OU COLE O TRECHO RELEVANTE]\n\nPeça ao Codex pra apontar vulnerabilidades comuns (dados sensíveis expostos, falta de validação, senhas no código, etc.) e sugerir correções.`,en:`I want a basic security check on my code before publishing.\n\nCode or project: [DESCRIBE OR PASTE THE RELEVANT SNIPPET]\n\nAsk Codex to point out common vulnerabilities (exposed sensitive data, missing validation, hardcoded passwords, etc.) and suggest fixes.`}
+];
+
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={id:'codex-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,quando:p.quando,prompt:p.prompt,promptEn:p.en,novo:i===0};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const lista=document.getElementById("lista-prompts"),contador=document.getElementById("contador"),busca=document.getElementById("busca"),ordenarSelect=document.getElementById("ordenar");
+const idiomaAtivo={};
+
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Codex ChatGPT',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaCodexUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaCodexUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaCodexFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaCodexFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};const g=window.deltaAuth;if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}_saveFeedback(fb);atualizarFeedbackUI(id);mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!')}
+function atualizarFeedbackUI(id){const fb=_loadFeedback()[id]||{voto:null};const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);if(up)up.classList.toggle('marcado',fb.voto==='up');if(down)down.classList.toggle('marcado',fb.voto==='down');const g=window.deltaAuth;if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}}
+
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('pre-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
+
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='📊 '+p.titulo+'\n\nConfira esse modelo de análise no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';ordenarSelect.value='padrao';aplicarFiltros();requestAnimationFrame(()=>destacarCard(id))}
+
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='📊 CODEX DO CHATGPT — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-codex.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de modelo de Codex para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Codex ChatGPT').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🧑‍💻 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+function criarCard(p){
+  const usos=_loadUsos();const usoCount=usos[p.id]||0;
+  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const card=document.createElement('div');
+  card.className='card';
+  card.id='card-'+p.id;
+  card.innerHTML=`
+    <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <h3>${p.titulo}</h3>
+    <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <pre id="pre-${p.id}">${p.prompt}</pre>
+    <div class="acoes">
+      <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button data-acao="chat" data-id="${p.id}">💬 ChatGPT</button>
+      <button data-acao="gemini" data-id="${p.id}">🔷 Gemini</button>
+      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+    </div>
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+  `;
+  atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarFeedbackUI(p.id);
+  return card;
+}
+
+function renderizar(arr){
+  lista.innerHTML="";
+  contador.innerText=`Total: ${arr.length} modelo${arr.length!==1?"s":""}`;
+  if(ordenarSelect.value==='padrao'){
+    ordemCategorias.forEach(cat=>{
+      const grupo=arr.filter(p=>p.categoria===cat);
+      if(grupo.length===0)return;
+      const tituloSecao=document.createElement("h2");
+      tituloSecao.className="secao-titulo";
+      tituloSecao.innerText=cat;
+      lista.appendChild(tituloSecao);
+      grupo.forEach(p=>lista.appendChild(criarCard(p)));
+    });
+  }else{
+    arr.forEach(p=>lista.appendChild(criarCard(p)));
+  }
+}
+
+function contarFiltrosAtivos(){const nivel=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';return nivel!=='todos'?1:0}
+function atualizarBadgeFiltros(){const n=contarFiltrosAtivos();const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}else{badge.style.display='none';btn.classList.remove('ativo')}}
+function atualizarContadoresNivel(){
+  const termo=busca.value.toLowerCase();
+  const base=prompts.filter(p=>(p.titulo+p.prompt+p.categoria).toLowerCase().includes(termo));
+  document.querySelectorAll('#filtrosNivel button').forEach(btn=>{
+    const n=btn.dataset.nivel==='todos'?base.length:base.filter(p=>p.nivel===btn.dataset.nivel).length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+  });
+}
+
+function aplicarFiltros(){
+  const termo=busca.value.toLowerCase();
+  const nivelAtivo=document.querySelector('#filtrosNivel .ativo')?.dataset.nivel||'todos';
+  let filtrados=prompts.filter(p=>(p.titulo.toLowerCase().includes(termo)||p.prompt.toLowerCase().includes(termo)||p.categoria.toLowerCase().includes(termo))&&(nivelAtivo==='todos'||p.nivel===nivelAtivo));
+  filtrados=ordenarLista(filtrados);
+  renderizar(filtrados);
+  atualizarContadoresNivel();
+  atualizarBadgeFiltros();
+}
+
+function toggleMaisFiltros(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'flex':'none'}
+function limparFiltros(){document.querySelectorAll('#filtrosNivel button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));busca.value='';aplicarFiltros();mostrarToast('✕ Filtros limpos')}
+
+document.querySelectorAll('#filtrosNivel button').forEach(b=>{b.dataset.label=b.textContent.trim();b.addEventListener('click',()=>{document.querySelectorAll('#filtrosNivel button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');aplicarFiltros()})});
+
+lista.addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar'){registrarUso(id);copiarPrompt(textoFinal(id))}
+  else if(acao==='chat'){registrarUso(id);abrirChatGPT(textoFinal(id))}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='irpara')irPara(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+ordenarSelect.addEventListener('change',aplicarFiltros);
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
+document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+atualizarStats();
+aplicarFiltros();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+</script></body></html>
