@@ -375,7 +375,7 @@
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-20260827-menu-v41';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;let pushUsosTimer=null;var DELTA_ADMIN_EMAIL='jhoncorretor2025@gmail.com';function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260826').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,syncUsos:mod.syncUsosFromCloud,pushUsos:mod.pushUsosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal,registrarPageView:mod.registrarPageView,obterTopFeedback:mod.obterTopFeedback,obterTopPageViews:mod.obterTopPageViews};mod.initAuthWatcher();mod.registrarPageView(location.pathname);return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null;var user=e.detail&&e.detail.user;if(user&&user.email===DELTA_ADMIN_EMAIL){setTimeout(function(){var links=document.querySelector('.sidebar .menu-links:last-of-type')||document.querySelector('.sidebar');if(links&&!document.getElementById('deltaAdminLink')){var a=document.createElement('a');a.id='deltaAdminLink';a.href='/delta-prompts/admin.html';a.textContent='🔐 Painel Admin';links.appendChild(a)}},400)}});window.addEventListener('delta:favoritos-updated',function(){if(!deltaUid||!window.deltaAuth||!window.deltaAuth.pushFavoritos)return;clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){window.deltaAuth.pushFavoritos(deltaUid)},600)});document.addEventListener('click',function(e){const btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');if(!btn||!deltaUid||!window.deltaAuth||!window.deltaAuth.pushUsos)return;clearTimeout(pushUsosTimer);pushUsosTimer=setTimeout(function(){window.deltaAuth.pushUsos(deltaUid)},800)},true);
+(function(){function getMenuCandidates(){const version='delta-prompts-20260828-menu-v42';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;let pushUsosTimer=null;var DELTA_ADMIN_EMAIL='jhoncorretor2025@gmail.com';function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260826').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,syncUsos:mod.syncUsosFromCloud,pushUsos:mod.pushUsosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal,registrarPageView:mod.registrarPageView,obterTopFeedback:mod.obterTopFeedback,obterTopPageViews:mod.obterTopPageViews};mod.initAuthWatcher();mod.registrarPageView(location.pathname);return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null;var user=e.detail&&e.detail.user;if(user&&user.email===DELTA_ADMIN_EMAIL){setTimeout(function(){var links=document.querySelector('.sidebar .menu-links:last-of-type')||document.querySelector('.sidebar');if(links&&!document.getElementById('deltaAdminLink')){var a=document.createElement('a');a.id='deltaAdminLink';a.href='/delta-prompts/admin.html';a.textContent='🔐 Painel Admin';links.appendChild(a)}},400)}});window.addEventListener('delta:favoritos-updated',function(){if(!deltaUid||!window.deltaAuth||!window.deltaAuth.pushFavoritos)return;clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){window.deltaAuth.pushFavoritos(deltaUid)},600)});document.addEventListener('click',function(e){const btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');if(!btn||!deltaUid||!window.deltaAuth||!window.deltaAuth.pushUsos)return;clearTimeout(pushUsosTimer);pushUsosTimer=setTimeout(function(){window.deltaAuth.pushUsos(deltaUid)},800)},true);
 // ===== Guarda titulo/link de cada prompt usado (para o Top 5 em Meus Numeros) e registra atividade diaria =====
 document.addEventListener('click',function(e){
   var btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');
@@ -397,7 +397,100 @@ document.addEventListener('click',function(e){
     localStorage.setItem('deltaAtividadeDiaria',JSON.stringify(ativ));
   }catch(err){}
 },true);
-fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth()}).catch(err=>console.error(err))})();
+fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth();aplicarMenuInteligente()}).catch(err=>console.error(err))})();
+
+// ===== MENU INTELIGENTE: reordena os 5 grupos grandes pelo uso de cada pessoa =====
+(function(){
+  var CHAVES={pessoal:'PESSOAL & DIA A DIA',carreira:'CARREIRA PESSOAL',empresa:'GESTÃO DE EMPRESA',avancado:'IA & RECURSOS',biblioteca:'BIBLIOTECA'};
+  function chaveDoTitulo(texto){
+    texto=(texto||'').toUpperCase();
+    for(var k in CHAVES){if(texto.indexOf(CHAVES[k])!==-1)return k}
+    return null;
+  }
+  function lerScores(){try{return JSON.parse(localStorage.getItem('deltaGrupoScores'))||{}}catch(e){return{}}}
+  function salvarScores(s){try{localStorage.setItem('deltaGrupoScores',JSON.stringify(s))}catch(e){}}
+  function somarScore(grupo,pontos){
+    if(!grupo)return;
+    var s=lerScores();
+    s[grupo]=(s[grupo]||0)+pontos;
+    salvarScores(s);
+  }
+  function grupoDaPaginaAtual(sidebar){
+    var caminho=location.pathname;
+    var titulos=sidebar.querySelectorAll('.menu-group-title');
+    for(var i=0;i<titulos.length;i++){
+      var el=titulos[i].nextElementSibling;
+      while(el&&!el.classList.contains('menu-group-title')){
+        var links=el.querySelectorAll('a[href]');
+        for(var j=0;j<links.length;j++){
+          try{if(new URL(links[j].href,location.origin).pathname===caminho)return chaveDoTitulo(titulos[i].textContent)}catch(e){}
+        }
+        el=el.nextElementSibling;
+      }
+    }
+    return null;
+  }
+  window._deltaGrupoAtual=null;
+
+  function reordenarGrupos(sidebar){
+    var titulos=[].slice.call(sidebar.querySelectorAll('.menu-group-title'));
+    if(!titulos.length)return;
+    var blocos=titulos.map(function(titulo){
+      var els=[titulo];
+      var el=titulo.nextElementSibling;
+      while(el&&!el.classList.contains('menu-group-title')){els.push(el);el=el.nextElementSibling}
+      return{chave:chaveDoTitulo(titulo.textContent),els:els};
+    });
+    var scores=lerScores();
+    var comIndice=blocos.map(function(b,i){return{b:b,i:i,score:b.chave?(scores[b.chave]||0):0}});
+    comIndice.sort(function(a,b){if(b.score!==a.score)return b.score-a.score;return a.i-b.i});
+    comIndice.forEach(function(item){
+      item.b.els.forEach(function(el){sidebar.insertBefore(el,null)});
+    });
+  }
+
+  function criarMinimizarAtalhos(sidebar){
+    var brand=sidebar.querySelector('.menu-brand');
+    if(!brand)return;
+    var el=brand.nextElementSibling;
+    var candidatos=[];
+    while(el&&!el.classList.contains('menu-group-title')){candidatos.push(el);el=el.nextElementSibling}
+    if(!candidatos.length)return;
+    if(document.getElementById('deltaMinimizarAtalhos'))return;
+    var btn=document.createElement('button');
+    btn.type='button';btn.id='deltaMinimizarAtalhos';
+    btn.style.cssText='display:block;width:100%;text-align:left;border:0;background:none;color:#8a92a6;font-size:12px;font-weight:800;padding:6px 4px;cursor:pointer;margin-bottom:4px';
+    function lerEstado(){try{return localStorage.getItem('deltaAtalhosMinimizados')==='true'}catch(e){return false}}
+    function aplicar(min){
+      candidatos.forEach(function(c){c.style.display=min?'none':''});
+      btn.textContent=min?'▸ Mostrar atalhos':'▾ Minimizar atalhos';
+      try{localStorage.setItem('deltaAtalhosMinimizados',min?'true':'false')}catch(e){}
+    }
+    btn.addEventListener('click',function(){aplicar(!lerEstado())});
+    brand.parentNode.insertBefore(btn,brand.nextSibling);
+    aplicar(lerEstado());
+  }
+
+  window.aplicarMenuInteligente=function(){
+    var sidebar=document.querySelector('#menu .sidebar');
+    if(!sidebar)return;
+    reordenarGrupos(sidebar);
+    criarMinimizarAtalhos(sidebar);
+    var grupo=grupoDaPaginaAtual(sidebar);
+    window._deltaGrupoAtual=grupo;
+    if(grupo)somarScore(grupo,1); // visita conta 1 ponto
+  };
+
+  // Acoes reais (copiar, favoritar) somam mais peso ao grupo da pagina atual
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest&&e.target.closest('button,a');
+    if(!btn||!window._deltaGrupoAtual)return;
+    var texto=(btn.textContent||'').trim();
+    var ehCopiar=/copiar/i.test(texto)&&!/sugest/i.test(texto);
+    var ehFavoritar=btn.classList&&(btn.classList.contains('favoritar')||btn.classList.contains('fav-btn'));
+    if(ehCopiar||ehFavoritar)somarScore(window._deltaGrupoAtual,3);
+  },true);
+})();
 (function(){function enhanceCategoryPage(){const hasPromptCards=document.querySelector('.prompt-text, pre.prompt-text, #lista, #lista-prompts');const hasCategoryHeading=document.querySelector('main > h1');if(hasPromptCards&&hasCategoryHeading)document.body.classList.add('category-page')}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enhanceCategoryPage,{once:true});else enhanceCategoryPage()})();
 (function(){function load(){if(window.gtag)return;const GA_ID='G-1YF2VY4HXW',script=document.createElement('script');script.async=true;script.src=`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;document.head.appendChild(script);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',GA_ID)}if('requestIdleCallback'in window)requestIdleCallback(load,{timeout:4000});else setTimeout(load,2500)})();
 (function(){const API='https://api.counterapi.dev/v1',NAMESPACE='delta-prompts-jhoncorretor2025';function key(){return(window.location.pathname.replace(/^\/delta-prompts\/?/,'').replace(/\/$/,'')||'inicio').replace(/\.html$/,'').replace(/[^a-zA-Z0-9_-]+/g,'-').toLowerCase()}function start(){const main=document.querySelector('main'),h1=main&&main.querySelector('h1');if(!h1||document.getElementById('page-view-counter'))return;const badge=document.createElement('div');badge.id='page-view-counter';badge.className='page-view-counter';badge.innerHTML='<span>👁️</span> <strong>—</strong> visualizações';h1.insertAdjacentElement('afterend',badge);const controller=new AbortController();setTimeout(()=>controller.abort(),3500);fetch(`${API}/${NAMESPACE}/${key()}/up`,{cache:'no-store',signal:controller.signal}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{const n=Number(d.count??d.value??d.data?.count??d.data?.value??d.data);if(Number.isFinite(n))badge.querySelector('strong').textContent=new Intl.NumberFormat('pt-BR').format(n);else badge.remove()}).catch(()=>badge.remove())}const style=document.createElement('style');style.textContent='.page-view-counter{display:inline-flex;align-items:center;gap:5px;margin:6px 0 14px;padding:7px 11px;border:1px solid #e5e7eb;border-radius:999px;background:#fff;color:#667085;font-size:13px}.page-view-counter strong{color:#4f46e5}';document.head.appendChild(style);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start()})();
