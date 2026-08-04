@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp, increment } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp, increment, collection, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 
 const firebaseConfig={apiKey:'AIzaSyAFMCGldhbqzcHqem-Nm8bPqSLHTf04UKc',authDomain:'delta-prompts.firebaseapp.com',projectId:'delta-prompts',storageBucket:'delta-prompts.firebasestorage.app',messagingSenderId:'755389200448',appId:'1:755389200448:web:0affd073b7c607169dc7a5',measurementId:'G-29MLGRJW66'};
 const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getFirestore(app);const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});
@@ -89,6 +89,34 @@ export async function pushUsosToCloud(uid){
     _todasChavesUso().forEach(k=>{try{obj[k]=JSON.parse(localStorage.getItem(k))}catch(e){}});
     await setDoc(doc(db,'users',uid),{usos:obj},{merge:true});
   }catch(e){console.error('Erro ao enviar uso para a nuvem:',e)}
+}
+
+// ===== ESTATÍSTICAS GLOBAIS DO SITE (para o Painel Administrativo) =====
+export async function registrarPageView(caminho){
+  try{
+    const id=(caminho||'raiz').replace(/[\/.]/g,'_')||'raiz';
+    await setDoc(doc(db,'pageViews',id),{path:caminho,views:increment(1)},{merge:true});
+  }catch(e){console.error('Erro ao registrar visualização de página:',e)}
+}
+
+export async function obterTopFeedback(qtd){
+  try{
+    const q=query(collection(db,'feedbackGlobal'),orderBy('up','desc'),limit(qtd||20));
+    const snap=await getDocs(q);
+    const resultado=[];
+    snap.forEach(d=>resultado.push({id:d.id,up:d.data().up||0,down:d.data().down||0}));
+    return resultado;
+  }catch(e){console.error('Erro ao buscar ranking de feedback:',e);return[]}
+}
+
+export async function obterTopPageViews(qtd){
+  try{
+    const q=query(collection(db,'pageViews'),orderBy('views','desc'),limit(qtd||30));
+    const snap=await getDocs(q);
+    const resultado=[];
+    snap.forEach(d=>resultado.push({id:d.id,path:d.data().path||d.id,views:d.data().views||0}));
+    return resultado;
+  }catch(e){console.error('Erro ao buscar ranking de páginas:',e);return[]}
 }
 
 export async function login(){try{const result=await signInWithPopup(auth,provider);await saveProfile(result.user)}catch(e){if(['auth/popup-blocked','auth/cancelled-popup-request','auth/operation-not-supported-in-this-environment'].includes(e.code)){await signInWithRedirect(auth,provider);return}console.error('Erro no login Google:',e);alert('Não foi possível entrar com o Google. Tente novamente.')}}

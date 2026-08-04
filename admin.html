@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Painel Admin | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="robots" content="noindex"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.admin-box{padding:20px;border-radius:16px;border:1px solid #e5e7eb;background:#fff;margin:20px 0}
+.admin-box h3{margin:0 0 14px}
+.admin-lista{display:flex;flex-direction:column;gap:0}
+.admin-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f1f5f9}
+.admin-item:last-child{border-bottom:0}
+.admin-posicao{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:#eef2ff;color:#5b5ce2;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center}
+.admin-nome{flex:1;font-weight:700;font-size:14px;word-break:break-word}
+.admin-numeros{flex:0 0 auto;font-size:12.5px;color:#667085;font-weight:700;white-space:nowrap}
+.admin-bloqueado{text-align:center;padding:60px 20px}
+.admin-bloqueado h1{font-size:26px}
+.vazio-mini{text-align:center;padding:20px;color:#8a92a6;font-size:13.5px}
+[data-theme="dark"] .admin-box{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .admin-item{border-color:rgba(255,255,255,.08)}
+[data-theme="dark"] .admin-numeros{color:#a0a0a0}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260827"></script><main>
+
+<div id="conteudoAdmin">
+  <div class="vazio-mini" style="padding:60px 20px">🔄 Verificando acesso...</div>
+</div>
+
+</main>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+
+const ADMIN_EMAIL='jhoncorretor2025@gmail.com';
+
+function aguardarMudancaAuth(){
+  return new Promise(resolve=>{
+    window.addEventListener('delta-auth-changed',function ouvir(e){
+      window.removeEventListener('delta-auth-changed',ouvir);
+      resolve(e.detail&&e.detail.user?e.detail.user:null);
+    });
+  });
+}
+
+function renderBloqueado(){
+  document.getElementById('conteudoAdmin').innerHTML=`
+    <div class="admin-bloqueado">
+      <h1>🚫 Acesso restrito</h1>
+      <p>Essa página é só para o administrador do site. Entre com a conta certa pra acessar.</p>
+      <a href="/delta-prompts/index.html" style="display:inline-block;margin-top:14px;padding:12px 22px;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:700;border-radius:12px;text-decoration:none">🏠 Voltar para a Página Inicial</a>
+    </div>`;
+}
+
+function labelPagina(caminho){
+  if(!caminho)return'(desconhecida)';
+  const partes=caminho.replace(/^\/delta-prompts\//,'').replace(/\.html$/,'');
+  return partes||'Página Inicial';
+}
+
+async function renderPainel(user){
+  document.getElementById('conteudoAdmin').innerHTML=`
+    <h1>🔐 Painel Administrativo</h1>
+    <p>Estatísticas agregadas de <strong>todos os usuários</strong> do Delta Prompts. Logado como ${user.email}.</p>
+
+    <div class="admin-box">
+      <h3>👍 Prompts mais bem avaliados (feedback global)</h3>
+      <div class="admin-lista" id="listaFeedback"><div class="vazio-mini">Carregando...</div></div>
+    </div>
+
+    <div class="admin-box">
+      <h3>📈 Páginas mais visitadas</h3>
+      <div class="admin-lista" id="listaPageviews"><div class="vazio-mini">Carregando...</div></div>
+    </div>
+  `;
+
+  try{
+    const topFeedback=await window.deltaAuth.obterTopFeedback(20);
+    const boxFb=document.getElementById('listaFeedback');
+    if(!topFeedback.length){
+      boxFb.innerHTML='<div class="vazio-mini">Ainda não há dados de feedback suficientes.</div>';
+    }else{
+      boxFb.innerHTML=topFeedback.map((p,i)=>`
+        <div class="admin-item">
+          <span class="admin-posicao">${i+1}</span>
+          <span class="admin-nome">${p.id}</span>
+          <span class="admin-numeros">👍 ${p.up} · 👎 ${p.down}</span>
+        </div>`).join('');
+    }
+  }catch(e){
+    document.getElementById('listaFeedback').innerHTML='<div class="vazio-mini">Erro ao carregar. Confira as regras do Firestore.</div>';
+  }
+
+  try{
+    const topPaginas=await window.deltaAuth.obterTopPageViews(30);
+    const boxPv=document.getElementById('listaPageviews');
+    if(!topPaginas.length){
+      boxPv.innerHTML='<div class="vazio-mini">Ainda não há visualizações registradas.</div>';
+    }else{
+      boxPv.innerHTML=topPaginas.map((p,i)=>`
+        <div class="admin-item">
+          <span class="admin-posicao">${i+1}</span>
+          <span class="admin-nome">${labelPagina(p.path)}</span>
+          <span class="admin-numeros">👁️ ${p.views}</span>
+        </div>`).join('');
+    }
+  }catch(e){
+    document.getElementById('listaPageviews').innerHTML='<div class="vazio-mini">Erro ao carregar. Confira as regras do Firestore.</div>';
+  }
+}
+
+async function iniciar(){
+  if(!window.deltaLoadAuth){renderBloqueado();return}
+  const promessaAuth=aguardarMudancaAuth();
+  await window.deltaLoadAuth();
+  const user=await promessaAuth;
+  if(user&&user.email===ADMIN_EMAIL){
+    renderPainel(user);
+  }else{
+    renderBloqueado();
+  }
+}
+iniciar();
+</script>
+</body></html>
