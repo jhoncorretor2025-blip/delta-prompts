@@ -50,6 +50,47 @@ export async function obterFeedbackGlobal(promptId){
   catch(e){return{up:0,down:0}}
 }
 
+// ===== CONTADOR DE USO SINCRONIZADO NA NUVEM =====
+// Cada pagina guarda seu proprio contador (ex: 'deltaFinancasUsos', 'deltaSaudeUsos'...).
+// Aqui a gente sincroniza TODAS as chaves que terminam em "Usos" de uma vez.
+function _todasChavesUso(){
+  const chaves=[];
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(k&&/Usos$/.test(k))chaves.push(k);
+    }
+  }catch(e){}
+  return chaves;
+}
+
+export async function syncUsosFromCloud(uid){
+  if(!uid)return;
+  try{
+    const snap=await getDoc(doc(db,'users',uid));
+    const nuvem=(snap.exists()&&snap.data().usos)||{};
+    Object.keys(nuvem).forEach(chave=>{
+      let local={};
+      try{local=JSON.parse(localStorage.getItem(chave))||{}}catch(e){}
+      const mesclado={...local};
+      Object.keys(nuvem[chave]||{}).forEach(id=>{
+        mesclado[id]=Math.max(local[id]||0,nuvem[chave][id]||0);
+      });
+      try{localStorage.setItem(chave,JSON.stringify(mesclado))}catch(e){}
+    });
+    await pushUsosToCloud(uid);
+  }catch(e){console.error('Erro ao sincronizar uso:',e)}
+}
+
+export async function pushUsosToCloud(uid){
+  if(!uid)return;
+  try{
+    const obj={};
+    _todasChavesUso().forEach(k=>{try{obj[k]=JSON.parse(localStorage.getItem(k))}catch(e){}});
+    await setDoc(doc(db,'users',uid),{usos:obj},{merge:true});
+  }catch(e){console.error('Erro ao enviar uso para a nuvem:',e)}
+}
+
 export async function login(){try{const result=await signInWithPopup(auth,provider);await saveProfile(result.user)}catch(e){if(['auth/popup-blocked','auth/cancelled-popup-request','auth/operation-not-supported-in-this-environment'].includes(e.code)){await signInWithRedirect(auth,provider);return}console.error('Erro no login Google:',e);alert('Não foi possível entrar com o Google. Tente novamente.')}}
 export function logout(){return signOut(auth)}
 export function getUser(){return auth.currentUser}
@@ -57,5 +98,5 @@ export function getUser(){return auth.currentUser}
 // Chamado uma unica vez, DEPOIS que o menu ja existe no DOM (sem MutationObserver, sem loop).
 export function initAuthWatcher(){
   getRedirectResult(auth).then(r=>r&&saveProfile(r.user)).catch(console.error);
-  onAuthStateChanged(auth,user=>{window.deltaUser=user||null;window.dispatchEvent(new CustomEvent('delta-auth-changed',{detail:{user}}));render(user);if(user){saveProfile(user).catch(console.error);syncFavoritosFromCloud(user.uid)}});
+  onAuthStateChanged(auth,user=>{window.deltaUser=user||null;window.dispatchEvent(new CustomEvent('delta-auth-changed',{detail:{user}}));render(user);if(user){saveProfile(user).catch(console.error);syncFavoritosFromCloud(user.uid);syncUsosFromCloud(user.uid)}});
 }
