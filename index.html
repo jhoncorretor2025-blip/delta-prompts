@@ -37,7 +37,7 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260827"></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260829"></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
@@ -70,6 +70,8 @@
 </div></section>
 
 <section class="section white" id="fixadas-section" style="display:none"><div class="container"><div class="section-title"><div><span class="tag">📌 FIXADAS</span><h2>Suas categorias fixadas</h2></div></div><div class="list-grid" id="fixadas-grid"></div></div></section>
+
+<section class="section white" id="recomendado-section" style="display:none"><div class="container"><div class="section-title"><div><span class="tag">🧠 PRA VOCÊ</span><h2>Baseado no que você mais usa</h2></div></div><div class="list-grid" id="recomendado-grid"></div></div></section>
 
 <section class="section white" id="caminhos"><div class="container"><div class="head"><h2>🧭 O que você procura?</h2><p>Escolha o caminho que mais combina com o que você precisa agora.</p></div><div class="paths"><a class="path" href="#pessoal"><span class="emoji" aria-hidden="true">🏠</span><h3>Pessoal & Dia a Dia</h3><p>Estudar, organizar a vida, cuidar de informações pessoais e criar imagens.</p><b>Explorar opções →</b></a><a class="path" href="#negocio"><span class="emoji" aria-hidden="true">🏢</span><h3>Minha Empresa & Negócio</h3><p>Marketing, criação de imagens, cartão de visita, folder, redes sociais e vendas.</p><b>Explorar opções →</b></a><a class="path" href="#trabalho"><span class="emoji" aria-hidden="true">💼</span><h3>Trabalho & Negócios</h3><p>Imóveis, produtividade, comunicação, planejamento e mais.</p><b>Explorar opções →</b></a><a class="path advanced" href="#avancado"><span class="emoji" aria-hidden="true">🚀</span><span class="type">AVANÇADO</span><h3>IA & Recursos Avançados</h3><p>Skills, agentes, packs, automações, programação e sistemas com IA.</p><b>Explorar opções →</b></a></div></div></section>
 
@@ -143,6 +145,30 @@ function renderFixadas(){
   if(!nomes.length){sec.style.display='none';return}
   sec.style.display='';
   document.getElementById('fixadas-grid').innerHTML=nomes.map(n=>itens.find(x=>x.n===n)).filter(Boolean).map(item).join('');
+}
+
+// ===== RECOMENDAÇÃO INTELIGENTE (baseada no grupo que a pessoa mais usa) =====
+function renderRecomendado(){
+  const sec=document.getElementById('recomendado-section');
+  if(!sec)return;
+  let scores={};
+  try{scores=JSON.parse(localStorage.getItem('deltaGrupoScores'))||{}}catch(e){}
+  // grupos do menu inteligente (pessoal/carreira/empresa/avancado/biblioteca) mapeiam pra g: pessoal/trabalho/avancado
+  const mapa={pessoal:'pessoal',carreira:'trabalho',empresa:'trabalho',avancado:'avancado',biblioteca:null};
+  const combinados={};
+  Object.keys(scores).forEach(k=>{const g=mapa[k];if(g)combinados[g]=(combinados[g]||0)+scores[k]});
+  const grupoTop=Object.keys(combinados).sort((a,b)=>combinados[b]-combinados[a])[0];
+  if(!grupoTop||!combinados[grupoTop]){sec.style.display='none';return}
+
+  let favoritosNomes=[];
+  try{favoritosNomes=(JSON.parse(localStorage.getItem('deltaFavoritos'))||[]).map(f=>f.titulo)}catch(e){}
+  const jaFixadas=_loadFixadas();
+
+  const candidatos=itens.filter(x=>x.g===grupoTop&&!jaFixadas.includes(x.n));
+  if(!candidatos.length){sec.style.display='none';return}
+  const escolhidos=[...candidatos].sort(()=>Math.random()-0.5).slice(0,4);
+  sec.style.display='';
+  document.getElementById('recomendado-grid').innerHTML=escolhidos.map(item).join('');
 }
 
 // ===== SEUS MAIS ACESSADOS =====
@@ -295,6 +321,7 @@ aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}c
 render();
 renderHeroStats();
 renderFixadas();
+renderRecomendado();
 renderMaisAcessados();
 renderContinuar();
 renderHistorico();
