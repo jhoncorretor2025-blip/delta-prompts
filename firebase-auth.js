@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp, increment, collection, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp, increment, collection, query, orderBy, where, limit, getDocs } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 
 const firebaseConfig={apiKey:'AIzaSyAFMCGldhbqzcHqem-Nm8bPqSLHTf04UKc',authDomain:'delta-prompts.firebaseapp.com',projectId:'delta-prompts',storageBucket:'delta-prompts.firebasestorage.app',messagingSenderId:'755389200448',appId:'1:755389200448:web:0affd073b7c607169dc7a5',measurementId:'G-29MLGRJW66'};
 const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getFirestore(app);const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});
@@ -138,6 +138,27 @@ export function getUser(){return auth.currentUser}
 // Chamado uma unica vez, DEPOIS que o menu ja existe no DOM (sem MutationObserver, sem loop).
 let _resolverAuthPronto;
 export const authPronto=new Promise(r=>{_resolverAuthPronto=r});
+// ===== PRESENÇA (pessoas navegando agora) =====
+export async function registrarPresenca(){
+  try{
+    let sid;
+    try{
+      sid=sessionStorage.getItem('deltaSessaoId');
+      if(!sid){sid='s-'+Math.random().toString(36).slice(2)+Date.now();sessionStorage.setItem('deltaSessaoId',sid)}
+    }catch(e){sid='s-'+Math.random().toString(36).slice(2)}
+    await setDoc(doc(db,'presenca',sid),{ultimoPing:serverTimestamp()});
+  }catch(e){}
+}
+
+export async function contarPessoasOnline(){
+  try{
+    const doisMinAtras=new Date(Date.now()-2*60*1000);
+    const q=query(collection(db,'presenca'),where('ultimoPing','>',doisMinAtras));
+    const snap=await getDocs(q);
+    return snap.size;
+  }catch(e){return null}
+}
+
 export function initAuthWatcher(){
   getRedirectResult(auth).then(r=>r&&saveProfile(r.user)).catch(console.error);
   let primeiraVez=true;

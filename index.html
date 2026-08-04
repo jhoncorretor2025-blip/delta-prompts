@@ -37,7 +37,7 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260829"></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260830"></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
@@ -45,6 +45,7 @@
 <p>Escolha seu objetivo, pesquise uma necessidade ou explore prompts, Skills, agentes e packs organizados por nível de uso.</p>
 
 <div class="hero-stats" id="heroStats"></div>
+<div id="pessoasOnline" style="display:none;margin-top:8px;font-size:13px;color:#15803d;font-weight:700"></div>
 
 <button type="button" id="btnModoSimplesHero" class="modo-simples-hero">🧓 Sou iniciante / prefiro um modo mais simples</button>
 
@@ -322,6 +323,23 @@ render();
 renderHeroStats();
 renderFixadas();
 renderRecomendado();
+
+// ===== PESSOAS ONLINE AGORA =====
+if(window.deltaLoadAuth){
+  window.deltaLoadAuth().then(mod=>mod&&mod.authPronto).then(()=>{
+    if(!window.deltaAuth||!window.deltaAuth.contarPessoasOnline)return;
+    function atualizarOnline(){
+      window.deltaAuth.contarPessoasOnline().then(n=>{
+        const el=document.getElementById('pessoasOnline');
+        if(!el||n===null||n<2)return; // so mostra se fizer sentido social (2+)
+        el.style.display='block';
+        el.textContent='🟢 '+n+' pessoas navegando no Delta Prompts agora';
+      });
+    }
+    atualizarOnline();
+    setInterval(atualizarOnline,30000);
+  });
+}
 renderMaisAcessados();
 renderContinuar();
 renderHistorico();
