@@ -161,21 +161,33 @@ Organize em categorias claras e sugira melhorias no equilíbrio entre elas.`,en:
 [INCOME, FIXED AND VARIABLE EXPENSES]
 
 Organize into clear categories and suggest improvements in the balance between them.`},
-{categoria:'📋 Orçamento & Controle',nivel:'intermediario',titulo:'📊 Orçamento Detalhado (Regra 50/30/20)',quando:'Para um planejamento mensal mais completo e estruturado.',prompt:`Atue como consultor financeiro pessoal. Crie um orçamento mensal detalhado considerando:
+{categoria:'📋 Orçamento & Controle',nivel:'intermediario',titulo:'📊 Orçamento Detalhado (Regra 50/30/20)',quando:'Para um planejamento mensal mais completo e estruturado, mesmo se você nunca ouviu falar da regra 50/30/20.',prompt:`Você vai me ajudar a montar meu orçamento mensal usando a regra 50/30/20.
 
-Renda líquida: [VALOR]
-Despesas fixas: [LISTA]
-Despesas variáveis: [LISTA]
-Metas financeiras: [METAS]
+Antes de qualquer coisa, explique pra mim de um jeito bem simples o que é essa regra: o que significa o 50%, o que significa o 30% e o que significa o 20%, com um exemplo prático.
 
-Distribua seguindo a regra 50/30/20 (necessidades, desejos, objetivos). Inclua categorias detalhadas, valores sugeridos, alertas para gastos excessivos e dicas de economia.`,en:`Act as a personal financial consultant. Create a detailed monthly budget considering:
+Depois, veja as informações que eu já trouxe:
 
-Net income: [AMOUNT]
-Fixed expenses: [LIST]
-Variable expenses: [LIST]
-Financial goals: [GOALS]
+Renda líquida: [VALOR DA RENDA OU "NÃO SEI AINDA"]
+Despesas fixas: [LISTA DE DESPESAS FIXAS OU "NÃO SEI AINDA"]
+Despesas variáveis: [LISTA DE DESPESAS VARIÁVEIS OU "NÃO SEI AINDA"]
+Metas financeiras: [METAS OU "NÃO TENHO METAS DEFINIDAS"]
 
-Distribute following the 50/30/20 rule (needs, wants, goals). Include detailed categories, suggested amounts, alerts for excessive spending, and savings tips.`},
+Se alguma dessas informações estiver vazia, sem sentido, ou eu tiver escrito "não sei", não invente nem pule essa parte — me explique por que aquilo é importante e me faça uma pergunta simples pra eu conseguir responder (por exemplo, se eu não souber minhas despesas fixas, me ajude a lembrar quais são as mais comuns).
+
+Só depois de reunir as informações necessárias, monte o orçamento com categorias detalhadas, valores sugeridos dentro de cada faixa (50/30/20), alertas para gastos excessivos e dicas de economia. Converse comigo como se estivesse me ensinando de verdade, não só entregando uma tabela pronta.`,en:`You will help me put together my monthly budget using the 50/30/20 rule.
+
+Before anything else, explain to me in a very simple way what this rule is: what the 50% means, what the 30% means, and what the 20% means, with a practical example.
+
+Then, look at the information I have already provided:
+
+Net income: [INCOME AMOUNT OR "I DON'T KNOW YET"]
+Fixed expenses: [LIST OF FIXED EXPENSES OR "I DON'T KNOW YET"]
+Variable expenses: [LIST OF VARIABLE EXPENSES OR "I DON'T KNOW YET"]
+Financial goals: [GOALS OR "I DON'T HAVE DEFINED GOALS"]
+
+If any of this information is empty, doesn't make sense, or I wrote "I don't know," do not invent it or skip that part — explain to me why it matters and ask me a simple question so I can answer it (for example, if I don't know my fixed expenses, help me remember the most common ones).
+
+Only after gathering the necessary information, build the budget with detailed categories, suggested amounts within each range (50/30/20), alerts for excessive spending, and savings tips. Talk to me as if you were really teaching me, not just handing me a ready-made table.`},
 {categoria:'📋 Orçamento & Controle',nivel:'intermediario',titulo:'🩺 Diagnóstico de Saúde Financeira',quando:'Para avaliar sua situação financeira atual como um todo.',prompt:`Faça um diagnóstico completo da minha saúde financeira baseado em:
 
 Salário/renda mensal: [VALOR DO SALÁRIO]
