@@ -159,10 +159,10 @@ function renderMaisAcessados(){
   document.getElementById('mais-acessados-grid').innerHTML=ranked.map(card).join('');
 }
 document.addEventListener('click',e=>{
-  const a=e.target.closest('a.item,a.card');
+  const a=e.target.closest('a.item,a.card,#menu a');
   if(!a)return;
   const href=a.getAttribute('href');
-  const match=itens.find(x=>x.l===href);
+  const match=itens.find(x=>x.l===href||href&&href.endsWith('/'+x.l));
   if(match)registrarClique(match.n);
 });
 
