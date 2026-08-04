@@ -92,6 +92,33 @@
   });
 })();
 
+// ===== PWA: manifest, service worker e icones (instalar como app) =====
+(function(){
+  try{
+    if(!document.querySelector('link[rel="manifest"]')){
+      var link=document.createElement('link');
+      link.rel='manifest';
+      link.href='/delta-prompts/manifest.json';
+      document.head.appendChild(link);
+    }
+    if(!document.querySelector('meta[name="theme-color"]')){
+      var tema=document.createElement('meta');
+      tema.name='theme-color';
+      tema.content='#5b5ce2';
+      document.head.appendChild(tema);
+    }
+    if(!document.querySelector('link[rel="apple-touch-icon"]')){
+      var appleIcon=document.createElement('link');
+      appleIcon.rel='apple-touch-icon';
+      appleIcon.href='/delta-prompts/apple-touch-icon.png';
+      document.head.appendChild(appleIcon);
+    }
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/delta-prompts/sw.js').catch(function(){});
+    }
+  }catch(e){}
+})();
+
 // ===== BARRA DE PROGRESSO DE LEITURA =====
 (function(){
   function montar(){
@@ -348,7 +375,7 @@
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-20260825-menu-v39';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;let pushUsosTimer=null;function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260824').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,syncUsos:mod.syncUsosFromCloud,pushUsos:mod.pushUsosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal};mod.initAuthWatcher();return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null});window.addEventListener('delta:favoritos-updated',function(){if(!deltaUid||!window.deltaAuth||!window.deltaAuth.pushFavoritos)return;clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){window.deltaAuth.pushFavoritos(deltaUid)},600)});document.addEventListener('click',function(e){const btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');if(!btn||!deltaUid||!window.deltaAuth||!window.deltaAuth.pushUsos)return;clearTimeout(pushUsosTimer);pushUsosTimer=setTimeout(function(){window.deltaAuth.pushUsos(deltaUid)},800)},true);
+(function(){function getMenuCandidates(){const version='delta-prompts-20260826-menu-v40';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;let pushUsosTimer=null;function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260824').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,syncUsos:mod.syncUsosFromCloud,pushUsos:mod.pushUsosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal};mod.initAuthWatcher();return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null});window.addEventListener('delta:favoritos-updated',function(){if(!deltaUid||!window.deltaAuth||!window.deltaAuth.pushFavoritos)return;clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){window.deltaAuth.pushFavoritos(deltaUid)},600)});document.addEventListener('click',function(e){const btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');if(!btn||!deltaUid||!window.deltaAuth||!window.deltaAuth.pushUsos)return;clearTimeout(pushUsosTimer);pushUsosTimer=setTimeout(function(){window.deltaAuth.pushUsos(deltaUid)},800)},true);
 // ===== Guarda titulo/link de cada prompt usado (para o Top 5 em Meus Numeros) e registra atividade diaria =====
 document.addEventListener('click',function(e){
   var btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');
