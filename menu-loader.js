@@ -2,6 +2,25 @@
 // MENU LOADER + CONTROLES
 // ==============================
 (function(){try{var p=location.pathname;var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';if(!isIndex){localStorage.setItem('deltaUltimaPagina',JSON.stringify({path:p,ts:Date.now()}))}}catch(e){}})();
+// ===== HISTÓRICO DAS ÚLTIMAS 5 PÁGINAS VISITADAS =====
+(function(){
+  try{
+    var p=location.pathname;
+    var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';
+    if(isIndex)return; // nao conta a propria home
+    function registrar(){
+      var titulo=(document.title||'').split('|')[0].trim()||p;
+      var hist=[];
+      try{hist=JSON.parse(localStorage.getItem('deltaHistoricoPaginas'))||[]}catch(e){}
+      hist=hist.filter(function(h){return h.path!==p}); // remove duplicata, vai pro topo de novo
+      hist.unshift({path:p,titulo:titulo,ts:Date.now()});
+      if(hist.length>5)hist=hist.slice(0,5);
+      try{localStorage.setItem('deltaHistoricoPaginas',JSON.stringify(hist))}catch(e){}
+    }
+    if(document.title)registrar();else document.addEventListener('DOMContentLoaded',registrar,{once:true});
+  }catch(e){}
+})();
+
 // ===== REGISTRO DE VISITAS (para o painel Meus Numeros) =====
 (function(){
   try{

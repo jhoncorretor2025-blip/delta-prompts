@@ -92,6 +92,12 @@
 </section>
 
 <section class="card">
+  <h3>🧑 Qual é o seu perfil?</h3>
+  <p style="margin:0 0 14px;color:#667085;font-size:14px">Escolha o que mais combina com você agora — a gente já organiza o menu com esse tipo de conteúdo na frente. Você pode ajustar manualmente depois, na seção abaixo.</p>
+  <div id="listaPerfis" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px"></div>
+</section>
+
+<section class="card">
   <h3>⚙️ Personalizar Ordem do Menu</h3>
   <p style="margin:0 0 14px;color:#667085;font-size:14px">Por padrão, o menu se reorganiza automaticamente pelo que você mais usa. Se preferir, defina você mesmo a ordem dos grupos abaixo — sua escolha manual passa a valer no lugar da automática.</p>
   <div id="listaOrdemGrupos" style="display:flex;flex-direction:column;gap:8px"></div>
@@ -99,6 +105,11 @@
     <button type="button" id="btnResetarOrdem" style="border:1px solid #e5e7eb;background:#fff;color:#475467;font-weight:700;border-radius:10px;padding:10px 16px;cursor:pointer;font-size:13px">🔄 Voltar para automático</button>
   </div>
   <p id="statusOrdem" style="margin:10px 0 0;font-size:12.5px;color:#667085"></p>
+</section>
+
+<section class="card">
+  <h3>🕐 Últimas páginas que você visitou</h3>
+  <div id="listaHistorico" style="display:flex;flex-direction:column;gap:8px"></div>
 </section>
 
 <section class="card" style="text-align:center">
@@ -425,6 +436,56 @@ iniciar();
   });
   renderLista();
   atualizarStatus();
+
+  // ===== SELETOR DE PERFIL =====
+  var PERFIS=[
+    {chave:'pessoal',emoji:'🏠',nome:'Uso Pessoal',desc:'Vida pessoal, saúde e estudo primeiro',ordem:['pessoal','biblioteca','avancado','carreira','empresa']},
+    {chave:'empreendedor',emoji:'💼',nome:'Empreendedor(a)',desc:'Gestão de empresa e marketing primeiro',ordem:['empresa','carreira','avancado','pessoal','biblioteca']},
+    {chave:'carreira',emoji:'👔',nome:'Foco em Carreira',desc:'Emprego, currículo e crescimento primeiro',ordem:['carreira','empresa','avancado','pessoal','biblioteca']},
+    {chave:'avancado',emoji:'🚀',nome:'Avançado / Tech',desc:'IA, sistemas e automações primeiro',ordem:['avancado','empresa','carreira','pessoal','biblioteca']}
+  ];
+  function lerPerfilAtivo(){try{return localStorage.getItem('deltaPerfilAtivo')}catch(e){return null}}
+  function renderPerfis(){
+    var container=document.getElementById('listaPerfis');
+    if(!container)return;
+    var ativo=lerPerfilAtivo();
+    container.innerHTML=PERFIS.map(function(p){
+      var sel=ativo===p.chave;
+      return '<button type="button" data-perfil="'+p.chave+'" style="text-align:left;padding:14px;border-radius:12px;cursor:pointer;font:inherit;border:2px solid '+(sel?'#5b5ce2':'#e5e7eb')+';background:'+(sel?'#eef2ff':'#fff')+'">'+
+        '<div style="font-size:22px;margin-bottom:4px">'+p.emoji+'</div>'+
+        '<strong style="font-size:14px;display:block">'+p.nome+'</strong>'+
+        '<span style="font-size:12.5px;color:#667085">'+p.desc+'</span>'+
+        '</button>';
+    }).join('');
+    container.querySelectorAll('button[data-perfil]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var perfil=PERFIS.find(function(p){return p.chave===btn.dataset.perfil});
+        if(!perfil)return;
+        try{localStorage.setItem('deltaPerfilAtivo',perfil.chave)}catch(e){}
+        salvarOrdemManual(perfil.ordem.slice());
+        renderPerfis();
+        renderLista();
+        atualizarStatus();
+        mostrarToast&&mostrarToast(perfil.emoji+' Perfil "'+perfil.nome+'" aplicado!');
+      });
+    });
+  }
+  renderPerfis();
+
+  // ===== HISTÓRICO DAS ÚLTIMAS PÁGINAS =====
+  (function(){
+    var container=document.getElementById('listaHistorico');
+    if(!container)return;
+    var hist=[];
+    try{hist=JSON.parse(localStorage.getItem('deltaHistoricoPaginas'))||[]}catch(e){}
+    if(!hist.length){
+      container.innerHTML='<p style="color:#667085;font-size:14px;margin:0">Você ainda não visitou outras páginas nesta sessão. Assim que navegar pelo site, elas vão aparecer aqui.</p>';
+      return;
+    }
+    container.innerHTML=hist.map(function(h){
+      return '<a href="'+h.path+'" style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;text-decoration:none;color:inherit;font-weight:700;font-size:14px">↩️ '+h.titulo+'</a>';
+    }).join('');
+  })();
 })();
 
 </script>
