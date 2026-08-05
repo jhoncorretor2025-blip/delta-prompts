@@ -498,6 +498,41 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
   }
   window._deltaGrupoAtual=null;
 
+  function criarGruposRecolhiveis(sidebar){
+    var titulos=[].slice.call(sidebar.querySelectorAll('.menu-group-title'));
+    if(!titulos.length)return;
+    function lerColapsados(){try{return JSON.parse(localStorage.getItem('deltaGruposColapsados'))||{}}catch(e){return{}}}
+    function salvarColapsados(o){try{localStorage.setItem('deltaGruposColapsados',JSON.stringify(o))}catch(e){}}
+    var colapsados=lerColapsados();
+    titulos.forEach(function(titulo){
+      if(titulo.dataset.recolhivel)return; // ja preparado, evita duplicar
+      titulo.dataset.recolhivel='1';
+      var chave=chaveDoTitulo(titulo.textContent)||titulo.textContent;
+      var els=[];
+      var el=titulo.nextElementSibling;
+      while(el&&!el.classList.contains('menu-group-title')){els.push(el);el=el.nextElementSibling}
+      var seta=document.createElement('span');
+      seta.textContent='▾';
+      seta.style.cssText='float:right;transition:transform .2s ease;font-size:12px;opacity:.6';
+      titulo.appendChild(seta);
+      titulo.style.cursor='pointer';
+      titulo.style.userSelect='none';
+      function aplicar(colapsado){
+        els.forEach(function(e){e.style.display=colapsado?'none':''});
+        seta.style.transform=colapsado?'rotate(-90deg)':'rotate(0deg)';
+      }
+      var estadoInicial=!!colapsados[chave];
+      aplicar(estadoInicial);
+      titulo.addEventListener('click',function(){
+        var c=lerColapsados();
+        var novoEstado=!c[chave];
+        c[chave]=novoEstado;
+        salvarColapsados(c);
+        aplicar(novoEstado);
+      });
+    });
+  }
+
   function reordenarGrupos(sidebar){
     var titulos=[].slice.call(sidebar.querySelectorAll('.menu-group-title'));
     if(!titulos.length)return;
@@ -584,6 +619,7 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
     var sidebar=document.querySelector('#menu .sidebar');
     if(!sidebar)return;
     reordenarGrupos(sidebar);
+    criarGruposRecolhiveis(sidebar);
     criarSinoNovidades(sidebar);
     criarMinimizarAtalhos(sidebar);
     var grupo=grupoDaPaginaAtual(sidebar);
