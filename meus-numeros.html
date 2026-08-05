@@ -91,6 +91,16 @@
   <button type="button" id="btnConvidar" style="border:0;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:800;padding:14px 26px;border-radius:12px;cursor:pointer;font-size:15px">📲 Convidar pelo WhatsApp ou compartilhar</button>
 </section>
 
+<section class="card">
+  <h3>⚙️ Personalizar Ordem do Menu</h3>
+  <p style="margin:0 0 14px;color:#667085;font-size:14px">Por padrão, o menu se reorganiza automaticamente pelo que você mais usa. Se preferir, defina você mesmo a ordem dos grupos abaixo — sua escolha manual passa a valer no lugar da automática.</p>
+  <div id="listaOrdemGrupos" style="display:flex;flex-direction:column;gap:8px"></div>
+  <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+    <button type="button" id="btnResetarOrdem" style="border:1px solid #e5e7eb;background:#fff;color:#475467;font-weight:700;border-radius:10px;padding:10px 16px;cursor:pointer;font-size:13px">🔄 Voltar para automático</button>
+  </div>
+  <p id="statusOrdem" style="margin:10px 0 0;font-size:12.5px;color:#667085"></p>
+</section>
+
 <section class="card" style="text-align:center">
   <h3>🚀 Continue explorando</h3>
   <a href="/delta-prompts/index.html" style="display:inline-block;margin-top:10px;padding:14px 28px;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:700;border-radius:12px;text-decoration:none">🏠 Voltar para a Página Inicial</a>
@@ -355,5 +365,67 @@ async function iniciar(){
   renderizarTop5();
 }
 iniciar();
+
+// ===== PERSONALIZAR ORDEM DO MENU =====
+(function(){
+  var GRUPOS=[
+    {chave:'pessoal',label:'🏠 Pessoal & Dia a Dia'},
+    {chave:'carreira',label:'👔 Carreira Pessoal'},
+    {chave:'empresa',label:'🏢 Gestão de Empresa & Marketing'},
+    {chave:'avancado',label:'🚀 IA & Recursos Avançados'},
+    {chave:'biblioteca',label:'📚 Minha Biblioteca'}
+  ];
+  function lerOrdemManual(){try{return JSON.parse(localStorage.getItem('deltaGrupoOrdemManual'))}catch(e){return null}}
+  function salvarOrdemManual(o){try{localStorage.setItem('deltaGrupoOrdemManual',JSON.stringify(o))}catch(e){}}
+  function ordemAtual(){
+    var manual=lerOrdemManual();
+    if(manual&&manual.length)return manual;
+    var scores={};
+    try{scores=JSON.parse(localStorage.getItem('deltaGrupoScores'))||{}}catch(e){}
+    return GRUPOS.map(function(g){return g.chave}).sort(function(a,b){return (scores[b]||0)-(scores[a]||0)});
+  }
+  function atualizarStatus(){
+    var status=document.getElementById('statusOrdem');
+    if(!status)return;
+    status.textContent=lerOrdemManual()?'✅ Ordem personalizada ativa.':'🤖 Usando ordem automática (baseada no seu uso).';
+  }
+  function renderLista(){
+    var container=document.getElementById('listaOrdemGrupos');
+    if(!container)return;
+    var chaves=ordemAtual();
+    container.innerHTML=chaves.map(function(chave,i){
+      var g=GRUPOS.find(function(x){return x.chave===chave})||{label:chave};
+      return '<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff">'+
+        '<span style="font-weight:800;color:#5b5ce2;min-width:20px">'+(i+1)+'</span>'+
+        '<span style="flex:1;font-weight:700;font-size:14px">'+g.label+'</span>'+
+        '<button type="button" data-mover="cima" data-chave="'+chave+'" '+(i===0?'disabled':'')+' style="border:0;background:#f1f5f9;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px;'+(i===0?'opacity:.4':'')+'">↑</button>'+
+        '<button type="button" data-mover="baixo" data-chave="'+chave+'" '+(i===chaves.length-1?'disabled':'')+' style="border:0;background:#f1f5f9;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px;'+(i===chaves.length-1?'opacity:.4':'')+'">↓</button>'+
+      '</div>';
+    }).join('');
+    container.querySelectorAll('button[data-mover]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var chaves=ordemAtual();
+        var idx=chaves.indexOf(btn.dataset.chave);
+        var novoIdx=btn.dataset.mover==='cima'?idx-1:idx+1;
+        if(novoIdx<0||novoIdx>=chaves.length)return;
+        var tmp=chaves[idx];chaves[idx]=chaves[novoIdx];chaves[novoIdx]=tmp;
+        salvarOrdemManual(chaves);
+        renderLista();
+        atualizarStatus();
+        mostrarToast&&mostrarToast('✅ Ordem salva!');
+      });
+    });
+  }
+  var btnResetar=document.getElementById('btnResetarOrdem');
+  if(btnResetar)btnResetar.addEventListener('click',function(){
+    try{localStorage.removeItem('deltaGrupoOrdemManual')}catch(e){}
+    renderLista();
+    atualizarStatus();
+    mostrarToast&&mostrarToast('🔄 Voltou pra ordem automática');
+  });
+  renderLista();
+  atualizarStatus();
+})();
+
 </script>
 </body></html>
