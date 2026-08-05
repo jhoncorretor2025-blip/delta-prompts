@@ -523,6 +523,13 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
     function lerColapsados(){try{return JSON.parse(localStorage.getItem('deltaGruposColapsados'))||{}}catch(e){return{}}}
     function salvarColapsados(o){try{localStorage.setItem('deltaGruposColapsados',JSON.stringify(o))}catch(e){}}
     var colapsados=lerColapsados();
+    var funcoesAplicar=[];
+    function atualizarBotaoExpandirTudo(){
+      var c=lerColapsados();
+      var algumFechado=Object.keys(c).some(function(k){return c[k]});
+      var btn=document.getElementById('deltaExpandirTudoBtn');
+      if(btn)btn.style.display=algumFechado?'block':'none';
+    }
     titulos.forEach(function(titulo){
       if(titulo.dataset.recolhivel)return; // ja preparado, evita duplicar
       titulo.dataset.recolhivel='1';
@@ -540,6 +547,7 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
         els.forEach(function(e){e.style.display=colapsado?'none':''});
         seta.style.transform=colapsado?'rotate(-90deg)':'rotate(0deg)';
       }
+      funcoesAplicar.push(aplicar);
       var estadoInicial=!!colapsados[chave];
       aplicar(estadoInicial);
       titulo.addEventListener('click',function(){
@@ -548,8 +556,25 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
         c[chave]=novoEstado;
         salvarColapsados(c);
         aplicar(novoEstado);
+        atualizarBotaoExpandirTudo();
       });
     });
+    if(!document.getElementById('deltaExpandirTudoBtn')){
+      var brand=sidebar.querySelector('.menu-brand');
+      if(brand){
+        var btnExpandir=document.createElement('button');
+        btnExpandir.type='button';btnExpandir.id='deltaExpandirTudoBtn';
+        btnExpandir.textContent='↕️ Expandir todos os menus';
+        btnExpandir.style.cssText='display:none;width:100%;text-align:left;border:1px solid #fed7aa;background:#fff7ed;color:#c2410c;border-radius:10px;padding:9px 12px;cursor:pointer;font-size:12.5px;font-weight:800;margin-bottom:8px';
+        btnExpandir.addEventListener('click',function(){
+          try{localStorage.setItem('deltaGruposColapsados','{}')}catch(e){}
+          funcoesAplicar.forEach(function(fn){fn(false)});
+          atualizarBotaoExpandirTudo();
+        });
+        brand.parentNode.insertBefore(btnExpandir,brand.nextSibling);
+      }
+    }
+    atualizarBotaoExpandirTudo();
   }
 
   function lerOrdemManual(){try{return JSON.parse(localStorage.getItem('deltaGrupoOrdemManual'))}catch(e){return null}}
@@ -583,7 +608,10 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
     if(!brand)return;
     var el=brand.nextElementSibling;
     var candidatos=[];
-    while(el&&!el.classList.contains('menu-group-title')){candidatos.push(el);el=el.nextElementSibling}
+    while(el&&!el.classList.contains('menu-group-title')){
+      if(el.tagName==='A')candidatos.push(el); // so os links originais (Inicio, Mais Acessados, Novo Prompt, Gerador Pro), nao os botoes injetados depois (sino, expandir tudo etc)
+      el=el.nextElementSibling;
+    }
     if(!candidatos.length)return;
     if(document.getElementById('deltaMinimizarAtalhos'))return;
     var btn=document.createElement('button');
