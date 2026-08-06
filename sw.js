@@ -1,4 +1,4 @@
-const CACHE_NAME = 'delta-prompts-shell-v1';
+const CACHE_NAME = 'delta-prompts-shell-v2';
 const SHELL_URLS = [
   '/delta-prompts/index.html',
   '/delta-prompts/style.css',
