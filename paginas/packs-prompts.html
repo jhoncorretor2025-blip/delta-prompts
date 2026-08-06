@@ -1,9 +1,285 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Packs de Prompts | Delta Prompts</title><meta name="description" content="Os packs reúnem prompts que funcionam juntos. Você pode usar apenas um ou seguir o kit completo do começo ao fim."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.intro{padding:22px;background:linear-gradient(135deg,#fff7ed,#fff);border-radius:18px;margin-bottom:24px}.pack{border-left:5px solid #7a5bff}.prompt-text{white-space:pre-wrap;background:#f8fafc;padding:13px;border-radius:10px;margin:10px 0}.item{margin-top:18px}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.tag{font-size:12px;font-weight:800;background:#fff7ed;padding:5px 9px;border-radius:999px}</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260831c"></script><main><h1>📦 Packs de Prompts Prontos</h1><div class="intro"><h3>Um objetivo, vários prompts em sequência</h3><p>Os packs reúnem prompts que funcionam juntos. Você pode usar apenas um ou seguir o kit completo do começo ao fim.</p></div><div id="lista"></div></main><script>
-const packs=[
-{titulo:'📚 Pack Estudo Inteligente',categoria:'Estudo',descricao:'Para aprender um assunto novo do zero.',prompts:[['1. Entender','Explique [ASSUNTO] para um iniciante usando uma explicação simples, uma analogia cotidiana e um exemplo prático.'],['2. Organizar','Crie um mapa dos 20% de [ASSUNTO] que me darão 80% da compreensão prática. Organize em ordem de aprendizado.'],['3. Praticar','Crie 5 exercícios progressivos sobre [ASSUNTO]. Comece fácil e aumente a dificuldade. Não mostre as respostas até eu tentar.'],['4. Revisar','Faça 10 perguntas curtas para revisar [ASSUNTO], focando nos pontos mais importantes e nos erros mais comuns.']]},
-{titulo:'🏠 Pack Corretor de Imóveis',categoria:'Profissional',descricao:'Do imóvel bruto ao anúncio e atendimento.',prompts:[['1. Organizar imóvel','Organize estes dados do imóvel sem inventar informações: [DADOS]. Separe características, localização, diferenciais, valores e informações que ainda faltam.'],['2. Criar anúncio','Com base nestes dados, crie um anúncio imobiliário persuasivo, claro e natural. Destaque os diferenciais reais e finalize com chamada para contato.'],['3. Marketplace','Adapte o anúncio para Facebook Marketplace com título chamativo, descrição objetiva e informações essenciais. Não invente dados.'],['4. WhatsApp','Crie uma mensagem curta de WhatsApp para apresentar este imóvel a um cliente interessado, com linguagem humana e convite para visita.']]},
-{titulo:'🎨 Pack Criador de Imagens',categoria:'Criatividade',descricao:'Para transformar uma ideia em um prompt visual melhor.',prompts:[['1. Definir conceito','Transforme esta ideia de imagem em um conceito visual claro: [IDEIA]. Defina personagem, cenário, iluminação, enquadramento, clima e estilo.'],['2. Criar prompt','Com base no conceito, escreva um prompt detalhado para geração de imagem, priorizando composição, iluminação, realismo e coerência visual.'],['3. Melhorar resultado','Analise o resultado descrito a seguir e reescreva o prompt corrigindo os problemas: [DESCREVA O RESULTADO E O QUE NÃO GOSTOU].']]},
-{titulo:'📱 Pack Redes Sociais',categoria:'Marketing',descricao:'Para transformar uma ideia em conteúdo completo.',prompts:[['1. Ideias','Gere 10 ideias de conteúdo sobre [TEMA] para [PÚBLICO]. Priorize ideias úteis, específicas e fáceis de produzir.'],['2. Post','Crie um post sobre [IDEIA] com gancho forte, desenvolvimento claro e chamada para ação natural.'],['3. Stories','Transforme o conteúdo em uma sequência de 5 stories curtos que gerem curiosidade e interação.'],['4. Reaproveitar','Reaproveite este conteúdo em 3 formatos diferentes sem apenas repetir as mesmas frases.']]},
-{titulo:'🧠 Pack Organização Pessoal',categoria:'Pessoal',descricao:'Para sair da confusão e chegar a um plano simples.',prompts:[['1. Descarregar','Vou enviar tudo que está na minha cabeça. Apenas organize os itens por assunto e não crie tarefas novas: [CONTEÚDO].'],['2. Priorizar','Classifique os itens em: urgente, importante, pode esperar e pode eliminar. Explique brevemente os casos duvidosos.'],['3. Próximo passo','Transforme as prioridades em próximos passos pequenos e executáveis. Mostre apenas o que devo fazer primeiro.']]},
-{titulo:'🤖 Pack Começando com IA',categoria:'IA',descricao:'Para quem quer descobrir como usar IA no próprio dia a dia.',prompts:[['1. Mapear rotina','Faça 10 perguntas sobre minha rotina para descobrir onde a inteligência artificial pode me economizar tempo ou melhorar resultados. Faça uma pergunta por vez.'],['2. Escolher oportunidades','Com base nas minhas respostas, identifique as 5 melhores oportunidades de uso de IA, ordenadas da mais fácil para a mais avançada.'],['3. Plano prático','Crie um plano de 7 dias para eu testar essas aplicações de IA sem precisar saber programação.']]}
-];function copiar(t){navigator.clipboard.writeText(t);alert('Pack copiado!')}function render(){lista.innerHTML=packs.map(p=>{const completo=p.prompts.map(x=>x[0]+'\n'+x[1]).join('\n\n');return `<section class="card pack"><span class="tag">${p.categoria}</span><h2>${p.titulo}</h2><p>${p.descricao}</p>${p.prompts.map(x=>`<div class="item"><strong>${x[0]}</strong><div class="prompt-text">${x[1]}</div></div>`).join('')}<div class="acoes"><button onclick='copiar(${JSON.stringify(completo)})'>📋 Copiar Pack Completo</button><button onclick='navigator.clipboard.writeText(${JSON.stringify(completo)});window.open("https://chatgpt.com/","_blank")'>🤖 Usar no ChatGPT</button></div></section>`}).join('')}render();</script></body></html>
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Packs de Prompts | Delta Prompts</title><meta name="description" content="Os packs reúnem prompts que funcionam juntos. Você pode usar apenas um ou seguir o kit completo do começo ao fim."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.intro{padding:22px;background:linear-gradient(135deg,#fff7ed,#fff);border-radius:18px;margin-bottom:24px}
+.pack{border-left:5px solid #7a5bff}
+.prompt-text{white-space:pre-wrap;background:#f8fafc;padding:13px;border-radius:10px;margin:10px 0;font-size:14px}
+.item{margin-top:18px;padding-top:16px;border-top:1px dashed #e5e7eb}
+.item:first-of-type{border-top:0;padding-top:0}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{border:0;border-radius:11px;padding:10px 14px;font-weight:800;cursor:pointer;font-size:13px;background:#f1f5f9;color:#334155}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes-item{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.acoes-item button{border:1px solid #e5e7eb;background:#fff;border-radius:9px;padding:7px 11px;font-weight:700;cursor:pointer;font-size:12px;color:#475467}
+.acoes-item button.ativo-en{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.tag{font-size:12px;font-weight:800;background:#fff7ed;padding:5px 9px;border-radius:999px;color:#c2410c}
+.nivel{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;margin-left:6px}
+.nivel-basico{background:#dcfce7;color:#166534}
+.nivel-intermediario{background:#fef9c3;color:#854d0e}
+.nivel-avancado{background:#fee2e2;color:#991b1b}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:14px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}
+.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filtros button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}
+.filtros button.ativo{background:#7a5bff;color:#fff;border-color:#7a5bff}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(122,91,255,.12);color:#7a5bff}
+.filtros button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fffaf5}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#7a5bff;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.stats-bar{font-size:13px;color:#667085;margin:0 0 10px;font-weight:600}
+[data-theme="dark"] .prompt-text{background:rgba(255,255,255,.05);color:#cbd5e1}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .acoes-item button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica{color:#a0a0a0}
+</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260831c"></script><main>
+
+<h1>📦 Packs de Prompts Prontos</h1>
+<div class="intro"><h3>Um objetivo, vários prompts em sequência</h3><p>Os packs reúnem prompts que funcionam juntos, um passo de cada vez. Você pode usar apenas um passo ou seguir o kit completo do começo ao fim.</p></div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="🔎 Buscar pack por tema...">
+  <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
+</div>
+<div class="filtros" id="filtrosCategoria"></div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um pack</button>
+</div>
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o pack que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes"><button id="btnCopiarSugestao">📋 Copiar sugestão</button><span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span></div>
+</div>
+
+<div id="lista"></div>
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const dadosBrutos=[
+{categoria:'Estudo',nivel:'basico',titulo:'📚 Pack Estudo Inteligente',descricao:'Para aprender um assunto novo do zero.',passos:[
+{t:'1. Entender',p:'Explique [ASSUNTO] para um iniciante usando uma explicação simples, uma analogia cotidiana e um exemplo prático.',en:'Explain [TOPIC] to a beginner using a simple explanation, an everyday analogy, and a practical example.'},
+{t:'2. Organizar',p:'Crie um mapa dos 20% de [ASSUNTO] que me darão 80% da compreensão prática. Organize em ordem de aprendizado.',en:'Create a map of the 20% of [TOPIC] that will give me 80% of the practical understanding. Organize it in learning order.'},
+{t:'3. Praticar',p:'Crie 5 exercícios progressivos sobre [ASSUNTO]. Comece fácil e aumente a dificuldade. Não mostre as respostas até eu tentar.',en:'Create 5 progressive exercises about [TOPIC]. Start easy and increase difficulty. Do not show the answers until I try.'},
+{t:'4. Revisar',p:'Faça 10 perguntas curtas para revisar [ASSUNTO], focando nos pontos mais importantes e nos erros mais comuns.',en:'Ask 10 short questions to review [TOPIC], focusing on the most important points and the most common mistakes.'}
+]},
+{categoria:'Profissional',nivel:'intermediario',titulo:'🏠 Pack Corretor de Imóveis',descricao:'Do imóvel bruto ao anúncio e atendimento.',passos:[
+{t:'1. Organizar imóvel',p:'Organize estes dados do imóvel sem inventar informações: [DADOS]. Separe características, localização, diferenciais, valores e informações que ainda faltam.',en:'Organize this property data without inventing information: [DATA]. Separate features, location, differentiators, prices, and information still missing.'},
+{t:'2. Criar anúncio',p:'Com base nestes dados, crie um anúncio imobiliário persuasivo, claro e natural. Destaque os diferenciais reais e finalize com chamada para contato.',en:'Based on this data, create a persuasive, clear, and natural real estate listing. Highlight the real differentiators and finish with a call to contact.'},
+{t:'3. Marketplace',p:'Adapte o anúncio para Facebook Marketplace com título chamativo, descrição objetiva e informações essenciais. Não invente dados.',en:'Adapt the listing for Facebook Marketplace with a catchy title, objective description, and essential information. Do not invent data.'},
+{t:'4. WhatsApp',p:'Crie uma mensagem curta de WhatsApp para apresentar este imóvel a um cliente interessado, com linguagem humana e convite para visita.',en:'Create a short WhatsApp message to present this property to an interested client, with human language and an invitation to visit.'}
+]},
+{categoria:'Criatividade',nivel:'basico',titulo:'🎨 Pack Criador de Imagens',descricao:'Para transformar uma ideia em um prompt visual melhor.',passos:[
+{t:'1. Definir conceito',p:'Transforme esta ideia de imagem em um conceito visual claro: [IDEIA]. Defina personagem, cenário, iluminação, enquadramento, clima e estilo.',en:'Turn this image idea into a clear visual concept: [IDEA]. Define character, setting, lighting, framing, mood, and style.'},
+{t:'2. Criar prompt',p:'Com base no conceito, escreva um prompt detalhado para geração de imagem, priorizando composição, iluminação, realismo e coerência visual.',en:'Based on the concept, write a detailed prompt for image generation, prioritizing composition, lighting, realism, and visual coherence.'},
+{t:'3. Melhorar resultado',p:'Analise o resultado descrito a seguir e reescreva o prompt corrigindo os problemas: [DESCREVA O RESULTADO E O QUE NÃO GOSTOU].',en:'Analyze the result described below and rewrite the prompt fixing the issues: [DESCRIBE THE RESULT AND WHAT YOU DID NOT LIKE].'}
+]},
+{categoria:'Marketing',nivel:'basico',titulo:'📱 Pack Redes Sociais',descricao:'Para transformar uma ideia em conteúdo completo.',passos:[
+{t:'1. Ideias',p:'Gere 10 ideias de conteúdo sobre [TEMA] para [PÚBLICO]. Priorize ideias úteis, específicas e fáceis de produzir.',en:'Generate 10 content ideas about [TOPIC] for [AUDIENCE]. Prioritize ideas that are useful, specific, and easy to produce.'},
+{t:'2. Post',p:'Crie um post sobre [IDEIA] com gancho forte, desenvolvimento claro e chamada para ação natural.',en:'Create a post about [IDEA] with a strong hook, clear development, and a natural call to action.'},
+{t:'3. Stories',p:'Transforme o conteúdo em uma sequência de 5 stories curtos que gerem curiosidade e interação.',en:'Turn the content into a sequence of 5 short stories that generate curiosity and interaction.'},
+{t:'4. Reaproveitar',p:'Reaproveite este conteúdo em 3 formatos diferentes sem apenas repetir as mesmas frases.',en:'Repurpose this content into 3 different formats without just repeating the same sentences.'}
+]},
+{categoria:'Pessoal',nivel:'basico',titulo:'🧠 Pack Organização Pessoal',descricao:'Para sair da confusão e chegar a um plano simples.',passos:[
+{t:'1. Descarregar',p:'Vou enviar tudo que está na minha cabeça. Apenas organize os itens por assunto e não crie tarefas novas: [CONTEÚDO].',en:'I will send everything that is on my mind. Just organize the items by subject and do not create new tasks: [CONTENT].'},
+{t:'2. Priorizar',p:'Classifique os itens em: urgente, importante, pode esperar e pode eliminar. Explique brevemente os casos duvidosos.',en:'Classify the items into: urgent, important, can wait, and can eliminate. Briefly explain the doubtful cases.'},
+{t:'3. Próximo passo',p:'Transforme as prioridades em próximos passos pequenos e executáveis. Mostre apenas o que devo fazer primeiro.',en:'Turn the priorities into small, actionable next steps. Show only what I should do first.'}
+]},
+{categoria:'IA',nivel:'basico',titulo:'🤖 Pack Começando com IA',descricao:'Para quem quer descobrir como usar IA no próprio dia a dia.',passos:[
+{t:'1. Mapear rotina',p:'Faça 10 perguntas sobre minha rotina para descobrir onde a inteligência artificial pode me economizar tempo ou melhorar resultados. Faça uma pergunta por vez.',en:'Ask me 10 questions about my routine to discover where artificial intelligence can save me time or improve results. Ask one question at a time.'},
+{t:'2. Escolher oportunidades',p:'Com base nas minhas respostas, identifique as 5 melhores oportunidades de uso de IA, ordenadas da mais fácil para a mais avançada.',en:'Based on my answers, identify the 5 best AI usage opportunities, ordered from easiest to most advanced.'},
+{t:'3. Plano prático',p:'Crie um plano de 7 dias para eu testar essas aplicações de IA sem precisar saber programação.',en:'Create a 7-day plan for me to test these AI applications without needing to know how to code.'}
+]},
+{categoria:'Profissional',nivel:'intermediario',titulo:'💼 Pack Currículo & Entrevista',descricao:'Do currículo cru até chegar preparado para a entrevista.',passos:[
+{t:'1. Organizar experiência',p:'Organize estas informações da minha trajetória profissional sem inventar nada: [EXPERIÊNCIAS, FORMAÇÃO, HABILIDADES]. Separe em blocos claros.',en:'Organize this information about my professional background without inventing anything: [EXPERIENCE, EDUCATION, SKILLS]. Separate it into clear blocks.'},
+{t:'2. Montar currículo',p:'Com base nessas informações, monte um currículo claro e objetivo para a vaga de [CARGO], destacando os pontos mais relevantes pra essa vaga específica.',en:'Based on this information, put together a clear, objective resume for the [JOB TITLE] position, highlighting the points most relevant to this specific role.'},
+{t:'3. Prever perguntas',p:'Liste as 10 perguntas mais prováveis numa entrevista para [CARGO], e sugira uma estrutura de resposta pra cada uma, sem inventar minha experiência.',en:'List the 10 most likely questions in an interview for [JOB TITLE], and suggest a response structure for each, without inventing my experience.'},
+{t:'4. Simular entrevista',p:'Simule uma entrevista comigo para a vaga de [CARGO], uma pergunta de cada vez. Depois de cada resposta minha, dê um feedback rápido antes de seguir pra próxima.',en:'Simulate an interview with me for the [JOB TITLE] position, one question at a time. After each of my answers, give quick feedback before moving to the next one.'}
+]},
+{categoria:'Marketing',nivel:'intermediario',titulo:'🛒 Pack Vendas Completo',descricao:'Do perfil do cliente até fechar a venda.',passos:[
+{t:'1. Perfil do cliente',p:'Com base nestas informações, monte o perfil do cliente ideal para [PRODUTO/SERVIÇO]: necessidades, dúvidas comuns, objeções prováveis. Use só o que eu informar: [INFORMAÇÕES].',en:'Based on this information, build the ideal customer profile for [PRODUCT/SERVICE]: needs, common doubts, likely objections. Use only what I provide: [INFORMATION].'},
+{t:'2. Abordagem inicial',p:'Crie 3 formas diferentes de abordar esse cliente pela primeira vez (WhatsApp, ligação e presencial), sem parecer forçado ou insistente.',en:'Create 3 different ways to approach this customer for the first time (WhatsApp, phone call, and in-person), without sounding forced or pushy.'},
+{t:'3. Responder objeções',p:'Liste as objeções mais prováveis para [PRODUTO/SERVIÇO] e crie uma resposta natural e honesta para cada uma, sem pressão excessiva.',en:'List the most likely objections for [PRODUCT/SERVICE] and create a natural, honest response for each, without excessive pressure.'},
+{t:'4. Fechar venda',p:'Crie uma sequência de mensagens para conduzir esse cliente até a decisão final, incluindo um follow-up caso ele não responda.',en:'Create a sequence of messages to guide this customer toward the final decision, including a follow-up in case they do not respond.'}
+]}
+];
+
+const packs=dadosBrutos.map((p,i)=>{
+  const obj={id:'pack-'+i,categoria:p.categoria,nivel:p.nivel,titulo:p.titulo,descricao:p.descricao,novo:i>=6};
+  obj.passos=p.passos.map((s,j)=>{
+    const placeholders=[...new Set((s.p.match(/\[([^\]]+)\]/g)||[]).map(x=>x.slice(1,-1)))];
+    return{id:'pack-'+i+'-passo-'+j,titulo:s.t,prompt:s.p,promptEn:s.en,placeholders};
+  });
+  return obj;
+});
+
+const idiomaAtivo={};
+let categoriaAtual='todos';
+
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function textoBase(passo){return idiomaAtivo[passo.id]==='en'?(passo.promptEn||passo.prompt):passo.prompt}
+function textoFinalPasso(passo){let t=textoBase(passo);(passo.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+passo.id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+function textoCompletoPack(p){return p.passos.map(s=>s.titulo+'\n'+textoFinalPasso(s)).join('\n\n')}
+function atualizarBtnFav(pack,btn){if(!btn)return;if(isFav(pack.id)){btn.textContent='❤️ Favoritado';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const pack=packs.find(p=>p.id===id);if(!pack)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:pack.titulo,texto:textoCompletoPack(pack),categoria:'Packs Prontos',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Pack adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(pack,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaPacksUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaPacksUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos)}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaPacksFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaPacksFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};
+  const g=window.deltaAuth;
+  if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}
+  else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up)up.classList.toggle('marcado',fb.voto==='up');
+  if(down)down.classList.toggle('marcado',fb.voto==='down');
+  const g=window.deltaAuth;
+  if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
+}
+
+function alternarIdioma(id){
+  const passo=packs.flatMap(p=>p.passos).find(s=>s.id===id);if(!passo)return;
+  idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';
+  const pre=document.getElementById('prompt-'+id),btn=document.getElementById('idioma-'+id);
+  if(pre)pre.textContent=textoFinalPasso(passo);
+  if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 PT':'🌐 EN';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}
+}
+
+async function copiarPasso(id){
+  const passo=packs.flatMap(p=>p.passos).find(s=>s.id===id);if(!passo)return;
+  registrarUso(id);
+  try{await navigator.clipboard.writeText(textoFinalPasso(passo));mostrarToast('📋 Passo copiado!')}catch(e){mostrarToast('Não foi possível copiar')}
+}
+async function abrirPasso(id,url){
+  const passo=packs.flatMap(p=>p.passos).find(s=>s.id===id);if(!passo)return;
+  registrarUso(id);
+  try{await navigator.clipboard.writeText(textoFinalPasso(passo))}catch(e){}
+  mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open(url,'_blank'),300);
+}
+async function copiarPackCompleto(id){
+  const pack=packs.find(p=>p.id===id);if(!pack)return;
+  try{await navigator.clipboard.writeText(textoCompletoPack(pack));mostrarToast('📋 Pack completo copiado!')}catch(e){mostrarToast('Não foi possível copiar')}
+}
+function compartilhar(id){
+  const pack=packs.find(p=>p.id===id);if(!pack)return;
+  const url=location.origin+location.pathname+'#'+pack.id;
+  const texto='📦 '+pack.titulo+'\n\nConfira esse pack de prompts no Delta Prompts:\n'+url;
+  if(navigator.share){navigator.share({title:pack.titulo,text:texto,url:url}).catch(()=>{})}
+  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}
+}
+
+function exportarTodos(){
+  const linhas=packs.map(p=>p.titulo+' ('+p.categoria+')\n'+p.descricao+'\n\n'+p.passos.map(s=>s.titulo+'\n'+s.prompt).join('\n\n')+'\n\n'+'─'.repeat(40));
+  const conteudo='📦 PACKS DE PROMPTS — DELTA PROMPTS\n\n'+linhas.join('\n\n');
+  const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-packs.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  mostrarToast('📥 Arquivo baixado!');
+}
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão de pack para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Packs Prontos').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> pack'+(favs===1?'':'s')+' · 📦 <strong>'+packs.length+'</strong> packs disponíveis'}
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function montarFiltroCategoria(){
+  const cont=document.getElementById('filtrosCategoria');
+  const categorias=[...new Set(packs.map(p=>p.categoria))];
+  cont.innerHTML='<button class="'+(categoriaAtual==='todos'?'ativo':'')+'" data-categoria="todos">Todos <span class="count-badge">'+packs.length+'</span></button>'+
+    categorias.map(c=>{const n=packs.filter(p=>p.categoria===c).length;return `<button class="${categoriaAtual===c?'ativo':''}" data-categoria="${c}">${c} <span class="count-badge">${n}</span></button>`}).join('');
+  cont.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{categoriaAtual=b.dataset.categoria;montarFiltroCategoria();render()}));
+}
+
+function render(){
+  const termo=norm(document.getElementById('busca').value);
+  const filtrados=packs.filter(p=>{
+    const texto=norm([p.titulo,p.descricao,p.categoria,p.passos.map(s=>s.titulo+' '+s.prompt).join(' ')].join(' '));
+    return(!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual);
+  });
+  document.getElementById('contador').textContent=filtrados.length+' de '+packs.length+' packs';
+  const lista=document.getElementById('lista');
+  lista.innerHTML=filtrados.length?filtrados.map(p=>`
+    <section class="card pack" id="card-${p.id}">
+      <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span>
+      <h2>${p.titulo}</h2>
+      <p>${p.descricao}</p>
+      ${p.passos.map(s=>`
+        <div class="item">
+          <strong>${s.titulo}</strong>
+          ${s.placeholders.length?`<div class="campos-preenchimento">${s.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${s.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+          <div class="prompt-text" id="prompt-${s.id}">${s.prompt}</div>
+          <div class="acoes-item">
+            <button data-acao="copiar-passo" data-id="${s.id}">📋 Copiar este passo</button>
+            <button data-acao="chat-passo" data-id="${s.id}">🤖 ChatGPT</button>
+            <button data-acao="gemini-passo" data-id="${s.id}">✨ Gemini</button>
+            <button id="idioma-${s.id}" data-acao="idioma-passo" data-id="${s.id}">🌐 EN</button>
+          </div>
+        </div>`).join('')}
+      <div class="acoes">
+        <button data-acao="copiar-pack" data-id="${p.id}">📋 Copiar Pack Completo</button>
+        <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+        <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+      </div>
+      <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse pack te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    </section>`).join('') : '<div style="text-align:center;padding:30px;opacity:.7">🔎 Nenhum pack encontrado.</div>';
+
+  filtrados.forEach(p=>{atualizarBtnFav(p,document.querySelector('#card-'+p.id+' .favoritar'));atualizarFeedbackUI(p.id)});
+}
+
+document.getElementById('lista').addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar-passo')copiarPasso(id);
+  else if(acao==='chat-passo')abrirPasso(id,'https://chatgpt.com/');
+  else if(acao==='gemini-passo')abrirPasso(id,'https://gemini.google.com/app');
+  else if(acao==='idioma-passo')alternarIdioma(id);
+  else if(acao==='copiar-pack')copiarPackCompleto(id);
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+document.getElementById('busca').addEventListener('input',render);
+document.getElementById('btnExportar').addEventListener('click',exportarTodos);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+montarFiltroCategoria();
+atualizarStats();
+render();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
+</script></body></html>
