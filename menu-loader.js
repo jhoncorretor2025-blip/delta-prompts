@@ -609,7 +609,7 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
     var el=brand.nextElementSibling;
     var candidatos=[];
     while(el&&!el.classList.contains('menu-group-title')){
-      if(el.tagName==='A')candidatos.push(el); // so os links originais (Inicio, Mais Acessados, Novo Prompt, Gerador Pro), nao os botoes injetados depois (sino, expandir tudo etc)
+      if(el.tagName==='A'&&!el.classList.contains('menu-fav-fixo'))candidatos.push(el); // so os links originais (Inicio, Mais Acessados, Novo Prompt, Gerador Pro); Favoritos/Biblioteca fixos ficam sempre visiveis
       el=el.nextElementSibling;
     }
     if(!candidatos.length)return;
