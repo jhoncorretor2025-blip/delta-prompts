@@ -8,7 +8,7 @@
 .ordem-status-ativa{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#dcfce7;color:#166534;font-weight:700;font-size:12.5px;margin-top:10px}
 .ordem-status-auto{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#f1f5f9;color:#475467;font-weight:700;font-size:12.5px;margin-top:10px}
 @media(max-width:560px){#listaPerfis{grid-template-columns:1fr!important}}
-</style></head><body id="configuracao-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260901b"></script><main>
+</style></head><body id="configuracao-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260901c"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Configuração</p>
 <h1>⚙️ Configuração</h1>
@@ -33,6 +33,24 @@
 <section class="card">
   <h3>🕐 Últimas páginas que você visitou</h3>
   <div id="listaHistorico" style="display:flex;flex-direction:column;gap:8px" aria-label="Histórico de páginas visitadas"></div>
+</section>
+
+<section class="card">
+  <h3>🔔 Quais Novidades você quer ver?</h3>
+  <p style="margin:0 0 14px;color:#667085;font-size:14px">Escolha os tipos de aviso que aparecem no sino de novidades, no topo da tela.</p>
+  <div style="display:flex;flex-direction:column;gap:10px" id="filtroNovidades"></div>
+</section>
+
+<section class="card">
+  <h3>🙈 Esconder categorias que você não usa</h3>
+  <p style="margin:0 0 14px;color:#667085;font-size:14px">Desmarque as páginas que você nunca acessa — elas somem do menu lateral (você pode marcar de volta quando quiser).</p>
+  <div style="display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto;padding-right:4px" id="listaCategorias"></div>
+</section>
+
+<section class="card">
+  <h3>📜 Histórico de Alterações</h3>
+  <p style="margin:0 0 14px;color:#667085;font-size:14px">As últimas mudanças que você fez nas configurações do site.</p>
+  <div style="display:flex;flex-direction:column;gap:6px" id="listaLogConfig"></div>
 </section>
 
 <section class="card" style="text-align:center">
@@ -99,6 +117,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
         renderLista();
         atualizarStatus();
         mostrarToast('✅ Ordem salva!');
+        if(window.deltaRegistrarLog)window.deltaRegistrarLog('📐 Reordenou o menu manualmente');
       });
     });
   }
@@ -108,6 +127,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
     renderLista();
     atualizarStatus();
     mostrarToast('🔄 Voltou pra ordem automática');
+    if(window.deltaRegistrarLog)window.deltaRegistrarLog('🔄 Voltou a ordem do menu para automática');
   });
   renderLista();
   atualizarStatus();
@@ -142,6 +162,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
         renderLista();
         atualizarStatus();
         mostrarToast(perfil.emoji+' Perfil "'+perfil.nome+'" aplicado!');
+        if(window.deltaRegistrarLog)window.deltaRegistrarLog(perfil.emoji+' Escolheu o perfil "'+perfil.nome+'"');
       });
     });
   }
@@ -160,6 +181,86 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
     container.innerHTML=hist.map(function(h){
       return '<a href="'+h.path+'" style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;text-decoration:none;color:inherit;font-weight:700;font-size:14px">↩️ '+h.titulo+'</a>';
     }).join('');
+  })();
+
+  // ===== FILTRO DE NOVIDADES =====
+  (function(){
+    var container=document.getElementById('filtroNovidades');
+    if(!container)return;
+    var TIPOS=[{chave:'recurso',emoji:'✨',label:'Recursos novos'},{chave:'correcao',emoji:'🛠️',label:'Correções e melhorias'}];
+    function lerFiltro(){try{return JSON.parse(localStorage.getItem('deltaFiltroNovidades'))||{recurso:true,correcao:true}}catch(e){return{recurso:true,correcao:true}}}
+    function salvarFiltro(f){try{localStorage.setItem('deltaFiltroNovidades',JSON.stringify(f))}catch(e){}}
+    function render(){
+      var f=lerFiltro();
+      container.innerHTML=TIPOS.map(function(t){
+        var ativo=f[t.chave]!==false;
+        return '<label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;cursor:pointer"><input type="checkbox" data-tipo="'+t.chave+'" '+(ativo?'checked':'')+' style="width:18px;height:18px"><span aria-hidden="true">'+t.emoji+'</span><span style="font-weight:700;font-size:14px">'+t.label+'</span></label>';
+      }).join('');
+      container.querySelectorAll('input[data-tipo]').forEach(function(input){
+        input.addEventListener('change',function(){
+          var f=lerFiltro();
+          f[input.dataset.tipo]=input.checked;
+          salvarFiltro(f);
+          mostrarToast(input.checked?'🔔 Vai mostrar esse tipo de novidade':'🔕 Não vai mostrar mais esse tipo');
+          if(window.deltaRegistrarLog)window.deltaRegistrarLog('🔔 '+(input.checked?'Ativou':'Desativou')+' avisos de "'+TIPOS.find(function(t){return t.chave===input.dataset.tipo}).label+'"');
+        });
+      });
+    }
+    render();
+  })();
+
+  // ===== ESCONDER CATEGORIAS =====
+  (function(){
+    var container=document.getElementById('listaCategorias');
+    if(!container)return;
+    function montar(){
+      var sidebar=document.querySelector('#menu .sidebar');
+      if(!sidebar){setTimeout(montar,300);return}
+      var links=[].slice.call(sidebar.querySelectorAll('.menu-links a'));
+      if(!links.length){setTimeout(montar,300);return}
+      var escondidas=[];
+      try{escondidas=JSON.parse(localStorage.getItem('deltaCategoriasEscondidas'))||[]}catch(e){}
+      var vistos={};
+      var itens=links.filter(function(a){var h=a.getAttribute('href');if(vistos[h])return false;vistos[h]=true;return true});
+      container.innerHTML=itens.map(function(a){
+        var href=a.getAttribute('href');
+        var marcado=escondidas.indexOf(href)===-1;
+        return '<label style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;cursor:pointer"><input type="checkbox" data-href="'+href+'" '+(marcado?'checked':'')+' style="width:17px;height:17px;flex:0 0 auto"><span style="font-size:13.5px">'+a.textContent.trim()+'</span></label>';
+      }).join('');
+      container.querySelectorAll('input[data-href]').forEach(function(input){
+        input.addEventListener('change',function(){
+          var escondidas=[];
+          try{escondidas=JSON.parse(localStorage.getItem('deltaCategoriasEscondidas'))||[]}catch(e){}
+          var href=input.dataset.href;
+          if(input.checked)escondidas=escondidas.filter(function(h){return h!==href});
+          else if(escondidas.indexOf(href)===-1)escondidas.push(href);
+          try{localStorage.setItem('deltaCategoriasEscondidas',JSON.stringify(escondidas))}catch(e){}
+          var nomeItem=input.parentElement.textContent.trim();
+          mostrarToast(input.checked?'👁️ "'+nomeItem+'" volta a aparecer no menu':'🙈 "'+nomeItem+'" escondida do menu');
+          if(window.deltaRegistrarLog)window.deltaRegistrarLog((input.checked?'👁️ Mostrou':'🙈 Escondeu')+' a categoria "'+nomeItem+'" no menu');
+        });
+      });
+    }
+    montar();
+  })();
+
+  // ===== LOG DE ALTERAÇÕES =====
+  (function(){
+    var container=document.getElementById('listaLogConfig');
+    if(!container)return;
+    function render(){
+      var log=[];
+      try{log=JSON.parse(localStorage.getItem('deltaLogConfig'))||[]}catch(e){}
+      if(!log.length){container.innerHTML='<p style="color:#667085;font-size:14px;margin:0">Nenhuma alteração registrada ainda. Assim que você mudar alguma configuração, vai aparecer aqui.</p>';return}
+      container.innerHTML=log.map(function(item){
+        var data=new Date(item.ts);
+        var dataFmt=data.toLocaleDateString('pt-BR')+' às '+data.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+        return '<div style="padding:10px 12px;border-bottom:1px solid #f1f5f9;font-size:13.5px"><div>'+item.texto+'</div><div style="font-size:11.5px;color:#8a92a6;margin-top:2px">'+dataFmt+'</div></div>';
+      }).join('');
+    }
+    render();
+    window.addEventListener('storage',function(e){if(e.key==='deltaLogConfig')render()});
+    window.addEventListener('delta:log-updated',render);
   })();
 })();
 </script>
