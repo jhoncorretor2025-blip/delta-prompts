@@ -24,9 +24,9 @@
 .grafico-box h3{margin:0 0 16px}
 .grafico-barras{display:flex;align-items:flex-end;gap:8px;height:140px}
 .grafico-coluna{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
-.grafico-valor{font-size:11px;font-weight:800;color:var(--delta-accent,#5b5ce2);margin-bottom:4px}
+.grafico-valor{font-size:13px;font-weight:800;color:var(--delta-accent,#5b5ce2);margin-bottom:4px}
 .grafico-barra{width:100%;max-width:36px;border-radius:8px 8px 0 0;background:var(--delta-accent,#5b5ce2);min-height:3px;transition:height .3s}
-.grafico-dia{font-size:11px;color:#667085;font-weight:700;margin-top:6px}
+.grafico-dia{font-size:12.5px;color:#475467;font-weight:700;margin-top:6px}
 .top5-box{padding:20px;border-radius:16px;border:1px solid #e5e7eb;background:#fff;margin:20px 0}
 .top5-box h3{margin:0 0 14px}
 .top5-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f1f5f9;text-decoration:none;color:inherit}
@@ -36,9 +36,13 @@
 .top5-contagem{flex:0 0 auto;font-size:13px;color:#667085;font-weight:700}
 .btn-compartilhar-numeros{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:12px 22px;border:0;border-radius:12px;background:#15803d;color:#fff;font-weight:800;font-size:14px;cursor:pointer}
 .vazio-numeros{text-align:center;padding:40px 20px;color:#667085}
-.vazio-mini{text-align:center;padding:20px;color:#8a92a6;font-size:13.5px}
+.vazio-mini{text-align:center;padding:20px;color:#667085;font-size:14px}
 .toast-numeros{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
 .toast-numeros.show{opacity:1;transform:translate(-50%,0)}
+.breadcrumb{font-size:13px;color:#667085;margin:0 0 14px}
+.breadcrumb a{color:#5b5ce2;text-decoration:none;font-weight:700}
+.breadcrumb a:hover{text-decoration:underline}
+#numeros-page button:focus-visible,#numeros-page a:focus-visible{outline:3px solid #5b5ce2;outline-offset:2px;border-radius:8px}
 [data-theme="dark"] .numero-card,[data-theme="dark"] .grafico-box,[data-theme="dark"] .top5-box{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .numero-label{color:#a0a0a0}
 [data-theme="dark"] .categoria-favorita-box{background:var(--bg-card,#16213e)}
@@ -46,12 +50,13 @@
 [data-theme="dark"] .top5-item{border-color:rgba(255,255,255,.08)}
 [data-theme="dark"] .grafico-dia,[data-theme="dark"] .top5-contagem{color:#a0a0a0}
 @media(max-width:600px){.numeros-grid{grid-template-columns:1fr}}
-</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260901b"></script><main>
+</style></head><body id="numeros-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260901b"></script><main>
 
+<p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Meus Números</p>
 <h1>📊 Meus Números</h1>
 <p>Um resumo de como você tem usado o Delta Prompts. Tudo calculado só com informações salvas no seu próprio navegador.</p>
 
-<div class="sync-status" id="syncStatus">🔄 Carregando...</div>
+<div class="sync-status" id="syncStatus" role="status" aria-live="polite">🔄 Carregando...</div>
 
 <div class="periodo-seletor" id="periodoSeletor">
   <button data-periodo="semana">📅 Esta semana</button>
@@ -73,7 +78,7 @@
 </div>
 
 <div class="top5-box">
-  <h3>🏆 Top 5 prompts mais usados <span style="font-weight:400;font-size:12.5px;color:#8a92a6">(de todos os tempos)</span></h3>
+  <h3>🏆 Top 5 prompts mais usados <span style="font-weight:400;font-size:12.5px;color:#667085">(de todos os tempos)</span></h3>
   <div id="top5Lista"></div>
 </div>
 
@@ -107,7 +112,7 @@
 
 </main>
 <div class="toast-numeros" id="toastNumeros"></div>
-<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro" aria-label="Alternar entre tema claro e escuro">🌙</button>
 <script>
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});

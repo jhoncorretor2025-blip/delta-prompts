@@ -1,8 +1,16 @@
 <!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Configuração | Delta Prompts</title><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="robots" content="noindex"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
 .toast-config{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
 .toast-config.show{opacity:1;transform:translate(-50%,0)}
-</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260901b"></script><main>
+.breadcrumb{font-size:13px;color:#667085;margin:0 0 14px}
+.breadcrumb a{color:#5b5ce2;text-decoration:none;font-weight:700}
+.breadcrumb a:hover{text-decoration:underline}
+#configuracao-page button:focus-visible,#configuracao-page a:focus-visible{outline:3px solid #5b5ce2;outline-offset:2px;border-radius:8px}
+.ordem-status-ativa{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#dcfce7;color:#166534;font-weight:700;font-size:12.5px;margin-top:10px}
+.ordem-status-auto{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#f1f5f9;color:#475467;font-weight:700;font-size:12.5px;margin-top:10px}
+@media(max-width:560px){#listaPerfis{grid-template-columns:1fr!important}}
+</style></head><body id="configuracao-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260901b"></script><main>
 
+<p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Configuração</p>
 <h1>⚙️ Configuração</h1>
 <p>Personalize como o Delta Prompts funciona pra você — seu perfil, a ordem do menu, e veja por onde você andou por aqui.</p>
 
@@ -15,16 +23,16 @@
 <section class="card">
   <h3>📐 Personalizar Ordem do Menu</h3>
   <p style="margin:0 0 14px;color:#667085;font-size:14px">Por padrão, o menu se reorganiza automaticamente pelo que você mais usa. Se preferir, defina você mesmo a ordem dos grupos abaixo — sua escolha manual passa a valer no lugar da automática.</p>
-  <div id="listaOrdemGrupos" style="display:flex;flex-direction:column;gap:8px"></div>
+  <div id="listaOrdemGrupos" style="display:flex;flex-direction:column;gap:8px" role="list" aria-label="Ordem dos grupos do menu"></div>
   <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
     <button type="button" id="btnResetarOrdem" style="border:1px solid #e5e7eb;background:#fff;color:#475467;font-weight:700;border-radius:10px;padding:10px 16px;cursor:pointer;font-size:13px">🔄 Voltar para automático</button>
   </div>
-  <p id="statusOrdem" style="margin:10px 0 0;font-size:12.5px;color:#667085"></p>
+  <div id="statusOrdem"></div>
 </section>
 
 <section class="card">
   <h3>🕐 Últimas páginas que você visitou</h3>
-  <div id="listaHistorico" style="display:flex;flex-direction:column;gap:8px"></div>
+  <div id="listaHistorico" style="display:flex;flex-direction:column;gap:8px" aria-label="Histórico de páginas visitadas"></div>
 </section>
 
 <section class="card" style="text-align:center">
@@ -34,8 +42,8 @@
 </section>
 
 </main>
-<div class="toast-config" id="toastConfig"></div>
-<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<div class="toast-config" id="toastConfig" role="status" aria-live="polite"></div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro" aria-label="Alternar entre tema claro e escuro">🌙</button>
 <script>
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
@@ -64,7 +72,8 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   function atualizarStatus(){
     var status=document.getElementById('statusOrdem');
     if(!status)return;
-    status.textContent=lerOrdemManual()?'✅ Ordem personalizada ativa.':'🤖 Usando ordem automática (baseada no seu uso).';
+    if(lerOrdemManual()){status.innerHTML='<span class="ordem-status-ativa">✅ Ordem personalizada ativa</span>'}
+    else{status.innerHTML='<span class="ordem-status-auto">🤖 Usando ordem automática (baseada no seu uso)</span>'}
   }
   function renderLista(){
     var container=document.getElementById('listaOrdemGrupos');
@@ -72,11 +81,11 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
     var chaves=ordemAtual();
     container.innerHTML=chaves.map(function(chave,i){
       var g=GRUPOS.find(function(x){return x.chave===chave})||{label:chave};
-      return '<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff">'+
-        '<span style="font-weight:800;color:#5b5ce2;min-width:20px">'+(i+1)+'</span>'+
+      return '<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff" role="listitem">'+
+        '<span aria-hidden="true" style="font-weight:800;color:#5b5ce2;min-width:20px">'+(i+1)+'</span>'+
         '<span style="flex:1;font-weight:700;font-size:14px">'+g.label+'</span>'+
-        '<button type="button" data-mover="cima" data-chave="'+chave+'" '+(i===0?'disabled':'')+' style="border:0;background:#f1f5f9;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px;'+(i===0?'opacity:.4':'')+'">↑</button>'+
-        '<button type="button" data-mover="baixo" data-chave="'+chave+'" '+(i===chaves.length-1?'disabled':'')+' style="border:0;background:#f1f5f9;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px;'+(i===chaves.length-1?'opacity:.4':'')+'">↓</button>'+
+        '<button type="button" data-mover="cima" data-chave="'+chave+'" '+(i===0?'disabled':'')+' aria-label="Mover '+g.label+' para cima" style="border:0;background:#f1f5f9;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px;'+(i===0?'opacity:.4':'')+'">↑</button>'+
+        '<button type="button" data-mover="baixo" data-chave="'+chave+'" '+(i===chaves.length-1?'disabled':'')+' aria-label="Mover '+g.label+' para baixo" style="border:0;background:#f1f5f9;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px;'+(i===chaves.length-1?'opacity:.4':'')+'">↓</button>'+
       '</div>';
     }).join('');
     container.querySelectorAll('button[data-mover]').forEach(function(btn){
@@ -117,8 +126,8 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
     var ativo=lerPerfilAtivo();
     container.innerHTML=PERFIS.map(function(p){
       var sel=ativo===p.chave;
-      return '<button type="button" data-perfil="'+p.chave+'" style="text-align:left;padding:14px;border-radius:12px;cursor:pointer;font:inherit;border:2px solid '+(sel?'#5b5ce2':'#e5e7eb')+';background:'+(sel?'#eef2ff':'#fff')+'">'+
-        '<div style="font-size:22px;margin-bottom:4px">'+p.emoji+'</div>'+
+      return '<button type="button" data-perfil="'+p.chave+'" aria-pressed="'+sel+'" style="text-align:left;padding:14px;border-radius:12px;cursor:pointer;font:inherit;border:2px solid '+(sel?'#5b5ce2':'#e5e7eb')+';background:'+(sel?'#eef2ff':'#fff')+'">'+
+        '<div aria-hidden="true" style="font-size:22px;margin-bottom:4px">'+p.emoji+'</div>'+
         '<strong style="font-size:14px;display:block">'+p.nome+'</strong>'+
         '<span style="font-size:12.5px;color:#667085">'+p.desc+'</span>'+
         '</button>';
