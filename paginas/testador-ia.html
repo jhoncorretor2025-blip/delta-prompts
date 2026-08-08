@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Testador de IA | Delta Prompts</title><meta name="description" content="Prompts padronizados pra comparar diferentes IAs (ChatGPT, Gemini, Claude e outras) no mesmo teste: texto, imagem, vídeo, código e raciocínio."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.intro{padding:22px;background:linear-gradient(135deg,#eef2ff,#fff);border-radius:18px;margin-bottom:24px}
+.prompt-text{white-space:pre-wrap;background:#f8fafc;padding:13px;border-radius:10px;margin:10px 0;font-size:14px}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{border:0;border-radius:11px;padding:10px 14px;font-weight:800;cursor:pointer;font-size:13px;background:#f1f5f9;color:#334155}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.tag{font-size:12px;font-weight:800;background:#eef2ff;padding:5px 9px;border-radius:999px;color:#4338ca}
+.nivel{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;margin-left:6px}
+.nivel-basico{background:#dcfce7;color:#166534}
+.nivel-intermediario{background:#fef9c3;color:#854d0e}
+.nivel-avancado{background:#fee2e2;color:#991b1b}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:14px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}
+.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filtros button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}
+.filtros button.ativo{background:#4338ca;color:#fff;border-color:#4338ca}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(67,56,202,.12);color:#4338ca}
+.filtros button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#eef2ff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#4338ca;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.stats-bar{font-size:13px;color:#667085;margin:0 0 10px;font-weight:600}
+[data-theme="dark"] .prompt-text{background:rgba(255,255,255,.05);color:#cbd5e1}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica{color:#a0a0a0}
+</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908"></script><main>
+
+<h1>🧪 Testador de IA</h1>
+<div class="intro"><h3>Compare diferentes IAs de forma justa</h3><p>A ideia é simples: você copia o <strong>mesmo prompt</strong> e roda em duas ou mais IAs diferentes (ChatGPT, Gemini, Claude, etc). Como o texto é idêntico, a comparação fica justa — e no final, tem um prompt de <strong>Comparação Final</strong> pra te ajudar a decidir qual saiu melhor.</p></div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="🔎 Buscar teste...">
+  <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
+</div>
+<div class="filtros" id="filtrosCategoria"></div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um teste</button>
+</div>
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o tipo de teste que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes"><button id="btnCopiarSugestao">📋 Copiar sugestão</button><span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span></div>
+</div>
+
+<div id="lista"></div>
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const dadosBrutos=[
+{categoria:'📝 Texto',nivel:'basico',titulo:'📝 Teste de Escrita com Restrições',quando:'Para ver qual IA segue instruções à risca, sem deixar passar nenhuma regra.',prompt:'Escreva um texto de exatamente 150 palavras sobre [TEMA], no tom [TOM, EX: HUMORÍSTICO, FORMAL, POÉTICO], que obrigatoriamente inclua as palavras: [PALAVRA 1], [PALAVRA 2], [PALAVRA 3]. O texto deve terminar com uma pergunta retórica, e não pode usar a palavra "muito" em nenhum momento. Não me avise sobre as regras que seguiu, apenas entregue o texto.',en:'Write a text of exactly 150 words about [TOPIC], in the tone [TONE, EG: HUMOROUS, FORMAL, POETIC], that must include the words: [WORD 1], [WORD 2], [WORD 3]. The text must end with a rhetorical question, and cannot use the word "very" at any point. Do not tell me about the rules you followed, just deliver the text.'},
+{categoria:'🎨 Imagem',nivel:'basico',titulo:'🎨 Teste de Geração de Imagem',quando:'Para comparar como diferentes IAs interpretam um mesmo pedido visual detalhado.',prompt:'Crie uma imagem de: [DESCREVA A CENA]. Deve ter: [ELEMENTO ESPECÍFICO, EX: UM PERSONAGEM COM ROUPA VERMELHA], estilo visual [ESTILO, EX: AQUARELA, CYBERPUNK, REALISTA], iluminação [ILUMINAÇÃO, EX: PÔR DO SOL DOURADO], e enquadramento [ENQUADRAMENTO, EX: PLANO GERAL, CLOSE-UP]. Gere a imagem diretamente, sem me pedir mais detalhes antes.',en:'Create an image of: [DESCRIBE THE SCENE]. It must have: [SPECIFIC ELEMENT, EG: A CHARACTER WEARING RED], visual style [STYLE, EG: WATERCOLOR, CYBERPUNK, REALISTIC], lighting [LIGHTING, EG: GOLDEN SUNSET], and framing [FRAMING, EG: WIDE SHOT, CLOSE-UP]. Generate the image directly, without asking me for more details first.'},
+{categoria:'🎬 Vídeo',nivel:'intermediario',titulo:'🎬 Teste de Roteiro/Criação de Vídeo',quando:'Para comparar a capacidade de estruturar (ou gerar) um vídeo curto com começo, meio e fim.',prompt:'Crie um roteiro de vídeo de 30 segundos sobre [TEMA OU PRODUTO], dividido em cenas numeradas. Para cada cena, informe: descrição visual, texto de narração ou fala, e duração em segundos. O vídeo deve terminar com uma chamada para ação clara. Se você tiver capacidade de gerar um vídeo de verdade, gere-o; caso contrário, entregue apenas o roteiro bem detalhado.',en:'Create a 30-second video script about [TOPIC OR PRODUCT], divided into numbered scenes. For each scene, provide: visual description, narration or dialogue text, and duration in seconds. The video must end with a clear call to action. If you are able to actually generate a video, generate it; otherwise, deliver just the detailed script.'},
+{categoria:'💻 Código/Jogos',nivel:'avancado',titulo:'💻 Teste de Criação de Jogo Funcional',quando:'Para ver qual IA entrega um jogo que realmente funciona de primeira, sem erros.',prompt:'Crie um jogo de [TIPO DE JOGO, EX: JOGO DA VELHA, QUIZ, ADIVINHAÇÃO] completo e funcional em um único arquivo HTML, com CSS e JavaScript inclusos, sem usar nenhuma biblioteca externa. O jogo deve ser jogável imediatamente ao abrir o arquivo, sem nenhum erro no console do navegador. Entregue o código completo, pronto pra copiar e colar.',en:'Create a [GAME TYPE, EG: TIC-TAC-TOE, QUIZ, GUESSING GAME] game, complete and functional, in a single HTML file, with CSS and JavaScript included, without using any external library. The game must be playable immediately upon opening the file, with no errors in the browser console. Deliver the complete code, ready to copy and paste.'},
+{categoria:'🧠 Raciocínio',nivel:'intermediario',titulo:'🧠 Teste de Raciocínio Passo a Passo',quando:'Para ver qual IA "pensa" de forma mais clara e chega à resposta certa.',prompt:'Resolva este problema passo a passo, mostrando todo o seu raciocínio, sem pular etapas: [DESCREVA UM PROBLEMA LÓGICO OU MATEMÁTICO]. Ao final, destaque claramente a resposta final numa linha separada.',en:'Solve this problem step by step, showing all your reasoning, without skipping steps: [DESCRIBE A LOGIC OR MATH PROBLEM]. At the end, clearly highlight the final answer on a separate line.'},
+{categoria:'📊 Dados',nivel:'intermediario',titulo:'📊 Teste de Análise de Dados',quando:'Para comparar qual IA encontra os insights mais úteis sem inventar informação.',prompt:'Analise estes dados: [COLE OS DADOS OU DESCREVA UMA SITUAÇÃO COM NÚMEROS]. Identifique padrões, tendências, e pelo menos 3 insights que não sejam óbvios à primeira vista. Não invente nenhum número que eu não tenha fornecido — se faltar informação para alguma conclusão, diga isso claramente.',en:'Analyze this data: [PASTE THE DATA OR DESCRIBE A SITUATION WITH NUMBERS]. Identify patterns, trends, and at least 3 insights that are not obvious at first glance. Do not invent any number I have not provided — if information is missing for a conclusion, state that clearly.'},
+{categoria:'⚖️ Comparação Final',nivel:'avancado',titulo:'⚖️ Grade de Comparação Entre IAs',quando:'Depois de rodar o mesmo teste em 2 ou mais IAs, use esse prompt para julgar qual saiu melhor, com critérios claros.',prompt:'Vou colar abaixo as respostas de diferentes IAs para o mesmo prompt. Compare-as usando estes critérios, dando uma nota de 0 a 10 para cada IA em cada critério: Clareza, Criatividade, Seguiu as instruções à risca, Precisão/veracidade, e Utilidade prática. Monte uma tabela comparativa. Ao final, diga qual resposta foi melhor no geral e explique por quê, de forma objetiva.\n\nPrompt original usado: [COLE O PROMPT QUE VOCÊ TESTOU]\n\nResposta da IA 1 ([NOME DA IA 1]): [COLE AQUI]\n\nResposta da IA 2 ([NOME DA IA 2]): [COLE AQUI]',en:'I will paste below the responses from different AIs for the same prompt. Compare them using these criteria, giving a score from 0 to 10 for each AI on each criterion: Clarity, Creativity, Followed instructions precisely, Accuracy/truthfulness, and Practical usefulness. Build a comparison table. At the end, say which response was better overall and explain why, objectively.\n\nOriginal prompt used: [PASTE THE PROMPT YOU TESTED]\n\nAI 1 response ([AI 1 NAME]): [PASTE HERE]\n\nAI 2 response ([AI 2 NAME]): [PASTE HERE]'}
+];
+
+const prompts=dadosBrutos.map((x,i)=>{
+  const obj={id:'test-'+i,categoria:x.categoria,nivel:x.nivel,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:true};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const idiomaAtivo={};
+let categoriaAtual='todos';
+
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function getItem(id){return prompts.find(p=>p.id===id)}
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='❤️ Favoritado';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:textoFinal(id),categoria:'Testador de IA',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaTestadorUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaTestadorUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos)}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaTestadorFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaTestadorFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};
+  const g=window.deltaAuth;
+  if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}
+  else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up)up.classList.toggle('marcado',fb.voto==='up');
+  if(down)down.classList.toggle('marcado',fb.voto==='down');
+  const g=window.deltaAuth;
+  if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
+}
+
+function alternarIdioma(id){
+  idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';
+  const pre=document.getElementById('prompt-'+id),btn=document.getElementById('idioma-'+id);
+  if(pre)pre.textContent=textoFinal(id);
+  if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}
+}
+async function copiarPorId(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id));mostrarToast('📋 Copiado!')}catch(e){mostrarToast('Não foi possível copiar')}}
+async function abrirChat(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://gemini.google.com/app','_blank'),300)}
+function compartilhar(id){
+  const p=getItem(id);if(!p)return;
+  const texto='🧪 '+p.titulo+'\n\n'+textoFinal(id)+'\n\n— via Delta Prompts';
+  if(navigator.share){navigator.share({title:p.titulo,text:texto}).catch(()=>{})}
+  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Copiado! Cole onde quiser compartilhar.'))}
+}
+function exportarTodos(){
+  const linhas=prompts.map(p=>p.titulo+' ('+p.categoria+')\n'+p.prompt);
+  const blob=new Blob(['🧪 TESTADOR DE IA — DELTA PROMPTS\n\n'+linhas.join('\n\n'+'─'.repeat(40)+'\n\n')],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-testador-ia.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  mostrarToast('📥 Arquivo baixado!');
+}
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão para o Delta Prompts (Testador de IA):\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Testador de IA').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> teste'+(favs===1?'':'s')+' · 🧪 <strong>'+prompts.length+'</strong> testes disponíveis'}
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function montarFiltroCategoria(){
+  const cont=document.getElementById('filtrosCategoria');
+  const categorias=[...new Set(prompts.map(p=>p.categoria))];
+  cont.innerHTML='<button class="'+(categoriaAtual==='todos'?'ativo':'')+'" data-categoria="todos">Todos <span class="count-badge">'+prompts.length+'</span></button>'+
+    categorias.map(c=>{const n=prompts.filter(p=>p.categoria===c).length;return `<button class="${categoriaAtual===c?'ativo':''}" data-categoria="${c}">${c} <span class="count-badge">${n}</span></button>`}).join('');
+  cont.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{categoriaAtual=b.dataset.categoria;montarFiltroCategoria();render()}));
+}
+
+function render(){
+  const termo=norm(document.getElementById('busca').value);
+  const filtrados=prompts.filter(p=>{
+    const texto=norm([p.titulo,p.quando,p.categoria,p.prompt].join(' '));
+    return(!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual);
+  });
+  document.getElementById('contador').textContent=filtrados.length+' de '+prompts.length+' testes';
+  const lista=document.getElementById('lista');
+  lista.innerHTML=filtrados.length?filtrados.map(p=>`
+    <section class="card" id="card-${p.id}">
+      <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span>
+      <h3>${p.titulo}</h3>
+      <p style="color:#667085;font-size:14px">📌 ${p.quando}</p>
+      ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+      <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
+      <div class="acoes">
+        <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+        <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+        <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
+        <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
+        <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+        <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+      </div>
+      <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse teste te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    </section>`).join('') : '<div style="text-align:center;padding:30px;opacity:.7">🔎 Nenhum teste encontrado.</div>';
+
+  filtrados.forEach(p=>{atualizarBtnFav(p.id,document.querySelector('#card-'+p.id+' .favoritar'));atualizarFeedbackUI(p.id)});
+}
+
+document.getElementById('lista').addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar')copiarPorId(id);
+  else if(acao==='chat')abrirChat(id);
+  else if(acao==='gemini')abrirGemini(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+document.getElementById('busca').addEventListener('input',render);
+document.getElementById('btnExportar').addEventListener('click',exportarTodos);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+montarFiltroCategoria();
+atualizarStats();
+render();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+</script></body></html>
