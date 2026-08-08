@@ -8,7 +8,7 @@
 .ordem-status-ativa{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#dcfce7;color:#166534;font-weight:700;font-size:12.5px;margin-top:10px}
 .ordem-status-auto{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#f1f5f9;color:#475467;font-weight:700;font-size:12.5px;margin-top:10px}
 @media(max-width:560px){#listaPerfis{grid-template-columns:1fr!important}}
-</style></head><body id="configuracao-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260901f"></script><main>
+</style></head><body id="configuracao-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260901g"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Configuração</p>
 <h1>⚙️ Configuração</h1>
@@ -211,23 +211,43 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
     render();
   })();
 
-  // ===== ESCONDER CATEGORIAS =====
+  // ===== ESCONDER CATEGORIAS (paginas e secoes inteiras) =====
   (function(){
     var container=document.getElementById('listaCategorias');
     var buscaInput=document.getElementById('buscaCategorias');
     var semResultado=document.getElementById('semResultadoCategorias');
     if(!container)return;
-    var todosItens=null;
+    var todasSecoes=null; // [{titulo, hrefs:[...], links:[{href,texto}]}]
     function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+    function lerSecoesEscondidas(){try{return JSON.parse(localStorage.getItem('deltaSecoesEscondidas'))||[]}catch(e){return[]}}
+    function salvarSecoesEscondidas(l){try{localStorage.setItem('deltaSecoesEscondidas',JSON.stringify(l))}catch(e){}}
+    function lerPaginasEscondidas(){try{return JSON.parse(localStorage.getItem('deltaCategoriasEscondidas'))||[]}catch(e){return[]}}
+    function salvarPaginasEscondidas(l){try{localStorage.setItem('deltaCategoriasEscondidas',JSON.stringify(l))}catch(e){}}
+
+    function toggleSecao(titulo,marcar){
+      var secoesEsc=lerSecoesEscondidas();
+      if(marcar)secoesEsc=secoesEsc.filter(function(t){return t!==titulo});
+      else if(secoesEsc.indexOf(titulo)===-1)secoesEsc.push(titulo);
+      salvarSecoesEscondidas(secoesEsc);
+      mostrarToast(marcar?'👁️ Seção "'+titulo+'" volta a aparecer':'🙈 Seção "'+titulo+'" inteira escondida ('+(todasSecoes.find(function(s){return s.titulo===titulo})||{links:[]}).links.length+' páginas)');
+      if(window.deltaRegistrarLog)window.deltaRegistrarLog((marcar?'👁️ Mostrou':'🙈 Escondeu')+' a seção inteira "'+titulo+'" no menu');
+    }
+    function togglePagina(href,marcar){
+      var pagEsc=lerPaginasEscondidas();
+      if(marcar)pagEsc=pagEsc.filter(function(h){return h!==href});
+      else if(pagEsc.indexOf(href)===-1)pagEsc.push(href);
+      salvarPaginasEscondidas(pagEsc);
+    }
     function attachListeners(){
+      container.querySelectorAll('input[data-secao]').forEach(function(input){
+        input.addEventListener('change',function(){
+          toggleSecao(input.dataset.secao,input.checked);
+          renderFiltrado(buscaInput?buscaInput.value:'');
+        });
+      });
       container.querySelectorAll('input[data-href]').forEach(function(input){
         input.addEventListener('change',function(){
-          var escondidas=[];
-          try{escondidas=JSON.parse(localStorage.getItem('deltaCategoriasEscondidas'))||[]}catch(e){}
-          var href=input.dataset.href;
-          if(input.checked)escondidas=escondidas.filter(function(h){return h!==href});
-          else if(escondidas.indexOf(href)===-1)escondidas.push(href);
-          try{localStorage.setItem('deltaCategoriasEscondidas',JSON.stringify(escondidas))}catch(e){}
+          togglePagina(input.dataset.href,input.checked);
           var nomeItem=input.parentElement.textContent.trim();
           mostrarToast(input.checked?'👁️ "'+nomeItem+'" volta a aparecer no menu':'🙈 "'+nomeItem+'" escondida do menu');
           if(window.deltaRegistrarLog)window.deltaRegistrarLog((input.checked?'👁️ Mostrou':'🙈 Escondeu')+' a categoria "'+nomeItem+'" no menu');
@@ -235,25 +255,41 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
       });
     }
     function renderFiltrado(termo){
-      var escondidas=[];
-      try{escondidas=JSON.parse(localStorage.getItem('deltaCategoriasEscondidas'))||[]}catch(e){}
+      var secoesEsc=lerSecoesEscondidas();
+      var pagEsc=lerPaginasEscondidas();
       var t=norm(termo);
-      var visiveis=t?todosItens.filter(function(a){return norm(a.textContent).includes(t)}):todosItens;
-      semResultado.style.display=(t&&!visiveis.length)?'block':'none';
-      container.innerHTML=visiveis.map(function(a){
-        var href=a.getAttribute('href');
-        var marcado=escondidas.indexOf(href)===-1;
-        return '<label style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;cursor:pointer"><input type="checkbox" data-href="'+href+'" '+(marcado?'checked':'')+' style="width:17px;height:17px;flex:0 0 auto"><span style="font-size:13.5px">'+a.textContent.trim()+'</span></label>';
-      }).join('');
+      var html='';
+      todasSecoes.forEach(function(secao){
+        var linksVisiveis=t?secao.links.filter(function(l){return norm(l.texto).includes(t)||norm(secao.titulo).includes(t)}):secao.links;
+        if(!linksVisiveis.length)return;
+        var secaoEscondida=secoesEsc.indexOf(secao.titulo)!==-1;
+        html+='<div style="margin-bottom:4px">';
+        html+='<label style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;cursor:pointer;background:#f8fafc"><input type="checkbox" data-secao="'+secao.titulo.replace(/"/g,'&quot;')+'" '+(secaoEscondida?'':'checked')+' style="width:17px;height:17px;flex:0 0 auto"><span style="font-size:13.5px;font-weight:800;color:#344055">'+secao.titulo+' <span style="font-weight:600;color:#8a92a6;font-size:11.5px">(seção inteira, '+secao.links.length+' páginas)</span></span></label>';
+        html+='<div style="padding-left:26px;display:flex;flex-direction:column;gap:2px;margin-top:2px">';
+        linksVisiveis.forEach(function(l){
+          var marcado=pagEsc.indexOf(l.href)===-1;
+          html+='<label style="display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:8px;cursor:pointer;'+(secaoEscondida?'opacity:.45':'')+'"><input type="checkbox" data-href="'+l.href+'" '+(marcado&&!secaoEscondida?'checked':'')+' '+(secaoEscondida?'disabled':'')+' style="width:15px;height:15px;flex:0 0 auto"><span style="font-size:12.5px">'+l.texto+'</span></label>';
+        });
+        html+='</div></div>';
+      });
+      container.innerHTML=html;
+      semResultado.style.display=(t&&!html)?'block':'none';
       attachListeners();
     }
     function montar(){
       var sidebar=document.querySelector('#menu .sidebar');
       if(!sidebar){setTimeout(montar,300);return}
-      var links=[].slice.call(sidebar.querySelectorAll('.menu-links a'));
-      if(!links.length){setTimeout(montar,300);return}
+      var secoesDom=[].slice.call(sidebar.querySelectorAll('.menu-section'));
+      if(!secoesDom.length){setTimeout(montar,300);return}
       var vistos={};
-      todosItens=links.filter(function(a){var h=a.getAttribute('href');if(vistos[h])return false;vistos[h]=true;return true});
+      todasSecoes=secoesDom.map(function(sec){
+        var tituloEl=sec.querySelector('.menu-title');
+        var titulo=tituloEl?tituloEl.textContent.trim():'Outros';
+        var links=[].slice.call(sec.querySelectorAll('.menu-links a')).filter(function(a){
+          var h=a.getAttribute('href');if(vistos[h])return false;vistos[h]=true;return true;
+        }).map(function(a){return{href:a.getAttribute('href'),texto:a.textContent.trim()}});
+        return{titulo:titulo,links:links};
+      }).filter(function(s){return s.links.length});
       renderFiltrado('');
     }
     if(buscaInput)buscaInput.addEventListener('input',function(){renderFiltrado(buscaInput.value)});
