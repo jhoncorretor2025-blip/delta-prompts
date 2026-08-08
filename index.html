@@ -4,6 +4,9 @@
 .modo-simples-hero{margin-top:14px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:#fff;color:var(--text);padding:12px 18px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer}
 .modo-simples-hero:hover{background:#f0fdf4;border-color:#16a34a;color:#16a34a}
 [data-modo-simples="true"] .modo-simples-hero{background:#16a34a;color:#fff;border-color:#16a34a}
+.modo-simples-hero-link{margin-top:10px;display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:var(--muted);padding:4px 2px;font-weight:700;font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.modo-simples-hero-link:hover{color:var(--p)}
+[data-modo-simples="true"] .modo-simples-hero-link{color:#16a34a;font-weight:800}
 .hero-stats a{color:var(--p);font-weight:800;text-decoration:none}
 .quick.historico{margin-top:8px}
 .quick.historico .historico-label{display:flex;align-items:center;font-size:12px;color:var(--muted);font-weight:700;padding-right:4px;flex:0 0 auto}
@@ -49,11 +52,12 @@
 <div class="hero-stats" id="heroStats"></div>
 <div id="pessoasOnline" style="display:none;margin-top:8px;font-size:13px;color:#15803d;font-weight:700"></div>
 
-<button type="button" id="btnModoSimplesHero" class="modo-simples-hero">🧓 Sou iniciante / prefiro um modo mais simples</button>
-
 <div class="search" id="buscar"><span aria-hidden="true">🔎</span><input id="busca-global" type="search" autocomplete="off" aria-label="Buscar no Delta Prompts" placeholder="O que você quer fazer hoje?"><div class="suggestions" id="suggestions"></div></div>
+<p style="font-size:12.5px;color:var(--muted);margin:6px 0 0 6px">🔍 Busca até dentro do texto dos prompts — não precisa saber o nome exato da categoria</p>
 
 <div class="quick"><button data-search="imagem">🎨 Imagens</button><button data-search="estudo">📚 Estudo</button><button data-search="marketing">📣 Marketing</button><button data-search="notebook">📚 NotebookLM</button><button data-search="skill">🧠 Skills</button></div>
+
+<button type="button" id="btnModoSimplesHero" class="modo-simples-hero-link">🧓 Sou iniciante / prefiro um modo mais simples</button>
 
 <div class="quick historico" id="historicoBusca" style="display:none"></div>
 
@@ -430,11 +434,23 @@ function renderPromptResults(v){
   box.style.display='block';
   renderPromptResultsGrid(resultados);
 }
+const GRUPO_LABEL={pessoal:'🏠 Pessoal',trabalho:'👔 Trabalho & Negócio',avancado:'🚀 Avançado'};
+const GRUPO_COR={pessoal:'#166534',trabalho:'#9a3412',avancado:'#6d28d9'};
+function infoDaPagina(link){
+  const alvo=link.replace(/^\/delta-prompts\//,'');
+  const item=itens.find(x=>x.l===alvo);
+  return item?{grupo:item.g,novo:!!item.new}:null;
+}
 function renderPromptResultsGrid(resultados){
   const grid=document.getElementById('prompt-results-grid');
   const LIMITE=12;
   const visiveis=promptResultsExpandido?resultados:resultados.slice(0,LIMITE);
-  let html=visiveis.map(p=>`<a href="${p.link}" style="display:block;padding:14px;border:1px solid var(--border);border-radius:14px;background:#fff;text-decoration:none;color:inherit"><strong style="font-size:14px;display:block;margin-bottom:4px">${p.titulo}</strong><span style="font-size:12.5px;color:var(--muted);display:block;line-height:1.4;margin-bottom:6px">${p.resumo}${p.resumo.length>=160?'…':''}</span><span style="font-size:11px;color:var(--p);font-weight:700">📁 ${p.pagina}</span></a>`).join('');
+  let html=visiveis.map(p=>{
+    const info=infoDaPagina(p.link);
+    const badgeGrupo=info&&GRUPO_LABEL[info.grupo]?`<span style="font-size:10.5px;font-weight:800;color:${GRUPO_COR[info.grupo]};background:${GRUPO_COR[info.grupo]}14;padding:2px 8px;border-radius:999px">${GRUPO_LABEL[info.grupo]}</span>`:'';
+    const badgeNovo=info&&info.novo?'<span style="font-size:10.5px;font-weight:900;color:#fff;background:#16a34a;padding:2px 8px;border-radius:999px">🆕 NOVO</span>':'';
+    return `<a href="${p.link}" style="display:block;padding:14px;border:1px solid var(--border);border-radius:14px;background:#fff;text-decoration:none;color:inherit"><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">${badgeNovo}${badgeGrupo}</div><strong style="font-size:14px;display:block;margin-bottom:4px">${p.titulo}</strong><span style="font-size:12.5px;color:var(--muted);display:block;line-height:1.4;margin-bottom:6px">${p.resumo}${p.resumo.length>=160?'…':''}</span><span style="font-size:11px;color:var(--p);font-weight:700">📁 ${p.pagina}</span></a>`;
+  }).join('');
   grid.innerHTML=html;
   const restante=resultados.length-visiveis.length;
   const boxBtn=document.getElementById('prompt-ver-mais-box');
