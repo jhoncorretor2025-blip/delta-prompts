@@ -329,6 +329,44 @@ window.deltaRegistrarLog=function(texto){
   document.addEventListener('input',function(){agendar(500)},true);
 })();
 
+// ===== OUVIR PROMPT EM ÁUDIO (por card, em qualquer pagina) =====
+(function(){
+  if(!('speechSynthesis' in window))return; // navegador sem suporte, nao adiciona o botao
+  var falando=null;
+  function pararTudo(){try{speechSynthesis.cancel()}catch(e){}if(falando)falando.textContent='🔊 Ouvir';falando=null}
+  function criarBotaoOuvir(favBtn){
+    var acoes=favBtn.closest('.acoes');
+    if(!acoes||acoes.querySelector('.delta-ouvir-btn'))return;
+    var b=document.createElement('button');
+    b.type='button';b.className='delta-ouvir-btn';
+    b.style.cssText='flex:1 1 100px;border:0;border-radius:11px;padding:10px;font-weight:800;cursor:pointer;font-size:inherit;background:#e0f2fe;color:#0369a1';
+    b.textContent='🔊 Ouvir';
+    b.addEventListener('click',function(){
+      var card=favBtn.closest('.card')||favBtn.closest('[id^="card-"]');
+      if(!card)return;
+      var texto=card.querySelector('.prompt-text,pre');
+      if(!texto)return;
+      if(falando===b){pararTudo();return}
+      pararTudo();
+      var utter=new SpeechSynthesisUtterance(texto.textContent.trim());
+      utter.lang='pt-BR';
+      utter.onend=function(){if(falando===b){b.textContent='🔊 Ouvir';falando=null}};
+      utter.onerror=function(){if(falando===b){b.textContent='🔊 Ouvir';falando=null}};
+      falando=b;
+      b.textContent='⏸️ Parar';
+      speechSynthesis.speak(utter);
+    });
+    acoes.appendChild(b);
+  }
+  function escanearOuvir(){document.querySelectorAll('[data-acao="favoritar"]').forEach(criarBotaoOuvir)}
+  var to=null;
+  function agendarOuvir(delay){clearTimeout(to);to=setTimeout(escanearOuvir,delay||300)}
+  setTimeout(escanearOuvir,1000);
+  document.addEventListener('click',function(e){if(!e.target.closest('.delta-ouvir-btn'))agendarOuvir(300)},true);
+  document.addEventListener('change',function(){agendarOuvir(300)},true);
+  window.addEventListener('beforeunload',pararTudo);
+})();
+
 // ===== EXPORTAR PROMPT EM PDF (por card, em qualquer pagina) =====
 (function(){
   var jsPDFPromise=null;
@@ -535,7 +573,7 @@ window.deltaRegistrarLog=function(texto){
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-20260908-menu-v59';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;let pushUsosTimer=null;var DELTA_ADMIN_EMAIL='jhoncorretor2025@gmail.com';function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260830').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,syncUsos:mod.syncUsosFromCloud,pushUsos:mod.pushUsosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal,registrarPageView:mod.registrarPageView,obterTopFeedback:mod.obterTopFeedback,obterTopPageViews:mod.obterTopPageViews,authPronto:mod.authPronto,registrarPresenca:mod.registrarPresenca,contarPessoasOnline:mod.contarPessoasOnline};mod.initAuthWatcher();mod.registrarPageView(location.pathname);mod.registrarPresenca();setInterval(mod.registrarPresenca,25000);return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null;var user=e.detail&&e.detail.user;if(user&&user.email===DELTA_ADMIN_EMAIL){setTimeout(function(){var sidebar=document.querySelector('.sidebar');if(sidebar&&!document.getElementById('deltaAdminLink')){var a=document.createElement('a');a.id='deltaAdminLink';a.className='menu-item-final';a.href='/delta-prompts/admin.html';a.textContent='🔐 Painel Admin';sidebar.appendChild(a);var itensFinais=[].slice.call(sidebar.querySelectorAll('.menu-item-final-titulo, .menu-item-final'));itensFinais.forEach(function(el){sidebar.insertBefore(el,null)})}},400)}});window.addEventListener('delta:favoritos-updated',function(){clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){loadAuth().then(function(mod){return mod&&mod.authPronto}).then(function(){if(deltaUid&&window.deltaAuth&&window.deltaAuth.pushFavoritos)window.deltaAuth.pushFavoritos(deltaUid)})},600)});document.addEventListener('click',function(e){const btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');if(!btn||!deltaUid||!window.deltaAuth||!window.deltaAuth.pushUsos)return;clearTimeout(pushUsosTimer);pushUsosTimer=setTimeout(function(){window.deltaAuth.pushUsos(deltaUid)},800)},true);
+(function(){function getMenuCandidates(){const version='delta-prompts-20260908-menu-v60';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;let pushUsosTimer=null;var DELTA_ADMIN_EMAIL='jhoncorretor2025@gmail.com';function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260830').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,syncUsos:mod.syncUsosFromCloud,pushUsos:mod.pushUsosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal,registrarPageView:mod.registrarPageView,obterTopFeedback:mod.obterTopFeedback,obterTopPageViews:mod.obterTopPageViews,authPronto:mod.authPronto,registrarPresenca:mod.registrarPresenca,contarPessoasOnline:mod.contarPessoasOnline};mod.initAuthWatcher();mod.registrarPageView(location.pathname);mod.registrarPresenca();setInterval(mod.registrarPresenca,25000);return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null;var user=e.detail&&e.detail.user;if(user&&user.email===DELTA_ADMIN_EMAIL){setTimeout(function(){var sidebar=document.querySelector('.sidebar');if(sidebar&&!document.getElementById('deltaAdminLink')){var a=document.createElement('a');a.id='deltaAdminLink';a.className='menu-item-final';a.href='/delta-prompts/admin.html';a.textContent='🔐 Painel Admin';sidebar.appendChild(a);var itensFinais=[].slice.call(sidebar.querySelectorAll('.menu-item-final-titulo, .menu-item-final'));itensFinais.forEach(function(el){sidebar.insertBefore(el,null)})}},400)}});window.addEventListener('delta:favoritos-updated',function(){clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){loadAuth().then(function(mod){return mod&&mod.authPronto}).then(function(){if(deltaUid&&window.deltaAuth&&window.deltaAuth.pushFavoritos)window.deltaAuth.pushFavoritos(deltaUid)})},600)});document.addEventListener('click',function(e){const btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');if(!btn||!deltaUid||!window.deltaAuth||!window.deltaAuth.pushUsos)return;clearTimeout(pushUsosTimer);pushUsosTimer=setTimeout(function(){window.deltaAuth.pushUsos(deltaUid)},800)},true);
 // ===== Guarda titulo/link de cada prompt usado (para o Top 5 em Meus Numeros) e registra atividade diaria =====
 document.addEventListener('click',function(e){
   var btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');

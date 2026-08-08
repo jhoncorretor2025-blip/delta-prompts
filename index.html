@@ -37,7 +37,7 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260908"></script><script src="search-index.js?v=20260908" defer></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260908b"></script><script src="search-index.js?v=20260908" defer></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
@@ -69,6 +69,20 @@
 <a class="continuar-card" id="continuarCard" href="#" style="display:none"></a>
 
 </div></section>
+
+<div id="dataEspecialBox" style="display:none;margin:24px 0;padding:20px;border-radius:16px;background:linear-gradient(135deg,#fff7ed,#fef2f2);border:1px solid #fed7aa"></div>
+
+<div id="promptDoDiaBox" style="margin:24px 0;padding:22px;border-radius:18px;background:linear-gradient(135deg,#eef2ff,#fff);border:1px solid #c7d2fe"></div>
+
+<div style="margin:24px 0;padding:22px;border-radius:18px;background:#fff;border:1px solid var(--border)">
+  <h3 style="margin:0 0 6px">🧩 Não sabe qual prompt usar? Descreve o problema</h3>
+  <p style="color:#667085;font-size:14px;margin:0 0 14px">Não precisa saber o nome técnico — só escreva com suas palavras o que você precisa fazer.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <input type="text" id="encaixaInput" placeholder="Ex: preciso responder um cliente bravo no whatsapp" style="flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd">
+    <button type="button" id="encaixaBtn" style="padding:14px 24px;background:var(--p);color:#fff;font-weight:700;border-radius:12px;border:0;cursor:pointer">🔎 Encontrar</button>
+  </div>
+  <div id="encaixaResultados" style="margin-top:16px;display:none"></div>
+</div>
 
 <section class="section white" id="exemplos-section"><div class="container"><div class="head"><h2>✨ Veja como funciona</h2><p>Alguns prompts prontos de verdade — é só copiar e usar.</p></div>
 <div class="list-grid" style="grid-template-columns:repeat(3,1fr)">
@@ -421,6 +435,81 @@ document.querySelectorAll('.exemplo-copiar').forEach(btn=>{
     });
   });
 });
+
+// ===== DATAS ESPECIAIS =====
+(function(){
+  const DATAS=[
+    {inicio:'01-01',fim:'01-15',emoji:'🎊',titulo:'Ano Novo, metas novas',texto:'Ótimo momento pra organizar objetivos do ano. Que tal um prompt de planejamento?',link:'paginas/planejamento.html'},
+    {inicio:'01-20',fim:'02-15',emoji:'🎒',titulo:'Volta às aulas',texto:'Época de organizar estudos e rotina. Dá uma olhada nos prompts de Estudo.',link:'paginas/estudo.html'},
+    {inicio:'05-01',fim:'05-11',emoji:'💐',titulo:'Dia das Mães chegando',texto:'Se você vende algo, comece a preparar sua campanha especial de Dia das Mães.',link:'paginas/marketing-campanha.html'},
+    {inicio:'06-01',fim:'06-12',emoji:'💕',titulo:'Dia dos Namorados chegando',texto:'Boa hora pra criar uma campanha ou promoção temática.',link:'paginas/marketing-campanha.html'},
+    {inicio:'08-01',fim:'08-11',emoji:'👨',titulo:'Dia dos Pais chegando',texto:'Se você vende algo, vale preparar uma campanha especial.',link:'paginas/marketing-campanha.html'},
+    {inicio:'09-01',fim:'09-15',emoji:'🎉',titulo:'Dia do Cliente chegando (15/09)',texto:'Boa época pra criar mensagens de agradecimento e ofertas pros seus clientes.',link:'paginas/vendas-conversao.html'},
+    {inicio:'10-01',fim:'10-12',emoji:'🎈',titulo:'Dia das Crianças chegando',texto:'Se você vende produtos infantis, comece já sua campanha.',link:'paginas/marketing-campanha.html'},
+    {inicio:'11-01',fim:'11-29',emoji:'🛍️',titulo:'Black Friday se aproximando',texto:'Comece a preparar sua campanha de Black Friday com antecedência.',link:'paginas/marketing-campanha.html'},
+    {inicio:'12-01',fim:'12-24',emoji:'🎄',titulo:'Natal chegando',texto:'Hora de preparar campanhas, mensagens e planejamento de fim de ano.',link:'paginas/marketing-campanha.html'}
+  ];
+  function hojeMMDD(){const d=new Date();return String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function dentroDoIntervalo(hoje,ini,fim){return hoje>=ini&&hoje<=fim}
+  const hoje=hojeMMDD();
+  const encontrada=DATAS.find(d=>dentroDoIntervalo(hoje,d.inicio,d.fim));
+  if(encontrada){
+    const box=document.getElementById('dataEspecialBox');
+    box.style.display='block';
+    box.innerHTML=`<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><span style="font-size:34px">${encontrada.emoji}</span><div style="flex:1;min-width:200px"><strong style="font-size:16px">${encontrada.titulo}</strong><p style="margin:4px 0 0;color:#667085;font-size:14px">${encontrada.texto}</p></div><a href="${encontrada.link}" style="flex:0 0 auto;padding:12px 20px;background:#c2410c;color:#fff;font-weight:700;border-radius:12px;text-decoration:none;font-size:13.5px">Ver prompts →</a></div>`;
+  }
+})();
+
+// ===== PROMPT DO DIA =====
+(function(){
+  const box=document.getElementById('promptDoDiaBox');
+  if(!box)return;
+  function render(){
+    const idx=window.deltaSearchIndex;
+    if(!idx||!idx.length)return;
+    const hoje=new Date();
+    const diaDoAno=Math.floor((hoje-new Date(hoje.getFullYear(),0,0))/86400000);
+    const escolhido=idx[diaDoAno%idx.length];
+    box.innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span class="tag" style="background:#e0e7ff;color:#4338ca">🔁 PROMPT DO DIA</span></div><h3 style="margin:0 0 6px">${escolhido.titulo}</h3><p style="color:#667085;font-size:14px;margin:0 0 14px">${escolhido.resumo}${escolhido.resumo.length>=160?'…':''}</p><div style="display:flex;gap:10px;flex-wrap:wrap"><a href="${escolhido.link}" style="padding:12px 20px;background:var(--p);color:#fff;font-weight:700;border-radius:12px;text-decoration:none;font-size:13.5px">Ver prompt completo →</a><span style="align-self:center;font-size:12px;color:#8a92a6">📁 ${escolhido.pagina}</span></div>`;
+  }
+  if(window.deltaSearchIndex){render()}
+  else{
+    let tentativas=0;
+    const t=setInterval(()=>{tentativas++;if(window.deltaSearchIndex){render();clearInterval(t)}else if(tentativas>20)clearInterval(t)},200);
+  }
+})();
+
+// ===== ENCAIXA AQUI (descreva o problema, sem saber o nome tecnico) =====
+(function(){
+  const input=document.getElementById('encaixaInput');
+  const btn=document.getElementById('encaixaBtn');
+  const box=document.getElementById('encaixaResultados');
+  if(!input||!btn)return;
+  const PARAR=new Set(['de','da','do','das','dos','a','o','as','os','um','uma','para','pra','com','que','e','em','no','na','preciso','quero','como','meu','minha']);
+  function buscarPorPalavras(v){
+    const idx=window.deltaSearchIndex;
+    if(!idx||!idx.length)return[];
+    const palavras=normBusca(v).split(/\s+/).filter(p=>p.length>=3&&!PARAR.has(p));
+    if(!palavras.length)return[];
+    const pontuados=idx.map(p=>{
+      const texto=normBusca(p.titulo+' '+p.resumo+' '+p.pagina);
+      const pontos=palavras.reduce((acc,pl)=>acc+(texto.includes(pl)?1:0),0);
+      return{item:p,pontos};
+    }).filter(x=>x.pontos>0);
+    pontuados.sort((a,b)=>b.pontos-a.pontos);
+    return pontuados.map(x=>x.item);
+  }
+  function buscar(){
+    const v=input.value.trim();
+    if(!v){box.style.display='none';return}
+    const resultados=buscarPorPalavras(v).slice(0,6);
+    box.style.display='block';
+    if(!resultados.length){box.innerHTML='<p style="color:#667085;font-size:14px">🔎 Não achei nada certeiro. Tenta descrever de outro jeito, ou usa a busca principal ali em cima.</p>';return}
+    box.innerHTML='<p style="font-size:12.5px;color:#667085;margin:0 0 10px;font-weight:700">ISSO AQUI PODE RESOLVER:</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">'+resultados.map(p=>`<a href="${p.link}" style="display:block;padding:13px;border:1px solid var(--border);border-radius:12px;background:#fafafe;text-decoration:none;color:inherit"><strong style="font-size:13.5px;display:block;margin-bottom:3px">${p.titulo}</strong><span style="font-size:12px;color:var(--muted)">📁 ${p.pagina}</span></a>`).join('')+'</div>';
+  }
+  btn.addEventListener('click',buscar);
+  input.addEventListener('keydown',e=>{if(e.key==='Enter')buscar()});
+})();
 
 renderFixadas();
 renderRecomendado();
