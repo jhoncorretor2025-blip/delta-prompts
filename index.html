@@ -7,6 +7,8 @@
 .hero-stats a{color:var(--p);font-weight:800;text-decoration:none}
 .quick.historico{margin-top:8px}
 .quick.historico .historico-label{display:flex;align-items:center;font-size:12px;color:var(--muted);font-weight:700;padding-right:4px;flex:0 0 auto}
+.quick.historico{background:#f8f8ff;border:1px dashed #d8d9f5;border-radius:12px;padding:8px 10px;margin-top:8px}
+.quick.historico button{background:#fff;border:1px solid #e0e0f5}
 .quick.historico button{background:#f5f5fb;font-weight:600;font-size:12px}
 .onboarding-card{margin-top:18px;padding:16px;border-radius:16px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow)}
 .onboarding-card p{margin:0 0 10px}
@@ -37,7 +39,7 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260908b"></script><script src="search-index.js?v=20260908b" defer></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260908b"></script><script src="search-index.js?v=20260908c" defer></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
@@ -380,15 +382,67 @@ function buscarPrompts(v){
   const termo=normBusca(v);
   if(!termo)return[];
   const palavras=termo.split(/\s+/).filter(Boolean);
-  return idx.filter(p=>{const texto=normBusca(p.titulo+' '+p.resumo+' '+p.pagina);return palavras.every(pal=>texto.includes(pal))}).slice(0,12);
+  return idx.filter(p=>{const texto=normBusca(p.titulo+' '+p.resumo+' '+p.pagina);return palavras.every(pal=>texto.includes(pal))});
 }
+function sugerirCorrecaoPrompt(v){
+  const idx=window.deltaSearchIndex;
+  if(!idx||!idx.length)return null;
+  const palavrasBusca=norm(v.trim()).split(/\s+/).filter(p=>p.length>=3);
+  if(!palavrasBusca.length)return null;
+  const vocabulario=new Set();
+  idx.forEach(p=>{norm(p.titulo+' '+p.pagina).split(/\s+/).forEach(w=>{if(w.length>=4)vocabulario.add(w)})});
+  const vocabArr=[...vocabulario];
+  let mudou=false;
+  const palavrasCorrigidas=palavrasBusca.map(palavra=>{
+    if(vocabulario.has(palavra))return palavra; // ja existe exatamente, nao mexe
+    let melhor=null,menorDist=Infinity;
+    vocabArr.forEach(cand=>{
+      const dist=distanciaEdicao(palavra,cand);
+      const limite=palavra.length<=5?1:2;
+      if(dist<=limite&&dist<menorDist&&dist>0){menorDist=dist;melhor=cand}
+    });
+    if(melhor){mudou=true;return melhor}
+    return palavra;
+  });
+  return mudou?palavrasCorrigidas.join(' '):null;
+}
+let promptResultsExpandido=false;
 function renderPromptResults(v){
+  promptResultsExpandido=false;
   const resultados=buscarPrompts(v);
   const box=document.getElementById('prompt-results-box');
   const grid=document.getElementById('prompt-results-grid');
-  if(!resultados.length){box.style.display='none';return}
+  if(!resultados.length){
+    const sugestao=sugerirCorrecaoPrompt(v);
+    if(sugestao){
+      box.style.display='block';
+      grid.innerHTML='';
+      box.querySelector('h3').insertAdjacentHTML('afterend','<p id="prompt-sugestao-typo" style="font-size:13px;color:var(--muted);margin:0 0 12px">Nenhum prompt encontrado. Você quis dizer <button type="button" onclick="input.value=\''+sugestao+'\';buscar(\''+sugestao+'\')" style="border:0;background:none;color:var(--p);font-weight:800;text-decoration:underline;cursor:pointer;padding:0">'+sugestao+'</button>?</p>');
+    }else{
+      box.style.display='none';
+    }
+    const velho=document.getElementById('prompt-sugestao-typo');
+    if(velho&&!sugestao)velho.remove();
+    return;
+  }
+  const velho=document.getElementById('prompt-sugestao-typo');
+  if(velho)velho.remove();
   box.style.display='block';
-  grid.innerHTML=resultados.map(p=>`<a href="${p.link}" style="display:block;padding:14px;border:1px solid var(--border);border-radius:14px;background:#fff;text-decoration:none;color:inherit"><strong style="font-size:14px;display:block;margin-bottom:4px">${p.titulo}</strong><span style="font-size:12.5px;color:var(--muted);display:block;line-height:1.4;margin-bottom:6px">${p.resumo}${p.resumo.length>=160?'…':''}</span><span style="font-size:11px;color:var(--p);font-weight:700">📁 ${p.pagina}</span></a>`).join('');
+  renderPromptResultsGrid(resultados);
+}
+function renderPromptResultsGrid(resultados){
+  const grid=document.getElementById('prompt-results-grid');
+  const LIMITE=12;
+  const visiveis=promptResultsExpandido?resultados:resultados.slice(0,LIMITE);
+  let html=visiveis.map(p=>`<a href="${p.link}" style="display:block;padding:14px;border:1px solid var(--border);border-radius:14px;background:#fff;text-decoration:none;color:inherit"><strong style="font-size:14px;display:block;margin-bottom:4px">${p.titulo}</strong><span style="font-size:12.5px;color:var(--muted);display:block;line-height:1.4;margin-bottom:6px">${p.resumo}${p.resumo.length>=160?'…':''}</span><span style="font-size:11px;color:var(--p);font-weight:700">📁 ${p.pagina}</span></a>`).join('');
+  grid.innerHTML=html;
+  const restante=resultados.length-visiveis.length;
+  const boxBtn=document.getElementById('prompt-ver-mais-box');
+  if(boxBtn)boxBtn.remove();
+  if(restante>0){
+    grid.insertAdjacentHTML('afterend','<div id="prompt-ver-mais-box" style="text-align:center;margin-top:14px"><button type="button" id="btnVerMaisPrompts" style="border:1px solid var(--border);background:#fff;padding:10px 20px;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px">Ver mais '+restante+' resultado'+(restante===1?'':'s')+' →</button></div>');
+    document.getElementById('btnVerMaisPrompts').addEventListener('click',()=>{promptResultsExpandido=true;renderPromptResultsGrid(resultados)});
+  }
 }
 function buscar(v,scroll=true){
   const r=matches(v),sec=document.getElementById('search-results');
