@@ -44,7 +44,9 @@
 <section class="card">
   <h3>🙈 Esconder categorias que você não usa</h3>
   <p style="margin:0 0 14px;color:#667085;font-size:14px">Desmarque as páginas que você nunca acessa — elas somem do menu lateral (você pode marcar de volta quando quiser).</p>
+  <input type="search" id="buscaCategorias" placeholder="🔎 Buscar página..." style="width:100%;box-sizing:border-box;padding:11px 14px;border:1px solid #e5e7eb;border-radius:10px;font:inherit;margin-bottom:10px">
   <div style="display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto;padding-right:4px" id="listaCategorias"></div>
+  <p id="semResultadoCategorias" style="display:none;color:#667085;font-size:13.5px;margin:8px 0 0">🔎 Nenhuma página encontrada com esse nome.</p>
 </section>
 
 <section class="card">
@@ -212,21 +214,12 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   // ===== ESCONDER CATEGORIAS =====
   (function(){
     var container=document.getElementById('listaCategorias');
+    var buscaInput=document.getElementById('buscaCategorias');
+    var semResultado=document.getElementById('semResultadoCategorias');
     if(!container)return;
-    function montar(){
-      var sidebar=document.querySelector('#menu .sidebar');
-      if(!sidebar){setTimeout(montar,300);return}
-      var links=[].slice.call(sidebar.querySelectorAll('.menu-links a'));
-      if(!links.length){setTimeout(montar,300);return}
-      var escondidas=[];
-      try{escondidas=JSON.parse(localStorage.getItem('deltaCategoriasEscondidas'))||[]}catch(e){}
-      var vistos={};
-      var itens=links.filter(function(a){var h=a.getAttribute('href');if(vistos[h])return false;vistos[h]=true;return true});
-      container.innerHTML=itens.map(function(a){
-        var href=a.getAttribute('href');
-        var marcado=escondidas.indexOf(href)===-1;
-        return '<label style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;cursor:pointer"><input type="checkbox" data-href="'+href+'" '+(marcado?'checked':'')+' style="width:17px;height:17px;flex:0 0 auto"><span style="font-size:13.5px">'+a.textContent.trim()+'</span></label>';
-      }).join('');
+    var todosItens=null;
+    function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+    function attachListeners(){
       container.querySelectorAll('input[data-href]').forEach(function(input){
         input.addEventListener('change',function(){
           var escondidas=[];
@@ -241,6 +234,29 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
         });
       });
     }
+    function renderFiltrado(termo){
+      var escondidas=[];
+      try{escondidas=JSON.parse(localStorage.getItem('deltaCategoriasEscondidas'))||[]}catch(e){}
+      var t=norm(termo);
+      var visiveis=t?todosItens.filter(function(a){return norm(a.textContent).includes(t)}):todosItens;
+      semResultado.style.display=(t&&!visiveis.length)?'block':'none';
+      container.innerHTML=visiveis.map(function(a){
+        var href=a.getAttribute('href');
+        var marcado=escondidas.indexOf(href)===-1;
+        return '<label style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;cursor:pointer"><input type="checkbox" data-href="'+href+'" '+(marcado?'checked':'')+' style="width:17px;height:17px;flex:0 0 auto"><span style="font-size:13.5px">'+a.textContent.trim()+'</span></label>';
+      }).join('');
+      attachListeners();
+    }
+    function montar(){
+      var sidebar=document.querySelector('#menu .sidebar');
+      if(!sidebar){setTimeout(montar,300);return}
+      var links=[].slice.call(sidebar.querySelectorAll('.menu-links a'));
+      if(!links.length){setTimeout(montar,300);return}
+      var vistos={};
+      todosItens=links.filter(function(a){var h=a.getAttribute('href');if(vistos[h])return false;vistos[h]=true;return true});
+      renderFiltrado('');
+    }
+    if(buscaInput)buscaInput.addEventListener('input',function(){renderFiltrado(buscaInput.value)});
     montar();
   })();
 
