@@ -37,7 +37,7 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260901g"></script><script src="search-index.js?v=20260908" defer></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260908"></script><script src="search-index.js?v=20260908" defer></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
@@ -275,6 +275,19 @@ function finalizarOnboarding(){
   try{localStorage.setItem('deltaOnboardingFeito','1')}catch(e){}
   const card=document.getElementById('onboardingCard');
   if(card)card.style.display='none';
+  mostrarDicaRapida();
+}
+function mostrarDicaRapida(){
+  try{if(localStorage.getItem('deltaDicaRapidaVista'))return;localStorage.setItem('deltaDicaRapidaVista','1')}catch(e){}
+  const dicas=['🔎 Dica: a busca acha até prompts específicos, não só categorias.','❤️ Dica: toque no coração de qualquer prompt (ou página) pra favoritar.','⚙️ Dica: em Configuração dá pra personalizar o menu do seu jeito.'];
+  let i=0;
+  function mostrar(){
+    if(i>=dicas.length)return;
+    mostrarToast(dicas[i]);
+    i++;
+    setTimeout(mostrar,3200);
+  }
+  setTimeout(mostrar,900);
 }
 
 // ===== NÚMEROS DE CREDIBILIDADE + FAVORITOS =====
@@ -313,6 +326,27 @@ function render(){
 
 const input=document.getElementById('busca-global'),sug=document.getElementById('suggestions');
 function matches(v){const q=norm(v.trim());return q?itens.filter(x=>norm(x.n+' '+x.d+' '+x.t).includes(q)):[]}
+function distanciaEdicao(a,b){
+  const m=a.length,n=b.length;
+  const d=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)d[i][0]=i;
+  for(let j=0;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);
+  return d[m][n];
+}
+function sugerirCorrecao(v){
+  const q=norm(v.trim());
+  if(!q||q.length<3)return null;
+  const vocabulario=new Set();
+  itens.forEach(x=>{norm(x.n).split(/\s+/).forEach(p=>{if(p.length>=4)vocabulario.add(p)});norm(x.t).split(/\s+/).forEach(p=>{if(p.length>=4)vocabulario.add(p)})});
+  let melhor=null,menorDist=Infinity;
+  vocabulario.forEach(palavra=>{
+    const dist=distanciaEdicao(q,palavra);
+    const limite=q.length<=5?1:2;
+    if(dist<=limite&&dist<menorDist&&dist>0){menorDist=dist;melhor=palavra}
+  });
+  return melhor;
+}
 function normBusca(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function buscarPrompts(v){
   const idx=window.deltaSearchIndex;
@@ -335,7 +369,11 @@ function buscar(v,scroll=true){
   registrarBuscaHistorico(v);
   sec.classList.add('active');
   document.getElementById('results-title').textContent=`Resultados para "${v}"`;
-  document.getElementById('results-grid').innerHTML=r.length?r.map(card).join(''):'<div class="empty">🔎 Nada encontrado. Tente outra palavra.</div>';
+  document.getElementById('results-grid').innerHTML=r.length?r.map(card).join(''):(function(){
+    const sugestao=sugerirCorrecao(v);
+    if(sugestao)return '<div class="empty">🔎 Nada encontrado para "'+v+'". <br>Você quis dizer <button type="button" onclick="input.value=\''+sugestao+'\';buscar(\''+sugestao+'\')" style="border:0;background:none;color:var(--p);font-weight:800;text-decoration:underline;cursor:pointer;font-size:inherit">'+sugestao+'</button>?</div>';
+    return '<div class="empty">🔎 Nada encontrado. Tente outra palavra.</div>';
+  })();
   renderPromptResults(v);
   sug.classList.remove('active');
   if(scroll)sec.scrollIntoView({behavior:'smooth',block:'start'});

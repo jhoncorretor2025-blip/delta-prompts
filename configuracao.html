@@ -8,11 +8,17 @@
 .ordem-status-ativa{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#dcfce7;color:#166534;font-weight:700;font-size:12.5px;margin-top:10px}
 .ordem-status-auto{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#f1f5f9;color:#475467;font-weight:700;font-size:12.5px;margin-top:10px}
 @media(max-width:560px){#listaPerfis{grid-template-columns:1fr!important}}
-</style></head><body id="configuracao-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260901g"></script><main>
+</style></head><body id="configuracao-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Configuração</p>
 <h1>⚙️ Configuração</h1>
 <p>Personalize como o Delta Prompts funciona pra você — seu perfil, a ordem do menu, e veja por onde você andou por aqui.</p>
+
+<section class="card">
+  <h3>🏠 Preenchimento Automático</h3>
+  <p style="margin:0 0 14px;color:#667085;font-size:14px">Preencha uma vez, e qualquer prompt do site que peça isso já vem preenchido sozinho.</p>
+  <div style="display:flex;flex-direction:column;gap:10px" id="camposDadosPadrao"></div>
+</section>
 
 <section class="card">
   <h3>🧑 Qual é o seu perfil?</h3>
@@ -133,6 +139,37 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   });
   renderLista();
   atualizarStatus();
+
+  // ===== PREENCHIMENTO AUTOMÁTICO UNIVERSAL =====
+  (function(){
+    var container=document.getElementById('camposDadosPadrao');
+    if(!container)return;
+    var CAMPOS=[
+      {chave:'empresa',label:'🏢 Nome da empresa/negócio',placeholder:'Ex: Delta Imóveis'},
+      {chave:'produto',label:'📦 Produto ou serviço principal',placeholder:'Ex: Apartamentos e casas'},
+      {chave:'publico',label:'🎯 Público-alvo',placeholder:'Ex: Famílias buscando o primeiro imóvel'},
+      {chave:'cargo',label:'💼 Seu cargo/profissão',placeholder:'Ex: Corretor de imóveis'}
+    ];
+    function lerDados(){try{return JSON.parse(localStorage.getItem('deltaDadosPadrao'))||{}}catch(e){return{}}}
+    function salvarDados(d){try{localStorage.setItem('deltaDadosPadrao',JSON.stringify(d))}catch(e){}}
+    var dados=lerDados();
+    container.innerHTML=CAMPOS.map(function(c){
+      return '<label style="display:flex;flex-direction:column;gap:5px;font-size:12.5px;font-weight:700;color:#475467">'+c.label+'<input type="text" data-chave="'+c.chave+'" value="'+(dados[c.chave]||'').replace(/"/g,'&quot;')+'" placeholder="'+c.placeholder+'" style="padding:11px 13px;border:1px solid #e5e7eb;border-radius:10px;font:inherit;font-weight:400"></label>';
+    }).join('');
+    var timer=null;
+    container.querySelectorAll('input[data-chave]').forEach(function(input){
+      input.addEventListener('input',function(){
+        clearTimeout(timer);
+        timer=setTimeout(function(){
+          var d=lerDados();
+          d[input.dataset.chave]=input.value.trim();
+          salvarDados(d);
+          mostrarToast('💾 Salvo! Já vai preencher sozinho nos prompts.');
+          if(window.deltaRegistrarLog)window.deltaRegistrarLog('🏠 Atualizou o preenchimento automático');
+        },700);
+      });
+    });
+  })();
 
   // ===== SELETOR DE PERFIL =====
   var PERFIS=[
