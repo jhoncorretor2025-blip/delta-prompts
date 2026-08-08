@@ -205,8 +205,20 @@ function renderMaisAcessados(){
   const sec=document.getElementById('mais-acessados-section');
   if(!sec)return;
   const ranked=itens.filter(x=>cliques[x.n]).sort((a,b)=>cliques[b.n]-cliques[a.n]).slice(0,6);
-  if(!ranked.length){sec.style.display='none';return}
+  if(!ranked.length){
+    // sem historico ainda: mostra sugestoes padrao que costumam interessar a maioria
+    const nomesPadrao=['Saúde','Estudo','Imagens'];
+    const sugestoes=nomesPadrao.map(n=>itens.find(x=>x.n===n)).filter(Boolean);
+    if(!sugestoes.length){sec.style.display='none';return}
+    sec.style.display='';
+    const tituloEl=sec.querySelector('h2');
+    if(tituloEl)tituloEl.textContent='Sugestões pra começar';
+    document.getElementById('mais-acessados-grid').innerHTML=sugestoes.map(card).join('');
+    return;
+  }
   sec.style.display='';
+  const tituloEl=sec.querySelector('h2');
+  if(tituloEl)tituloEl.textContent='Mais Acessados';
   document.getElementById('mais-acessados-grid').innerHTML=ranked.map(card).join('');
 }
 document.addEventListener('click',e=>{
