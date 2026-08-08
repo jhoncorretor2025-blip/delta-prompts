@@ -37,7 +37,7 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260901g"></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260901g"></script><script src="search-index.js?v=20260908" defer></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
@@ -98,7 +98,9 @@ Identifique:
 
 <section class="section white" id="caminhos"><div class="container"><div class="head"><h2>🧭 O que você procura?</h2><p>Escolha o caminho que mais combina com o que você precisa agora.</p></div><div class="paths"><a class="path" href="#pessoal"><span class="emoji" aria-hidden="true">🏠</span><h3>Pessoal & Dia a Dia</h3><p>Estudar, organizar a vida, cuidar de informações pessoais e criar imagens.</p><b>Explorar opções →</b></a><a class="path" href="#negocio"><span class="emoji" aria-hidden="true">🏢</span><h3>Minha Empresa & Negócio</h3><p>Marketing, criação de imagens, cartão de visita, folder, redes sociais e vendas.</p><b>Explorar opções →</b></a><a class="path" href="#trabalho"><span class="emoji" aria-hidden="true">💼</span><h3>Trabalho & Negócios</h3><p>Imóveis, produtividade, comunicação, planejamento e mais.</p><b>Explorar opções →</b></a><a class="path advanced" href="#avancado"><span class="emoji" aria-hidden="true">🚀</span><span class="type">AVANÇADO</span><h3>IA & Recursos Avançados</h3><p>Skills, agentes, packs, automações, programação e sistemas com IA.</p><b>Explorar opções →</b></a></div></div></section>
 
-<section class="section search-results" id="search-results"><div class="container"><div class="toolbar"><h2 id="results-title">Resultados</h2><button class="clear" onclick="limparBusca()">✕ Limpar</button></div><div class="grid" id="results-grid"></div></div></section>
+<section class="section search-results" id="search-results"><div class="container"><div class="toolbar"><h2 id="results-title">Resultados</h2><button class="clear" onclick="limparBusca()">✕ Limpar</button></div><div class="grid" id="results-grid"></div>
+<div id="prompt-results-box" style="display:none;margin-top:26px"><h3 style="font-size:16px;margin:0 0 12px;color:#344055">📝 Prompts relacionados</h3><div id="prompt-results-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px"></div></div>
+</div></section>
 
 <section class="section" id="populares"><div class="container"><div class="section-title"><div><span class="tag">⭐ COMEÇAR AGORA</span><h2>Mais úteis para começar</h2></div></div><div class="grid" id="popular-grid"></div></div></section>
 
@@ -311,6 +313,22 @@ function render(){
 
 const input=document.getElementById('busca-global'),sug=document.getElementById('suggestions');
 function matches(v){const q=norm(v.trim());return q?itens.filter(x=>norm(x.n+' '+x.d+' '+x.t).includes(q)):[]}
+function normBusca(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function buscarPrompts(v){
+  const idx=window.deltaSearchIndex;
+  if(!idx||!idx.length)return[];
+  const termo=normBusca(v);
+  if(!termo)return[];
+  return idx.filter(p=>normBusca(p.titulo+' '+p.resumo).includes(termo)).slice(0,12);
+}
+function renderPromptResults(v){
+  const resultados=buscarPrompts(v);
+  const box=document.getElementById('prompt-results-box');
+  const grid=document.getElementById('prompt-results-grid');
+  if(!resultados.length){box.style.display='none';return}
+  box.style.display='block';
+  grid.innerHTML=resultados.map(p=>`<a href="${p.link}" style="display:block;padding:14px;border:1px solid var(--border);border-radius:14px;background:#fff;text-decoration:none;color:inherit"><strong style="font-size:14px;display:block;margin-bottom:4px">${p.titulo}</strong><span style="font-size:12.5px;color:var(--muted);display:block;line-height:1.4;margin-bottom:6px">${p.resumo}${p.resumo.length>=160?'…':''}</span><span style="font-size:11px;color:var(--p);font-weight:700">📁 ${p.pagina}</span></a>`).join('');
+}
 function buscar(v,scroll=true){
   const r=matches(v),sec=document.getElementById('search-results');
   if(!v.trim()){sec.classList.remove('active');return}
@@ -318,6 +336,7 @@ function buscar(v,scroll=true){
   sec.classList.add('active');
   document.getElementById('results-title').textContent=`Resultados para "${v}"`;
   document.getElementById('results-grid').innerHTML=r.length?r.map(card).join(''):'<div class="empty">🔎 Nada encontrado. Tente outra palavra.</div>';
+  renderPromptResults(v);
   sug.classList.remove('active');
   if(scroll)sec.scrollIntoView({behavior:'smooth',block:'start'});
 }
