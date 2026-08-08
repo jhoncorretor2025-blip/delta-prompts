@@ -472,7 +472,7 @@ window.deltaRegistrarLog=function(texto){
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-20260901-menu-v55';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;let pushUsosTimer=null;var DELTA_ADMIN_EMAIL='jhoncorretor2025@gmail.com';function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260830').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,syncUsos:mod.syncUsosFromCloud,pushUsos:mod.pushUsosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal,registrarPageView:mod.registrarPageView,obterTopFeedback:mod.obterTopFeedback,obterTopPageViews:mod.obterTopPageViews,authPronto:mod.authPronto,registrarPresenca:mod.registrarPresenca,contarPessoasOnline:mod.contarPessoasOnline};mod.initAuthWatcher();mod.registrarPageView(location.pathname);mod.registrarPresenca();setInterval(mod.registrarPresenca,25000);return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null;var user=e.detail&&e.detail.user;if(user&&user.email===DELTA_ADMIN_EMAIL){setTimeout(function(){var sidebar=document.querySelector('.sidebar');if(sidebar&&!document.getElementById('deltaAdminLink')){var a=document.createElement('a');a.id='deltaAdminLink';a.className='menu-item-final';a.href='/delta-prompts/admin.html';a.textContent='🔐 Painel Admin';sidebar.appendChild(a)}},400)}});window.addEventListener('delta:favoritos-updated',function(){clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){loadAuth().then(function(mod){return mod&&mod.authPronto}).then(function(){if(deltaUid&&window.deltaAuth&&window.deltaAuth.pushFavoritos)window.deltaAuth.pushFavoritos(deltaUid)})},600)});document.addEventListener('click',function(e){const btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');if(!btn||!deltaUid||!window.deltaAuth||!window.deltaAuth.pushUsos)return;clearTimeout(pushUsosTimer);pushUsosTimer=setTimeout(function(){window.deltaAuth.pushUsos(deltaUid)},800)},true);
+(function(){function getMenuCandidates(){const version='delta-prompts-20260901-menu-v56';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}window.attachMenuControls=function(){const menuEl=document.getElementById('menu'),sidebar=menuEl&&menuEl.querySelector('.sidebar'),toggle=menuEl&&menuEl.querySelector('.menu-toggle');if(!menuEl||!sidebar||!toggle)return;let open=false;function setOpen(value){open=!!value;sidebar.classList.toggle('active',open);toggle.setAttribute('aria-expanded',String(open));document.documentElement.classList.toggle('menu-open',open)}toggle.onclick=function(e){e.preventDefault();e.stopPropagation();setOpen(!open)};menuEl.addEventListener('click',function(e){const link=e.target.closest&&e.target.closest('a');if(link)setOpen(false);const title=e.target.closest&&e.target.closest('.menu-title');if(title){const section=title.closest('.menu-section'),links=section&&section.querySelector('.menu-links');if(links){menuEl.querySelectorAll('.menu-links.active').forEach(m=>{if(m!==links)m.classList.remove('active')});links.classList.toggle('active')}}});document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)},{passive:true})};let authPromise=null;let deltaUid=null;let pushFavTimer=null;let pushUsosTimer=null;var DELTA_ADMIN_EMAIL='jhoncorretor2025@gmail.com';function loadAuth(){if(!authPromise){authPromise=import('/delta-prompts/firebase-auth.js?v=20260830').then(function(mod){window.deltaAuth={login:mod.login,logout:mod.logout,getUser:mod.getUser,syncFavoritos:mod.syncFavoritosFromCloud,pushFavoritos:mod.pushFavoritosToCloud,syncUsos:mod.syncUsosFromCloud,pushUsos:mod.pushUsosToCloud,registrarFeedbackGlobal:mod.registrarFeedbackGlobal,obterFeedbackGlobal:mod.obterFeedbackGlobal,registrarPageView:mod.registrarPageView,obterTopFeedback:mod.obterTopFeedback,obterTopPageViews:mod.obterTopPageViews,authPronto:mod.authPronto,registrarPresenca:mod.registrarPresenca,contarPessoasOnline:mod.contarPessoasOnline};mod.initAuthWatcher();mod.registrarPageView(location.pathname);mod.registrarPresenca();setInterval(mod.registrarPresenca,25000);return mod}).catch(function(err){console.error('Falha ao carregar autenticacao:',err)})}return authPromise}window.deltaLoadAuth=loadAuth;window.addEventListener('delta-auth-changed',function(e){deltaUid=e.detail&&e.detail.user?e.detail.user.uid:null;var user=e.detail&&e.detail.user;if(user&&user.email===DELTA_ADMIN_EMAIL){setTimeout(function(){var sidebar=document.querySelector('.sidebar');if(sidebar&&!document.getElementById('deltaAdminLink')){var a=document.createElement('a');a.id='deltaAdminLink';a.className='menu-item-final';a.href='/delta-prompts/admin.html';a.textContent='🔐 Painel Admin';sidebar.appendChild(a)}},400)}});window.addEventListener('delta:favoritos-updated',function(){clearTimeout(pushFavTimer);pushFavTimer=setTimeout(function(){loadAuth().then(function(mod){return mod&&mod.authPronto}).then(function(){if(deltaUid&&window.deltaAuth&&window.deltaAuth.pushFavoritos)window.deltaAuth.pushFavoritos(deltaUid)})},600)});document.addEventListener('click',function(e){const btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');if(!btn||!deltaUid||!window.deltaAuth||!window.deltaAuth.pushUsos)return;clearTimeout(pushUsosTimer);pushUsosTimer=setTimeout(function(){window.deltaAuth.pushUsos(deltaUid)},800)},true);
 // ===== Guarda titulo/link de cada prompt usado (para o Top 5 em Meus Numeros) e registra atividade diaria =====
 document.addEventListener('click',function(e){
   var btn=e.target.closest&&e.target.closest('[data-acao="copiar"],[data-acao="chat"],[data-acao="gemini"]');
@@ -711,6 +711,53 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
       if(escondidas.indexOf(href)!==-1)a.style.display='none';
     });
   }
+
+  // ===== FAVORITAR PÁGINA INTEIRA (categoria) =====
+  (function(){
+    var p=location.pathname;
+    var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';
+    var excluidas=['/delta-prompts/favoritos.html','/delta-prompts/configuracao.html','/delta-prompts/meus-numeros.html','/delta-prompts/quiz.html','/delta-prompts/ajuda.html','/delta-prompts/biblioteca.html','/delta-prompts/admin.html'];
+    if(isIndex||excluidas.indexOf(p)!==-1)return;
+    function lerPaginasFav(){try{return JSON.parse(localStorage.getItem('deltaPaginasFavoritas'))||[]}catch(e){return[]}}
+    function salvarPaginasFav(l){try{localStorage.setItem('deltaPaginasFavoritas',JSON.stringify(l))}catch(e){}}
+    function estaFavoritada(){return lerPaginasFav().some(function(x){return x.path===p})}
+    function toast(texto){
+      var t=document.getElementById('deltaToastFavPagina');
+      if(!t){t=document.createElement('div');t.id='deltaToastFavPagina';t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;z-index:9999;opacity:0;transition:.25s';document.body.appendChild(t)}
+      t.textContent=texto;t.style.opacity='1';t.style.transform='translate(-50%,0)';
+      clearTimeout(window._toastFavPaginaTimer);
+      window._toastFavPaginaTimer=setTimeout(function(){t.style.opacity='0';t.style.transform='translate(-50%,20px)'},1800);
+    }
+    function criarBotao(){
+      if(document.getElementById('deltaFavPaginaBtn'))return;
+      var btn=document.createElement('button');
+      btn.type='button';btn.id='deltaFavPaginaBtn';
+      btn.style.cssText='position:fixed;right:30px;bottom:270px;z-index:1400;width:44px;height:44px;border-radius:50%;border:1px solid #e5e7eb;cursor:pointer;font-size:19px;box-shadow:0 8px 20px rgba(20,20,40,.14)';
+      function atualizar(){
+        var fav=estaFavoritada();
+        btn.textContent=fav?'❤️':'🤍';
+        btn.title=fav?'Remover essa página dos favoritos':'Favoritar essa página inteira';
+        btn.style.background=fav?'#fff1f2':'#fff';
+      }
+      atualizar();
+      btn.addEventListener('click',function(){
+        var lista=lerPaginasFav();
+        var idx=lista.findIndex(function(x){return x.path===p});
+        if(idx===-1){
+          var titulo=(document.title||'').split('|')[0].trim()||p;
+          lista.unshift({path:p,titulo:titulo,ts:Date.now()});
+          toast('❤️ Página adicionada aos favoritos!');
+        }else{
+          lista.splice(idx,1);
+          toast('🤍 Removida dos favoritos');
+        }
+        salvarPaginasFav(lista);
+        atualizar();
+      });
+      document.body.appendChild(btn);
+    }
+    if(document.body)criarBotao();else document.addEventListener('DOMContentLoaded',criarBotao,{once:true});
+  })();
 
   window.aplicarMenuInteligente=function(){
     var sidebar=document.querySelector('#menu .sidebar');
