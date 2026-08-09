@@ -164,6 +164,42 @@ const ordemCategorias = [
 const promptsEstudo = [
 
   {
+categoria: "👩‍🏫 Para Professores",
+    nivel: "basico",
+titulo: "📝 Criar Exercícios para a Turma",
+quando: "Para professores criarem exercícios prontos, sem precisar montar do zero.",
+prompt: `Crie [QUANTIDADE, EX: 10] exercícios de [MATÉRIA, EX: PORTUGUÊS, MATEMÁTICA, HISTÓRIA] sobre o tema: [TEMA ESPECÍFICO]
+
+Série/ano dos alunos: [SÉRIE OU ANO, EX: 5º ANO DO FUNDAMENTAL, 2º ANO DO ENSINO MÉDIO]
+
+Organize os exercícios do mais fácil pro mais difícil, varie o tipo de pergunta (múltipla escolha, associar, completar, dissertativa curta), e inclua o gabarito separado no final. Use uma linguagem adequada pra idade dessa série.`,
+en: `Create [QUANTITY, E.G., 10] exercises for [SUBJECT, E.G., PORTUGUESE, MATH, HISTORY] on the topic: [SPECIFIC TOPIC]
+
+Students' grade/year: [GRADE OR YEAR, E.G., 5TH GRADE, 10TH GRADE]
+
+Organize the exercises from easiest to hardest, vary the question type (multiple choice, matching, fill-in-the-blank, short answer), and include a separate answer key at the end. Use language appropriate for that grade level.`
+  },
+
+  {
+categoria: "👩‍🏫 Para Professores",
+    nivel: "intermediario",
+titulo: "🎮 Criar Jogo Educativo para a Turma",
+quando: "Para professores criarem uma atividade em formato de jogo, pra tornar a aula mais dinâmica.",
+prompt: `Crie um jogo educativo simples de [MATÉRIA, EX: PORTUGUÊS, MATEMÁTICA, CIÊNCIAS] sobre o tema: [TEMA ESPECÍFICO]
+
+Série/ano dos alunos: [SÉRIE OU ANO]
+Formato preferido: [EX: JOGO DE TABULEIRO IMPRESSO, QUIZ EM SALA, JOGO EM DUPLAS, GINCANA]
+
+Explique: as regras do jogo, materiais necessários (priorize algo fácil de conseguir na escola), como aplicar em sala de aula, tempo estimado, e como isso reforça o conteúdo da matéria. Adapte a linguagem e complexidade pra idade dessa série.`,
+en: `Create a simple educational game for [SUBJECT, E.G., PORTUGUESE, MATH, SCIENCE] on the topic: [SPECIFIC TOPIC]
+
+Students' grade/year: [GRADE OR YEAR]
+Preferred format: [E.G., PRINTED BOARD GAME, IN-CLASS QUIZ, PAIR GAME, SCAVENGER HUNT]
+
+Explain: the game rules, materials needed (prioritize things easy to get at school), how to run it in class, estimated time, and how it reinforces the subject content. Adapt the language and complexity for that grade level.`
+  },
+
+  {
 categoria: "🧭 Preparação",
     nivel: "intermediario",
 titulo: "Definição Estratégica do Tema",
