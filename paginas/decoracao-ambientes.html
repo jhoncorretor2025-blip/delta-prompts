@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Decoração de Ambientes com IA | Delta Prompts</title><meta name="description" content="Prompts prontos para usar IA na decoração de ambientes: sala, quarto, cozinha, home office, paleta de cores, iluminação e mais."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.prompt-text{white-space:pre-wrap;background:#f8fafc;padding:13px;border-radius:10px;margin:10px 0;font-size:14px}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{border:0;border-radius:11px;padding:10px 14px;font-weight:800;cursor:pointer;font-size:13px;background:#f1f5f9;color:#334155}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.tag{font-size:12px;font-weight:800;background:#fdf2f8;padding:5px 9px;border-radius:999px;color:#be185d}
+.nivel{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;margin-left:6px}
+.nivel-basico{background:#dcfce7;color:#166534}
+.nivel-intermediario{background:#fef9c3;color:#854d0e}
+.nivel-avancado{background:#fee2e2;color:#991b1b}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:14px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}
+.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filtros button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}
+.filtros button.ativo{background:#db2777;color:#fff;border-color:#db2777}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(219,39,119,.12);color:#db2777}
+.filtros button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fdf2f8}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#db2777;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.stats-bar{font-size:13px;color:#667085;margin:0 0 10px;font-weight:600}
+[data-theme="dark"] .prompt-text{background:rgba(255,255,255,.05);color:#cbd5e1}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica{color:#a0a0a0}
+</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908c"></script><main>
+
+<h1>🛋️ Decoração de Ambientes com IA</h1>
+<p>10 prompts prontos pra usar o ChatGPT (ou qualquer IA de texto) como apoio na decoração da sua casa — sala, quarto, cozinha, home office, paleta de cores e mais. Quanto mais detalhes você der (medidas, estilo, orçamento), melhor a resposta.</p>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="🔎 Buscar por ambiente ou objetivo...">
+  <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
+</div>
+<div class="filtros" id="filtrosCategoria"></div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o prompt de decoração que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes"><button id="btnCopiarSugestao">📋 Copiar sugestão</button><span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span></div>
+</div>
+
+<div id="lista"></div>
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const dadosBrutos=[
+{categoria:'🧭 Planejamento',nivel:'basico',titulo:'🎨 Definir Meu Estilo de Decoração',quando:'Para quem não sabe por onde começar e quer descobrir qual estilo combina mais.',prompt:'Me ajude a descobrir meu estilo de decoração ideal.\n\nCores que eu gosto: [CORES]\nComo eu quero me sentir no ambiente: [EX: ACONCHEGANTE, CLEAN, ENERGIZANTE]\nReferências que eu já gosto (filmes, lugares, fotos): [REFERÊNCIAS, SE TIVER]\n\nCom base nisso, sugira 2 ou 3 estilos de decoração que combinam comigo (ex: escandinavo, industrial, boho, minimalista), explique as características de cada um, e diga por que combinariam com o que eu descrevi.',en:'Help me figure out my ideal decorating style.\n\nColors I like: [COLORS]\nHow I want to feel in the space: [EG: COZY, CLEAN, ENERGIZING]\nReferences I already like (movies, places, photos): [REFERENCES, IF ANY]\n\nBased on this, suggest 2 or 3 decorating styles that would suit me (eg: Scandinavian, industrial, boho, minimalist), explain the characteristics of each, and say why they would fit what I described.'},
+{categoria:'🛋️ Por Ambiente',nivel:'basico',titulo:'🛋️ Redecorar a Sala de Estar',quando:'Para repaginar a sala com o que você já tem ou com poucas compras novas.',prompt:'Me ajude a redecorar minha sala de estar.\n\nMedidas aproximadas: [MEDIDAS]\nMóveis que já tenho e quero manter: [MÓVEIS]\nEstilo desejado: [ESTILO]\nObjetivo principal: [EX: MAIS ACONCHEGANTE, MAIS MODERNA, MAIS FUNCIONAL PARA RECEBER VISITAS]\n\nSugira: disposição dos móveis, paleta de cores, tipo de iluminação, e no máximo 3 itens novos que fariam mais diferença no ambiente, sem propor uma reforma completa.',en:'Help me redecorate my living room.\n\nApproximate dimensions: [DIMENSIONS]\nFurniture I already have and want to keep: [FURNITURE]\nDesired style: [STYLE]\nMain goal: [EG: COZIER, MORE MODERN, MORE FUNCTIONAL FOR HOSTING GUESTS]\n\nSuggest: furniture layout, color palette, type of lighting, and at most 3 new items that would make the biggest difference, without proposing a full renovation.'},
+{categoria:'🛋️ Por Ambiente',nivel:'basico',titulo:'🛏️ Deixar o Quarto Mais Aconchegante',quando:'Para transformar o quarto num lugar mais relaxante para dormir e descansar.',prompt:'Quero deixar meu quarto mais aconchegante e relaxante.\n\nMedidas aproximadas: [MEDIDAS]\nO que já existe no quarto: [MÓVEIS E ITENS ATUAIS]\nOrçamento disponível: [ORÇAMENTO, OU "BAIXO"]\n\nSugira mudanças simples de fazer (roupa de cama, iluminação, cheiros, organização, elementos naturais) que deixem o ambiente mais convidativo para dormir bem, sem depender de reforma ou móveis novos caros.',en:"I want to make my bedroom cozier and more relaxing.\n\nApproximate dimensions: [DIMENSIONS]\nWhat already exists in the room: [CURRENT FURNITURE AND ITEMS]\nAvailable budget: [BUDGET, OR \"LOW\"]\n\nSuggest simple changes (bedding, lighting, scents, organization, natural elements) that make the space more inviting for good sleep, without relying on renovation or expensive new furniture."},
+{categoria:'🛋️ Por Ambiente',nivel:'intermediario',titulo:'🍳 Otimizar uma Cozinha Pequena',quando:'Para aproveitar melhor o espaço numa cozinha compacta, sem obra.',prompt:'Minha cozinha é pequena e preciso otimizar o espaço.\n\nMedidas aproximadas: [MEDIDAS]\nO que mais me incomoda hoje: [EX: FALTA DE ARMÁRIO, BANCADA PEQUENA, TUDO BAGUNÇADO]\nPossibilidade de reforma: [SIM/NÃO — SE NÃO, SÓ SUGESTÕES SEM OBRA]\n\nSugira soluções de organização vertical, móveis multifuncionais, e pequenas mudanças de layout que aumentem a sensação de espaço e a praticidade no dia a dia, respeitando a limitação que eu informei sobre reforma.',en:"My kitchen is small and I need to optimize the space.\n\nApproximate dimensions: [DIMENSIONS]\nWhat bothers me most today: [EG: LACK OF STORAGE, SMALL COUNTER, EVERYTHING CLUTTERED]\nRenovation possible: [YES/NO — IF NO, SUGGESTIONS WITHOUT RENOVATION ONLY]\n\nSuggest vertical storage solutions, multifunctional furniture, and small layout changes that increase the sense of space and everyday practicality, respecting the renovation limitation I stated."},
+{categoria:'🛋️ Por Ambiente',nivel:'intermediario',titulo:'💼 Criar um Home Office Funcional',quando:'Para montar um cantinho de trabalho produtivo, mesmo em espaço pequeno ou compartilhado.',prompt:'Quero montar um home office funcional.\n\nEspaço disponível: [EX: CANTO DA SALA, QUARTO EXTRA, MEDIDAS SE SOUBER]\nTipo de trabalho que faço: [TIPO DE TRABALHO]\nOrçamento disponível: [ORÇAMENTO]\nO ambiente é compartilhado com outro uso (sim/não): [RESPOSTA]\n\nSugira: disposição ideal considerando iluminação natural, tipo de mesa e cadeira, organização de cabos e materiais, e como separar visualmente o espaço de trabalho do resto do ambiente, se for compartilhado.',en:'I want to set up a functional home office.\n\nAvailable space: [EG: CORNER OF THE LIVING ROOM, SPARE ROOM, DIMENSIONS IF KNOWN]\nType of work I do: [TYPE OF WORK]\nAvailable budget: [BUDGET]\nIs the space shared with another use (yes/no): [ANSWER]\n\nSuggest: ideal layout considering natural light, type of desk and chair, cable and material organization, and how to visually separate the work area from the rest of the room, if shared.'},
+{categoria:'🎨 Cores & Luz',nivel:'basico',titulo:'🎨 Sugerir Paleta de Cores para o Ambiente',quando:'Para escolher cores de parede, móveis e objetos que combinem entre si.',prompt:'Preciso de uma paleta de cores para [AMBIENTE, EX: SALA, QUARTO, ESCRITÓRIO].\n\nCores que já existem no ambiente (piso, móveis fixos): [CORES EXISTENTES]\nSensação que eu quero passar: [EX: CALMA, ENERGIA, SOFISTICAÇÃO]\nEstilo de decoração: [ESTILO, SE SOUBER]\n\nSugira uma paleta com cor principal, cor de apoio e cor de destaque, explique onde aplicar cada uma (parede, tecidos, objetos) e por que essa combinação funciona bem junto.',en:'I need a color palette for [ROOM, EG: LIVING ROOM, BEDROOM, OFFICE].\n\nColors that already exist in the room (floor, fixed furniture): [EXISTING COLORS]\nFeeling I want to convey: [EG: CALM, ENERGY, SOPHISTICATION]\nDecorating style: [STYLE, IF KNOWN]\n\nSuggest a palette with a main color, a supporting color, and an accent color, explain where to apply each one (walls, fabrics, objects), and why this combination works well together.'},
+{categoria:'🎨 Cores & Luz',nivel:'intermediario',titulo:'💡 Planejar a Iluminação do Ambiente',quando:'Para deixar o ambiente mais bonito e funcional usando diferentes tipos de luz.',prompt:'Quero planejar a iluminação do meu [AMBIENTE, EX: SALA, QUARTO].\n\nMedidas aproximadas: [MEDIDAS]\nTem luz natural (sim/não, e de onde vem): [LUZ NATURAL]\nUso principal do ambiente: [EX: RELAXAR, TRABALHAR, RECEBER VISITAS]\n\nSugira os melhores tipos de iluminação (principal, indireta e decorativa), possíveis posições de luminárias, e temperatura de cor recomendada (mais quente ou mais fria) para cada função do ambiente.',en:'I want to plan the lighting for my [ROOM, EG: LIVING ROOM, BEDROOM].\n\nApproximate dimensions: [DIMENSIONS]\nDoes it have natural light (yes/no, and where from): [NATURAL LIGHT]\nMain use of the room: [EG: RELAXING, WORKING, HOSTING GUESTS]\n\nSuggest the best types of lighting (main, indirect, and decorative), possible fixture positions, and recommended color temperature (warmer or cooler) for each function of the room.'},
+{categoria:'🧭 Planejamento',nivel:'intermediario',titulo:'📋 Diagnóstico do Ambiente Atual',quando:'Para descrever como o ambiente está hoje e receber sugestões específicas de melhoria.',prompt:'Vou descrever como está o meu ambiente hoje, quero um diagnóstico com sugestões de melhoria.\n\nAmbiente: [QUAL AMBIENTE]\nComo está organizado hoje: [DESCREVA A DISPOSIÇÃO ATUAL DOS MÓVEIS]\nO que mais incomoda: [O QUE VOCÊ NÃO GOSTA HOJE]\nO que não pode mudar: [EX: JANELA FIXA, PORTA, MÓVEL QUE NÃO SAI]\n\nCom base na descrição, aponte os principais problemas do ambiente atual e sugira de 3 a 5 melhorias práticas, em ordem de prioridade, sem exigir reforma estrutural.',en:"I'll describe how my room looks today, and I want a diagnosis with improvement suggestions.\n\nRoom: [WHICH ROOM]\nHow it's arranged today: [DESCRIBE THE CURRENT FURNITURE LAYOUT]\nWhat bothers me most: [WHAT YOU DON'T LIKE TODAY]\nWhat can't change: [EG: FIXED WINDOW, DOOR, FURNITURE THAT CAN'T BE MOVED]\n\nBased on the description, point out the main problems with the current room and suggest 3 to 5 practical improvements, in priority order, without requiring structural renovation."},
+{categoria:'💰 Orçamento',nivel:'intermediario',titulo:'💰 Decorar com Orçamento Limitado',quando:'Para melhorar o ambiente gastando pouco, priorizando o que faz mais diferença.',prompt:'Quero decorar/melhorar meu [AMBIENTE] com um orçamento limitado.\n\nOrçamento total disponível: [VALOR]\nO que já tenho e não preciso comprar: [ITENS QUE JÁ TENHO]\nMaior prioridade: [O QUE MAIS INCOMODA HOJE]\n\nMonte uma lista de prioridades dentro do orçamento, começando pelo que gera mais impacto visual pelo menor custo. Para cada item, sugira uma faixa de preço realista e onde esse tipo de item costuma ser encontrado (ex: lojas de departamento, usado, feito à mão).',en:'I want to decorate/improve my [ROOM] with a limited budget.\n\nTotal available budget: [AMOUNT]\nWhat I already have and don\'t need to buy: [ITEMS I ALREADY HAVE]\nTop priority: [WHAT BOTHERS ME MOST TODAY]\n\nPut together a priority list within the budget, starting with what gives the most visual impact for the lowest cost. For each item, suggest a realistic price range and where this type of item is usually found (eg: department stores, secondhand, handmade).'},
+{categoria:'📐 Espaços Pequenos',nivel:'avancado',titulo:'📐 Aproveitar Melhor um Espaço Pequeno',quando:'Para ambientes muito compactos que precisam acumular mais de uma função.',prompt:'Preciso aproveitar ao máximo um espaço pequeno e multifuncional.\n\nMedidas aproximadas: [MEDIDAS]\nFunções que esse espaço precisa cumprir: [EX: DORMIR + TRABALHAR, SALA + JANTAR]\nRestrições do espaço: [EX: PÉ DIREITO BAIXO, POUCA JANELA, FORMATO IRREGULAR]\n\nProponha uma solução de layout que separe bem as funções sem parecer apertado, sugerindo móveis multifuncionais ou dobráveis, truques visuais para ampliar a sensação de espaço (cores, espelhos, iluminação), e o que evitar nesse tipo de ambiente.',en:'I need to make the most of a small, multifunctional space.\n\nApproximate dimensions: [DIMENSIONS]\nFunctions this space needs to serve: [EG: SLEEPING + WORKING, LIVING + DINING]\nSpace constraints: [EG: LOW CEILING, LITTLE WINDOW, IRREGULAR SHAPE]\n\nPropose a layout solution that separates the functions well without feeling cramped, suggesting multifunctional or foldable furniture, visual tricks to enhance the sense of space (colors, mirrors, lighting), and what to avoid in this type of room.'}
+];
+
+const prompts=dadosBrutos.map((x,i)=>{
+  const obj={id:'decor-'+i,categoria:x.categoria,nivel:x.nivel,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:true};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const idiomaAtivo={};
+let categoriaAtual='todos';
+
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+function getItem(id){return prompts.find(p=>p.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='❤️ Favoritado';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:textoFinal(id),categoria:'Decoração',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaDecoracaoUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaDecoracaoUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos)}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaDecoracaoFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaDecoracaoFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};
+  const g=window.deltaAuth;
+  if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}
+  else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up)up.classList.toggle('marcado',fb.voto==='up');
+  if(down)down.classList.toggle('marcado',fb.voto==='down');
+  const g=window.deltaAuth;
+  if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
+}
+
+function alternarIdioma(id){
+  idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';
+  const pre=document.getElementById('prompt-'+id),btn=document.getElementById('idioma-'+id);
+  if(pre)pre.textContent=textoFinal(id);
+  if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}
+}
+async function copiarPorId(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id));mostrarToast('📋 Copiado!')}catch(e){mostrarToast('Não foi possível copiar')}}
+async function abrirChat(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://gemini.google.com/app','_blank'),300)}
+function compartilhar(id){
+  const p=getItem(id);if(!p)return;
+  const texto='🛋️ '+p.titulo+'\n\n'+textoFinal(id)+'\n\n— via Delta Prompts';
+  if(navigator.share){navigator.share({title:p.titulo,text:texto}).catch(()=>{})}
+  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Copiado! Cole onde quiser compartilhar.'))}
+}
+function exportarTodos(){
+  const linhas=prompts.map(p=>p.titulo+' ('+p.categoria+')\n'+p.prompt);
+  const blob=new Blob(['🛋️ DECORAÇÃO DE AMBIENTES COM IA — DELTA PROMPTS\n\n'+linhas.join('\n\n'+'─'.repeat(40)+'\n\n')],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-decoracao.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  mostrarToast('📥 Arquivo baixado!');
+}
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão para o Delta Prompts (Decoração):\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Decoração').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🛋️ <strong>'+prompts.length+'</strong> modelos disponíveis'}
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function montarFiltroCategoria(){
+  const cont=document.getElementById('filtrosCategoria');
+  const categorias=[...new Set(prompts.map(p=>p.categoria))];
+  cont.innerHTML='<button class="'+(categoriaAtual==='todos'?'ativo':'')+'" data-categoria="todos">Todos <span class="count-badge">'+prompts.length+'</span></button>'+
+    categorias.map(c=>{const n=prompts.filter(p=>p.categoria===c).length;return `<button class="${categoriaAtual===c?'ativo':''}" data-categoria="${c}">${c} <span class="count-badge">${n}</span></button>`}).join('');
+  cont.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{categoriaAtual=b.dataset.categoria;montarFiltroCategoria();render()}));
+}
+
+function render(){
+  const termo=norm(document.getElementById('busca').value);
+  const filtrados=prompts.filter(p=>{
+    const texto=norm([p.titulo,p.quando,p.categoria,p.prompt].join(' '));
+    return(!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual);
+  });
+  document.getElementById('contador').textContent=filtrados.length+' de '+prompts.length+' modelos';
+  const lista=document.getElementById('lista');
+  lista.innerHTML=filtrados.length?filtrados.map(p=>`
+    <section class="card" id="card-${p.id}">
+      <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span>
+      <h3>${p.titulo}</h3>
+      <p style="color:#667085;font-size:13.5px;margin:4px 0 10px">${p.quando}</p>
+      ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+      <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
+      <div class="acoes">
+        <button class="copiar" data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+        <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+        <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
+        <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
+        <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+        <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+      </div>
+      <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    </section>`).join('') : '<div style="text-align:center;padding:30px;opacity:.7">🔎 Nenhum modelo encontrado.</div>';
+
+  filtrados.forEach(p=>{atualizarBtnFav(p.id,document.querySelector('#card-'+p.id+' .favoritar'));atualizarFeedbackUI(p.id)});
+}
+
+document.getElementById('lista').addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar')copiarPorId(id);
+  else if(acao==='chat')abrirChat(id);
+  else if(acao==='gemini')abrirGemini(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+document.getElementById('busca').addEventListener('input',render);
+document.getElementById('btnExportar').addEventListener('click',exportarTodos);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+montarFiltroCategoria();
+atualizarStats();
+render();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+</script></body></html>
