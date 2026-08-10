@@ -35,6 +35,15 @@
     </div>
   </section>
 
+  <section class="card" id="exclusoesPadraoCard">
+    <h3>🚫 O que você NÃO quer que a IA fale? (opcional)</h3>
+    <p style="margin:0 0 12px;color:#667085;font-size:14px">Ex: homeopatia, não relacionar com tal medicamento, não citar tal doença... A gente adiciona isso como restrição em todos os prompts abaixo, automaticamente, antes de copiar.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <input type="text" id="exclusoesPadraoInput" placeholder="Ex: homeopatia, corticoide" style="flex:1;min-width:220px;padding:12px 14px;border-radius:10px;border:1px solid #e6e8f0;font:inherit">
+      <button type="button" id="exclusoesPadraoSalvar" style="border:0;background:#5b5ce2;color:#fff;font-weight:800;border-radius:10px;padding:12px 20px;cursor:pointer">💾 Salvar</button>
+    </div>
+  </section>
+
   <!-- 3️⃣ OBJETIVO -->
   <section class="card collapse-card">
     <button type="button" class="collapse-toggle" onclick="this.closest('.collapse-card').classList.toggle('aberto')">
@@ -715,6 +724,9 @@ function textoFinal(id){
     const val=el?el.value.trim():'';
     if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}
   });
+  let exclusoes='';
+  try{exclusoes=localStorage.getItem('deltaExclusoesPadrao')||''}catch(e){}
+  if(exclusoes.trim()){t+='\n\nImportante: não mencione nem relacione a resposta com: '+exclusoes.trim()+'.'}
   return t;
 }
 
@@ -916,6 +928,18 @@ aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSk
     try{localStorage.setItem('deltaTemaPadrao',input.value.trim())}catch(e){}
     mostrarToast('📌 Tema salvo! Já preenchido nos prompts.');
     filtrarPrompts();
+  });
+})();
+
+// ===== EXCLUSÕES PADRÃO (anexa restrição do que a IA NÃO deve falar) =====
+(function(){
+  const input=document.getElementById('exclusoesPadraoInput');
+  const btn=document.getElementById('exclusoesPadraoSalvar');
+  if(!input||!btn)return;
+  try{input.value=localStorage.getItem('deltaExclusoesPadrao')||''}catch(e){}
+  btn.addEventListener('click',()=>{
+    try{localStorage.setItem('deltaExclusoesPadrao',input.value.trim())}catch(e){}
+    mostrarToast(input.value.trim()?'🚫 Restrição salva! Aplicada em todos os prompts.':'Restrição removida.');
   });
 })();
 
