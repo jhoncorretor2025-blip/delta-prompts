@@ -35,7 +35,16 @@
 [data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .btn-mais-filtros,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
 [data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{color:#a0a0a0}
 [data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
-@media(max-width:720px){#lista-prompts,.journey{grid-template-columns:1fr}.theme-toggle{bottom:90px}}</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908b"></script><main>
+.sugestao-proximo{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.3s;z-index:9999;font-size:13px;font-weight:700;max-width:92vw;text-align:center}
+.sugestao-proximo.show{opacity:1;transform:translate(-50%,0)}
+.sugestao-proximo button{border:0;background:#5b5ce2;color:#fff;border-radius:8px;padding:6px 12px;font-weight:800;cursor:pointer;margin-left:6px;font-size:12.5px}
+.aplicado-btn.aplicado{background:#dcfce7!important;color:#166534!important}
+.projeto-row{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.select-projeto{padding:7px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:12.5px;font-family:inherit}
+.btn-novo-projeto{border:1px dashed #c7c7f0;background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;color:#5b5ce2}
+[data-theme="dark"] .select-projeto{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .btn-novo-projeto{background:#0f1424;border-color:rgba(255,255,255,.2);color:#a5a6f0}
+</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908b"></script><main>
 
 <header class="page-head"><h1>🌐 Sites & Landing Pages</h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
 
@@ -217,6 +226,42 @@ function mostrarToast(texto){const t=document.getElementById('toast');if(!t)retu
 function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
 function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
 function isFav(id){return _loadFav().some(f=>f.id===id)}
+
+function _loadProjetos(){try{return JSON.parse(localStorage.getItem('deltaSitesProjetos'))||{}}catch(e){return{}}}
+function _saveProjetos(o){try{localStorage.setItem('deltaSitesProjetos',JSON.stringify(o))}catch(e){}}
+function projetoDoPrompt(id){return _loadProjetos()[id]||''}
+function todosProjetos(){return[...new Set(Object.values(_loadProjetos()).filter(Boolean))]}
+function moverParaProjeto(id,nomeProjeto){const p=_loadProjetos();if(nomeProjeto)p[id]=nomeProjeto;else delete p[id];_saveProjetos(p);render()}
+function criarNovoProjeto(id){const nome=prompt('Nome do novo projeto (ex: Site Cliente X):');if(nome&&nome.trim())moverParaProjeto(id,nome.trim())}
+
+function _loadAplicados(){try{return JSON.parse(localStorage.getItem('deltaSitesAplicados'))||[]}catch(e){return[]}}
+function _saveAplicados(l){try{localStorage.setItem('deltaSitesAplicados',JSON.stringify(l))}catch(e){}}
+function estaAplicado(id){return _loadAplicados().includes(id)}
+function toggleAplicado(id,btn){let l=_loadAplicados();const idx=l.indexOf(id);if(idx===-1){l.push(id);mostrarToast('✅ Marcado como já aplicado!')}else{l.splice(idx,1);mostrarToast('Desmarcado')}_saveAplicados(l);atualizarBtnAplicado(id,btn)}
+function atualizarBtnAplicado(id,btn){if(!btn)return;const ap=estaAplicado(id);btn.textContent=ap?'✅ Já Apliquei':'⬜ Marcar como Aplicado';btn.classList.toggle('aplicado',ap)}
+
+function proximoPromptSugerido(id){
+  const idx=prompts.findIndex(p=>p.id===id);
+  if(idx===-1)return null;
+  const atual=prompts[idx];
+  for(let i=idx+1;i<prompts.length;i++){if(prompts[i].fase===atual.fase)return prompts[i]}
+  const ordemFases=['inicio','andamento','pronto'];
+  const posFaseAtual=ordemFases.indexOf(atual.fase);
+  for(let f=posFaseAtual+1;f<ordemFases.length;f++){const prox=prompts.find(p=>p.fase===ordemFases[f]);if(prox)return prox}
+  return null;
+}
+function mostrarSugestaoProximo(id){
+  const proximo=proximoPromptSugerido(id);
+  if(!proximo)return;
+  const box=document.createElement('div');
+  box.className='sugestao-proximo';
+  box.innerHTML=`🎯 Próximo passo sugerido: <button type="button" data-ir="${proximo.id}">${proximo.titulo} →</button>`;
+  box.querySelector('button').addEventListener('click',()=>{irPara(proximo.id);box.remove()});
+  document.body.appendChild(box);
+  setTimeout(()=>{box.classList.add('show')},10);
+  setTimeout(()=>{box.classList.remove('show');setTimeout(()=>box.remove(),300)},5000);
+}
+
 function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
 function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Sites & Landing Pages',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
 
@@ -335,15 +380,21 @@ function criarCard(p){
     <div class="acoes">
       <button class="copiar" data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
       <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+      <button class="aplicado-btn" data-acao="aplicado" data-id="${p.id}">⬜ Marcar como Aplicado</button>
       <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
       <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
       <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
       <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
     </div>
+    <div class="projeto-row">
+      <select class="select-projeto" data-mover-id="${p.id}"><option value="">🗂️ Sem projeto</option>${todosProjetos().map(pr=>`<option value="${pr}" ${projetoDoPrompt(p.id)===pr?'selected':''}>🗂️ ${pr}</option>`).join('')}</select>
+      <button type="button" class="btn-novo-projeto" data-acao="novoprojeto" data-id="${p.id}">➕ Novo projeto</button>
+    </div>
     <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse prompt te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
     ${relacionados.length?`<div class="relacionadas"><strong>🔗 Prompts relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
   `;
   atualizarBtnFav(p.id,card.querySelector('.favoritar'));
+  atualizarBtnAplicado(p.id,card.querySelector('.aplicado-btn'));
   atualizarFeedbackUI(p.id);
   return card;
 }
@@ -366,15 +417,22 @@ lista.addEventListener('click',e=>{
   if(!btn)return;
   const acao=btn.dataset.acao,id=btn.dataset.id;
   if(acao==='ver')alternarPrompt(id);
-  else if(acao==='copiar'){registrarUso(id);copiarTexto(textoFinal(id))}
-  else if(acao==='chat'){registrarUso(id);abrirChat(textoFinal(id))}
-  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id))}
+  else if(acao==='copiar'){registrarUso(id);copiarTexto(textoFinal(id));mostrarSugestaoProximo(id)}
+  else if(acao==='chat'){registrarUso(id);abrirChat(textoFinal(id));mostrarSugestaoProximo(id)}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id));mostrarSugestaoProximo(id)}
   else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='aplicado')toggleAplicado(id,btn);
+  else if(acao==='novoprojeto')criarNovoProjeto(id);
   else if(acao==='compartilhar')compartilhar(id);
   else if(acao==='irpara')irPara(id);
   else if(acao==='fbup')darFeedback(id,'up');
   else if(acao==='fbdown')darFeedback(id,'down');
   else if(acao==='idioma')alternarIdioma(id);
+});
+lista.addEventListener('change',e=>{
+  const sel=e.target.closest('.select-projeto');
+  if(!sel)return;
+  moverParaProjeto(sel.dataset.moverId,sel.value);
 });
 
 document.querySelectorAll('#journey button').forEach(b=>b.addEventListener('click',()=>{
