@@ -8,41 +8,78 @@
 .tendencia-pos{font-size:20px;font-weight:900;color:#5b5ce2;min-width:32px;text-align:center}
 .tendencia-info{flex:1;min-width:0}
 .tendencia-titulo{font-weight:800;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tendencia-sub{font-size:12px;color:#8a92a6;margin-top:2px}
+.tendencia-sub{font-size:12px;color:#667085;margin-top:2px}
 .tendencia-numero{font-size:13px;font-weight:800;color:#166534;background:#dcfce7;padding:5px 12px;border-radius:999px;white-space:nowrap}
 .vazio-tendencia{text-align:center;padding:30px;color:#667085}
+.vazio-tendencia a{color:#5b5ce2;font-weight:800;text-decoration:none}
+.vazio-tendencia a:hover{text-decoration:underline}
 .recentes-item{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin-bottom:8px;text-decoration:none;color:inherit;font-size:13.5px;font-weight:700}
 .recentes-item:hover{border-color:#5b5ce2}
+.nota-topo{font-size:13px;color:#667085;background:#f8fafc;border-radius:12px;padding:10px 14px;margin:0 0 18px}
+.atualizado-em{font-size:11.5px;color:#667085;margin-top:10px}
+.btn-tentar-novamente{border:1px solid #e5e7eb;background:#fff;border-radius:10px;padding:8px 16px;font-weight:700;font-size:12.5px;cursor:pointer;color:#5b5ce2;margin-top:8px}
+.btn-compartilhar-tendencias{border:1px solid #e5e7eb;background:#fff;border-radius:10px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;color:#475467;display:inline-flex;align-items:center;gap:6px;margin-bottom:8px}
 [data-theme="dark"] .tendencia-item,[data-theme="dark"] .recentes-item{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.12)}
 [data-theme="dark"] .tendencia-numero{background:#0f2e1a;color:#4ade80}
-</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908e"></script><main>
+[data-theme="dark"] .nota-topo{background:#0f1424;color:#a0a0a0}
+[data-theme="dark"] .btn-tentar-novamente,[data-theme="dark"] .btn-compartilhar-tendencias{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+#tendencias-page a:focus-visible,#tendencias-page button:focus-visible{outline:3px solid #5b5ce2;outline-offset:2px;border-radius:8px}
+@media(max-width:600px){
+  .tendencia-item{padding:12px}
+  .tendencia-titulo{font-size:13.5px}
+  .tendencia-numero{font-size:12px;padding:4px 10px}
+}
+@media(min-width:900px){
+  .duas-colunas{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+}
+</style></head><body id="tendencias-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908f"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Tendências</p>
 <h1>📈 Tendências</h1>
 <p>O que mais está bombando no Delta Prompts agora, com base no uso de todo mundo.</p>
+<p class="nota-topo"><span aria-hidden="true">ℹ️</span> As seções "Mais Bem Avaliados" e "Mais Visitadas" são dados <strong>de todos os visitantes</strong>. Só "Você Usou Recentemente" é pessoal e fica salvo no seu navegador.</p>
 
+<button type="button" class="btn-compartilhar-tendencias" id="btnCompartilharTendencias" aria-label="Compartilhar a página de Tendências">🔗 Compartilhar essa página</button>
+
+<div class="duas-colunas">
 <section class="card tendencia-box">
   <h3>👍 Prompts Mais Bem Avaliados</h3>
-  <div id="listaTopFeedback"><div class="vazio-tendencia">🔄 Carregando...</div></div>
+  <div id="listaTopFeedback" role="list"><div class="vazio-tendencia">🔄 Carregando...</div></div>
+  <div class="atualizado-em" id="atualizadoFeedback"></div>
 </section>
 
 <section class="card tendencia-box">
   <h3>🔥 Páginas Mais Visitadas</h3>
-  <div id="listaTopPaginas"><div class="vazio-tendencia">🔄 Carregando...</div></div>
+  <div id="listaTopPaginas" role="list"><div class="vazio-tendencia">🔄 Carregando...</div></div>
+  <div class="atualizado-em" id="atualizadoPaginas"></div>
 </section>
+</div>
 
 <section class="card tendencia-box">
   <h3>🕐 Você Usou Recentemente</h3>
-  <p style="margin:0 0 12px;color:#667085;font-size:13.5px">Só você vê isso — fica salvo no seu navegador.</p>
-  <div id="listaRecentes"></div>
+  <p style="margin:0 0 12px;color:#667085;font-size:13.5px">Só você vê isso — fica salvo no seu navegador. Se o Modo Privado estiver ativo, nada é registrado aqui.</p>
+  <div id="listaRecentes" role="list"></div>
 </section>
 
 </main>
-<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro" aria-label="Alternar entre tema claro e escuro">🌙</button>
 <script>
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+
+function mostrarToast(texto){
+  let t=document.getElementById('toastTendencias');
+  if(!t){t=document.createElement('div');t.id='toastTendencias';t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;z-index:9999;opacity:0;transition:.25s';document.body.appendChild(t)}
+  t.textContent=texto;t.style.opacity='1';t.style.transform='translate(-50%,0)';
+  clearTimeout(window._toastTendTimer);
+  window._toastTendTimer=setTimeout(()=>{t.style.opacity='0';t.style.transform='translate(-50%,20px)'},2200);
+}
+document.getElementById('btnCompartilharTendencias').addEventListener('click',()=>{
+  const texto='📈 Confira as tendências do Delta Prompts — os prompts mais usados e bem avaliados: '+location.href;
+  if(navigator.share){navigator.share({title:'Tendências - Delta Prompts',text:texto}).catch(()=>{})}
+  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}
+});
 
 // Mapeia o prefixo do ID pra pagina (ex: 'estudo-5' -> /delta-prompts/paginas/estudo.html)
 const MAPA_PREFIXO_PAGINA={
@@ -57,44 +94,64 @@ function resolverPromptId(id){
   if(mapa[id])return{titulo:mapa[id].titulo,url:mapa[id].url};
   var prefixo=id.split('-')[0];
   var pagina=MAPA_PREFIXO_PAGINA[prefixo];
-  if(pagina)return{titulo:'Ver prompt nessa página',url:'/delta-prompts/paginas/'+pagina+'#'+id};
+  if(pagina)return{titulo:'🔥 Prompt popular — clique pra ver',url:'/delta-prompts/paginas/'+pagina+'#'+id};
   return null;
+}
+function marcarAtualizado(idEl){
+  const el=document.getElementById(idEl);
+  if(el)el.textContent='🕐 Atualizado agora há pouco';
 }
 
 async function carregarTopFeedback(){
   const box=document.getElementById('listaTopFeedback');
-  if(!window.deltaLoadAuth){box.innerHTML='<div class="vazio-tendencia">Não foi possível carregar agora.</div>';return}
-  await window.deltaLoadAuth();
-  if(!window.deltaAuth||!window.deltaAuth.obterTopFeedback){box.innerHTML='<div class="vazio-tendencia">Não foi possível carregar agora.</div>';return}
-  const dados=await window.deltaAuth.obterTopFeedback(15);
-  const comInfo=dados.map(d=>({...d,info:resolverPromptId(d.id)})).filter(d=>d.up>0);
-  if(!comInfo.length){box.innerHTML='<div class="vazio-tendencia">Ainda não temos avaliações suficientes. Seja um dos primeiros a avaliar um prompt! 👍</div>';return}
-  box.innerHTML=comInfo.slice(0,10).map((d,i)=>{
-    const titulo=d.info?d.info.titulo:('Prompt #'+d.id);
-    const url=d.info?d.info.url:'/delta-prompts/index.html';
-    return `<a class="tendencia-item" href="${url}"><span class="tendencia-pos">${i+1}º</span><div class="tendencia-info"><div class="tendencia-titulo">${titulo}</div><div class="tendencia-sub">${d.down>0?d.down+' 👎 também':'Bem avaliado pela comunidade'}</div></div><span class="tendencia-numero">👍 ${d.up}</span></a>`;
-  }).join('');
+  box.innerHTML='<div class="vazio-tendencia">🔄 Carregando...</div>';
+  try{
+    if(!window.deltaLoadAuth)throw new Error('sem auth');
+    await window.deltaLoadAuth();
+    if(!window.deltaAuth||!window.deltaAuth.obterTopFeedback)throw new Error('sem funcao');
+    const dados=await window.deltaAuth.obterTopFeedback(15);
+    const comInfo=dados.map(d=>({...d,info:resolverPromptId(d.id)})).filter(d=>d.up>0);
+    if(!comInfo.length){box.innerHTML='<div class="vazio-tendencia">Ainda não temos avaliações suficientes. Seja um dos primeiros a avaliar um prompt! 👍</div>';return}
+    box.innerHTML=comInfo.slice(0,10).map((d,i)=>{
+      const titulo=d.info?d.info.titulo:('Prompt popular');
+      const url=d.info?d.info.url:'/delta-prompts/index.html';
+      return `<a class="tendencia-item" href="${url}" role="listitem" aria-label="${i+1}º lugar: ${titulo}, ${d.up} avaliações positivas"><span class="tendencia-pos" aria-hidden="true">${i+1}º</span><div class="tendencia-info"><div class="tendencia-titulo">${titulo}</div><div class="tendencia-sub">${d.down>0?d.down+' 👎 também':'Bem avaliado pela comunidade'}</div></div><span class="tendencia-numero" aria-hidden="true">👍 ${d.up}</span></a>`;
+    }).join('');
+    marcarAtualizado('atualizadoFeedback');
+  }catch(e){
+    box.innerHTML='<div class="vazio-tendencia">Não foi possível carregar agora.<br><button type="button" class="btn-tentar-novamente" onclick="carregarTopFeedback()">🔄 Tentar novamente</button></div>';
+  }
 }
 
 async function carregarTopPaginas(){
   const box=document.getElementById('listaTopPaginas');
-  if(!window.deltaAuth||!window.deltaAuth.obterTopPageViews){box.innerHTML='<div class="vazio-tendencia">Não foi possível carregar agora.</div>';return}
-  const dados=await window.deltaAuth.obterTopPageViews(10);
-  if(!dados.length){box.innerHTML='<div class="vazio-tendencia">Ainda não temos dados suficientes.</div>';return}
-  box.innerHTML=dados.map((d,i)=>{
-    const nome=(d.path||'').replace('/delta-prompts/paginas/','').replace('/delta-prompts/','').replace('.html','').replace(/-/g,' ');
-    return `<a class="tendencia-item" href="${d.path}"><span class="tendencia-pos">${i+1}º</span><div class="tendencia-info"><div class="tendencia-titulo" style="text-transform:capitalize">${nome}</div></div><span class="tendencia-numero">👁️ ${d.views}</span></a>`;
-  }).join('');
+  box.innerHTML='<div class="vazio-tendencia">🔄 Carregando...</div>';
+  try{
+    if(!window.deltaAuth||!window.deltaAuth.obterTopPageViews)throw new Error('sem funcao');
+    const dados=await window.deltaAuth.obterTopPageViews(10);
+    if(!dados.length){box.innerHTML='<div class="vazio-tendencia">Ainda não temos dados suficientes.</div>';return}
+    box.innerHTML=dados.map((d,i)=>{
+      const nome=(d.path||'').replace('/delta-prompts/paginas/','').replace('/delta-prompts/','').replace('.html','').replace(/-/g,' ');
+      return `<a class="tendencia-item" href="${d.path}" role="listitem" aria-label="${i+1}º lugar: ${nome}, ${d.views} visualizações"><span class="tendencia-pos" aria-hidden="true">${i+1}º</span><div class="tendencia-info"><div class="tendencia-titulo" style="text-transform:capitalize">${nome}</div></div><span class="tendencia-numero" aria-hidden="true">👁️ ${d.views}</span></a>`;
+    }).join('');
+    marcarAtualizado('atualizadoPaginas');
+  }catch(e){
+    box.innerHTML='<div class="vazio-tendencia">Não foi possível carregar agora.<br><button type="button" class="btn-tentar-novamente" onclick="carregarTopPaginas()">🔄 Tentar novamente</button></div>';
+  }
 }
 
 function carregarRecentes(){
   const box=document.getElementById('listaRecentes');
+  if(window.deltaModoPrivadoAtivo&&window.deltaModoPrivadoAtivo()){
+    box.innerHTML='<div class="vazio-tendencia">🕶️ Modo Privado está ativo — nada está sendo registrado agora.</div>';
+    return;
+  }
   let recentes=[];
   try{recentes=JSON.parse(localStorage.getItem('deltaPromptsRecentes'))||[]}catch(e){}
-  if(!recentes.length){box.innerHTML='<div class="vazio-tendencia">Você ainda não copiou nenhum prompt nessa sessão. Assim que usar algum, ele aparece aqui.</div>';return}
+  if(!recentes.length){box.innerHTML='<div class="vazio-tendencia">Você ainda não copiou nenhum prompt nessa sessão. <a href="/delta-prompts/index.html">Explorar prompts →</a></div>';return}
   box.innerHTML=recentes.map(r=>{
     const dataFmt=new Date(r.ts).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' às '+new Date(r.ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-    return `<a class="recentes-item" href="${r.url}#${r.id}"><span aria-hidden="true">🕐</span><span style="flex:1">${r.titulo}</span><span style="font-weight:400;color:#8a92a6;font-size:11.5px">${dataFmt}</span></a>`;
+    return `<a class="recentes-item" href="${r.url}#${r.id}" role="listitem" aria-label="${r.titulo}, usado em ${dataFmt}"><span aria-hidden="true">🕐</span><span style="flex:1">${r.titulo}</span><span style="font-weight:400;color:#667085;font-size:11.5px" aria-hidden="true">${dataFmt}</span></a>`;
   }).join('');
 }
 
