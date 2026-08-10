@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tendências | Delta Prompts</title><meta name="description" content="Os prompts e páginas mais usados por todo mundo no Delta Prompts."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.breadcrumb{font-size:13px;color:#667085;margin:0 0 12px}
+.breadcrumb a{color:#5b5ce2;text-decoration:none;font-weight:700}
+.breadcrumb a:hover{text-decoration:underline}
+.tendencia-box{margin:22px 0}
+.tendencia-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid #e5e7eb;border-radius:14px;background:#fff;margin-bottom:10px;text-decoration:none;color:inherit}
+.tendencia-item:hover{border-color:#5b5ce2;box-shadow:0 6px 16px rgba(91,92,226,.1)}
+.tendencia-pos{font-size:20px;font-weight:900;color:#5b5ce2;min-width:32px;text-align:center}
+.tendencia-info{flex:1;min-width:0}
+.tendencia-titulo{font-weight:800;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tendencia-sub{font-size:12px;color:#8a92a6;margin-top:2px}
+.tendencia-numero{font-size:13px;font-weight:800;color:#166534;background:#dcfce7;padding:5px 12px;border-radius:999px;white-space:nowrap}
+.vazio-tendencia{text-align:center;padding:30px;color:#667085}
+.recentes-item{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin-bottom:8px;text-decoration:none;color:inherit;font-size:13.5px;font-weight:700}
+.recentes-item:hover{border-color:#5b5ce2}
+[data-theme="dark"] .tendencia-item,[data-theme="dark"] .recentes-item{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.12)}
+[data-theme="dark"] .tendencia-numero{background:#0f2e1a;color:#4ade80}
+</style></head><body><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908e"></script><main>
+
+<p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Tendências</p>
+<h1>📈 Tendências</h1>
+<p>O que mais está bombando no Delta Prompts agora, com base no uso de todo mundo.</p>
+
+<section class="card tendencia-box">
+  <h3>👍 Prompts Mais Bem Avaliados</h3>
+  <div id="listaTopFeedback"><div class="vazio-tendencia">🔄 Carregando...</div></div>
+</section>
+
+<section class="card tendencia-box">
+  <h3>🔥 Páginas Mais Visitadas</h3>
+  <div id="listaTopPaginas"><div class="vazio-tendencia">🔄 Carregando...</div></div>
+</section>
+
+<section class="card tendencia-box">
+  <h3>🕐 Você Usou Recentemente</h3>
+  <p style="margin:0 0 12px;color:#667085;font-size:13.5px">Só você vê isso — fica salvo no seu navegador.</p>
+  <div id="listaRecentes"></div>
+</section>
+
+</main>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+
+// Mapeia o prefixo do ID pra pagina (ex: 'estudo-5' -> /delta-prompts/paginas/estudo.html)
+const MAPA_PREFIXO_PAGINA={
+  estudo:'estudo.html', site:'sites-landing-pages.html', pack:'packs-prompts.html',
+  games:'games.html', decor:'decoracao-ambientes.html', espirit:'espiritualidade.html',
+  filosofia:'filosofia-de-vida.html', fono:'fonoaudiologia.html', cantor:'aprender-a-cantar.html',
+  saude:'saude.html', pesquisa:'pesquisa-profunda.html'
+};
+function resolverPromptId(id){
+  var mapa={};
+  try{mapa=JSON.parse(localStorage.getItem('deltaTituloPorId'))||{}}catch(e){}
+  if(mapa[id])return{titulo:mapa[id].titulo,url:mapa[id].url};
+  var prefixo=id.split('-')[0];
+  var pagina=MAPA_PREFIXO_PAGINA[prefixo];
+  if(pagina)return{titulo:'Ver prompt nessa página',url:'/delta-prompts/paginas/'+pagina+'#'+id};
+  return null;
+}
+
+async function carregarTopFeedback(){
+  const box=document.getElementById('listaTopFeedback');
+  if(!window.deltaLoadAuth){box.innerHTML='<div class="vazio-tendencia">Não foi possível carregar agora.</div>';return}
+  await window.deltaLoadAuth();
+  if(!window.deltaAuth||!window.deltaAuth.obterTopFeedback){box.innerHTML='<div class="vazio-tendencia">Não foi possível carregar agora.</div>';return}
+  const dados=await window.deltaAuth.obterTopFeedback(15);
+  const comInfo=dados.map(d=>({...d,info:resolverPromptId(d.id)})).filter(d=>d.up>0);
+  if(!comInfo.length){box.innerHTML='<div class="vazio-tendencia">Ainda não temos avaliações suficientes. Seja um dos primeiros a avaliar um prompt! 👍</div>';return}
+  box.innerHTML=comInfo.slice(0,10).map((d,i)=>{
+    const titulo=d.info?d.info.titulo:('Prompt #'+d.id);
+    const url=d.info?d.info.url:'/delta-prompts/index.html';
+    return `<a class="tendencia-item" href="${url}"><span class="tendencia-pos">${i+1}º</span><div class="tendencia-info"><div class="tendencia-titulo">${titulo}</div><div class="tendencia-sub">${d.down>0?d.down+' 👎 também':'Bem avaliado pela comunidade'}</div></div><span class="tendencia-numero">👍 ${d.up}</span></a>`;
+  }).join('');
+}
+
+async function carregarTopPaginas(){
+  const box=document.getElementById('listaTopPaginas');
+  if(!window.deltaAuth||!window.deltaAuth.obterTopPageViews){box.innerHTML='<div class="vazio-tendencia">Não foi possível carregar agora.</div>';return}
+  const dados=await window.deltaAuth.obterTopPageViews(10);
+  if(!dados.length){box.innerHTML='<div class="vazio-tendencia">Ainda não temos dados suficientes.</div>';return}
+  box.innerHTML=dados.map((d,i)=>{
+    const nome=(d.path||'').replace('/delta-prompts/paginas/','').replace('/delta-prompts/','').replace('.html','').replace(/-/g,' ');
+    return `<a class="tendencia-item" href="${d.path}"><span class="tendencia-pos">${i+1}º</span><div class="tendencia-info"><div class="tendencia-titulo" style="text-transform:capitalize">${nome}</div></div><span class="tendencia-numero">👁️ ${d.views}</span></a>`;
+  }).join('');
+}
+
+function carregarRecentes(){
+  const box=document.getElementById('listaRecentes');
+  let recentes=[];
+  try{recentes=JSON.parse(localStorage.getItem('deltaPromptsRecentes'))||[]}catch(e){}
+  if(!recentes.length){box.innerHTML='<div class="vazio-tendencia">Você ainda não copiou nenhum prompt nessa sessão. Assim que usar algum, ele aparece aqui.</div>';return}
+  box.innerHTML=recentes.map(r=>{
+    const dataFmt=new Date(r.ts).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' às '+new Date(r.ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    return `<a class="recentes-item" href="${r.url}#${r.id}"><span aria-hidden="true">🕐</span><span style="flex:1">${r.titulo}</span><span style="font-weight:400;color:#8a92a6;font-size:11.5px">${dataFmt}</span></a>`;
+  }).join('');
+}
+
+carregarTopFeedback();
+carregarTopPaginas();
+carregarRecentes();
+</script>
+</body></html>
