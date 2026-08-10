@@ -77,6 +77,19 @@
   <div class="grafico-barras" id="graficoBarras"></div>
 </div>
 
+<div class="grafico-box">
+  <h3>🔥 Calendário de Uso <span style="font-weight:400;font-size:12.5px;color:#667085">(últimos meses)</span></h3>
+  <div id="calendarioUso" style="overflow-x:auto;padding-bottom:6px"></div>
+  <div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:#8a92a6">
+    <span>Menos</span>
+    <span style="width:11px;height:11px;border-radius:3px;background:#ebedf0;display:inline-block"></span>
+    <span style="width:11px;height:11px;border-radius:3px;background:#c6e6c6;display:inline-block"></span>
+    <span style="width:11px;height:11px;border-radius:3px;background:#7bc47f;display:inline-block"></span>
+    <span style="width:11px;height:11px;border-radius:3px;background:var(--delta-accent,#5b5ce2);display:inline-block"></span>
+    <span>Mais</span>
+  </div>
+</div>
+
 <div class="top5-box">
   <h3>🏆 Top 5 prompts mais usados <span style="font-weight:400;font-size:12.5px;color:#667085">(de todos os tempos)</span></h3>
   <div id="top5Lista"></div>
@@ -235,6 +248,56 @@ function renderizarGrafico(){
   }).join('');
 }
 
+function renderizarCalendarioUso(){
+  const container=document.getElementById('calendarioUso');
+  if(!container)return;
+  let visitas=[];
+  try{visitas=JSON.parse(localStorage.getItem('deltaVisitDates'))||[]}catch(e){}
+  const setVisitas=new Set(visitas);
+  if(!visitas.length){
+    container.innerHTML='<div class="vazio-mini">Ainda não temos dias suficientes registrados. Volte aqui daqui uns dias! 🔥</div>';
+    return;
+  }
+  const HOJE=new Date();
+  const DIAS_TOTAL=182; // ~26 semanas, cabe bem na tela
+  const inicio=new Date(HOJE);inicio.setDate(inicio.getDate()-DIAS_TOTAL);
+  // alinha ao domingo anterior pra formar colunas de semana certinhas
+  while(inicio.getDay()!==0)inicio.setDate(inicio.getDate()-1);
+  const semanas=[];
+  let cursor=new Date(inicio);
+  while(cursor<=HOJE){
+    const semana=[];
+    for(let d=0;d<7;d++){
+      const chave=cursor.toISOString().slice(0,10);
+      semana.push({chave,ativo:setVisitas.has(chave),futuro:cursor>HOJE});
+      cursor.setDate(cursor.getDate()+1);
+    }
+    semanas.push(semana);
+  }
+  const mesesLabels=[];
+  let ultimoMes=null;
+  semanas.forEach((semana,i)=>{
+    const mes=new Date(semana[0].chave).getMonth();
+    if(mes!==ultimoMes){mesesLabels.push({indice:i,nome:new Date(semana[0].chave).toLocaleDateString('pt-BR',{month:'short'}).replace('.','')});ultimoMes=mes}
+  });
+  let html='<div style="display:inline-block">';
+  html+='<div style="display:flex;gap:3px;margin-bottom:4px;padding-left:2px">';
+  semanas.forEach((s,i)=>{const label=mesesLabels.find(m=>m.indice===i);html+=`<div style="width:11px;font-size:10px;color:#8a92a6">${label?label.nome:''}</div>`});
+  html+='</div>';
+  html+='<div style="display:flex;gap:3px">';
+  semanas.forEach(semana=>{
+    html+='<div style="display:flex;flex-direction:column;gap:3px">';
+    semana.forEach(dia=>{
+      if(dia.futuro){html+='<div style="width:11px;height:11px"></div>';return}
+      const cor=dia.ativo?'var(--delta-accent,#5b5ce2)':'#ebedf0';
+      html+=`<div title="${dia.chave}${dia.ativo?' — você usou o site':''}" style="width:11px;height:11px;border-radius:3px;background:${cor}"></div>`;
+    });
+    html+='</div>';
+  });
+  html+='</div></div>';
+  container.innerHTML=html;
+}
+
 function renderizarTop5(){
   const top5=top5MaisUsados();
   const box=document.getElementById('top5Lista');
@@ -346,7 +409,7 @@ async function iniciar(){
   mostrarStatusSync('carregando');
   if(!window.deltaLoadAuth){
     mostrarStatusSync('deslogado');
-    renderizarNumeros('tudo');renderizarGrafico();renderizarTop5();
+    renderizarNumeros('tudo');renderizarGrafico();renderizarCalendarioUso();renderizarTop5();
     return;
   }
   const promessaAuth=aguardarMudancaAuth();
@@ -364,6 +427,7 @@ async function iniciar(){
   }
   renderizarNumeros('tudo');
   renderizarGrafico();
+  renderizarCalendarioUso();
   renderizarTop5();
 }
 iniciar();

@@ -1,7 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-(function(){try{var p=location.pathname;var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';if(!isIndex){localStorage.setItem('deltaUltimaPagina',JSON.stringify({path:p,ts:Date.now()}))}}catch(e){}})();
+window.deltaModoPrivadoAtivo=function(){try{return localStorage.getItem('deltaModoPrivado')==='true'}catch(e){return false}};
+(function(){try{var p=location.pathname;var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';if(!isIndex&&!window.deltaModoPrivadoAtivo()){localStorage.setItem('deltaUltimaPagina',JSON.stringify({path:p,ts:Date.now()}))}}catch(e){}})();
 
 // ===== LOG DE ALTERACOES NAS CONFIGURACOES =====
 window.deltaRegistrarLog=function(texto){
@@ -17,10 +18,12 @@ window.deltaRegistrarLog=function(texto){
 // ===== HISTÓRICO DAS ÚLTIMAS 5 PÁGINAS VISITADAS =====
 (function(){
   try{
+    if(window.deltaModoPrivadoAtivo())return;
     var p=location.pathname;
     var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';
     if(isIndex)return; // nao conta a propria home
     function registrar(){
+      if(window.deltaModoPrivadoAtivo())return;
       var titulo=(document.title||'').split('|')[0].trim()||p;
       var hist=[];
       try{hist=JSON.parse(localStorage.getItem('deltaHistoricoPaginas'))||[]}catch(e){}
@@ -36,6 +39,7 @@ window.deltaRegistrarLog=function(texto){
 // ===== REGISTRO DE VISITAS (para o painel Meus Numeros) =====
 (function(){
   try{
+    if(window.deltaModoPrivadoAtivo())return;
     var hoje=new Date().toISOString().slice(0,10);
     var dias=JSON.parse(localStorage.getItem('deltaVisitDates')||'[]');
     if(dias[dias.length-1]!==hoje){
@@ -44,6 +48,43 @@ window.deltaRegistrarLog=function(texto){
       localStorage.setItem('deltaVisitDates',JSON.stringify(dias));
     }
   }catch(e){}
+})();
+
+// ===== MODO PRIVADO =====
+(function(){
+  function estaAtivo(){return window.deltaModoPrivadoAtivo()}
+  function alternar(){
+    var novo=!estaAtivo();
+    try{localStorage.setItem('deltaModoPrivado',novo?'true':'false')}catch(e){}
+    atualizarBotao();
+    mostrarAvisoModoPrivado(novo);
+  }
+  var btn;
+  function atualizarBotao(){
+    if(!btn)return;
+    var ativo=estaAtivo();
+    btn.textContent=ativo?'🕶️':'👓';
+    btn.title=ativo?'Modo Privado ativo — clique para desativar':'Ativar Modo Privado (navegar sem registrar histórico)';
+    btn.style.background=ativo?'#1f2937':'#fff';
+    btn.style.color=ativo?'#fff':'#1f2937';
+  }
+  function mostrarAvisoModoPrivado(ativo){
+    var t=document.createElement('div');
+    t.textContent=ativo?'🕶️ Modo Privado ativado — nada do que você fizer agora fica registrado':'👓 Modo Privado desativado — voltando ao normal';
+    t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1f2937;color:#fff;padding:12px 18px;border-radius:12px;z-index:9999;font-size:13px;font-weight:700;max-width:90vw;text-align:center';
+    document.body.appendChild(t);
+    setTimeout(function(){t.style.transition='.3s';t.style.opacity='0';setTimeout(function(){t.remove()},300)},2400);
+  }
+  function criarBotao(){
+    if(document.getElementById('deltaModoPrivadoBtn'))return;
+    btn=document.createElement('button');
+    btn.type='button';btn.id='deltaModoPrivadoBtn';
+    btn.style.cssText='position:fixed;right:30px;bottom:330px;z-index:1400;width:44px;height:44px;border-radius:50%;border:1px solid #e5e7eb;cursor:pointer;font-size:19px;box-shadow:0 8px 20px rgba(20,20,40,.14)';
+    btn.addEventListener('click',alternar);
+    document.body.appendChild(btn);
+    atualizarBotao();
+  }
+  if(document.body)criarBotao();else document.addEventListener('DOMContentLoaded',criarBotao,{once:true});
 })();
 
 // ===== COR DE DESTAQUE PERSONALIZADA =====
@@ -608,7 +649,7 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
   function lerScores(){try{return JSON.parse(localStorage.getItem('deltaGrupoScores'))||{}}catch(e){return{}}}
   function salvarScores(s){try{localStorage.setItem('deltaGrupoScores',JSON.stringify(s))}catch(e){}}
   function somarScore(grupo,pontos){
-    if(!grupo)return;
+    if(!grupo||window.deltaModoPrivadoAtivo())return;
     var s=lerScores();
     s[grupo]=(s[grupo]||0)+pontos;
     salvarScores(s);

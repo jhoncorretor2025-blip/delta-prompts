@@ -42,7 +42,7 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260908b"></script><script src="search-index.js?v=20260908c" defer></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"></div><script src="menu-loader.js?v=20260908b"></script><script src="search-index.js?v=20260908d" defer></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
@@ -52,7 +52,7 @@
 <div class="hero-stats" id="heroStats"></div>
 <div id="pessoasOnline" style="display:none;margin-top:8px;font-size:13px;color:#15803d;font-weight:700"></div>
 
-<div class="search" id="buscar"><span aria-hidden="true">🔎</span><input id="busca-global" type="search" autocomplete="off" aria-label="Buscar no Delta Prompts" placeholder="O que você quer fazer hoje?"><div class="suggestions" id="suggestions"></div></div>
+<div class="search" id="buscar"><span aria-hidden="true">🔎</span><input id="busca-global" type="search" autocomplete="off" aria-label="Buscar no Delta Prompts" placeholder="O que você quer fazer hoje?"><button type="button" id="btnMicBuscaHome" title="Falar o que você precisa" aria-label="Buscar por voz" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:20px;cursor:pointer;display:none">🎤</button><div class="suggestions" id="suggestions"></div></div>
 <p style="font-size:12.5px;color:var(--muted);margin:6px 0 0 6px">🔍 Busca até dentro do texto dos prompts — não precisa saber o nome exato da categoria</p>
 
 <div class="quick"><button data-search="imagem">🎨 Imagens</button><button data-search="estudo">📚 Estudo</button><button data-search="marketing">📣 Marketing</button><button data-search="notebook">📚 NotebookLM</button><button data-search="skill">🧠 Skills</button></div>
@@ -357,7 +357,9 @@ function render(){
 }
 
 const input=document.getElementById('busca-global'),sug=document.getElementById('suggestions');
-function matches(v){const q=norm(v.trim());if(!q)return[];const palavras=q.split(/\s+/).filter(Boolean);return itens.filter(x=>{const texto=norm(x.n+' '+x.d+' '+x.t);return palavras.every(p=>texto.includes(p))})}
+const STOPWORDS=new Set(['de','da','do','das','dos','um','uma','uns','umas','o','a','os','as','e','ou','pra','para','por','com','sem','que','eu','me','minha','meu','minhas','meus','preciso','quero','gostaria','como','usar','fazer','criar','ajuda','ajude','favor','sobre','no','na','nos','nas','em','ao','aos','à','às']);
+function palavrasSignificativas(q){const todas=q.split(/\s+/).filter(Boolean);const sig=todas.filter(p=>p.length>=2&&!STOPWORDS.has(p));return sig.length?sig:todas}
+function matches(v){const q=norm(v.trim());if(!q)return[];const palavras=palavrasSignificativas(q);return itens.filter(x=>{const texto=norm(x.n+' '+x.d+' '+x.t);return palavras.every(p=>texto.includes(p))})}
 function distanciaEdicao(a,b){
   const m=a.length,n=b.length;
   const d=Array.from({length:m+1},()=>new Array(n+1).fill(0));
@@ -385,7 +387,7 @@ function buscarPrompts(v){
   if(!idx||!idx.length)return[];
   const termo=normBusca(v);
   if(!termo)return[];
-  const palavras=termo.split(/\s+/).filter(Boolean);
+  const palavras=palavrasSignificativas(termo);
   return idx.filter(p=>{const texto=normBusca(p.titulo+' '+p.resumo+' '+p.pagina);return palavras.every(pal=>texto.includes(pal))});
 }
 function sugerirCorrecaoPrompt(v){
@@ -477,6 +479,29 @@ function buscar(v,scroll=true){
 }
 function limparBusca(){input.value='';sug.classList.remove('active');document.getElementById('search-results').classList.remove('active');input.focus()}
 input.addEventListener('input',()=>{const r=matches(input.value).slice(0,5);sug.innerHTML=r.map(x=>`<a href="${x.l}">${x.i}<span><strong>${x.n}</strong><br><small>${x.d}</small></span></a>`).join('');sug.classList.toggle('active',!!input.value.trim()&&r.length>0)});
+
+// ===== BUSCA POR VOZ (ditar a necessidade inteira) =====
+(function(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const btnMic=document.getElementById('btnMicBuscaHome');
+  if(!SR||!btnMic)return;
+  btnMic.style.display='block';
+  btnMic.addEventListener('click',()=>{
+    const rec=new SR();
+    rec.lang='pt-BR';
+    rec.interimResults=false;
+    btnMic.textContent='🔴';
+    btnMic.disabled=true;
+    rec.onresult=(ev)=>{
+      const texto=ev.results[0][0].transcript;
+      input.value=texto;
+      buscar(texto);
+    };
+    rec.onerror=()=>{btnMic.textContent='🎤';btnMic.disabled=false};
+    rec.onend=()=>{btnMic.textContent='🎤';btnMic.disabled=false};
+    try{rec.start()}catch(e){btnMic.textContent='🎤';btnMic.disabled=false}
+  });
+})();
 input.addEventListener('keydown',e=>{if(e.key==='Enter')buscar(input.value)});
 (function(){try{const params=new URLSearchParams(location.search);const q=params.get('busca');if(q){input.value=q;buscar(q)}}catch(e){}})();
 document.querySelectorAll('[data-search]').forEach(b=>b.onclick=()=>{input.value=b.dataset.search;buscar(input.value)});

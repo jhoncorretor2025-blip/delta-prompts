@@ -21,6 +21,12 @@
 </section>
 
 <section class="card">
+  <h3>🕶️ Modo Privado</h3>
+  <p style="margin:0 0 14px;color:#667085;font-size:14px">Se alguém mais usa seu celular ou computador, ative o Modo Privado antes de navegar — nada do que você fizer fica registrado (histórico, streak, pontuação de uso). O botão fica sempre disponível no canto direito da tela, em qualquer página.</p>
+  <div id="statusModoPrivado" style="font-size:13px;font-weight:800;padding:10px 14px;border-radius:10px;background:#f1f5f9;color:#475467"></div>
+</section>
+
+<section class="card">
   <h3>🧑 Qual é o seu perfil?</h3>
   <p style="margin:0 0 14px;color:#667085;font-size:14px">Escolha o que mais combina com você agora — a gente já organiza o menu com esse tipo de conteúdo na frente. Você pode ajustar manualmente depois, na seção abaixo.</p>
   <div id="listaPerfis" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px"></div>
@@ -350,6 +356,20 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
     render();
     window.addEventListener('storage',function(e){if(e.key==='deltaLogConfig')render()});
     window.addEventListener('delta:log-updated',render);
+  })();
+
+  // ===== STATUS DO MODO PRIVADO =====
+  (function(){
+    var box=document.getElementById('statusModoPrivado');
+    if(!box)return;
+    function atualizar(){
+      var ativo=window.deltaModoPrivadoAtivo&&window.deltaModoPrivadoAtivo();
+      box.textContent=ativo?'🕶️ Modo Privado está ATIVO agora':'👓 Modo Privado está desativado (uso normal)';
+      box.style.background=ativo?'#1f2937':'#f1f5f9';
+      box.style.color=ativo?'#fff':'#475467';
+    }
+    atualizar();
+    setInterval(atualizar,1000);
   })();
 })();
 </script>
