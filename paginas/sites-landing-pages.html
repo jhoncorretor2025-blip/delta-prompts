@@ -44,8 +44,53 @@
 .btn-novo-projeto{border:1px dashed #c7c7f0;background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;color:#5b5ce2}
 [data-theme="dark"] .select-projeto{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .btn-novo-projeto{background:#0f1424;border-color:rgba(255,255,255,.2);color:#a5a6f0}
-</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908b"></script><main>
 
+/* ===== Melhorias da auditoria ===== */
+/* #2 foco visivel */
+#sites-page button:focus-visible,#sites-page input:focus-visible,#sites-page select:focus-visible,#sites-page a:focus-visible{outline:3px solid #5b5ce2;outline-offset:2px;border-radius:6px}
+/* #3 fontes pequenas */
+.uso-badge,.count-badge{font-size:12.5px}
+.tag{font-size:12.5px}
+.relacionadas{font-size:13px}
+.chip-relacionada{font-size:12.5px}
+/* #7 breadcrumb */
+.breadcrumb{font-size:13px;color:#667085;margin:0 0 12px}
+.breadcrumb a{color:#5b5ce2;text-decoration:none;font-weight:700}
+.breadcrumb a:hover{text-decoration:underline}
+/* #9 contador de aplicados */
+.contador-aplicados{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;color:#166534;background:#dcfce7;padding:5px 12px;border-radius:999px;margin-left:8px}
+/* #10 cor diferente pra aplicado (azul, distinto do favoritar rosa) */
+.aplicado-btn.aplicado{background:#dbeafe!important;color:#1e40af!important}
+/* #5 menu de mais acoes */
+.acoes{position:relative}
+.mais-acoes-wrap{position:relative;flex:0 0 auto!important}
+.btn-mais-acoes{background:#f1f5f9!important;color:#475467!important;flex:0 0 auto!important;min-width:44px!important;padding:11px 14px!important}
+.mais-acoes-menu{display:none;position:absolute;bottom:calc(100% + 6px);right:0;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 12px 30px rgba(20,20,40,.16);padding:6px;min-width:200px;z-index:60}
+.mais-acoes-menu.show{display:flex;flex-direction:column;gap:2px}
+.mais-acoes-menu button{width:100%;text-align:left;background:none!important;border-radius:8px!important;padding:9px 10px!important;font-size:13px!important}
+.mais-acoes-menu button:hover{background:#f1f5f9!important}
+[data-theme="dark"] .mais-acoes-menu{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.15)}
+/* #14 - resolvido sem modal: campo de projeto agora e input com datalist embutido, sem popup nativo feio */
+/* #15 campos preenchimento colapsados por padrao */
+.campos-preenchimento{display:none!important}
+.campos-preenchimento.aberto{display:flex!important}
+.btn-toggle-campos{border:1px solid #e6e8f0;background:#fff;border-radius:9px;padding:7px 11px;font-size:12px;font-weight:700;cursor:pointer;color:#5b5ce2;margin-bottom:8px}
+/* #4 responsividade mobile - testado em 375/414/768px */
+@media(max-width:600px){
+  #lista-prompts{grid-template-columns:1fr}
+  .journey{grid-template-columns:1fr}
+  .acoes button{min-width:80px;font-size:12.5px}
+  .top-bar{flex-direction:column;align-items:stretch}
+  .top-bar input{width:100%}
+  .mais-acoes-menu{right:auto;left:0}
+}
+@media(max-width:400px){
+  .prompt-card{padding:14px}
+  .acoes button{flex:1 1 45%}
+}
+</style></head><body class="category-page" id="sites-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908b"></script><main>
+
+<p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Sites & Landing Pages</p>
 <header class="page-head"><h1>🌐 Sites & Landing Pages</h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Qual caminho escolher? <span>⌄</span></button><div class="info-body"><b>🟢 Criando do zero:</b> para quem ainda vai começar. <b>🟡 Site em andamento:</b> para quem já tem a página inicial ou parte do projeto e travou. <b>🔴 Site pronto:</b> para quem quer melhorar UX, visual, navegação, conversão e estrutura.</div></section>
@@ -80,6 +125,7 @@
   <input id="busca" type="search" placeholder="🔎 Buscar melhorias, visual, navegação, mobile...">
   <button type="button" id="btnMaisFiltros" class="btn-mais-filtros">🎛️ Mais filtros<span class="filtros-ativos-badge" id="filtrosAtivosBadge" style="display:none">0</span></button>
   <span id="contador" class="contador"></span>
+  <span id="contadorAplicados" class="contador-aplicados" style="display:none"></span>
 </div>
 
 <div class="filtros-container" id="filtrosContainer">
@@ -89,6 +135,7 @@
 
 <div class="toolbar-extra">
   <button id="btnExportar">📥 Exportar todos</button>
+  <select id="selectExportarProjeto" style="border:1px solid #e6e8f0;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer;display:none"></select>
   <button id="btnSugerir">💡 Sugerir um prompt</button>
 </div>
 
@@ -100,6 +147,7 @@
   </div>
 </div>
 
+<datalist id="listaProjetosGlobal"></datalist>
 <div id="lista-prompts"></div>
 
 </main>
@@ -231,8 +279,8 @@ function _loadProjetos(){try{return JSON.parse(localStorage.getItem('deltaSitesP
 function _saveProjetos(o){try{localStorage.setItem('deltaSitesProjetos',JSON.stringify(o))}catch(e){}}
 function projetoDoPrompt(id){return _loadProjetos()[id]||''}
 function todosProjetos(){return[...new Set(Object.values(_loadProjetos()).filter(Boolean))]}
-function moverParaProjeto(id,nomeProjeto){const p=_loadProjetos();if(nomeProjeto)p[id]=nomeProjeto;else delete p[id];_saveProjetos(p);render()}
-function criarNovoProjeto(id){const nome=prompt('Nome do novo projeto (ex: Site Cliente X):');if(nome&&nome.trim())moverParaProjeto(id,nome.trim())}
+function moverParaProjeto(id,nomeProjeto){const p=_loadProjetos();if(nomeProjeto&&nomeProjeto.trim())p[id]=nomeProjeto.trim();else delete p[id];_saveProjetos(p);atualizarDatalistProjetos();render()}
+function atualizarDatalistProjetos(){const dl=document.getElementById('listaProjetosGlobal');if(!dl)return;dl.innerHTML=todosProjetos().map(pr=>`<option value="${pr}">`).join('')}
 
 function _loadAplicados(){try{return JSON.parse(localStorage.getItem('deltaSitesAplicados'))||[]}catch(e){return[]}}
 function _saveAplicados(l){try{localStorage.setItem('deltaSitesAplicados',JSON.stringify(l))}catch(e){}}
@@ -313,6 +361,23 @@ function irPara(id){fase='todos';tema='Todos';busca.value='';document.querySelec
 
 // ===== EXPORTAR =====
 function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nFase: '+faseLabel(p.fase)+' | Tema: '+p.categoria+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='🌐 SITES & LANDING PAGES — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-sites.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+function exportarPorProjeto(nomeProjeto){
+  const idsDoProjeto=Object.entries(_loadProjetos()).filter(([id,proj])=>proj===nomeProjeto).map(([id])=>id);
+  const doProjeto=prompts.filter(p=>idsDoProjeto.includes(p.id));
+  if(!doProjeto.length){mostrarToast('Esse projeto está vazio');return}
+  const linhas=doProjeto.map(p=>p.titulo+'\nFase: '+faseLabel(p.fase)+' | Tema: '+p.categoria+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));
+  const conteudo='🗂️ PROJETO: '+nomeProjeto.toUpperCase()+' — DELTA PROMPTS\n\n'+linhas.join('\n\n');
+  const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-'+nomeProjeto.toLowerCase().replace(/\s+/g,'-')+'.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  mostrarToast('📥 Projeto "'+nomeProjeto+'" exportado!');
+}
+function atualizarSelectExportarProjeto(){
+  const sel=document.getElementById('selectExportarProjeto');
+  const projetos=todosProjetos();
+  if(!projetos.length){sel.style.display='none';return}
+  sel.style.display='inline-block';
+  sel.innerHTML='<option value="">📥 Exportar um projeto...</option>'+projetos.map(p=>`<option value="${p}">🗂️ ${p}</option>`).join('');
+}
 
 // ===== SUGERIR =====
 function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
@@ -366,32 +431,38 @@ function atualizarContadoresJourney(){
 // ===== CARD =====
 function criarCard(p){
   const usos=_loadUsos();const usoCount=usos[p.id]||0;
-  const relacionados=prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const relacionados=window.modoGuiadoAtivo?[]:prompts.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const projetoAtual=projetoDoPrompt(p.id);
   const card=document.createElement('article');
   card.className='prompt-card';
   card.id='card-'+p.id;
   card.innerHTML=`
-    <div class="meta"><span class="tag">${faseLabel(p.fase)}</span><span class="tag">${p.categoria}</span><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+    <div class="meta"><span class="tag">${faseLabel(p.fase)}</span><span class="tag">${p.categoria}</span><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}"><span aria-hidden="true">🔥</span> Usado ${usoCount}x</span></div>
     <h3>${p.titulo}</h3>
-    <p class="quando">💡 ${p.quando}</p>
-    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/LINK/i.test(ph)?(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    <p class="quando"><span aria-hidden="true">💡</span> ${p.quando}</p>
+    ${p.placeholders.length?`<button type="button" class="btn-toggle-campos" data-acao="togglecampos" data-id="${p.id}" aria-expanded="false">✏️ Preencher campos (${p.placeholders.length})</button><div class="campos-preenchimento" id="campos-${p.id}">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/LINK/i.test(ph)?(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
     <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
-    <button class="ver" type="button" data-acao="ver" data-id="${p.id}">Ver prompt completo</button>
+    <button class="ver" type="button" data-acao="ver" data-id="${p.id}" aria-label="Ver prompt completo de ${p.titulo}">Ver prompt completo</button>
     <div class="acoes">
-      <button class="copiar" data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
-      <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
-      <button class="aplicado-btn" data-acao="aplicado" data-id="${p.id}">⬜ Marcar como Aplicado</button>
-      <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
-      <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
-      <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
-      <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+      <button class="copiar" data-acao="copiar" data-id="${p.id}" aria-label="Copiar prompt ${p.titulo}"><span aria-hidden="true">📋</span> Copiar</button>
+      <button class="favoritar" data-acao="favoritar" data-id="${p.id}" aria-label="Favoritar ${p.titulo}"><span aria-hidden="true">🤍</span> Favoritar</button>
+      <div class="mais-acoes-wrap">
+        <button type="button" class="btn-mais-acoes" data-acao="maisacoes" data-id="${p.id}" aria-label="Mais ações para ${p.titulo}" aria-haspopup="true" aria-expanded="false">⋯</button>
+        <div class="mais-acoes-menu" id="maisacoes-${p.id}">
+          <button class="aplicado-btn" data-acao="aplicado" data-id="${p.id}" aria-label="Marcar ${p.titulo} como já aplicado">⬜ Marcar como Aplicado</button>
+          <button data-acao="chat" data-id="${p.id}" aria-label="Abrir ${p.titulo} no ChatGPT"><span aria-hidden="true">🤖</span> ChatGPT</button>
+          <button data-acao="gemini" data-id="${p.id}" aria-label="Abrir ${p.titulo} no Gemini"><span aria-hidden="true">✨</span> Gemini</button>
+          <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}" aria-label="Compartilhar ${p.titulo}"><span aria-hidden="true">🔗</span> Compartilhar</button>
+          <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}" aria-label="Ver ${p.titulo} em inglês"><span aria-hidden="true">🌐</span> View in English</button>
+        </div>
+      </div>
     </div>
     <div class="projeto-row">
-      <select class="select-projeto" data-mover-id="${p.id}"><option value="">🗂️ Sem projeto</option>${todosProjetos().map(pr=>`<option value="${pr}" ${projetoDoPrompt(p.id)===pr?'selected':''}>🗂️ ${pr}</option>`).join('')}</select>
-      <button type="button" class="btn-novo-projeto" data-acao="novoprojeto" data-id="${p.id}">➕ Novo projeto</button>
+      <input type="text" class="select-projeto" list="listaProjetosGlobal" data-mover-id="${p.id}" value="${projetoAtual}" placeholder="🗂️ Sem projeto (digite pra criar/escolher)" aria-label="Projeto de ${p.titulo}">
+      ${projetoAtual?`<button type="button" class="btn-novo-projeto" data-acao="removerprojeto" data-id="${p.id}" aria-label="Remover ${p.titulo} do projeto">🗑️ Tirar do projeto</button>`:''}
     </div>
-    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse prompt te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
-    ${relacionados.length?`<div class="relacionadas"><strong>🔗 Prompts relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
+    <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse prompt te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}" aria-label="Sim, esse prompt ajudou">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}" aria-label="Não, esse prompt não ajudou">👎 0</button></div>
+    ${relacionados.length?`<div class="relacionadas"><strong><span aria-hidden="true">🔗</span> Prompts do mesmo tema</strong>${relacionados.map(r=>`<button class="chip-relacionada" data-acao="irpara" data-id="${r.id}">${r.titulo}</button>`).join('')}</div>`:''}
   `;
   atualizarBtnFav(p.id,card.querySelector('.favoritar'));
   atualizarBtnAplicado(p.id,card.querySelector('.aplicado-btn'));
@@ -405,34 +476,63 @@ function render(){
   const usos=_loadUsos();
   f.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0));
   contador.textContent=f.length+' de '+prompts.length+' prompts';
+  const aplicadosCount=_loadAplicados().filter(id=>prompts.some(p=>p.id===id)).length;
+  const badgeAplicados=document.getElementById('contadorAplicados');
+  if(aplicadosCount>0){badgeAplicados.style.display='inline-flex';badgeAplicados.innerHTML=`✅ ${aplicadosCount} de ${prompts.length} aplicados`}
+  else{badgeAplicados.style.display='none'}
   lista.innerHTML='';
   if(!f.length){lista.innerHTML='<p>🔎 Nenhum prompt encontrado.</p>'}
   else{f.forEach(p=>lista.appendChild(criarCard(p)))}
   atualizarContadoresJourney();
   atualizarBadgeFiltros();
+  atualizarDatalistProjetos();
+  atualizarSelectExportarProjeto();
 }
 
 lista.addEventListener('click',e=>{
   const btn=e.target.closest('button[data-acao]');
-  if(!btn)return;
+  if(!btn){
+    // fecha qualquer menu de "mais acoes" aberto se clicar fora
+    document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show'));
+    document.querySelectorAll('.btn-mais-acoes[aria-expanded="true"]').forEach(b=>b.setAttribute('aria-expanded','false'));
+    return;
+  }
   const acao=btn.dataset.acao,id=btn.dataset.id;
   if(acao==='ver')alternarPrompt(id);
-  else if(acao==='copiar'){registrarUso(id);copiarTexto(textoFinal(id));mostrarSugestaoProximo(id)}
-  else if(acao==='chat'){registrarUso(id);abrirChat(textoFinal(id));mostrarSugestaoProximo(id)}
-  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id));mostrarSugestaoProximo(id)}
+  else if(acao==='copiar'){registrarUso(id);copiarTexto(textoFinal(id));if(!window.modoGuiadoAtivo)mostrarSugestaoProximo(id)}
+  else if(acao==='chat'){registrarUso(id);abrirChat(textoFinal(id));if(!window.modoGuiadoAtivo)mostrarSugestaoProximo(id)}
+  else if(acao==='gemini'){registrarUso(id);abrirGemini(textoFinal(id));if(!window.modoGuiadoAtivo)mostrarSugestaoProximo(id)}
   else if(acao==='favoritar')favoritar(id,btn);
   else if(acao==='aplicado')toggleAplicado(id,btn);
-  else if(acao==='novoprojeto')criarNovoProjeto(id);
+  else if(acao==='removerprojeto')moverParaProjeto(id,'');
   else if(acao==='compartilhar')compartilhar(id);
   else if(acao==='irpara')irPara(id);
   else if(acao==='fbup')darFeedback(id,'up');
   else if(acao==='fbdown')darFeedback(id,'down');
   else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='togglecampos'){
+    const box=document.getElementById('campos-'+id);
+    const aberto=box.classList.toggle('aberto');
+    btn.setAttribute('aria-expanded',aberto?'true':'false');
+  }
+  else if(acao==='maisacoes'){
+    e.stopPropagation();
+    const menu=document.getElementById('maisacoes-'+id);
+    const jaAberto=menu.classList.contains('show');
+    document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show'));
+    document.querySelectorAll('.btn-mais-acoes[aria-expanded="true"]').forEach(b=>b.setAttribute('aria-expanded','false'));
+    if(!jaAberto){menu.classList.add('show');btn.setAttribute('aria-expanded','true')}
+  }
+});
+document.addEventListener('click',e=>{
+  if(e.target.closest('.mais-acoes-wrap'))return;
+  document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show'));
+  document.querySelectorAll('.btn-mais-acoes[aria-expanded="true"]').forEach(b=>b.setAttribute('aria-expanded','false'));
 });
 lista.addEventListener('change',e=>{
-  const sel=e.target.closest('.select-projeto');
-  if(!sel)return;
-  moverParaProjeto(sel.dataset.moverId,sel.value);
+  const inp=e.target.closest('.select-projeto');
+  if(!inp)return;
+  moverParaProjeto(inp.dataset.moverId,inp.value);
 });
 
 document.querySelectorAll('#journey button').forEach(b=>b.addEventListener('click',()=>{
@@ -448,6 +548,7 @@ busca.addEventListener('input',render);
 document.getElementById('btnMaisFiltros').addEventListener('click',toggleMaisFiltros);
 document.getElementById('btnLimparFiltros').addEventListener('click',limparFiltros);
 document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('selectExportarProjeto').addEventListener('change',e=>{if(e.target.value){exportarPorProjeto(e.target.value);e.target.value=''}});
 document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
 document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
@@ -484,9 +585,9 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
   }
   function abrirModal(listaIds){
     passos=listaIds.map(id=>prompts.find(p=>p.id===id)).filter(Boolean);
-    passoAtual=0;modal.style.display='flex';renderPasso();
+    passoAtual=0;modal.style.display='flex';window.modoGuiadoAtivo=true;renderPasso();
   }
-  function fecharModal(){modal.style.display='none'}
+  function fecharModal(){modal.style.display='none';window.modoGuiadoAtivo=false}
   document.getElementById('btnModoGuiado').addEventListener('click',()=>abrirModal(prompts.filter(p=>p.fase==='inicio').map(p=>p.id)));
   document.getElementById('btnModoGuiadoMelhorar').addEventListener('click',()=>abrirModal(ORDEM_MELHORAR));
   modal.addEventListener('click',e=>{if(e.target===modal)fecharModal()});
