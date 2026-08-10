@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aprender a Cantar | Delta Prompts</title><meta name="description" content="Prompts para quem quer aprender a cantar do zero: descobrir a voz, escolher musicas faceis, exercicios de respiracao e aquecimento vocal."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.prompt-text{white-space:pre-wrap;background:#f8fafc;padding:13px;border-radius:10px;margin:10px 0;font-size:14px}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{border:0;border-radius:11px;padding:10px 14px;font-weight:800;cursor:pointer;font-size:13px;background:#f1f5f9;color:#334155}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.tag{font-size:12px;font-weight:800;background:#fdf2f8;padding:5px 9px;border-radius:999px;color:#be185d}
+.nivel{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;margin-left:6px}
+.nivel-basico{background:#dcfce7;color:#166534}
+.nivel-intermediario{background:#fef9c3;color:#854d0e}
+.nivel-avancado{background:#fee2e2;color:#991b1b}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:14px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}
+.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filtros button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}
+.filtros button.ativo{background:#db2777;color:#fff;border-color:#db2777}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:#fdf2f8;color:#db2777}
+.filtros button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#fdf2f8}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#db2777;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.stats-bar{font-size:13px;color:#667085;margin:0 0 10px;font-weight:600}
+[data-theme="dark"] .prompt-text{background:rgba(255,255,255,.05);color:#cbd5e1}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica{color:#a0a0a0}
+</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
+
+<h1>🎤 Aprender a Cantar</h1>
+<p>10 prompts para quem quer começar a cantar do zero — sem saber por onde começar, nem que músicas tentar. Do descobrir sua voz aos primeiros exercícios, no seu ritmo.</p>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="🔎 Buscar por ambiente ou objetivo...">
+  <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
+</div>
+<div class="filtros" id="filtrosCategoria"></div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o prompt de decoração que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes"><button id="btnCopiarSugestao">📋 Copiar sugestão</button><span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span></div>
+</div>
+
+<div id="lista"></div>
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const dadosBrutos=[
+{categoria:'🧭 Primeiros Passos',nivel:'basico',titulo:'🎤 Descobrir Minha Voz (Tessitura Simples)',quando:'Para quem nunca cantou e não sabe se a voz é mais grave ou mais aguda, nem por onde começar.',prompt:`Quero descobrir melhor como é minha voz, mesmo nunca tendo estudado canto.
+
+Como minha voz costuma ser no dia a dia: [EX: GRAVE, AGUDA, NÃO SEI DIZER]
+Cantores/cantoras que eu consigo acompanhar sem esforço: [SE SOUBER, LISTE ALGUNS]
+Cantores/cantoras que eu tenho dificuldade de acompanhar: [SE SOUBER, LISTE ALGUNS]
+
+Faça de 5 a 7 perguntas simples, uma de cada vez, pra me ajudar a ter uma ideia inicial da minha faixa vocal (grave, média ou aguda), sem exigir nenhum conhecimento técnico de música da minha parte.`,en:`I want to better understand my voice, even though I've never studied singing.
+
+How my voice usually is day-to-day: [EG: LOW, HIGH, NOT SURE]
+Singers I can sing along with easily: [IF YOU KNOW, LIST A FEW]
+Singers I have trouble singing along with: [IF YOU KNOW, LIST A FEW]
+
+Ask 5 to 7 simple questions, one at a time, to help me get an initial idea of my vocal range (low, medium, or high), without requiring any technical music knowledge from me.`},
+{categoria:'🧭 Primeiros Passos',nivel:'basico',titulo:'🎵 Escolher as Primeiras Músicas para Aprender a Cantar',quando:'Para não travar na hora de escolher — músicas fáceis pra começar, de acordo com seu gosto e sua voz.',prompt:`Preciso de sugestões de músicas fáceis pra começar a cantar.
+
+Estilos musicais que eu gosto: [ESTILOS]
+Minha experiência com canto: [NENHUMA/JÁ CANTEI UM POUCO]
+Minha voz (se já souber): [GRAVE/AGUDA/MÉDIA/NÃO SEI]
+
+Sugira de 5 a 8 músicas populares e fáceis de cantar pra iniciantes, dentro dos estilos que eu gosto, explicando rapidamente por que cada uma é uma boa escolha pra quem está começando (melodia simples, faixa vocal confortável, etc.).`,en:`I need suggestions for easy songs to start singing.
+
+Music styles I like: [STYLES]
+My singing experience: [NONE/SUNG A LITTLE BEFORE]
+My voice (if you already know): [LOW/HIGH/MEDIUM/NOT SURE]
+
+Suggest 5 to 8 popular songs that are easy to sing for beginners, within the styles I like, briefly explaining why each is a good choice for someone starting out (simple melody, comfortable vocal range, etc.).`},
+{categoria:'🎯 Exercícios Práticos',nivel:'basico',titulo:'🫁 Exercícios de Respiração para Cantar',quando:'Para aprender a respirar direito antes de tentar cantar — a base de tudo.',prompt:`Quero aprender a respirar corretamente pra cantar, do zero.
+
+Minha experiência com canto: [NENHUMA/POUCA]
+Tempo disponível pra praticar: [TEMPO]
+
+Ensine de 3 a 4 exercícios básicos de respiração diafragmática voltados pra canto, explicando o passo a passo de um jeito bem simples, como se eu nunca tivesse ouvido falar nisso antes.`,en:`I want to learn to breathe correctly for singing, from scratch.
+
+My singing experience: [NONE/A LITTLE]
+Time available to practice: [TIME]
+
+Teach 3 to 4 basic diaphragmatic breathing exercises for singing, explaining the step-by-step in a very simple way, as if I'd never heard of this before.`},
+{categoria:'🎯 Exercícios Práticos',nivel:'basico',titulo:'🎶 Aquecimento Vocal Antes de Cantar',quando:'Para não forçar a voz — um aquecimento simples antes de qualquer prática de canto.',prompt:`Quero um aquecimento vocal simples antes de praticar canto.
+
+Tempo disponível pro aquecimento: [TEMPO, EX: 5 MINUTOS]
+Horário do dia que costumo praticar: [HORÁRIO]
+
+Crie uma sequência curta de aquecimento vocal (sons, escalas simples, relaxamento) adequada pra iniciante, explicando cada etapa de forma bem clara, e avise sobre sinais de que devo parar (dor, forçar a voz).`,en:`I want a simple vocal warm-up before practicing singing.
+
+Time available for warm-up: [TIME, EG: 5 MINUTES]
+Time of day I usually practice: [TIME OF DAY]
+
+Create a short vocal warm-up sequence (sounds, simple scales, relaxation) suitable for a beginner, explaining each step clearly, and warn about signs that I should stop (pain, straining the voice).`},
+{categoria:'🔎 Autoconhecimento',nivel:'intermediario',titulo:'🎯 Identificar Meus Pontos Fracos ao Cantar',quando:'Para saber especificamente o que trabalhar, em vez de praticar sem direção.',prompt:`Quero identificar meus pontos fracos ao cantar, pra saber o que focar.
+
+O que eu percebo quando canto: [EX: DESAFINO EM NOTAS ALTAS, PERCO O FÔLEGO, NÃO SEI SE ESTOU NO TOM]
+Música que costumo tentar cantar: [MÚSICA, SE TIVER UMA EM MENTE]
+
+Faça de 5 a 7 perguntas, uma de cada vez, pra me ajudar a identificar com mais clareza onde estão minhas maiores dificuldades (afinação, fôlego, potência, ritmo). No final, resuma os pontos identificados e sugira por onde começar a trabalhar.`,en:`I want to identify my weak points when singing, to know what to focus on.
+
+What I notice when I sing: [EG: I GO OFF-KEY ON HIGH NOTES, I RUN OUT OF BREATH, I'M NOT SURE IF I'M IN TUNE]
+Song I usually try to sing: [SONG, IF YOU HAVE ONE IN MIND]
+
+Ask 5 to 7 questions, one at a time, to help me more clearly identify where my biggest difficulties are (pitch, breath, power, rhythm). At the end, summarize the points identified and suggest where to start working.`},
+{categoria:'📅 Planejamento',nivel:'intermediario',titulo:'📅 Plano de Prática Semanal para Iniciantes',quando:'Para organizar uma rotina de prática de canto sem se sobrecarregar.',prompt:`Quero montar um plano de prática de canto pra iniciante.
+
+Tempo disponível por semana: [TEMPO TOTAL]
+Dias que consigo praticar: [DIAS]
+Meu maior objetivo agora: [EX: APRENDER UMA MÚSICA, MELHORAR AFINAÇÃO, GANHAR CONFIANÇA]
+
+Monte um plano semanal simples, dividindo aquecimento, respiração, exercícios vocais e prática da música escolhida entre os dias disponíveis, adequado pra quem está começando.`,en:`I want to build a singing practice plan for beginners.
+
+Time available per week: [TOTAL TIME]
+Days I can practice: [DAYS]
+My main goal right now: [EG: LEARN A SONG, IMPROVE PITCH, BUILD CONFIDENCE]
+
+Put together a simple weekly plan, dividing warm-up, breathing, vocal exercises, and practicing the chosen song across the available days, suited for someone just starting out.`},
+{categoria:'🎯 Exercícios Práticos',nivel:'intermediario',titulo:'🎼 Entender uma Música Nova Antes de Cantar',quando:'Para estudar a estrutura de uma música antes de tentar cantar ela inteira.',prompt:`Quero entender melhor uma música antes de tentar cantar ela.
+
+Música: [NOME DA MÚSICA E ARTISTA]
+
+Explique a estrutura da música (introdução, versos, refrão, ponte), aponte as partes que costumam ser mais difíceis pra iniciantes (notas altas, mudanças de ritmo), e sugira por onde eu poderia começar a praticar primeiro (ex: só o refrão, depois o resto).`,en:`I want to better understand a song before trying to sing it.
+
+Song: [SONG NAME AND ARTIST]
+
+Explain the song's structure (intro, verses, chorus, bridge), point out the parts that tend to be harder for beginners (high notes, rhythm changes), and suggest where I could start practicing first (eg: just the chorus, then the rest).`},
+{categoria:'🎯 Exercícios Práticos',nivel:'intermediario',titulo:'🎙️ Preparar para Gravar e Avaliar Minha Própria Voz',quando:'Para perceber, ao se ouvir gravado, coisas que não percebe cantando ao vivo.',prompt:`Quero começar a me gravar cantando pra me avaliar.
+
+Música ou trecho que vou gravar: [MÚSICA/TRECHO]
+O que já sei sobre minha voz: [O QUE JÁ PERCEBEU]
+
+Me dê uma lista de 6 coisas específicas pra prestar atenção quando eu ouvir minha gravação de volta (afinação, respiração, dicção, ritmo, potência, emoção), explicando brevemente o que observar em cada uma.`,en:`I want to start recording myself singing to evaluate myself.
+
+Song or excerpt I'll record: [SONG/EXCERPT]
+What I already know about my voice: [WHAT YOU'VE ALREADY NOTICED]
+
+Give me a list of 6 specific things to pay attention to when I listen back to my recording (pitch, breathing, diction, rhythm, power, emotion), briefly explaining what to observe in each.`},
+{categoria:'🔎 Autoconhecimento',nivel:'basico',titulo:'💪 Superar a Insegurança de Cantar na Frente de Outros',quando:'Para quem tem vergonha ou medo de cantar perto de outras pessoas, mesmo gostando de cantar.',prompt:`Tenho insegurança de cantar na frente de outras pessoas e quero trabalhar isso aos poucos.
+
+O que mais me dá insegurança: [EX: MEDO DE DESAFINAR, VERGONHA DA VOZ, MEDO DE JULGAMENTO]
+Situação que eu gostaria de conseguir enfrentar: [EX: CANTAR PRA UM AMIGO, KARAOKÊ, GRAVAR UM VÍDEO]
+
+Sugira um caminho gradual, em pequenos passos, pra eu ir ganhando confiança aos poucos até conseguir encarar a situação que mencionei, sem me forçar a pular etapas.`,en:`I feel insecure about singing in front of other people and want to work on this gradually.
+
+What makes me most insecure: [EG: FEAR OF GOING OFF-KEY, EMBARRASSED ABOUT MY VOICE, FEAR OF JUDGMENT]
+Situation I'd like to be able to face: [EG: SINGING FOR A FRIEND, KARAOKE, RECORDING A VIDEO]
+
+Suggest a gradual path, in small steps, for me to build confidence bit by bit until I can face the situation I mentioned, without forcing myself to skip steps.`},
+{categoria:'📅 Planejamento',nivel:'avancado',titulo:'🎓 Quando Vale a Pena Procurar um Professor de Canto',quando:'Para refletir se já é hora de buscar aulas, com base no que você já pratica sozinho(a).',prompt:`Quero refletir se já é hora de procurar um professor de canto.
+
+Há quanto tempo pratico sozinho(a): [TEMPO]
+O que já consigo fazer: [O QUE JÁ CONSEGUE]
+O que sinto que travo sozinho(a): [DIFICULDADES QUE NÃO CONSIGO RESOLVER SOZINHO]
+Meu objetivo com o canto: [EX: HOBBY, SE APRESENTAR, PROFISSIONALIZAR]
+
+Me ajude a refletir sobre os sinais de que vale a pena buscar aulas com um professor agora, versus continuar praticando sozinho(a) por mais um tempo, considerando meu objetivo e o que já tentei.`,en:`I want to reflect on whether it's time to look for a singing teacher.
+
+How long I've been practicing alone: [TIME]
+What I can already do: [WHAT YOU CAN ALREADY DO]
+What I feel stuck on by myself: [DIFFICULTIES YOU CAN'T SOLVE ALONE]
+My goal with singing: [EG: HOBBY, PERFORMING, GOING PROFESSIONAL]
+
+Help me reflect on the signs that it's worth seeking lessons with a teacher now, versus continuing to practice alone for a while longer, considering my goal and what I've already tried.`}
+];
+
+const prompts=dadosBrutos.map((x,i)=>{
+  const obj={id:'decor-'+i,categoria:x.categoria,nivel:x.nivel,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:true};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const idiomaAtivo={};
+let categoriaAtual='todos';
+
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+function getItem(id){return prompts.find(p=>p.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='❤️ Favoritado';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:textoFinal(id),categoria:'Aprender a Cantar',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaCantorUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaCantorUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos)}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaCantorFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaCantorFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};
+  const g=window.deltaAuth;
+  if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}
+  else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up)up.classList.toggle('marcado',fb.voto==='up');
+  if(down)down.classList.toggle('marcado',fb.voto==='down');
+  const g=window.deltaAuth;
+  if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
+}
+
+function alternarIdioma(id){
+  idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';
+  const pre=document.getElementById('prompt-'+id),btn=document.getElementById('idioma-'+id);
+  if(pre)pre.textContent=textoFinal(id);
+  if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}
+}
+async function copiarPorId(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id));mostrarToast('📋 Copiado!')}catch(e){mostrarToast('Não foi possível copiar')}}
+async function abrirChat(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://gemini.google.com/app','_blank'),300)}
+function compartilhar(id){
+  const p=getItem(id);if(!p)return;
+  const texto='🛋️ '+p.titulo+'\n\n'+textoFinal(id)+'\n\n— via Delta Prompts';
+  if(navigator.share){navigator.share({title:p.titulo,text:texto}).catch(()=>{})}
+  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Copiado! Cole onde quiser compartilhar.'))}
+}
+function exportarTodos(){
+  const linhas=prompts.map(p=>p.titulo+' ('+p.categoria+')\n'+p.prompt);
+  const blob=new Blob(['🛋️ APRENDER A CANTAR — DELTA PROMPTS\n\n'+linhas.join('\n\n'+'─'.repeat(40)+'\n\n')],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='deltacantor.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  mostrarToast('📥 Arquivo baixado!');
+}
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão para o Delta Prompts (Aprender a Cantar):\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Aprender a Cantar').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🛋️ <strong>'+prompts.length+'</strong> modelos disponíveis'}
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function montarFiltroCategoria(){
+  const cont=document.getElementById('filtrosCategoria');
+  const categorias=[...new Set(prompts.map(p=>p.categoria))];
+  cont.innerHTML='<button class="'+(categoriaAtual==='todos'?'ativo':'')+'" data-categoria="todos">Todos <span class="count-badge">'+prompts.length+'</span></button>'+
+    categorias.map(c=>{const n=prompts.filter(p=>p.categoria===c).length;return `<button class="${categoriaAtual===c?'ativo':''}" data-categoria="${c}">${c} <span class="count-badge">${n}</span></button>`}).join('');
+  cont.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{categoriaAtual=b.dataset.categoria;montarFiltroCategoria();render()}));
+}
+
+function render(){
+  const termo=norm(document.getElementById('busca').value);
+  const filtrados=prompts.filter(p=>{
+    const texto=norm([p.titulo,p.quando,p.categoria,p.prompt].join(' '));
+    return(!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual);
+  });
+  document.getElementById('contador').textContent=filtrados.length+' de '+prompts.length+' modelos';
+  const lista=document.getElementById('lista');
+  lista.innerHTML=filtrados.length?filtrados.map(p=>`
+    <section class="card" id="card-${p.id}">
+      <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span>
+      <h3>${p.titulo}</h3>
+      <p style="color:#667085;font-size:13.5px;margin:4px 0 10px">${p.quando}</p>
+      ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+      <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
+      <div class="acoes">
+        <button class="copiar" data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+        <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+        <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
+        <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
+        <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+        <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+      </div>
+      <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    </section>`).join('') : '<div style="text-align:center;padding:30px;opacity:.7">🔎 Nenhum modelo encontrado.</div>';
+
+  filtrados.forEach(p=>{atualizarBtnFav(p.id,document.querySelector('#card-'+p.id+' .favoritar'));atualizarFeedbackUI(p.id)});
+}
+
+document.getElementById('lista').addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar')copiarPorId(id);
+  else if(acao==='chat')abrirChat(id);
+  else if(acao==='gemini')abrirGemini(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+document.getElementById('busca').addEventListener('input',render);
+document.getElementById('btnExportar').addEventListener('click',exportarTodos);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+montarFiltroCategoria();
+atualizarStats();
+render();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+</script></body></html>

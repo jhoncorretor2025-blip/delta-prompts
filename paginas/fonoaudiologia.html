@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fonoaudiologia & Dicção | Delta Prompts</title><meta name="description" content="Prompts para praticar dicção, articulação e clareza na fala com IA - para quem quer falar com mais clareza, do zero."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.prompt-text{white-space:pre-wrap;background:#f8fafc;padding:13px;border-radius:10px;margin:10px 0;font-size:14px}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{border:0;border-radius:11px;padding:10px 14px;font-weight:800;cursor:pointer;font-size:13px;background:#f1f5f9;color:#334155}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.tag{font-size:12px;font-weight:800;background:#f0fdfa;padding:5px 9px;border-radius:999px;color:#0f766e}
+.nivel{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;margin-left:6px}
+.nivel-basico{background:#dcfce7;color:#166534}
+.nivel-intermediario{background:#fef9c3;color:#854d0e}
+.nivel-avancado{background:#fee2e2;color:#991b1b}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:14px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}
+.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filtros button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}
+.filtros button.ativo{background:#0d9488;color:#fff;border-color:#0d9488}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:#f0fdfa;color:#0d9488}
+.filtros button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#f0fdfa}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#0d9488;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.stats-bar{font-size:13px;color:#667085;margin:0 0 10px;font-weight:600}
+[data-theme="dark"] .prompt-text{background:rgba(255,255,255,.05);color:#cbd5e1}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica{color:#a0a0a0}
+</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
+
+<h1>🗣️ Fonoaudiologia & Dicção</h1>
+<p>10 prompts para quem quer falar com mais clareza — do diagnóstico simples aos exercícios práticos, mesmo sem saber por onde começar. Esses prompts ajudam a praticar e organizar informações, mas não substituem uma avaliação com fonoaudiólogo se você sentir necessidade.</p>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="🔎 Buscar por ambiente ou objetivo...">
+  <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
+</div>
+<div class="filtros" id="filtrosCategoria"></div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o prompt de decoração que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes"><button id="btnCopiarSugestao">📋 Copiar sugestão</button><span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span></div>
+</div>
+
+<div id="lista"></div>
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const dadosBrutos=[
+{categoria:'🧭 Primeiros Passos',nivel:'basico',titulo:'🗣️ Diagnóstico Simples de Como Está Minha Fala Hoje',quando:'Para quem não sabe nem por onde começar e quer entender melhor a própria fala primeiro.',prompt:`Me ajude a entender melhor como está minha fala hoje.
+
+Como eu descreveria minha fala: [EX: ENROLADA, RÁPIDA DEMAIS, TROCO LETRAS, GAGUEJO ÀS VEZES]
+Em que situações percebo mais dificuldade: [EX: AO FALAR RÁPIDO, QUANDO ESTOU NERVOSO(A), EM PALAVRAS ESPECÍFICAS]
+Desde quando percebo isso: [DESDE QUANDO]
+
+Faça de 6 a 8 perguntas, uma de cada vez, pra me ajudar a identificar padrões na minha fala (sons que mais confundo, velocidade, respiração, nervosismo). No final, resuma o que percebeu e sugira por onde eu poderia começar a praticar.`,en:`Help me better understand how my speech is today.
+
+How I would describe my speech: [EG: SLURRED, TOO FAST, I MIX UP LETTERS, I SOMETIMES STUTTER]
+Situations where I notice more difficulty: [EG: WHEN SPEAKING FAST, WHEN NERVOUS, WITH SPECIFIC WORDS]
+Since when I've noticed this: [SINCE WHEN]
+
+Ask 6 to 8 questions, one at a time, to help identify patterns in my speech (sounds I mix up most, speed, breathing, nervousness). At the end, summarize what you noticed and suggest where I could start practicing.`},
+{categoria:'🎯 Exercícios Práticos',nivel:'basico',titulo:'👄 Exercícios de Articulação para Falar mais Claro',quando:'Para treinar a boca e a língua a pronunciar com mais clareza, com exercícios simples do dia a dia.',prompt:`Quero praticar exercícios de articulação pra falar mais claro.
+
+Sons ou letras que mais confundo ou engulo ao falar: [EX: R, S, T, PALAVRAS COM CONSOANTES JUNTAS]
+Tempo que tenho disponível pra praticar por dia: [TEMPO]
+
+Crie uma sequência de exercícios de articulação (movimentos de boca, língua e lábios) focados nos sons que mencionei, com passo a passo simples de fazer sozinho(a) em casa, na ordem certa pra um treino diário curto.`,en:`I want to practice articulation exercises to speak more clearly.
+
+Sounds or letters I mix up or swallow most when speaking: [EG: R, S, T, WORDS WITH CONSONANT CLUSTERS]
+Time I have available to practice per day: [TIME]
+
+Create a sequence of articulation exercises (mouth, tongue, and lip movements) focused on the sounds I mentioned, with a simple step-by-step I can do alone at home, in the right order for a short daily practice.`},
+{categoria:'🎯 Exercícios Práticos',nivel:'basico',titulo:'🌬️ Exercícios de Respiração para Falar com mais Controle',quando:'Para quem fala rápido demais ou sem fôlego, e quer ganhar mais controle ao falar.',prompt:`Quero praticar respiração pra ter mais controle ao falar.
+
+O que eu percebo: [EX: FICO SEM FÔLEGO NO MEIO DA FRASE, FALO MUITO RÁPIDO, MINHA VOZ FICA FRACA NO FINAL DA FRASE]
+
+Ensine de 3 a 5 exercícios de respiração diafragmática voltados pra fala (não canto), explicando o passo a passo de cada um, e como aplicar isso enquanto falo no dia a dia, sem parecer artificial.`,en:`I want to practice breathing to have more control while speaking.
+
+What I notice: [EG: I RUN OUT OF BREATH MID-SENTENCE, I SPEAK TOO FAST, MY VOICE GETS WEAK AT THE END OF A SENTENCE]
+
+Teach 3 to 5 diaphragmatic breathing exercises geared toward speech (not singing), explaining the step-by-step for each, and how to apply this while speaking day-to-day, without sounding artificial.`},
+{categoria:'🎯 Exercícios Práticos',nivel:'intermediario',titulo:'🔤 Trava-línguas Personalizados para Praticar',quando:'Para treinar especificamente os sons que mais te atrapalham, de um jeito mais divertido.',prompt:`Crie trava-línguas personalizados pra eu praticar.
+
+Sons que quero focar: [SONS OU LETRAS, EX: R, S, LH]
+Nível de dificuldade que eu quero: [FÁCIL/MÉDIO/DIFÍCIL]
+
+Crie 5 trava-línguas focados nesses sons específicos, do mais fácil pro mais difícil, e explique como praticar cada um (devagar primeiro, depois aumentando a velocidade aos poucos).`,en:`Create personalized tongue twisters for me to practice.
+
+Sounds I want to focus on: [SOUNDS OR LETTERS, EG: R, S, LH]
+Difficulty level I want: [EASY/MEDIUM/HARD]
+
+Create 5 tongue twisters focused on these specific sounds, from easiest to hardest, and explain how to practice each one (slowly first, then gradually increasing speed).`},
+{categoria:'🎯 Exercícios Práticos',nivel:'intermediario',titulo:'📖 Treino de Leitura em Voz Alta com Foco em Clareza',quando:'Para praticar clareza lendo um texto que você já tem, prestando atenção em pontos específicos.',prompt:`Quero treinar clareza de fala lendo um texto em voz alta.
+
+Texto que vou ler (cole aqui ou descreva o assunto): [TEXTO OU ASSUNTO]
+O que mais quero melhorar enquanto leio: [EX: VELOCIDADE, PAUSAS, ENTONAÇÃO, PRONÚNCIA]
+
+Me dê um guia de como ler esse texto em voz alta focando no que mencionei: onde fazer pausas, onde desacelerar, e 3 dicas específicas pra prestar atenção durante a leitura.`,en:`I want to practice speech clarity by reading a text out loud.
+
+Text I'm going to read (paste it here or describe the topic): [TEXT OR TOPIC]
+What I most want to improve while reading: [EG: SPEED, PAUSES, INTONATION, PRONUNCIATION]
+
+Give me a guide for reading this text out loud focused on what I mentioned: where to pause, where to slow down, and 3 specific tips to pay attention to while reading.`},
+{categoria:'📅 Planejamento',nivel:'intermediario',titulo:'📅 Plano de Prática Diária de Dicção',quando:'Para organizar uma rotina curta e constante de prática, em vez de tentar tudo de uma vez.',prompt:`Quero montar um plano de prática diária de dicção.
+
+Tempo disponível por dia: [TEMPO, EX: 10 MINUTOS]
+Minhas maiores dificuldades: [DIFICULDADES]
+Dias da semana que consigo praticar: [DIAS]
+
+Monte um plano semanal simples, dividindo respiração, articulação e leitura em voz alta entre os dias, adequado ao tempo que tenho disponível, sem sobrecarregar.`,en:`I want to build a daily diction practice plan.
+
+Time available per day: [TIME, EG: 10 MINUTES]
+My biggest difficulties: [DIFFICULTIES]
+Days of the week I can practice: [DAYS]
+
+Put together a simple weekly plan, dividing breathing, articulation, and reading aloud across the days, suited to the time I have available, without overloading me.`},
+{categoria:'🎯 Exercícios Práticos',nivel:'intermediario',titulo:'🎙️ Preparar para Gravar e se Ouvir Falando',quando:'Para perceber padrões na própria fala que só aparecem quando você se escuta gravado.',prompt:`Quero começar a me gravar falando pra perceber padrões na minha fala.
+
+O que já sei sobre minha fala: [O QUE VOCÊ JÁ PERCEBEU]
+
+Me dê um roteiro curto (30 segundos a 1 minuto) pra eu ler ou falar naturalmente numa gravação, e uma lista de 5 coisas específicas pra prestar atenção quando eu ouvir a gravação de volta (velocidade, clareza, pausas, tom, sons que confundo).`,en:`I want to start recording myself speaking to notice patterns in my speech.
+
+What I already know about my speech: [WHAT YOU'VE ALREADY NOTICED]
+
+Give me a short script (30 seconds to 1 minute) to read or speak naturally in a recording, and a list of 5 specific things to pay attention to when I listen back (speed, clarity, pauses, tone, sounds I mix up).`},
+{categoria:'💬 Situações do Dia a Dia',nivel:'intermediario',titulo:'💬 Praticar Fala para Situações Específicas',quando:'Para treinar antes de uma apresentação, entrevista ou conversa importante.',prompt:`Quero praticar minha fala pra uma situação específica.
+
+Situação: [EX: APRESENTAÇÃO NO TRABALHO, ENTREVISTA DE EMPREGO, LIGAÇÃO IMPORTANTE]
+O que mais me preocupa nessa situação: [EX: FICAR NERVOSO E FALAR RÁPIDO DEMAIS, TRAVAR]
+
+Me dê 3 exercícios rápidos de aquecimento vocal e respiração pra fazer antes dessa situação específica, e 2 técnicas pra manter clareza mesmo se eu ficar nervoso(a) durante.`,en:`I want to practice my speech for a specific situation.
+
+Situation: [EG: WORK PRESENTATION, JOB INTERVIEW, IMPORTANT CALL]
+What worries me most about this situation: [EG: GETTING NERVOUS AND SPEAKING TOO FAST, FREEZING UP]
+
+Give me 3 quick vocal warm-up and breathing exercises to do before this specific situation, and 2 techniques to maintain clarity even if I get nervous during it.`},
+{categoria:'🧭 Primeiros Passos',nivel:'basico',titulo:'🧑‍⚕️ Organizar Informações Antes de uma Consulta com Fonoaudiólogo',quando:'Para chegar preparado(a) numa primeira consulta, caso você decida procurar um profissional.',prompt:`Vou ter uma consulta com um fonoaudiólogo e quero chegar organizado(a).
+
+Como eu descreveria minha fala/voz: [DESCRIÇÃO]
+Desde quando percebo isso: [DESDE QUANDO]
+Já tentei algo por conta própria? O quê: [O QUE JÁ TENTOU, SE ALGO]
+Como isso afeta meu dia a dia: [IMPACTO NO DIA A DIA]
+
+Organize essas informações de forma clara em tópicos, do jeito que costuma ser útil levar pra uma primeira consulta fonoaudiológica. Não sugira diagnóstico nem tratamento — só organize o que eu escrevi.`,en:`I'm going to have an appointment with a speech therapist and want to arrive prepared.
+
+How I would describe my speech/voice: [DESCRIPTION]
+Since when I've noticed this: [SINCE WHEN]
+Have I tried anything on my own? What: [WHAT YOU'VE TRIED, IF ANYTHING]
+How this affects my daily life: [IMPACT ON DAILY LIFE]
+
+Organize this information clearly in topics, the way that's usually useful to bring to a first speech therapy appointment. Do not suggest a diagnosis or treatment — just organize what I wrote.`},
+{categoria:'📅 Planejamento',nivel:'avancado',titulo:'📈 Acompanhar Minha Evolução na Fala ao Longo do Tempo',quando:'Para quem já está praticando há um tempo e quer um jeito estruturado de ver o progresso.',prompt:`Quero acompanhar minha evolução na fala ao longo do tempo.
+
+Há quanto tempo estou praticando: [TEMPO]
+O que já mudou, na minha percepção: [MUDANÇAS PERCEBIDAS]
+O que ainda quero melhorar: [O QUE FALTA]
+
+Crie um modelo simples de acompanhamento semanal (perguntas curtas que eu possa responder toda semana) pra registrar minha evolução, dificuldades que aparecem, e o que praticar na semana seguinte com base nisso.`,en:`I want to track my speech progress over time.
+
+How long I've been practicing: [TIME]
+What has already changed, in my perception: [CHANGES NOTICED]
+What I still want to improve: [WHAT'S LEFT]
+
+Create a simple weekly tracking template (short questions I can answer every week) to log my progress, difficulties that come up, and what to practice the following week based on that.`}
+];
+
+const prompts=dadosBrutos.map((x,i)=>{
+  const obj={id:'decor-'+i,categoria:x.categoria,nivel:x.nivel,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:true};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const idiomaAtivo={};
+let categoriaAtual='todos';
+
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+function getItem(id){return prompts.find(p=>p.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='❤️ Favoritado';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:textoFinal(id),categoria:'Fonoaudiologia',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaFonoUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaFonoUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos)}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaFonoFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaFonoFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};
+  const g=window.deltaAuth;
+  if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}
+  else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up)up.classList.toggle('marcado',fb.voto==='up');
+  if(down)down.classList.toggle('marcado',fb.voto==='down');
+  const g=window.deltaAuth;
+  if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
+}
+
+function alternarIdioma(id){
+  idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';
+  const pre=document.getElementById('prompt-'+id),btn=document.getElementById('idioma-'+id);
+  if(pre)pre.textContent=textoFinal(id);
+  if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}
+}
+async function copiarPorId(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id));mostrarToast('📋 Copiado!')}catch(e){mostrarToast('Não foi possível copiar')}}
+async function abrirChat(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://gemini.google.com/app','_blank'),300)}
+function compartilhar(id){
+  const p=getItem(id);if(!p)return;
+  const texto='🛋️ '+p.titulo+'\n\n'+textoFinal(id)+'\n\n— via Delta Prompts';
+  if(navigator.share){navigator.share({title:p.titulo,text:texto}).catch(()=>{})}
+  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Copiado! Cole onde quiser compartilhar.'))}
+}
+function exportarTodos(){
+  const linhas=prompts.map(p=>p.titulo+' ('+p.categoria+')\n'+p.prompt);
+  const blob=new Blob(['🛋️ FONOAUDIOLOGIA & DICÇÃO — DELTA PROMPTS\n\n'+linhas.join('\n\n'+'─'.repeat(40)+'\n\n')],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='deltafono.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  mostrarToast('📥 Arquivo baixado!');
+}
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão para o Delta Prompts (Fonoaudiologia):\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Fonoaudiologia').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🛋️ <strong>'+prompts.length+'</strong> modelos disponíveis'}
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function montarFiltroCategoria(){
+  const cont=document.getElementById('filtrosCategoria');
+  const categorias=[...new Set(prompts.map(p=>p.categoria))];
+  cont.innerHTML='<button class="'+(categoriaAtual==='todos'?'ativo':'')+'" data-categoria="todos">Todos <span class="count-badge">'+prompts.length+'</span></button>'+
+    categorias.map(c=>{const n=prompts.filter(p=>p.categoria===c).length;return `<button class="${categoriaAtual===c?'ativo':''}" data-categoria="${c}">${c} <span class="count-badge">${n}</span></button>`}).join('');
+  cont.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{categoriaAtual=b.dataset.categoria;montarFiltroCategoria();render()}));
+}
+
+function render(){
+  const termo=norm(document.getElementById('busca').value);
+  const filtrados=prompts.filter(p=>{
+    const texto=norm([p.titulo,p.quando,p.categoria,p.prompt].join(' '));
+    return(!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual);
+  });
+  document.getElementById('contador').textContent=filtrados.length+' de '+prompts.length+' modelos';
+  const lista=document.getElementById('lista');
+  lista.innerHTML=filtrados.length?filtrados.map(p=>`
+    <section class="card" id="card-${p.id}">
+      <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span>
+      <h3>${p.titulo}</h3>
+      <p style="color:#667085;font-size:13.5px;margin:4px 0 10px">${p.quando}</p>
+      ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+      <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
+      <div class="acoes">
+        <button class="copiar" data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+        <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+        <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
+        <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
+        <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+        <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+      </div>
+      <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    </section>`).join('') : '<div style="text-align:center;padding:30px;opacity:.7">🔎 Nenhum modelo encontrado.</div>';
+
+  filtrados.forEach(p=>{atualizarBtnFav(p.id,document.querySelector('#card-'+p.id+' .favoritar'));atualizarFeedbackUI(p.id)});
+}
+
+document.getElementById('lista').addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar')copiarPorId(id);
+  else if(acao==='chat')abrirChat(id);
+  else if(acao==='gemini')abrirGemini(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+document.getElementById('busca').addEventListener('input',render);
+document.getElementById('btnExportar').addEventListener('click',exportarTodos);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+montarFiltroCategoria();
+atualizarStats();
+render();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+</script></body></html>
