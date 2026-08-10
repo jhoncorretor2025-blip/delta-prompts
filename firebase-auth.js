@@ -147,6 +147,19 @@ export async function registrarFeedbackGlobal(promptId,tipo,delta){
   try{await setDoc(doc(db,'feedbackGlobal',promptId),{[tipo]:increment(delta)},{merge:true})}
   catch(e){console.error('Erro ao registrar feedback global:',e)}
 }
+
+// ===== QUAL IA RESPONDEU MELHOR (por prompt, agregado de todo mundo) =====
+export async function registrarPreferenciaIA(promptId,ia,delta){
+  if(!promptId||(ia!=='chatgpt'&&ia!=='gemini'&&ia!=='empate'))return;
+  delta=delta||1;
+  try{await setDoc(doc(db,'preferenciaIA',promptId),{[ia]:increment(delta)},{merge:true})}
+  catch(e){console.error('Erro ao registrar preferencia de IA:',e)}
+}
+export async function obterPreferenciaIA(promptId){
+  try{const snap=await getDoc(doc(db,'preferenciaIA',promptId));return snap.exists()?{chatgpt:snap.data().chatgpt||0,gemini:snap.data().gemini||0,empate:snap.data().empate||0}:{chatgpt:0,gemini:0,empate:0}}
+  catch(e){return{chatgpt:0,gemini:0,empate:0}}
+}
+
 export async function obterFeedbackGlobal(promptId){
   try{const snap=await getDoc(doc(db,'feedbackGlobal',promptId));return snap.exists()?{up:snap.data().up||0,down:snap.data().down||0}:{up:0,down:0}}
   catch(e){return{up:0,down:0}}

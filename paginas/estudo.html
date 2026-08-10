@@ -652,6 +652,32 @@ function atualizarFeedbackUI(id){
   if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
 }
 
+// ===== QUAL IA RESPONDEU MELHOR =====
+function _loadPreferenciaIA(){try{return JSON.parse(localStorage.getItem('deltaEstudoPreferenciaIA'))||{}}catch(e){return{}}}
+function _savePreferenciaIA(o){try{localStorage.setItem('deltaEstudoPreferenciaIA',JSON.stringify(o))}catch(e){}}
+function darPreferenciaIA(id,ia){
+  const pref=_loadPreferenciaIA();const atual=pref[id];
+  const g=window.deltaAuth;
+  if(atual===ia){delete pref[id];if(g&&g.registrarPreferenciaIA)g.registrarPreferenciaIA(id,ia,-1)}
+  else{if(atual&&g&&g.registrarPreferenciaIA)g.registrarPreferenciaIA(id,atual,-1);pref[id]=ia;if(g&&g.registrarPreferenciaIA)g.registrarPreferenciaIA(id,ia,1)}
+  _savePreferenciaIA(pref);atualizarPreferenciaIAUI(id);
+  mostrarToast(atual===ia?'Marcação removida':'✅ Valeu por avaliar!');
+}
+function atualizarPreferenciaIAUI(id){
+  const pref=_loadPreferenciaIA()[id];
+  const btnChat=document.getElementById('prefchat-'+id),btnGem=document.getElementById('prefgem-'+id),btnEmp=document.getElementById('prefemp-'+id);
+  if(btnChat)btnChat.classList.toggle('marcado',pref==='chatgpt');
+  if(btnGem)btnGem.classList.toggle('marcado',pref==='gemini');
+  if(btnEmp)btnEmp.classList.toggle('marcado',pref==='empate');
+  const g=window.deltaAuth;
+  if(g&&g.obterPreferenciaIA){g.obterPreferenciaIA(id).then(r=>{
+    const total=(r.chatgpt||0)+(r.gemini||0)+(r.empate||0);
+    if(btnChat)btnChat.textContent='🤖 ChatGPT'+(total?' ('+r.chatgpt+')':'');
+    if(btnGem)btnGem.textContent='✨ Gemini'+(total?' ('+r.gemini+')':'');
+    if(btnEmp)btnEmp.textContent='🤝 Empate'+(total?' ('+r.empate+')':'');
+  })}
+}
+
 // ===== PAINEL MAIS FILTROS =====
 function toggleMaisFiltrosEstudo(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
 function atualizarBadgeFiltrosEstudo(){
@@ -784,11 +810,13 @@ function criarCard(p){
     <button class="compartilhar" onclick="compartilhar('${p.id}')">🔗 Compartilhar</button>
   </div>
   <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" onclick="darFeedback('${p.id}','up')">👍 0</button><button id="fbdown-${p.id}" onclick="darFeedback('${p.id}','down')">👎 0</button></div>
+  <div class="feedback-row" style="margin-top:8px"><span style="font-size:12px;color:#8a92a6">Usou nas duas? Qual respondeu melhor?</span><button id="prefchat-${p.id}" onclick="darPreferenciaIA('${p.id}','chatgpt')">🤖 ChatGPT</button><button id="prefgem-${p.id}" onclick="darPreferenciaIA('${p.id}','gemini')">✨ Gemini</button><button id="prefemp-${p.id}" onclick="darPreferenciaIA('${p.id}','empate')">🤝 Empate</button></div>
   ${relacionados.length ? `<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" onclick="irPara('${r.id}')">${r.titulo}</button>`).join('')}</div>` : ''}
   `;
 
   atualizarBtnFav(p.id, card.querySelector('.favoritar'));
   atualizarFeedbackUI(p.id);
+  atualizarPreferenciaIAUI(p.id);
   return card;
 }
 
@@ -896,7 +924,7 @@ aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}c
 atualizarStats();
 filtrarPrompts();
 window.addEventListener('delta:favoritos-updated', atualizarStats);
-if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')));document.querySelectorAll('[id^="prefchat-"]').forEach(b=>atualizarPreferenciaIAUI(b.id.replace('prefchat-','')))})}
 if (location.hash) { setTimeout(() => destacarCard(location.hash.slice(1)), 400); }
 
 </script>
