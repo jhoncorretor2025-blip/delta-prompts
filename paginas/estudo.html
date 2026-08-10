@@ -145,6 +145,7 @@
   <!-- 🛠️ FERRAMENTAS EXTRAS -->
   <div class="toolbar-extra">
     <button id="btnExportar">📥 Exportar todos</button>
+    <select id="selectExportarProjetoEstudo" style="border:1px solid #e6e8f0;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer;display:none"></select>
     <button id="btnSugerir">💡 Sugerir um modelo</button>
   </div>
 
@@ -155,6 +156,14 @@
       <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
     </div>
   </div>
+
+  <button type="button" id="btnModoGuiadoEstudo" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed #5b5ce2;background:#f8f8ff;color:#5b5ce2;font-weight:800;font-size:15px;padding:16px;border-radius:14px;cursor:pointer;margin:16px 0">🎯 Modo Guiado: Como Estudar um Assunto do Zero (passo a passo)</button>
+
+  <div id="modalGuiadoEstudo" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:3000;align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:20px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:26px;position:relative" id="modalGuiadoEstudoConteudo"></div>
+  </div>
+
+  <datalist id="listaProjetosEstudoGlobal"></datalist>
 
   <!-- 5️⃣ CARDS -->
   <div id="lista-prompts"></div>
@@ -794,7 +803,8 @@ function ordenarLista(arr){
 function criarCard(p){
   const usos=_loadUsos();
   const usoCount=usos[p.id]||0;
-  const relacionados=promptsEstudo.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const relacionados=window.modoGuiadoAtivo?[]:promptsEstudo.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const projetoAtual=projetoDoPromptEstudo(p.id);
 
   const card=document.createElement('div');
   card.className='card';
@@ -814,12 +824,22 @@ function criarCard(p){
   ${p.placeholders.length ? `<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/TEMA|ASSUNTO|TÓPICO|TOPICO/i.test(ph)?(function(){try{return localStorage.getItem('deltaTemaPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>` : ''}
   <pre>${p.prompt}</pre>
 
-  <div class="acoes">
+  <div class="acoes" style="position:relative">
     <button onclick="copiarPorId('${p.id}')">📋 Copiar</button>
     <button class="favoritar" onclick="favoritar('${p.id}',this)">🤍 Favoritar</button>
-    <button onclick="chatPorId('${p.id}')">💬 ChatGPT</button>
-    <button onclick="geminiPorId('${p.id}')">🔷 Gemini</button>
-    <button class="compartilhar" onclick="compartilhar('${p.id}')">🔗 Compartilhar</button>
+    <div class="mais-acoes-wrap" style="position:relative;display:inline-block">
+      <button type="button" class="btn-mais-acoes" onclick="toggleMaisAcoesEstudo('${p.id}')" aria-haspopup="true">⋯</button>
+      <div class="mais-acoes-menu" id="maisacoes-${p.id}">
+        <button class="aplicado-btn" id="aplicado-${p.id}" onclick="toggleEstudado('${p.id}')">⬜ Marcar como Já Estudei</button>
+        <button onclick="chatPorId('${p.id}')">💬 ChatGPT</button>
+        <button onclick="geminiPorId('${p.id}')">🔷 Gemini</button>
+        <button class="compartilhar" onclick="compartilhar('${p.id}')">🔗 Compartilhar</button>
+      </div>
+    </div>
+  </div>
+  <div class="projeto-row">
+    <input type="text" class="select-projeto" list="listaProjetosEstudoGlobal" data-mover-id="${p.id}" value="${projetoAtual}" placeholder="🗂️ Sem tópico/matéria (digite pra criar)" onchange="moverParaProjetoEstudo('${p.id}',this.value)">
+    ${projetoAtual?`<button type="button" class="btn-novo-projeto" onclick="moverParaProjetoEstudo('${p.id}','')">🗑️ Tirar do tópico</button>`:''}
   </div>
   <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" onclick="darFeedback('${p.id}','up')">👍 0</button><button id="fbdown-${p.id}" onclick="darFeedback('${p.id}','down')">👎 0</button></div>
   <div class="feedback-row" style="margin-top:8px"><span style="font-size:12px;color:#8a92a6">Usou nas duas? Qual respondeu melhor?</span><button id="prefchat-${p.id}" onclick="darPreferenciaIA('${p.id}','chatgpt')">🤖 ChatGPT</button><button id="prefgem-${p.id}" onclick="darPreferenciaIA('${p.id}','gemini')">✨ Gemini</button><button id="prefemp-${p.id}" onclick="darPreferenciaIA('${p.id}','empate')">🤝 Empate</button></div>
@@ -829,7 +849,74 @@ function criarCard(p){
   atualizarBtnFav(p.id, card.querySelector('.favoritar'));
   atualizarFeedbackUI(p.id);
   atualizarPreferenciaIAUI(p.id);
+  atualizarBtnEstudado(p.id);
   return card;
+}
+
+// ===== MENU MAIS AÇÕES =====
+function toggleMaisAcoesEstudo(id){
+  const menu=document.getElementById('maisacoes-'+id);
+  const jaAberto=menu.classList.contains('show');
+  document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show'));
+  if(!jaAberto)menu.classList.add('show');
+}
+document.addEventListener('click',e=>{
+  if(e.target.closest('.mais-acoes-wrap'))return;
+  document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show'));
+});
+
+// ===== MARCAR COMO JÁ ESTUDEI =====
+function _loadEstudados(){try{return JSON.parse(localStorage.getItem('deltaEstudoAplicados'))||[]}catch(e){return[]}}
+function _saveEstudados(l){try{localStorage.setItem('deltaEstudoAplicados',JSON.stringify(l))}catch(e){}}
+function estaEstudado(id){return _loadEstudados().includes(id)}
+function toggleEstudado(id){
+  let l=_loadEstudados();const idx=l.indexOf(id);
+  if(idx===-1){l.push(id);mostrarToast('✅ Marcado como já estudado!')}
+  else{l.splice(idx,1);mostrarToast('Desmarcado')}
+  _saveEstudados(l);atualizarBtnEstudado(id);
+}
+function atualizarBtnEstudado(id){
+  const btn=document.getElementById('aplicado-'+id);if(!btn)return;
+  const ap=estaEstudado(id);
+  btn.textContent=ap?'✅ Já Estudei':'⬜ Marcar como Já Estudei';
+  btn.classList.toggle('aplicado',ap);
+}
+
+// ===== AGRUPAR POR TÓPICO/MATÉRIA (projeto) =====
+function _loadProjetosEstudo(){try{return JSON.parse(localStorage.getItem('deltaEstudoProjetos'))||{}}catch(e){return{}}}
+function _saveProjetosEstudo(o){try{localStorage.setItem('deltaEstudoProjetos',JSON.stringify(o))}catch(e){}}
+function projetoDoPromptEstudo(id){return _loadProjetosEstudo()[id]||''}
+function todosProjetosEstudo(){return[...new Set(Object.values(_loadProjetosEstudo()).filter(Boolean))]}
+function moverParaProjetoEstudo(id,nome){
+  const p=_loadProjetosEstudo();
+  if(nome&&nome.trim())p[id]=nome.trim();else delete p[id];
+  _saveProjetosEstudo(p);
+  atualizarDatalistProjetosEstudo();
+  atualizarSelectExportarProjetoEstudo();
+  filtrarPrompts();
+}
+function atualizarDatalistProjetosEstudo(){
+  const dl=document.getElementById('listaProjetosEstudoGlobal');if(!dl)return;
+  dl.innerHTML=todosProjetosEstudo().map(pr=>`<option value="${pr}">`).join('');
+}
+
+// ===== EXPORTAR POR TÓPICO/MATÉRIA =====
+function exportarPorProjetoEstudo(nome){
+  const idsDoProjeto=Object.entries(_loadProjetosEstudo()).filter(([id,proj])=>proj===nome).map(([id])=>id);
+  const doProjeto=promptsEstudo.filter(p=>idsDoProjeto.includes(p.id));
+  if(!doProjeto.length){mostrarToast('Esse tópico está vazio');return}
+  const linhas=doProjeto.map(p=>p.titulo+'\nCategoria: '+p.categoria+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));
+  const conteudo='🗂️ TÓPICO: '+nome.toUpperCase()+' — DELTA PROMPTS\n\n'+linhas.join('\n\n');
+  const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-'+nome.toLowerCase().replace(/\s+/g,'-')+'.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  mostrarToast('📥 Tópico "'+nome+'" exportado!');
+}
+function atualizarSelectExportarProjetoEstudo(){
+  const sel=document.getElementById('selectExportarProjetoEstudo');if(!sel)return;
+  const projetos=todosProjetosEstudo();
+  if(!projetos.length){sel.style.display='none';return}
+  sel.style.display='inline-block';
+  sel.innerHTML='<option value="">📥 Exportar um tópico...</option>'+projetos.map(p=>`<option value="${p}">🗂️ ${p}</option>`).join('');
 }
 
 function renderizar(arr) {
@@ -943,6 +1030,50 @@ aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSk
   });
 })();
 
+
+// ===== MODO GUIADO: COMO ESTUDAR UM ASSUNTO DO ZERO =====
+(function(){
+  const ORDEM_CATEGORIAS=['🧭 Preparação','📚 Estruturação','🎓 Didática','🧠 Memorização','🧪 Prática','🔄 Revisão','📊 Avaliação'];
+  let passos=[];
+  let passoAtual=0;
+  const modal=document.getElementById('modalGuiadoEstudo');
+  const conteudo=document.getElementById('modalGuiadoEstudoConteudo');
+  if(!modal||!conteudo)return;
+  function renderPasso(){
+    const p=passos[passoAtual];
+    const total=passos.length;
+    conteudo.innerHTML=`
+      <button type="button" id="fecharGuiadoEstudo" style="position:absolute;top:16px;right:16px;border:0;background:#f1f5f9;border-radius:999px;width:32px;height:32px;cursor:pointer;font-size:15px">✕</button>
+      <div style="font-size:12px;font-weight:800;color:#5b5ce2;margin-bottom:6px">PASSO ${passoAtual+1} DE ${total}</div>
+      <div style="display:flex;gap:4px;margin-bottom:16px">${passos.map((_,i)=>`<span style="flex:1;height:5px;border-radius:999px;background:${i<=passoAtual?'#5b5ce2':'#e5e7eb'}"></span>`).join('')}</div>
+      <h3 style="margin:0 0 8px">${p.titulo}</h3>
+      <p style="color:#667085;margin:0 0 14px;font-size:14px">💡 ${p.quando}</p>
+      <div style="white-space:pre-wrap;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px;font-size:13.5px;max-height:220px;overflow-y:auto">${p.prompt}</div>
+      <div style="display:flex;gap:10px;margin-top:18px">
+        <button type="button" id="guiadoEstudoCopiar" style="flex:1;border:0;background:#5b5ce2;color:#fff;font-weight:800;padding:12px;border-radius:10px;cursor:pointer">📋 Copiar este prompt</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px">
+        <button type="button" id="guiadoEstudoAnterior" ${passoAtual===0?'disabled':''} style="border:0;background:none;color:${passoAtual===0?'#c8ccd6':'#5b5ce2'};font-weight:800;cursor:${passoAtual===0?'default':'pointer'}">← Anterior</button>
+        <button type="button" id="guiadoEstudoProximo" style="border:0;background:none;color:#5b5ce2;font-weight:800;cursor:pointer">${passoAtual===total-1?'Finalizar ✓':'Próximo →'}</button>
+      </div>
+    `;
+    document.getElementById('fecharGuiadoEstudo').addEventListener('click',fecharModal);
+    document.getElementById('guiadoEstudoCopiar').addEventListener('click',()=>{registrarUso(p.id);navigator.clipboard.writeText(textoFinal(p.id)).then(()=>mostrarToast('📋 Prompt copiado!'))});
+    document.getElementById('guiadoEstudoAnterior').addEventListener('click',()=>{if(passoAtual>0){passoAtual--;renderPasso()}});
+    document.getElementById('guiadoEstudoProximo').addEventListener('click',()=>{if(passoAtual<total-1){passoAtual++;renderPasso()}else{fecharModal()}});
+  }
+  function abrirModal(){
+    passos=ORDEM_CATEGORIAS.map(cat=>promptsEstudo.find(p=>p.categoria===cat)).filter(Boolean);
+    if(!passos.length){mostrarToast('Não encontramos passos suficientes agora.');return}
+    passoAtual=0;modal.style.display='flex';window.modoGuiadoAtivo=true;renderPasso();
+  }
+  function fecharModal(){modal.style.display='none';window.modoGuiadoAtivo=false}
+  document.getElementById('btnModoGuiadoEstudo').addEventListener('click',abrirModal);
+  modal.addEventListener('click',e=>{if(e.target===modal)fecharModal()});
+})();
+document.getElementById('selectExportarProjetoEstudo').addEventListener('change',e=>{if(e.target.value){exportarPorProjetoEstudo(e.target.value);e.target.value=''}});
+atualizarDatalistProjetosEstudo();
+atualizarSelectExportarProjetoEstudo();
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 atualizarStats();
@@ -1072,6 +1203,20 @@ pre {
 [data-theme="dark"] .filtro-titulo{color:#a0a0a0}
 [data-theme="dark"] .collapse-icon{color:#a5b4fc}
 @media(max-width:760px){.theme-toggle{bottom:90px}}
+.mais-acoes-wrap{position:relative;flex:0 0 auto}
+.btn-mais-acoes{background:#f1f5f9!important;color:#475467!important;flex:0 0 auto;min-width:40px;padding:9px 12px!important}
+.mais-acoes-menu{display:none;position:absolute;bottom:calc(100% + 6px);right:0;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 12px 30px rgba(20,20,40,.16);padding:6px;min-width:180px;z-index:60}
+.mais-acoes-menu.show{display:flex;flex-direction:column;gap:2px}
+.mais-acoes-menu button{width:100%;text-align:left;background:none!important;border-radius:8px!important;padding:9px 10px!important;font-size:13px!important}
+.mais-acoes-menu button:hover{background:#f1f5f9!important}
+.aplicado-btn.aplicado{background:#dbeafe!important;color:#1e40af!important}
+.projeto-row{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.select-projeto{padding:7px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:12.5px;font-family:inherit;flex:1;min-width:160px}
+.btn-novo-projeto{border:1px dashed #c7c7f0;background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;color:#5b5ce2}
+[data-theme="dark"] .mais-acoes-menu{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.15)}
+[data-theme="dark"] .select-projeto{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .btn-novo-projeto{background:#0f1424;border-color:rgba(255,255,255,.2);color:#a5a6f0}
+[data-theme="dark"] .btn-mais-acoes{background:#0f1424!important;color:#cbd5e1!important}
 </style>
 
 </body>
