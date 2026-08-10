@@ -73,9 +73,40 @@ async function renderPainel(user){
       <button type="button" id="btnChecarLinks" style="border:0;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:800;border-radius:10px;padding:10px 18px;cursor:pointer">🔍 Checar agora</button>
       <div class="admin-lista" id="listaLinks" style="margin-top:14px"></div>
     </div>
+
+    <div class="admin-box">
+      <h3>📊 Contagem Real de Prompts por Página</h3>
+      <p style="margin:0 0 12px;color:#667085;font-size:13.5px">Compara o número real de prompts (extraído automaticamente de cada página) com o número mostrado no menu — avisa quando estão diferentes.</p>
+      <button type="button" id="btnContarPrompts" style="border:0;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:800;border-radius:10px;padding:10px 18px;cursor:pointer">📊 Recalcular agora</button>
+      <div class="admin-lista" id="listaContagem" style="margin-top:14px"></div>
+    </div>
+
+    <div class="admin-box">
+      <h3>📝 Corrigir Contadores do Menu</h3>
+      <p style="margin:0 0 12px;color:#667085;font-size:13.5px">Depois de recalcular acima, gera o texto do menu.html já com os números certos, pronto pra você copiar e substituir.</p>
+      <button type="button" id="btnGerarMenuCorrigido" style="border:1px solid #e5e7eb;background:#fff;color:#344055;font-weight:800;border-radius:10px;padding:10px 18px;cursor:pointer">📝 Gerar menu.html corrigido</button>
+      <textarea id="menuCorrigidoTexto" readonly style="display:none;width:100%;box-sizing:border-box;min-height:160px;margin-top:12px;font-family:monospace;font-size:11px;padding:10px;border:1px solid #e5e7eb;border-radius:10px"></textarea>
+      <button type="button" id="btnCopiarMenuCorrigido" style="display:none;margin-top:8px;border:0;background:#16a34a;color:#fff;font-weight:800;border-radius:10px;padding:8px 16px;cursor:pointer;font-size:12.5px">📋 Copiar texto</button>
+    </div>
+
+    <div class="admin-box">
+      <h3>📅 Log de Publicações (histórico real do GitHub)</h3>
+      <p style="margin:0 0 12px;color:#667085;font-size:13.5px">As últimas publicações feitas no site, direto do histórico do repositório.</p>
+      <div class="admin-lista" id="listaPublicacoes"><div class="vazio-mini">Carregando...</div></div>
+    </div>
+
+    <div class="admin-box">
+      <h3>💬 Sugestões dos Usuários (centralizadas)</h3>
+      <p style="margin:0 0 12px;color:#667085;font-size:13.5px">Todas as sugestões enviadas pelo botão "💡 Sugerir" em qualquer página do site, num só lugar.</p>
+      <div class="admin-lista" id="listaSugestoes"><div class="vazio-mini">Carregando...</div></div>
+    </div>
   `;
 
   document.getElementById('btnChecarLinks').addEventListener('click',checarLinksMenu);
+  document.getElementById('btnContarPrompts').addEventListener('click',contarPromptsReais);
+  document.getElementById('btnGerarMenuCorrigido').addEventListener('click',gerarMenuCorrigido);
+  carregarPublicacoes();
+  carregarSugestoes();
 
   try{
     const topFeedback=await window.deltaAuth.obterTopFeedback(20);
@@ -138,6 +169,129 @@ async function checarLinksMenu(){
     }
   }catch(e){
     box.innerHTML='<div class="vazio-mini">Erro ao checar os links. Tente novamente.</div>';
+  }
+}
+
+let ultimaContagem=null; // guarda o resultado pra reaproveitar em gerarMenuCorrigido
+
+async function contarPromptsReais(){
+  const box=document.getElementById('listaContagem');
+  box.innerHTML='<div class="vazio-mini">🔄 Carregando índice de busca e menu...</div>';
+  try{
+    const [resIdx,resMenu]=await Promise.all([
+      fetch('/delta-prompts/search-index.js?v='+Date.now()),
+      fetch('/delta-prompts/menu.html?v='+Date.now())
+    ]);
+    const textoIdx=await resIdx.text();
+    const textoMenu=await resMenu.text();
+
+    // extrai o array do search-index.js (window.deltaSearchIndex = [...])
+    const m=textoIdx.match(/window\.deltaSearchIndex\s*=\s*(\[[\s\S]*\]);/);
+    if(!m){box.innerHTML='<div class="vazio-mini">Não consegui ler o índice de busca.</div>';return}
+    const indice=JSON.parse(m[1]);
+
+    const contagemReal={};
+    indice.forEach(p=>{const link=(p.link||'').replace(/^\/delta-prompts\//,'');contagemReal[link]=(contagemReal[link]||0)+1});
+
+    // extrai contadores do menu: <a href="/delta-prompts/paginas/x.html">Nome <span class="menu-count">N</span></a>
+    const regexMenu=/href="\/delta-prompts\/([^"]+\.html)"[^>]*>([^<]*)<span class="menu-count">(\d+)<\/span>/g;
+    const contagemMenu={};
+    let mm;
+    while((mm=regexMenu.exec(textoMenu))){
+      contagemMenu[mm[1]]={nome:mm[2].trim(),valor:parseInt(mm[3],10)};
+    }
+
+    const linhas=[];
+    Object.keys(contagemMenu).forEach(link=>{
+      const real=contagemReal[link]||0;
+      const noMenu=contagemMenu[link].valor;
+      if(real!==noMenu&&real>0){ // so avisa quando ha discrepancia relevante (indice extraiu algo)
+        linhas.push({link,nome:contagemMenu[link].nome,real,noMenu});
+      }
+    });
+
+    ultimaContagem={contagemReal,contagemMenu};
+
+    if(!linhas.length){
+      box.innerHTML='<div class="vazio-mini">✅ Todos os contadores do menu batem com a contagem real (dentro do que o índice conseguiu detectar).</div>';
+    }else{
+      box.innerHTML=`<div style="color:#c2410c;font-weight:800;margin-bottom:8px">⚠️ ${linhas.length} página(s) com número diferente:</div>`+
+        linhas.map(l=>`<div class="admin-item"><span class="admin-nome">${l.nome}</span><span class="admin-numeros">menu: ${l.noMenu} → real: <strong>${l.real}</strong></span></div>`).join('');
+    }
+  }catch(e){
+    box.innerHTML='<div class="vazio-mini">Erro ao calcular. Tente novamente.</div>';
+  }
+}
+
+async function gerarMenuCorrigido(){
+  if(!ultimaContagem){await contarPromptsReais()}
+  if(!ultimaContagem)return;
+  try{
+    const resMenu=await fetch('/delta-prompts/menu.html?v='+Date.now());
+    let textoMenu=await resMenu.text();
+    const {contagemReal}=ultimaContagem;
+    textoMenu=textoMenu.replace(/href="\/delta-prompts\/([^"]+\.html)"([^>]*>[^<]*<span class="menu-count">)(\d+)(<\/span>)/g,(match,link,antes,valorAntigo,depois)=>{
+      const real=contagemReal[link];
+      if(real&&real!==parseInt(valorAntigo,10)){
+        return `href="/delta-prompts/${link}"${antes}${real}${depois}`;
+      }
+      return match;
+    });
+    const area=document.getElementById('menuCorrigidoTexto');
+    area.value=textoMenu;
+    area.style.display='block';
+    document.getElementById('btnCopiarMenuCorrigido').style.display='inline-block';
+    document.getElementById('btnCopiarMenuCorrigido').onclick=()=>{
+      navigator.clipboard.writeText(textoMenu).then(()=>{
+        const btn=document.getElementById('btnCopiarMenuCorrigido');
+        const original=btn.textContent;btn.textContent='✓ Copiado!';setTimeout(()=>btn.textContent=original,1500);
+      });
+    };
+  }catch(e){
+    mostrarToastAdmin('Erro ao gerar o menu corrigido.');
+  }
+}
+
+function mostrarToastAdmin(texto){
+  const t=document.createElement('div');
+  t.textContent=texto;
+  t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;z-index:9999;font-size:13px;font-weight:700';
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2200);
+}
+
+async function carregarPublicacoes(){
+  const box=document.getElementById('listaPublicacoes');
+  try{
+    const r=await fetch('https://api.github.com/repos/jhoncorretor2025-blip/delta-prompts/commits?per_page=25');
+    if(!r.ok){box.innerHTML='<div class="vazio-mini">Não foi possível carregar o histórico agora.</div>';return}
+    const commits=await r.json();
+    box.innerHTML=commits.map(c=>{
+      const msg=(c.commit.message||'').split('\n')[0];
+      const data=new Date(c.commit.author.date).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+      const hora=new Date(c.commit.author.date).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+      return `<div class="admin-item"><span class="admin-nome" style="flex:1">${msg}</span><span class="admin-numeros">${data} ${hora}</span></div>`;
+    }).join('');
+  }catch(e){
+    box.innerHTML='<div class="vazio-mini">Não foi possível carregar o histórico agora.</div>';
+  }
+}
+
+async function carregarSugestoes(){
+  const box=document.getElementById('listaSugestoes');
+  try{
+    if(!window.deltaAuth||!window.deltaAuth.obterSugestoes){box.innerHTML='<div class="vazio-mini">Sistema de sugestões ainda carregando, tente recarregar a página.</div>';return}
+    const sugestoes=await window.deltaAuth.obterSugestoes(50);
+    if(!sugestoes.length){
+      box.innerHTML='<div class="vazio-mini">Nenhuma sugestão enviada ainda.</div>';
+      return;
+    }
+    box.innerHTML=sugestoes.map(s=>{
+      const data=s.ts&&s.ts.seconds?new Date(s.ts.seconds*1000).toLocaleDateString('pt-BR'):'';
+      return `<div class="admin-item" style="align-items:flex-start;flex-direction:column;gap:4px"><div style="font-weight:700;font-size:13.5px">${(s.texto||'').replace(/</g,'&lt;')}</div><div style="font-size:11.5px;color:#8a92a6">📍 ${s.pagina||'?'} · ${data}</div></div>`;
+    }).join('');
+  }catch(e){
+    box.innerHTML='<div class="vazio-mini">Erro ao carregar sugestões. Confira as regras do Firestore (coleção "sugestoes").</div>';
   }
 }
 

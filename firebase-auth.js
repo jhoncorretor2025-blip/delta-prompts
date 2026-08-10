@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp, increment, collection, query, orderBy, where, limit, getDocs } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp, increment, collection, addDoc, query, orderBy, where, limit, getDocs } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js';
 
 const firebaseConfig={apiKey:'AIzaSyAFMCGldhbqzcHqem-Nm8bPqSLHTf04UKc',authDomain:'delta-prompts.firebaseapp.com',projectId:'delta-prompts',storageBucket:'delta-prompts.firebasestorage.app',messagingSenderId:'755389200448',appId:'1:755389200448:web:0affd073b7c607169dc7a5',measurementId:'G-29MLGRJW66'};
 const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getFirestore(app);const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});
@@ -120,6 +120,20 @@ export async function registrarFeedbackGlobal(promptId,tipo,delta){
 export async function obterFeedbackGlobal(promptId){
   try{const snap=await getDoc(doc(db,'feedbackGlobal',promptId));return snap.exists()?{up:snap.data().up||0,down:snap.data().down||0}:{up:0,down:0}}
   catch(e){return{up:0,down:0}}
+}
+
+// ===== SUGESTOES CENTRALIZADAS (de qualquer pagina do site) =====
+export async function registrarSugestao(texto,pagina){
+  if(!texto||!texto.trim())return;
+  try{await addDoc(collection(db,'sugestoes'),{texto:texto.trim(),pagina:pagina||location.pathname,ts:serverTimestamp(),lida:false})}
+  catch(e){console.error('Erro ao registrar sugestao:',e)}
+}
+export async function obterSugestoes(qtd){
+  try{
+    const q=query(collection(db,'sugestoes'),orderBy('ts','desc'),limit(qtd||50));
+    const snap=await getDocs(q);
+    return snap.docs.map(d=>({id:d.id,...d.data()}));
+  }catch(e){return[]}
 }
 
 // ===== CONTADOR DE USO SINCRONIZADO NA NUVEM =====
