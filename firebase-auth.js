@@ -110,6 +110,36 @@ export async function pushFavoritosToCloud(uid){
   catch(e){console.error('Erro ao enviar favoritos para a nuvem:',e);_avisarErroSync()}
 }
 
+// ===== TODAS AS CONFIGURACOES DO SITE (esconder categorias, ordem do menu, perfil, cor, etc) =====
+const CHAVES_CONFIG=['deltaCategoriasEscondidas','deltaSecoesEscondidas','deltaGrupoOrdemManual','deltaPerfilAtivo','deltaCorDestaque','deltaAtalhosMinimizados','deltaFiltroNovidades','deltaTheme','deltaModoSimples'];
+export async function syncConfiguracoesFromCloud(uid){
+  if(!uid)return;
+  try{
+    const snap=await getDoc(doc(db,'users',uid));
+    const nuvem=(snap.exists()&&snap.data().configuracoes)||{};
+    const paraSalvar={};
+    CHAVES_CONFIG.forEach(k=>{
+      const local=localStorage.getItem(k);
+      if(local===null&&nuvem[k]!==undefined){
+        try{localStorage.setItem(k,nuvem[k])}catch(e){}
+        paraSalvar[k]=nuvem[k];
+      }else if(local!==null){
+        paraSalvar[k]=local;
+      }
+    });
+    await setDoc(doc(db,'users',uid),{configuracoes:paraSalvar},{merge:true});
+    window.dispatchEvent(new CustomEvent('delta:config-sincronizada'));
+  }catch(e){console.error('Erro ao sincronizar configuracoes:',e)}
+}
+export async function pushConfiguracoesToCloud(uid){
+  if(!uid)return;
+  try{
+    const paraSalvar={};
+    CHAVES_CONFIG.forEach(k=>{const v=localStorage.getItem(k);if(v!==null)paraSalvar[k]=v});
+    await setDoc(doc(db,'users',uid),{configuracoes:paraSalvar},{merge:true});
+  }catch(e){console.error('Erro ao enviar configuracoes para a nuvem:',e)}
+}
+
 // ===== FEEDBACK GLOBAL (útil / não útil de todos os usuários, agregado) =====
 export async function registrarFeedbackGlobal(promptId,tipo,delta){
   if(!promptId||(tipo!=='up'&&tipo!=='down'))return;
