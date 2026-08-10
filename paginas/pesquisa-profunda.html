@@ -51,6 +51,15 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
 <h1>🔬 Pesquisa Profunda com IA</h1>
 <p>Prompts profissionais para investigar assuntos com profundidade, verificar informações, comparar evidências e pesquisar preços de produtos.</p>
 
+<section class="card" id="temaPesquisaPadraoCard">
+  <h3>📌 Cole o tema que você quer pesquisar aqui uma vez</h3>
+  <p style="margin:0 0 12px;color:#667085;font-size:14px">Ex: psoríase, gastrite, dores nas articulações, ou qualquer tema/produto que você queira investigar. A gente já preenche automaticamente todo campo de <strong>tema/condição</strong> dos prompts abaixo com isso.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <input type="text" id="temaPesquisaPadraoInput" placeholder="Ex: dores nas articulações" style="flex:1;min-width:220px;padding:12px 14px;border-radius:10px;border:1px solid #e6e8f0;font:inherit">
+    <button type="button" id="temaPesquisaPadraoSalvar" style="border:0;background:#5b5ce2;color:#fff;font-weight:800;border-radius:10px;padding:12px 20px;cursor:pointer">💾 Salvar</button>
+  </div>
+</section>
+
 <section class="card"><h3>🎯 Objetivo</h3><p>Usar a inteligência artificial como assistente de pesquisa, ajudando a estruturar investigações, encontrar lacunas, avaliar evidências e comparar preços antes de comprar.</p></section>
 <section class="card"><h3>🗺️ Como os prompts estão organizados</h3><ul style="line-height:1.6"><li><strong>🧭 Planejamento:</strong> definir perguntas e estratégia.</li><li><strong>🔎 Investigação:</strong> pesquisar e aprofundar o tema.</li><li><strong>⚖️ Verificação:</strong> comparar fontes e testar afirmações.</li><li><strong>📊 Síntese:</strong> organizar descobertas e relatórios.</li><li><strong>🛒 Compras & Preços:</strong> pesquisar produtos e comparar antes de comprar.</li></ul></section>
 
@@ -175,7 +184,7 @@ function criarCard(p){
     <div class="card-top-row"><div class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</div><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
     <h3>${p.titulo}</h3>
     <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/TEMA|TOPIC|CONDIÇÃO|DOENÇA|DISEASE|CONDITION/i.test(ph)?(function(){try{return localStorage.getItem('deltaTemaPesquisaPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
     <pre id="pre-${p.id}">${p.prompt}</pre>
     <div class="acoes">
       <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
@@ -262,6 +271,20 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 atualizarStats();
+
+// ===== TEMA/CONDIÇÃO PADRÃO (auto-preenche todo campo relacionado) =====
+(function(){
+  const input=document.getElementById('temaPesquisaPadraoInput');
+  const btn=document.getElementById('temaPesquisaPadraoSalvar');
+  if(!input||!btn)return;
+  try{input.value=localStorage.getItem('deltaTemaPesquisaPadrao')||''}catch(e){}
+  btn.addEventListener('click',()=>{
+    try{localStorage.setItem('deltaTemaPesquisaPadrao',input.value.trim())}catch(e){}
+    mostrarToast('📌 Salvo! Já preenchido nos prompts.');
+    aplicarFiltros();
+  });
+})();
+
 aplicarFiltros();
 window.addEventListener('delta:favoritos-updated',atualizarStats);
 if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
