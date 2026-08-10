@@ -26,6 +26,15 @@
     Prompts profissionais para aprender mais rápido, organizar conteúdos e aprofundar conhecimento com inteligência.
   </p>
 
+  <section class="card" id="temaPadraoCard">
+    <h3>📌 Cole o assunto que você quer estudar aqui uma vez</h3>
+    <p style="margin:0 0 12px;color:#667085;font-size:14px">Ex: psoríase, gastrite, dores nas articulações, um idioma, uma matéria da faculdade... A gente já preenche automaticamente todo campo de <strong>tema/assunto</strong> dos prompts abaixo com isso, sem precisar digitar de novo toda vez.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <input type="text" id="temaPadraoInput" placeholder="Ex: psoríase" style="flex:1;min-width:220px;padding:12px 14px;border-radius:10px;border:1px solid #e6e8f0;font:inherit">
+      <button type="button" id="temaPadraoSalvar" style="border:0;background:#5b5ce2;color:#fff;font-weight:800;border-radius:10px;padding:12px 20px;cursor:pointer">💾 Salvar</button>
+    </div>
+  </section>
+
   <!-- 3️⃣ OBJETIVO -->
   <section class="card collapse-card">
     <button type="button" class="collapse-toggle" onclick="this.closest('.collapse-card').classList.toggle('aberto')">
@@ -764,7 +773,7 @@ function criarCard(p){
   <span class="tag-categoria">${p.categoria}</span>
   <h3>${p.titulo}</h3>
   <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-  ${p.placeholders.length ? `<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>` : ''}
+  ${p.placeholders.length ? `<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/TEMA|ASSUNTO|TÓPICO|TOPICO/i.test(ph)?(function(){try{return localStorage.getItem('deltaTemaPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>` : ''}
   <pre>${p.prompt}</pre>
 
   <div class="acoes">
@@ -868,6 +877,20 @@ function aplicarEstadoJornada(escondido){
 fecharBtn.addEventListener('click',()=>aplicarEstadoJornada(true));
 reabrirBtn.addEventListener('click',()=>aplicarEstadoJornada(false));
 aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSkipEstudo')==='true'}catch(e){return false}})());
+
+// ===== TEMA PADRAO (auto-preenche todo campo de tema/assunto) =====
+(function(){
+  const input=document.getElementById('temaPadraoInput');
+  const btn=document.getElementById('temaPadraoSalvar');
+  if(!input||!btn)return;
+  try{input.value=localStorage.getItem('deltaTemaPadrao')||''}catch(e){}
+  btn.addEventListener('click',()=>{
+    try{localStorage.setItem('deltaTemaPadrao',input.value.trim())}catch(e){}
+    mostrarToast('📌 Tema salvo! Já preenchido nos prompts.');
+    filtrarPrompts();
+  });
+})();
+
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 atualizarStats();
