@@ -314,6 +314,45 @@ const ordemCategorias = [
 
 const promptsSaude = [
     {
+        categoria: "📋 Planejamento",
+        nivel: "basico",
+        titulo: "🌿📋 Organizar Informações Antes de uma Consulta com Homeopata",
+        quando: "Para chegar mais preparado(a) numa primeira consulta homeopática, já que ela costuma ser bem detalhada.",
+        prompt: `Vou ter uma consulta com um homeopata e quero chegar organizado(a).
+
+Meus sintomas físicos atuais: [SINTOMAS FÍSICOS]
+Meu estado emocional/mental no momento: [ESTADO EMOCIONAL]
+Histórico de saúde relevante: [HISTÓRICO]
+Hábitos de sono, alimentação e rotina: [HÁBITOS]
+O que costuma piorar ou melhorar meus sintomas: [O QUE PIORA/MELHORA]
+
+Organize essas informações de forma clara, em tópicos, do jeito que costuma ser útil levar pra uma consulta homeopática (que costuma perguntar sobre corpo, emoções e hábitos de forma bem ampla). Não sugira diagnóstico nem remédio algum — só organize o que eu escrevi.`
+    },
+    {
+        categoria: "🔎 Autoconhecimento",
+        nivel: "basico",
+        titulo: "🌿❓ Perguntas Para Fazer ao Homeopata",
+        quando: "Para não esquecer de perguntar o que importa numa primeira consulta ou retorno.",
+        prompt: `Vou consultar um homeopata e quero uma lista de perguntas boas para fazer.
+
+Motivo da consulta: [MOTIVO DA CONSULTA]
+É primeira consulta ou retorno: [PRIMEIRA CONSULTA/RETORNO]
+
+Sugira de 8 a 10 perguntas relevantes para eu fazer nessa consulta, cobrindo como funciona o tratamento, tempo esperado até notar diferença, possíveis interações com outros tratamentos que eu já faço, e como saber se está funcionando.`
+    },
+    {
+        categoria: "📊 Monitoramento",
+        nivel: "basico",
+        titulo: "🌿📊 Diário de Acompanhamento de Tratamento Homeopático",
+        quando: "Para registrar como você está se sentindo ao longo de um tratamento já prescrito por um homeopata, e levar isso pro retorno.",
+        prompt: `Quero montar um diário simples pra acompanhar meu tratamento homeopático (já prescrito pelo meu homeopata) e levar as anotações no meu retorno.
+
+Tratamento que estou fazendo: [NOME DO TRATAMENTO, SE SOUBER]
+Desde quando comecei: [DATA DE INÍCIO]
+
+Crie um modelo de diário diário/semanal com perguntas simples (como me senti hoje, mudanças percebidas, sintomas antigos que sumiram ou pioraram, novidades) que eu possa preencher rapidinho, pra ter um resumo organizado pra mostrar ao meu homeopata no retorno.`
+    },
+    {
         categoria: "🔎 Autoconhecimento",
         nivel: "basico",
         titulo: "🧠🔍 Avaliação de Hábitos Atuais",
