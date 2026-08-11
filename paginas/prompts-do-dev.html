@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prompts do Dev | Delta Prompts</title><meta name="description" content="Os prompts favoritos de Jonathan, criador do Delta Prompts - os que ele mesmo usa no dia a dia."><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>
+.prompt-text{white-space:pre-wrap;background:#f8fafc;padding:13px;border-radius:10px;margin:10px 0;font-size:14px}
+.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.acoes button{border:0;border-radius:11px;padding:10px 14px;font-weight:800;cursor:pointer;font-size:13px;background:#f1f5f9;color:#334155}
+.acoes button.favoritar.is-fav{background:#fff1f2;color:#be123c}
+.acoes button.compartilhar{background:#f0fdf4;color:#15803d}
+.acoes button.idioma{background:#fef9c3;color:#854d0e}
+.acoes button.idioma.ativo-en{background:#5b5ce2;color:#fff}
+.tag{font-size:12px;font-weight:800;background:#f3f4f6;padding:5px 9px;border-radius:999px;color:#374151}
+.nivel{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;margin-left:6px}
+.nivel-basico{background:#dcfce7;color:#166534}
+.nivel-intermediario{background:#fef9c3;color:#854d0e}
+.nivel-avancado{background:#fee2e2;color:#991b1b}
+.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:10px 0;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e5e7eb}
+.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}
+.campo-label input{padding:9px 10px;border:1px solid #e5e7eb;border-radius:9px;font-size:13.5px;font-family:inherit}
+.feedback-row{display:flex;align-items:center;gap:8px;margin-top:14px}
+.feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
+.feedback-row button.marcado{background:#eef2ff;border-color:#5b5ce2;color:#5b5ce2}
+.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}
+.top-bar input{flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd}
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filtros button{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid #ddd;border-radius:999px;background:#fff;cursor:pointer}
+.filtros button.ativo{background:#1f2937;color:#fff;border-color:#1f2937}
+.count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:#f3f4f6;color:#1f2937}
+.filtros button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e5e7eb;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.sugerir-box{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:0 0 20px;background:#f3f4f6}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#1f2937;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.stats-bar{font-size:13px;color:#667085;margin:0 0 10px;font-weight:600}
+[data-theme="dark"] .prompt-text{background:rgba(255,255,255,.05);color:#cbd5e1}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica{color:#a0a0a0}
+</style></head><body class="category-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908f"></script><main>
+
+<h1>👨‍💻 Prompts do Dev</h1>
+<p>Esses são os prompts que eu, Jonathan (quem fez esse site), mais uso no dia a dia — de agentes de saúde a jogos e melhoria de sites. Todos já estão espalhados pelo site em suas categorias normais; aqui é só um jeito rápido de encontrar os meus favoritos pessoais num lugar só.</p>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="🔎 Buscar por ambiente ou objetivo...">
+  <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
+</div>
+<div class="filtros" id="filtrosCategoria"></div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o prompt de decoração que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes"><button id="btnCopiarSugestao">📋 Copiar sugestão</button><span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span></div>
+</div>
+
+<div id="lista"></div>
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>
+
+const dadosBrutos=[
+{categoria:'🧑‍⚕️ Agentes de IA',nivel:'intermediario',titulo:'🧑‍⚕️ Time Médico Combinado (Clínico + Dermato + Gastro)',quando:'Um único agente reunindo várias especialidades quando os sintomas podem estar conectados.',prompt:'Você atuará como um time de apoio combinando três especialidades: clínico geral, dermatologia e gastroenterologia.\n\nMeu contexto: [IDADE, CONDIÇÕES CONHECIDAS EM CADA ÁREA]\n\nQuando eu trouxer um sintoma, identifique com qual especialidade ele se relaciona mais (ou se envolve mais de uma), faça as perguntas necessárias daquela área antes de comentar, e sinalize claramente se algo pode estar conectado entre as áreas (ex: pele e intestino). Nunca prescreva nada. Diga sempre quando o caso exige avaliação presencial. Confirme que entendeu essa estrutura antes de continuarmos.',en:'You will act as a support team combining three specialties: general practice, dermatology, and gastroenterology.\n\nMy context: [AGE, KNOWN CONDITIONS IN EACH AREA]\n\nWhen I bring up a symptom, identify which specialty it relates to most (or if it involves more than one), ask the necessary questions from that area before commenting, and clearly flag if something might be connected across areas (e.g., skin and gut). Never prescribe anything. Always say when the case requires an in-person evaluation. Confirm you understood this structure before we continue.'},
+{categoria:'🧑‍⚕️ Agentes de IA',nivel:'intermediario',titulo:'🔎 Agente Pesquisador',quando:'Fazer pesquisas profundas e entregar conclusão prática',prompt:'Atue como pesquisador criterioso. Primeiro entenda a pergunta central. Pesquise fontes confiáveis e recentes quando necessário, compare informações, identifique divergências e entregue: resumo executivo, descobertas principais, evidências, incertezas e conclusão prática. Não apresente suposições como fatos.',en:''},
+{categoria:'🧑‍⚕️ Agentes de IA',nivel:'basico',titulo:'🏠 Corretor Imobiliário IA',quando:'Ajudar em anúncios, atendimento e análise de imóveis',prompt:'Atue como assistente de um corretor de imóveis brasileiro. Ajude a criar anúncios, melhorar descrições, responder clientes e organizar informações de imóveis. Preserve os dados fornecidos, não invente características e adapte o texto ao canal solicitado. Em anúncios, destaque diferenciais reais, localização, benefícios e chamada para ação sem exageros.',en:''},
+{categoria:'🧑‍⚕️ Agentes de IA',nivel:'intermediario',titulo:'🧴 Meu Agente de Dermatologia',quando:'Acompanhar uma condição de pele específica (ex: psoríase, acne, dermatite).',prompt:'Você atuará como um assistente de dermatologia especializado em pele, focado na minha condição.\n\nMinha condição: [EX: PSORÍASE, ACNE, DERMATITE — DESCREVA]\nTratamentos já utilizados: [TRATAMENTOS E REAÇÕES]\n\nA partir de agora, quando eu descrever uma mudança ou dúvida sobre a pele, você deve:\n• Perguntar sobre fatores que podem ter influenciado (estresse, alimentação, clima, produtos novos)\n• Organizar possíveis explicações sem afirmar diagnóstico\n• Indicar sinais de piora que merecem avaliação médica\n• Nunca recomendar remédios ou doses\n\nIsto não substitui acompanhamento com dermatologista. Confirme que entendeu minha condição antes de continuarmos.',en:'You will act as a dermatology assistant specialized in skin, focused on my condition.\n\nMy condition: [E.G., PSORIASIS, ACNE, DERMATITIS — DESCRIBE]\nTreatments already used: [TREATMENTS AND REACTIONS]\n\nFrom now on, when I describe a change or question about my skin, you should:\n• Ask about factors that might have contributed (stress, diet, weather, new products)\n• Organize possible explanations without stating a diagnosis\n• Point out signs of worsening that deserve medical evaluation\n• Never recommend medication or dosage\n\nThis does not replace follow-up with a dermatologist. Confirm you understood my condition before we continue.'},
+{categoria:'🎮 Criar Jogos',nivel:'intermediario',titulo:'🏓 Pong Simples',quando:'Para criar o jogo Pong clássico, contra o computador.',prompt:'Crie o jogo Pong completo em um único arquivo HTML usando canvas. Uma raquete controlada pelo jogador (mouse ou teclado) e outra controlada por uma IA simples. Bola que quica nas paredes e raquetes, contador de pontuação de cada lado, e o jogo deve reiniciar a rodada após cada ponto. Não use bibliotecas externas.',en:'Create the complete Pong game in a single HTML file using canvas. One paddle controlled by the player (mouse or keyboard) and another controlled by a simple AI. Ball that bounces off walls and paddles, score counter for each side, and the game should restart the round after each point. Do not use external libraries.'},
+{categoria:'🌐 Sites & Landing Pages',nivel:'basico',titulo:'20 Melhorias para uma Página',quando:'Para uma análise detalhada de uma página específica.',prompt:'Analise esta página: [LINK/PRINT/CÓDIGO]. Entregue exatamente 20 melhorias priorizadas com problema, mudança, benefício, prioridade e implementação simples. Avalie visual, CTA, confiança, navegação, responsividade e acessibilidade.',en:'Analyze this page: [LINK/SCREENSHOT/CODE]. Deliver exactly 20 prioritized improvements with problem, change, benefit, priority, and simple implementation. Evaluate visuals, CTA, trust, navigation, responsiveness, and accessibility.'},
+{categoria:'🌐 Sites & Landing Pages',nivel:'basico',titulo:'💡 Brainstorm: 10 Ideias de Recursos e Design',quando:'Para gerar ideias novas e variadas quando você não sabe o que criar a seguir.',prompt:'Meu site/sistema é sobre: [DESCREVA O SITE OU SISTEMA E SEU OBJETIVO]\n\nO que já existe hoje: [O QUE JÁ TEM, SE QUISER INFORMAR]\n\nGere 10 ideias novas e criativas para melhorar esse projeto, misturando:\n• Novos recursos e funcionalidades\n• Melhorias de design e visual\n• Ideias de experiência do usuário\n\nPara cada ideia, dê um nome curto, explique em uma frase o que é, e diga se é mais fácil ou mais difícil de implementar. Não repita recursos que eu já tenha informado como existentes.',en:'My site/system is about: [DESCRIBE THE SITE OR SYSTEM AND ITS GOAL]\n\nWhat already exists today: [WHAT YOU ALREADY HAVE, IF YOU WANT TO SHARE]\n\nGenerate 10 new and creative ideas to improve this project, mixing:\n• New features and functionality\n• Design and visual improvements\n• User experience ideas\n\nFor each idea, give a short name, explain in one sentence what it is, and say whether it\'s easier or harder to implement. Don\'t repeat features I\'ve already mentioned as existing.'}
+];
+
+const prompts=dadosBrutos.map((x,i)=>{
+  const obj={id:'decor-'+i,categoria:x.categoria,nivel:x.nivel,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:true};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+const idiomaAtivo={};
+let categoriaAtual='todos';
+
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function isFav(id){return _loadFav().some(f=>f.id===id)}
+function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]==='en'?(p.promptEn||p.prompt):p.prompt}
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+function getItem(id){return prompts.find(p=>p.id===id)}
+function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='❤️ Favoritado';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:textoFinal(id),categoria:'Prompts do Dev',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaPromptsDoDevUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaPromptsDoDevUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos)}
+
+function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaPromptsDoDevFeedback'))||{}}catch(e){return{}}}
+function _saveFeedback(o){try{localStorage.setItem('deltaPromptsDoDevFeedback',JSON.stringify(o))}catch(e){}}
+function darFeedback(id,tipo){
+  const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;if(!fb[id])fb[id]={voto:null};
+  const g=window.deltaAuth;
+  if(atual===tipo){fb[id].voto=null;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,-1)}
+  else{if(atual&&g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,atual,-1);fb[id].voto=tipo;if(g&&g.registrarFeedbackGlobal)g.registrarFeedbackGlobal(id,tipo,1)}
+  _saveFeedback(fb);atualizarFeedbackUI(id);
+  mostrarToast(tipo==='up'?'👍 Obrigado pelo feedback!':'👎 Obrigado, vamos melhorar esse!');
+}
+function atualizarFeedbackUI(id){
+  const fb=_loadFeedback()[id]||{voto:null};
+  const up=document.getElementById('fbup-'+id),down=document.getElementById('fbdown-'+id);
+  if(up)up.classList.toggle('marcado',fb.voto==='up');
+  if(down)down.classList.toggle('marcado',fb.voto==='down');
+  const g=window.deltaAuth;
+  if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
+}
+
+function alternarIdioma(id){
+  idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';
+  const pre=document.getElementById('prompt-'+id),btn=document.getElementById('idioma-'+id);
+  if(pre)pre.textContent=textoFinal(id);
+  if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}
+}
+async function copiarPorId(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id));mostrarToast('📋 Copiado!')}catch(e){mostrarToast('Não foi possível copiar')}}
+async function abrirChat(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://gemini.google.com/app','_blank'),300)}
+function compartilhar(id){
+  const p=getItem(id);if(!p)return;
+  const texto='🛋️ '+p.titulo+'\n\n'+textoFinal(id)+'\n\n— via Delta Prompts';
+  if(navigator.share){navigator.share({title:p.titulo,text:texto}).catch(()=>{})}
+  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Copiado! Cole onde quiser compartilhar.'))}
+}
+function exportarTodos(){
+  const linhas=prompts.map(p=>p.titulo+' ('+p.categoria+')\n'+p.prompt);
+  const blob=new Blob(['🛋️ PROMPTS DO DEV — DELTA PROMPTS\n\n'+linhas.join('\n\n'+'─'.repeat(40)+'\n\n')],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='deltapromptsdodev.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  mostrarToast('📥 Arquivo baixado!');
+}
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão para o Delta Prompts (Prompts do Dev):\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Prompts do Dev').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🛋️ <strong>'+prompts.length+'</strong> modelos disponíveis'}
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+function montarFiltroCategoria(){
+  const cont=document.getElementById('filtrosCategoria');
+  const categorias=[...new Set(prompts.map(p=>p.categoria))];
+  cont.innerHTML='<button class="'+(categoriaAtual==='todos'?'ativo':'')+'" data-categoria="todos">Todos <span class="count-badge">'+prompts.length+'</span></button>'+
+    categorias.map(c=>{const n=prompts.filter(p=>p.categoria===c).length;return `<button class="${categoriaAtual===c?'ativo':''}" data-categoria="${c}">${c} <span class="count-badge">${n}</span></button>`}).join('');
+  cont.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{categoriaAtual=b.dataset.categoria;montarFiltroCategoria();render()}));
+}
+
+function render(){
+  const termo=norm(document.getElementById('busca').value);
+  const filtrados=prompts.filter(p=>{
+    const texto=norm([p.titulo,p.quando,p.categoria,p.prompt].join(' '));
+    return(!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual);
+  });
+  document.getElementById('contador').textContent=filtrados.length+' de '+prompts.length+' modelos';
+  const lista=document.getElementById('lista');
+  lista.innerHTML=filtrados.length?filtrados.map(p=>`
+    <section class="card" id="card-${p.id}">
+      <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span>
+      <h3>${p.titulo}</h3>
+      <p style="color:#667085;font-size:13.5px;margin:4px 0 10px">${p.quando}</p>
+      ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+      <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
+      <div class="acoes">
+        <button class="copiar" data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
+        <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
+        <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
+        <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
+        <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+        <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
+      </div>
+      <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
+    </section>`).join('') : '<div style="text-align:center;padding:30px;opacity:.7">🔎 Nenhum modelo encontrado.</div>';
+
+  filtrados.forEach(p=>{atualizarBtnFav(p.id,document.querySelector('#card-'+p.id+' .favoritar'));atualizarFeedbackUI(p.id)});
+}
+
+document.getElementById('lista').addEventListener('click',e=>{
+  const btn=e.target.closest('button[data-acao]');
+  if(!btn)return;
+  const acao=btn.dataset.acao,id=btn.dataset.id;
+  if(acao==='copiar')copiarPorId(id);
+  else if(acao==='chat')abrirChat(id);
+  else if(acao==='gemini')abrirGemini(id);
+  else if(acao==='idioma')alternarIdioma(id);
+  else if(acao==='favoritar')favoritar(id,btn);
+  else if(acao==='compartilhar')compartilhar(id);
+  else if(acao==='fbup')darFeedback(id,'up');
+  else if(acao==='fbdown')darFeedback(id,'down');
+});
+
+document.getElementById('busca').addEventListener('input',render);
+document.getElementById('btnExportar').addEventListener('click',exportarTodos);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+montarFiltroCategoria();
+atualizarStats();
+render();
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+</script></body></html>
