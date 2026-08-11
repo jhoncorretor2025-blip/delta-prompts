@@ -314,6 +314,57 @@ const ordemCategorias = [
 
 const promptsSaude = [
     {
+        categoria: "📊 Análise",
+        nivel: "intermediario",
+        titulo: "📄🩺 Leitor Inteligente de Laudos e Exames",
+        quando: "Para entender um exame ou laudo em linguagem simples e descobrir quais pontos merecem ser discutidos com um profissional.",
+        prompt: `Analise o exame/laudo fornecido.
+
+Exame: [ANEXAR ARQUIVO / COLAR TEXTO]
+Motivo pelo qual o exame foi solicitado: [MOTIVO, SE SOUBER]
+Idade: [IDADE]
+Sintomas relacionados: [SINTOMAS, SE HOUVER]
+
+SUA MISSÃO
+Não faça apenas uma tradução do laudo. Faça uma leitura inteligente e organizada.
+
+1️⃣ 📋 RESUMO DO EXAME
+Explique em linguagem simples: qual exame foi realizado, para que ele serve, e quais são os principais achados.
+
+2️⃣ 🟢 NORMAL
+Liste os principais resultados descritos como normais ou dentro dos parâmetros apresentados.
+
+3️⃣ 🟡 ALTERAÇÕES
+Liste somente os resultados que realmente merecem atenção. Para cada um:
+Resultado: (valor/achado)
+O que significa em linguagem simples: (explicação)
+Importância: Baixa / Moderada / Alta
+
+4️⃣ 🔴 PONTOS IMPORTANTES
+Identifique achados que merecem ser discutidos com o profissional que solicitou o exame.
+
+5️⃣ 🧩 RELAÇÃO COM OS SINTOMAS
+Se sintomas tiverem sido fornecidos, explique se existe alguma relação possível. Não trate essa relação como diagnóstico.
+
+6️⃣ ❓ PERGUNTAS PARA A CONSULTA
+Crie 5 a 10 perguntas específicas baseadas nesse exame.
+
+7️⃣ 📌 RESUMO FINAL
+Explique em linguagem extremamente simples: "Se eu tivesse que explicar este exame para alguém em 30 segundos, eu diria:"
+
+REGRAS
+- Não invente informações que não estejam no exame.
+- Preserve valores, unidades e referências exatamente como aparecem.
+- Não ignore observações importantes do laudo.
+- Não transforme um achado em diagnóstico.
+- Diferencie claramente o que o exame mostra do que pode significar.
+- Se a imagem ou texto estiver ilegível, informe exatamente qual parte não foi possível interpretar.
+- Não recomende tratamento ou alteração de medicamentos.
+
+ALERTA
+Se houver um achado que possa exigir avaliação rápida, destaque isso claramente e recomende procurar orientação profissional adequada, sem criar diagnóstico ou alarmismo.`
+    },
+    {
         categoria: "📋 Planejamento",
         nivel: "basico",
         titulo: "🌿📋 Organizar Informações Antes de uma Consulta com Homeopata",
