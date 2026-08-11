@@ -8,11 +8,45 @@
 .ordem-status-ativa{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#dcfce7;color:#166534;font-weight:700;font-size:12.5px;margin-top:10px}
 .ordem-status-auto{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#f1f5f9;color:#475467;font-weight:700;font-size:12.5px;margin-top:10px}
 @media(max-width:560px){#listaPerfis{grid-template-columns:1fr!important}}
+.pastas-config-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.pasta-config{border:1px solid #e5e7eb;border-radius:14px;padding:14px;background:#fafafe}
+.pasta-config h4{margin:0 0 10px;font-size:13px;font-weight:900;color:#5b5ce2;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;gap:6px}
+.pasta-config a{display:block;padding:8px 0;font-size:14px;font-weight:700;color:#344055;text-decoration:none;border-radius:8px}
+.pasta-config a:hover{color:#5b5ce2}
+.pasta-config a[aria-current="page"]{color:#5b5ce2}
+[data-theme="dark"] .pasta-config{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .pasta-config a{color:#e2e8f0}
 </style></head><body id="configuracao-page"><div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20260908b"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Configuração</p>
 <h1>⚙️ Configuração</h1>
 <p>Personalize como o Delta Prompts funciona pra você — seu perfil, a ordem do menu, e veja por onde você andou por aqui.</p>
+
+<section class="card">
+  <h3>📂 Navegação Rápida</h3>
+  <p style="margin:0 0 14px;color:#667085;font-size:14px">Tudo relacionado à sua conta e uso do site, organizado por área.</p>
+  <div class="pastas-config-grid">
+    <div class="pasta-config">
+      <h4><span aria-hidden="true">📊</span> Meu Uso</h4>
+      <a href="/delta-prompts/favoritos.html">❤️ Favoritos</a>
+      <a href="/delta-prompts/biblioteca.html">📦 Biblioteca</a>
+      <a href="/delta-prompts/meus-numeros.html">📊 Meus Dados</a>
+    </div>
+    <div class="pasta-config">
+      <h4><span aria-hidden="true">⚙️</span> Personalizar</h4>
+      <a href="/delta-prompts/configuracao.html" aria-current="page">⚙️ Configuração (aqui)</a>
+    </div>
+    <div class="pasta-config">
+      <h4><span aria-hidden="true">🧭</span> Descobrir</h4>
+      <a href="/delta-prompts/quiz.html">🧭 Qual prompt eu uso?</a>
+      <a href="/delta-prompts/tendencias.html">📈 Tendências</a>
+    </div>
+    <div class="pasta-config">
+      <h4><span aria-hidden="true">❓</span> Suporte</h4>
+      <a href="/delta-prompts/ajuda.html">❓ Ajuda</a>
+    </div>
+  </div>
+</section>
 
 <section class="card">
   <h3>🏠 Preenchimento Automático</h3>
