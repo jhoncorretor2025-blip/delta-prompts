@@ -110,6 +110,21 @@ export async function pushFavoritosToCloud(uid){
   catch(e){console.error('Erro ao enviar favoritos para a nuvem:',e);_avisarErroSync()}
 }
 
+// ===== PERFIL PUBLICO (compartilhar so os favoritos marcados como publicos) =====
+export async function obterPerfilPublico(uid){
+  if(!uid)return null;
+  try{
+    const snap=await getDoc(doc(db,'users',uid));
+    if(!snap.exists())return null;
+    const dados=snap.data();
+    const favoritos=(dados.favoritos||[]).filter(f=>f&&f.publico===true);
+    // so o primeiro nome, sem sobrenome nem email - privacidade
+    const nomeCompleto=dados.name||'';
+    const primeiroNome=nomeCompleto.split(' ')[0]||'Alguém';
+    return{nome:primeiroNome,favoritos};
+  }catch(e){console.error('Erro ao buscar perfil publico:',e);return null}
+}
+
 // ===== TODAS AS CONFIGURACOES DO SITE (esconder categorias, ordem do menu, perfil, cor, etc) =====
 const CHAVES_CONFIG=['deltaCategoriasEscondidas','deltaSecoesEscondidas','deltaGrupoOrdemManual','deltaPerfilAtivo','deltaCorDestaque','deltaAtalhosMinimizados','deltaFiltroNovidades','deltaTheme','deltaModoSimples'];
 export async function syncConfiguracoesFromCloud(uid){

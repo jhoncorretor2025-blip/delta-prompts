@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Perfil Público | Delta Prompts</title><meta name="robots" content="noindex"><meta name="description" content="Confira os prompts favoritos compartilhados por um usuário do Delta Prompts."><link rel="stylesheet" href="/delta-prompts/style.css"><style>
+body{background:#f8f9fc}
+.perfil-hero{max-width:900px;margin:0 auto;padding:40px 20px 10px;text-align:center}
+.perfil-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#5b5ce2,#7a5bff);color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;margin:0 auto 14px}
+.perfil-hero h1{margin:0 0 6px;font-size:24px}
+.perfil-hero p{color:#667085;margin:0}
+.perfil-lista{max-width:900px;margin:30px auto;padding:0 20px}
+.perfil-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.perfil-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:18px;box-shadow:0 5px 18px rgba(15,23,42,.04)}
+.perfil-card .tag{display:inline-block;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:11px;font-weight:900;margin-bottom:10px}
+.perfil-card h3{margin:0 0 10px;font-size:15px}
+.perfil-card .preview{white-space:pre-wrap;background:#f8fafc;border:1px solid #edf0f5;border-radius:11px;padding:12px;color:#475467;font-size:13px;max-height:130px;overflow:hidden;line-height:1.5}
+.perfil-card button{margin-top:10px;width:100%;border:0;background:#5b5ce2;color:#fff;font-weight:800;padding:10px;border-radius:10px;cursor:pointer}
+.perfil-cta{max-width:900px;margin:40px auto;padding:26px 20px;text-align:center;background:linear-gradient(135deg,#f5f3ff,#eef2ff);border-radius:20px}
+.perfil-cta a{display:inline-block;margin-top:12px;padding:13px 26px;background:#5b5ce2;color:#fff;font-weight:800;border-radius:12px;text-decoration:none}
+.perfil-vazio{text-align:center;padding:60px 20px;color:#667085}
+.perfil-carregando{text-align:center;padding:60px 20px;color:#667085}
+#toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);display:none;background:#202236;color:#fff;padding:11px 18px;border-radius:11px;z-index:3000}
+</style></head><body>
+
+<div class="perfil-hero" id="perfilHero">
+  <div class="perfil-carregando">🔄 Carregando perfil...</div>
+</div>
+<div class="perfil-lista" id="perfilLista"></div>
+<div class="perfil-cta">
+  <h2 style="margin:0 0 6px">🧠 Delta Prompts</h2>
+  <p style="color:#667085;margin:0">Uma biblioteca com centenas de prompts prontos pra usar com IA, organizados por assunto.</p>
+  <a href="/delta-prompts/index.html">🚀 Conhecer o Delta Prompts</a>
+</div>
+
+<div id="toast">✓ Copiado!</div>
+<script type="module">
+import { obterPerfilPublico } from '/delta-prompts/firebase-auth.js';
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function mostrarToast(texto){const t=document.getElementById('toast');t.textContent=texto;t.style.display='block';setTimeout(()=>t.style.display='none',1800)}
+async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar')}}
+
+(function(){
+  const params=new URLSearchParams(location.search);
+  const uid=params.get('u');
+  const hero=document.getElementById('perfilHero');
+  const lista=document.getElementById('perfilLista');
+
+  if(!uid){
+    hero.innerHTML='<div class="perfil-vazio">🔗 Link inválido. Confira se copiou o endereço completo.</div>';
+    return;
+  }
+
+  obterPerfilPublico(uid).then(perfil=>{
+    if(!perfil){
+      hero.innerHTML='<div class="perfil-vazio">😕 Não encontramos esse perfil.</div>';
+      return;
+    }
+    const inicial=(perfil.nome||'?').charAt(0).toUpperCase();
+    hero.innerHTML=`<div class="perfil-avatar">${inicial}</div><h1>Favoritos de ${esc(perfil.nome)}</h1><p>${perfil.favoritos.length} prompt${perfil.favoritos.length===1?'':'s'} compartilhado${perfil.favoritos.length===1?'':'s'} publicamente</p>`;
+
+    if(!perfil.favoritos.length){
+      lista.innerHTML='<div class="perfil-vazio">Essa pessoa ainda não tornou nenhum favorito público.</div>';
+      return;
+    }
+    lista.innerHTML='<div class="perfil-grid">'+perfil.favoritos.map(f=>`
+      <div class="perfil-card">
+        <span class="tag">${esc(f.categoria||'Geral')}</span>
+        <h3>${esc(f.titulo||'Prompt favorito')}</h3>
+        <div class="preview">${esc(f.texto||'')}</div>
+        <button type="button" data-texto="${esc(f.texto||'')}">📋 Copiar prompt</button>
+      </div>
+    `).join('')+'</div>';
+
+    lista.querySelectorAll('button[data-texto]').forEach(b=>{
+      b.addEventListener('click',()=>copiarPrompt(b.dataset.texto));
+    });
+  }).catch(err=>{
+    console.error('Erro ao carregar perfil publico:',err);
+    hero.innerHTML='<div class="perfil-vazio">😕 Não foi possível carregar esse perfil agora.</div>';
+  });
+})();
+</script>
+</body></html>
