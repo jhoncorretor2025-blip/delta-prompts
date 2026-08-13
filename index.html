@@ -598,12 +598,42 @@ document.querySelectorAll('.exemplo-copiar').forEach(btn=>{
     pontuados.sort((a,b)=>b.pontos-a.pontos);
     return pontuados.map(x=>x.item);
   }
+  function sugerirCategoriaProxima(v){
+    const palavras=normBusca(v).split(/\s+/).filter(p=>p.length>=3&&!PARAR.has(p));
+    if(!palavras.length)return[];
+    const pontuadas=itens.map(cat=>{
+      const texto=normBusca(cat.n+' '+cat.d+' '+cat.t);
+      let pontos=0;
+      palavras.forEach(pl=>{
+        if(texto.includes(pl)){pontos+=2;return}
+        // tolera erro de digitacao leve (distancia 1-2) em pelo menos uma palavra-chave da categoria
+        const palavrasCat=texto.split(/\s+/);
+        if(palavrasCat.some(pc=>{
+          if(pc.length<5||pl.length<5)return false;
+          const dist=distanciaEdicao(pl,pc);
+          const limite=pc.length>=8?2:1;
+          return dist<=limite;
+        }))pontos+=1;
+      });
+      return{cat,pontos};
+    }).filter(x=>x.pontos>0);
+    pontuadas.sort((a,b)=>b.pontos-a.pontos);
+    return pontuadas.slice(0,2).map(x=>x.cat);
+  }
   function buscar(){
     const v=input.value.trim();
     if(!v){box.style.display='none';return}
     const resultados=buscarPorPalavras(v).slice(0,6);
     box.style.display='block';
-    if(!resultados.length){box.innerHTML='<p style="color:#667085;font-size:14px">🔎 Não achei nada certeiro. Tenta descrever de outro jeito, ou usa a busca principal ali em cima.</p>';return}
+    if(!resultados.length){
+      const proximas=sugerirCategoriaProxima(v);
+      if(proximas.length){
+        box.innerHTML='<p style="font-size:13px;color:#667085;margin:0 0 10px">🔎 Não temos um prompt certeiro pra isso ainda, mas você pode gostar de conferir:</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">'+proximas.map(c=>`<a href="${c.l}" style="display:block;padding:13px;border:1px dashed var(--border);border-radius:12px;background:#fafafe;text-decoration:none;color:inherit"><strong style="font-size:13.5px;display:block;margin-bottom:3px">${c.i} ${c.n}</strong><span style="font-size:12px;color:var(--muted)">${c.d}</span></a>`).join('')+'</div>';
+      }else{
+        box.innerHTML='<p style="color:#667085;font-size:14px">🔎 Não achei nada certeiro. Tenta descrever de outro jeito, ou usa a busca principal ali em cima.</p>';
+      }
+      return;
+    }
     box.innerHTML='<p style="font-size:12.5px;color:#667085;margin:0 0 10px;font-weight:700">ISSO AQUI PODE RESOLVER:</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">'+resultados.map(p=>`<a href="${p.link}" style="display:block;padding:13px;border:1px solid var(--border);border-radius:12px;background:#fafafe;text-decoration:none;color:inherit"><strong style="font-size:13.5px;display:block;margin-bottom:3px">${p.titulo}</strong><span style="font-size:12px;color:var(--muted)">📁 ${p.pagina}</span></a>`).join('')+'</div>';
   }
   btn.addEventListener('click',buscar);
