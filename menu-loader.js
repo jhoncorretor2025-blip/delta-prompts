@@ -944,7 +944,70 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
     var grupo=grupoDaPaginaAtual(sidebar);
     window._deltaGrupoAtual=grupo;
     if(grupo)somarScore(grupo,1); // visita conta 1 ponto
+    mostrarOnboardingSePrimeiraVez(sidebar);
   };
+
+  // ===== TELA DE BOAS-VINDAS (so na primeira visita) =====
+  function mostrarOnboardingSePrimeiraVez(sidebar){
+    var jaViu=false;
+    try{jaViu=localStorage.getItem('deltaOnboardingCompleto')==='true'}catch(e){jaViu=true}
+    if(jaViu)return;
+    if(document.getElementById('deltaOnboardingOverlay'))return;
+
+    var titulos=[].slice.call(sidebar.querySelectorAll('.menu-title')).map(function(el){return el.textContent.trim()}).filter(Boolean);
+    if(!titulos.length)return;
+
+    var overlay=document.createElement('div');
+    overlay.id='deltaOnboardingOverlay';
+    overlay.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:5000;display:flex;align-items:center;justify-content:center;padding:20px';
+
+    var caixa=document.createElement('div');
+    caixa.style.cssText='background:#fff;border-radius:20px;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:28px';
+
+    var listaChecks=titulos.map(function(t,i){
+      return '<label style="display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e5e7eb;border-radius:11px;cursor:pointer;margin-bottom:7px"><input type="checkbox" checked data-onb-idx="'+i+'" style="width:18px;height:18px;flex:0 0 auto"><span style="font-size:14px;font-weight:700">'+t+'</span></label>';
+    }).join('');
+
+    caixa.innerHTML=
+      '<div style="text-align:center;margin-bottom:18px">'+
+        '<div style="font-size:38px;margin-bottom:6px">👋</div>'+
+        '<h2 style="margin:0 0 6px;font-size:20px">Bem-vindo(a) ao Delta Prompts!</h2>'+
+        '<p style="margin:0;color:#667085;font-size:13.5px">Escolha o que você quer ver no menu. Você pode mudar isso depois em Configuração, a qualquer momento.</p>'+
+      '</div>'+
+      '<div id="deltaOnboardingLista">'+listaChecks+'</div>'+
+      '<div style="display:flex;gap:8px;margin:10px 0 18px">'+
+        '<button type="button" id="deltaOnbMarcarTodos" style="flex:1;border:1px solid #e5e7eb;background:#fff;border-radius:9px;padding:8px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467">Marcar todos</button>'+
+        '<button type="button" id="deltaOnbDesmarcarTodos" style="flex:1;border:1px solid #e5e7eb;background:#fff;border-radius:9px;padding:8px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467">Desmarcar todos</button>'+
+      '</div>'+
+      '<button type="button" id="deltaOnbEntrarGoogle" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #e5e7eb;background:#fff;border-radius:11px;padding:12px;font-weight:800;font-size:14px;cursor:pointer;margin-bottom:10px;color:#344055">🔑 Entrar com Google (sincroniza seus dados)</button>'+
+      '<button type="button" id="deltaOnbConcluir" style="width:100%;border:0;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:800;font-size:15px;padding:14px;border-radius:11px;cursor:pointer">🚀 Começar a usar</button>';
+
+    overlay.appendChild(caixa);
+    document.body.appendChild(overlay);
+
+    caixa.querySelector('#deltaOnbMarcarTodos').addEventListener('click',function(){
+      caixa.querySelectorAll('input[type="checkbox"]').forEach(function(c){c.checked=true});
+    });
+    caixa.querySelector('#deltaOnbDesmarcarTodos').addEventListener('click',function(){
+      caixa.querySelectorAll('input[type="checkbox"]').forEach(function(c){c.checked=false});
+    });
+    caixa.querySelector('#deltaOnbEntrarGoogle').addEventListener('click',function(){
+      if(window.deltaAuth&&window.deltaAuth.login)window.deltaAuth.login();
+    });
+    caixa.querySelector('#deltaOnbConcluir').addEventListener('click',function(){
+      var escondidas=[];
+      caixa.querySelectorAll('input[type="checkbox"]').forEach(function(c){
+        if(!c.checked){var idx=parseInt(c.dataset.onbIdx,10);escondidas.push(titulos[idx])}
+      });
+      try{
+        localStorage.setItem('deltaSecoesEscondidas',JSON.stringify(escondidas));
+        localStorage.setItem('deltaOnboardingCompleto','true');
+      }catch(e){}
+      if(window.deltaRegistrarLog)window.deltaRegistrarLog('👋 Completou a tela de boas-vindas, escondendo '+escondidas.length+' seção(ões)');
+      overlay.remove();
+      aplicarCategoriasEscondidas(sidebar);
+    });
+  }
 
   // Acoes reais (copiar, favoritar) somam mais peso ao grupo da pagina atual
   document.addEventListener('click',function(e){
