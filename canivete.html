@@ -1,25 +1,242 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Canivete | Planejamento Financeiro</title>
-<meta name="description" content="Painel financeiro pessoal para organizar renda, gastos, projeções e objetivos.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f172a">
+<title>Canivete Assistente | Delta Prompts</title>
+<meta name="description" content="Ferramentas úteis do dia a dia: painel financeiro, metas e projeções. Parte do Delta Prompts.">
 <style>
-:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--line:#e5eaf2;--blue:#2563eb;--blue2:#1d4ed8;--green:#07883b;--red:#c92a2a;--shadow:0 12px 35px rgba(23,32,51,.08);--r:20px}*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:linear-gradient(180deg,#eef4ff,#f8fafc 30%,#f5f7fb);color:var(--text)}button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1400px;margin:auto;min-height:100vh;display:grid;grid-template-columns:235px 1fr}aside{background:rgba(255,255,255,.78);border-right:1px solid var(--line);padding:26px 16px;position:sticky;top:0;height:100vh;backdrop-filter:blur(15px)}.brand{display:flex;gap:11px;align-items:center;padding:4px 8px 28px}.mark{width:43px;height:43px;border-radius:13px;background:linear-gradient(135deg,#2563eb,#60a5fa);display:grid;place-items:center;color:#fff;font-weight:900;font-size:20px}.brand b{display:block;font-size:17px}.brand span{font-size:11px;color:var(--muted)}nav{display:grid;gap:6px}.nav{border:0;background:transparent;text-align:left;padding:12px;border-radius:12px;color:#5b6678;font-weight:750}.nav.active{background:#eaf1ff;color:var(--blue)}.side-note{position:absolute;left:16px;right:16px;bottom:18px;border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px}.side-note b{font-size:12px}.side-note p{font-size:11px;line-height:1.5;color:var(--muted);margin:5px 0 0}main{padding:30px 34px 50px}.top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:25px}.eyebrow{font-size:11px;color:var(--blue);font-weight:900;letter-spacing:.1em;text-transform:uppercase}.title{font-size:32px;letter-spacing:-.04em;margin:5px 0}.subtitle{margin:0;color:var(--muted);font-size:14px}.saved{background:#fff;border:1px solid var(--line);padding:9px 12px;border-radius:12px;font-size:12px;color:#596579}.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:20px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:22px}.head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:18px}.ct{font-size:17px;font-weight:850}.cs{font-size:12px;color:var(--muted);margin-top:4px}.income{display:grid;grid-template-columns:1fr 180px;gap:12px;margin-bottom:20px}.label{font-size:12px;color:#6d7788;font-weight:750;display:block;margin-bottom:7px}.input,.expense input,.goal-form input,.goal-form select{width:100%;height:44px;border:1px solid var(--line);border-radius:11px;background:#fbfcfe;padding:0 12px;outline:0}.input:focus,.expense input:focus,.goal-form input:focus,.goal-form select:focus{border-color:#8cb1ff;box-shadow:0 0 0 4px #edf3ff}.expense-list{display:grid;gap:8px;max-height:360px;overflow:auto}.expense{display:grid;grid-template-columns:1fr 130px 35px;gap:8px}.expense input{height:42px}.remove{border:1px solid #f0d7d7;background:#fff;color:#c34b4b;border-radius:10px}.add{margin-top:11px;border:0;background:#eff5ff;color:var(--blue);padding:11px 13px;border-radius:11px;font-weight:800}.stats{display:grid;grid-template-columns:1fr 1fr;gap:11px}.stat{padding:15px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(#fff,#fafcff)}.stat small{display:block;color:var(--muted);font-weight:700}.value{font-size:23px;font-weight:900;margin-top:6px;letter-spacing:-.03em}.positive{color:var(--green)}.negative{color:var(--red)}.projection{margin-top:14px;background:#0f172a;color:#fff;padding:17px;border-radius:17px}.proj-top{display:flex;justify-content:space-between;gap:10px}.proj-title{font-size:12px;font-weight:800}.proj-total{font-size:22px;font-weight:900}.bar{height:8px;background:#273449;border-radius:9px;margin:12px 0 8px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,#60a5fa,#a7f3d0);width:0}.hint{font-size:11px;color:#cbd5e1}.proj-grid{margin-top:17px}.goals{display:grid;gap:10px}.goal{display:grid;grid-template-columns:43px 1fr auto;gap:11px;align-items:center;border:1px solid var(--line);border-radius:15px;padding:12px}.goal-icon{width:43px;height:43px;border-radius:12px;background:#eef4ff;display:grid;place-items:center;font-size:20px}.goal b{font-size:13px}.goal p{margin:3px 0 0;font-size:11px;color:var(--muted)}.goal strong{text-align:right;font-size:13px}.delete{border:0;background:transparent;color:#a36b75}.primary{border:0;background:var(--blue);color:#fff;border-radius:11px;padding:11px 14px;font-weight:850}.primary:hover{background:var(--blue2)}.goal-form{display:grid;grid-template-columns:1.2fr .7fr .7fr auto;gap:8px;margin-top:12px}.goal-form>*{height:42px}.insight{margin-top:15px;padding:13px;border:1px dashed #c9d6ea;background:#f8fbff;border-radius:14px;font-size:12px}.insight b{display:block}.insight span{color:#5d687a}.tools{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.tool{padding:17px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}.tool h3{font-size:14px;margin:8px 0 4px}.tool p{font-size:12px;color:var(--muted);line-height:1.45;margin:0}.ghost{margin-top:12px;width:100%;height:36px;border:1px solid var(--line);background:#fff;border-radius:10px;font-weight:750;color:#465166}.footer{text-align:center;color:#8993a3;font-size:11px;margin-top:20px}@media(max-width:1050px){.app{grid-template-columns:1fr}aside{display:none}.grid{grid-template-columns:1fr}.tools{grid-template-columns:1fr 1fr}}@media(max-width:620px){main{padding:20px 13px 35px}.top{margin-bottom:18px}.title{font-size:26px}.income{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.expense{grid-template-columns:1fr 105px 35px}.goal-form{grid-template-columns:1fr 1fr}.goal-form .primary{grid-column:span 2}.tools{grid-template-columns:1fr}.saved{display:none}}
-</style></head>
-<body><div class="app"><aside><div class="brand"><div class="mark">C</div><div><b>Canivete</b><span>Ferramentas úteis</span></div></div><nav><button class="nav active">◈ Financeiro</button><button class="nav">◌ Calculadoras</button><button class="nav">✓ Listas & Organização</button><button class="nav">⚙ Ferramentas</button></nav><div class="side-note"><b>Primeiro módulo</b><p>Organize sua renda, despesas e objetivos em um único painel.</p></div></aside>
-<main><header class="top"><div><div class="eyebrow">Canivete · Financeiro</div><h1 class="title">Seu dinheiro, mais claro.</h1><p class="subtitle">Informe sua renda e despesas para entender quanto sobra hoje — e onde você pode chegar.</p></div><div class="saved">● Salvo neste navegador</div></header>
-<section class="grid"><div class="card"><div class="head"><div><div class="ct">Sua realidade mensal</div><div class="cs">Comece pela renda líquida e pelos gastos recorrentes.</div></div></div><div class="income"><div><label class="label">Quanto você ganha por mês?</label><input class="input" id="income" type="number" min="0" step="50" value="5000"></div><div><label class="label">Quanto pretende guardar?</label><input class="input" id="saving" type="number" min="0" max="100" value="20"></div></div><div class="head" style="margin-bottom:10px"><div><div class="ct" style="font-size:14px">Seus gastos</div><div class="cs">Edite, remova ou adicione gastos.</div></div></div><div class="expense-list" id="expenses"></div><button class="add" id="addExpense">+ Adicionar gasto</button><div class="insight"><b>💡 Como funciona</b><span>A sobra é calculada pela renda menos todos os gastos. As projeções não consideram juros, inflação ou investimentos.</span></div></div>
-<div class="card"><div class="head"><div><div class="ct">Visão geral</div><div class="cs">Atualizado automaticamente.</div></div></div><div class="stats"><div class="stat"><small>Renda mensal</small><div class="value" id="incomeView">R$ 0</div></div><div class="stat"><small>Gastos mensais</small><div class="value" id="expenseView">R$ 0</div></div><div class="stat"><small>Sobra líquida</small><div class="value positive" id="leftView">R$ 0</div></div><div class="stat"><small>Taxa de sobra</small><div class="value" id="rateView">0%</div></div></div><div class="projection"><div class="proj-top"><div><div class="proj-title">Seu potencial em 5 anos</div><div class="hint">Acumulando a sobra mensal atual</div></div><div class="proj-total" id="five">R$ 0</div></div><div class="bar"><span id="bar"></span></div><div class="hint">Sem considerar juros, inflação ou investimentos.</div></div><div class="proj-grid"><div class="ct" style="font-size:14px;margin-bottom:10px">Projeções</div><div class="stats"><div class="stat"><small>Em 6 meses</small><div class="value" id="m6">R$ 0</div></div><div class="stat"><small>Em 12 meses</small><div class="value" id="m12">R$ 0</div></div><div class="stat"><small>Em 3 anos</small><div class="value" id="y3">R$ 0</div></div><div class="stat"><small>Em 5 anos</small><div class="value" id="y5">R$ 0</div></div></div></div></div></section>
-<section class="card" style="margin-top:20px"><div class="head"><div><div class="ct">Meus objetivos</div><div class="cs">Cadastre o que você quer conquistar e veja quanto precisaria reservar.</div></div><button class="primary" id="newGoal">+ Novo objetivo</button></div><div class="goals" id="goals"></div><div class="goal-form" id="goalForm" hidden><input id="goalName" placeholder="Ex.: Comprar um carro"><input id="goalValue" type="number" min="0" placeholder="Valor"><select id="goalMonths"><option value="12">12 meses</option><option value="24">24 meses</option><option value="36">3 anos</option><option value="60">5 anos</option><option value="120">10 anos</option></select><button class="primary" id="saveGoal">Adicionar</button></div></section>
-<section class="tools"><div class="tool"><div>📊</div><h3>Orçamento 50/30/20</h3><p>Compare sua renda com necessidades, desejos e metas.</p><button class="ghost">Em breve</button></div><div class="tool"><div>🧮</div><h3>Calculadoras</h3><p>Financiamento, porcentagem, juros e outras ferramentas.</p><button class="ghost">Em breve</button></div><div class="tool"><div>📋</div><h3>Listas & Organização</h3><p>Um espaço para futuras ferramentas rápidas do Canivete.</p><button class="ghost">Em breve</button></div></section><div class="footer">Canivete · Primeiro módulo financeiro · Seus dados ficam salvos neste navegador.</div></main></div>
+:root{
+  --bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--line:#e6eaf0;
+  --primary:#2563eb;--primary2:#1d4ed8;--success:#16a34a;--danger:#dc2626;
+  --shadow:0 10px 30px rgba(15,23,42,.07);--radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button,input{font:inherit}
+.app{display:flex;min-height:100vh}
+.sidebar{width:245px;background:#0f172a;color:#fff;padding:24px 16px;position:fixed;inset:0 auto 0 0;z-index:10}
+.brand{font-size:21px;font-weight:800;padding:8px 12px 26px}
+.brand small{display:block;color:#94a3b8;font-size:11px;font-weight:500;margin-top:4px}
+.voltar-delta{display:flex;align-items:center;gap:8px;color:#93c5fd;text-decoration:none;font-size:12.5px;font-weight:700;padding:0 12px 18px;border-bottom:1px solid #1e293b;margin-bottom:14px}
+.voltar-delta:hover{color:#bfdbfe}
+.nav button{width:100%;border:0;background:transparent;color:#cbd5e1;text-align:left;padding:12px 14px;border-radius:11px;margin:3px 0;cursor:pointer}
+.nav button:hover,.nav button.active{background:#1e293b;color:#fff}
+.main{margin-left:245px;width:calc(100% - 245px);padding:28px;max-width:1500px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:16px}
+h1{margin:0;font-size:28px}.subtitle{color:var(--muted);margin-top:5px}
+.section{display:none}.section.active{display:block}
+.grid{display:grid;gap:16px}.cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.metric-label{font-size:13px;color:var(--muted)}.metric{font-size:27px;font-weight:800;margin-top:7px}
+.metric.success{color:var(--success)}.metric.danger{color:var(--danger)}
+.two{grid-template-columns:1.35fr .85fr}.three{grid-template-columns:repeat(3,1fr)}
+.card h2,.card h3{margin:0 0 15px}.card h2{font-size:18px}
+.row{display:flex;gap:10px;align-items:center}.between{justify-content:space-between}
+input{width:100%;border:1px solid #d7dce5;border-radius:10px;padding:11px 12px;background:#fff;color:var(--text);outline:none}
+input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{border:0;border-radius:10px;padding:11px 15px;cursor:pointer;font-weight:700}
+.btn.primary{background:var(--primary);color:#fff}.btn.primary:hover{background:var(--primary2)}
+.btn.light{background:#eef2f7;color:#344054}.btn.danger{background:#fee2e2;color:#b91c1c}
+.expense-list{margin-top:12px}.expense{display:grid;grid-template-columns:1fr 140px 40px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.goal{padding:15px 0;border-bottom:1px solid var(--line)}.goal:last-child{border:0}
+.progress{height:9px;background:#e9edf3;border-radius:20px;overflow:hidden;margin:9px 0}.progress span{display:block;height:100%;background:var(--primary);border-radius:20px}
+.badge{font-size:11px;padding:4px 8px;border-radius:20px;background:#eff6ff;color:#1d4ed8}
+.bar{height:180px;display:flex;align-items:end;gap:10px;border-bottom:1px solid var(--line);padding:12px 5px}
+.bar-item{flex:1;text-align:center;font-size:11px;color:var(--muted)}.bar-fill{background:linear-gradient(180deg,#60a5fa,#2563eb);border-radius:7px 7px 0 0;min-height:5px;margin:0 auto 6px;max-width:44px}
+.rule{height:1px;background:var(--line);margin:16px 0}
+.notice{background:#eff6ff;border:1px solid #dbeafe;color:#1e40af;padding:13px;border-radius:12px;font-size:13px}
+.empty{color:var(--muted);text-align:center;padding:20px}
+.mobile-menu{display:none}
+@media(max-width:1050px){.cards{grid-template-columns:repeat(2,1fr)}.two,.three{grid-template-columns:1fr}}
+@media(max-width:700px){
+ .sidebar{display:none}.main{margin:0;width:100%;padding:16px 14px 80px}
+ .mobile-menu{display:block;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:20;background:#0f172a;color:#fff;border:0;border-radius:30px;padding:12px 20px;box-shadow:var(--shadow)}
+ .cards{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}
+ h1{font-size:23px}.topbar{align-items:flex-start}
+ .expense{grid-template-columns:1fr 105px 38px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">🧰 Canivete Assistente<small>Seu painel de ferramentas úteis</small></div>
+  <a href="/delta-prompts/index.html" class="voltar-delta">← Voltar ao Delta Prompts</a>
+  <nav class="nav">
+    <button class="active" data-section="dashboard">📊 Financeiro</button>
+    <button data-section="metas">🎯 Metas</button>
+    <button data-section="projecoes">📈 Projeções</button>
+    <button data-section="futuro">🧩 Mais ferramentas</button>
+  </nav>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div><h1 id="title">Painel Financeiro</h1><div class="subtitle" id="subtitle">Tenha uma visão simples e prática do seu dinheiro.</div></div>
+    <button class="btn light" onclick="resetAll()">Limpar dados</button>
+  </div>
+
+  <section id="dashboard" class="section active">
+    <div class="grid cards">
+      <div class="card"><div class="metric-label">Renda mensal</div><div class="metric" id="mIncome">R$ 0,00</div></div>
+      <div class="card"><div class="metric-label">Gastos mensais</div><div class="metric danger" id="mExpenses">R$ 0,00</div></div>
+      <div class="card"><div class="metric-label">Sobra líquida</div><div class="metric success" id="mNet">R$ 0,00</div></div>
+      <div class="card"><div class="metric-label">% que sobra</div><div class="metric" id="mPercent">0%</div></div>
+    </div>
+
+    <div class="grid two" style="margin-top:16px">
+      <div class="card">
+        <h2>Minha renda e gastos</h2>
+        <div class="form-grid">
+          <div><label>Renda mensal</label><input id="income" type="number" min="0" step="0.01" placeholder="Ex.: 5000"></div>
+        </div>
+        <div class="rule"></div>
+        <div class="row between"><h3 style="margin:0">Gastos mensais</h3><button class="btn primary" onclick="addExpense()">+ Adicionar</button></div>
+        <div id="expenses" class="expense-list"></div>
+      </div>
+
+      <div class="card">
+        <h2>Resumo</h2>
+        <div class="notice">Os dados ficam salvos automaticamente nesta máquina usando o armazenamento do navegador.</div>
+        <div style="margin-top:18px">
+          <div class="row between"><span>Renda</span><strong id="sIncome">R$ 0,00</strong></div>
+          <div class="row between" style="margin-top:12px"><span>Despesas</span><strong id="sExpenses">R$ 0,00</strong></div>
+          <div class="row between" style="margin-top:12px"><span>Disponível</span><strong id="sNet">R$ 0,00</strong></div>
+          <div class="progress" style="margin-top:16px"><span id="netProgress" style="width:0%"></span></div>
+          <small style="color:var(--muted)">Percentual da renda que permanece livre.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Regra 50 / 30 / 20 — referência</h2>
+      <div class="grid three">
+        <div><strong>50%</strong><p style="color:var(--muted);font-size:13px">Necessidades</p></div>
+        <div><strong>30%</strong><p style="color:var(--muted);font-size:13px">Desejos</p></div>
+        <div><strong>20%</strong><p style="color:var(--muted);font-size:13px">Reserva e objetivos</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="metas" class="section">
+    <div class="card">
+      <div class="row between"><h2>Objetivos financeiros</h2><button class="btn primary" onclick="addGoal()">+ Nova meta</button></div>
+      <p style="color:var(--muted);font-size:13px">Cadastre algo que você quer conquistar, o valor e o prazo.</p>
+      <div id="goals"></div>
+    </div>
+  </section>
+
+  <section id="projecoes" class="section">
+    <div class="grid cards">
+      <div class="card"><div class="metric-label">Em 6 meses</div><div class="metric success" id="p6">R$ 0,00</div></div>
+      <div class="card"><div class="metric-label">Em 12 meses</div><div class="metric success" id="p12">R$ 0,00</div></div>
+      <div class="card"><div class="metric-label">Em 3 anos</div><div class="metric success" id="p36">R$ 0,00</div></div>
+      <div class="card"><div class="metric-label">Em 5 anos</div><div class="metric success" id="p60">R$ 0,00</div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>Projeção acumulada</h2>
+      <p style="color:var(--muted);font-size:13px">Estimativa simples considerando que toda a sobra líquida mensal seja guardada, sem juros.</p>
+      <div class="bar" id="chart"></div>
+    </div>
+  </section>
+
+  <section id="futuro" class="section">
+    <div class="card">
+      <h2>Mais ferramentas do Canivete</h2>
+      <p style="color:var(--muted)">Esta área está preparada para receber os próximos módulos.</p>
+      <div class="grid three">
+        <div class="card" style="box-shadow:none;background:#f8fafc"><h3>🧮 Calculadoras</h3><p style="color:var(--muted);font-size:13px">Ferramentas rápidas para cálculos do dia a dia.</p></div>
+        <div class="card" style="box-shadow:none;background:#f8fafc"><h3>📝 Listas</h3><p style="color:var(--muted);font-size:13px">Organize tarefas, ideias e informações.</p></div>
+        <div class="card" style="box-shadow:none;background:#f8fafc"><h3>🤖 IA</h3><p style="color:var(--muted);font-size:13px">Espaço para futuras ferramentas inteligentes.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+<button class="mobile-menu" onclick="toggleMobileNav()">☰ Menu</button>
+</div>
+
 <script>
-const defaults=[['Moradia',1200],['Alimentação',700],['Transporte',400],['Internet e celular',150],['Energia e água',180],['Saúde',150],['Lazer',250]];
-let data=JSON.parse(localStorage.getItem('caniveteFinanceiro')||'null')||{income:5000,saving:20,expenses:defaults.map(x=>({name:x[0],value:x[1]})),goals:[]};
-const money=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});const $=id=>document.getElementById(id);
-function save(){localStorage.setItem('caniveteFinanceiro',JSON.stringify(data));}
-function renderExpenses(){const box=$('expenses');box.innerHTML='';data.expenses.forEach((e,i)=>{const row=document.createElement('div');row.className='expense';row.innerHTML=`<input value="${e.name.replaceAll('"','&quot;')}" aria-label="Nome do gasto"><input type="number" min="0" step="10" value="${e.value}" aria-label="Valor do gasto"><button class="remove" title="Remover">×</button>`;const ins=row.querySelectorAll('input');ins[0].oninput=()=>{data.expenses[i].name=ins[0].value;save();};ins[1].oninput=()=>{data.expenses[i].value=Number(ins[1].value)||0;update();save();};row.querySelector('.remove').onclick=()=>{data.expenses.splice(i,1);renderExpenses();update();save();};box.appendChild(row)});}
-function update(){data.income=Number($('income').value)||0;data.saving=Number($('saving').value)||0;const total=data.expenses.reduce((s,e)=>s+(Number(e.value)||0),0),left=data.income-total; $('incomeView').textContent=money(data.income);$('expenseView').textContent=money(total);$('leftView').textContent=money(left);$('leftView').className='value '+(left>=0?'positive':'negative');$('rateView').textContent=(data.income?Math.max(0,left/data.income*100):0).toFixed(1)+'%';const vals=[6,12,36,60].map(m=>Math.max(0,left)*m);['m6','m12','y3','y5'].forEach((id,i)=>$(id).textContent=money(vals[i]));$('five').textContent=money(vals[3]);$('bar').style.width=Math.min(100,Math.max(0,left/data.income*100))+'%';renderGoals();}
-function renderGoals(){const box=$('goals');box.innerHTML='';if(!data.goals.length){box.innerHTML='<div style="padding:15px;border:1px dashed var(--line);border-radius:14px;color:var(--muted);font-size:12px">Nenhum objetivo cadastrado. Clique em “+ Novo objetivo” para começar.</div>';return}data.goals.forEach((g,i)=>{const need=g.value/g.months;const icon=/carro/i.test(g.name)?'🚗':/casa|im[oó]vel/i.test(g.name)?'🏠':/viagem/i.test(g.name)?'✈️':'🎯';const el=document.createElement('div');el.className='goal';el.innerHTML=`<div class="goal-icon">${icon}</div><div><b>${g.name}</b><p>${g.months} meses · precisa reservar ${money(need)}/mês</p></div><div><strong>${money(g.value)}</strong><br><button class="delete" title="Excluir">Excluir</button></div>`;el.querySelector('.delete').onclick=()=>{data.goals.splice(i,1);save();update()};box.appendChild(el)})}
-$('income').value=data.income;$('saving').value=data.saving;$('income').oninput=()=>{update();save()};$('saving').oninput=()=>{save()};$('addExpense').onclick=()=>{data.expenses.push({name:'Novo gasto',value:0});renderExpenses();update();save()};$('newGoal').onclick=()=>{$('goalForm').hidden=false;$('goalName').focus()};$('saveGoal').onclick=()=>{const name=$('goalName').value.trim(),value=Number($('goalValue').value)||0,months=Number($('goalMonths').value);if(!name||value<=0)return alert('Informe o nome e o valor do objetivo.');data.goals.push({name,value,months});$('goalName').value='';$('goalValue').value='';$('goalForm').hidden=true;save();update()};renderExpenses();update();
-</script></body></html>
+const KEY="canivete-assistente-v1";
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{
+ income:0,
+ expenses:[
+  {name:"Moradia",value:0},{name:"Alimentação",value:0},{name:"Transporte",value:0}
+ ],
+ goals:[]
+};
+
+const money=v=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(v)||0);
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function calc(){
+ const expenses=data.expenses.reduce((s,e)=>s+(Number(e.value)||0),0);
+ const income=Number(data.income)||0;
+ return {income,expenses,net:income-expenses,percent:income?((income-expenses)/income*100):0};
+}
+function render(){
+ document.getElementById('income').value=data.income||"";
+ const c=calc();
+ document.getElementById('mIncome').textContent=money(c.income);
+ document.getElementById('mExpenses').textContent=money(c.expenses);
+ document.getElementById('mNet').textContent=money(c.net);
+ document.getElementById('mPercent').textContent=(c.percent||0).toFixed(1)+"%";
+ document.getElementById('sIncome').textContent=money(c.income);
+ document.getElementById('sExpenses').textContent=money(c.expenses);
+ document.getElementById('sNet').textContent=money(c.net);
+ document.getElementById('netProgress').style.width=Math.max(0,Math.min(100,c.percent))+"%";
+
+ const list=document.getElementById('expenses');
+ list.innerHTML=data.expenses.length?data.expenses.map((e,i)=>`
+ <div class="expense">
+  <input value="${esc(e.name)}" oninput="data.expenses[${i}].name=this.value;save()">
+  <input type="number" min="0" step="0.01" value="${Number(e.value)||0}" oninput="data.expenses[${i}].value=this.value;save()">
+  <button class="btn danger" onclick="removeExpense(${i})">×</button>
+ </div>`).join(""):'<div class="empty">Nenhum gasto cadastrado.</div>';
+
+ const periods=[6,12,36,60];
+ periods.forEach(n=>document.getElementById('p'+n).textContent=money(Math.max(0,c.net*n)));
+ const chart=document.getElementById('chart'), vals=[1,3,6,12,24,36,60].map(n=>Math.max(0,c.net*n)), max=Math.max(...vals,1);
+ chart.innerHTML=vals.map((v,i)=>`<div class="bar-item"><div class="bar-fill" style="height:${Math.max(5,v/max*135)}px" title="${money(v)}"></div>${[1,3,6,12,24,36,60][i]}m</div>`).join("");
+
+ const goals=document.getElementById('goals');
+ goals.innerHTML=data.goals.length?data.goals.map((g,i)=>{
+  const target=Number(g.target)||0,saved=Number(g.saved)||0,p=Math.min(100,target?saved/target*100:0);
+  return `<div class="goal">
+   <div class="row between"><strong>${esc(g.name||"Nova meta")}</strong><span class="badge">${g.months||0} meses</span></div>
+   <div class="form-grid" style="margin-top:10px">
+    <div><label>Nome</label><input value="${esc(g.name)}" oninput="data.goals[${i}].name=this.value;save()"></div>
+    <div><label>Valor da meta</label><input type="number" min="0" step="0.01" value="${target}" oninput="data.goals[${i}].target=this.value;save()"></div>
+    <div><label>Já guardado</label><input type="number" min="0" step="0.01" value="${saved}" oninput="data.goals[${i}].saved=this.value;save()"></div>
+    <div><label>Prazo em meses</label><input type="number" min="1" value="${g.months||12}" oninput="data.goals[${i}].months=this.value;save()"></div>
+   </div>
+   <div class="progress"><span style="width:${p}%"></span></div>
+   <div class="row between" style="font-size:12px;color:var(--muted)"><span>${money(saved)} de ${money(target)}</span><button class="btn danger" onclick="removeGoal(${i})">Excluir</button></div>
+  </div>`}).join(""):'<div class="empty">Você ainda não cadastrou nenhuma meta.</div>';
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+document.getElementById('income').addEventListener('input',e=>{data.income=e.target.value;save()});
+function addExpense(){data.expenses.push({name:"Novo gasto",value:0});save()}
+function removeExpense(i){data.expenses.splice(i,1);save()}
+function addGoal(){data.goals.push({name:"Nova meta",target:0,saved:0,months:12});save()}
+function removeGoal(i){data.goals.splice(i,1);save()}
+function resetAll(){if(confirm("Apagar todos os dados deste Canivete?")){localStorage.removeItem(KEY);location.reload()}}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+ document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+ document.getElementById(b.dataset.section).classList.add('active');
+ const titles={dashboard:["Painel Financeiro","Tenha uma visão simples e prática do seu dinheiro."],metas:["Metas","Transforme planos em objetivos acompanháveis."],projecoes:["Projeções","Veja quanto sua sobra pode acumular com o tempo."],futuro:["Mais ferramentas","O Canivete foi pensado para crescer com novas ferramentas."]};
+ document.getElementById('title').textContent=titles[b.dataset.section][0];
+ document.getElementById('subtitle').textContent=titles[b.dataset.section][1];
+}));
+function toggleMobileNav(){
+ const sb=document.querySelector('.sidebar');
+ sb.style.display=sb.style.display==='block'?'none':'block';
+ sb.style.position='fixed';sb.style.width='245px';sb.style.height='100vh';
+}
+render();
+</script>
+</body>
+</html>
