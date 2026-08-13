@@ -388,7 +388,10 @@ function buscarPrompts(v){
   const termo=normBusca(v);
   if(!termo)return[];
   const palavras=palavrasSignificativas(termo);
-  return idx.filter(p=>{const texto=normBusca(p.titulo+' '+p.resumo+' '+p.pagina);return palavras.every(pal=>texto.includes(pal))});
+  return idx.filter(p=>{
+    if(window.deltaLinkEstaEscondido&&window.deltaLinkEstaEscondido(p.link))return false;
+    const texto=normBusca(p.titulo+' '+p.resumo+' '+p.pagina);return palavras.every(pal=>texto.includes(pal));
+  });
 }
 function sugerirCorrecaoPrompt(v){
   const idx=window.deltaSearchIndex;
@@ -607,8 +610,28 @@ document.querySelectorAll('.exemplo-copiar').forEach(btn=>{
   input.addEventListener('keydown',e=>{if(e.key==='Enter')buscar()});
 })();
 
-renderFixadas();
-renderRecomendado();
+function filtrarItensEscondidos(){
+  if(!window.deltaHrefsEscondidos)return;
+  for(let i=itens.length-1;i>=0;i--){
+    if(window.deltaLinkEstaEscondido(itens[i].l))itens.splice(i,1);
+  }
+}
+function inicializarRenderizacaoPrincipal(){
+  filtrarItensEscondidos();
+  renderFixadas();
+  renderRecomendado();
+  renderMaisAcessados();
+  renderContinuar();
+  renderHistorico();
+  iniciarOnboarding();
+}
+if(window.deltaHrefsEscondidos){
+  inicializarRenderizacaoPrincipal();
+}else{
+  let jaRodou=false;
+  window.addEventListener('delta:links-escondidos-prontos',()=>{if(jaRodou)return;jaRodou=true;inicializarRenderizacaoPrincipal()});
+  setTimeout(()=>{if(jaRodou)return;jaRodou=true;inicializarRenderizacaoPrincipal()},1500);
+}
 
 // ===== PESSOAS ONLINE AGORA =====
 if(window.deltaLoadAuth){
@@ -626,9 +649,5 @@ if(window.deltaLoadAuth){
     setInterval(atualizarOnline,30000);
   });
 }
-renderMaisAcessados();
-renderContinuar();
-renderHistorico();
-iniciarOnboarding();
 </script>
 </body></html>

@@ -866,11 +866,20 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
     document.body.appendChild(wrap);
   }
 
+  function normalizarHref(href){
+    if(!href)return'';
+    return href.replace(/^\/delta-prompts\//,'').replace(/^\//,'');
+  }
+
   function aplicarCategoriasEscondidas(sidebar){
     var escondidas=[];
     try{escondidas=JSON.parse(localStorage.getItem('deltaCategoriasEscondidas'))||[]}catch(e){}
     var secoesEscondidas=[];
     try{secoesEscondidas=JSON.parse(localStorage.getItem('deltaSecoesEscondidas'))||[]}catch(e){}
+
+    var todosHrefsEscondidos={};
+    escondidas.forEach(function(h){todosHrefsEscondidos[normalizarHref(h)]=true});
+
     if(escondidas.length){
       sidebar.querySelectorAll('.menu-links a').forEach(function(a){
         var href=a.getAttribute('href');
@@ -881,10 +890,21 @@ fetchMenu().then(html=>{const container=document.getElementById('menu');if(!cont
       sidebar.querySelectorAll('.menu-section').forEach(function(sec){
         var tituloEl=sec.querySelector('.menu-title');
         var titulo=tituloEl?tituloEl.textContent.trim():'';
-        if(titulo&&secoesEscondidas.indexOf(titulo)!==-1)sec.style.display='none';
+        if(titulo&&secoesEscondidas.indexOf(titulo)!==-1){
+          sec.style.display='none';
+          sec.querySelectorAll('.menu-links a').forEach(function(a){
+            todosHrefsEscondidos[normalizarHref(a.getAttribute('href'))]=true;
+          });
+        }
       });
     }
+    window.deltaHrefsEscondidos=todosHrefsEscondidos;
+    window.dispatchEvent(new CustomEvent('delta:links-escondidos-prontos'));
   }
+  window.deltaLinkEstaEscondido=function(link){
+    if(!window.deltaHrefsEscondidos)return false;
+    return!!window.deltaHrefsEscondidos[normalizarHref(link)];
+  };
 
   // ===== FAVORITAR PÁGINA INTEIRA (categoria) =====
   (function(){
