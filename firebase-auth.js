@@ -155,6 +155,18 @@ export async function pushConfiguracoesToCloud(uid){
   }catch(e){console.error('Erro ao enviar configuracoes para a nuvem:',e)}
 }
 
+// ===== CANIVETE ASSISTENTE (dados financeiros do usuario) =====
+export async function pushCaniveteToCloud(uid,dados){
+  if(!uid)return;
+  try{await setDoc(doc(db,'users',uid),{canivete:dados},{merge:true})}
+  catch(e){console.error('Erro ao enviar dados do canivete para a nuvem:',e)}
+}
+export async function obterCaniveteDaNuvem(uid){
+  if(!uid)return null;
+  try{const snap=await getDoc(doc(db,'users',uid));return snap.exists()?(snap.data().canivete||null):null}
+  catch(e){console.error('Erro ao buscar dados do canivete:',e);return null}
+}
+
 // ===== FEEDBACK GLOBAL (útil / não útil de todos os usuários, agregado) =====
 export async function registrarFeedbackGlobal(promptId,tipo,delta){
   if(!promptId||(tipo!=='up'&&tipo!=='down'))return;
