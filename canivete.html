@@ -33,7 +33,7 @@
 <section id="compras" class="section"><div class="card hero"><div class="row between"><div><h2>🛒 Lista de Compras</h2><p class="sub">Uma lista simples: marque o que já comprou e o que ainda falta.</p></div><div class="row" style="gap:8px"><button class="btn light" type="button" onclick="compartilharListaCompras()">📤 Compartilhar</button><button class="btn primary" type="button" onclick="addItemCompra()">➕ Adicionar item</button></div></div></div><div class="card"><div class="expense-summary"><div class="stat"><b id="comprasFaltam">0</b><span>ainda falta comprar</span></div><div class="stat"><b id="comprasFeitas">0</b><span>já comprado</span></div></div><button class="btn light" type="button" id="btnOrdenarCompras" onclick="toggleOrdemCompras()" style="margin-bottom:12px">🔤 Ordenar A-Z</button><div id="comprasList"></div></div></section>
 </main><button class="mobile" type="button" onclick="toggleMenu()">☰ Menu</button>
 <script>
-const APP_VERSION='1.1';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='1.2';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -291,7 +291,9 @@ function agendarSyncNuvem(){
 }
 async function carregarFirebaseCanivete(){
   try{deltaFirebaseModulo=await import('/delta-prompts/firebase-auth.js')}catch(e){console.error('Erro ao carregar sincronizacao:',e);return}
+  deltaFirebaseModulo.initAuthWatcher();
   deltaFirebaseModulo.authPronto.then(()=>{const user=deltaFirebaseModulo.getUser();if(user)aoLogarCanivete(user)});
+  window.addEventListener('delta-auth-changed',e=>{const user=e.detail&&e.detail.user;if(user)aoLogarCanivete(user);else if(usuarioLogado)aoDeslogarCanivete()});
   const btnLogin=document.getElementById('btnLoginCanivete'),btnLogout=document.getElementById('btnLogoutCanivete');
   if(btnLogin)btnLogin.addEventListener('click',()=>deltaFirebaseModulo.login());
   if(btnLogout)btnLogout.addEventListener('click',()=>{deltaFirebaseModulo.logout();aoDeslogarCanivete()});
