@@ -382,6 +382,14 @@ function sugerirCorrecao(v){
   return melhor;
 }
 function normBusca(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function contemTolerantePlural(texto,palavra){
+  if(texto.includes(palavra))return true;
+  // tenta a palavra sem o "s" do final (plural simples: series->serie, filmes->filme)
+  if(palavra.length>=5&&palavra.endsWith('s')&&texto.includes(palavra.slice(0,-1)))return true;
+  // tenta a palavra COM "s" no final (caso o conteudo esteja no plural e a busca no singular: filme->filmes)
+  if(palavra.length>=4&&!palavra.endsWith('s')&&texto.includes(palavra+'s'))return true;
+  return false;
+}
 function buscarPrompts(v){
   const idx=window.deltaSearchIndex;
   if(!idx||!idx.length)return[];
@@ -592,7 +600,7 @@ document.querySelectorAll('.exemplo-copiar').forEach(btn=>{
     if(!palavras.length)return[];
     const pontuados=idx.map(p=>{
       const texto=normBusca(p.titulo+' '+p.resumo+' '+p.pagina);
-      const pontos=palavras.reduce((acc,pl)=>acc+(texto.includes(pl)?1:0),0);
+      const pontos=palavras.reduce((acc,pl)=>acc+(contemTolerantePlural(texto,pl)?1:0),0);
       return{item:p,pontos};
     }).filter(x=>x.pontos>0);
     pontuados.sort((a,b)=>b.pontos-a.pontos);
@@ -605,7 +613,7 @@ document.querySelectorAll('.exemplo-copiar').forEach(btn=>{
       const texto=normBusca(cat.n+' '+cat.d+' '+cat.t);
       let pontos=0;
       palavras.forEach(pl=>{
-        if(texto.includes(pl)){pontos+=2;return}
+        if(contemTolerantePlural(texto,pl)){pontos+=2;return}
         // tolera erro de digitacao leve (distancia 1-2) em pelo menos uma palavra-chave da categoria
         const palavrasCat=texto.split(/\s+/);
         if(palavrasCat.some(pc=>{
