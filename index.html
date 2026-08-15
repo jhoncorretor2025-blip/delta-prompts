@@ -514,6 +514,21 @@ input.addEventListener('input',()=>{const r=matches(input.value).slice(0,5);sug.
   });
 })();
 input.addEventListener('keydown',e=>{if(e.key==='Enter')buscar(input.value)});
+// ===== ATALHOS DE TECLADO GLOBAIS =====
+document.addEventListener('keydown',e=>{
+  const alvo=e.target;
+  const digitando=alvo&&(alvo.tagName==='INPUT'||alvo.tagName==='TEXTAREA'||alvo.isContentEditable);
+  if(e.key==='/'&&!digitando){
+    e.preventDefault();
+    input.focus();
+  }else if(e.key==='Escape'){
+    if(digitando&&alvo===input){
+      limparBusca();
+      alvo.blur();
+    }
+  }
+});
+
 (function(){try{const params=new URLSearchParams(location.search);const q=params.get('busca');if(q){input.value=q;buscar(q)}}catch(e){}})();
 document.querySelectorAll('[data-search]').forEach(b=>b.onclick=()=>{input.value=b.dataset.search;buscar(input.value)});
 document.addEventListener('click',e=>{if(!e.target.closest('.search'))sug.classList.remove('active')});
