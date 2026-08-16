@@ -381,7 +381,7 @@ function sugerirCorrecao(v){
   });
   return melhor;
 }
-function normBusca(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function normBusca(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/['’]/g,'')}
 function contemTolerantePlural(texto,palavra){
   if(texto.includes(palavra))return true;
   // tenta a palavra sem o "s" do final (plural simples: series->serie, filmes->filme)
