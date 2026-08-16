@@ -103,7 +103,7 @@ function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)re
 function irPara(id){temaAtual='Todos';nivelAtual='todos';busca.value='';ordenarSelect.value='padrao';criarTemas();document.querySelectorAll('#niveis button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));render();requestAnimationFrame(()=>destacarCard(id))}
 
 // ===== EXPORTAR =====
-function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nTema: '+p.tema+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='🧠 TOMADA DE DECISÃO — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-tomada-de-decisao.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nTema: '+p.tema+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='🧠 O QUE FAZER COM COMET — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-o-que-fazer-com-comet.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
 
 // ===== SUGERIR =====
 function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
