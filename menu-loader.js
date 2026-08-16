@@ -1064,3 +1064,87 @@ function coletarCards(container){const diretos=[...container.querySelectorAll(':
 function aplicar(){if(processando)return;const container=document.getElementById('lista-prompts');if(!container)return;processando=true;prepararCards(container);const cards=coletarCards(container);if(!cards.length){processando=false;return}const total=Math.ceil(cards.length/POR_PAGINA);if(pagina>total)pagina=1;cards.forEach((c,i)=>c.style.display=(i>=(pagina-1)*POR_PAGINA&&i<pagina*POR_PAGINA)?'':'none');container.querySelectorAll('.secao-categoria').forEach(sec=>{const vis=[...sec.querySelectorAll('.card')].some(c=>c.style.display!=='none');sec.style.display=vis?'':'none'});let nav=document.getElementById('paginacao-prompts');if(total<=1){if(nav)nav.remove();processando=false;return}if(!nav){nav=document.createElement('nav');nav.id='paginacao-prompts';nav.className='paginacao-prompts';container.insertAdjacentElement('afterend',nav)}let html='<button data-p="prev" '+(pagina===1?'disabled':'')+'>← Anterior</button>';for(let i=1;i<=total;i++)html+='<button data-p="'+i+'" class="'+(i===pagina?'pag-ativa':'')+'">'+i+'</button>';html+='<button data-p="next" '+(pagina===total?'disabled':'')+'>Próxima →</button>';nav.innerHTML=html;nav.querySelectorAll('button:not(:disabled)').forEach(b=>b.onclick=()=>{const p=b.dataset.p;pagina=p==='prev'?pagina-1:p==='next'?pagina+1:Number(p);aplicar();container.scrollIntoView({behavior:'smooth',block:'start'})});processando=false}
 function categoriasEstudo(){if(!/\/estudo\.html$/.test(path)||document.querySelector('.filtro-categorias-estudo'))return;const nivel=document.querySelector('.filtro-nivel'),busca=document.getElementById('busca');if(!nivel||!busca)return;const cats=['Todas categorias','🧭 Preparação','📚 Estruturação','🎓 Didática','🧠 Memorização','📊 Avaliação','🧠 Aprimoramento','🚀 Aplicação Profissional com IA'];const box=document.createElement('div');box.className='filtro-categorias-estudo';box.innerHTML=cats.map((c,i)=>`<button class="${i===0?'ativo':''}" data-cat="${c}">${c}</button>`).join('');nivel.insertAdjacentElement('afterend',box);box.onclick=e=>{const b=e.target.closest('button');if(!b)return;box.querySelectorAll('button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');busca.value=b.dataset.cat==='Todas categorias'?'':b.dataset.cat;pagina=1;if(typeof window.filtrarPrompts==='function')window.filtrarPrompts();setTimeout(aplicar,50)}}
 function iniciar(){const container=document.getElementById('lista-prompts');if(!container)return;categoriasEstudo();const obs=new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>{pagina=1;aplicar()},100)});obs.observe(container,{childList:true,subtree:false});setTimeout(aplicar,220)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar,{once:true});else iniciar()})();
+
+// ===== VER PROMPTS PARECIDOS (baseado em texto selecionado, funciona em qualquer pagina) =====
+(function(){
+  let botaoParecidos=null,indiceCarregado=null,carregandoIndice=false;
+  function normSel(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/['’]/g,'')}
+  function palavrasChave(texto){
+    const stop=new Set(['de','da','do','das','dos','a','o','as','os','e','em','para','com','um','uma','que','no','na','nos','nas','por','se','ou','ao','aos','como','pra','seu','sua','meu','minha']);
+    return normSel(texto).replace(/[^\w\s]/g,' ').split(/\s+/).filter(p=>p.length>=4&&!stop.has(p));
+  }
+  async function carregarIndice(){
+    if(indiceCarregado)return indiceCarregado;
+    if(carregandoIndice)return null;
+    carregandoIndice=true;
+    try{
+      const res=await fetch('/delta-prompts/search-index.js');
+      const texto=await res.text();
+      const idx=texto.indexOf('[');
+      indiceCarregado=JSON.parse(texto.slice(idx,texto.lastIndexOf(']')+1));
+    }catch(e){console.error('Erro ao carregar indice de busca:',e)}
+    carregandoIndice=false;
+    return indiceCarregado;
+  }
+  function removerBotao(){if(botaoParecidos){botaoParecidos.remove();botaoParecidos=null}}
+  function criarBotao(x,y,textoSelecionado){
+    removerBotao();
+    botaoParecidos=document.createElement('button');
+    const meuBotao=botaoParecidos;
+    botaoParecidos.textContent='🔍 Ver prompts parecidos';
+    botaoParecidos.style.cssText='position:fixed;left:'+x+'px;top:'+y+'px;z-index:9999;background:#5b5ce2;color:#fff;border:0;padding:9px 14px;border-radius:999px;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(15,23,42,.25);white-space:nowrap';
+    botaoParecidos.onclick=async function(e){
+      e.stopPropagation();
+      botaoParecidos.textContent='🔄 Buscando...';
+      const idx=await carregarIndice();
+      removerBotao();
+      if(!idx)return;
+      mostrarResultadosParecidos(textoSelecionado,idx);
+    };
+    document.body.appendChild(botaoParecidos);
+    setTimeout(function(){if(botaoParecidos===meuBotao)removerBotao()},6000);
+  }
+  function mostrarResultadosParecidos(textoSelecionado,indice){
+    const palavras=palavrasChave(textoSelecionado);
+    if(!palavras.length)return;
+    const linkAtual=location.pathname;
+    const pontuados=indice.map(item=>{
+      const texto=normSel((item.titulo||'')+' '+(item.resumo||''));
+      let pontos=0;
+      palavras.forEach(p=>{if(texto.includes(p))pontos++});
+      return{item,pontos};
+    }).filter(x=>x.pontos>0).sort((a,b)=>b.pontos-a.pontos).slice(0,5);
+    const overlay=document.createElement('div');
+    overlay.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px';
+    overlay.onclick=function(e){if(e.target===overlay)overlay.remove()};
+    const card=document.createElement('div');
+    card.style.cssText='background:#fff;border-radius:18px;padding:22px;max-width:420px;width:100%;max-height:75vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)';
+    let html='<h2 style="margin:0 0 6px;font-size:17px">🔍 Prompts parecidos</h2><p style="margin:0 0 14px;color:#667085;font-size:13px">Baseado no texto que você selecionou. Isso ajuda a evitar duplicidade, mas não apaga nada sozinho.</p>';
+    if(!pontuados.length){
+      html+='<p style="color:#667085;font-size:14px">Não achamos nada parecido com esse trecho no site.</p>';
+    }else{
+      html+=pontuados.map(x=>'<a href="'+x.item.link+'" style="display:block;padding:11px 12px;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:8px;text-decoration:none;color:#172033"><strong style="font-size:13.5px">'+(x.item.titulo||'')+'</strong><br><span style="font-size:11.5px;color:#8a92a6">'+(x.item.pagina||'')+'</span></a>').join('');
+    }
+    html+='<button id="fecharParecidosBtn" style="margin-top:8px;width:100%;padding:11px;border:0;background:#f1f5f9;border-radius:11px;font-weight:800;cursor:pointer">Fechar</button>';
+    card.innerHTML=html;
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+    document.getElementById('fecharParecidosBtn').onclick=function(){overlay.remove()};
+  }
+  document.addEventListener('mouseup',function(){
+    setTimeout(function(){
+      const sel=window.getSelection();
+      const texto=sel&&sel.rangeCount?sel.toString().trim():'';
+      if(texto.length>=8&&texto.length<=300){
+        const range=sel.getRangeAt(0);
+        const rect=range.getBoundingClientRect();
+        criarBotao(Math.max(8,rect.left),Math.max(8,rect.top-42),texto);
+      }else{
+        removerBotao();
+      }
+    },10);
+  });
+  document.addEventListener('mousedown',function(e){
+    if(botaoParecidos&&e.target!==botaoParecidos)removerBotao();
+  });
+})();
