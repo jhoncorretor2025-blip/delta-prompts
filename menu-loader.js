@@ -731,7 +731,52 @@ function ativarRedimensionarMenu(){
   window.addEventListener('resize',()=>{if(window.innerWidth<900){alca.style.display='none'}else{alca.style.display='block';atualizarPosicaoAlca()}});
   atualizarPosicaoAlca();
 }
-fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth();aplicarMenuInteligente();destacarPaginaAtual();ativarBuscaMenu();ativarRedimensionarMenu()}).catch(err=>console.error(err))})();
+function ativarExemplosDeCampo(){
+  const EXEMPLOS=[
+    [/^(op[cç][aã]o|op[cç][oõ]es)/i,'mudar de emprego, comprar um carro'],
+    [/^decis[aã]o/i,'pedir demissão, mudar de cidade'],
+    [/^situa[cç][aã]o/i,'briga com um colega de trabalho'],
+    [/^(nome|pessoa)/i,'João Silva'],
+    [/^(assunto|tema|t[oó]pico)/i,'marketing digital'],
+    [/^objetivo/i,'aumentar minhas vendas em 3 meses'],
+    [/^problema/i,'meu site está lento'],
+    [/^produto|servi[cç]o/i,'curso online de inglês'],
+    [/^empresa|neg[oó]cio/i,'uma loja de roupas'],
+    [/^cidade/i,'São Paulo'],
+    [/^data/i,'15/03/2026'],
+    [/^valor|pre[cç]o|or[cç]amento/i,'R$ 500'],
+    [/^e-?mail/i,'contato@exemplo.com'],
+    [/^telefone/i,'(11) 99999-9999'],
+    [/^p[uú]blico/i,'mulheres de 25 a 40 anos'],
+    [/^idioma|l[ií]ngua/i,'inglês'],
+    [/^cargo|profiss[aã]o/i,'analista de marketing'],
+    [/^habilidade|compet[eê]ncia/i,'liderança de equipe'],
+    [/^sintoma/i,'dor de cabeça frequente'],
+    [/^receita|prato/i,'bolo de chocolate'],
+    [/^m[uú]sica|artista/i,'uma música que goste'],
+    [/^filme|s[eé]rie/i,'um filme que assistiu recentemente'],
+  ];
+  function gerarExemplo(nomeCampo){
+    const limpo=(nomeCampo||'').trim();
+    for(const[regex,exemplo] of EXEMPLOS){if(regex.test(limpo))return exemplo}
+    return null;
+  }
+  function processarLabel(label){
+    if(label.dataset.exemploAplicado)return;
+    const input=label.querySelector('input[placeholder="Preencha antes de copiar (opcional)"], input[placeholder*="Preencha antes de copiar"]');
+    if(!input)return;
+    label.dataset.exemploAplicado='1';
+    const nomeCampo=label.textContent.replace(/^[^\w]*/,'').split(/[,(]/)[0];
+    const exemplo=gerarExemplo(nomeCampo);
+    input.placeholder=exemplo?('Ex: '+exemplo):'Digite aqui antes de copiar (opcional)';
+  }
+  function varrer(){document.querySelectorAll('.campo-label').forEach(processarLabel)}
+  varrer();
+  const obs=new MutationObserver(()=>varrer());
+  obs.observe(document.body,{childList:true,subtree:true});
+}
+fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth();aplicarMenuInteligente();destacarPaginaAtual();ativarBuscaMenu();ativarRedimensionarMenu()}).catch(err=>console.error(err));
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ativarExemplosDeCampo,{once:true});else ativarExemplosDeCampo()})();
 
 // ===== MENU INTELIGENTE: reordena os 5 grupos grandes pelo uso de cada pessoa =====
 (function(){
