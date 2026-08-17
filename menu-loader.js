@@ -1078,10 +1078,17 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
     if(carregandoIndice)return null;
     carregandoIndice=true;
     try{
+      const cache=sessionStorage.getItem('deltaSearchIndexCache');
+      if(cache){
+        indiceCarregado=JSON.parse(cache);
+        carregandoIndice=false;
+        return indiceCarregado;
+      }
       const res=await fetch('/delta-prompts/search-index.js');
       const texto=await res.text();
       const idx=texto.indexOf('[');
       indiceCarregado=JSON.parse(texto.slice(idx,texto.lastIndexOf(']')+1));
+      try{sessionStorage.setItem('deltaSearchIndexCache',JSON.stringify(indiceCarregado))}catch(e){}
     }catch(e){console.error('Erro ao carregar indice de busca:',e)}
     carregandoIndice=false;
     return indiceCarregado;
