@@ -658,7 +658,80 @@ document.addEventListener('click',function(e){
     localStorage.setItem('deltaAtividadeDiaria',JSON.stringify(ativ));
   }catch(err){}
 },true);
-fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth();aplicarMenuInteligente()}).catch(err=>console.error(err))})();
+function destacarPaginaAtual(){
+  const sidebar=document.querySelector('#menu .sidebar');
+  if(!sidebar)return;
+  const linksMenu=sidebar.querySelectorAll('a[href]');
+  const caminhoAtual=location.pathname.replace(/\/+$/,'')||'/delta-prompts/index.html';
+  linksMenu.forEach(a=>{
+    try{
+      const caminhoLink=new URL(a.getAttribute('href'),location.origin).pathname.replace(/\/+$/,'');
+      if(caminhoLink&&(caminhoLink===caminhoAtual||caminhoAtual.endsWith(caminhoLink))){
+        a.classList.add('pagina-atual');
+      }
+    }catch(e){}
+  });
+}
+function ativarBuscaMenu(){
+  const input=document.getElementById('buscaMenuPrincipal');
+  if(!input)return;
+  input.addEventListener('input',()=>{
+    const termo=input.value.toLowerCase().trim();
+    const sidebar=document.querySelector('#menu .sidebar');
+    if(!sidebar)return;
+    sidebar.querySelectorAll('.menu-links a, .menu-item-final').forEach(a=>{
+      const texto=a.textContent.toLowerCase();
+      a.style.display=(!termo||texto.includes(termo))?'':'none';
+    });
+    sidebar.querySelectorAll('.menu-section').forEach(sec=>{
+      const algumVisivel=[...sec.querySelectorAll('.menu-links a')].some(a=>a.style.display!=='none');
+      sec.style.display=(!termo||algumVisivel)?'':'none';
+    });
+    sidebar.querySelectorAll('.menu-group-title, .menu-item-final-titulo').forEach(titulo=>{
+      let el=titulo.nextElementSibling,algumVisivel=false;
+      while(el&&(el.classList.contains('menu-section')||el.classList.contains('menu-item-final'))){
+        if(el.style.display!=='none')algumVisivel=true;
+        el=el.nextElementSibling;
+      }
+      titulo.style.display=(!termo||algumVisivel)?'':'none';
+    });
+  });
+}
+function ativarRedimensionarMenu(){
+  const menuEl=document.getElementById('menu');
+  if(!menuEl||window.innerWidth<900)return;
+  let larguraSalva=240;
+  try{larguraSalva=parseInt(localStorage.getItem('deltaLarguraMenu'))||240}catch(e){}
+  larguraSalva=Math.min(400,Math.max(180,larguraSalva));
+  menuEl.style.flexBasis=larguraSalva+'px';
+  menuEl.style.width=larguraSalva+'px';
+  const alca=document.createElement('div');
+  alca.id='deltaAlcaRedimensionar';
+  alca.style.cssText='position:fixed;top:0;bottom:0;left:'+larguraSalva+'px;width:6px;cursor:col-resize;z-index:2700;background:transparent';
+  document.body.appendChild(alca);
+  function atualizarPosicaoAlca(){alca.style.left=menuEl.getBoundingClientRect().right+'px'}
+  let arrastando=false;
+  alca.addEventListener('mousedown',e=>{arrastando=true;e.preventDefault();document.body.style.cursor='col-resize';document.body.style.userSelect='none'});
+  document.addEventListener('mousemove',e=>{
+    if(!arrastando)return;
+    let nova=Math.min(400,Math.max(180,e.clientX));
+    menuEl.style.flexBasis=nova+'px';
+    menuEl.style.width=nova+'px';
+    atualizarPosicaoAlca();
+  });
+  document.addEventListener('mouseup',()=>{
+    if(!arrastando)return;
+    arrastando=false;
+    document.body.style.cursor='';
+    document.body.style.userSelect='';
+    try{localStorage.setItem('deltaLarguraMenu',parseInt(menuEl.style.width))}catch(e){}
+  });
+  alca.addEventListener('mouseenter',()=>{alca.style.background='#5b5ce233'});
+  alca.addEventListener('mouseleave',()=>{if(!arrastando)alca.style.background='transparent'});
+  window.addEventListener('resize',()=>{if(window.innerWidth<900){alca.style.display='none'}else{alca.style.display='block';atualizarPosicaoAlca()}});
+  atualizarPosicaoAlca();
+}
+fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth();aplicarMenuInteligente();destacarPaginaAtual();ativarBuscaMenu();ativarRedimensionarMenu()}).catch(err=>console.error(err))})();
 
 // ===== MENU INTELIGENTE: reordena os 5 grupos grandes pelo uso de cada pessoa =====
 (function(){
