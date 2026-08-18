@@ -13,7 +13,9 @@ function render(user){
   const el=box();
   if(!el)return;
   if(user){
-    el.innerHTML=`<button type="button" class="delta-user" id="delta-user-toggle"><img src="${user.photoURL||''}" alt=""><div class="delta-user-info"><strong>${escapeHtml(user.displayName||'Minha conta')}</strong><small>${escapeHtml(user.email||'')}</small></div><span class="delta-user-seta" id="delta-user-seta">▾</span></button><div class="delta-user-menu" id="delta-user-menu"><a href="/delta-prompts/configuracao.html">⚙️ Configuração</a><button type="button" class="delta-logout-btn" id="delta-logout">🚪 Sair da conta</button></div>`;
+    el.innerHTML=`<button type="button" class="delta-user" id="delta-user-toggle"><img src="${user.photoURL||''}" alt=""><div class="delta-user-info"><strong>${escapeHtml(user.displayName||'Minha conta')}</strong><small>${escapeHtml(user.email||'')}</small></div><span class="delta-user-seta" id="delta-user-seta">▾</span></button><div class="delta-user-menu" id="delta-user-menu"><a href="/delta-prompts/configuracao.html">⚙️ Configuração</a><a href="/delta-prompts/ajuda.html">❓ Ajuda</a><a href="/delta-prompts/quiz.html">🧭 Qual prompt eu uso?</a><a href="/delta-prompts/tendencias.html">📈 Tendências</a><button type="button" class="delta-logout-btn" id="delta-logout">🚪 Sair da conta</button></div>`;
+    const grupoAjudaMenu=document.getElementById('menuGrupoAjuda');
+    if(grupoAjudaMenu)grupoAjudaMenu.style.display='none';
     document.getElementById('delta-logout').onclick=()=>signOut(auth);
     const toggle=document.getElementById('delta-user-toggle');
     const menu=document.getElementById('delta-user-menu');
@@ -21,6 +23,10 @@ function render(user){
     toggle.onclick=(e)=>{e.stopPropagation();const aberto=menu.classList.toggle('aberto');seta.classList.toggle('aberto',aberto)};
     document.addEventListener('click',(e)=>{if(!el.contains(e.target)){menu.classList.remove('aberto');seta.classList.remove('aberto')}});
     return;
+  }
+  if(!user){
+    const grupoAjudaMenu=document.getElementById('menuGrupoAjuda');
+    if(grupoAjudaMenu)grupoAjudaMenu.style.display='';
   }
   if(!modoEmail){
     el.innerHTML=`<button class="delta-login-btn" id="delta-login"><span>G</span> Entrar com Google</button><div class="delta-auth-divisor">ou</div><button type="button" class="delta-email-toggle" id="delta-email-toggle">✉️ Entrar com e-mail e senha</button><div class="delta-auth-status">Sincronize sua conta e seus dados pessoais.</div>`;
