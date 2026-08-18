@@ -57,7 +57,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='3.7';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='3.8';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -744,19 +744,85 @@ async function exportarPDF(){
       await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s)});
     }
     const {jsPDF}=window.jspdf;const doc=new jsPDF();const c=calc();
-    doc.setFontSize(18);doc.text('Relatório Financeiro - Canivete Assistente',14,18);
-    doc.setFontSize(11);doc.setTextColor(100);doc.text('Gerado em '+new Date().toLocaleDateString('pt-BR'),14,26);
-    doc.setFontSize(13);doc.setTextColor(0);let y=40;
-    doc.text('Renda mensal: '+money(c.i),14,y);y+=8;
-    doc.text('Despesas mensais: '+money(c.e),14,y);y+=8;
-    doc.text('Sobra: '+money(c.net),14,y);y+=8;
-    doc.text('Patrimônio: '+money(c.a),14,y);y+=14;
-    doc.setFontSize(14);doc.text('Despesas por categoria',14,y);y+=8;doc.setFontSize(10);
-    const porCategoria={};d.expenses.forEach(e=>{const v=n(e.value);if(!v)return;const cat=e.cat||'outros';porCategoria[cat]=(porCategoria[cat]||0)+v});
-    Object.entries(porCategoria).sort((a,b)=>b[1]-a[1]).forEach(x=>{const meta=cats[x[0]]||['','Outras despesas'];if(y>270){doc.addPage();y=20}doc.text(meta[1]+': '+money(x[1]),14,y);y+=7});
-    if(d.dividas.length){y+=8;if(y>260){doc.addPage();y=20}doc.setFontSize(14);doc.text('Dívidas',14,y);y+=8;doc.setFontSize(10);d.dividas.forEach(x=>{if(y>270){doc.addPage();y=20}doc.text(safe(x.nome)+': saldo '+money(x.saldo),14,y);y+=7})}
-    if(d.goals.length){y+=8;if(y>260){doc.addPage();y=20}doc.setFontSize(14);doc.text('Metas',14,y);y+=8;doc.setFontSize(10);d.goals.forEach(g=>{if(y>270){doc.addPage();y=20}doc.text(g.name+': '+money(g.saved)+' de '+money(g.target),14,y);y+=7})}
-    doc.save('relatorio-financeiro-canivete.pdf');
+    const ROXO=[91,92,226],CINZA_CLARO=[244,244,247],CINZA_TEXTO=[71,84,103],VERDE=[22,163,74],VERMELHO=[220,38,38];
+    const margemE=14,margemD=196;
+
+    // ===== CABECALHO =====
+    doc.setFillColor(...ROXO);doc.rect(0,0,210,32,'F');
+    doc.setTextColor(255,255,255);doc.setFontSize(19);doc.setFont(undefined,'bold');
+    doc.text('📊 Relatório de Despesas',margemE,16);
+    doc.setFontSize(10);doc.setFont(undefined,'normal');
+    doc.text('Canivete Assistente · Gerado em '+new Date().toLocaleDateString('pt-BR'),margemE,24);
+
+    // ===== CARDS DE RESUMO =====
+    let y=42;
+    const larguraCard=(margemD-margemE-8)/3;
+    function cardResumo(x,titulo,valor,cor){
+      doc.setFillColor(...CINZA_CLARO);doc.roundedRect(x,y,larguraCard,22,2,2,'F');
+      doc.setTextColor(...CINZA_TEXTO);doc.setFontSize(8.5);doc.setFont(undefined,'normal');
+      doc.text(titulo,x+4,y+7);
+      doc.setTextColor(...cor);doc.setFontSize(12.5);doc.setFont(undefined,'bold');
+      doc.text(money(valor),x+4,y+16);
+    }
+    cardResumo(margemE,'RENDA MENSAL',c.i,[30,41,59]);
+    cardResumo(margemE+larguraCard+4,'TOTAL DE DESPESAS',c.e,VERMELHO);
+    cardResumo(margemE+(larguraCard+4)*2,'SOBRA DO MÊS',c.net,c.net>=0?VERDE:VERMELHO);
+    y+=32;
+
+    // ===== TABELA DE DESPESAS =====
+    doc.setFontSize(12.5);doc.setFont(undefined,'bold');doc.setTextColor(30,41,59);
+    doc.text('Detalhamento das Despesas',margemE,y);y+=7;
+
+    const despesasComValor=d.expenses.filter(e=>n(e.value)>0).sort((a,b)=>n(b.value)-n(a.value));
+    const colX={nome:margemE,cat:margemE+62,status:margemE+112,tipo:margemE+142,valor:margemD};
+
+    function cabecalhoTabela(){
+      doc.setFillColor(30,41,59);doc.rect(margemE,y,margemD-margemE,8,'F');
+      doc.setTextColor(255,255,255);doc.setFontSize(8.5);doc.setFont(undefined,'bold');
+      doc.text('DESPESA',colX.nome+2,y+5.5);
+      doc.text('CATEGORIA',colX.cat+2,y+5.5);
+      doc.text('STATUS',colX.status+2,y+5.5);
+      doc.text('TIPO',colX.tipo+2,y+5.5);
+      doc.text('VALOR',colX.valor-2,y+5.5,{align:'right'});
+      y+=8;
+    }
+    cabecalhoTabela();
+    doc.setFont(undefined,'normal');doc.setFontSize(9);
+    despesasComValor.forEach((e,i)=>{
+      if(y>275){doc.addPage();y=15;cabecalhoTabela();doc.setFont(undefined,'normal');doc.setFontSize(9)}
+      if(i%2===0){doc.setFillColor(250,250,252);doc.rect(margemE,y,margemD-margemE,7,'F')}
+      doc.setTextColor(30,41,59);
+      const meta=cats[e.cat]||['🧾','Outras despesas'];
+      doc.text(safe(e.name).slice(0,32),colX.nome+2,y+5);
+      doc.setTextColor(...CINZA_TEXTO);doc.setFontSize(8);
+      doc.text(meta[1].slice(0,20),colX.cat+2,y+5);
+      const corStatus=e.pago?VERDE:[217,119,6];
+      doc.setTextColor(...corStatus);
+      doc.text(e.pago?'Pago':'Pendente',colX.status+2,y+5);
+      doc.setTextColor(...CINZA_TEXTO);
+      doc.text(e.fixo!==false?'Fixa':'Variável',colX.tipo+2,y+5);
+      doc.setTextColor(30,41,59);doc.setFontSize(9);
+      doc.text(money(n(e.value)),colX.valor-2,y+5,{align:'right'});
+      y+=7;
+    });
+
+    // ===== LINHA DE TOTAL =====
+    y+=1;doc.setDrawColor(...ROXO);doc.setLineWidth(0.6);doc.line(margemE,y,margemD,y);y+=6;
+    doc.setFont(undefined,'bold');doc.setFontSize(11);doc.setTextColor(30,41,59);
+    doc.text('TOTAL',colX.nome+2,y);
+    doc.setTextColor(...VERMELHO);
+    doc.text(money(c.e),colX.valor-2,y,{align:'right'});
+
+    // ===== RODAPE =====
+    const paginas=doc.internal.getNumberOfPages();
+    for(let p=1;p<=paginas;p++){
+      doc.setPage(p);
+      doc.setFontSize(8);doc.setTextColor(150,150,150);doc.setFont(undefined,'normal');
+      doc.text('Gerado com Canivete Assistente · Delta Prompts',margemE,290);
+      doc.text('Página '+p+' de '+paginas,margemD,290,{align:'right'});
+    }
+
+    doc.save('relatorio-despesas-'+new Date().toISOString().slice(0,10)+'.pdf');
     mostrarToastCanivete('✅ PDF baixado!');
   }catch(e){console.error('Erro ao gerar PDF:',e);mostrarToastCanivete('Não foi possível gerar o PDF agora.')}
 }
