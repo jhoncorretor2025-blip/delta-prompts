@@ -110,6 +110,7 @@ Checklist depois de editar:
 | 18/08 | Prompt novo em `redes-sociais.html` nunca aparecia em nenhuma busca | Categoria nova não estava em `ordemCategorias` | Sempre checar se a página tem essa lista fixa antes de usar categoria nova |
 | 18/08 | Campo de valor perdia foco a cada tecla no Canivete | `oninput` chamando `renderFullList()` (redesenho completo) a cada caractere | Redesenho pesado só em `onchange`, nunca em `oninput` |
 | 18/08 | Despesas arquivadas voltavam sozinhas após atualização | Lógica de "garantir categorias padrão" só checava lista ativa, não a arquivada | Sempre considerar TODOS os estados possíveis de um dado (ativo + arquivado + etc.) |
+| 19/08 | Prompt de agente (filmes) tinha campo "o que não quero" mas nenhuma regra numerada obrigava a IA a respeitar | Campo de input existia mas não estava amarrado a uma regra explícita e enforçada | Todo campo de exclusão/restrição do usuário precisa virar uma REGRA NUMERADA explícita no prompt, não só um campo solto — senão a IA pode ignorar |
 
 ---
 
