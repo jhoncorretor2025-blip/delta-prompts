@@ -111,6 +111,8 @@ Checklist depois de editar:
 | 18/08 | Campo de valor perdia foco a cada tecla no Canivete | `oninput` chamando `renderFullList()` (redesenho completo) a cada caractere | Redesenho pesado só em `onchange`, nunca em `oninput` |
 | 18/08 | Despesas arquivadas voltavam sozinhas após atualização | Lógica de "garantir categorias padrão" só checava lista ativa, não a arquivada | Sempre considerar TODOS os estados possíveis de um dado (ativo + arquivado + etc.) |
 | 19/08 | Prompt de agente (filmes) tinha campo "o que não quero" mas nenhuma regra numerada obrigava a IA a respeitar | Campo de input existia mas não estava amarrado a uma regra explícita e enforçada | Todo campo de exclusão/restrição do usuário precisa virar uma REGRA NUMERADA explícita no prompt, não só um campo solto — senão a IA pode ignorar |
+| 19/08 | Prompt duplicado em `imobiliario.html` ficou invisível | Categoria nova não estava em `ordemCategorias` — mesmo erro já catalogado acima, mas descoberto depois de já ter duplicado o prompt | Ao duplicar prompt em página nova, sempre checar `ordemCategorias` ANTES de publicar, não só depois de reclamação |
+| 19/08 | Favoritar prompt em 6 páginas novas salvava com categoria errada (`tomada-de-decisao` fixo) | Atributo `data-categoria` do botão de favoritar não foi atualizado ao copiar o template de `tomada-de-decisao.html` pra 6 páginas novas | Ao copiar uma página como template, sempre `grep` por valores hardcoded do arquivo original (nome de categoria, ID, etc.) antes de publicar |
 
 ---
 
