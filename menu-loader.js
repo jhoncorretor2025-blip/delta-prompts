@@ -775,6 +775,16 @@ function ativarExemplosDeCampo(){
   const obs=new MutationObserver(()=>varrer());
   obs.observe(document.body,{childList:true,subtree:true});
 }
+function ativarReordenarPorUso(){
+  document.addEventListener('click',function(e){
+    const alvo=e.target.closest('[onclick*="copiarPorId("],[onclick*="chatPorId("],[onclick*="geminiPorId("],[data-acao^="copiar"],[data-acao^="chat"],[data-acao^="gemini"]');
+    if(!alvo)return;
+    setTimeout(function(){
+      if(typeof window.reordenarLista==='function')window.reordenarLista();
+    },500);
+  });
+}
+ativarReordenarPorUso();
 fetchMenu().then(html=>{const container=document.getElementById('menu');if(!container)return;container.innerHTML=html;window.attachMenuControls();loadAuth();aplicarMenuInteligente();destacarPaginaAtual();ativarBuscaMenu();ativarRedimensionarMenu()}).catch(err=>console.error(err));
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ativarExemplosDeCampo,{once:true});else ativarExemplosDeCampo()})();
 

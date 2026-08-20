@@ -94,7 +94,7 @@
 </main>
 <div class="toast" id="toast">✓ Copiado!</div>
 <button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
-<script>
+<script>window.reordenarLista=function(){try{aplicarFiltros()}catch(e){}};
 
 const dadosBrutos=[
 {tipo:'Processos',nivel:'basico',titulo:'🗺️ Mapear Processo Repetitivo',quando:'Quando quiser descobrir o que pode ser automatizado em uma rotina.',prompt:`Atue como especialista em automação com IA.\n\nAnalise esta rotina: [DESCREVA A ROTINA]\n\nIdentifique:\n- Etapas repetitivas\n- Informações necessárias\n- Ferramentas envolvidas\n- O que pode ser automatizado\n- Riscos ou cuidados\n- Fluxo ideal passo a passo\n\nFinalize com uma versão simples para começar hoje.`,en:`Act as an AI automation specialist.\n\nAnalyze this routine: [DESCRIBE THE ROUTINE]\n\nIdentify:\n- Repetitive steps\n- Required information\n- Tools involved\n- What can be automated\n- Risks or precautions\n- Ideal step-by-step flow\n\nFinish with a simple version to start today.`},

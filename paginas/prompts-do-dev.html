@@ -64,7 +64,7 @@
 </main>
 <div class="toast" id="toast">✓ Copiado!</div>
 <button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
-<script>
+<script>window.reordenarLista=function(){try{render()}catch(e){}};
 
 const dadosBrutos=[
 {categoria:'🧑‍⚕️ Agentes de IA',nivel:'intermediario',titulo:'🧑‍⚕️ Time Médico Combinado (Clínico + Dermato + Gastro)',quando:'Um único agente reunindo várias especialidades quando os sintomas podem estar conectados.',prompt:'Você atuará como um time de apoio combinando três especialidades: clínico geral, dermatologia e gastroenterologia.\n\nMeu contexto: [IDADE, CONDIÇÕES CONHECIDAS EM CADA ÁREA]\n\nQuando eu trouxer um sintoma, identifique com qual especialidade ele se relaciona mais (ou se envolve mais de uma), faça as perguntas necessárias daquela área antes de comentar, e sinalize claramente se algo pode estar conectado entre as áreas (ex: pele e intestino). Nunca prescreva nada. Diga sempre quando o caso exige avaliação presencial. Confirme que entendeu essa estrutura antes de continuarmos.',en:'You will act as a support team combining three specialties: general practice, dermatology, and gastroenterology.\n\nMy context: [AGE, KNOWN CONDITIONS IN EACH AREA]\n\nWhen I bring up a symptom, identify which specialty it relates to most (or if it involves more than one), ask the necessary questions from that area before commenting, and clearly flag if something might be connected across areas (e.g., skin and gut). Never prescribe anything. Always say when the case requires an in-person evaluation. Confirm you understood this structure before we continue.'},

@@ -94,7 +94,7 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
 </main>
 <div class="toast" id="toast">✓ Copiado!</div>
 <button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
-<script>
+<script>window.reordenarLista=function(){try{aplicarFiltros()}catch(e){}};
 
 const dadosBrutos=[
 {categoria:'conversação',nivel:'basico',titulo:'💬 Praticar Conversação',quando:'Para treinar diálogo real, como se fosse com uma pessoa nativa.',prompt:`A partir de agora, converse comigo em [IDIOMA] sobre o tema: [TEMA, EX: VIAGEM, TRABALHO, DIA A DIA].\n\nMeu nível atual é: [INICIANTE, INTERMEDIÁRIO OU AVANÇADO]\n\nFale comigo naturalmente, faça perguntas para eu responder, e corrija meus erros de forma gentil ao final de cada resposta minha, sem interromper o fluxo da conversa.`,en:`From now on, talk to me in [LANGUAGE] about the topic: [TOPIC, E.G., TRAVEL, WORK, DAILY LIFE].\n\nMy current level is: [BEGINNER, INTERMEDIATE OR ADVANCED]\n\nSpeak with me naturally, ask me questions to answer, and gently correct my mistakes at the end of each of my responses, without interrupting the flow of the conversation.`},

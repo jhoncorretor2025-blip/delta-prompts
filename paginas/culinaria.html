@@ -94,7 +94,7 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
 </main>
 <div class="toast" id="toast">✓ Copiado!</div>
 <button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
-<script>
+<script>window.reordenarLista=function(){try{aplicarFiltros()}catch(e){}};
 
 const dadosBrutos=[
 {categoria:'dia a dia',nivel:'basico',titulo:'🍽️ Receita com o que Tenho em Casa',quando:'Quando não sabe o que fazer com os ingredientes que já tem.',prompt:`Tenho estes ingredientes disponíveis: [LISTE OS INGREDIENTES QUE VOCÊ TEM]\n\nSugira 3 receitas possíveis com o que eu já tenho, sem precisar comprar nada extra (ou o mínimo possível). Para cada uma, diga o modo de preparo resumido e o tempo aproximado.`,en:`I have these ingredients available: [LIST THE INGREDIENTS YOU HAVE]\n\nSuggest 3 possible recipes using only what I already have, without needing to buy anything extra (or as little as possible). For each one, give a summarized method and the approximate time.`},

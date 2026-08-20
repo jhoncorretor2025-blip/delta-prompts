@@ -64,7 +64,7 @@
 </main>
 <div class="toast" id="toast">✓ Copiado!</div>
 <button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
-<script>
+<script>window.reordenarLista=function(){try{render()}catch(e){}};
 
 const dadosBrutos=[
 {categoria:'🎓 Entender o Código',nivel:'basico',titulo:'📖 Explicar Como Esse Jogo Funciona',quando:'Para quando você pegou um jogo pronto (aqui do site ou de outro lugar) e quer entender o código, mesmo sem saber programar.',prompt:'Vou colar o código de um jogo que eu gerei/encontrei, e quero entender como ele funciona, mesmo sem saber programar.\n\n[COLE O CÓDIGO DO JOGO AQUI]\n\nExplique de forma simples, como se fosse pra um iniciante completo:\n• O que cada parte principal do código faz (HTML, CSS, JavaScript), sem entrar em detalhes técnicos demais\n• Onde estão as regras do jogo (pontuação, vitória, derrota)\n• Se eu quisesse mudar uma coisa simples (tipo a cor, o texto ou a velocidade), me diga exatamente qual linha eu procuraria\n\nNão reescreva o código, só explique o que já está ali.',en:'I\'m going to paste the code of a game I generated/found, and I want to understand how it works, even without knowing how to code.\n\n[PASTE THE GAME CODE HERE]\n\nExplain it simply, as if for a complete beginner:\n• What each main part of the code does (HTML, CSS, JavaScript), without going into too much technical detail\n• Where the game rules are (scoring, winning, losing)\n• If I wanted to change something simple (like the color, text, or speed), tell me exactly which line I would look for\n\nDo not rewrite the code, just explain what\'s already there.'},
