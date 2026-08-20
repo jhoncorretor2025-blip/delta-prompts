@@ -22,7 +22,7 @@
       <option value="padrao">↕️ Padrão</option>
       <option value="az">🔤 A-Z</option>
       <option value="recentes">🆕 Mais recentes</option>
-      <option value="populares">🔥 Mais usadas</option>
+      <option value="populares" selected>🔥 Mais usadas</option>
     </select>
     <span class="contador" id="contador"></span>
   </div>
@@ -129,9 +129,9 @@ function textoFinal(id){
   });
   return t;
 }
-function copiarPorId(id){registrarUso(id);copiar(textoFinal(id))}
-function chatPorId(id){registrarUso(id);abrirChat(textoFinal(id))}
-function geminiPorId(id){registrarUso(id);abrirGemini(textoFinal(id))}
+function copiarPorId(id){registrarUso(id);copiar(textoFinal(id));setTimeout(render,500)}
+function chatPorId(id){registrarUso(id);abrirChat(textoFinal(id));setTimeout(render,500)}
+function geminiPorId(id){registrarUso(id);abrirGemini(textoFinal(id));setTimeout(render,500)}
 
 // ===== COMPARTILHAR =====
 function compartilhar(id){
