@@ -135,7 +135,7 @@ function render(){
       <div class="prompt-text">${x.prompt}</div>
       <button class="ver-mais" onclick="const p=this.previousElementSibling;p.classList.toggle('aberto');this.textContent=p.classList.contains('aberto')?'Mostrar menos':'👁️ Ver prompt completo'">👁️ Ver prompt completo</button>
       <div class="acoes">
-        <button class="fav-btn" data-id="${x.id}" data-titulo="${x.titulo}" data-texto="${x.prompt.replace(/"/g,'&quot;')}" data-categoria="tomada-de-decisao">🤍</button>
+        <button class="fav-btn" data-id="${x.id}" data-titulo="${x.titulo}" data-texto="${x.prompt.replace(/"/g,'&quot;')}" data-categoria="hipnose">🤍</button>
         <button class="copiar" onclick="copiarPorId('${x.id}')">📋 Copiar</button>
         <button onclick="abrirChat('${x.id}')">🤖 ChatGPT</button>
         <button onclick="abrirGemini('${x.id}')">✨ Gemini</button>
