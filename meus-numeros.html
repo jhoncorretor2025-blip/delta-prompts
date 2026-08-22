@@ -42,7 +42,7 @@
 .breadcrumb{font-size:13px;color:#667085;margin:0 0 14px}
 .breadcrumb a{color:#5b5ce2;text-decoration:none;font-weight:700}
 .breadcrumb a:hover{text-decoration:underline}
-#numeros-page button:focus-visible,#numeros-page a:focus-visible{outline:3px solid #5b5ce2;outline-offset:2px;border-radius:8px}
+#numeros-page button:focus-visible,#numeros-page a:focus-visible,#numeros-page .dia-calendario:focus-visible{outline:3px solid #5b5ce2;outline-offset:2px;border-radius:2px}
 [data-theme="dark"] .numero-card,[data-theme="dark"] .grafico-box,[data-theme="dark"] .top5-box{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .numero-label{color:#a0a0a0}
 [data-theme="dark"] .categoria-favorita-box{background:var(--bg-card,#16213e)}
@@ -89,7 +89,7 @@
 /* #7 responsividade adicional - testado em 375/414/768px */
 @media(max-width:400px){.numero-card{padding:16px}.numero-valor{font-size:30px}.grafico-barras{gap:4px}}
 @media(max-width:480px){.periodo-seletor{gap:6px}.periodo-seletor button{padding:8px 12px;font-size:12.5px}.conquistas-box{gap:6px}.conquista-badge{padding:6px 10px;font-size:12px}}
-</style></head><body id="numeros-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
+</style></head><body id="numeros-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d" defer></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Meus Números</p>
 <h1>📊 Meus Números</h1>
@@ -342,16 +342,20 @@ function renderizarCalendarioUso(){
       if(dia.futuro){html+='<div style="width:11px;height:11px"></div>';return}
       const cor=dia.ativo?'var(--delta-accent,#5b5ce2)':'#ebedf0';
       const ehHoje=dia.chave===chaveHoje;
-      html+=`<div class="dia-calendario${ehHoje?' dia-hoje':''}" data-dia="${dia.chave}" data-ativo="${dia.ativo}" title="${dia.chave}${dia.ativo?' — você usou o site':''}${ehHoje?' (hoje)':''}" style="width:11px;height:11px;border-radius:3px;background:${cor}"></div>`;
+      html+=`<div class="dia-calendario${ehHoje?' dia-hoje':''}" data-dia="${dia.chave}" data-ativo="${dia.ativo}" tabindex="0" role="button" aria-label="${dia.chave}${dia.ativo?', você usou o site':', sem uso registrado'}${ehHoje?' (hoje)':''}" title="${dia.chave}${dia.ativo?' — você usou o site':''}${ehHoje?' (hoje)':''}" style="width:11px;height:11px;border-radius:3px;background:${cor}"></div>`;
     });
     html+='</div>';
   });
   html+='</div></div>';
   container.innerHTML=html;
   container.querySelectorAll('.dia-calendario').forEach(el=>{
-    el.addEventListener('click',()=>{
+    const ativarDia=()=>{
       const data=new Date(el.dataset.dia+'T00:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
       mostrarToast(el.dataset.ativo==='true'?'✅ Você usou o site em '+data:'⬜ Sem uso registrado em '+data);
+    };
+    el.addEventListener('click',ativarDia);
+    el.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();ativarDia();}
     });
   });
 }
@@ -515,10 +519,20 @@ function mostrarStatusSync(estado,user){
 
 function aguardarMudancaAuth(){
   return new Promise(resolve=>{
+    let resolvido=false;
     window.addEventListener('delta-auth-changed',function ouvir(e){
+      if(resolvido)return;
+      resolvido=true;
       window.removeEventListener('delta-auth-changed',ouvir);
       resolve(e.detail&&e.detail.user?e.detail.user:null);
     });
+    // Segurança: se o evento de login/logout nunca disparar por algum motivo,
+    // não deixa a pessoa presa pra sempre na tela de "carregando".
+    setTimeout(()=>{
+      if(resolvido)return;
+      resolvido=true;
+      resolve(null);
+    },6000);
   });
 }
 
@@ -529,17 +543,22 @@ async function iniciar(){
     renderizarNumeros('tudo');renderizarGrafico();renderizarCalendarioUso();renderizarTop5();
     return;
   }
-  const promessaAuth=aguardarMudancaAuth();
-  await window.deltaLoadAuth();
-  const user=await promessaAuth;
-  if(user){
-    mostrarStatusSync('sincronizando',user);
-    try{
-      if(window.deltaAuth.syncFavoritos)await window.deltaAuth.syncFavoritos(user.uid);
-      if(window.deltaAuth.syncUsos)await window.deltaAuth.syncUsos(user.uid);
-    }catch(e){console.error('Erro ao sincronizar meus numeros:',e)}
-    mostrarStatusSync('sincronizado',user);
-  }else{
+  try{
+    const promessaAuth=aguardarMudancaAuth();
+    await window.deltaLoadAuth();
+    const user=await promessaAuth;
+    if(user){
+      mostrarStatusSync('sincronizando',user);
+      try{
+        if(window.deltaAuth.syncFavoritos)await window.deltaAuth.syncFavoritos(user.uid);
+        if(window.deltaAuth.syncUsos)await window.deltaAuth.syncUsos(user.uid);
+      }catch(e){console.error('Erro ao sincronizar meus numeros:',e)}
+      mostrarStatusSync('sincronizado',user);
+    }else{
+      mostrarStatusSync('deslogado');
+    }
+  }catch(e){
+    console.error('Erro ao iniciar sincronizacao:',e);
     mostrarStatusSync('deslogado');
   }
   renderizarNumeros('tudo');
