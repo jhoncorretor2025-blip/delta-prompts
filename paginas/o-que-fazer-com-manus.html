@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Manus AI: agente autônomo que planeja, executa e entrega tarefas completas sozinho (sites, viagens, análises, dashboards) sem precisar de supervisão passo a passo."><title>Manus AI | Delta Prompts</title><link rel="icon" type="image/x-icon" href="/delta-prompts/favicon.ico"><link rel="apple-touch-icon" href="/delta-prompts/icon-192.png"><link rel="stylesheet" href="/delta-prompts/style.css"><link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css"><style>.page-head h1{margin-bottom:6px}.page-head p{margin-top:0;color:#667085}.info-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}.info-mini{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#fff}.info-mini button{width:100%;display:flex;justify-content:space-between;padding:14px 16px;border:0;background:transparent;font:inherit;font-weight:800;text-align:left;cursor:pointer}.info-body{display:none;padding:0 16px 16px;color:#667085;line-height:1.55}.info-mini.open .info-body{display:block}.top-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0 14px}.top-bar input{flex:1;min-width:220px;min-height:48px;padding:12px 14px;border:1px solid #e6e8f0;border-radius:12px;font:inherit}.top-bar select{padding:12px 10px;border-radius:12px;border:1px solid #e6e8f0;font-size:14px;background:#fff;cursor:pointer}.contador{font-weight:800}.filter-group{margin-bottom:15px}.filter-label{display:block;margin-bottom:8px;font-size:14px;font-weight:900;color:#344054}.filtros{display:flex;gap:8px;overflow-x:auto;padding:2px 0 5px}.filtros button{white-space:nowrap;padding:9px 13px;border:1px solid #e6e8f0;border-radius:999px;background:#fff;font:inherit;font-weight:800;cursor:pointer}.filtros button.ativo{background:#5b5ce2;border-color:#5b5ce2;color:#fff}#lista-prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.prompt-card{display:flex;flex-direction:column;padding:20px;border:1px solid #e5e7eb;border-radius:18px;background:#fff}.meta{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.tag,.uso-badge{padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800}.uso-badge{background:#fef3c7;color:#b45309}.nivel-basico{background:#ecfdf3;color:#027a48}.nivel-intermediario{background:#fffaeb;color:#b54708}.nivel-avancado{background:#fef3f2;color:#b42318}.prompt-card h3{margin:12px 0 5px}.quando{margin:0 0 12px;color:#667085}.campos-preenchimento{display:flex;flex-direction:column;gap:8px;margin:0 0 12px;padding:10px;background:#f8fafc;border-radius:12px;border:1px dashed #e6e8f0}.campo-label{font-size:12px;font-weight:700;color:#667085;display:flex;flex-direction:column;gap:4px}.campo-label input{padding:9px 10px;border:1px solid #e6e8f0;border-radius:9px;font-size:13.5px;font-family:inherit}.prompt-text{white-space:pre-wrap;overflow-wrap:anywhere;background:#f8fafc;border:1px solid #e6e8f0;border-radius:12px;padding:14px;font-size:14px;line-height:1.55;max-height:105px;overflow:hidden}.prompt-text.aberto{max-height:none}.ver-mais{align-self:flex-end;margin-top:8px;border:0;background:none;color:#4f46e5;font-weight:800;cursor:pointer}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:14px}.acoes button{flex:1;min-width:100px;padding:11px;border:0;border-radius:11px;font-weight:800;cursor:pointer;background:#eef2ff;color:#4f46e5}.acoes .copiar{background:#5b5ce2;color:#fff}.acoes .fav-btn.favorito{background:#fff1f2;color:#be123c}.acoes .compartilhar{background:#f0fdf4;color:#15803d}.relacionadas{margin:14px 0 0;padding-top:12px;border-top:1px dashed #e6e8f0;font-size:12.5px;color:#667085}.relacionadas strong{color:#172033;display:block;margin-bottom:6px}.chip-relacionada{display:inline-block;margin:0 6px 6px 0;padding:6px 11px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-weight:700;font-size:12px;cursor:pointer;border:0}.destacado{outline:3px solid #4f46e5;outline-offset:3px}.empty{grid-column:1/-1;text-align:center;padding:30px;color:#667085}
+.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
+.toolbar-extra button{border:1px solid #e6e8f0;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.toolbar-extra button:hover{background:#eef2ff;color:#4f46e5}
+.sugerir-box{border:1px solid #e6e8f0;border-radius:14px;padding:14px;margin:0 0 20px;background:#fafbff}
+.sugerir-box textarea{width:100%;box-sizing:border-box;min-height:80px;border:1px solid #e6e8f0;border-radius:10px;padding:10px;font:inherit;resize:vertical}
+.sugerir-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sugerir-acoes button{border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer}
+.sugerir-dica{font-size:12px;color:#667085}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:#172033;color:#fff;padding:12px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:9999}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] .info-mini,[data-theme="dark"] .prompt-card{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .prompt-text{background:rgba(255,255,255,.05);color:#cbd5e1;border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .top-bar input,[data-theme="dark"] .top-bar select,[data-theme="dark"] .campo-label input,[data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
+[data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica,[data-theme="dark"] .relacionadas,[data-theme="dark"] .contador{color:#a0a0a0}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
+@media(max-width:720px){.info-row,#lista-prompts{grid-template-columns:1fr}.page-head h1{font-size:28px}.prompt-card{padding:17px}.theme-toggle{bottom:90px}}</style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
+
+<header class="page-head"><h1>🦋 Manus AI</h1><p>Agente autônomo: você dá um objetivo, ele planeja, executa e entrega o resultado sozinho, sem precisar ficar guiando passo a passo.</p></header>
+
+<div class="info-row">
+<section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Objetivo<span>⌄</span></button><div class="info-body">Ajudar você a decidir com mais critério: comparar opções, entender riscos, reduzir vieses e agir depois de decidir.</div></section>
+<section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🛠️ Como usar?<span>⌄</span></button><div class="info-body">Escolha um tema, filtre pelo nível, abra o prompt completo e preencha os campos editáveis com sua decisão real.</div></section>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="top-bar">
+  <input id="busca" type="search" placeholder="🔎 Buscar comparar opções, riscos, vieses, matriz de decisão...">
+  <select id="ordenar" aria-label="Ordenar prompts">
+    <option value="padrao">↕️ Padrão</option>
+    <option value="az">🔤 A-Z</option>
+    <option value="recentes">🆕 Mais recentes</option>
+    <option value="populares" selected>🔥 Mais usados</option>
+  </select>
+  <span class="contador" id="contador"></span>
+</div>
+
+<div class="filter-group"><span class="filter-label">🎯 Filtrar por tema</span><div class="filtros" id="temas"></div></div>
+<div class="filter-group"><span class="filter-label">📊 Filtrar por nível de conhecimento</span><div class="filtros" id="niveis"><button class="ativo" data-nivel="todos">🌐 Todos</button><button data-nivel="basico">🟢 Básico</button><button data-nivel="intermediario">🟡 Intermediário</button><button data-nivel="avancado">🔴 Avançado</button></div></div>
+
+<div class="toolbar-extra">
+  <button id="btnExportar">📥 Exportar todos</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button>
+</div>
+
+<div class="sugerir-box" id="sugerirBox" style="display:none">
+  <textarea id="sugestaoTexto" placeholder="Descreva o modelo que você gostaria de ver aqui..."></textarea>
+  <div class="sugerir-acoes">
+    <button id="btnCopiarSugestao">📋 Copiar sugestão</button>
+    <span class="sugerir-dica">Copie e envie pra gente pelo WhatsApp ou e-mail de suporte 💌</span>
+  </div>
+</div>
+
+<div id="lista-prompts"></div>
+
+<div class="card" style="margin-top:20px"><h2 style="margin:0 0 4px">🔗 Veja também</h2><p class="small" style="margin:0 0 14px;color:#667085">Cada IA tem seus próprios pontos fortes — confira o que as outras fazem de diferente.</p><a href="/delta-prompts/paginas/o-que-fazer-com-chatgpt.html" style="display:block;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:8px;text-decoration:none;color:#172033;font-weight:700">🤖 O Que Fazer com ChatGPT</a><a href="/delta-prompts/paginas/o-que-fazer-com-gemini.html" style="display:block;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:8px;text-decoration:none;color:#172033;font-weight:700">✨ O Que Fazer com Gemini</a><a href="/delta-prompts/paginas/o-que-fazer-com-claude.html" style="display:block;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:8px;text-decoration:none;color:#172033;font-weight:700">🧡 O Que Fazer com Claude</a><a href="/delta-prompts/paginas/o-que-fazer-com-grok.html" style="display:block;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:8px;text-decoration:none;color:#172033;font-weight:700">⚡ O Que Fazer com Grok</a></div>
+
+</main>
+<div class="toast" id="toast">✓ Copiado!</div>
+<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<script>window.reordenarLista=function(){try{render()}catch(e){}};
+
+const dadosBrutos=[{"id": "ma01", "nivel": "avancado", "tema": "Criação de Site", "titulo": "🌐 Criar Site Completo a partir de uma Descrição", "quando": "Para pedir um site pronto e publicado, descrevendo só o objetivo, sem precisar guiar cada etapa.", "prompt": "Crie um site completo com base nesta descrição.\n\nTipo de site: [EX: PORTFÓLIO, LOJA SIMPLES, SITE PESSOAL]\nPara quem é: [DESCREVA A PESSOA OU NEGÓCIO]\nO que precisa ter: [SEÇÕES, FUNCIONALIDADES]\nEstilo desejado: [EX: MINIMALISTA, COLORIDO, PROFISSIONAL]\n\nPlaneje a estrutura, crie o site completo e entregue pronto pra eu revisar, sem precisar que eu guie cada etapa.", "en": "Create a complete website based on this description.\n\nType of site: [EX: PORTFOLIO, SIMPLE STORE, PERSONAL SITE]\nWho it's for: [DESCRIBE THE PERSON OR BUSINESS]\nWhat it needs to have: [SECTIONS, FEATURES]\nDesired style: [EX: MINIMALIST, COLORFUL, PROFESSIONAL]\n\nPlan the structure, create the complete site, and deliver it ready for me to review, without needing me to guide each step."}, {"id": "ma02", "nivel": "avancado", "tema": "Planejamento", "titulo": "✈️ Planejar Viagem Completa com Roteiro Otimizado", "quando": "Para receber um roteiro de viagem inteiro já pronto, com pesquisa de preços e otimização incluída.", "prompt": "Planeje uma viagem completa pra mim.\n\nDestino: [CIDADE/PAÍS]\nDatas: [PERÍODO]\nOrçamento aproximado: [VALOR]\nPreferências: [EX: MAIS CULTURA, MAIS PRAIA, RITMO TRANQUILO OU CORRIDO]\n\nPesquise e monte um roteiro dia a dia otimizado (evitando deslocamentos desnecessários), com sugestões de hospedagem e passagens dentro do orçamento, entregue como um plano completo e pronto.", "en": "Plan a complete trip for me.\n\nDestination: [CITY/COUNTRY]\nDates: [PERIOD]\nApproximate budget: [AMOUNT]\nPreferences: [EX: MORE CULTURE, MORE BEACH, RELAXED OR FAST-PACED]\n\nResearch and put together a day-by-day optimized itinerary (avoiding unnecessary travel between spots), with lodging and flight suggestions within budget, delivered as a complete, ready plan."}, {"id": "ma03", "nivel": "avancado", "tema": "RH & Triagem", "titulo": "📋 Triagem de Currículos Automatizada", "quando": "Para analisar vários currículos de uma vez e já entregar uma pré-seleção organizada, sem ler um por um manualmente.", "prompt": "Faça a triagem de currículos para uma vaga.\n\nVaga: [CARGO E PRINCIPAIS REQUISITOS]\nCurrículos para analisar: [ANEXE OU DESCREVA ONDE ESTÃO]\nCritérios de corte: [EX: EXPERIÊNCIA MÍNIMA, FORMAÇÃO, HABILIDADES OBRIGATÓRIAS]\n\nAnalise todos os currículos, organize numa lista ordenada por aderência à vaga, e destaque os pontos fortes e fracos de cada candidato pré-selecionado.", "en": "Screen resumes for a job opening.\n\nPosition: [ROLE AND MAIN REQUIREMENTS]\nResumes to analyze: [ATTACH OR DESCRIBE WHERE THEY ARE]\nCutoff criteria: [EX: MINIMUM EXPERIENCE, EDUCATION, REQUIRED SKILLS]\n\nAnalyze all the resumes, organize them into a list ranked by fit for the role, and highlight the strengths and weaknesses of each shortlisted candidate."}, {"id": "ma04", "nivel": "avancado", "tema": "Dashboard", "titulo": "📊 Dashboard Financeiro Automatizado", "quando": "Para transformar dados financeiros soltos num painel organizado, sem montar manualmente.", "prompt": "Crie um dashboard financeiro a partir dos meus dados.\n\nDados disponíveis: [DESCREVA OU ANEXE, EX: PLANILHA DE GASTOS, EXTRATO]\nO que quero visualizar: [EX: GASTOS POR CATEGORIA, EVOLUÇÃO MENSAL, COMPARATIVO]\nPeríodo: [INTERVALO DE TEMPO]\n\nOrganize os dados, monte um dashboard visual com os indicadores pedidos, e aponte 3 observações relevantes que encontrar nos números.", "en": "Create a financial dashboard from my data.\n\nAvailable data: [DESCRIBE OR ATTACH, EX: EXPENSE SPREADSHEET, STATEMENT]\nWhat I want to visualize: [EX: SPENDING BY CATEGORY, MONTHLY TREND, COMPARISON]\nPeriod: [TIME RANGE]\n\nOrganize the data, build a visual dashboard with the requested indicators, and point out 3 relevant observations you find in the numbers."}, {"id": "ma05", "nivel": "intermediario", "tema": "Pesquisa & Comparação", "titulo": "🔎 Pesquisar e Comparar Fornecedores", "quando": "Para pesquisar várias opções de fornecedor/produto e já receber uma comparação pronta, sem abrir site por site.", "prompt": "Pesquise e compare fornecedores para o que eu preciso.\n\nO que estou procurando: [PRODUTO OU SERVIÇO]\nCritérios importantes: [EX: PREÇO, PRAZO DE ENTREGA, AVALIAÇÕES, LOCALIZAÇÃO]\nQuantidade de opções que quero comparar: [NÚMERO]\n\nPesquise as opções disponíveis, organize numa tabela comparativa com os critérios pedidos, e recomende a melhor opção com o motivo.", "en": "Research and compare suppliers for what I need.\n\nWhat I'm looking for: [PRODUCT OR SERVICE]\nImportant criteria: [EX: PRICE, DELIVERY TIME, REVIEWS, LOCATION]\nNumber of options I want compared: [NUMBER]\n\nResearch the available options, organize them into a comparison table with the requested criteria, and recommend the best option with the reasoning."}, {"id": "ma06", "nivel": "avancado", "tema": "Autonomia Total", "titulo": "🔄 Deixar o Manus Trabalhar Sozinho até Entregar o Objetivo", "quando": "Para tarefas complexas onde você só quer dar o objetivo final e deixar o agente planejar, executar e ajustar sozinho até entregar.", "prompt": "Quero que você trabalhe de forma totalmente autônoma neste objetivo, sem eu precisar orientar cada passo.\n\nObjetivo final: [DESCREVA O RESULTADO COMPLETO QUE VOCÊ QUER]\nRecursos disponíveis: [O QUE VOCÊ PODE USAR/CONSULTAR]\nLimites ou restrições: [SE HOUVER ALGO QUE NÃO PODE FAZER]\n\nAnalise o objetivo, planeje as ações necessárias, execute cada etapa, e observe os resultados pra ajustar o caminho sozinho quando precisar — só me chame quando o resultado final estiver pronto ou se travar em algo que exija minha decisão.", "en": "I want you to work fully autonomously on this goal, without me needing to guide each step.\n\nFinal goal: [DESCRIBE THE COMPLETE RESULT YOU WANT]\nAvailable resources: [WHAT YOU CAN USE/CONSULT]\nLimits or restrictions: [IF THERE'S ANYTHING YOU CAN'T DO]\n\nAnalyze the goal, plan the necessary actions, execute each step, and observe the results to adjust the path on your own when needed — only reach out to me when the final result is ready or if you get stuck on something that requires my decision."}];
+
+const prompts=dadosBrutos.map((p,i)=>{
+  const obj={...p,novo:i>=8};
+  obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
+  return obj;
+});
+
+let temaAtual='Todos',nivelAtual='todos';
+const lista=document.getElementById('lista-prompts'),busca=document.getElementById('busca'),contador=document.getElementById('contador'),temas=document.getElementById('temas'),ordenarSelect=document.getElementById('ordenar');
+
+function nivelLabel(n){return n==='basico'?'🟢 Básico':n==='intermediario'?'🟡 Intermediário':'🔴 Avançado'}
+const temaIcons={"Todos": "🌐", "Análise": "⚖️", "Preparação": "🎯", "Validação": "🧪", "Risco": "⚠️", "Ação": "✅"};
+function temaLabel(t){return (temaIcons[t]||'📌')+' '+t}
+function criarTemas(){const itens=['Todos',...new Set(prompts.map(x=>x.tema))];temas.innerHTML=itens.map(t=>`<button class="${t===temaAtual?'ativo':''}" data-tema="${t}">${temaLabel(t)}</button>`).join('');temas.querySelectorAll('button').forEach(b=>b.onclick=()=>{temaAtual=b.dataset.tema;criarTemas();render()})}
+function getItem(id){return prompts.find(p=>p.id===id)}
+
+// ===== TOAST =====
+function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+// ===== POPULARIDADE =====
+function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaTdUsos'))||{}}catch(e){return{}}}
+function _saveUsos(o){try{localStorage.setItem('deltaTdUsos',JSON.stringify(o))}catch(e){}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+
+// ===== CAMPOS EDITÁVEIS =====
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=p.prompt;(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+
+// ===== AÇÕES =====
+async function copiarPorId(id){registrarUso(id);const texto=textoFinal(id);try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
+async function abrirChat(id){registrarUso(id);const texto=textoFinal(id);try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(id){registrarUso(id);const texto=textoFinal(id);try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+
+// ===== COMPARTILHAR =====
+function compartilhar(id){const p=getItem(id);if(!p)return;const url=location.origin+location.pathname+'#'+p.id;const texto='🧠 '+p.titulo+'\n\nConfira esse modelo no Delta Prompts:\n'+url;if(navigator.share){navigator.share({title:p.titulo,text:texto,url:url}).catch(()=>{})}else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Link copiado! Cole onde quiser compartilhar.'))}}
+
+// ===== RELACIONADOS / NAVEGAÇÃO =====
+function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
+function irPara(id){temaAtual='Todos';nivelAtual='todos';busca.value='';ordenarSelect.value='padrao';criarTemas();document.querySelectorAll('#niveis button').forEach(b=>b.classList.toggle('ativo',b.dataset.nivel==='todos'));render();requestAnimationFrame(()=>destacarCard(id))}
+
+// ===== EXPORTAR =====
+function exportarTodas(){const linhas=prompts.map(p=>p.titulo+'\nTema: '+p.tema+' | Nível: '+nivelLabel(p.nivel)+'\nQuando usar: '+p.quando+'\n\n'+p.prompt+'\n\n'+'─'.repeat(40));const conteudo='🧠 MANUS AI — DELTA PROMPTS\n\n'+linhas.join('\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-manus-ai.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Arquivo baixado!')}
+
+// ===== SUGERIR =====
+function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
+function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão para o Delta Prompts:\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
+
+// ===== ESTATÍSTICAS (usa o sistema global de favoritos do menu-loader.js) =====
+function atualizarStats(){const favs=(window.getFavoritos?window.getFavoritos():[]).filter(f=>f.categoria==='tomada-de-decisao').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🧠 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+
+// ===== TEMA =====
+function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
+
+// ===== ORDENAÇÃO =====
+function ordenarLista(arr){const modo=ordenarSelect.value;const arr2=[...arr];if(modo==='az')arr2.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));else if(modo==='recentes')arr2.sort((a,b)=>(b.novo?1:0)-(a.novo?1:0));else if(modo==='populares'){const usos=_loadUsos();arr2.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0))}return arr2}
+
+function render(){
+  const q=busca.value.toLowerCase().trim();
+  let f=prompts.filter(x=>(temaAtual==='Todos'||x.tema===temaAtual)&&(nivelAtual==='todos'||x.nivel===nivelAtual)&&(x.titulo+' '+x.tema+' '+x.quando+' '+x.prompt).toLowerCase().includes(q));
+  f=ordenarLista(f);
+  const usos=_loadUsos();
+  contador.textContent=f.length+' de '+prompts.length+' prompts';
+  lista.innerHTML=f.length?f.map(x=>{
+    const usoCount=usos[x.id]||0;
+    const relacionadas=prompts.filter(d=>d.tema===x.tema&&d.id!==x.id).slice(0,3);
+    return `<article class="prompt-card" id="card-${x.id}">
+      <div class="meta"><span class="tag nivel-${x.nivel}">${nivelLabel(x.nivel)}</span><span class="tag">${temaLabel(x.tema)}</span><span class="uso-badge" id="uso-${x.id}" style="${usoCount>0?'':'display:none'}">🔥 Usado ${usoCount}x</span></div>
+      <h3>${x.titulo}</h3>
+      <p class="quando">💡 ${x.quando}</p>
+      ${x.placeholders.length?`<div class="campos-preenchimento">${x.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${x.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+      <div class="prompt-text">${x.prompt}</div>
+      <button class="ver-mais" onclick="const p=this.previousElementSibling;p.classList.toggle('aberto');this.textContent=p.classList.contains('aberto')?'Mostrar menos':'👁️ Ver prompt completo'">👁️ Ver prompt completo</button>
+      <div class="acoes">
+        <button class="fav-btn" data-id="${x.id}" data-titulo="${x.titulo}" data-texto="${x.prompt.replace(/"/g,'&quot;')}" data-categoria="o-que-fazer-com-manus">🤍</button>
+        <button class="copiar" onclick="copiarPorId('${x.id}')">📋 Copiar</button>
+        <button onclick="abrirChat('${x.id}')">🤖 ChatGPT</button>
+        <button onclick="abrirGemini('${x.id}')">✨ Gemini</button>
+        <button class="compartilhar" onclick="compartilhar('${x.id}')">🔗 Compartilhar</button>
+      </div>
+      ${relacionadas.length?`<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionadas.map(r=>`<button class="chip-relacionada" onclick="irPara('${r.id}')">${r.titulo}</button>`).join('')}</div>`:''}
+    </article>`;
+  }).join(''):'<div class="empty">🔎 Nenhum prompt encontrado com esses filtros.</div>';
+  document.querySelectorAll('.fav-btn').forEach(btn=>{if(window.updateFavButtonUI)window.updateFavButtonUI(btn)});
+}
+
+busca.addEventListener('input',render);
+ordenarSelect.addEventListener('change',render);
+document.querySelectorAll('#niveis button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#niveis button').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');nivelAtual=b.dataset.nivel;render()});
+document.getElementById('btnExportar').addEventListener('click',exportarTodas);
+document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
+document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+window.addEventListener('delta:favoritos-updated',atualizarStats);
+
+aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+criarTemas();
+atualizarStats();
+render();
+if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+</script></body></html>
