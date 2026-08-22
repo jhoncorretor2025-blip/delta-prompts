@@ -59,7 +59,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='6.0';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='6.1';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -707,14 +707,27 @@ function _removerContato(i){confirmarCanivete('Excluir este contato?',()=>{const
 
 // ===== LINKS IMPORTANTES =====
 function _lerLinks(){
+  let l;
   try{
     const salvo=localStorage.getItem('canivete-links');
-    if(salvo)return JSON.parse(salvo);
-  }catch(e){}
-  // primeira vez que a pessoa abre essa lista: ja vem com o link do MEI configurado
-  const padrao=[{nome:'📋 Emissor de Nota Fiscal MEI (NFS-e Nacional)',url:'https://www.nfse.gov.br/EmissorNacional/Login',obs:''}];
-  try{localStorage.setItem('canivete-links',JSON.stringify(padrao))}catch(e){}
-  return padrao;
+    l=salvo?JSON.parse(salvo):null;
+  }catch(e){l=null}
+  if(!l){
+    // primeira vez que a pessoa abre essa lista: ja vem com o link do MEI configurado
+    l=[{nome:'📋 Emissor de Nota Fiscal MEI (NFS-e Nacional)',url:'https://www.nfse.gov.br/EmissorNacional/Login',obs:''}];
+  }
+  const linksIndicados=[
+    {nome:'🎬 Pluto TV (filmes e canais grátis, legal)',url:'https://pluto.tv/',obs:''},
+    {nome:'📺 Globoplay',url:'https://globoplay.globo.com/',obs:''},
+    {nome:'🛒 Mercado Play (filmes grátis, legal)',url:'https://play.mercadolivre.com.br/',obs:''},
+    {nome:'🍥 Crunchyroll (animes)',url:'https://www.crunchyroll.com/pt-br',obs:''},
+  ];
+  let mudou=false;
+  linksIndicados.forEach(novo=>{
+    if(!l.some(x=>x.url===novo.url)){l.push(novo);mudou=true}
+  });
+  if(mudou)try{localStorage.setItem('canivete-links',JSON.stringify(l))}catch(e){}
+  return l;
 }
 function _salvarLinks(l){try{localStorage.setItem('canivete-links',JSON.stringify(l))}catch(e){}}
 function addLinkImportante(){
