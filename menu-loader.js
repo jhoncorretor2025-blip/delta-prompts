@@ -860,11 +860,11 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         seta.style.transform=colapsado?'rotate(-90deg)':'rotate(0deg)';
       }
       funcoesAplicar.push(aplicar);
-      var estadoInicial=!!colapsados[chave];
+      var estadoInicial=(chave in colapsados)?!!colapsados[chave]:true;
       aplicar(estadoInicial);
       titulo.addEventListener('click',function(){
         var c=lerColapsados();
-        var novoEstado=!c[chave];
+        var novoEstado=(chave in c)?!c[chave]:false;
         c[chave]=novoEstado;
         salvarColapsados(c);
         aplicar(novoEstado);
