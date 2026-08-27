@@ -78,7 +78,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='6.6';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='6.7';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -775,7 +775,7 @@ function renderSugestoesRemedios(){
 function addRemedioRapido(nome,tipo){
   const l=_lerRemedios();
   if(l.some(r=>r.nome.toLowerCase()===nome.toLowerCase()))return;
-  l.push({nome,tipo,diasUso:[]});
+  l.push({nome,tipo,diasUso:[],dataAdicionado:new Date().toISOString().slice(0,10)});
   _salvarRemedios(l);
   renderListaRemedios();renderSugestoesRemedios();
   mostrarToastCanivete('✅ '+nome+' adicionado à sua lista.');
@@ -787,7 +787,7 @@ function addRemedioManual(){
   if(!nome){mostrarToastCanivete('Digite um nome antes de adicionar.');return}
   const l=_lerRemedios();
   if(l.some(r=>r.nome.toLowerCase()===nome.toLowerCase())){mostrarToastCanivete('Isso já está na sua lista.');return}
-  l.push({nome,tipo,diasUso:[]});
+  l.push({nome,tipo,diasUso:[],dataAdicionado:new Date().toISOString().slice(0,10)});
   _salvarRemedios(l);
   inputNome.value='';
   renderListaRemedios();renderSugestoesRemedios();
@@ -812,8 +812,11 @@ function renderListaRemedios(){
   const l=_lerRemedios();
   if(!l.length){el.innerHTML='<div class="empty">💊 Nenhum item adicionado ainda. Use a lista de sugestões acima ou adicione manualmente.</div>';return}
   const hoje=new Date().toISOString().slice(0,10);
+  const ontemDate=new Date();ontemDate.setDate(ontemDate.getDate()-1);
+  const ontem=ontemDate.toISOString().slice(0,10);
   el.innerHTML=l.map((r,i)=>{
     const marcadoHoje=r.diasUso.includes(hoje);
+    const esqueceuOntem=r.dataAdicionado&&r.dataAdicionado<=ontem&&!r.diasUso.includes(ontem);
     const ultimos7=[];
     for(let k=6;k>=0;k--){
       const dt=new Date();dt.setDate(dt.getDate()-k);
@@ -821,6 +824,7 @@ function renderListaRemedios(){
       ultimos7.push({iso,marcado:r.diasUso.includes(iso),diaLabel:['D','S','T','Q','Q','S','S'][dt.getDay()]});
     }
     return `<div class="goal"><div class="row between"><div><strong>${r.tipo==='medicamento'?'💊':'🌿'} ${safe(r.nome)}</strong><div class="small" style="color:var(--muted)">${r.tipo==='medicamento'?'Medicamento':'Vitamina/Suplemento'} · usado ${r.diasUso.length}x no total</div></div><button class="btn danger" type="button" onclick="_removerRemedio(${i})">🗑️</button></div>
+    ${esqueceuOntem?`<div class="notice" style="border-left:4px solid #d97706;margin-top:8px;font-size:12.5px">⚠️ Parece que você não marcou ontem — não esqueça de tomar hoje!</div>`:''}
     <div style="display:flex;gap:6px;margin-top:12px;align-items:center;flex-wrap:wrap">
       <button type="button" class="btn ${marcadoHoje?'primary':'light'}" style="font-size:12px" onclick="toggleUsoHoje(${i})">${marcadoHoje?'✅ Usei hoje':'⬜ Marcar que usei hoje'}</button>
       <div style="display:flex;gap:3px;margin-left:auto">
