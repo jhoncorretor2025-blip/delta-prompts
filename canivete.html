@@ -53,6 +53,8 @@
 
 <section id="saude" class="section"><div class="card hero"><div><h2>💊 Medicamentos & Vitaminas</h2><p class="sub">Controle o que você toma e marque os dias que usou, pra acompanhar sua rotina. Isso é só uma organização pessoal — não é orientação médica, siga sempre as instruções do seu médico ou farmacêutico.</p></div></div>
 
+<div class="card"><h2>👤 Seu perfil</h2><p class="small">Isso ajuda a sugerir itens comuns automaticamente (você pode remover a qualquer momento).</p><div class="field" style="margin-top:10px;max-width:280px"><label for="generoUsuario">Gênero</label><select id="generoUsuario" onchange="d.generoUsuario=this.value;save();aplicarSugestaoPorGenero()"><option value="">Prefiro não informar</option><option value="mulher">Mulher</option><option value="homem">Homem</option></select></div></div>
+
 <div class="card"><h2>➕ Adicionar da minha lista</h2><p class="small">Digite um nome e escolha se é medicamento ou vitamina/suplemento, ou clique em um dos sugeridos abaixo pra adicionar rápido.</p><div class="form" style="margin-top:10px"><div class="field"><label for="novoRemedioNome">Nome</label><input id="novoRemedioNome" type="text" placeholder="Ex.: Paracetamol" aria-label="Nome do medicamento ou vitamina"></div><div class="field"><label for="novoRemedioTipo">Tipo</label><select id="novoRemedioTipo"><option value="medicamento">💊 Medicamento</option><option value="vitamina">🌿 Vitamina/Suplemento</option></select></div></div><button class="btn primary" type="button" onclick="addRemedioManual()" style="margin-top:12px">➕ Adicionar à minha lista</button>
 
 <div style="margin-top:18px"><strong style="font-size:13px">🌿 Vitaminas/suplementos comuns (clique pra adicionar):</strong><div id="sugestoesVitaminas" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
@@ -78,7 +80,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='6.7';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='6.8';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -152,7 +154,7 @@ function detectarAnomalias(){
   el.innerHTML=`<div class="card" style="margin-bottom:16px;border:1px solid #fde68a;background:#fffbeb"><h2>🔔 Gastos fora do padrão este mês</h2>${anomalias.map(a=>`<div class="notice alerta" style="margin-top:10px">${a.icon} <strong>${safe(a.nome)}</strong>: você já gastou ${money(a.valorAtual)} este mês, ${a.variacao.toFixed(0)}% a mais que sua média (${money(a.media)}).</div>`).join('')}</div>`;
 }
 
-function render(){document.getElementById('salary').value=d.salary;document.getElementById('frequency').value=d.frequency;document.getElementById('commission').value=d.commission;document.getElementById('hasCommission').checked=!!d.hasCommission;document.getElementById('commissionWrap').style.display=d.hasCommission?'block':'none';document.getElementById('otherIncome').value=d.otherIncome;document.getElementById('tipoTrabalho').value=d.tipoTrabalho||'anonimo';document.getElementById('bonificacao').value=d.bonificacao||'';document.getElementById('horaExtra').value=d.horaExtra||'';document.getElementById('valeRefeicao').value=d.valeRefeicao||'';document.getElementById('valeTransporte').value=d.valeTransporte||'';document.getElementById('feriasRecebidas').value=d.feriasRecebidas||'';document.getElementById('decimoTerceiro').value=d.decimoTerceiro||'';document.getElementById('anoEntradaEmpresa').value=d.anoEntradaEmpresa||'';document.getElementById('feriasJaTiradas').value=d.feriasJaTiradas||'';toggleCamposCLT();document.getElementById('saved').value=d.saved;document.getElementById('bank').value=d.bank;document.getElementById('investments').value=d.investments;document.getElementById('payDay1').value=d.payDay1||'';document.getElementById('payDay2').value=d.payDay2||'';document.getElementById('payDay2Wrap').style.display=d.frequency==='biweekly'?'block':'none';document.getElementById('diaFechamentoFatura').value=d.diaFechamentoFatura||'';renderExpenses();renderFullList();renderBenefits();renderGoals();renderDividas();renderHistorico();renderCompras();renderArquivadas();refresh();document.getElementById('goalBadge').textContent=d.goals.length;document.getElementById('debtBadge').textContent=d.dividas.length;updateSteps();applyExpenseView();document.getElementById('versaoTexto').textContent='v'+APP_VERSION}
+function render(){document.getElementById('salary').value=d.salary;document.getElementById('frequency').value=d.frequency;document.getElementById('commission').value=d.commission;document.getElementById('hasCommission').checked=!!d.hasCommission;document.getElementById('commissionWrap').style.display=d.hasCommission?'block':'none';document.getElementById('otherIncome').value=d.otherIncome;document.getElementById('tipoTrabalho').value=d.tipoTrabalho||'anonimo';document.getElementById('bonificacao').value=d.bonificacao||'';document.getElementById('horaExtra').value=d.horaExtra||'';document.getElementById('valeRefeicao').value=d.valeRefeicao||'';document.getElementById('valeTransporte').value=d.valeTransporte||'';document.getElementById('feriasRecebidas').value=d.feriasRecebidas||'';document.getElementById('decimoTerceiro').value=d.decimoTerceiro||'';document.getElementById('anoEntradaEmpresa').value=d.anoEntradaEmpresa||'';document.getElementById('feriasJaTiradas').value=d.feriasJaTiradas||'';toggleCamposCLT();document.getElementById('generoUsuario').value=d.generoUsuario||'';document.getElementById('saved').value=d.saved;document.getElementById('bank').value=d.bank;document.getElementById('investments').value=d.investments;document.getElementById('payDay1').value=d.payDay1||'';document.getElementById('payDay2').value=d.payDay2||'';document.getElementById('payDay2Wrap').style.display=d.frequency==='biweekly'?'block':'none';document.getElementById('diaFechamentoFatura').value=d.diaFechamentoFatura||'';renderExpenses();renderFullList();renderBenefits();renderGoals();renderDividas();renderHistorico();renderCompras();renderArquivadas();refresh();document.getElementById('goalBadge').textContent=d.goals.length;document.getElementById('debtBadge').textContent=d.dividas.length;updateSteps();applyExpenseView();document.getElementById('versaoTexto').textContent='v'+APP_VERSION}
 function renderCalculoFerias(){
   const el=document.getElementById('resultadoCalculoFerias');
   if(!el)return;
@@ -771,6 +773,18 @@ function renderSugestoesRemedios(){
     const desabilitado=jaTem.includes(nome.toLowerCase());
     return `<button type="button" class="btn light" style="font-size:11.5px;padding:6px 10px;${desabilitado?'opacity:.5;cursor:default':''}" ${desabilitado?'disabled':''} onclick="addRemedioRapido('${nome.replace(/'/g,"\\'")}','medicamento')">${desabilitado?'✓ ':'+ '}${nome}</button>`;
   }).join('');
+}
+function aplicarSugestaoPorGenero(){
+  if(d.generoUsuario!=='mulher')return;
+  if(d.anticoncepcionalSugerido)return;
+  const l=_lerRemedios();
+  if(l.some(r=>r.nome.toLowerCase()==='anticoncepcional'))return;
+  l.push({nome:'Anticoncepcional',tipo:'medicamento',diasUso:[],dataAdicionado:new Date().toISOString().slice(0,10)});
+  _salvarRemedios(l);
+  d.anticoncepcionalSugerido=true;
+  save();
+  renderListaRemedios();renderSugestoesRemedios();
+  mostrarToastCanivete('💊 Adicionamos "Anticoncepcional" na sua lista. Remova se não usar.');
 }
 function addRemedioRapido(nome,tipo){
   const l=_lerRemedios();
@@ -1436,5 +1450,5 @@ document.querySelectorAll('#nav button[data-page]').forEach(b=>{b.setAttribute('
 render();showPage('dashboard');carregarFirebaseCanivete();mostrarOnboardingSeNecessario();
 setTimeout(verificarEEnviarPush,1500);
 checarPinAoAbrir();
-renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();
+renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();aplicarSugestaoPorGenero();
 </script></body></html>
