@@ -66,7 +66,10 @@
 <div style="margin-top:16px"><strong style="font-size:13px">💊 Medicamentos comuns (clique pra adicionar):</strong><div id="sugestoesMedicamentos" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
 </div>
 
-<div class="card"><h2>📋 Minha lista</h2><div class="row" style="gap:8px;margin-bottom:14px;flex-wrap:wrap"><input type="text" id="buscaRemedioInput" placeholder="🔍 Buscar na minha lista..." aria-label="Buscar item na minha lista" oninput="buscarRemedio()" style="flex:1;min-width:160px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"><button class="btn light" type="button" id="btnToggleHistoricoRemedios" onclick="toggleHistoricoRemedios()">📅 Ver últimos 30 dias</button></div><div id="listaRemedios"></div></div>
+<div class="card"><h2>📋 Minha lista</h2><div class="row" style="gap:8px;margin-bottom:10px;flex-wrap:wrap"><input type="text" id="buscaRemedioInput" placeholder="🔍 Buscar na minha lista..." aria-label="Buscar item na minha lista" oninput="buscarRemedio()" style="flex:1;min-width:160px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"><button class="btn light" type="button" id="btnToggleHistoricoRemedios" onclick="toggleHistoricoRemedios()">📅 Ver últimos 30 dias</button><button class="btn light" type="button" id="btnModoCompactoRemedios" onclick="toggleModoCompactoRemedios()">📃 Ver lista compacta</button></div>
+<div class="row" style="gap:6px;margin-bottom:10px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted);align-self:center">Filtrar:</span><button class="btn light active" type="button" id="btnFiltroRemedio_todos" onclick="setFiltroTipoRemedio('todos')">Todos</button><button class="btn light" type="button" id="btnFiltroRemedio_medicamento" onclick="setFiltroTipoRemedio('medicamento')">💊 Medicamentos</button><button class="btn light" type="button" id="btnFiltroRemedio_vitamina" onclick="setFiltroTipoRemedio('vitamina')">🌿 Vitaminas</button><button class="btn light" type="button" id="btnFiltroRemedio_ativo" onclick="setFiltroTipoRemedio('ativo')">▶️ Só ativos</button></div>
+<div class="row" style="gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center"><span style="font-size:12px;color:var(--muted)">Ordenar por:</span><select onchange="setOrdenacaoRemedio(this.value)" style="padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-size:12px;background:var(--card);color:var(--ink)"><option value="adicao">Ordem de adição</option><option value="nome">Nome (A-Z)</option><option value="uso">Mais usado</option><option value="status">Status (ativos primeiro)</option></select><span style="margin-left:auto;display:flex;gap:6px"><button class="btn light" type="button" onclick="exportarListaRemedios()">📄 Exportar/Imprimir</button><button class="btn light" type="button" onclick="compartilharListaRemediosWhatsapp()">📲 WhatsApp</button></span></div>
+<div id="listaRemedios"></div></div>
 
 <div class="card"><h2>🏥 Condições de Saúde</h2><p class="small">Guarde aqui as condições que você tem, pra ter tudo num lugar só se precisar mostrar pra um médico novo. Isso é só um registro pessoal — não é diagnóstico nem substitui acompanhamento médico.</p>
 <div class="form" style="margin-top:10px"><div class="field"><label for="novaCondicaoNome">Nome da condição</label><input id="novaCondicaoNome" type="text" placeholder="Ex.: Diabetes" aria-label="Nome da condição de saúde"></div></div>
@@ -85,7 +88,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='7.2';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='7.3';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -705,7 +708,27 @@ function verificarEEnviarPush(){
   if(atrasados.length){
     new Notification('🔴 Você tem contas vencidas',{body:atrasados.map(e=>e.name).join(', '),icon:'/delta-prompts/icon-192.png'});
   }
+  verificarAlarmesRemedios();
 }
+function verificarAlarmesRemedios(){
+  const agora=new Date();
+  const horaAtual=String(agora.getHours()).padStart(2,'0')+':'+String(agora.getMinutes()).padStart(2,'0');
+  const hoje=agora.toISOString().slice(0,10);
+  const l=_lerRemedios();
+  let mudou=false;
+  l.forEach((r)=>{
+    if(r.ativo===false)return;
+    const horarios=r.horarios||(r.horarioConsumo?[r.horarioConsumo]:[]);
+    if(!horarios.includes(horaAtual))return;
+    r.ultimoAlarmeDisparado=r.ultimoAlarmeDisparado||{};
+    if(r.ultimoAlarmeDisparado[horaAtual]===hoje)return;
+    new Notification('⏰ Hora do '+(r.tipo==='medicamento'?'medicamento':'suplemento'),{body:r.nome+(r.dosagem?' — '+r.dosagem:''),icon:'/delta-prompts/icon-192.png'});
+    r.ultimoAlarmeDisparado[horaAtual]=hoje;
+    mudou=true;
+  });
+  if(mudou)_salvarRemedios(l);
+}
+setInterval(verificarAlarmesRemedios,60000);
 
 // ===== INICIAR NOVO MES (salva historico + reseta pago + avanca parcelas) =====
 // ===== SENHAS (guardadas so localmente, sem sincronizar com a nuvem) =====
@@ -845,6 +868,90 @@ function _removerRemedio(i){
     const l=_lerRemedios();l.splice(i,1);_salvarRemedios(l);renderListaRemedios();renderSugestoesRemedios();
   });
 }
+function adicionarHorarioRemedio(i,valor){
+  if(!valor)return;
+  const l=_lerRemedios();
+  if(!l[i].horarios)l[i].horarios=l[i].horarioConsumo?[l[i].horarioConsumo]:[];
+  if(!l[i].horarios.includes(valor))l[i].horarios.push(valor);
+  l[i].horarios.sort();
+  _salvarRemedios(l);
+  renderListaRemedios();
+}
+function removerHorarioRemedio(i,hi){
+  const l=_lerRemedios();
+  if(!l[i].horarios)l[i].horarios=l[i].horarioConsumo?[l[i].horarioConsumo]:[];
+  l[i].horarios.splice(hi,1);
+  _salvarRemedios(l);
+  renderListaRemedios();
+}
+function _duplicarRemedio(i){
+  const l=_lerRemedios();
+  const original=l[i];
+  const novoNomeBase=original.nome+' (cópia)';
+  let novoNome=novoNomeBase,contador=2;
+  while(l.some(r=>r.nome.toLowerCase()===novoNome.toLowerCase())){novoNome=novoNomeBase+' '+contador;contador++}
+  const copia={...original,nome:novoNome,diasUso:[],dataAdicionado:new Date().toISOString().slice(0,10)};
+  l.push(copia);
+  _salvarRemedios(l);
+  renderListaRemedios();renderSugestoesRemedios();
+  mostrarToastCanivete('📋 Item duplicado como "'+novoNome+'".');
+}
+function exportarListaRemedios(){
+  const l=_lerRemedios();
+  if(!l.length){mostrarToastCanivete('Sua lista está vazia.');return}
+  let txt='💊 MINHA LISTA DE MEDICAMENTOS E VITAMINAS\n';
+  txt+='(gerado pelo Canivete Assistente — Delta Prompts em '+new Date().toLocaleDateString('pt-BR')+')\n';
+  if(d.nomeUsuarioPerfil)txt+='Nome: '+d.nomeUsuarioPerfil+'\n';
+  if(d.idadeUsuarioPerfil)txt+='Idade: '+d.idadeUsuarioPerfil+'\n';
+  txt+='═'.repeat(40)+'\n\n';
+  l.forEach((r,i)=>{
+    const horarios=r.horarios||(r.horarioConsumo?[r.horarioConsumo]:[]);
+    txt+=(i+1)+'. '+(r.tipo==='medicamento'?'💊':'🌿')+' '+r.nome+(r.ativo===false?' (INATIVO)':'')+'\n';
+    if(r.dosagem)txt+='   Dosagem: '+r.dosagem+'\n';
+    if(r.frequencia)txt+='   Frequência: '+r.frequencia+'\n';
+    if(horarios.length)txt+='   Horário(s): '+horarios.join(', ')+'\n';
+    if(r.observacao)txt+='   Observação: '+r.observacao+'\n';
+    txt+='\n';
+  });
+  const condicoes=_lerCondicoes();
+  if(condicoes.length){
+    txt+='🏥 CONDIÇÕES DE SAÚDE\n';
+    condicoes.forEach((c,i)=>{txt+=(i+1)+'. '+c+'\n'});
+  }
+  navigator.clipboard.writeText(txt).then(()=>{
+    mostrarToastCanivete('✅ Copiado! Cole num documento ou envie pra impressão.');
+  }).catch(()=>{
+    const blob=new Blob([txt],{type:'text/plain'}),u=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=u;a.download='minha-lista-medicamentos.txt';a.click();URL.revokeObjectURL(u);
+    mostrarToastCanivete('📄 Baixado como arquivo .txt.');
+  });
+}
+function compartilharListaRemediosWhatsapp(){
+  const l=_lerRemedios();
+  if(!l.length){mostrarToastCanivete('Sua lista está vazia.');return}
+  let txt='💊 *Minha lista de medicamentos/vitaminas*\n\n';
+  l.forEach((r,i)=>{
+    txt+=(i+1)+'. '+(r.tipo==='medicamento'?'💊':'🌿')+' '+r.nome;
+    if(r.dosagem)txt+=' — '+r.dosagem;
+    txt+='\n';
+  });
+  const url='https://wa.me/?text='+encodeURIComponent(txt);
+  window.open(url,'_blank');
+}
+function _adicionarRemedioComoDespesa(i){
+  const r=_lerRemedios()[i];
+  if(!r||!r.custoMensal)return;
+  const jaExiste=d.expenses.find(e=>e.name===('💊 '+r.nome));
+  if(jaExiste){
+    jaExiste.value=n(r.custoMensal);
+    save();refresh();
+    mostrarToastCanivete('✅ Despesa "💊 '+r.nome+'" atualizada.');
+  }else{
+    d.expenses.push({name:'💊 '+r.nome,icon:'💊',value:n(r.custoMensal),cat:'saude'});
+    save();refresh();
+    mostrarToastCanivete('✅ Adicionado em Despesas como "💊 '+r.nome+'".');
+  }
+}
 function toggleUsoHoje(i){
   const l=_lerRemedios();
   const hoje=new Date().toISOString().slice(0,10);
@@ -864,6 +971,27 @@ function toggleUsoHoje(i){
   renderListaRemedios();
 }
 let diasHistoricoRemedios=7;
+let filtroTipoRemedioAtivo='todos';
+let ordenacaoRemedioAtiva='adicao';
+let modoCompactoRemedios=false;
+function setFiltroTipoRemedio(v){
+  filtroTipoRemedioAtivo=v;
+  ['todos','medicamento','vitamina','ativo'].forEach(tipo=>{
+    const btn=document.getElementById('btnFiltroRemedio_'+tipo);
+    if(btn)btn.classList.toggle('active',tipo===v);
+  });
+  renderListaRemedios();
+}
+function setOrdenacaoRemedio(v){
+  ordenacaoRemedioAtiva=v;
+  renderListaRemedios();
+}
+function toggleModoCompactoRemedios(){
+  modoCompactoRemedios=!modoCompactoRemedios;
+  const btn=document.getElementById('btnModoCompactoRemedios');
+  if(btn)btn.textContent=modoCompactoRemedios?'🗂️ Ver em cards':'📃 Ver lista compacta';
+  renderListaRemedios();
+}
 function calcularDiasSemMarcar(r,hoje){
   let dias=0;
   const dt=new Date();dt.setDate(dt.getDate()-1);
@@ -901,11 +1029,28 @@ function renderListaRemedios(){
   const termoBusca=(document.getElementById('buscaRemedioInput')?.value||'').toLowerCase().trim();
   let l=_lerRemedios();
   const listaCompleta=l;
-  if(termoBusca)l=l.map((r,i)=>({...r,_i:i})).filter(r=>r.nome.toLowerCase().includes(termoBusca));
-  else l=l.map((r,i)=>({...r,_i:i}));
+  l=l.map((r,i)=>({...r,_i:i}));
+  if(termoBusca)l=l.filter(r=>r.nome.toLowerCase().includes(termoBusca));
+  if(filtroTipoRemedioAtivo==='medicamento')l=l.filter(r=>r.tipo==='medicamento');
+  else if(filtroTipoRemedioAtivo==='vitamina')l=l.filter(r=>r.tipo==='vitamina');
+  else if(filtroTipoRemedioAtivo==='ativo')l=l.filter(r=>r.ativo!==false);
+  if(ordenacaoRemedioAtiva==='nome')l=l.slice().sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));
+  else if(ordenacaoRemedioAtiva==='uso')l=l.slice().sort((a,b)=>b.diasUso.length-a.diasUso.length);
+  else if(ordenacaoRemedioAtiva==='status')l=l.slice().sort((a,b)=>(b.ativo!==false?1:0)-(a.ativo!==false?1:0));
   if(!listaCompleta.length){el.innerHTML='<div class="empty">💊 Nenhum item adicionado ainda. Use a lista de sugestões acima ou adicione manualmente.</div>';return}
-  if(!l.length){el.innerHTML='<div class="empty">🔍 Nenhum item encontrado com esse nome.</div>';return}
+  if(!l.length){el.innerHTML='<div class="empty">🔍 Nenhum item encontrado com esses filtros.</div>';return}
   const hoje=new Date().toISOString().slice(0,10);
+
+  if(modoCompactoRemedios){
+    el.innerHTML=l.map((r)=>{
+      const i=r._i;
+      const ativo=r.ativo!==false;
+      const marcadoHoje=r.diasUso.includes(hoje);
+      return `<div class="row between" style="padding:9px 0;border-bottom:1px solid var(--line);${!ativo?'opacity:.55':''}"><span style="font-size:13px"><span style="color:var(--muted);font-weight:800">${i+1}.</span> ${r.tipo==='medicamento'?'💊':'🌿'} ${safe(r.nome)}${!ativo?' <span style="font-size:9.5px;color:#94a3b8">(inativo)</span>':''}</span><div style="display:flex;gap:5px;align-items:center"><button class="btn ${marcadoHoje?'primary':'light'}" type="button" style="font-size:11px;padding:5px 9px" onclick="toggleUsoHoje(${i})" ${!ativo?'disabled':''}>${marcadoHoje?'✅':'⬜'}</button><button class="btn light" type="button" style="font-size:11px;padding:5px 9px" onclick="toggleDetalhesRemedio(${i});toggleModoCompactoRemedios();toggleModoCompactoRemedios()" aria-label="Ver detalhes">⚙️</button></div></div>`;
+    }).join('');
+    return;
+  }
+
   el.innerHTML=l.map((r)=>{
     const i=r._i;
     const ativo=r.ativo!==false;
@@ -920,14 +1065,18 @@ function renderListaRemedios(){
     }
     const estoqueBaixo=r.estoqueAtual!==undefined&&r.estoqueAtual!==''&&r.estoqueMinimo!==undefined&&r.estoqueMinimo!==''&&Number(r.estoqueAtual)<=Number(r.estoqueMinimo);
     const detalhesAbertos=detalhesRemedioAbertos.has(i);
-    return `<div class="goal" style="${!ativo?'opacity:.55':''}"><div class="row between"><div><strong><span style="color:var(--muted);font-weight:800">${i+1}.</span> ${r.tipo==='medicamento'?'💊':'🌿'} ${safe(r.nome)}</strong> ${!ativo?'<span style="font-size:10px;background:#e2e8f0;color:#475569;padding:2px 7px;border-radius:999px;font-weight:800">⏸️ INATIVO</span>':''}<div class="small" style="color:var(--muted)">${r.tipo==='medicamento'?'Medicamento':'Vitamina/Suplemento'} · usado ${r.diasUso.length}x no total${r.horarioConsumo?' · ⏰ '+r.horarioConsumo:''}${r.frequencia?' · 🔁 '+safe(r.frequencia):''}</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn light" type="button" onclick="toggleDetalhesRemedio(${i})" aria-label="Ver/editar detalhes">${detalhesAbertos?'🔼':'⚙️'}</button><button class="btn light" type="button" onclick="_editarRemedio(${i})" aria-label="Editar nome">✏️</button><button class="btn danger" type="button" onclick="_removerRemedio(${i})" aria-label="Remover">🗑️</button></div></div>
+    const horarios=r.horarios||(r.horarioConsumo?[r.horarioConsumo]:[]);
+    return `<div class="goal" style="${!ativo?'opacity:.55':''}"><div class="row between"><div><strong><span style="color:var(--muted);font-weight:800">${i+1}.</span> ${r.tipo==='medicamento'?'💊':'🌿'} ${safe(r.nome)}</strong> ${!ativo?'<span style="font-size:10px;background:#e2e8f0;color:#475569;padding:2px 7px;border-radius:999px;font-weight:800">⏸️ INATIVO</span>':''}<div class="small" style="color:var(--muted)">${r.tipo==='medicamento'?'Medicamento':'Vitamina/Suplemento'} · usado ${r.diasUso.length}x no total${horarios.length?' · ⏰ '+horarios.join(', '):''}${r.frequencia?' · 🔁 '+safe(r.frequencia):''}${r.custoMensal?' · 💰 '+money(n(r.custoMensal))+'/mês':''}</div>${r.observacao?`<div class="small" style="color:var(--ink);margin-top:4px;font-style:italic">📝 ${safe(r.observacao)}</div>`:''}</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn light" type="button" onclick="toggleDetalhesRemedio(${i})" aria-label="Ver/editar detalhes">${detalhesAbertos?'🔼':'⚙️'}</button><button class="btn light" type="button" onclick="_duplicarRemedio(${i})" aria-label="Duplicar item">📋</button><button class="btn light" type="button" onclick="_editarRemedio(${i})" aria-label="Editar nome">✏️</button><button class="btn danger" type="button" onclick="_removerRemedio(${i})" aria-label="Remover">🗑️</button></div></div>
     ${estoqueBaixo?`<div class="notice" style="border-left:4px solid #dc2626;margin-top:8px;font-size:12.5px">📦 Estoque baixo: só restam ${r.estoqueAtual}. Hora de repor!</div>`:''}
     ${ativo&&diasSemMarcar>=1?`<div class="notice" style="border-left:4px solid ${diasSemMarcar>=3?'#dc2626':'#d97706'};margin-top:8px;font-size:12.5px">⚠️ ${diasSemMarcar===1?'Você não marcou ontem':'Já são '+diasSemMarcar+' dias seguidos sem marcar'} — não esqueça de manter sua rotina!</div>`:''}
     ${detalhesAbertos?`<div style="background:var(--bg2,#f8fafc);border-radius:10px;padding:12px;margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
       <div class="field"><label style="font-size:11.5px">💊 Dosagem/posologia</label><input type="text" value="${safe(r.dosagem||'')}" placeholder="Ex.: 1 comprimido" oninput="atualizarCampoRemedio(${i},'dosagem',this.value)" style="width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box"></div>
       <div class="field"><label style="font-size:11.5px">🔁 Frequência/intervalo</label><input type="text" value="${safe(r.frequencia||'')}" placeholder="Ex.: 1x ao dia, a cada 8h" oninput="atualizarCampoRemedio(${i},'frequencia',this.value)" style="width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box"></div>
-      <div class="field"><label style="font-size:11.5px">⏰ Horário do consumo</label><input type="time" value="${safe(r.horarioConsumo||'')}" oninput="atualizarCampoRemedio(${i},'horarioConsumo',this.value)" style="width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box"></div>
+      <div class="field" style="grid-column:1/-1"><label style="font-size:11.5px">⏰ Horários do consumo (pode ter mais de um, ex.: remédio de 12 em 12h)</label><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">${horarios.map((h,hi)=>`<span style="display:flex;align-items:center;gap:4px;background:#eef2ff;color:#4338ca;padding:4px 4px 4px 10px;border-radius:999px;font-size:12px;font-weight:700">${h}<button type="button" onclick="removerHorarioRemedio(${i},${hi})" style="background:none;border:0;cursor:pointer;color:#4338ca;font-weight:900;padding:2px 6px">×</button></span>`).join('')}<input type="time" onchange="adicionarHorarioRemedio(${i},this.value);this.value=''" style="padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-size:12.5px"></div></div>
       <div class="field"><label style="font-size:11.5px">📦 Estoque atual / mínimo p/ avisar</label><div style="display:flex;gap:6px"><input type="number" min="0" value="${r.estoqueAtual??''}" placeholder="Ex.: 30" oninput="atualizarCampoRemedio(${i},'estoqueAtual',this.value)" style="width:50%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box"><input type="number" min="0" value="${r.estoqueMinimo??''}" placeholder="Ex.: 5" oninput="atualizarCampoRemedio(${i},'estoqueMinimo',this.value)" style="width:50%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box"></div></div>
+      <div class="field"><label style="font-size:11.5px">💰 Custo mensal estimado (R$)</label><div style="display:flex;gap:6px"><input type="number" min="0" step="0.01" value="${r.custoMensal??''}" placeholder="Ex.: 45.90" oninput="atualizarCampoRemedio(${i},'custoMensal',this.value)" style="width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box"></div></div>
+      <div class="field" style="grid-column:1/-1"><label style="font-size:11.5px">📝 Observações (ex.: efeitos notados, orientação do médico)</label><textarea oninput="atualizarCampoRemedio(${i},'observacao',this.value)" placeholder="Escreva aqui..." style="width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box;min-height:50px;font-family:inherit">${safe(r.observacao||'')}</textarea></div>
+      ${r.custoMensal&&n(r.custoMensal)>0?`<div style="grid-column:1/-1"><button class="btn light" type="button" onclick="_adicionarRemedioComoDespesa(${i})" style="font-size:12px">➕ Somar esse custo em Despesas</button></div>`:''}
       <div class="field" style="grid-column:1/-1"><label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" ${ativo?'checked':''} onchange="toggleAtivoRemedio(${i})"> Tratamento ativo (desmarque se parou de usar, sem apagar o histórico)</label></div>
     </div>`:''}
     <div style="display:flex;gap:6px;margin-top:12px;align-items:center;flex-wrap:wrap">
