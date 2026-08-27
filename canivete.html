@@ -60,6 +60,13 @@
 </div>
 
 <div class="card"><h2>📋 Minha lista</h2><div id="listaRemedios"></div></div>
+
+<div class="card"><h2>🏥 Condições de Saúde</h2><p class="small">Guarde aqui as condições que você tem, pra ter tudo num lugar só se precisar mostrar pra um médico novo. Isso é só um registro pessoal — não é diagnóstico nem substitui acompanhamento médico.</p>
+<div class="form" style="margin-top:10px"><div class="field"><label for="novaCondicaoNome">Nome da condição</label><input id="novaCondicaoNome" type="text" placeholder="Ex.: Diabetes" aria-label="Nome da condição de saúde"></div></div>
+<button class="btn primary" type="button" onclick="addCondicaoManual()" style="margin-top:12px">➕ Adicionar</button>
+<div style="margin-top:18px"><strong style="font-size:13px">Sugestões rápidas (clique pra adicionar):</strong><div id="sugestoesCondicoes" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
+<div id="listaCondicoes" style="margin-top:16px"></div>
+</div>
 </section>
 
 </main>
@@ -71,7 +78,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='6.5';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='6.6';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -824,6 +831,56 @@ function renderListaRemedios(){
   }).join('');
 }
 
+const listaCondicoesSugeridas=['Infecção Urinária','Psoríase','Psoríase Articular','Hérnia','Diabetes'];
+
+function _lerCondicoes(){
+  try{return JSON.parse(localStorage.getItem('canivete-condicoes'))||[]}catch(e){return[]}
+}
+function _salvarCondicoes(l){
+  try{localStorage.setItem('canivete-condicoes',JSON.stringify(l))}catch(e){}
+}
+function renderSugestoesCondicoes(){
+  const el=document.getElementById('sugestoesCondicoes');
+  if(!el)return;
+  const jaTem=_lerCondicoes().map(c=>c.toLowerCase());
+  el.innerHTML=listaCondicoesSugeridas.map(nome=>{
+    const desabilitado=jaTem.includes(nome.toLowerCase());
+    return `<button type="button" class="btn light" style="font-size:11.5px;padding:6px 10px;${desabilitado?'opacity:.5;cursor:default':''}" ${desabilitado?'disabled':''} onclick="addCondicaoRapida('${nome.replace(/'/g,"\\'")}')">${desabilitado?'✓ ':'+ '}${nome}</button>`;
+  }).join('');
+}
+function addCondicaoRapida(nome){
+  const l=_lerCondicoes();
+  if(l.some(c=>c.toLowerCase()===nome.toLowerCase()))return;
+  l.push(nome);
+  _salvarCondicoes(l);
+  renderListaCondicoes();renderSugestoesCondicoes();
+  mostrarToastCanivete('✅ '+nome+' adicionada.');
+}
+function addCondicaoManual(){
+  const input=document.getElementById('novaCondicaoNome');
+  const nome=(input.value||'').trim();
+  if(!nome){mostrarToastCanivete('Digite um nome antes de adicionar.');return}
+  const l=_lerCondicoes();
+  if(l.some(c=>c.toLowerCase()===nome.toLowerCase())){mostrarToastCanivete('Isso já está na sua lista.');return}
+  l.push(nome);
+  _salvarCondicoes(l);
+  input.value='';
+  renderListaCondicoes();renderSugestoesCondicoes();
+  mostrarToastCanivete('✅ '+nome+' adicionada.');
+}
+function _removerCondicao(i){
+  confirmarCanivete('Remover esta condição da sua lista?',()=>{
+    const l=_lerCondicoes();l.splice(i,1);_salvarCondicoes(l);renderListaCondicoes();renderSugestoesCondicoes();
+  });
+}
+function renderListaCondicoes(){
+  const el=document.getElementById('listaCondicoes');
+  if(!el)return;
+  const l=_lerCondicoes();
+  if(!l.length){el.innerHTML='<div class="empty">Nenhuma condição adicionada ainda.</div>';return}
+  el.innerHTML=l.map((nome,i)=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><span>🏥 ${safe(nome)}</span><button class="btn danger" type="button" onclick="_removerCondicao(${i})">🗑️</button></div>`).join('');
+}
+
 function _lerLinks(){
   let l;
   try{
@@ -1375,5 +1432,5 @@ document.querySelectorAll('#nav button[data-page]').forEach(b=>{b.setAttribute('
 render();showPage('dashboard');carregarFirebaseCanivete();mostrarOnboardingSeNecessario();
 setTimeout(verificarEEnviarPush,1500);
 checarPinAoAbrir();
-renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();
+renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();
 </script></body></html>
