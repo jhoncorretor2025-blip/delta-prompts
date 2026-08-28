@@ -1,0 +1,34 @@
+name: Canivete v8.2 - Finalizar versão
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Atualizar versão
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('canivete.html')
+          s=p.read_text(encoding='utf-8')
+          if 'CANIVETE-V82-VITAMINAS' not in s or "const APP_VERSION='8.2'" in s:
+              raise SystemExit(0)
+          old="const APP_VERSION='8.1'"
+          new="const APP_VERSION='8.2'"
+          if old not in s:
+              raise SystemExit('Versão 8.1 não encontrada')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+      - name: Publicar versão
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git commit -m "CANIVETE-V82-VITAMINAS: versão 8.2" || exit 0
+          git push
