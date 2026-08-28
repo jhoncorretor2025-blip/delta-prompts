@@ -16,6 +16,30 @@ jobs:
       - name: Baixar repositorio
         uses: actions/checkout@v4
 
+      - name: Limpar itens antigos de saude
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('canivete.html')
+          s = p.read_text(encoding='utf-8')
+          marker = "function _salvarRemedios(l){"
+          migration = '''function limparItensSaudeAntigos(){
+            try{
+              const nomesRemover=new Set(['ashwagandha','moringa','maca negra','combo ashwagandha + moringa + maca negra']);
+              const lista=_lerRemedios();
+              const limpa=lista.filter(r=>!nomesRemover.has(String(r.nome||'').trim().toLowerCase()));
+              if(limpa.length!==lista.length)_salvarRemedios(limpa);
+            }catch(e){}
+          }
+          '''
+          if 'function limparItensSaudeAntigos()' not in s:
+              s=s.replace(marker,migration+marker,1)
+              anchor="renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();"
+              if anchor in s:
+                  s=s.replace(anchor,"limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();",1)
+              p.write_text(s,encoding='utf-8')
+          PY
+
       - name: Atualizar Canivete
         run: |
           python3 <<'PY'
@@ -54,7 +78,6 @@ jobs:
           if "analise:['Análise" not in s:
               s=s.replace("projecoes:['Projeções','Veja o crescimento estimado.']}","projecoes:['Projeções','Veja o crescimento estimado.'],analise:['Análise financeira','Descubra onde pode economizar e o impacto no futuro.']}",1)
 
-          # Acesso para usuários que querem ir além do básico.
           advanced='<a href="canivete-avancado.html" class="btn light" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">🧠 Visão Avançada</a>'
           if 'canivete-avancado.html' not in s:
               s=s.replace('<div class="actions"><button class="btn light" type="button" onclick="exportData()">⬇️ Exportar</button>', '<div class="actions">'+advanced+'<button class="btn light" type="button" onclick="exportData()">⬇️ Exportar</button>',1)
@@ -68,5 +91,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add canivete.html
           git diff --cached --quiet && exit 0
-          git commit -m "Adicionar acesso à visão avançada"
+          git commit -m "Adicionar acesso à visao avancada e limpeza de itens antigos"
           git push
