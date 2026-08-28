@@ -124,7 +124,7 @@
 
 <section id="links" class="section"><div class="card hero"><div class="row between"><div><h2>🔗 Links Importantes</h2><p class="sub">Guarde os links que você mais acessa (governo, banco, sistemas de trabalho) num lugar só.</p></div><button class="btn primary" type="button" onclick="addLinkImportante()">➕ Novo link</button></div></div><div class="card"><div id="linksList"></div></div></section>
 
-<section id="saude" class="section"><div class="card hero"><div><h2>💊 Medicamentos & Vitaminas <span class="v79-health-badge">v8.0</span></h2><p class="sub">Controle o que você toma e marque os dias que usou, pra acompanhar sua rotina. Isso é só uma organização pessoal — não é orientação médica, siga sempre as instruções do seu médico ou farmacêutico.</p></div></div>
+<section id="saude" class="section"><div class="card hero"><div><h2>💊 Medicamentos & Vitaminas <span class="v79-health-badge">v7.9</span></h2><p class="sub">Controle o que você toma e marque os dias que usou, pra acompanhar sua rotina. Isso é só uma organização pessoal — não é orientação médica, siga sempre as instruções do seu médico ou farmacêutico.</p></div></div>
 
 <div class="card"><h2>👤 Seu perfil</h2><p class="small">A sugestão automática de itens usa as informações do seu <a href="#" onclick="showPage('perfil');return false" style="color:var(--blue);font-weight:800">👤 Perfil central</a>. Preencha lá uma vez e vale pra cá e pra outros recursos futuros.</p></div>
 
@@ -1943,7 +1943,7 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
         // Versão visível no menu.
         if(!document.querySelector('.v80-version')){
           const brand=side.querySelector('.brand');
-          if(brand){const v=document.createElement('div');v.className='v80-version';v.textContent='🧰 Canivete v8.0';brand.insertAdjacentElement('afterend',v)}
+          if(brand){const v=document.createElement('div');v.className='v80-version';v.textContent='🧰 Canivete v7.9';brand.insertAdjacentElement('afterend',v)}
         }
 
         // Modo simples/avançado: reduz a carga cognitiva sem remover funções.
