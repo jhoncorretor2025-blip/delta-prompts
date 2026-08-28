@@ -52,6 +52,12 @@
 
 <section id="perfil" class="section"><div class="card hero"><h2>👤 Meu Perfil</h2><p class="sub">Informações centrais suas, usadas por vários recursos do Canivete (hoje e no futuro) pra personalizar sugestões automaticamente. Preencher aqui é opcional, e você sempre pode ajustar depois.</p></div>
 <div class="card"><h2>ℹ️ Dados básicos</h2><div class="form"><div class="field"><label for="generoUsuario">Gênero</label><select id="generoUsuario"><option value="">Prefiro não informar</option><option value="mulher">Mulher</option><option value="homem">Homem</option></select></div><div class="field"><label for="nomeUsuarioPerfil">Nome (opcional, só pra te chamar pelo nome em alguns lugares)</label><input id="nomeUsuarioPerfil" type="text" placeholder="Ex.: Jhonatan" aria-label="Seu nome"></div><div class="field"><label for="idadeUsuarioPerfil">Idade (opcional, ajuda em relatórios pra médico/IA)</label><input id="idadeUsuarioPerfil" type="number" min="0" max="120" placeholder="Ex.: 32" aria-label="Sua idade"></div></div><button class="btn primary" type="button" onclick="salvarPerfil()" style="margin-top:14px">💾 Salvar perfil</button><div class="notice" id="avisoPerfilConectado" style="margin-top:14px">🔌 Esse perfil já é usado hoje pela página de Medicamentos & Vitaminas (sugestão automática de item por gênero). Conforme novos recursos forem criados, eles também vão poder usar essas informações daqui, sem você precisar preencher de novo em cada lugar.</div></div>
+
+<div class="card"><h2>👨‍👩‍👧 Familiares</h2><p class="small">Cadastre outras pessoas (esposa, marido, filhos) pra marcar remédios, condições e consultas específicas de cada um, tudo dentro da mesma conta.</p>
+<div class="form" style="margin-top:10px"><div class="field"><label for="novoFamiliarNome">Nome</label><input id="novoFamiliarNome" type="text" placeholder="Ex.: Tania" aria-label="Nome do familiar"></div></div>
+<button class="btn primary" type="button" onclick="addFamiliar()" style="margin-top:12px">➕ Adicionar familiar</button>
+<div id="listaFamiliares" style="margin-top:16px"></div>
+</div>
 </section>
 
 <section id="renda" class="section"><div class="stepper" id="st1"></div><div class="card hero"><h2>💼 1. Renda & benefícios</h2><p class="sub">Informe sua renda. Depois, avance para seus gastos.</p></div><div class="grid two"><div class="card"><h2>💵 Renda principal</h2><div class="form"><div class="field"><label for="tipoTrabalho">Você trabalha de que forma?</label><select id="tipoTrabalho" onchange="d.tipoTrabalho=this.value;save();toggleCamposCLT();refresh()"><option value="anonimo">Anônimo / Prefiro não informar</option><option value="clt">CLT (carteira assinada)</option><option value="pj">PJ / Autônomo</option><option value="aposentado">Aposentado(a)</option></select></div><div class="field"><label for="salary">Salário / renda principal</label><input id="salary" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Ex.: 1500" aria-label="Salário ou renda principal"></div><div class="field"><label for="frequency">Com que frequência você recebe?</label><select id="frequency"><option value="monthly">Mensal</option><option value="biweekly">Quinzenal</option><option value="weekly">Semanal</option></select></div><div class="field"><label for="anoEntradaEmpresa">🗓️ Ano que você entrou na empresa/começou a trabalhar</label><input id="anoEntradaEmpresa" type="number" min="1970" max="2100" step="1" placeholder="Ex.: 2021" aria-label="Ano que você entrou na empresa" oninput="d.anoEntradaEmpresa=this.value;save();renderCalculoFerias()"></div></div><div class="form" id="camposAposentado" style="display:none;margin-top:16px"><div class="field"><label for="aposentadoriaExtra">💰 Renda extra além da aposentadoria (bico, aluguel, pensão, etc.)</label><input id="aposentadoriaExtra" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Ex.: 400" aria-label="Renda extra do aposentado" oninput="d.aposentadoriaExtra=this.value;save();refresh()"></div></div>
@@ -94,7 +100,7 @@
 <div id="listaRemedios"></div></div>
 
 <div class="card"><h2>📅 Consultas Médicas</h2><p class="small">Marque suas consultas e acompanhamentos. Se for consulta paga, a gente já ajuda a lançar o valor lá em Despesas, sem precisar fazer isso duas vezes.</p>
-<div class="form" style="margin-top:10px"><div class="field"><label for="novaConsultaMedico">Médico/especialidade</label><input id="novaConsultaMedico" type="text" placeholder="Ex.: Dr. João - Cardiologista" aria-label="Nome do médico ou especialidade"></div><div class="field"><label for="novaConsultaData">Data da consulta</label><input id="novaConsultaData" type="date" aria-label="Data da consulta"></div><div class="field"><label for="novaConsultaTipo">É gratuita ou paga?</label><select id="novaConsultaTipo" onchange="document.getElementById('novaConsultaValorWrap').style.display=this.value==='paga'?'block':'none'"><option value="gratuita">🆓 Gratuita (SUS/convênio sem custo)</option><option value="paga">💰 Paga (particular)</option></select></div><div class="field" id="novaConsultaValorWrap" style="display:none"><label for="novaConsultaValor">Valor da consulta (R$)</label><input id="novaConsultaValor" type="number" min="0" step="0.01" placeholder="Ex.: 250" aria-label="Valor da consulta"></div></div>
+<div class="form" style="margin-top:10px"><div class="field"><label for="novaConsultaMembro">Para quem é</label><select id="novaConsultaMembro" aria-label="Familiar da consulta"></select></div><div class="field"><label for="novaConsultaMedico">Médico/especialidade</label><input id="novaConsultaMedico" type="text" placeholder="Ex.: Dr. João - Cardiologista" aria-label="Nome do médico ou especialidade"></div><div class="field"><label for="novaConsultaData">Data da consulta</label><input id="novaConsultaData" type="date" aria-label="Data da consulta"></div><div class="field"><label for="novaConsultaTipo">É gratuita ou paga?</label><select id="novaConsultaTipo" onchange="document.getElementById('novaConsultaValorWrap').style.display=this.value==='paga'?'block':'none'"><option value="gratuita">🆓 Gratuita (SUS/convênio sem custo)</option><option value="paga">💰 Paga (particular)</option></select></div><div class="field" id="novaConsultaValorWrap" style="display:none"><label for="novaConsultaValor">Valor da consulta (R$)</label><input id="novaConsultaValor" type="number" min="0" step="0.01" placeholder="Ex.: 250" aria-label="Valor da consulta"></div></div>
 <button class="btn primary" type="button" onclick="addConsultaMedica()" style="margin-top:12px">➕ Marcar consulta</button>
 <div id="listaConsultas" style="margin-top:16px"></div>
 </div>
@@ -116,7 +122,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='7.6';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='7.7';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -867,6 +873,49 @@ function renderSugestoesRemedios(){
     return `<button type="button" class="btn light" style="font-size:11.5px;padding:6px 10px;${desabilitado?'opacity:.5;cursor:default':''}" ${desabilitado?'disabled':''} onclick="addRemedioRapido('${nome.replace(/'/g,"\\'")}','medicamento')">${desabilitado?'✓ ':'+ '}${nome}</button>`;
   }).join('');
 }
+function _lerFamiliares(){
+  try{return JSON.parse(localStorage.getItem('canivete-familiares'))||[]}catch(e){return[]}
+}
+function _salvarFamiliares(l){
+  try{localStorage.setItem('canivete-familiares',JSON.stringify(l))}catch(e){}
+}
+function addFamiliar(){
+  const input=document.getElementById('novoFamiliarNome');
+  const nome=(input.value||'').trim();
+  if(!nome){mostrarToastCanivete('Digite um nome antes de adicionar.');return}
+  const l=_lerFamiliares();
+  if(l.some(f=>f.toLowerCase()===nome.toLowerCase())){mostrarToastCanivete('Esse familiar já está cadastrado.');return}
+  l.push(nome);
+  _salvarFamiliares(l);
+  input.value='';
+  renderListaFamiliares();
+  atualizarSeletoresMembro();
+  mostrarToastCanivete('✅ '+nome+' adicionado(a).');
+}
+function _removerFamiliar(i){
+  confirmarCanivete('Remover esse familiar? Os itens já marcados pra ele(a) continuam guardados, só não vai mais aparecer na lista de sugestão.',()=>{
+    const l=_lerFamiliares();l.splice(i,1);_salvarFamiliares(l);renderListaFamiliares();atualizarSeletoresMembro();
+  });
+}
+function renderListaFamiliares(){
+  const el=document.getElementById('listaFamiliares');
+  if(!el)return;
+  const l=_lerFamiliares();
+  if(!l.length){el.innerHTML='<div class="empty">Nenhum familiar cadastrado ainda. Por padrão, tudo fica marcado como "Titular".</div>';return}
+  el.innerHTML=l.map((nome,i)=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><span>👤 ${safe(nome)}</span><button class="btn danger" type="button" onclick="_removerFamiliar(${i})">🗑️</button></div>`).join('');
+}
+function opcoesMembroHtml(valorAtual){
+  const familiares=_lerFamiliares();
+  const todos=['Titular',...familiares];
+  return todos.map(nome=>`<option value="${safe(nome)}" ${valorAtual===nome?'selected':''}>${safe(nome)}</option>`).join('');
+}
+function atualizarSeletoresMembro(){
+  ['novaConsultaMembro'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.innerHTML=opcoesMembroHtml(el.value||'Titular');
+  });
+  renderListaRemedios();renderListaConsultas();renderListaCondicoes();
+}
 function salvarPerfil(){
   d.generoUsuario=document.getElementById('generoUsuario').value;
   d.nomeUsuarioPerfil=document.getElementById('nomeUsuarioPerfil').value;
@@ -1168,6 +1217,7 @@ function _salvarConsultas(l){
   try{localStorage.setItem('canivete-consultas',JSON.stringify(l))}catch(e){}
 }
 function addConsultaMedica(){
+  const membro=document.getElementById('novaConsultaMembro').value||'Titular';
   const medico=(document.getElementById('novaConsultaMedico').value||'').trim();
   const data=document.getElementById('novaConsultaData').value;
   const tipo=document.getElementById('novaConsultaTipo').value;
@@ -1176,11 +1226,11 @@ function addConsultaMedica(){
   if(!data){mostrarToastCanivete('Escolha a data da consulta.');return}
   if(tipo==='paga'&&(!valor||n(valor)<=0)){mostrarToastCanivete('Digite o valor da consulta.');return}
   const l=_lerConsultas();
-  const consulta={medico,data,gratuita:tipo==='gratuita',valor:tipo==='paga'?n(valor):0,lancadaEmDespesas:false};
+  const consulta={membro,medico,data,gratuita:tipo==='gratuita',valor:tipo==='paga'?n(valor):0,lancadaEmDespesas:false};
   l.push(consulta);
   _salvarConsultas(l);
   if(tipo==='paga'){
-    d.expenses.push({name:'🩺 Consulta: '+medico,icon:'🩺',value:n(valor),cat:'saude',vencimento:String(new Date(data+'T00:00:00').getDate()),tipoDespesa:'ocasional'});
+    d.expenses.push({name:'🩺 Consulta ('+membro+'): '+medico,icon:'🩺',value:n(valor),cat:'saude',vencimento:String(new Date(data+'T00:00:00').getDate()),tipoDespesa:'ocasional'});
     save();refresh();renderExpenses();renderFullList();
     l[l.length-1].lancadaEmDespesas=true;
     _salvarConsultas(l);
@@ -1210,7 +1260,7 @@ function renderListaConsultas(){
   el.innerHTML=ordenada.map((c,idx)=>{
     const passada=c.data<hoje;
     const dataFormatada=new Date(c.data+'T00:00:00').toLocaleDateString('pt-BR');
-    return `<div class="row between" style="padding:9px 0;border-bottom:1px solid var(--line);${passada?'opacity:.6':''}"><span style="font-size:13px"><span style="color:var(--muted);font-weight:800">${idx+1}.</span> 🩺 <strong>${safe(c.medico)}</strong> — 📅 ${dataFormatada} ${passada?'<span style="font-size:10px;color:var(--muted)">(já passou)</span>':''}<br><span style="font-size:11.5px;color:var(--muted)">${c.gratuita?'🆓 Gratuita':'💰 '+money(c.valor)+(c.lancadaEmDespesas?' · já em Despesas':'')}</span></span><button class="btn danger" type="button" onclick="_removerConsulta(${c._i})">🗑️</button></div>`;
+    return `<div class="row between" style="padding:9px 0;border-bottom:1px solid var(--line);${passada?'opacity:.6':''}"><span style="font-size:13px"><span style="color:var(--muted);font-weight:800">${idx+1}.</span> 🩺 <strong>${safe(c.medico)}</strong> ${c.membro&&c.membro!=='Titular'?'<span style="font-size:10px;background:#eef2ff;color:#4338ca;padding:2px 7px;border-radius:999px;font-weight:800">👤 '+safe(c.membro)+'</span>':''} — 📅 ${dataFormatada} ${passada?'<span style="font-size:10px;color:var(--muted)">(já passou)</span>':''}<br><span style="font-size:11.5px;color:var(--muted)">${c.gratuita?'🆓 Gratuita':'💰 '+money(c.valor)+(c.lancadaEmDespesas?' · já em Despesas':'')}</span></span><button class="btn danger" type="button" onclick="_removerConsulta(${c._i})">🗑️</button></div>`;
   }).join('');
 }
 
@@ -1815,5 +1865,5 @@ document.querySelectorAll('#nav button[data-page]').forEach(b=>{b.setAttribute('
 render();showPage('dashboard');carregarFirebaseCanivete();mostrarOnboardingSeNecessario();
 setTimeout(verificarEEnviarPush,1500);
 checarPinAoAbrir();
-renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();renderListaConsultas();aplicarSugestaoPorGenero();
+renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();renderListaConsultas();renderListaFamiliares();atualizarSeletoresMembro();aplicarSugestaoPorGenero();
 </script></body></html>
