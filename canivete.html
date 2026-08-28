@@ -37,6 +37,19 @@
       .v80-start{font-size:13px}.v80-nav-group{border-radius:10px}
     }
     
+
+    /* CANIVETE-V79-SAUDE */
+    #saude .health-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 16px}
+    #saude .health-stat{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 13px}
+    #saude .health-stat strong{display:block;font-size:19px;line-height:1.1}.health-stat span{display:block;margin-top:4px;font-size:10.5px;color:var(--muted)}
+    #saude #listaRemedios{display:grid;gap:10px}#saude #listaRemedios .health-item-card{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:15px;box-shadow:0 4px 16px rgba(15,23,42,.04)}
+    #saude .health-item-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}#saude .health-item-name{min-width:0}#saude .health-item-name strong{font-size:15px;line-height:1.3}
+    #saude .health-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}#saude .health-tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800}#saude .health-tag.type{background:#eff6ff;color:#1d4ed8}#saude .health-tag.active{background:#ecfdf3;color:#166534}#saude .health-tag.paused{background:#f1f5f9;color:#475569}#saude .health-tag.today{background:#dcfce7;color:#166534}
+    #saude .health-item-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}#saude .health-item-actions .btn{min-height:36px;font-size:11px;padding:7px 9px}#saude .health-use-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+    #saude .health-detail-panel{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}.v79-health-badge{display:inline-flex;vertical-align:middle;margin-left:6px;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:9px;font-weight:850}
+    @media(max-width:800px){#saude .health-summary{grid-template-columns:repeat(2,minmax(0,1fr))}#saude .health-item-head{display:block}#saude .health-item-actions{justify-content:flex-start;margin-top:10px}#saude .health-item-actions .btn{flex:1;min-width:74px}}
+    @media(max-width:430px){#saude .health-summary{gap:7px}#saude .health-stat{padding:10px}#saude .health-item-card{padding:12px!important}#saude .health-item-actions{display:grid;grid-template-columns:1fr 1fr}#saude .health-item-actions .btn{width:100%}}
+    
 </style></head>
 <body>
 <a href="#conteudoPrincipal" style="position:absolute;left:-9999px;top:0;z-index:9999;background:var(--blue);color:#fff;padding:12px 18px;border-radius:0 0 10px 0;font-weight:700;text-decoration:none" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Pular para o conteúdo</a>
@@ -110,7 +123,7 @@
 
 <section id="links" class="section"><div class="card hero"><div class="row between"><div><h2>🔗 Links Importantes</h2><p class="sub">Guarde os links que você mais acessa (governo, banco, sistemas de trabalho) num lugar só.</p></div><button class="btn primary" type="button" onclick="addLinkImportante()">➕ Novo link</button></div></div><div class="card"><div id="linksList"></div></div></section>
 
-<section id="saude" class="section"><div class="card hero"><div><h2>💊 Medicamentos & Vitaminas</h2><p class="sub">Controle o que você toma e marque os dias que usou, pra acompanhar sua rotina. Isso é só uma organização pessoal — não é orientação médica, siga sempre as instruções do seu médico ou farmacêutico.</p></div></div>
+<section id="saude" class="section"><div class="card hero"><div><h2>💊 Medicamentos & Vitaminas <span class="v79-health-badge">v7.9</span></h2><p class="sub">Controle o que você toma e marque os dias que usou, pra acompanhar sua rotina. Isso é só uma organização pessoal — não é orientação médica, siga sempre as instruções do seu médico ou farmacêutico.</p></div></div>
 
 <div class="card"><h2>👤 Seu perfil</h2><p class="small">A sugestão automática de itens usa as informações do seu <a href="#" onclick="showPage('perfil');return false" style="color:var(--blue);font-weight:800">👤 Perfil central</a>. Preencha lá uma vez e vale pra cá e pra outros recursos futuros.</p></div>
 
@@ -148,7 +161,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='7.8';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='7.9';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -1916,7 +1929,7 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
         // Versão visível no menu.
         if(!document.querySelector('.v80-version')){
           const brand=side.querySelector('.brand');
-          if(brand){const v=document.createElement('div');v.className='v80-version';v.textContent='🧰 Canivete v8.0';brand.insertAdjacentElement('afterend',v)}
+          if(brand){const v=document.createElement('div');v.className='v80-version';v.textContent='🧰 Canivete v7.9';brand.insertAdjacentElement('afterend',v)}
         }
 
         // Modo simples/avançado: reduz a carga cognitiva sem remover funções.
@@ -1984,4 +1997,10 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
       if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
     })();
     </script>
+
+    <script>
+    /* CANIVETE-V79-SAUDE */
+    (function(){function enhanceHealth(){const section=document.getElementById('saude'),list=document.getElementById('listaRemedios');if(!section||!list)return;const items=list.querySelectorAll(':scope > .goal');const data=typeof _lerRemedios==='function'?_lerRemedios():[];if(!data.length)return;const today=new Date().toISOString().slice(0,10);let ativos=0,pausados=0,usadosHoje=0;data.forEach(r=>{if(r.ativo!==false)ativos++;else pausados++;if((r.diasUso||[]).includes(today))usadosHoje++});let summary=document.getElementById('healthSummary79');if(!summary){summary=document.createElement('div');summary.id='healthSummary79';summary.className='health-summary';list.parentElement.insertBefore(summary,list)}summary.innerHTML='<div class="health-stat"><strong>'+data.length+'</strong><span>itens cadastrados</span></div><div class="health-stat"><strong>'+ativos+'</strong><span>ativos</span></div><div class="health-stat"><strong>'+pausados+'</strong><span>pausados</span></div><div class="health-stat"><strong>'+usadosHoje+'</strong><span>usados hoje</span></div>';items.forEach((card,idx)=>{const r=data[idx];if(!r)return;card.classList.add('health-item-card');const head=card.querySelector('.row.between');if(head)head.classList.add('health-item-head');const left=head?.querySelector('div');if(left)left.classList.add('health-item-name');const actions=head?.querySelector('div:last-child');if(actions)actions.classList.add('health-item-actions');if(left&&!left.querySelector('.health-tags')){const tags=document.createElement('div');tags.className='health-tags';const type=document.createElement('span');type.className='health-tag type';type.textContent=r.tipo==='medicamento'?'💊 Medicamento':'🌿 Vitamina/Suplemento';const status=document.createElement('span');status.className='health-tag '+(r.ativo!==false?'active':'paused');status.textContent=r.ativo!==false?'🟢 Ativo':'⏸️ Pausado';tags.append(type,status);if((r.diasUso||[]).includes(today)){const used=document.createElement('span');used.className='health-tag today';used.textContent='✅ Usado hoje';tags.append(used)}left.append(tags)}})}setTimeout(enhanceHealth,200);})();
+    </script>
+    
 </body></html>
