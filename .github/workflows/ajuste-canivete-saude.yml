@@ -1,0 +1,38 @@
+name: Ajuste pontual do Canivete
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ajuste-canivete-saude.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  remover-vitaminas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Remover sugestões de Ashwagandha, Moringa e Maca Negra
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('canivete.html')
+          s = p.read_text(encoding='utf-8')
+          antigo = "const listaVitaminasSugeridas=['Creatina','Ashwagandha + Moringa + Maca Negra (combo)','Ashwagandha','Moringa','Maca Negra','Colágeno','Zinco','NAC (N-acetilcisteína)','Ômega 3','Vitamina D','Complexo B','Magnésio','Melatonina','Cúrcuma (Curcumina)','Coenzima Q10','Vitamina C','Própolis'];"
+          novo = "const listaVitaminasSugeridas=['Creatina','Colágeno','Zinco','NAC (N-acetilcisteína)','Ômega 3','Vitamina D','Complexo B','Magnésio','Melatonina','Cúrcuma (Curcumina)','Coenzima Q10','Vitamina C','Própolis'];"
+          if antigo not in s:
+              raise SystemExit('Trecho esperado não encontrado; nenhuma alteração foi feita.')
+          p.write_text(s.replace(antigo, novo, 1), encoding='utf-8')
+          PY
+
+      - name: Salvar alteração no GitHub
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Remover vitaminas Ashwagandha, Moringa e Maca Negra"
+          git push
