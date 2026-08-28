@@ -2075,4 +2075,48 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
   document.addEventListener('click',e=>{if(e.target.closest('[data-page="saude"]'))setTimeout(initSaudeAbas81,120)});
 })();
 </script>
+
+<!-- CANIVETE-V82-VITAMINAS -->
+<style>
+#saude .vitaminas-rapidas82{margin-top:16px;padding:14px;border:1px solid #dbeafe;border-radius:14px;background:var(--bg)}
+#saude .vitaminas-rapidas82 strong{display:block;font-size:13px;margin-bottom:4px}
+#saude .vitaminas-rapidas82 small{display:block;color:var(--muted);font-size:10.5px;margin-bottom:9px;line-height:1.4}
+#saude .vitaminas-rapidas82-list{display:flex;flex-wrap:wrap;gap:6px}
+#saude .vitaminas-rapidas82 .btn{font-size:11px;padding:7px 9px;min-height:34px}
+@media(max-width:600px){#saude .vitaminas-rapidas82-list{display:grid;grid-template-columns:1fr 1fr}#saude .vitaminas-rapidas82 .btn{width:100%;text-align:left}}
+</style>
+<script>
+(function(){
+  const nomes82=['Vitamina D','Magnésio','Ômega 3','Coenzima Q10','Multivitamínico / Multimineral','Vitamina C','Vitamina K','Complexo B','Probiótico','Zinco'];
+  function montar82(){
+    const section=document.getElementById('saude');
+    if(!section)return;
+    const add=Array.from(section.querySelectorAll('.card')).find(c=>c.textContent.includes('Adicionar da minha lista'));
+    if(!add)return;
+    let box=document.getElementById('vitaminasRapidas82');
+    if(!box){
+      box=document.createElement('div');
+      box.id='vitaminasRapidas82';
+      box.className='vitaminas-rapidas82';
+      box.innerHTML='<strong>🌿 10 vitaminas e suplementos comuns</strong><small>Clique em um item para adicionar rapidamente à sua lista.</small><div class="vitaminas-rapidas82-list"></div>';
+      add.appendChild(box);
+    }
+    const list=box.querySelector('.vitaminas-rapidas82-list');
+    if(!list)return;
+    let existentes=[];
+    try{existentes=_lerRemedios().map(r=>String(r.nome||'').toLowerCase())}catch(e){}
+    list.innerHTML=nomes82.map(nome=>{
+      const ja=existentes.includes(nome.toLowerCase());
+      return '<button type="button" class="btn light" '+(ja?'disabled':'onclick="addRemedioRapido(\''+nome.replace(/'/g,"\\'")+\',\'vitamina\')"')+' style="'+(ja?'opacity:.55;cursor:default':'')+'">'+(ja?'✓ ':'+ ')+nome+'</button>';
+    }).join('');
+  }
+  function iniciar82(){setTimeout(montar82,80);setTimeout(montar82,500)}
+  document.addEventListener('click',function(e){
+    if(e.target.closest('.health-tab81'))setTimeout(montar82,100);
+    if(e.target.closest('[data-page="saude"]'))setTimeout(montar82,150);
+  });
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar82);else iniciar82();
+})();
+</script>
+
 </body></html>
