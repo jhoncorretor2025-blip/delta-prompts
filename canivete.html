@@ -56,6 +56,20 @@
 .v89-quick-help strong{display:block;margin-bottom:2px}.health-tabs81{position:relative!important;z-index:1000!important;pointer-events:auto!important;isolation:isolate}.health-tab81{position:relative!important;z-index:1001!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:rgba(37,99,235,.12);min-height:44px}
 #saude .card{scroll-margin-top:78px}.v89-advanced-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none}.v89-critical{border-left:4px solid #2563eb!important}
 @media(max-width:760px){.v89-quick-help{padding:12px;font-size:12px;align-items:flex-start}.v89-advanced-link{width:100%;justify-content:center}.health-tabs81{margin-left:0;margin-right:0;top:4px!important}.health-tab81{font-size:12px!important;padding:10px 6px!important}.v80-mobile-nav{z-index:45!important}.bottom-nav{z-index:40!important}}
+
+/* CANIVETE V8.9 - UX MOBILE */
+.health-tabs81{position:relative!important;z-index:1000!important;pointer-events:auto!important;isolation:isolate}
+.health-tab81{position:relative!important;z-index:1001!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:rgba(37,99,235,.12);min-height:44px}
+.v89-quick-help{margin:0 0 16px;padding:14px 16px;border:1px solid #dbeafe;background:#eff6ff;color:#1e40af;border-radius:14px;display:flex;align-items:center;gap:12px;line-height:1.45;font-size:13px}
+.v89-quick-help strong{display:block;margin-bottom:2px}
+.v89-advanced-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+@media(max-width:760px){
+  .health-tabs81{margin-left:0!important;margin-right:0!important;top:4px!important}
+  .health-tab81{font-size:12px!important;padding:10px 6px!important;min-height:46px!important}
+  .v89-quick-help{padding:12px;font-size:12px;align-items:flex-start}
+  .v89-advanced-link{width:100%;justify-content:center}
+  .bottom-nav{z-index:40!important}
+}
 </style><style>
 /* CANIVETE V8.9 - UX/UI polish */
 :root{--ux-space:16px;--ux-radius:16px;--ux-focus:rgba(37,99,235,.16)}
@@ -2197,4 +2211,30 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
   document.addEventListener('pointerdown',e=>{const tab=e.target.closest&&e.target.closest('#saude .health-tab81');if(tab){tab.style.pointerEvents='auto';tab.style.zIndex='1001'}},true);
   document.addEventListener('click',e=>{const tab=e.target.closest&&e.target.closest('#saude .health-tab81');if(tab)atualizarVisualSaude89(tab.dataset.healthTab)},true);
   const obs=new MutationObserver(bindTabs89);obs.observe(document.body,{childList:true,subtree:true});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindTabs89);else bindTabs89();
-})();</script></body></html>
+})();</script>
+<script id="CANIVETE_V89_MOBILE_TABS">
+(function(){
+  function ativarAba89(tipo){
+    document.querySelectorAll('#saude .health-tab81').forEach(function(b){b.classList.toggle('active',b.dataset.healthTab===tipo)});
+    if(typeof setFiltroTipoRemedio==='function') setFiltroTipoRemedio(tipo);
+    var sv=document.getElementById('sugestoesVitaminas'),sm=document.getElementById('sugestoesMedicamentos'),sc=document.getElementById('sugestoesChas');
+    if(sv&&sv.parentElement)sv.parentElement.style.display=tipo==='vitamina'?'block':'none';
+    if(sm&&sm.parentElement)sm.parentElement.style.display=tipo==='medicamento'?'block':'none';
+    if(sc&&sc.parentElement)sc.parentElement.style.display=tipo==='cha'?'block':'none';
+  }
+  function preparar(){
+    document.querySelectorAll('#saude .health-tab81').forEach(function(tab){
+      tab.style.pointerEvents='auto';tab.style.position='relative';tab.style.zIndex='1001';tab.style.touchAction='manipulation';
+      if(tab.dataset.v89ok)return;
+      tab.dataset.v89ok='1';
+      tab.addEventListener('pointerup',function(e){e.preventDefault();e.stopPropagation();ativarAba89(tab.dataset.healthTab)},{passive:false});
+      tab.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();ativarAba89(tab.dataset.healthTab)},{passive:false});
+    });
+  }
+  document.addEventListener('pointerdown',function(e){var t=e.target.closest&&e.target.closest('#saude .health-tab81');if(t){t.style.pointerEvents='auto';t.style.zIndex='1001'}},true);
+  document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('#saude .health-tab81');if(t)ativarAba89(t.dataset.healthTab)},true);
+  var mo=new MutationObserver(preparar);mo.observe(document.body,{subtree:true,childList:true});
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',preparar);else preparar();
+})();
+</script>
+</body></html>
