@@ -1,0 +1,98 @@
+name: Canivete v8.0 - Saúde e Chás
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Aplicar melhorias de saúde v8.0
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('canivete.html')
+          s=p.read_text(encoding='utf-8')
+          marker='CANIVETE-V80-SAUDE-CHA'
+          if marker in s:
+              print('v8.0 já aplicada; nada a fazer.')
+              raise SystemExit(0)
+
+          s=s.replace("const APP_VERSION='7.9';", "const APP_VERSION='8.0';", 1)
+
+          s=s.replace(
+            "const listaMedicamentosSugeridos=['Paracetamol','Dorsilax','Dipirona','Ibuprofeno'];",
+            "const listaMedicamentosSugeridos=['Paracetamol','Dorsilax','Dipirona','Ibuprofeno'];\nconst listaChasSugeridos=['Camomila','Erva-doce','Hortelã','Chá verde','Hibisco','Gengibre','Melissa','Canela'];",
+            1
+          )
+
+          s=s.replace(
+            '<option value="vitamina">🌿 Vitamina/Suplemento</option></select>',
+            '<option value="vitamina">🌿 Vitamina/Suplemento</option><option value="cha">🍵 Chá</option></select>',
+            1
+          )
+
+          s=s.replace(
+            '<div style="margin-top:16px"><strong style="font-size:13px">💊 Medicamentos comuns (clique pra adicionar):</strong><div id="sugestoesMedicamentos" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>',
+            '<div style="margin-top:16px"><strong style="font-size:13px">💊 Medicamentos comuns (clique pra adicionar):</strong><div id="sugestoesMedicamentos" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>\n<div style="margin-top:16px"><strong style="font-size:13px">🍵 Chás (clique pra adicionar):</strong><div id="sugestoesChas" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>',
+            1
+          )
+
+          s=s.replace(
+            '<button class="btn light" type="button" id="btnFiltroRemedio_vitamina" onclick="setFiltroTipoRemedio(\'vitamina\')">🌿 Vitaminas</button><button class="btn light" type="button" id="btnFiltroRemedio_ativo"',
+            '<button class="btn light" type="button" id="btnFiltroRemedio_vitamina" onclick="setFiltroTipoRemedio(\'vitamina\')">🌿 Vitaminas</button><button class="btn light" type="button" id="btnFiltroRemedio_cha" onclick="setFiltroTipoRemedio(\'cha\')">🍵 Chás</button><button class="btn light" type="button" id="btnFiltroRemedio_ativo"',
+            1
+          )
+
+          s=s.replace(
+            "['todos','medicamento','vitamina','ativo']",
+            "['todos','medicamento','vitamina','cha','ativo']",
+            1
+          )
+          s=s.replace(
+            "else if(filtroTipoRemedioAtivo==='vitamina')l=l.filter(r=>r.tipo==='vitamina');",
+            "else if(filtroTipoRemedioAtivo==='vitamina')l=l.filter(r=>r.tipo==='vitamina');\n  else if(filtroTipoRemedioAtivo==='cha')l=l.filter(r=>r.tipo==='cha');",
+            1
+          )
+
+          s=s.replace(
+            "function renderSugestoesRemedios(){",
+            "function renderSugestoesChas(){\n  const el=document.getElementById('sugestoesChas');\n  if(!el)return;\n  const jaTem=_lerRemedios().map(r=>r.nome.toLowerCase());\n  el.innerHTML=listaChasSugeridos.map(nome=>{\n    const desabilitado=jaTem.includes(nome.toLowerCase());\n    return `<button type=\"button\" class=\"btn light\" style=\"font-size:11.5px;padding:6px 10px;${desabilitado?'opacity:.5;cursor:default':''}\" ${desabilitado?'disabled':''} onclick=\"addRemedioRapido('${nome.replace(/'/g,\"\\\\'\")}','cha')\">${desabilitado?'✓ ':'+ '}${nome}</button>`;\n  }).join('');\n}\nfunction renderSugestoesRemedios(){",
+            1
+          )
+          s=s.replace(
+            "elM.innerHTML=listaMedicamentosSugeridos.map(nome=>{",
+            "elM.innerHTML=listaMedicamentosSugeridos.map(nome=>{",
+            1
+          )
+          s=s.replace(
+            "  }).join('');\n}\nfunction _lerFamiliares(){",
+            "  }).join('');\n  renderSugestoesChas();\n}\nfunction _lerFamiliares(){",
+            1
+          )
+
+          s=s.replace(
+            "r.tipo==='medicamento'?'💊':'🌿'",
+            "r.tipo==='medicamento'?'💊':(r.tipo==='cha'?'🍵':'🌿')"
+          )
+          s=s.replace(
+            "r.tipo==='medicamento'?'Medicamento':'Vitamina/Suplemento'",
+            "r.tipo==='medicamento'?'Medicamento':(r.tipo==='cha'?'Chá':'Vitamina/Suplemento')"
+          )
+
+          css=r'''\n/* CANIVETE-V80-SAUDE-CHA */\n#saude .pause-controls{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}\n#saude .pause-controls .btn{font-size:11px;min-height:36px;padding:7px 10px}\n#saude .pause-reason{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:6px 9px;border-radius:9px;background:#fff7ed;color:#9a3412;font-size:11px;font-weight:800}\n#saude .tea-box{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--card),var(--bg))}\n#saude .tea-box strong{font-size:13px}\n#saude .tea-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}\n#saude .tea-note{font-size:11px;color:var(--muted);margin-top:7px}\n@media(max-width:760px){#saude .pause-controls{display:grid;grid-template-columns:1fr 1fr}#saude .pause-controls .btn{width:100%}}\n'''
+          s=s.replace('</style>',css+'\n</style>',1)
+
+          js=r'''\n<script>\n/* CANIVETE-V80-SAUDE-CHA */\n(function(){\n  window.suspenderRemedioV80=function(i,motivo){\n    const l=_lerRemedios(); if(!l[i])return;\n    l[i].ativo=false; l[i].motivoPausa=motivo||'Pausa temporária'; l[i].dataPausa=new Date().toISOString().slice(0,10);\n    _salvarRemedios(l); renderListaRemedios(); if(typeof renderSugestoesRemedios==='function')renderSugestoesRemedios();\n    if(typeof mostrarToastCanivete==='function')mostrarToastCanivete('⏸️ '+l[i].nome+' foi suspenso: '+l[i].motivoPausa);\n  };\n  window.retomarRemedioV80=function(i){\n    const l=_lerRemedios(); if(!l[i])return;\n    l[i].ativo=true; l[i].motivoPausa=''; l[i].dataRetomada=new Date().toISOString().slice(0,10);\n    _salvarRemedios(l); renderListaRemedios(); if(typeof renderSugestoesRemedios==='function')renderSugestoesRemedios();\n    if(typeof mostrarToastCanivete==='function')mostrarToastCanivete('▶️ '+l[i].nome+' voltou a ficar ativo.');\n  };\n  window.editarPausaRemedioV80=function(i){\n    const l=_lerRemedios(); if(!l[i])return;\n    const motivo=prompt('Por que você está suspendendo?\\n\\nEx.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.',l[i].motivoPausa||'Pausa temporária');\n    if(motivo===null)return;\n    l[i].ativo=false; l[i].motivoPausa=motivo.trim()||'Pausa temporária'; l[i].dataPausa=l[i].dataPausa||new Date().toISOString().slice(0,10);\n    _salvarRemedios(l); renderListaRemedios();\n  };\n  function enhanceV80(){\n    const section=document.getElementById('saude'),list=document.getElementById('listaRemedios');\n    if(!section||!list)return;\n    const cards=list.querySelectorAll(':scope > .goal');\n    cards.forEach(card=>{\n      const edit=Array.from(card.querySelectorAll('button')).find(b=>(b.getAttribute('onclick')||'').includes('_editarRemedio('));\n      if(!edit)return;\n      const m=(edit.getAttribute('onclick')||'').match(/_editarRemedio\\((\\d+)\\)/); if(!m)return;\n      const i=Number(m[1]); const l=_lerRemedios(); const r=l[i]; if(!r)return;\n      let controls=card.querySelector('.pause-controls');\n      if(!controls){\n        controls=document.createElement('div'); controls.className='pause-controls';\n        if(r.ativo!==false){\n          controls.innerHTML='<button class="btn light" type="button" onclick="suspenderRemedioV80('+i+',\'Pausa temporária\')">⏸️ Dar um tempo</button><button class="btn light" type="button" onclick="suspenderRemedioV80('+i+',\'Sem suplemento no momento\')">📦 Sem suplemento</button><button class="btn light" type="button" onclick="editarPausaRemedioV80('+i+')">📝 Outro motivo</button>';\n        }else{\n          controls.innerHTML='<button class="btn primary" type="button" onclick="retomarRemedioV80('+i+')">▶️ Retomar uso</button><button class="btn light" type="button" onclick="editarPausaRemedioV80('+i+')">📝 Alterar motivo</button>';\n        }\n        card.appendChild(controls);\n      }\n      if(r.ativo===false&&r.motivoPausa&&!card.querySelector('.pause-reason')){\n        const reason=document.createElement('div');reason.className='pause-reason';reason.textContent='⏸️ Suspenso: '+r.motivoPausa;\n        const controlsNow=card.querySelector('.pause-controls');card.insertBefore(reason,controlsNow||null);\n      }\n    });\n  }\n  const old=window.renderListaRemedios;\n  if(typeof old==='function'&&!old.__v80){\n    const wrapped=function(){old.apply(this,arguments);setTimeout(enhanceV80,0)};wrapped.__v80=true;window.renderListaRemedios=wrapped;\n  }\n  setTimeout(enhanceV80,300);\n  document.addEventListener('click',function(e){if(e.target.closest('#btnFiltroRemedio_cha'))setTimeout(enhanceV80,50)});\n})();\n</script>\n'''
+          s=s.replace('</body>',js+'\n</body>',1)
+          p.write_text(s,encoding='utf-8')
+          print('Aplicação v8.0 preparada.')
+      - name: Commit e publicar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          if git diff --cached --quiet; then echo "Sem alteração"; else git commit -m "Canivete v8.0 - suspensão de suplementos e chás"; git push; fi
