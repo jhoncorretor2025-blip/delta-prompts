@@ -122,7 +122,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='7.7';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='7.8';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -151,7 +151,8 @@ function setExpenseView(mode){expenseView=mode;localStorage.setItem('canivete-ex
 function applyExpenseView(){let cat=document.getElementById('expenseCategories'),list=document.getElementById('expenseFullList'),b1=document.getElementById('viewCat'),b2=document.getElementById('viewList');if(!cat||!list)return;cat.classList.toggle('view-hidden',expenseView!=='category');list.classList.toggle('show',expenseView==='list');b1.classList.toggle('active',expenseView==='category');b2.classList.toggle('active',expenseView==='list')}
 let categoriasAbertas=new Set();
 function toggleCategory(el){const cat=el.dataset.cat;el.classList.toggle('open');if(el.classList.contains('open'))categoriasAbertas.add(cat);else categoriasAbertas.delete(cat)}
-function abrirModalGastoRapido(){
+function abrirModalGastoRapido(catPreSelecionada,marcarComoPago){
+  if(marcarComoPago===undefined)marcarComoPago=true;
   const selCat=document.getElementById('gastoRapidoCategoria');
   if(selCat && !selCat.dataset.preenchido){
     selCat.innerHTML=Object.entries(cats).map(([k,v])=>`<option value="${k}">${v[0]} ${v[1]}</option>`).join('');
@@ -159,9 +160,11 @@ function abrirModalGastoRapido(){
   }
   document.getElementById('gastoRapidoNome').value='';
   document.getElementById('gastoRapidoValor').value='';
+  if(selCat && catPreSelecionada)selCat.value=catPreSelecionada;
   document.getElementById('gastoRapidoFormaPagamento').value='avista';
   document.getElementById('gastoRapidoParcelas').value='';
   document.getElementById('gastoRapidoParcelasWrap').style.display='none';
+  document.getElementById('modalGastoRapidoOverlay').dataset.marcarComoPago=marcarComoPago?'1':'0';
   document.getElementById('modalGastoRapidoOverlay').style.display='flex';
   setTimeout(()=>document.getElementById('gastoRapidoNome').focus(),50);
 }
@@ -174,10 +177,12 @@ function confirmarGastoRapido(){
   const cat=document.getElementById('gastoRapidoCategoria').value;
   const forma=document.getElementById('gastoRapidoFormaPagamento').value;
   const parcelas=document.getElementById('gastoRapidoParcelas').value;
+  const marcarComoPago=document.getElementById('modalGastoRapidoOverlay').dataset.marcarComoPago!=='0';
   if(!nome){mostrarToastCanivete('Digite o que você comprou.');return}
   if(!valor||valor<=0){mostrarToastCanivete('Digite um valor válido.');return}
   const meta=cats[cat]||['🧾','Outras despesas'];
-  const novaDespesa={name:nome,icon:meta[0],value:valor,cat:cat,formaPagamento:forma,pago:true,dataPagamento:new Date().toISOString().slice(0,10),tipoDespesa:'ocasional'};
+  const novaDespesa={name:nome,icon:meta[0],value:valor,cat:cat,formaPagamento:forma,pago:marcarComoPago,tipoDespesa:'ocasional'};
+  if(marcarComoPago)novaDespesa.dataPagamento=new Date().toISOString().slice(0,10);
   if(forma==='cartao'&&parcelas&&Number(parcelas)>1){
     novaDespesa.tipoDespesa='parcelada';
     novaDespesa.parcelaAtual=1;
@@ -186,9 +191,9 @@ function confirmarGastoRapido(){
   d.expenses.push(novaDespesa);
   save();refresh();renderExpenses();renderFullList();
   fecharModalGastoRapido();
-  mostrarToastCanivete('✅ Gasto de '+money(valor)+' lançado em '+meta[1]+'!');
+  mostrarToastCanivete('✅ '+(marcarComoPago?'Gasto':'Despesa')+' de '+money(valor)+' lançado em '+meta[1]+'!');
 }
-function addExpense(cat='financeiro'){let meta=cats[cat]||['🧾','Outras despesas'];d.expenses.push({name:'Nova despesa',icon:meta[0],value:0,cat:cat});save();renderExpenses();renderFullList();let last=document.querySelector(`.category[data-cat="${cat}"]`);if(last)last.classList.add('open')}
+function addExpense(cat){abrirModalGastoRapido(cat,false)}
 function renderBenefits(){document.getElementById('benefits').innerHTML=d.benefits.length?d.benefits.map((b,i)=>`<div class="line" style="grid-template-columns:40px minmax(0,1fr) 140px 115px 40px"><div class="icon">🎁</div><input class="benefit-name" value="${safe(b.name)}" oninput="d.benefits[${i}].name=this.value;save()"><input class="benefit-value" type="number" min="0" step="0.01" inputmode="decimal" value="${n(b.value)}" oninput="d.benefits[${i}].value=this.value;save();refresh()"><select class="benefit-type" onchange="d.benefits[${i}].type=this.value;save()"><option value="uso" ${b.type==='uso'?'selected':''}>Uso específico</option><option value="dinheiro" ${b.type==='dinheiro'?'selected':''}>Em dinheiro</option></select><button class="x" type="button" aria-label="Excluir benefício" onclick="confirmarCanivete('Excluir este benefício?',()=>{d.benefits.splice(${i},1);save();renderBenefits();refresh()})">×</button></div>`).join(''):'<div class="empty">🎁 Nenhum benefício cadastrado.</div>'}
 function addBenefit(){d.benefits.push({name:'Novo benefício',value:0,type:'uso'});save();renderBenefits()}
 function renderGoals(){const el=document.getElementById('goals');if(!d.goals.length){el.innerHTML='<div class="empty">🎯 Nenhuma meta criada.<br><button class="btn primary" type="button" onclick="addGoal()" style="margin-top:16px">➕ Criar meta</button></div>';return}el.innerHTML=d.goals.map((g,i)=>{let target=n(g.target),saved=n(g.saved),months=Math.max(1,n(g.months)||12),p=target?Math.min(100,saved/target*100):0,rest=Math.max(0,target-saved),need=rest/months;return `<div class="goal"><div class="row between"><div><strong>🎯 ${safe(g.name)}</strong><div class="small">${money(rest)} restantes</div></div><span class="pill">${p>=100?'Concluída':months+' meses'}</span></div><div class="goalgrid"><div class="field"><label>Nome</label><input value="${safe(g.name)}" oninput="d.goals[${i}].name=this.value;save()"></div><div class="field"><label>Valor da meta</label><input type="number" min="0" step="0.01" inputmode="decimal" value="${target}" oninput="d.goals[${i}].target=this.value;save();renderGoals()"></div><div class="field"><label>Quanto você já tem guardado?</label><input type="number" min="0" step="0.01" inputmode="decimal" value="${saved}" oninput="d.goals[${i}].saved=this.value;save();renderGoals()"></div><div class="field"><label>Em quantos meses?</label><input type="number" min="1" value="${months}" oninput="d.goals[${i}].months=this.value;save();renderGoals()"></div><div class="field"><label>🔗 Vincular a uma categoria (opcional)</label><select onchange="d.goals[${i}].categoriaVinculada=this.value;save();renderGoals()"><option value="">Nenhuma</option>${Object.keys(cats).map(k=>`<option value="${k}" ${g.categoriaVinculada===k?'selected':''}>${cats[k][0]} ${cats[k][1]}</option>`).join('')}</select></div></div>${g.categoriaVinculada&&cats[g.categoriaVinculada]?`<div class="notice" style="margin:10px 0">${cats[g.categoriaVinculada][0]} Gasto atual em ${safe(cats[g.categoriaVinculada][1])}: <strong>${money(d.expenses.filter(e=>e.cat===g.categoriaVinculada).reduce((s,e)=>s+n(e.value),0))}</strong></div>`:''}<div class="progress"><span style="width:${p}%"></span></div><div class="row between"><small>${p.toFixed(0)}% concluída · ${money(need)}/mês</small><button class="btn danger" type="button" onclick="confirmarCanivete('Excluir esta meta?',()=>{d.goals.splice(${i},1);save();renderGoals();document.getElementById('goalBadge').textContent=d.goals.length})">🗑️ Excluir</button></div></div>`}).join('')}
