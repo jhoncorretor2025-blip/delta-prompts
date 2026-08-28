@@ -1,0 +1,113 @@
+name: Canivete - Melhorar módulo Saúde
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  improve:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Aplicar melhorias no módulo Saúde e atualizar versão
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('canivete.html')
+          s=p.read_text(encoding='utf-8')
+          marker='CANIVETE-V79-SAUDE'
+          if marker in s:
+              print('Melhoria v7.9 já aplicada; nada a fazer.')
+              raise SystemExit(0)
+          s=s.replace("const APP_VERSION='7.8';", "const APP_VERSION='7.9';", 1)
+          css=r'''
+/* CANIVETE-V79-SAUDE */
+#saude .health-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 16px}
+#saude .health-stat{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 13px}
+#saude .health-stat strong{display:block;font-size:19px;line-height:1.1}
+#saude .health-stat span{display:block;margin-top:4px;font-size:10.5px;color:var(--muted)}
+#saude .health-suggest{border:1px solid var(--line);border-radius:14px;padding:14px;background:linear-gradient(180deg,var(--card),var(--bg))}
+#saude .health-suggest-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+#saude .health-suggest-row .btn{border-radius:999px;font-size:11px;min-height:36px;padding:7px 11px}
+#saude #listaRemedios{display:grid;gap:10px}
+#saude #listaRemedios .health-item-card{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:15px;box-shadow:0 4px 16px rgba(15,23,42,.04);transition:.15s}
+#saude #listaRemedios .health-item-card:hover{border-color:#cbd5e1;transform:translateY(-1px)}
+#saude .health-item-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+#saude .health-item-name{min-width:0}
+#saude .health-item-name strong{font-size:15px;line-height:1.3}
+#saude .health-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+#saude .health-tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800}
+#saude .health-tag.type{background:#eff6ff;color:#1d4ed8}
+#saude .health-tag.active{background:#ecfdf3;color:#166534}
+#saude .health-tag.paused{background:#f1f5f9;color:#475569}
+#saude .health-tag.today{background:#dcfce7;color:#166534}
+#saude .health-item-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+#saude .health-item-actions .btn{min-height:36px;font-size:11px;padding:7px 9px}
+#saude .health-use-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+#saude .health-history{display:flex;gap:3px;flex-wrap:wrap;margin-left:auto}
+#saude .health-day{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;background:#f1f5f9;color:#94a3b8}
+#saude .health-day.used{background:#dcfce7;color:#166534}
+#saude .health-detail-panel{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+@media(max-width:800px){#saude .health-summary{grid-template-columns:repeat(2,minmax(0,1fr))}#saude .health-item-head{display:block}#saude .health-item-actions{justify-content:flex-start;margin-top:10px}#saude .health-item-actions .btn{flex:1;min-width:74px}#saude .health-history{margin-left:0;width:100%;overflow-x:auto;padding-bottom:2px;flex-wrap:nowrap}#saude .health-day{flex:0 0 24px}}
+@media(max-width:430px){#saude .health-summary{grid-template-columns:1fr 1fr;gap:7px}#saude .health-stat{padding:10px}#saude .health-stat strong{font-size:17px}#saude .health-item-card{padding:12px!important}#saude .health-item-actions{display:grid;grid-template-columns:1fr 1fr}#saude .health-item-actions .btn{width:100%}}
+.v79-health-badge{display:inline-flex;vertical-align:middle;margin-left:6px;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:9px;font-weight:850}
+'''
+          s=s.replace('</style>', css+'\n</style>', 1)
+          js=r'''
+<script>
+/* CANIVETE-V79-SAUDE */
+(function(){
+  function enhanceHealth(){
+    const section=document.getElementById('saude');
+    const list=document.getElementById('listaRemedios');
+    if(!section||!list)return;
+    const items=list.querySelectorAll(':scope > .goal');
+    if(!items.length)return;
+    const data=typeof _lerRemedios==='function'?_lerRemedios():[];
+    const today=new Date().toISOString().slice(0,10);
+    let ativos=0, pausados=0, usadosHoje=0;
+    data.forEach(r=>{if(r.ativo!==false)ativos++;else pausados++;if((r.diasUso||[]).includes(today))usadosHoje++});
+    let summary=document.getElementById('healthSummary79');
+    if(!summary){summary=document.createElement('div');summary.id='healthSummary79';summary.className='health-summary';list.parentElement.insertBefore(summary,list)}
+    summary.innerHTML='<div class="health-stat"><strong>'+data.length+'</strong><span>itens cadastrados</span></div><div class="health-stat"><strong>'+ativos+'</strong><span>ativos</span></div><div class="health-stat"><strong>'+pausados+'</strong><span>pausados</span></div><div class="health-stat"><strong>'+usadosHoje+'</strong><span>usados hoje</span></div>';
+    items.forEach((card,idx)=>{
+      const r=data[idx]; if(!r)return;
+      card.classList.add('health-item-card');
+      const head=card.querySelector('.row.between');
+      if(head)head.classList.add('health-item-head');
+      const left=head?.querySelector('div');
+      if(left)left.classList.add('health-item-name');
+      const actions=head?.querySelector('div:last-child');
+      if(actions)actions.classList.add('health-item-actions');
+      if(left && !left.querySelector('.health-tags')){
+        const tags=document.createElement('div');tags.className='health-tags';
+        const type=document.createElement('span');type.className='health-tag type';type.textContent=r.tipo==='medicamento'?'💊 Medicamento':'🌿 Vitamina/Suplemento';
+        const status=document.createElement('span');status.className='health-tag '+(r.ativo!==false?'active':'paused');status.textContent=r.ativo!==false?'🟢 Ativo':'⏸️ Pausado';
+        tags.append(type,status);
+        if((r.diasUso||[]).includes(today)){const used=document.createElement('span');used.className='health-tag today';used.textContent='✅ Usado hoje';tags.append(used)}
+        left.append(tags);
+      }
+      const detail=Array.from(card.children).find(x=>x.textContent.includes('Dosagem/posologia')&&x.querySelector('input'));
+      if(detail)detail.classList.add('health-detail-panel');
+      const use=Array.from(card.children).find(x=>x.textContent.includes('Marcar que usei hoje')||x.textContent.includes('Usei hoje'));
+      if(use)use.classList.add('health-use-row');
+    });
+  }
+  const old=window.renderListaRemedios;
+  if(typeof old==='function')window.renderListaRemedios=function(){old.apply(this,arguments);setTimeout(enhanceHealth,0)};
+  setTimeout(enhanceHealth,200);
+})();
+</script>
+'''
+          s=s.replace('</body>', js+'\n</body>', 1)
+          s=s.replace('<h2>💊 Medicamentos & Vitaminas</h2>', '<h2>💊 Medicamentos & Vitaminas <span class="v79-health-badge">v7.9</span></h2>', 1)
+          p.write_text(s,encoding='utf-8')
+      - name: Commit se houver alteração
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git diff --cached --quiet || git commit -m "Melhora módulo de medicamentos e vitaminas - v7.9"
+          git push
