@@ -1,0 +1,52 @@
+name: Canivete v8.4 - corrigir contador usado hoje
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canivete.html'
+
+permissions:
+  contents: write
+
+jobs:
+  corrigir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Corrigir contador de usados hoje
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('canivete.html')
+          s = p.read_text(encoding='utf-8')
+          marker = 'CANIVETE_V84_USADO_HOJE'
+          if marker in s:
+              print('Correção já aplicada.')
+              raise SystemExit(0)
+
+          # Atualiza a versão quando existir uma constante explícita.
+          s = re.sub(r"(APP_VERSION\\s*=\\s*['\"])8\\.3(['\"])", r"\\g<1>8.4\\g<2>", s, count=1)
+
+          patch = r'''\n<script id="CANIVETE_V84_USADO_HOJE">\n(function(){\n  function atualizarUsadosHoje(){\n    var botoes = Array.from(document.querySelectorAll('button'));\n    var usados = botoes.filter(function(b){\n      return /usado\\s+hoje/i.test((b.textContent||'').trim());\n    }).length;\n\n    // Procura o cartão/label "usadas hoje" e atualiza o número sem depender\n    // da estrutura interna específica do Canivete.\n    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){\n      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());\n    });\n    labels.forEach(function(label){\n      var box = label.parentElement;\n      if(!box) return;\n      var numero = box.querySelector('.metric,.stat b,strong');\n      if(numero) numero.textContent = String(usados);\n    });\n\n    // Também atualiza elementos de resumo que contenham a expressão.\n    document.querySelectorAll('*').forEach(function(el){\n      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){\n        var candidatos = el.querySelectorAll('.metric,.stat b,strong');\n        if(candidatos.length) candidatos[0].textContent = String(usados);\n      }\n    });\n  }\n\n  document.addEventListener('click', function(e){\n    var b = e.target.closest && e.target.closest('button');\n    if(!b) return;\n    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){\n      setTimeout(atualizarUsadosHoje, 50);\n      setTimeout(atualizarUsadosHoje, 250);\n    }\n  }, true);\n\n  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });\n  obs.observe(document.body, {subtree:true, childList:true, characterData:true});\n  setTimeout(atualizarUsadosHoje, 300);\n  setTimeout(atualizarUsadosHoje, 1000);\n})();\n</script>\n'''
+
+          s = s.replace('</body>', patch + '</body>') if '</body>' in s else s + patch
+          p.write_text(s, encoding='utf-8')
+          print('Correção aplicada e versão ajustada para v8.4 quando encontrada.')
+          PY
+
+      - name: Publicar alteração
+        run: |
+          if git diff --quiet; then
+            echo 'Nenhuma alteração para publicar.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add canivete.html
+          git commit -m 'Canivete v8.4: corrigir contador Usado hoje'
+          git push
