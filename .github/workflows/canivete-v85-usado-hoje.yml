@@ -1,0 +1,89 @@
+name: Canivete v8.5 - corrigir resumo Usado hoje
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canivete.html'
+      - '.github/workflows/canivete-v85-usado-hoje.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  corrigir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Corrigir resumo Usado hoje
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('canivete.html')
+          s = p.read_text(encoding='utf-8')
+          marker = 'CANIVETE_V85_USADO_HOJE'
+          if marker in s:
+              print('Correção v8.5 já aplicada.')
+              raise SystemExit(0)
+
+          # Remove a versão v8.4, inclusive se o bloco anterior ficou com barras invertidas.
+          s = re.sub(r'\\?\\n?<script id="CANIVETE_V84_USADO_HOJE">.*?</script>\\?\\n?', '', s, flags=re.S)
+
+          patch = """
+<script id="CANIVETE_V85_USADO_HOJE">
+(function(){
+  function atualizarResumoUsadosHoje(){
+    var usados = Array.from(document.querySelectorAll('button')).filter(function(b){
+      return /usado\s+hoje/i.test((b.textContent || '').trim());
+    }).length;
+
+    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){
+      return el.children.length === 0 && /usadas?\s+hoje/i.test((el.textContent || '').trim());
+    });
+
+    labels.forEach(function(label){
+      var box = label.parentElement;
+      if(!box) return;
+      var numero = box.querySelector('.metric, .stat b, strong');
+      if(numero) numero.textContent = String(usados);
+    });
+  }
+
+  document.addEventListener('click', function(e){
+    var botao = e.target.closest && e.target.closest('button');
+    if(!botao) return;
+    if(/marcar\s+que\s+usei\s+hoje|usar\s+hoje|usado\s+hoje/i.test((botao.textContent || '').trim())){
+      setTimeout(atualizarResumoUsadosHoje, 80);
+      setTimeout(atualizarResumoUsadosHoje, 350);
+    }
+  }, true);
+
+  var observer = new MutationObserver(function(){ atualizarResumoUsadosHoje(); });
+  observer.observe(document.body, {subtree:true, childList:true, characterData:true});
+  setTimeout(atualizarResumoUsadosHoje, 300);
+  setTimeout(atualizarResumoUsadosHoje, 1200);
+})();
+</script>
+"""
+
+          s = s.replace('</body>', patch + '</body>') if '</body>' in s else s + patch
+          s = re.sub(r"(APP_VERSION\s*=\s*['\"])8\.[0-4](['\"])", r"\g<1>8.5\g<2>", s, count=1)
+          p.write_text(s, encoding='utf-8')
+          print('Correção v8.5 aplicada.')
+          PY
+
+      - name: Publicar alteração
+        run: |
+          if git diff --quiet; then
+            echo 'Nenhuma alteração para publicar.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add canivete.html
+          git commit -m 'Canivete v8.5: corrigir contador Usado hoje'
+          git push
