@@ -1,0 +1,78 @@
+name: Canivete v8.7 - Textos Saúde
+
+on:
+  push:
+    paths:
+      - '.github/workflows/canivete-v87-textos-saude.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  melhorar-textos-saude:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message != 'Canivete v8.7 - aplicar textos da saude'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+
+      - name: Melhorar textos da area de saude
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('canivete.html')
+          s = p.read_text(encoding='utf-8')
+          replacements = {
+              "const APP_VERSION='8.4'": "const APP_VERSION='8.7'",
+              "Canivete v7.9": "Canivete v8.7",
+              "<h2>💊 Medicamentos & Vitaminas <span class=\"v79-health-badge\">v7.9</span></h2>": "<h2>🩺 Minha Saúde <span class=\"v79-health-badge\">v8.7</span></h2>",
+              "<p class=\"sub\">Controle o que você toma e marque os dias que usou, pra acompanhar sua rotina. Isso é só uma organização pessoal — não é orientação médica, siga sempre as instruções do seu médico ou farmacêutico.</p>": "<p class=\"sub\">Organize medicamentos, suplementos, consultas e chás em um só lugar. Registre sua rotina e acompanhe seus horários e usos. Isso é apenas uma organização pessoal e não substitui orientação médica.</p>",
+              "<h2>👤 Seu perfil</h2>": "<h2>👤 Seu perfil</h2>",
+              "<h2>➕ Adicionar da minha lista</h2>": "<h2>➕ Adicionar item</h2>",
+              "<p class=\"small\">Digite um nome e escolha se é medicamento ou vitamina/suplemento, ou clique em um dos sugeridos abaixo pra adicionar rápido.</p>": "<p class=\"small\">Digite o nome do que você usa ou escolha uma sugestão abaixo para adicionar rapidamente.</p>",
+              "<label for=\"novoRemedioNome\">Nome</label>": "<label for=\"novoRemedioNome\">O que você usa?</label>",
+              "placeholder=\"Ex.: Paracetamol\" aria-label=\"Nome do medicamento ou vitamina\"": "placeholder=\"Ex.: Paracetamol, Vitamina D, Magnésio...\" aria-label=\"Nome do item de saúde\"",
+              "<option value=\"vitamina\">🌿 Vitamina/Suplemento</option>": "<option value=\"vitamina\">🌿 Suplemento</option>",
+              "onclick=\"addRemedioManual()\" style=\"margin-top:12px\">➕ Adicionar à minha lista</button>": "onclick=\"addRemedioManual()\" style=\"margin-top:12px\">➕ Adicionar</button>",
+              "🌿 Vitaminas/suplementos comuns (clique pra adicionar):": "🌿 Suplementos comuns",
+              "💊 Medicamentos comuns (clique pra adicionar):": "💊 Sugestões de medicamentos",
+              "🍵 Chás (clique pra adicionar):": "🍵 Sugestões de chás",
+              "<h2>📋 Minha lista</h2>": "<h2>📋 Minha lista</h2>",
+              "📅 Ver últimos 30 dias": "📅 Histórico",
+              "📃 Ver lista compacta": "▤ Lista compacta",
+              ">🌿 Vitaminas</button>": ">🌿 Suplementos</button>",
+              "<span style=\"font-size:12px;color:var(--muted);align-self:center\">Filtrar:</span>": "<span style=\"font-size:12px;color:var(--muted);align-self:center\">Mostrar:</span>",
+              "<option value=\"adicao\">Ordem de adição</option>": "<option value=\"adicao\">Mais recentes</option>",
+              "<h2>📅 Consultas Médicas</h2>": "<h2>🩺 Consultas</h2>",
+              "<p class=\"small\">Marque suas consultas e acompanhamentos. Se for consulta paga, a gente já ajuda a lançar o valor lá em Despesas, sem precisar fazer isso duas vezes.</p>": "<p class=\"small\">Cadastre suas consultas e acompanhamentos. Se for uma consulta paga, o valor pode ser lançado nas Despesas para você não precisar cadastrar duas vezes.</p>",
+              "<label for=\"novaConsultaMedico\">Médico/especialidade</label>": "<label for=\"novaConsultaMedico\">Médico ou especialidade</label>",
+              "<label for=\"novaConsultaData\">Data da consulta</label>": "<label for=\"novaConsultaData\">Quando é a consulta?</label>",
+              "<label for=\"novaConsultaTipo\">É gratuita ou paga?</label>": "<label for=\"novaConsultaTipo\">A consulta é gratuita ou paga?</label>",
+              "➕ Marcar consulta</button>": "➕ Adicionar consulta</button>",
+              "<h2>🏥 Condições de Saúde</h2>": "<h2>🏥 Condições de saúde</h2>",
+              "<p class=\"small\">Guarde aqui as condições que você tem, pra ter tudo num lugar só se precisar mostrar pra um médico novo. Isso é só um registro pessoal — não é diagnóstico nem substitui acompanhamento médico.</p>": "<p class=\"small\">Guarde aqui condições de saúde que você já conhece e queira ter registradas. É apenas um registro pessoal e não é diagnóstico nem substitui acompanhamento médico.</p>",
+              "Sugestões rápidas (clique pra adicionar):": "Sugestões rápidas",
+              "Nenhuma consulta marcada ainda.": "Nenhuma consulta cadastrada ainda.",
+              "Nenhum item adicionado ainda. Use a lista de sugestões acima ou adicione manualmente.": "Nenhum item cadastrado ainda. Escolha uma sugestão acima ou adicione manualmente.",
+              "Nenhum item encontrado com esses filtros.": "Nenhum item encontrado. Tente outro filtro ou nome.",
+              "Tratamento ativo (desmarque se parou de usar, sem apagar o histórico)": "Item ativo (desmarque se parou de usar; o histórico continua salvo)",
+              "Marcado como ativo.": "Marcado como ativo.",
+              "⏸️ Marcado como inativo.": "⏸️ Item colocado em pausa.",
+              "não esqueça de manter sua rotina!": "se você usou, registre o uso para manter seu histórico atualizado.",
+              "Vitamina/Suplemento": "Suplemento",
+              "<h2>🩺 Minha Saúde": "<h2>🩺 Minha Saúde",
+          }
+          for old, new in replacements.items():
+              s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Publicar alteracoes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git diff --cached --quiet && echo "Nenhuma alteracao necessaria" && exit 0
+          git commit -m "Canivete v8.7 - aplicar textos da saude"
+          git push
