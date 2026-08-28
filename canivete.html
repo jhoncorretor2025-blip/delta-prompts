@@ -861,6 +861,14 @@ const listaMedicamentosSugeridos=['Paracetamol','Dorsilax','Dipirona','Ibuprofen
 function _lerRemedios(){
   try{return JSON.parse(localStorage.getItem('canivete-remedios'))||[]}catch(e){return[]}
 }
+function limparItensSaudeAntigos(){
+  try{
+    const nomesRemover=new Set(['ashwagandha','moringa','maca negra','combo ashwagandha + moringa + maca negra']);
+    const lista=_lerRemedios();
+    const limpa=lista.filter(r=>!nomesRemover.has(String(r.nome||'').trim().toLowerCase()));
+    if(limpa.length!==lista.length)_salvarRemedios(limpa);
+  }catch(e){}
+}
 function _salvarRemedios(l){
   try{localStorage.setItem('canivete-remedios',JSON.stringify(l))}catch(e){}
 }
@@ -1870,5 +1878,5 @@ document.querySelectorAll('#nav button[data-page]').forEach(b=>{b.setAttribute('
 render();showPage('dashboard');carregarFirebaseCanivete();mostrarOnboardingSeNecessario();
 setTimeout(verificarEEnviarPush,1500);
 checarPinAoAbrir();
-renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();renderListaConsultas();renderListaFamiliares();atualizarSeletoresMembro();aplicarSugestaoPorGenero();
+limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();renderListaConsultas();renderListaFamiliares();atualizarSeletoresMembro();aplicarSugestaoPorGenero();
 </script></body></html>
