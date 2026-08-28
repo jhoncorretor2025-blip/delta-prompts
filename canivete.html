@@ -163,7 +163,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.0';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.1';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -2018,4 +2018,61 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
     </script>
     
 \n<script>\n/* CANIVETE-V80-SAUDE-CHA */\n(function(){\n  window.suspenderRemedioV80=function(i,motivo){\n    const l=_lerRemedios(); if(!l[i])return;\n    l[i].ativo=false; l[i].motivoPausa=motivo||'Pausa temporária'; l[i].dataPausa=new Date().toISOString().slice(0,10);\n    _salvarRemedios(l); renderListaRemedios(); if(typeof renderSugestoesRemedios==='function')renderSugestoesRemedios();\n    if(typeof mostrarToastCanivete==='function')mostrarToastCanivete('⏸️ '+l[i].nome+' foi suspenso: '+l[i].motivoPausa);\n  };\n  window.retomarRemedioV80=function(i){\n    const l=_lerRemedios(); if(!l[i])return;\n    l[i].ativo=true; l[i].motivoPausa=''; l[i].dataRetomada=new Date().toISOString().slice(0,10);\n    _salvarRemedios(l); renderListaRemedios(); if(typeof renderSugestoesRemedios==='function')renderSugestoesRemedios();\n    if(typeof mostrarToastCanivete==='function')mostrarToastCanivete('▶️ '+l[i].nome+' voltou a ficar ativo.');\n  };\n  window.editarPausaRemedioV80=function(i){\n    const l=_lerRemedios(); if(!l[i])return;\n    const motivo=prompt('Por que você está suspendendo?\\n\\nEx.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.',l[i].motivoPausa||'Pausa temporária');\n    if(motivo===null)return;\n    l[i].ativo=false; l[i].motivoPausa=motivo.trim()||'Pausa temporária'; l[i].dataPausa=l[i].dataPausa||new Date().toISOString().slice(0,10);\n    _salvarRemedios(l); renderListaRemedios();\n  };\n  function enhanceV80(){\n    const section=document.getElementById('saude'),list=document.getElementById('listaRemedios');\n    if(!section||!list)return;\n    const cards=list.querySelectorAll(':scope > .goal');\n    cards.forEach(card=>{\n      const edit=Array.from(card.querySelectorAll('button')).find(b=>(b.getAttribute('onclick')||'').includes('_editarRemedio('));\n      if(!edit)return;\n      const m=(edit.getAttribute('onclick')||'').match(/_editarRemedio\\((\\d+)\\)/); if(!m)return;\n      const i=Number(m[1]); const l=_lerRemedios(); const r=l[i]; if(!r)return;\n      let controls=card.querySelector('.pause-controls');\n      if(!controls){\n        controls=document.createElement('div'); controls.className='pause-controls';\n        if(r.ativo!==false){\n          controls.innerHTML='<button class="btn light" type="button" onclick="suspenderRemedioV80('+i+',\'Pausa temporária\')">⏸️ Dar um tempo</button><button class="btn light" type="button" onclick="suspenderRemedioV80('+i+',\'Sem suplemento no momento\')">📦 Sem suplemento</button><button class="btn light" type="button" onclick="editarPausaRemedioV80('+i+')">📝 Outro motivo</button>';\n        }else{\n          controls.innerHTML='<button class="btn primary" type="button" onclick="retomarRemedioV80('+i+')">▶️ Retomar uso</button><button class="btn light" type="button" onclick="editarPausaRemedioV80('+i+')">📝 Alterar motivo</button>';\n        }\n        card.appendChild(controls);\n      }\n      if(r.ativo===false&&r.motivoPausa&&!card.querySelector('.pause-reason')){\n        const reason=document.createElement('div');reason.className='pause-reason';reason.textContent='⏸️ Suspenso: '+r.motivoPausa;\n        const controlsNow=card.querySelector('.pause-controls');card.insertBefore(reason,controlsNow||null);\n      }\n    });\n  }\n  const old=window.renderListaRemedios;\n  if(typeof old==='function'&&!old.__v80){\n    const wrapped=function(){old.apply(this,arguments);setTimeout(enhanceV80,0)};wrapped.__v80=true;window.renderListaRemedios=wrapped;\n  }\n  setTimeout(enhanceV80,300);\n  document.addEventListener('click',function(e){if(e.target.closest('#btnFiltroRemedio_cha'))setTimeout(enhanceV80,50)});\n})();\n</script>\n
-<!-- CANIVETE-V80-BADGE-FIX -->\n</body></html>
+<!-- CANIVETE-V80-BADGE-FIX -->\n
+<!-- CANIVETE-V81-SAÚDE-ABAS -->
+<style>
+.health-tabs81{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px;padding:6px;background:var(--bg);border:1px solid var(--line);border-radius:15px;position:sticky;top:8px;z-index:15}
+.health-tab81{border:0;background:transparent;color:var(--muted);border-radius:10px;padding:11px 8px;font-size:12px;font-weight:850;cursor:pointer;transition:.15s}
+.health-tab81:hover{background:var(--card);color:var(--blue)}
+.health-tab81.active{background:var(--blue);color:#fff;box-shadow:0 3px 10px rgba(37,99,235,.18)}
+#saude .health-context81{margin:-5px 0 14px;padding:10px 12px;border-radius:11px;background:var(--bg);border:1px solid var(--line);font-size:12px;color:var(--muted)}
+@media(max-width:600px){.health-tabs81{grid-template-columns:repeat(2,1fr);position:sticky;top:5px}.health-tab81{min-height:44px;font-size:11px}}
+</style>
+<script>
+(function(){
+  function initSaudeAbas81(){
+    const section=document.getElementById('saude');
+    if(!section || section.dataset.v81==='1') return;
+    section.dataset.v81='1';
+    const hero=section.querySelector('.hero');
+    if(!hero) return;
+    const tabs=document.createElement('div');
+    tabs.className='health-tabs81';
+    tabs.innerHTML=`<button class="health-tab81 active" data-health-tab="medicamento">💊 Medicamentos</button><button class="health-tab81" data-health-tab="vitamina">🌿 Suplementos</button><button class="health-tab81" data-health-tab="consulta">🩺 Consultas</button><button class="health-tab81" data-health-tab="cha">🍵 Chás</button>`;
+    hero.insertAdjacentElement('afterend',tabs);
+    const cards=Array.from(section.children).filter(e=>e.classList.contains('card'));
+    const profile=cards.find(c=>c.textContent.includes('Seu perfil'));
+    const add=cards.find(c=>c.textContent.includes('Adicionar da minha lista'));
+    const list=cards.find(c=>c.querySelector('#listaRemedios'));
+    const consulta=cards.find(c=>c.querySelector('#listaConsultas')) || cards.find(c=>c.textContent.includes('Consultas Médicas'));
+    const cond=cards.find(c=>c.textContent.includes('Condições de Saúde'));
+    const obs=cards.find(c=>c.textContent.includes('Observações gerais'));
+    const stock=cards.find(c=>c.textContent.includes('Estoque'));
+    const context=document.createElement('div');
+    context.className='health-context81';
+    tabs.insertAdjacentElement('afterend',context);
+    function setTab(type){
+      tabs.querySelectorAll('.health-tab81').forEach(b=>b.classList.toggle('active',b.dataset.healthTab===type));
+      context.textContent={medicamento:'💊 Seus medicamentos em uso ou pausados. O histórico continua salvo.',vitamina:'🌿 Vitaminas e suplementos que você usa ou pretende retomar.',consulta:'🩺 Consultas médicas, acompanhamentos e valores pagos.',cha:'🍵 Chás e bebidas naturais que você deseja acompanhar.'}[type];
+      [profile,add,list,consulta,cond,obs,stock].forEach(c=>{if(c)c.style.display='none'});
+      if(type==='consulta'){if(consulta)consulta.style.display='block'}
+      else {if(profile)profile.style.display='block';if(add)add.style.display='block';if(list)list.style.display='block';if(cond)cond.style.display='block';if(obs)obs.style.display='block';if(stock)stock.style.display='block'}
+      const filter=document.getElementById('btnFiltroRemedio_'+type);
+      if(filter)filter.click();
+      const sv=document.getElementById('sugestoesVitaminas');
+      const sm=document.getElementById('sugestoesMedicamentos');
+      const sc=document.getElementById('sugestoesChas');
+      if(sv)sv.parentElement.style.display=type==='vitamina'?'block':'none';
+      if(sm)sm.parentElement.style.display=type==='medicamento'?'block':'none';
+      if(sc)sc.parentElement.style.display=type==='cha'?'block':'none';
+      const title=add?.querySelector('h2');
+      if(title)title.textContent=type==='medicamento'?'💊 Adicionar medicamento':type==='vitamina'?'🌿 Adicionar suplemento':type==='cha'?'🍵 Adicionar chá':'➕ Adicionar';
+    }
+    tabs.querySelectorAll('.health-tab81').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.healthTab)));
+    setTimeout(()=>setTab('medicamento'),50);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initSaudeAbas81);else initSaudeAbas81();
+  document.addEventListener('click',e=>{if(e.target.closest('[data-page="saude"]'))setTimeout(initSaudeAbas81,120)});
+})();
+</script>
+</body></html>
