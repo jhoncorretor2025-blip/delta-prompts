@@ -12,39 +12,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Sincronizar aba de suplementos
+      - name: Corrigir resumo Usado hoje
         shell: python
         run: |
           from pathlib import Path
           import re
           p=Path('canivete.html')
           s=p.read_text(encoding='utf-8')
-          if 'CANIVETE-V83-NAVEGACAO-SAUDE' in s:
+          if 'CANIVETE-V86-USADO-HOJE' in s:
               raise SystemExit(0)
-          s=s.replace("const APP_VERSION='8.2'","const APP_VERSION='8.3'",1)
-          patch=r'''
-          <!-- CANIVETE-V83-NAVEGACAO-SAUDE -->
-          <script>
-          (function(){
-            function sincronizar(){
-              const f=document.getElementById('btnFiltroRemedio_vitamina');
-              const t=document.querySelector('.health-tab81[data-health-tab="vitamina"]');
-              if(f && t && !f.dataset.sync83){
-                f.dataset.sync83='1';
-                f.addEventListener('click',function(){setTimeout(()=>t.click(),30)});
-              }
-            }
-            if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sincronizar);else sincronizar();
-            document.addEventListener('click',e=>{if(e.target.closest('[data-page="saude"]'))setTimeout(sincronizar,180)});
-          })();
-          </script>
-          '''
+
+          # Remove blocos antigos de correção do contador, se existirem.
+          s=re.sub(r'\\?\\n?<script id="CANIVETE_V84_USADO_HOJE">.*?</script>\\?\\n?', '', s, flags=re.S)
+          s=re.sub(r'\\?\\n?<script id="CANIVETE_V85_USADO_HOJE">.*?</script>\\?\\n?', '', s, flags=re.S)
+
+          patch="""
+<!-- CANIVETE-V86-USADO-HOJE -->
+<script>
+(function(){
+  function atualizarResumoUsadosHoje(){
+    var usados=Array.from(document.querySelectorAll('button')).filter(function(b){
+      return /usado\s+hoje/i.test((b.textContent||'').trim());
+    }).length;
+    Array.from(document.querySelectorAll('*')).forEach(function(el){
+      if(el.children.length===0 && /usadas?\s+hoje/i.test((el.textContent||'').trim())){
+        var box=el.parentElement;
+        if(!box)return;
+        var n=box.querySelector('.metric,.stat b,strong');
+        if(n)n.textContent=String(usados);
+      }
+    });
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('button');
+    if(!b)return;
+    if(/marcar\s+que\s+usei\s+hoje|usar\s+hoje|usado\s+hoje/i.test((b.textContent||'').trim())){
+      setTimeout(atualizarResumoUsadosHoje,100);
+      setTimeout(atualizarResumoUsadosHoje,400);
+    }
+  },true);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',atualizarResumoUsadosHoje);else atualizarResumoUsadosHoje();
+  setTimeout(atualizarResumoUsadosHoje,1200);
+})();
+</script>
+"""
           s=s.replace('</body>',patch+'\n</body>',1)
+          s=re.sub(r"(APP_VERSION\s*=\s*['\"])8\.[0-9]+(['\"])",r"\g<1>8.6\g<2>",s,count=1)
           p.write_text(s,encoding='utf-8')
       - name: Publicar
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add canivete.html
-          git commit -m "CANIVETE-V83-NAVEGACAO-SAUDE: sincronizar suplementos" || exit 0
+          git commit -m "CANIVETE-V86-USADO-HOJE: corrigir contador" || exit 0
           git push
