@@ -1,0 +1,147 @@
+name: Canivete v8.0 UX
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  enhance:
+    if: ${{ !contains(github.event.head_commit.message, '[canivete-v80]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Aplicar camada de melhorias UX
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('canivete.html')
+          html = path.read_text(encoding='utf-8')
+          marker = '/* CANIVETE-V80-UX */'
+
+          # Atualiza a versão sem alterar outras informações do sistema.
+          html = html.replace('v7.8', 'v8.0').replace('V7.8', 'V8.0')
+
+          if marker not in html:
+              css = r'''
+              /* CANIVETE-V80-UX */
+              .v80-version{display:inline-flex;align-items:center;gap:5px;margin:4px 12px 12px;padding:4px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:10px;font-weight:800}
+              .v80-nav-group{margin:10px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+              .v80-nav-group summary{list-style:none;cursor:pointer;padding:10px 12px;font-size:11px;font-weight:850;color:var(--muted);display:flex;align-items:center;gap:8px}
+              .v80-nav-group summary::-webkit-details-marker{display:none}
+              .v80-nav-group summary:after{content:'⌄';margin-left:auto;transition:.2s}
+              .v80-nav-group:not([open]) summary:after{transform:rotate(-90deg)}
+              .v80-nav-group .v80-group-body{padding:0 5px 5px}
+              .v80-nav-group .v80-group-body .nav button{margin:2px 0}
+              .v80-mode{width:100%;margin:4px 0 10px;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:10px;padding:9px 10px;font-size:11px;font-weight:800;text-align:left}
+              .v80-mode.active{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+              .v80-quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 16px}
+              .v80-quick-card{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px;box-shadow:var(--shadow)}
+              .v80-quick-card b{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}.v80-quick-card strong{font-size:18px}
+              .v80-start{border:1px solid #bfdbfe;background:#eff6ff;color:#1e40af;border-radius:14px;padding:14px;margin-bottom:16px}
+              .v80-start strong{display:block;margin-bottom:4px}.v80-start span{font-size:12px;line-height:1.5}
+              .v80-mobile-nav{display:none}
+              @media(max-width:760px){
+                .v80-quick{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v80-quick-card{padding:10px}.v80-quick-card strong{font-size:16px}
+                .v80-mobile-nav{position:fixed;left:10px;right:10px;bottom:10px;z-index:45;display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:7px;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(15,23,42,.16);backdrop-filter:blur(12px)}
+                [data-theme="dark"] .v80-mobile-nav{background:rgba(22,29,51,.96)}
+                .v80-mobile-nav button{border:0;background:transparent;color:var(--muted);border-radius:10px;padding:7px 3px;font-size:10px;font-weight:800;min-height:46px}.v80-mobile-nav button.active{background:#eef2ff;color:var(--blue)}
+                .v80-start{font-size:13px}.v80-nav-group{border-radius:10px}
+              }
+              '''
+              js = r'''
+              /* CANIVETE-V80-UX */
+              (function(){
+                const ready=()=>{
+                  const side=document.querySelector('.side');
+                  const nav=document.querySelector('.nav');
+                  if(!side||!nav) return;
+
+                  // Versão visível no menu.
+                  if(!document.querySelector('.v80-version')){
+                    const brand=side.querySelector('.brand');
+                    if(brand){const v=document.createElement('div');v.className='v80-version';v.textContent='🧰 Canivete v8.0';brand.insertAdjacentElement('afterend',v)}
+                  }
+
+                  // Modo simples/avançado: reduz a carga cognitiva sem remover funções.
+                  if(!document.querySelector('.v80-mode')){
+                    const btn=document.createElement('button');btn.className='v80-mode';btn.type='button';btn.textContent='✨ Modo simples';
+                    const anchor=side.querySelector('.back')||side.querySelector('.brand');
+                    if(anchor) anchor.insertAdjacentElement('afterend',btn);
+                    const key='canivete-v80-mode';
+                    const simple=localStorage.getItem(key)!=='advanced';
+                    const setMode=(advanced)=>{
+                      localStorage.setItem(key,advanced?'advanced':'simple');
+                      btn.textContent=advanced?'🧠 Modo avançado':'✨ Modo simples';btn.classList.toggle('active',advanced);
+                      document.documentElement.classList.toggle('v80-advanced',advanced);
+                      side.querySelectorAll('.v80-nav-group').forEach(g=>{
+                        const advancedGroup=g.dataset.advanced==='1';
+                        if(advancedGroup) g.style.display=advanced?'':'none';
+                      });
+                    };
+                    btn.addEventListener('click',()=>setMode(localStorage.getItem(key)==='advanced'?false:true));
+                    window.__caniveteV80Mode=setMode;setMode(!simple);
+                  }
+
+                  // Organiza o menu existente em grupos, preservando os botões e seus eventos.
+                  if(!nav.dataset.v80Grouped){
+                    const buttons=[...nav.querySelectorAll(':scope > button')];
+                    if(buttons.length>=5){
+                      const groups=[
+                        ['💰 Finanças',/(painel|início|renda|sal[aá]rio|despes|d[ií]vida|patrim[oô]nio|meta|proje|an[aá]lise|hist[oó]rico)/i,false],
+                        ['🧰 Organização',/(compra|senha|contato|data|link)/i,true],
+                        ['❤️ Pessoal',/(sa[uú]de|medic|vitamina)/i,true],
+                        ['⚙️ Sistema',/(perfil|config|ajuda|tend[eê]n|sobre)/i,true]
+                      ];
+                      const original=buttons.slice();
+                      nav.innerHTML='';
+                      groups.forEach(([title,re,adv])=>{
+                        const matched=original.filter(b=>re.test(b.textContent||''));
+                        if(!matched.length) return;
+                        const d=document.createElement('details');d.className='v80-nav-group';d.dataset.advanced=adv?'1':'0';
+                        const s=document.createElement('summary');s.textContent=title;d.appendChild(s);
+                        const body=document.createElement('div');body.className='v80-group-body';
+                        matched.forEach(b=>body.appendChild(b));d.appendChild(body);nav.appendChild(d);
+                        const k='canivete-v80-group-'+title;d.open=localStorage.getItem(k)!=='0';d.addEventListener('toggle',()=>localStorage.setItem(k,d.open?'1':'0'));
+                      });
+                      // Qualquer botão não classificado volta ao final para não perder nenhuma função.
+                      const leftovers=original.filter(b=>!nav.contains(b));
+                      if(leftovers.length){const d=document.createElement('details');d.className='v80-nav-group';d.open=true;const s=document.createElement('summary');s.textContent='☰ Outros';d.appendChild(s);const body=document.createElement('div');body.className='v80-group-body';leftovers.forEach(b=>body.appendChild(b));d.appendChild(body);nav.appendChild(d)}
+                      nav.dataset.v80Grouped='1';
+                    }
+                  }
+
+                  // Banner de início: orienta quem acabou de chegar sem esconder recursos avançados.
+                  const firstSection=document.querySelector('.section.active')||document.querySelector('.section');
+                  if(firstSection&&!document.querySelector('.v80-start')){
+                    const box=document.createElement('div');box.className='v80-start';box.innerHTML='<strong>🚀 Comece pelo básico</strong><span>Preencha sua renda, despesas, dinheiro guardado e um objetivo. Depois use Análise, Dívidas, Patrimônio e Projeções para uma visão mais avançada.</span>';
+                    firstSection.prepend(box);
+                  }
+
+                  // Atalhos móveis que acionam os botões originais.
+                  if(!document.querySelector('.v80-mobile-nav')){
+                    const m=document.createElement('nav');m.className='v80-mobile-nav';m.setAttribute('aria-label','Navegação rápida');
+                    const items=[['🏠','Início',/in[ií]cio|painel/i],['💸','Despesas',/despes/i],['🎯','Metas',/meta/i],['🧠','Análise',/an[aá]lise/i],['☰','Mais',null]];
+                    items.forEach(([ico,label,re])=>{const b=document.createElement('button');b.type='button';b.innerHTML=ico+'<br><span>'+label+'</span>';b.addEventListener('click',()=>{if(!re){side.classList.add('open');document.querySelector('.overlay')?.classList.add('open');return} const target=[...nav.querySelectorAll('button')].find(x=>re.test(x.textContent||''));if(target){target.click();m.querySelectorAll('button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}});m.appendChild(b)});document.body.appendChild(m);
+                  }
+                };
+                if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
+              })();
+              '''
+              html=html.replace('</style>',css+'\n</style>',1)
+              html=html.replace('</body>', '<script>'+js+'</script>\n</body>',1)
+
+          path.write_text(html,encoding='utf-8')
+          print('Canivete v8.0 preparado.')
+      - name: Commit das alterações
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git diff --cached --quiet || git commit -m "feat(canivete): melhorias de navegação e UX [canivete-v80]"
+          git push
