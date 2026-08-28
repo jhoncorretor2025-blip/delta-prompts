@@ -1,0 +1,39 @@
+name: Canivete v8.1 - separar saúde em abas
+
+on:
+  push:
+    paths:
+      - 'canivete.html'
+      - '.github/workflows/canivete-v81-saude-abas.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    if: ${{ !contains(github.event.head_commit.message, 'Canivete v8.1') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Aplicar abas de saúde
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('canivete.html')
+          s=p.read_text(encoding='utf-8')
+          if 'CANIVETE-V81-SAÚDE-ABAS' in s:
+              raise SystemExit(0)
+          marker='''\n<!-- CANIVETE-V81-SAÚDE-ABAS -->\n<style>\n.health-tabs81{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px;padding:6px;background:var(--bg);border:1px solid var(--line);border-radius:15px;position:sticky;top:8px;z-index:15}\n.health-tab81{border:0;background:transparent;color:var(--muted);border-radius:10px;padding:11px 8px;font-size:12px;font-weight:850;cursor:pointer;transition:.15s}\n.health-tab81:hover{background:var(--card);color:var(--blue)}\n.health-tab81.active{background:var(--blue);color:#fff;box-shadow:0 3px 10px rgba(37,99,235,.18)}\n.health-tab-panel81{display:none}\n.health-tab-panel81.active{display:block}\n#saude .health-context81{margin:-5px 0 14px;padding:10px 12px;border-radius:11px;background:var(--bg);border:1px solid var(--line);font-size:12px;color:var(--muted)}\n@media(max-width:600px){.health-tabs81{grid-template-columns:repeat(2,1fr);position:sticky;top:5px}.health-tab81{min-height:44px;font-size:11px}}\n</style>\n<script>\n(function(){\n  function initSaudeAbas81(){\n    const section=document.getElementById('saude');\n    if(!section || section.dataset.v81==='1') return;\n    section.dataset.v81='1';\n    const hero=section.querySelector('.hero');\n    if(!hero) return;\n    const tabs=document.createElement('div');\n    tabs.className='health-tabs81';\n    tabs.innerHTML=`<button class="health-tab81 active" data-health-tab="medicamento">💊 Medicamentos</button><button class="health-tab81" data-health-tab="vitamina">🌿 Suplementos</button><button class="health-tab81" data-health-tab="consulta">🩺 Consultas</button><button class="health-tab81" data-health-tab="cha">🍵 Chás</button>`;\n    hero.insertAdjacentElement('afterend',tabs);\n    const cards=Array.from(section.children).filter(e=>e.classList.contains('card'));\n    const profile=cards.find(c=>c.textContent.includes('Seu perfil'));\n    const add=cards.find(c=>c.textContent.includes('Adicionar da minha lista'));\n    const list=cards.find(c=>c.querySelector('#listaRemedios'));\n    const consulta=cards.find(c=>c.querySelector('#listaConsultas')) || cards.find(c=>c.textContent.includes('Consultas Médicas'));\n    const cond=cards.find(c=>c.textContent.includes('Condições de Saúde'));\n    const obs=cards.find(c=>c.textContent.includes('Observações gerais'));\n    const stock=cards.find(c=>c.textContent.includes('Estoque'));\n    const context=document.createElement('div');\n    context.className='health-context81';\n    tabs.insertAdjacentElement('afterend',context);\n    function setTab(type){\n      tabs.querySelectorAll('.health-tab81').forEach(b=>b.classList.toggle('active',b.dataset.healthTab===type));\n      context.textContent={medicamento:'💊 Seus medicamentos em uso ou pausados. O histórico continua salvo.',vitamina:'🌿 Vitaminas e suplementos que você usa ou pretende retomar.',consulta:'🩺 Consultas médicas, acompanhamentos e valores pagos.',cha:'🍵 Chás e bebidas naturais que você deseja acompanhar.'}[type];\n      [profile,add,list,consulta,cond,obs,stock].forEach(c=>{if(c)c.style.display='none'});\n      if(type==='consulta'){if(consulta)consulta.style.display='block'}\n      else {if(profile)profile.style.display='block';if(add)add.style.display='block';if(list)list.style.display='block';if(cond)cond.style.display='block';if(obs)obs.style.display='block';if(stock)stock.style.display='block'}\n      const filter=document.getElementById('btnFiltroRemedio_'+type);\n      if(filter)filter.click();\n      const sv=document.getElementById('sugestoesVitaminas');\n      const sm=document.getElementById('sugestoesMedicamentos');\n      const sc=document.getElementById('sugestoesChas');\n      if(sv)sv.parentElement.style.display=type==='vitamina'?'block':'none';\n      if(sm)sm.parentElement.style.display=type==='medicamento'?'block':'none';\n      if(sc)sc.parentElement.style.display=type==='cha'?'block':'none';\n      const title=add?.querySelector('h2');\n      if(title)title.textContent=type==='medicamento'?'💊 Adicionar medicamento':type==='vitamina'?'🌿 Adicionar suplemento':type==='cha'?'🍵 Adicionar chá':'➕ Adicionar';\n    }\n    tabs.querySelectorAll('.health-tab81').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.healthTab)));\n    setTimeout(()=>setTab('medicamento'),50);\n  }\n  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initSaudeAbas81);else initSaudeAbas81();\n  document.addEventListener('click',e=>{if(e.target.closest('[data-page="saude"]'))setTimeout(initSaudeAbas81,120)});\n})();\n</script>\n'''
+          s=s.replace('</body>',marker+'</body>')
+          s=s.replace("const APP_VERSION='8.0'","const APP_VERSION='8.1'")
+          s=s.replace('v8.0</span>','v8.1</span>')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commitar alteração
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add canivete.html
+          git diff --cached --quiet || git commit -m 'Canivete v8.1 - separar saúde em abas'
+          git push
