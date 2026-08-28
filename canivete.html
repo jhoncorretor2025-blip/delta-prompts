@@ -855,7 +855,7 @@ function _editarContato(i,campo,valor){const l=_lerContatos();l[i][campo]=valor;
 function _removerContato(i){confirmarCanivete('Excluir este contato?',()=>{const l=_lerContatos();l.splice(i,1);_salvarContatos(l);renderContatos()})}
 
 // ===== LINKS IMPORTANTES =====
-const listaVitaminasSugeridas=['Creatina','Colágeno','Zinco','NAC (N-acetilcisteína)','Ômega 3','Vitamina D','Complexo B','Magnésio','Melatonina','Cúrcuma (Curcumina)','Coenzima Q10','Vitamina C','Própolis'];
+const listaVitaminasSugeridas=['Vitamina D','Magnésio','Ômega 3','Coenzima Q10','Multivitamínico / Multimineral','Vitamina C','Vitamina K','Complexo B','Probiótico','Zinco'];
 const listaMedicamentosSugeridos=['Paracetamol','Dorsilax','Dipirona','Ibuprofeno'];
 
 function _lerRemedios(){
