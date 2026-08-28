@@ -1,0 +1,85 @@
+name: Canivete v8.2 - Restaurar vitaminas
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: ${{ !contains(github.event.head_commit.message, 'CANIVETE-V82-VITAMINAS') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Corrigir Canivete
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          p = Path('canivete.html')
+          s = p.read_text(encoding='utf-8')
+
+          if 'CANIVETE-V82-VITAMINAS' in s:
+              raise SystemExit(0)
+
+          s = re.sub(r"const APP_VERSION='8\\.1'", "const APP_VERSION='8.2'", s, count=1)
+
+          patch = r'''
+          <!-- CANIVETE-V82-VITAMINAS -->
+          <style>
+          #saude .vitaminas-rapidas82{margin-top:16px;padding:14px;border:1px solid #dbeafe;border-radius:14px;background:var(--bg)}
+          #saude .vitaminas-rapidas82 strong{display:block;font-size:13px;margin-bottom:4px}
+          #saude .vitaminas-rapidas82 small{display:block;color:var(--muted);font-size:10.5px;margin-bottom:9px;line-height:1.4}
+          #saude .vitaminas-rapidas82-list{display:flex;flex-wrap:wrap;gap:6px}
+          #saude .vitaminas-rapidas82 .btn{font-size:11px;padding:7px 9px;min-height:34px}
+          @media(max-width:600px){#saude .vitaminas-rapidas82-list{display:grid;grid-template-columns:1fr 1fr}#saude .vitaminas-rapidas82 .btn{width:100%;text-align:left}}
+          </style>
+          <script>
+          (function(){
+            const nomes82=['Vitamina D','Magnésio','Ômega 3','Coenzima Q10','Multivitamínico / Multimineral','Vitamina C','Vitamina K','Complexo B','Probiótico','Zinco'];
+            function montar82(){
+              const section=document.getElementById('saude');
+              if(!section)return;
+              const add=Array.from(section.querySelectorAll('.card')).find(c=>c.textContent.includes('Adicionar da minha lista'));
+              if(!add)return;
+              let box=document.getElementById('vitaminasRapidas82');
+              if(!box){
+                box=document.createElement('div');
+                box.id='vitaminasRapidas82';
+                box.className='vitaminas-rapidas82';
+                box.innerHTML='<strong>🌿 10 vitaminas e suplementos comuns</strong><small>Clique em um item para adicionar rapidamente à sua lista.</small><div class="vitaminas-rapidas82-list"></div>';
+                add.appendChild(box);
+              }
+              const list=box.querySelector('.vitaminas-rapidas82-list');
+              if(!list)return;
+              let existentes=[];
+              try{existentes=_lerRemedios().map(r=>String(r.nome||'').toLowerCase())}catch(e){}
+              list.innerHTML=nomes82.map(nome=>{
+                const ja=existentes.includes(nome.toLowerCase());
+                return '<button type="button" class="btn light" '+(ja?'disabled':'onclick="addRemedioRapido(\''+nome.replace(/'/g,"\\'")+\',\'vitamina\')"')+' style="'+(ja?'opacity:.55;cursor:default':'')+'">'+(ja?'✓ ':'+ ')+nome+'</button>';
+              }).join('');
+            }
+            function iniciar82(){setTimeout(montar82,80);setTimeout(montar82,500)}
+            document.addEventListener('click',function(e){
+              if(e.target.closest('.health-tab81'))setTimeout(montar82,100);
+              if(e.target.closest('[data-page="saude"]'))setTimeout(montar82,150);
+            });
+            if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar82);else iniciar82();
+          })();
+          </script>
+          '''
+
+          s = s.replace('</body>', patch + '\n</body>', 1)
+          p.write_text(s, encoding='utf-8')
+      - name: Publicar alteração
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git commit -m "CANIVETE-V82-VITAMINAS: restaurar 10 sugestões" || exit 0
+          git push
