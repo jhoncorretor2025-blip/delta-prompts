@@ -1,0 +1,64 @@
+name: Canivete v8.10 - Categoria Presentes
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/canivete-v810-presentes.yml'
+      - 'canivete.html'
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Adicionar categoria Presentes sem substituir o sistema
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          p=Path('canivete.html')
+          html=p.read_text(encoding='utf-8')
+          marker='CANIVETE_V810_PRESENTES'
+          if marker not in html:
+            script=r'''<script id="CANIVETE_V810_PRESENTES">
+(function(){
+  function addPresentes(){
+    var selects=document.querySelectorAll('select');
+    selects.forEach(function(sel){
+      var isCategoria=/categoria/i.test(sel.name||'')||/categoria/i.test(sel.id||'')||/categoria/i.test(sel.getAttribute('aria-label')||'');
+      if(!isCategoria) return;
+      if(!Array.from(sel.options).some(function(o){return /presente/i.test(o.textContent)})){
+        var o=document.createElement('option');o.value='Presentes';o.textContent='🎁 Presentes';sel.appendChild(o);
+      }
+    });
+    document.querySelectorAll('input,button').forEach(function(el){
+      if(el.dataset.v810Presentes) return;
+      var txt=(el.textContent||el.placeholder||el.value||'').trim();
+      if(/categoria|despesa/i.test(txt) && /quick|sugest|rapi/i.test((el.parentElement&&el.parentElement.textContent)||'')){
+        el.dataset.v810Presentes='1';
+      }
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addPresentes);else addPresentes();
+  new MutationObserver(addPresentes).observe(document.body,{childList:true,subtree:true});
+})();
+</script>'''
+            html=html.replace('</body>',script+'</body>',1)
+          html=re.sub(r'v8\.9', 'v8.10', html, flags=re.I)
+          html=re.sub(r'\bv8\.9\b', 'v8.10', html, flags=re.I)
+          p.write_text(html,encoding='utf-8')
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add canivete.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat: adicionar categoria Presentes ao Canivete v8.10 [skip ci]'
+          git push
