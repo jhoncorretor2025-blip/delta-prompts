@@ -261,6 +261,14 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <div id="listaConsultas" style="margin-top:16px"></div>
 </div>
 
+<div class="card"><h2>🏋️ Academia</h2><p class="small">Acompanhe seus treinos e o status da sua matrícula.</p>
+<div class="form" style="margin-top:10px"><div class="field"><label for="academiaStatus">Status atual</label><select id="academiaStatus" onchange="atualizarStatusAcademia(this.value)"><option value="">Nunca comecei</option><option value="ativo">✅ Ativo (treinando)</option><option value="trancado">⏸️ Trancado (matrícula pausada)</option><option value="parei">🛑 Parei</option></select></div><div class="field"><label for="academiaDataInicio">Data que começou (ou voltou)</label><input id="academiaDataInicio" type="date" aria-label="Data que começou na academia" oninput="d.academiaDataInicio=this.value;save()"></div></div>
+<div class="field" style="margin-top:10px"><label for="academiaTreinoAtual">Treino atual (opcional)</label><input id="academiaTreinoAtual" type="text" placeholder="Ex.: Treino ABC, foco em hipertrofia" aria-label="Nome do treino atual" oninput="d.academiaTreinoAtual=this.value;save()"></div>
+<div id="academiaTempoResumo" style="margin-top:12px"></div>
+<div id="academiaMarcarHoje" style="margin-top:12px"></div>
+<div style="margin-top:14px"><strong style="font-size:13px">Últimos 14 dias:</strong><div id="academiaHistorico14" style="display:flex;gap:3px;margin-top:8px;flex-wrap:wrap"></div></div>
+</div>
+
 <div class="card"><h2>🏥 Condições de saúde</h2><p class="small">Guarde aqui condições de saúde que você já conhece e queira ter registradas. É apenas um registro pessoal e não é diagnóstico nem substitui acompanhamento médico.</p>
 <div class="form" style="margin-top:10px"><div class="field"><label for="novaCondicaoNome">Nome da condição</label><input id="novaCondicaoNome" type="text" placeholder="Ex.: Diabetes" aria-label="Nome da condição de saúde"></div></div>
 <button class="btn primary" type="button" onclick="addCondicaoManual()" style="margin-top:12px">➕ Adicionar</button>
@@ -278,7 +286,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.8';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.14';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -1474,6 +1482,77 @@ function renderListaConsultas(){
   }).join('');
 }
 
+function _lerDiasAcademia(){
+  try{return JSON.parse(localStorage.getItem('canivete-academia-dias'))||[]}catch(e){return[]}
+}
+function _salvarDiasAcademia(l){
+  try{localStorage.setItem('canivete-academia-dias',JSON.stringify(l))}catch(e){}
+}
+function atualizarStatusAcademia(novoStatus){
+  const statusAnterior=d.academiaStatus;
+  d.academiaStatus=novoStatus;
+  if((novoStatus==='trancado'||novoStatus==='parei')&&statusAnterior!==novoStatus){
+    d.academiaDataStatusMudou=new Date().toISOString().slice(0,10);
+  }
+  save();
+  renderAcademia();
+}
+function toggleTreinoHoje(){
+  const l=_lerDiasAcademia();
+  const hoje=new Date().toISOString().slice(0,10);
+  const idx=l.indexOf(hoje);
+  if(idx===-1)l.push(hoje);else l.splice(idx,1);
+  _salvarDiasAcademia(l);
+  renderAcademia();
+}
+function renderAcademia(){
+  const elStatus=document.getElementById('academiaStatus');
+  if(!elStatus)return;
+  elStatus.value=d.academiaStatus||'';
+  document.getElementById('academiaDataInicio').value=d.academiaDataInicio||'';
+  document.getElementById('academiaTreinoAtual').value=d.academiaTreinoAtual||'';
+
+  const elTempo=document.getElementById('academiaTempoResumo');
+  const elMarcar=document.getElementById('academiaMarcarHoje');
+  const elHist=document.getElementById('academiaHistorico14');
+  const diasTreino=_lerDiasAcademia();
+  const hoje=new Date().toISOString().slice(0,10);
+
+  if(!d.academiaStatus){
+    elTempo.innerHTML='';
+    elMarcar.innerHTML='';
+  }else if(d.academiaStatus==='ativo'){
+    let tempoTexto='';
+    if(d.academiaDataInicio){
+      const inicio=new Date(d.academiaDataInicio+'T00:00:00');
+      const dias=Math.floor((new Date()-inicio)/(1000*60*60*24));
+      if(dias>=0){
+        const meses=Math.floor(dias/30);
+        tempoTexto=meses>0?`Você está treinando há ${meses} ${meses===1?'mês':'meses'} (aprox.)`:`Você está treinando há ${dias} dia(s)`;
+      }
+    }
+    elTempo.innerHTML=`<div class="notice" style="border-left:4px solid #16a34a">💪 ${tempoTexto||'Status: ativo'} · Total de treinos registrados: ${diasTreino.length}</div>`;
+    const marcadoHoje=diasTreino.includes(hoje);
+    elMarcar.innerHTML=`<button type="button" class="btn ${marcadoHoje?'primary':'light'}" onclick="toggleTreinoHoje()">${marcadoHoje?'✅ Treinei hoje':'⬜ Marcar que treinei hoje'}</button>`;
+  }else if(d.academiaStatus==='trancado'){
+    const dataTexto=d.academiaDataStatusMudou?new Date(d.academiaDataStatusMudou+'T00:00:00').toLocaleDateString('pt-BR'):'';
+    elTempo.innerHTML=`<div class="notice" style="border-left:4px solid #d97706">⏸️ Matrícula trancada${dataTexto?' desde '+dataTexto:''}. Total de treinos antes de trancar: ${diasTreino.length}</div>`;
+    elMarcar.innerHTML='';
+  }else if(d.academiaStatus==='parei'){
+    const dataTexto=d.academiaDataStatusMudou?new Date(d.academiaDataStatusMudou+'T00:00:00').toLocaleDateString('pt-BR'):'';
+    elTempo.innerHTML=`<div class="notice" style="border-left:4px solid #dc2626">🛑 Você parou${dataTexto?' em '+dataTexto:''}. Total de treinos que chegou a fazer: ${diasTreino.length}</div>`;
+    elMarcar.innerHTML='';
+  }
+
+  const ultimos14=[];
+  for(let k=13;k>=0;k--){
+    const dt=new Date();dt.setDate(dt.getDate()-k);
+    const iso=dt.toISOString().slice(0,10);
+    ultimos14.push({iso,marcado:diasTreino.includes(iso),diaLabel:['D','S','T','Q','Q','S','S'][dt.getDay()]});
+  }
+  elHist.innerHTML=ultimos14.map(x=>`<div title="${x.iso}" style="width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;background:${x.marcado?'#dcfce7':'#f1f5f9'};color:${x.marcado?'#166534':'#94a3b8'}">${x.diaLabel}</div>`).join('');
+}
+
 const listaCondicoesSugeridas=['Infecção Urinária','Psoríase','Psoríase Articular','Hérnia','Diabetes'];
 
 function _lerCondicoes(){
@@ -2075,7 +2154,7 @@ document.querySelectorAll('#nav button[data-page]').forEach(b=>{b.setAttribute('
 render();showPage('dashboard');carregarFirebaseCanivete();mostrarOnboardingSeNecessario();
 setTimeout(verificarEEnviarPush,1500);
 checarPinAoAbrir();
-limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();renderListaConsultas();renderListaFamiliares();atualizarSeletoresMembro();aplicarSugestaoPorGenero();
+limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();renderListaConsultas();renderListaFamiliares();atualizarSeletoresMembro();aplicarSugestaoPorGenero();renderAcademia();
 </script><script>
     /* CANIVETE-V80-UX */
     (function(){
