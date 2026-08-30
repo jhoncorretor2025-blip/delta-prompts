@@ -208,6 +208,22 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <section id="perfil" class="section"><div class="card hero"><h2>👤 Meu Perfil</h2><p class="sub">Informações centrais suas, usadas por vários recursos do Canivete (hoje e no futuro) pra personalizar sugestões automaticamente. Preencher aqui é opcional, e você sempre pode ajustar depois.</p></div>
 <div class="card"><h2>ℹ️ Dados básicos</h2><div class="form"><div class="field"><label for="generoUsuario">Gênero</label><select id="generoUsuario"><option value="">Prefiro não informar</option><option value="mulher">Mulher</option><option value="homem">Homem</option></select></div><div class="field"><label for="nomeUsuarioPerfil">Nome (opcional, só pra te chamar pelo nome em alguns lugares)</label><input id="nomeUsuarioPerfil" type="text" placeholder="Ex.: Jhonatan" aria-label="Seu nome"></div><div class="field"><label for="idadeUsuarioPerfil">Idade (opcional, ajuda em relatórios pra médico/IA)</label><input id="idadeUsuarioPerfil" type="number" min="0" max="120" placeholder="Ex.: 32" aria-label="Sua idade"></div><div class="field"><label for="alturaUsuarioPerfil">Altura em cm (opcional, usada pra calcular o IMC)</label><input id="alturaUsuarioPerfil" type="number" min="50" max="250" placeholder="Ex.: 175" aria-label="Sua altura em centímetros"></div></div><button class="btn primary" type="button" onclick="salvarPerfil()" style="margin-top:14px">💾 Salvar perfil</button><div class="notice" id="avisoPerfilConectado" style="margin-top:14px">🔌 Esse perfil já é usado hoje pela página de Medicamentos & Vitaminas (sugestão automática de item por gênero). Conforme novos recursos forem criados, eles também vão poder usar essas informações daqui, sem você precisar preencher de novo em cada lugar.</div></div>
 
+<div class="card"><h2>📋 Mais informações</h2><p class="small">Essas informações são usadas por vários recursos do Canivete — preencha o que fizer sentido pra você.</p>
+<div class="form" style="margin-top:10px">
+<div class="field"><label for="dataNascimentoPerfil">Data de nascimento (adiciona aniversário em Datas Importantes)</label><input id="dataNascimentoPerfil" type="date" aria-label="Sua data de nascimento"></div>
+<div class="field"><label for="tipoSanguineoPerfil">Tipo sanguíneo</label><select id="tipoSanguineoPerfil"><option value="">Não sei / prefiro não informar</option><option value="A+">A+</option><option value="A-">A-</option><option value="B+">B+</option><option value="B-">B-</option><option value="AB+">AB+</option><option value="AB-">AB-</option><option value="O+">O+</option><option value="O-">O-</option></select></div>
+<div class="field"><label for="alergiasPerfil">Alergias (aparece nos relatórios de Saúde)</label><input id="alergiasPerfil" type="text" placeholder="Ex.: Dipirona, amendoim" aria-label="Suas alergias"></div>
+<div class="field"><label for="profissaoPerfil">Profissão/Ocupação</label><input id="profissaoPerfil" type="text" placeholder="Ex.: Corretor de imóveis" aria-label="Sua profissão"></div>
+<div class="field"><label for="cidadeEstadoPerfil">Cidade/Estado</label><input id="cidadeEstadoPerfil" type="text" placeholder="Ex.: Gravataí/RS" aria-label="Sua cidade e estado"></div>
+<div class="field"><label for="fumantePerfil">Fumante?</label><select id="fumantePerfil"><option value="">Prefiro não informar</option><option value="nao">Não</option><option value="sim">Sim</option><option value="ex">Ex-fumante</option></select></div>
+<div class="field"><label for="planoSaudePerfil">Plano de saúde (contexto pra Consultas Médicas)</label><input id="planoSaudePerfil" type="text" placeholder="Ex.: Unimed, ou Particular/SUS" aria-label="Seu plano de saúde"></div>
+<div class="field"><label for="metaPesoPerfil">Meta de peso em kg (usada em Peso &amp; IMC)</label><input id="metaPesoPerfil" type="number" min="20" max="300" step="0.1" placeholder="Ex.: 75" aria-label="Sua meta de peso"></div>
+<div class="field"><label for="contatoEmergenciaNomePerfil">Contato de emergência — nome</label><input id="contatoEmergenciaNomePerfil" type="text" placeholder="Ex.: Tania (esposa)" aria-label="Nome do contato de emergência"></div>
+<div class="field"><label for="contatoEmergenciaTelefonePerfil">Contato de emergência — telefone (adiciona em Contatos)</label><input id="contatoEmergenciaTelefonePerfil" type="tel" placeholder="Ex.: (51) 99999-9999" aria-label="Telefone do contato de emergência"></div>
+</div>
+<button class="btn primary" type="button" onclick="salvarMaisInformacoesPerfil()" style="margin-top:14px">💾 Salvar</button>
+</div>
+
 <div class="card"><h2>⚖️ Peso & IMC</h2><p class="small">Registre seu peso de tempos em tempos pra acompanhar a evolução. Isso é reaproveitado automaticamente por outros recursos, como a Academia.</p>
 <div class="form" style="margin-top:10px"><div class="field"><label for="novoPesoValor">Peso atual (kg)</label><input id="novoPesoValor" type="number" min="20" max="300" step="0.1" placeholder="Ex.: 78.5" aria-label="Seu peso atual em quilos"></div></div>
 <button class="btn primary" type="button" onclick="registrarPeso()" style="margin-top:12px">➕ Registrar peso de hoje</button>
@@ -294,7 +310,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.8';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.16';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -410,7 +426,7 @@ function detectarAnomalias(){
   el.innerHTML=`<div class="card" style="margin-bottom:16px;border:1px solid #fde68a;background:#fffbeb"><h2>🔔 Gastos fora do padrão este mês</h2>${anomalias.map(a=>`<div class="notice alerta" style="margin-top:10px">${a.icon} <strong>${safe(a.nome)}</strong>: você já gastou ${money(a.valorAtual)} este mês, ${a.variacao.toFixed(0)}% a mais que sua média (${money(a.media)}).</div>`).join('')}</div>`;
 }
 
-function render(){document.getElementById('salary').value=d.salary;document.getElementById('frequency').value=d.frequency;document.getElementById('commission').value=d.commission;document.getElementById('hasCommission').checked=!!d.hasCommission;document.getElementById('commissionWrap').style.display=d.hasCommission?'block':'none';document.getElementById('otherIncome').value=d.otherIncome;document.getElementById('tipoTrabalho').value=d.tipoTrabalho||'anonimo';document.getElementById('bonificacao').value=d.bonificacao||'';document.getElementById('horaExtra').value=d.horaExtra||'';document.getElementById('valeRefeicao').value=d.valeRefeicao||'';document.getElementById('valeTransporte').value=d.valeTransporte||'';document.getElementById('feriasRecebidas').value=d.feriasRecebidas||'';document.getElementById('decimoTerceiro').value=d.decimoTerceiro||'';document.getElementById('aposentadoriaExtra').value=d.aposentadoriaExtra||'';document.getElementById('anoEntradaEmpresa').value=d.anoEntradaEmpresa||'';document.getElementById('feriasJaTiradas').value=d.feriasJaTiradas||'';toggleCamposCLT();document.getElementById('generoUsuario').value=d.generoUsuario||'';document.getElementById('nomeUsuarioPerfil').value=d.nomeUsuarioPerfil||'';document.getElementById('idadeUsuarioPerfil').value=d.idadeUsuarioPerfil||'';document.getElementById('alturaUsuarioPerfil').value=d.alturaUsuarioPerfil||'';renderImcEPeso();atualizarAvisoPerfilConectado();document.getElementById('saved').value=d.saved;document.getElementById('bank').value=d.bank;document.getElementById('investments').value=d.investments;document.getElementById('payDay1').value=d.payDay1||'';document.getElementById('payDay2').value=d.payDay2||'';document.getElementById('payDay2Wrap').style.display=d.frequency==='biweekly'?'block':'none';document.getElementById('diaFechamentoFatura').value=d.diaFechamentoFatura||'';renderExpenses();renderFullList();renderBenefits();renderGoals();renderDividas();renderHistorico();renderCompras();renderArquivadas();refresh();document.getElementById('goalBadge').textContent=d.goals.length;document.getElementById('debtBadge').textContent=d.dividas.length;updateSteps();applyExpenseView();document.getElementById('versaoTexto').textContent='v'+APP_VERSION}
+function render(){document.getElementById('salary').value=d.salary;document.getElementById('frequency').value=d.frequency;document.getElementById('commission').value=d.commission;document.getElementById('hasCommission').checked=!!d.hasCommission;document.getElementById('commissionWrap').style.display=d.hasCommission?'block':'none';document.getElementById('otherIncome').value=d.otherIncome;document.getElementById('tipoTrabalho').value=d.tipoTrabalho||'anonimo';document.getElementById('bonificacao').value=d.bonificacao||'';document.getElementById('horaExtra').value=d.horaExtra||'';document.getElementById('valeRefeicao').value=d.valeRefeicao||'';document.getElementById('valeTransporte').value=d.valeTransporte||'';document.getElementById('feriasRecebidas').value=d.feriasRecebidas||'';document.getElementById('decimoTerceiro').value=d.decimoTerceiro||'';document.getElementById('aposentadoriaExtra').value=d.aposentadoriaExtra||'';document.getElementById('anoEntradaEmpresa').value=d.anoEntradaEmpresa||'';document.getElementById('feriasJaTiradas').value=d.feriasJaTiradas||'';toggleCamposCLT();document.getElementById('generoUsuario').value=d.generoUsuario||'';document.getElementById('nomeUsuarioPerfil').value=d.nomeUsuarioPerfil||'';document.getElementById('idadeUsuarioPerfil').value=d.idadeUsuarioPerfil||'';document.getElementById('alturaUsuarioPerfil').value=d.alturaUsuarioPerfil||'';document.getElementById('dataNascimentoPerfil').value=d.dataNascimentoPerfil||'';document.getElementById('tipoSanguineoPerfil').value=d.tipoSanguineoPerfil||'';document.getElementById('alergiasPerfil').value=d.alergiasPerfil||'';document.getElementById('profissaoPerfil').value=d.profissaoPerfil||'';document.getElementById('cidadeEstadoPerfil').value=d.cidadeEstadoPerfil||'';document.getElementById('fumantePerfil').value=d.fumantePerfil||'';document.getElementById('planoSaudePerfil').value=d.planoSaudePerfil||'';document.getElementById('metaPesoPerfil').value=d.metaPesoPerfil||'';document.getElementById('contatoEmergenciaNomePerfil').value=d.contatoEmergenciaNomePerfil||'';document.getElementById('contatoEmergenciaTelefonePerfil').value=d.contatoEmergenciaTelefonePerfil||'';renderImcEPeso();atualizarAvisoPerfilConectado();document.getElementById('saved').value=d.saved;document.getElementById('bank').value=d.bank;document.getElementById('investments').value=d.investments;document.getElementById('payDay1').value=d.payDay1||'';document.getElementById('payDay2').value=d.payDay2||'';document.getElementById('payDay2Wrap').style.display=d.frequency==='biweekly'?'block':'none';document.getElementById('diaFechamentoFatura').value=d.diaFechamentoFatura||'';renderExpenses();renderFullList();renderBenefits();renderGoals();renderDividas();renderHistorico();renderCompras();renderArquivadas();refresh();document.getElementById('goalBadge').textContent=d.goals.length;document.getElementById('debtBadge').textContent=d.dividas.length;updateSteps();applyExpenseView();document.getElementById('versaoTexto').textContent='v'+APP_VERSION}
 function renderCalculoFerias(){
   const el=document.getElementById('resultadoCalculoFerias');
   if(!el)return;
@@ -1194,21 +1210,72 @@ function pesoMaisRecente(){
   if(!l.length)return null;
   return l.slice().sort((a,b)=>b.data.localeCompare(a.data))[0].peso;
 }
+function salvarMaisInformacoesPerfil(){
+  d.dataNascimentoPerfil=document.getElementById('dataNascimentoPerfil').value;
+  d.tipoSanguineoPerfil=document.getElementById('tipoSanguineoPerfil').value;
+  d.alergiasPerfil=document.getElementById('alergiasPerfil').value;
+  d.profissaoPerfil=document.getElementById('profissaoPerfil').value;
+  d.cidadeEstadoPerfil=document.getElementById('cidadeEstadoPerfil').value;
+  d.fumantePerfil=document.getElementById('fumantePerfil').value;
+  d.planoSaudePerfil=document.getElementById('planoSaudePerfil').value;
+  d.metaPesoPerfil=document.getElementById('metaPesoPerfil').value;
+  d.contatoEmergenciaNomePerfil=document.getElementById('contatoEmergenciaNomePerfil').value;
+  d.contatoEmergenciaTelefonePerfil=document.getElementById('contatoEmergenciaTelefonePerfil').value;
+  save();
+
+  let integracoes=[];
+
+  if(d.dataNascimentoPerfil){
+    const datas=_lerDatas();
+    const jaTemAniversario=datas.some(x=>x.tipo==='aniversario'&&x.nome.toLowerCase().includes('meu aniversário'));
+    if(!jaTemAniversario){
+      datas.push({nome:'🎂 Meu aniversário',tipo:'aniversario',data:d.dataNascimentoPerfil});
+      _salvarDatas(datas);
+      renderDatas();
+      integracoes.push('aniversário adicionado em Datas Importantes');
+    }
+  }
+
+  if(d.contatoEmergenciaNomePerfil&&d.contatoEmergenciaTelefonePerfil){
+    const contatos=_lerContatos();
+    const jaTemContato=contatos.some(x=>x.telefone===d.contatoEmergenciaTelefonePerfil);
+    if(!jaTemContato){
+      contatos.push({nome:d.contatoEmergenciaNomePerfil,categoria:'Emergência',telefone:d.contatoEmergenciaTelefonePerfil,obs:'Contato de emergência (do Perfil)'});
+      _salvarContatos(contatos);
+      renderContatos();
+      integracoes.push('contato de emergência adicionado em Contatos Importantes');
+    }
+  }
+
+  renderImcEPeso();
+  mostrarToastCanivete('✅ Informações salvas!'+(integracoes.length?' Também: '+integracoes.join(', ')+'.':''));
+}
 function renderImcEPeso(){
   const elImc=document.getElementById('imcResumo');
   const elLista=document.getElementById('pesoHistoricoLista');
   if(!elImc)return;
   const altura=n(d.alturaUsuarioPerfil);
   const pesoAtual=pesoMaisRecente();
+  const metaPeso=n(d.metaPesoPerfil);
 
+  let htmlImc='';
   if(altura>0&&pesoAtual>0){
     const alturaM=altura/100;
     const imc=pesoAtual/(alturaM*alturaM);
     const classe=classificarIMC(imc);
-    elImc.innerHTML=`<div class="notice" style="border-left:4px solid ${classe.cor}">📊 IMC atual: <strong>${imc.toFixed(1)}</strong> — ${classe.texto}<br><small style="color:var(--muted)">Referência geral (OMS), não considera massa muscular ou composição corporal. Não substitui avaliação profissional.</small></div>`;
+    htmlImc=`<div class="notice" style="border-left:4px solid ${classe.cor}">📊 IMC atual: <strong>${imc.toFixed(1)}</strong> — ${classe.texto}<br><small style="color:var(--muted)">Referência geral (OMS), não considera massa muscular ou composição corporal. Não substitui avaliação profissional.</small></div>`;
   }else{
-    elImc.innerHTML=`<div class="empty">Preencha sua altura no perfil e registre um peso pra calcular o IMC.</div>`;
+    htmlImc=`<div class="empty">Preencha sua altura no perfil e registre um peso pra calcular o IMC.</div>`;
   }
+  if(metaPeso>0&&pesoAtual>0){
+    const diff=pesoAtual-metaPeso;
+    if(Math.abs(diff)<0.1){
+      htmlImc+=`<div class="notice" style="border-left:4px solid #16a34a;margin-top:8px">🎯 Você está na sua meta de peso (${metaPeso}kg)!</div>`;
+    }else{
+      htmlImc+=`<div class="notice" style="border-left:4px solid #2563eb;margin-top:8px">🎯 Meta: ${metaPeso}kg — faltam ${Math.abs(diff).toFixed(1)}kg pra ${diff>0?'chegar lá':'chegar lá'}.</div>`;
+    }
+  }
+  elImc.innerHTML=htmlImc;
 
   const l=_lerHistoricoPeso().slice().sort((a,b)=>b.data.localeCompare(a.data));
   if(!l.length){elLista.innerHTML='';return}
