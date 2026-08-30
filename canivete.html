@@ -292,7 +292,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 
 <section id="academia" class="section"><div class="card hero"><div><h2>🏋️ Academia</h2><p class="sub">Acompanhe seus treinos e o status da sua matrícula.</p></div></div>
 
-<div class="card"><div class="form" style="margin-top:10px"><div class="field"><label for="academiaStatus">Status atual</label><select id="academiaStatus" onchange="atualizarStatusAcademia(this.value)"><option value="">Nunca comecei</option><option value="ativo">✅ Ativo (treinando)</option><option value="trancado">⏸️ Trancado (matrícula pausada)</option><option value="parei">🛑 Parei</option></select></div><div class="field"><label for="academiaDataInicio">Data que começou (ou voltou)</label><input id="academiaDataInicio" type="date" aria-label="Data que começou na academia" oninput="d.academiaDataInicio=this.value;save()"></div></div>
+<div class="card"><div class="form" style="margin-top:10px"><div class="field"><label for="academiaStatus">Status atual</label><select id="academiaStatus" onchange="mudarStatusAcademiaComData(this.value)"><option value="">Nunca comecei</option><option value="ativo">✅ Ativo (treinando)</option><option value="trancado">⏸️ Trancado (matrícula pausada)</option><option value="parei">🛑 Parei</option></select></div><div class="field"><label for="academiaDataInicio">Data que começou (ou voltou)</label><input id="academiaDataInicio" type="date" aria-label="Data que começou na academia" oninput="d.academiaDataInicio=this.value;save()"></div></div>
+<div class="field" id="academiaDataTrancamentoWrap" style="display:none;margin-top:10px"><label for="academiaDataTrancamento">Data que trancou/parou</label><input id="academiaDataTrancamento" type="date" aria-label="Data que trancou ou parou" onchange="d.academiaDataStatusMudou=this.value;save();renderAcademia()"></div>
 <div class="form" style="margin-top:10px"><div class="field"><label for="academiaMetaFrequencia">Meta de treinos por semana</label><input id="academiaMetaFrequencia" type="number" min="1" max="7" placeholder="Ex.: 4" aria-label="Meta de dias de treino por semana" oninput="d.academiaMetaFrequencia=this.value;save();renderAcademia()"></div><div class="field"><label for="academiaCustoMensalidade">Mensalidade (R$)</label><input id="academiaCustoMensalidade" type="number" min="0" step="0.01" placeholder="Ex.: 120" aria-label="Valor da mensalidade da academia" oninput="d.academiaCustoMensalidade=this.value;save();renderAcademia()"></div></div>
 <div class="form" style="margin-top:10px"><div class="field"><label for="academiaHorarioTreino">Horário do treino (lembrete)</label><input id="academiaHorarioTreino" type="time" aria-label="Horário programado de treino" oninput="d.academiaHorarioTreino=this.value;save()"></div></div>
 <div id="academiaBtnLancarDespesa" style="margin-top:10px"></div>
@@ -320,7 +321,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.21';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.22';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -1746,14 +1747,48 @@ function verificarAlarmeAcademia(){
   save();
 }
 setInterval(verificarAlarmeAcademia,60000);
-function atualizarStatusAcademia(novoStatus){
+function mudarStatusAcademiaComData(novoStatus){
   const statusAnterior=d.academiaStatus;
+  const hoje=new Date().toISOString().slice(0,10);
+
+  if(statusAnterior&&d.academiaDataInicioPeriodoAtual&&statusAnterior!==novoStatus){
+    if(!d.academiaHistoricoPeriodos)d.academiaHistoricoPeriodos=[];
+    d.academiaHistoricoPeriodos.push({tipo:statusAnterior,dataInicio:d.academiaDataInicioPeriodoAtual,dataFim:hoje});
+  }
+
   d.academiaStatus=novoStatus;
-  if((novoStatus==='trancado'||novoStatus==='parei')&&statusAnterior!==novoStatus){
-    d.academiaDataStatusMudou=new Date().toISOString().slice(0,10);
+  if(statusAnterior!==novoStatus){
+    d.academiaDataInicioPeriodoAtual=hoje;
+    if(novoStatus==='trancado'||novoStatus==='parei'){
+      d.academiaDataStatusMudou=hoje;
+    }
+    if(novoStatus==='ativo'){
+      d.academiaDataInicio=hoje;
+    }
   }
   save();
   renderAcademia();
+}
+function calcularTotaisAcademia(){
+  const historico=d.academiaHistoricoPeriodos||[];
+  let totalAtivoDias=0,totalPausadoDias=0;
+  historico.forEach(p=>{
+    const inicio=new Date(p.dataInicio+'T00:00:00');
+    const fim=new Date(p.dataFim+'T00:00:00');
+    const dias=Math.max(0,Math.floor((fim-inicio)/(1000*60*60*24)));
+    if(p.tipo==='ativo')totalAtivoDias+=dias;else totalPausadoDias+=dias;
+  });
+  if(d.academiaStatus&&d.academiaDataInicioPeriodoAtual){
+    const inicio=new Date(d.academiaDataInicioPeriodoAtual+'T00:00:00');
+    const dias=Math.max(0,Math.floor((new Date()-inicio)/(1000*60*60*24)));
+    if(d.academiaStatus==='ativo')totalAtivoDias+=dias;else totalPausadoDias+=dias;
+  }
+  return{totalAtivoDias,totalPausadoDias};
+}
+function formatarDiasComoTempo(dias){
+  if(dias<30)return dias+' dia(s)';
+  const meses=Math.floor(dias/30);
+  return meses+' '+(meses===1?'mês':'meses')+' (aprox.)';
 }
 function toggleTreinoHoje(){
   const l=_lerDiasAcademia();
@@ -1772,6 +1807,12 @@ function renderAcademia(){
   document.getElementById('academiaCustoMensalidade').value=d.academiaCustoMensalidade||'';
   document.getElementById('academiaHorarioTreino').value=d.academiaHorarioTreino||'';
 
+  const elWrapTrancamento=document.getElementById('academiaDataTrancamentoWrap');
+  if(elWrapTrancamento){
+    elWrapTrancamento.style.display=(d.academiaStatus==='trancado'||d.academiaStatus==='parei')?'block':'none';
+    document.getElementById('academiaDataTrancamento').value=d.academiaDataStatusMudou||'';
+  }
+
   const elBtnDespesa=document.getElementById('academiaBtnLancarDespesa');
   const custo=n(d.academiaCustoMensalidade);
   if(elBtnDespesa)elBtnDespesa.innerHTML=custo>0?`<button class="btn light" type="button" onclick="lancarMensalidadeAcademiaComoDespesa()">➕ Lançar ${money(custo)} em Despesas</button>`:'';
@@ -1784,6 +1825,7 @@ function renderAcademia(){
   const elHistLabel=document.getElementById('academiaHistoricoLabel');
   const diasTreino=_lerDiasAcademia();
   const hoje=new Date().toISOString().slice(0,10);
+  const totais=calcularTotaisAcademia();
 
   let htmlResumo='';
   if(!d.academiaStatus){
@@ -1800,6 +1842,10 @@ function renderAcademia(){
       }
     }
     htmlResumo=`<div class="notice" style="border-left:4px solid #16a34a">💪 ${tempoTexto||'Status: ativo'} · Total de treinos registrados: ${diasTreino.length}</div>`;
+
+    if(totais.totalPausadoDias>0){
+      htmlResumo+=`<div class="notice" style="border-left:4px solid #64748b;margin-top:8px">📜 Somando tudo: você já treinou ${formatarDiasComoTempo(totais.totalAtivoDias)} no total, e ficou parado ${formatarDiasComoTempo(totais.totalPausadoDias)} no total (entre trancamentos e pausas).</div>`;
+    }
 
     const metaFreq=n(d.academiaMetaFrequencia);
     if(metaFreq>0){
@@ -1833,11 +1879,22 @@ function renderAcademia(){
     elMarcar.innerHTML=`<button type="button" class="btn ${marcadoHoje?'primary':'light'}" onclick="toggleTreinoHoje()">${marcadoHoje?'✅ Treinei hoje':'⬜ Marcar que treinei hoje'}</button>`;
   }else if(d.academiaStatus==='trancado'){
     const dataTexto=d.academiaDataStatusMudou?new Date(d.academiaDataStatusMudou+'T00:00:00').toLocaleDateString('pt-BR'):'';
-    htmlResumo=`<div class="notice" style="border-left:4px solid #d97706">⏸️ Matrícula trancada${dataTexto?' desde '+dataTexto:''}. Total de treinos antes de trancar: ${diasTreino.length}</div>`;
+    let diasTrancado='';
+    if(d.academiaDataStatusMudou){
+      const dias=Math.floor((new Date()-new Date(d.academiaDataStatusMudou+'T00:00:00'))/(1000*60*60*24));
+      if(dias>=0)diasTrancado=' (já são '+formatarDiasComoTempo(dias)+' trancado)';
+    }
+    htmlResumo=`<div class="notice" style="border-left:4px solid #d97706">⏸️ Matrícula trancada${dataTexto?' desde '+dataTexto:''}${diasTrancado}.</div>`;
+    if(totais.totalAtivoDias>0){
+      htmlResumo+=`<div class="notice" style="border-left:4px solid #64748b;margin-top:8px">📜 Antes de trancar, você já tinha treinado ${formatarDiasComoTempo(totais.totalAtivoDias)} no total.</div>`;
+    }
     elMarcar.innerHTML='';
   }else if(d.academiaStatus==='parei'){
     const dataTexto=d.academiaDataStatusMudou?new Date(d.academiaDataStatusMudou+'T00:00:00').toLocaleDateString('pt-BR'):'';
-    htmlResumo=`<div class="notice" style="border-left:4px solid #dc2626">🛑 Você parou${dataTexto?' em '+dataTexto:''}. Total de treinos que chegou a fazer: ${diasTreino.length}</div>`;
+    htmlResumo=`<div class="notice" style="border-left:4px solid #dc2626">🛑 Você parou${dataTexto?' em '+dataTexto:''}.</div>`;
+    if(totais.totalAtivoDias>0){
+      htmlResumo+=`<div class="notice" style="border-left:4px solid #64748b;margin-top:8px">📜 No total, você chegou a treinar ${formatarDiasComoTempo(totais.totalAtivoDias)}.</div>`;
+    }
     elMarcar.innerHTML='';
   }
   elTempo.innerHTML=htmlResumo;
@@ -2764,4 +2821,4 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',preparar);else preparar();
 })();
 </script>
-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<script id="CANIVETE_V84_USADO_HOJE">\n(function(){\n  function atualizarUsadosHoje(){\n    var botoes = Array.from(document.querySelectorAll('button'));\n    var usados = botoes.filter(function(b){\n      return /usado\\s+hoje/i.test((b.textContent||'').trim());\n    }).length;\n\n    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){\n      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());\n    });\n    labels.forEach(function(label){\n      var box = label.parentElement;\n      if(!box) return;\n      var numero = box.querySelector('.metric,.stat b,strong');\n      if(numero) numero.textContent = String(usados);\n    });\n\n    document.querySelectorAll('*').forEach(function(el){\n      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){\n        var candidatos = el.querySelectorAll('.metric,.stat b,strong');\n        if(candidatos.length) candidatos[0].textContent = String(usados);\n      }\n    });\n  }\n\n  document.addEventListener('click', function(e){\n    var b = e.target.closest && e.target.closest('button');\n    if(!b) return;\n    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){\n      setTimeout(atualizarUsadosHoje, 50);\n      setTimeout(atualizarUsadosHoje, 250);\n    }\n  }, true);\n\n  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });\n  obs.observe(document.body, {subtree:true, childList:true, characterData:true});\n  setTimeout(atualizarUsadosHoje, 300);\n  setTimeout(atualizarUsadosHoje, 1000);\n})();\n</script>\n</body></html>
+\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n</body></html>
