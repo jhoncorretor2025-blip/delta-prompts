@@ -206,7 +206,14 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <section id="dashboard" class="section active"><div id="lembretesWidget"></div><div id="sobraPorDia" style="margin-bottom:16px"></div><div class="card hero"><h2>👋 Organize sua vida financeira</h2><p class="sub"><strong>É simples:</strong> informe quanto recebe → seus gastos → o que já possui → suas metas.</p><div class="notice">🧭 Você pode começar pela renda e avançar passo a passo. Seus dados ficam salvos neste dispositivo — e também na nuvem, com segurança, se você entrar com sua conta Google no menu lateral.</div><div class="row" style="margin-top:14px;flex-wrap:wrap"><button class="btn primary" type="button" onclick="showPage('renda')">🚀 Começar agora</button><button class="btn light" type="button" onclick="showPage('despesas')">💸 Já quero informar gastos</button></div></div><div class="focus"><div class="label">💰 QUANTO PODE SOBRAR PARA VOCÊ</div><div class="value green" id="heroNet">R$ 0,00</div><div class="sub" id="heroExplain">Informe sua renda e suas despesas para descobrir.</div></div><div class="grid cards" style="margin-bottom:16px"><div class="card"><div class="metric-label">💵 Renda mensal</div><div class="metric blue" id="mIncome">R$ 0,00</div><div class="mini">Total estimado</div></div><div class="card"><div class="metric-label">💸 Despesas</div><div class="metric red" id="mExpenses">R$ 0,00</div><div class="mini" id="mExpensePct">0%</div><div class="mini" id="mExpensesAno">≈ R$ 0,00/ano</div></div><div class="card"><div class="metric-label">💰 Sobra</div><div class="metric green" id="mNet">R$ 0,00</div><div class="mini" id="mNetPct">0%</div></div><div class="card"><div class="metric-label">🏦 O que você já possui</div><div class="metric blue" id="mAssets">R$ 0,00</div><div class="mini">Total informado</div></div></div><div class="grid two"><div class="card"><h2>🧭 Diagnóstico financeiro</h2><div id="status" class="status attention"><strong>👋 Vamos começar</strong><small>Informe renda e despesas para receber seu diagnóstico.</small></div><div id="tips"></div></div><div class="card"><h2>📋 Resumo</h2><div class="summary"><div class="sum"><span>💵 Renda</span><strong id="sIncome">R$ 0,00</strong></div><div class="sum"><span>🎁 Benefícios</span><strong id="sBenefits">R$ 0,00</strong></div><div class="sum"><span>💸 Despesas</span><strong id="sExpenses">R$ 0,00</strong></div><div class="sum total"><span>💰 Sobra</span><strong id="sNet">R$ 0,00</strong></div></div></div></div><div id="comparativoMensal"></div><div id="comparativoCategorias"></div><div id="previsaoOcasional"></div><div id="resumoPessoas"></div><div class="card" style="margin-top:16px"><h2>🔔 Lembretes de vencimento</h2><p class="small" style="margin:-6px 0 12px;color:var(--muted)">O Canivete não envia mensagem sozinho (isso exigiria um servidor por trás). Mas você pode: gerar o texto pronto pra mandar no seu WhatsApp/e-mail com 1 clique, ou ativar avisos do navegador enquanto o Canivete estiver aberto numa aba.</p><div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn light" type="button" onclick="enviarLembretePorWhatsApp()">📱 Enviar por WhatsApp</button><button class="btn light" type="button" onclick="enviarLembretePorEmail()">✉️ Enviar por e-mail</button><button class="btn light" type="button" onclick="ativarNotificacaoPush()">🔔 Ativar aviso do navegador</button></div></div></section>
 
 <section id="perfil" class="section"><div class="card hero"><h2>👤 Meu Perfil</h2><p class="sub">Informações centrais suas, usadas por vários recursos do Canivete (hoje e no futuro) pra personalizar sugestões automaticamente. Preencher aqui é opcional, e você sempre pode ajustar depois.</p></div>
-<div class="card"><h2>ℹ️ Dados básicos</h2><div class="form"><div class="field"><label for="generoUsuario">Gênero</label><select id="generoUsuario"><option value="">Prefiro não informar</option><option value="mulher">Mulher</option><option value="homem">Homem</option></select></div><div class="field"><label for="nomeUsuarioPerfil">Nome (opcional, só pra te chamar pelo nome em alguns lugares)</label><input id="nomeUsuarioPerfil" type="text" placeholder="Ex.: Jhonatan" aria-label="Seu nome"></div><div class="field"><label for="idadeUsuarioPerfil">Idade (opcional, ajuda em relatórios pra médico/IA)</label><input id="idadeUsuarioPerfil" type="number" min="0" max="120" placeholder="Ex.: 32" aria-label="Sua idade"></div></div><button class="btn primary" type="button" onclick="salvarPerfil()" style="margin-top:14px">💾 Salvar perfil</button><div class="notice" id="avisoPerfilConectado" style="margin-top:14px">🔌 Esse perfil já é usado hoje pela página de Medicamentos & Vitaminas (sugestão automática de item por gênero). Conforme novos recursos forem criados, eles também vão poder usar essas informações daqui, sem você precisar preencher de novo em cada lugar.</div></div>
+<div class="card"><h2>ℹ️ Dados básicos</h2><div class="form"><div class="field"><label for="generoUsuario">Gênero</label><select id="generoUsuario"><option value="">Prefiro não informar</option><option value="mulher">Mulher</option><option value="homem">Homem</option></select></div><div class="field"><label for="nomeUsuarioPerfil">Nome (opcional, só pra te chamar pelo nome em alguns lugares)</label><input id="nomeUsuarioPerfil" type="text" placeholder="Ex.: Jhonatan" aria-label="Seu nome"></div><div class="field"><label for="idadeUsuarioPerfil">Idade (opcional, ajuda em relatórios pra médico/IA)</label><input id="idadeUsuarioPerfil" type="number" min="0" max="120" placeholder="Ex.: 32" aria-label="Sua idade"></div><div class="field"><label for="alturaUsuarioPerfil">Altura em cm (opcional, usada pra calcular o IMC)</label><input id="alturaUsuarioPerfil" type="number" min="50" max="250" placeholder="Ex.: 175" aria-label="Sua altura em centímetros"></div></div><button class="btn primary" type="button" onclick="salvarPerfil()" style="margin-top:14px">💾 Salvar perfil</button><div class="notice" id="avisoPerfilConectado" style="margin-top:14px">🔌 Esse perfil já é usado hoje pela página de Medicamentos & Vitaminas (sugestão automática de item por gênero). Conforme novos recursos forem criados, eles também vão poder usar essas informações daqui, sem você precisar preencher de novo em cada lugar.</div></div>
+
+<div class="card"><h2>⚖️ Peso & IMC</h2><p class="small">Registre seu peso de tempos em tempos pra acompanhar a evolução. Isso é reaproveitado automaticamente por outros recursos, como a Academia.</p>
+<div class="form" style="margin-top:10px"><div class="field"><label for="novoPesoValor">Peso atual (kg)</label><input id="novoPesoValor" type="number" min="20" max="300" step="0.1" placeholder="Ex.: 78.5" aria-label="Seu peso atual em quilos"></div></div>
+<button class="btn primary" type="button" onclick="registrarPeso()" style="margin-top:12px">➕ Registrar peso de hoje</button>
+<div id="imcResumo" style="margin-top:14px"></div>
+<div id="pesoHistoricoLista" style="margin-top:14px"></div>
+</div>
 
 <div class="card"><h2>👨‍👩‍👧 Familiares</h2><p class="small">Cadastre outras pessoas (esposa, marido, filhos) pra marcar remédios, condições e consultas específicas de cada um, tudo dentro da mesma conta.</p>
 <div class="form" style="margin-top:10px"><div class="field"><label for="novoFamiliarNome">Nome</label><input id="novoFamiliarNome" type="text" placeholder="Ex.: Tania" aria-label="Nome do familiar"></div></div>
@@ -267,6 +274,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <div id="academiaTempoResumo" style="margin-top:12px"></div>
 <div id="academiaMarcarHoje" style="margin-top:12px"></div>
 <div style="margin-top:14px"><strong style="font-size:13px">Últimos 14 dias:</strong><div id="academiaHistorico14" style="display:flex;gap:3px;margin-top:8px;flex-wrap:wrap"></div></div>
+<div class="notice" style="margin-top:14px">⚖️ Acompanhando a evolução do seu peso? Isso fica registrado no seu <a href="#" onclick="showPage('perfil');return false" style="color:var(--blue);font-weight:800">👤 Perfil central</a>, e o IMC é calculado automaticamente de lá.</div>
 </div>
 
 <div class="card"><h2>🏥 Condições de saúde</h2><p class="small">Guarde aqui condições de saúde que você já conhece e queira ter registradas. É apenas um registro pessoal e não é diagnóstico nem substitui acompanhamento médico.</p>
@@ -286,7 +294,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.14';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.15';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -402,7 +410,7 @@ function detectarAnomalias(){
   el.innerHTML=`<div class="card" style="margin-bottom:16px;border:1px solid #fde68a;background:#fffbeb"><h2>🔔 Gastos fora do padrão este mês</h2>${anomalias.map(a=>`<div class="notice alerta" style="margin-top:10px">${a.icon} <strong>${safe(a.nome)}</strong>: você já gastou ${money(a.valorAtual)} este mês, ${a.variacao.toFixed(0)}% a mais que sua média (${money(a.media)}).</div>`).join('')}</div>`;
 }
 
-function render(){document.getElementById('salary').value=d.salary;document.getElementById('frequency').value=d.frequency;document.getElementById('commission').value=d.commission;document.getElementById('hasCommission').checked=!!d.hasCommission;document.getElementById('commissionWrap').style.display=d.hasCommission?'block':'none';document.getElementById('otherIncome').value=d.otherIncome;document.getElementById('tipoTrabalho').value=d.tipoTrabalho||'anonimo';document.getElementById('bonificacao').value=d.bonificacao||'';document.getElementById('horaExtra').value=d.horaExtra||'';document.getElementById('valeRefeicao').value=d.valeRefeicao||'';document.getElementById('valeTransporte').value=d.valeTransporte||'';document.getElementById('feriasRecebidas').value=d.feriasRecebidas||'';document.getElementById('decimoTerceiro').value=d.decimoTerceiro||'';document.getElementById('aposentadoriaExtra').value=d.aposentadoriaExtra||'';document.getElementById('anoEntradaEmpresa').value=d.anoEntradaEmpresa||'';document.getElementById('feriasJaTiradas').value=d.feriasJaTiradas||'';toggleCamposCLT();document.getElementById('generoUsuario').value=d.generoUsuario||'';document.getElementById('nomeUsuarioPerfil').value=d.nomeUsuarioPerfil||'';document.getElementById('idadeUsuarioPerfil').value=d.idadeUsuarioPerfil||'';atualizarAvisoPerfilConectado();document.getElementById('saved').value=d.saved;document.getElementById('bank').value=d.bank;document.getElementById('investments').value=d.investments;document.getElementById('payDay1').value=d.payDay1||'';document.getElementById('payDay2').value=d.payDay2||'';document.getElementById('payDay2Wrap').style.display=d.frequency==='biweekly'?'block':'none';document.getElementById('diaFechamentoFatura').value=d.diaFechamentoFatura||'';renderExpenses();renderFullList();renderBenefits();renderGoals();renderDividas();renderHistorico();renderCompras();renderArquivadas();refresh();document.getElementById('goalBadge').textContent=d.goals.length;document.getElementById('debtBadge').textContent=d.dividas.length;updateSteps();applyExpenseView();document.getElementById('versaoTexto').textContent='v'+APP_VERSION}
+function render(){document.getElementById('salary').value=d.salary;document.getElementById('frequency').value=d.frequency;document.getElementById('commission').value=d.commission;document.getElementById('hasCommission').checked=!!d.hasCommission;document.getElementById('commissionWrap').style.display=d.hasCommission?'block':'none';document.getElementById('otherIncome').value=d.otherIncome;document.getElementById('tipoTrabalho').value=d.tipoTrabalho||'anonimo';document.getElementById('bonificacao').value=d.bonificacao||'';document.getElementById('horaExtra').value=d.horaExtra||'';document.getElementById('valeRefeicao').value=d.valeRefeicao||'';document.getElementById('valeTransporte').value=d.valeTransporte||'';document.getElementById('feriasRecebidas').value=d.feriasRecebidas||'';document.getElementById('decimoTerceiro').value=d.decimoTerceiro||'';document.getElementById('aposentadoriaExtra').value=d.aposentadoriaExtra||'';document.getElementById('anoEntradaEmpresa').value=d.anoEntradaEmpresa||'';document.getElementById('feriasJaTiradas').value=d.feriasJaTiradas||'';toggleCamposCLT();document.getElementById('generoUsuario').value=d.generoUsuario||'';document.getElementById('nomeUsuarioPerfil').value=d.nomeUsuarioPerfil||'';document.getElementById('idadeUsuarioPerfil').value=d.idadeUsuarioPerfil||'';document.getElementById('alturaUsuarioPerfil').value=d.alturaUsuarioPerfil||'';renderImcEPeso();atualizarAvisoPerfilConectado();document.getElementById('saved').value=d.saved;document.getElementById('bank').value=d.bank;document.getElementById('investments').value=d.investments;document.getElementById('payDay1').value=d.payDay1||'';document.getElementById('payDay2').value=d.payDay2||'';document.getElementById('payDay2Wrap').style.display=d.frequency==='biweekly'?'block':'none';document.getElementById('diaFechamentoFatura').value=d.diaFechamentoFatura||'';renderExpenses();renderFullList();renderBenefits();renderGoals();renderDividas();renderHistorico();renderCompras();renderArquivadas();refresh();document.getElementById('goalBadge').textContent=d.goals.length;document.getElementById('debtBadge').textContent=d.dividas.length;updateSteps();applyExpenseView();document.getElementById('versaoTexto').textContent='v'+APP_VERSION}
 function renderCalculoFerias(){
   const el=document.getElementById('resultadoCalculoFerias');
   if(!el)return;
@@ -1137,9 +1145,11 @@ function salvarPerfil(){
   d.generoUsuario=document.getElementById('generoUsuario').value;
   d.nomeUsuarioPerfil=document.getElementById('nomeUsuarioPerfil').value;
   d.idadeUsuarioPerfil=document.getElementById('idadeUsuarioPerfil').value;
+  d.alturaUsuarioPerfil=document.getElementById('alturaUsuarioPerfil').value;
   save();
   aplicarSugestaoPorGenero();
   atualizarAvisoPerfilConectado();
+  renderImcEPeso();
   mostrarToastCanivete('✅ Perfil salvo com sucesso!');
 }
 function atualizarAvisoPerfilConectado(){
@@ -1147,6 +1157,72 @@ function atualizarAvisoPerfilConectado(){
   if(!aviso)return;
   const preenchido=!!(d.generoUsuario||d.nomeUsuarioPerfil||d.idadeUsuarioPerfil);
   aviso.style.display=preenchido?'none':'block';
+}
+function _lerHistoricoPeso(){
+  try{return JSON.parse(localStorage.getItem('canivete-historico-peso'))||[]}catch(e){return[]}
+}
+function _salvarHistoricoPeso(l){
+  try{localStorage.setItem('canivete-historico-peso',JSON.stringify(l))}catch(e){}
+}
+function classificarIMC(imc){
+  if(imc<18.5)return{texto:'Abaixo do peso',cor:'#2563eb'};
+  if(imc<25)return{texto:'Peso considerado normal',cor:'#16a34a'};
+  if(imc<30)return{texto:'Sobrepeso',cor:'#d97706'};
+  if(imc<35)return{texto:'Obesidade grau I',cor:'#dc2626'};
+  if(imc<40)return{texto:'Obesidade grau II',cor:'#dc2626'};
+  return{texto:'Obesidade grau III',cor:'#dc2626'};
+}
+function registrarPeso(){
+  const valor=n(document.getElementById('novoPesoValor').value);
+  if(!valor||valor<=0){mostrarToastCanivete('Digite um peso válido.');return}
+  const l=_lerHistoricoPeso();
+  const hoje=new Date().toISOString().slice(0,10);
+  const idxHoje=l.findIndex(x=>x.data===hoje);
+  if(idxHoje!==-1)l[idxHoje].peso=valor;else l.push({data:hoje,peso:valor});
+  _salvarHistoricoPeso(l);
+  document.getElementById('novoPesoValor').value='';
+  renderImcEPeso();
+  mostrarToastCanivete('✅ Peso registrado!');
+}
+function _removerPeso(i){
+  confirmarCanivete('Remover esse registro de peso?',()=>{
+    const l=_lerHistoricoPeso();l.splice(i,1);_salvarHistoricoPeso(l);renderImcEPeso();
+  });
+}
+function pesoMaisRecente(){
+  const l=_lerHistoricoPeso();
+  if(!l.length)return null;
+  return l.slice().sort((a,b)=>b.data.localeCompare(a.data))[0].peso;
+}
+function renderImcEPeso(){
+  const elImc=document.getElementById('imcResumo');
+  const elLista=document.getElementById('pesoHistoricoLista');
+  if(!elImc)return;
+  const altura=n(d.alturaUsuarioPerfil);
+  const pesoAtual=pesoMaisRecente();
+
+  if(altura>0&&pesoAtual>0){
+    const alturaM=altura/100;
+    const imc=pesoAtual/(alturaM*alturaM);
+    const classe=classificarIMC(imc);
+    elImc.innerHTML=`<div class="notice" style="border-left:4px solid ${classe.cor}">📊 IMC atual: <strong>${imc.toFixed(1)}</strong> — ${classe.texto}<br><small style="color:var(--muted)">Referência geral (OMS), não considera massa muscular ou composição corporal. Não substitui avaliação profissional.</small></div>`;
+  }else{
+    elImc.innerHTML=`<div class="empty">Preencha sua altura no perfil e registre um peso pra calcular o IMC.</div>`;
+  }
+
+  const l=_lerHistoricoPeso().slice().sort((a,b)=>b.data.localeCompare(a.data));
+  if(!l.length){elLista.innerHTML='';return}
+  elLista.innerHTML='<strong style="font-size:13px">Histórico:</strong>'+l.map((x,idx)=>{
+    const dataFormatada=new Date(x.data+'T00:00:00').toLocaleDateString('pt-BR');
+    const anterior=l[idx+1];
+    let variacao='';
+    if(anterior){
+      const diff=x.peso-anterior.peso;
+      variacao=` <span style="color:${diff>0?'#dc2626':diff<0?'#16a34a':'var(--muted)'}">(${diff>0?'+':''}${diff.toFixed(1)}kg)</span>`;
+    }
+    const iReal=_lerHistoricoPeso().findIndex(y=>y.data===x.data);
+    return `<div class="row between" style="padding:7px 0;border-bottom:1px solid var(--line);font-size:13px"><span>${dataFormatada}: <strong>${x.peso}kg</strong>${variacao}</span><button class="btn danger" type="button" onclick="_removerPeso(${iReal})" style="font-size:11px;padding:4px 8px">🗑️</button></div>`;
+  }).join('');
 }
 function aplicarSugestaoPorGenero(){
   if(d.generoUsuario!=='mulher')return;
@@ -2614,4 +2690,44 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   setTimeout(atualizarUsadosHoje, 300);
   setTimeout(atualizarUsadosHoje, 1000);
 })();
-</script>\n\n<script id="CANIVETE_V84_USADO_HOJE">\n(function(){\n  function atualizarUsadosHoje(){\n    var botoes = Array.from(document.querySelectorAll('button'));\n    var usados = botoes.filter(function(b){\n      return /usado\\s+hoje/i.test((b.textContent||'').trim());\n    }).length;\n\n    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){\n      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());\n    });\n    labels.forEach(function(label){\n      var box = label.parentElement;\n      if(!box) return;\n      var numero = box.querySelector('.metric,.stat b,strong');\n      if(numero) numero.textContent = String(usados);\n    });\n\n    document.querySelectorAll('*').forEach(function(el){\n      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){\n        var candidatos = el.querySelectorAll('.metric,.stat b,strong');\n        if(candidatos.length) candidatos[0].textContent = String(usados);\n      }\n    });\n  }\n\n  document.addEventListener('click', function(e){\n    var b = e.target.closest && e.target.closest('button');\n    if(!b) return;\n    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){\n      setTimeout(atualizarUsadosHoje, 50);\n      setTimeout(atualizarUsadosHoje, 250);\n    }\n  }, true);\n\n  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });\n  obs.observe(document.body, {subtree:true, childList:true, characterData:true});\n  setTimeout(atualizarUsadosHoje, 300);\n  setTimeout(atualizarUsadosHoje, 1000);\n})();\n</script>\n</body></html>
+</script>\n\n<script>
+(function(){
+  function atualizarUsadosHoje(){
+    var botoes = Array.from(document.querySelectorAll('button'));
+    var usados = botoes.filter(function(b){
+      return /usado\\s+hoje/i.test((b.textContent||'').trim());
+    }).length;
+
+    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){
+      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());
+    });
+    labels.forEach(function(label){
+      var box = label.parentElement;
+      if(!box) return;
+      var numero = box.querySelector('.metric,.stat b,strong');
+      if(numero) numero.textContent = String(usados);
+    });
+
+    document.querySelectorAll('*').forEach(function(el){
+      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){
+        var candidatos = el.querySelectorAll('.metric,.stat b,strong');
+        if(candidatos.length) candidatos[0].textContent = String(usados);
+      }
+    });
+  }
+
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('button');
+    if(!b) return;
+    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){
+      setTimeout(atualizarUsadosHoje, 50);
+      setTimeout(atualizarUsadosHoje, 250);
+    }
+  }, true);
+
+  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });
+  obs.observe(document.body, {subtree:true, childList:true, characterData:true});
+  setTimeout(atualizarUsadosHoje, 300);
+  setTimeout(atualizarUsadosHoje, 1000);
+})();
+</script>\n</body></html>
