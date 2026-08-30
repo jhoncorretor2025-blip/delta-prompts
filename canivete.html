@@ -123,6 +123,49 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
   .bottom-nav button{min-height:52px}
 }
 </style>
+<style>
+/* CANIVETE V8.8 - UX/UI polish */
+:root{--ux-space:16px;--ux-radius:16px;--ux-focus:rgba(37,99,235,.16)}
+body{line-height:1.45;letter-spacing:-.01em}
+.side{padding-top:18px;box-shadow:4px 0 18px rgba(15,23,42,.035)}
+.brand{letter-spacing:-.025em}
+.nav button{min-height:44px;font-weight:650;transition:background .15s,border-color .15s,transform .15s}
+.nav button:hover{transform:translateX(2px)}
+.nav button.active{font-weight:800;box-shadow:inset 3px 0 0 var(--blue)}
+.main{padding-top:24px}
+.top h1{letter-spacing:-.035em;font-weight:900}
+.sub{max-width:760px}
+.card{border-radius:var(--ux-radius);transition:box-shadow .18s,border-color .18s,transform .18s}
+.card:hover{box-shadow:0 10px 30px rgba(15,23,42,.07)}
+.cards .card{min-height:116px}
+.metric{letter-spacing:-.03em}
+.btn{transition:transform .12s,box-shadow .12s,background .12s}
+.btn:hover{transform:translateY(-1px)}
+.primary{box-shadow:0 5px 12px rgba(37,99,235,.18)}
+.field input,.field select{transition:border-color .15s,box-shadow .15s}
+.field label{text-transform:none;letter-spacing:0}
+.pill{gap:4px}
+.empty{background:rgba(248,250,252,.5)}
+.expense-summary .stat{min-width:118px}
+.expense-view{position:sticky;top:8px;z-index:8;backdrop-filter:blur(8px)}
+.category{box-shadow:0 2px 10px rgba(15,23,42,.025)}
+.cat-head{min-height:66px}
+.cat-title{letter-spacing:-.01em}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #93c5fd;outline-offset:2px;box-shadow:0 0 0 4px var(--ux-focus)}
+@media(max-width:760px){
+  .main{padding:14px 12px 96px}
+  .top h1{font-size:23px}
+  .top{margin-bottom:16px}
+  .card{padding:16px;border-radius:14px}
+  .cards{gap:10px}
+  .cards .card{min-height:104px}
+  .metric{font-size:23px}
+  .expense-view{top:4px}
+  .view-switch button{padding:9px 10px}
+  .cat-head{min-height:62px}
+  .bottom-nav button{min-height:52px}
+}
+</style>
 </head>
 <body>
 <a href="#conteudoPrincipal" style="position:absolute;left:-9999px;top:0;z-index:9999;background:var(--blue);color:#fff;padding:12px 18px;border-radius:0 0 10px 0;font-weight:700;text-decoration:none" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Pular para o conteúdo</a>
@@ -235,7 +278,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.11';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.8';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
