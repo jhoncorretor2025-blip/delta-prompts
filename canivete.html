@@ -308,7 +308,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.8';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.18';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -1458,13 +1458,26 @@ let diasHistoricoRemedios=7;
 let filtroTipoRemedioAtivo='todos';
 let ordenacaoRemedioAtiva='adicao';
 let modoCompactoRemedios=false;
+let _travaSetFiltroTipoRemedio=false;
+let _timestampUltimoFiltroReal=0;
 function setFiltroTipoRemedio(v){
-  filtroTipoRemedioAtivo=v;
-  ['todos','medicamento','vitamina','cha','ativo'].forEach(tipo=>{
-    const btn=document.getElementById('btnFiltroRemedio_'+tipo);
-    if(btn)btn.classList.toggle('active',tipo===v);
-  });
-  renderListaRemedios();
+  if(_travaSetFiltroTipoRemedio)return;
+  const agora=Date.now();
+  if(agora-_timestampUltimoFiltroReal<250)return;
+  _timestampUltimoFiltroReal=agora;
+  if(v===filtroTipoRemedioAtivo)return;
+  _travaSetFiltroTipoRemedio=true;
+  try{
+    filtroTipoRemedioAtivo=v;
+    ['todos','medicamento','vitamina','cha','ativo'].forEach(tipo=>{
+      const btn=document.getElementById('btnFiltroRemedio_'+tipo);
+      if(btn)btn.classList.toggle('active',tipo===v);
+    });
+    document.querySelectorAll('#saude .health-tab81').forEach(function(b){b.classList.toggle('active',b.dataset.healthTab===v)});
+    renderListaRemedios();
+  }finally{
+    _travaSetFiltroTipoRemedio=false;
+  }
 }
 function setOrdenacaoRemedio(v){
   ordenacaoRemedioAtiva=v;
@@ -2552,21 +2565,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 </script>
 
 
-<!-- CANIVETE-V83-NAVEGACAO-SAUDE -->
-<script>
-(function(){
-  function sincronizar(){
-    const f=document.getElementById('btnFiltroRemedio_vitamina');
-    const t=document.querySelector('.health-tab81[data-health-tab="vitamina"]');
-    if(f && t && !f.dataset.sync83){
-      f.dataset.sync83='1';
-      f.addEventListener('click',function(){setTimeout(()=>t.click(),30)});
-    }
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sincronizar);else sincronizar();
-  document.addEventListener('click',e=>{if(e.target.closest('[data-page="saude"]'))setTimeout(sincronizar,180)});
-})();
-</script>
+<!-- CANIVETE-V83-NAVEGACAO-SAUDE (sincronizacao cruzada removida - causava loop revertendo filtro pra vitamina) -->
 
 \n<script>
 (function(){
@@ -2608,21 +2607,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   setTimeout(atualizarUsadosHoje, 300);
   setTimeout(atualizarUsadosHoje, 1000);
 })();
-</script>\n<script id="CANIVETE_V89_MOBILE_UX">
-(function(){
-  function atualizarVisualSaude89(tipo){
-    const tabs=document.querySelectorAll('.health-tab81');tabs.forEach(b=>b.classList.toggle('active',b.dataset.healthTab===tipo));
-    const context=document.querySelector('.health-context81');const textos={medicamento:'💊 Seus medicamentos em uso ou pausados. O histórico continua salvo.',vitamina:'🌿 Vitaminas e suplementos que você usa ou pretende retomar.',consulta:'🩺 Consultas médicas, acompanhamentos e valores pagos.',cha:'🍵 Chás e bebidas naturais que você deseja acompanhar.'};if(context)context.textContent=textos[tipo]||'';
-    if(typeof setFiltroTipoRemedio==='function')setFiltroTipoRemedio(tipo);
-    const sv=document.getElementById('sugestoesVitaminas'),sm=document.getElementById('sugestoesMedicamentos'),sc=document.getElementById('sugestoesChas');
-    if(sv&&sv.parentElement)sv.parentElement.style.display=tipo==='vitamina'?'block':'none';if(sm&&sm.parentElement)sm.parentElement.style.display=tipo==='medicamento'?'block':'none';if(sc&&sc.parentElement)sc.parentElement.style.display=tipo==='cha'?'block':'none';
-  }
-  function bindTabs89(){document.querySelectorAll('#saude .health-tab81').forEach(tab=>{tab.style.pointerEvents='auto';tab.style.position='relative';tab.style.zIndex='1001';if(!tab.dataset.v89bound){tab.dataset.v89bound='1';const acao=e=>{e.preventDefault();e.stopPropagation();atualizarVisualSaude89(tab.dataset.healthTab)};tab.addEventListener('pointerup',acao,{passive:false});tab.addEventListener('touchend',acao,{passive:false})}})}
-  document.addEventListener('pointerdown',e=>{const tab=e.target.closest&&e.target.closest('#saude .health-tab81');if(tab){tab.style.pointerEvents='auto';tab.style.zIndex='1001'}},true);
-  document.addEventListener('click',e=>{const tab=e.target.closest&&e.target.closest('#saude .health-tab81');if(tab)atualizarVisualSaude89(tab.dataset.healthTab)},true);
-  const obs=new MutationObserver(bindTabs89);obs.observe(document.body,{childList:true,subtree:true});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindTabs89);else bindTabs89();
-})();</script>
-<script id="CANIVETE_V89_MOBILE_TABS">
+</script>\n<script id="CANIVETE_V89_MOBILE_TABS">
 (function(){
   function ativarAba89(tipo){
     document.querySelectorAll('#saude .health-tab81').forEach(function(b){b.classList.toggle('active',b.dataset.healthTab===tipo)});
@@ -2643,168 +2628,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   }
   document.addEventListener('pointerdown',function(e){var t=e.target.closest&&e.target.closest('#saude .health-tab81');if(t){t.style.pointerEvents='auto';t.style.zIndex='1001'}},true);
   document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('#saude .health-tab81');if(t)ativarAba89(t.dataset.healthTab)},true);
-  var mo=new MutationObserver(preparar);mo.observe(document.body,{subtree:true,childList:true});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',preparar);else preparar();
 })();
 </script>
-\n<script>
-(function(){
-  function atualizarUsadosHoje(){
-    var botoes = Array.from(document.querySelectorAll('button'));
-    var usados = botoes.filter(function(b){
-      return /usado\\s+hoje/i.test((b.textContent||'').trim());
-    }).length;
-
-    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){
-      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());
-    });
-    labels.forEach(function(label){
-      var box = label.parentElement;
-      if(!box) return;
-      var numero = box.querySelector('.metric,.stat b,strong');
-      if(numero) numero.textContent = String(usados);
-    });
-
-    document.querySelectorAll('*').forEach(function(el){
-      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){
-        var candidatos = el.querySelectorAll('.metric,.stat b,strong');
-        if(candidatos.length) candidatos[0].textContent = String(usados);
-      }
-    });
-  }
-
-  document.addEventListener('click', function(e){
-    var b = e.target.closest && e.target.closest('button');
-    if(!b) return;
-    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){
-      setTimeout(atualizarUsadosHoje, 50);
-      setTimeout(atualizarUsadosHoje, 250);
-    }
-  }, true);
-
-  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });
-  obs.observe(document.body, {subtree:true, childList:true, characterData:true});
-  setTimeout(atualizarUsadosHoje, 300);
-  setTimeout(atualizarUsadosHoje, 1000);
-})();
-</script>\n\n\n\n\n\n<script>
-(function(){
-  function atualizarUsadosHoje(){
-    var botoes = Array.from(document.querySelectorAll('button'));
-    var usados = botoes.filter(function(b){
-      return /usado\\s+hoje/i.test((b.textContent||'').trim());
-    }).length;
-
-    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){
-      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());
-    });
-    labels.forEach(function(label){
-      var box = label.parentElement;
-      if(!box) return;
-      var numero = box.querySelector('.metric,.stat b,strong');
-      if(numero) numero.textContent = String(usados);
-    });
-
-    document.querySelectorAll('*').forEach(function(el){
-      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){
-        var candidatos = el.querySelectorAll('.metric,.stat b,strong');
-        if(candidatos.length) candidatos[0].textContent = String(usados);
-      }
-    });
-  }
-
-  document.addEventListener('click', function(e){
-    var b = e.target.closest && e.target.closest('button');
-    if(!b) return;
-    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){
-      setTimeout(atualizarUsadosHoje, 50);
-      setTimeout(atualizarUsadosHoje, 250);
-    }
-  }, true);
-
-  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });
-  obs.observe(document.body, {subtree:true, childList:true, characterData:true});
-  setTimeout(atualizarUsadosHoje, 300);
-  setTimeout(atualizarUsadosHoje, 1000);
-})();
-</script>\n\n<script>
-(function(){
-  function atualizarUsadosHoje(){
-    var botoes = Array.from(document.querySelectorAll('button'));
-    var usados = botoes.filter(function(b){
-      return /usado\\s+hoje/i.test((b.textContent||'').trim());
-    }).length;
-
-    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){
-      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());
-    });
-    labels.forEach(function(label){
-      var box = label.parentElement;
-      if(!box) return;
-      var numero = box.querySelector('.metric,.stat b,strong');
-      if(numero) numero.textContent = String(usados);
-    });
-
-    document.querySelectorAll('*').forEach(function(el){
-      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){
-        var candidatos = el.querySelectorAll('.metric,.stat b,strong');
-        if(candidatos.length) candidatos[0].textContent = String(usados);
-      }
-    });
-  }
-
-  document.addEventListener('click', function(e){
-    var b = e.target.closest && e.target.closest('button');
-    if(!b) return;
-    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){
-      setTimeout(atualizarUsadosHoje, 50);
-      setTimeout(atualizarUsadosHoje, 250);
-    }
-  }, true);
-
-  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });
-  obs.observe(document.body, {subtree:true, childList:true, characterData:true});
-  setTimeout(atualizarUsadosHoje, 300);
-  setTimeout(atualizarUsadosHoje, 1000);
-})();
-</script>\n\n<script>
-(function(){
-  function atualizarUsadosHoje(){
-    var botoes = Array.from(document.querySelectorAll('button'));
-    var usados = botoes.filter(function(b){
-      return /usado\\s+hoje/i.test((b.textContent||'').trim());
-    }).length;
-
-    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){
-      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());
-    });
-    labels.forEach(function(label){
-      var box = label.parentElement;
-      if(!box) return;
-      var numero = box.querySelector('.metric,.stat b,strong');
-      if(numero) numero.textContent = String(usados);
-    });
-
-    document.querySelectorAll('*').forEach(function(el){
-      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){
-        var candidatos = el.querySelectorAll('.metric,.stat b,strong');
-        if(candidatos.length) candidatos[0].textContent = String(usados);
-      }
-    });
-  }
-
-  document.addEventListener('click', function(e){
-    var b = e.target.closest && e.target.closest('button');
-    if(!b) return;
-    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){
-      setTimeout(atualizarUsadosHoje, 50);
-      setTimeout(atualizarUsadosHoje, 250);
-    }
-  }, true);
-
-  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });
-  obs.observe(document.body, {subtree:true, childList:true, characterData:true});
-  setTimeout(atualizarUsadosHoje, 300);
-  setTimeout(atualizarUsadosHoje, 1000);
-})();
-</script>\n</body></html>
+\n\n\n\n\n\n\n\n\n\n\n\n</body></html>
