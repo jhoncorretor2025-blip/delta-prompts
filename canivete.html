@@ -122,7 +122,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='7.8';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='7.9';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -855,7 +855,35 @@ function _editarContato(i,campo,valor){const l=_lerContatos();l[i][campo]=valor;
 function _removerContato(i){confirmarCanivete('Excluir este contato?',()=>{const l=_lerContatos();l.splice(i,1);_salvarContatos(l);renderContatos()})}
 
 // ===== LINKS IMPORTANTES =====
-const listaVitaminasSugeridas=['Creatina','Ashwagandha + Moringa + Maca Negra (combo)','Ashwagandha','Moringa','Maca Negra','Colágeno','Zinco','NAC (N-acetilcisteína)','Ômega 3','Vitamina D','Complexo B','Magnésio','Melatonina','Cúrcuma (Curcumina)','Coenzima Q10','Vitamina C','Própolis'];
+const listaVitaminasSugeridas=['Creatina','Ashwagandha + Moringa + Maca Negra (combo)','Ashwagandha','Moringa','Maca Negra','Colágeno','Zinco','NAC (N-acetilcisteína)','Ômega 3','Vitamina D','Complexo B','Magnésio','Melatonina','Cúrcuma (Curcumina)','Coenzima Q10','Vitamina C','Própolis','Vitamina B12','Vitamina B6','Vitamina B9 (Ácido fólico)','Vitamina A','Vitamina E','Vitamina B1 (Tiamina)','Vitamina B2 (Riboflavina)','Vitamina B3 (Niacina)'];
+const infoVitaminas={
+  'vitamina d':'Ossos, músculos e sistema imunológico',
+  'vitamina c':'Antioxidante e sistema imunológico',
+  'vitamina b12':'Sistema nervoso e formação das células sanguíneas',
+  'vitamina b6':'Metabolismo e sistema nervoso',
+  'vitamina b9 (ácido fólico)':'Formação de células e DNA',
+  'vitamina a':'Visão, pele e imunidade',
+  'vitamina e':'Ação antioxidante e proteção celular',
+  'vitamina b1 (tiamina)':'Energia e funcionamento do sistema nervoso',
+  'vitamina b2 (riboflavina)':'Energia e manutenção das células',
+  'vitamina b3 (niacina)':'Metabolismo energético e pele',
+};
+function mostrarInfoVitamina(nome){
+  const info=infoVitaminas[nome.toLowerCase()];
+  const texto=info?('Mais conhecida por: '+info):'Sem informação cadastrada pra esse item ainda.';
+  const overlay=document.createElement('div');
+  overlay.className='overlay';
+  overlay.style.cssText='display:flex;z-index:6000;position:fixed;inset:0;background:rgba(15,23,42,.55);align-items:center;justify-content:center;padding:16px';
+  overlay.innerHTML=`<div class="card" style="max-width:340px;padding:22px;text-align:center">
+    <div style="font-size:30px;margin-bottom:6px">ℹ️</div>
+    <h3 style="margin:0 0 8px">${safe(nome)}</h3>
+    <p style="margin:0 0 12px;font-size:13.5px;line-height:1.5;color:var(--ink)">${safe(texto)}</p>
+    ${info?'<p style="margin:0 0 16px;font-size:11.5px;color:var(--muted)">Informação geral, não substitui orientação médica.</p>':''}
+    <button class="btn primary" type="button" onclick="this.closest('.overlay').remove()" style="width:100%">Entendi</button>
+  </div>`;
+  overlay.addEventListener('click',(e)=>{if(e.target===overlay)overlay.remove()});
+  document.body.appendChild(overlay);
+}
 const listaMedicamentosSugeridos=['Paracetamol','Dorsilax','Dipirona','Ibuprofeno'];
 
 function _lerRemedios(){
@@ -871,7 +899,8 @@ function renderSugestoesRemedios(){
   const jaTem=_lerRemedios().map(r=>r.nome.toLowerCase());
   elV.innerHTML=listaVitaminasSugeridas.map(nome=>{
     const desabilitado=jaTem.includes(nome.toLowerCase());
-    return `<button type="button" class="btn light" style="font-size:11.5px;padding:6px 10px;${desabilitado?'opacity:.5;cursor:default':''}" ${desabilitado?'disabled':''} onclick="addRemedioRapido('${nome.replace(/'/g,"\\'")}','vitamina')">${desabilitado?'✓ ':'+ '}${nome}</button>`;
+    const temInfo=!!infoVitaminas[nome.toLowerCase()];
+    return `<span style="display:inline-flex;align-items:center;gap:2px"><button type="button" class="btn light" style="font-size:11.5px;padding:6px 10px;${desabilitado?'opacity:.5;cursor:default':''}" ${desabilitado?'disabled':''} onclick="addRemedioRapido('${nome.replace(/'/g,"\\'")}','vitamina')">${desabilitado?'✓ ':'+ '}${nome}</button>${temInfo?`<button type="button" onclick="mostrarInfoVitamina('${nome.replace(/'/g,"\\'")}')" aria-label="O que é ${safe(nome)}" style="width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:11px;font-weight:800;cursor:pointer;flex-shrink:0">?</button>`:''}</span>`;
   }).join('');
   elM.innerHTML=listaMedicamentosSugeridos.map(nome=>{
     const desabilitado=jaTem.includes(nome.toLowerCase());
@@ -1185,7 +1214,7 @@ function renderListaRemedios(){
     const estoqueBaixo=r.estoqueAtual!==undefined&&r.estoqueAtual!==''&&r.estoqueMinimo!==undefined&&r.estoqueMinimo!==''&&Number(r.estoqueAtual)<=Number(r.estoqueMinimo);
     const detalhesAbertos=detalhesRemedioAbertos.has(i);
     const horarios=r.horarios||(r.horarioConsumo?[r.horarioConsumo]:[]);
-    return `<div class="goal" style="${!ativo?'opacity:.55':''}"><div class="row between"><div><strong><span style="color:var(--muted);font-weight:800">${i+1}.</span> ${r.tipo==='medicamento'?'💊':'🌿'} ${safe(r.nome)}</strong> ${!ativo?'<span style="font-size:10px;background:#e2e8f0;color:#475569;padding:2px 7px;border-radius:999px;font-weight:800">⏸️ INATIVO</span>':''}<div class="small" style="color:var(--muted)">${r.tipo==='medicamento'?'Medicamento':'Vitamina/Suplemento'} · usado ${r.diasUso.length}x no total${horarios.length?' · ⏰ '+horarios.join(', '):''}${r.frequencia?' · 🔁 '+safe(r.frequencia):''}${r.custoMensal?' · 💰 '+money(n(r.custoMensal))+'/mês':''}</div>${r.observacao?`<div class="small" style="color:var(--ink);margin-top:4px;font-style:italic">📝 ${safe(r.observacao)}</div>`:''}</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn light" type="button" onclick="toggleDetalhesRemedio(${i})" aria-label="Ver/editar detalhes">${detalhesAbertos?'🔼':'⚙️'}</button><button class="btn light" type="button" onclick="_duplicarRemedio(${i})" aria-label="Duplicar item">📋</button><button class="btn light" type="button" onclick="_editarRemedio(${i})" aria-label="Editar nome">✏️</button><button class="btn danger" type="button" onclick="_removerRemedio(${i})" aria-label="Remover">🗑️</button></div></div>
+    return `<div class="goal" style="${!ativo?'opacity:.55':''}"><div class="row between"><div><strong><span style="color:var(--muted);font-weight:800">${i+1}.</span> ${r.tipo==='medicamento'?'💊':'🌿'} ${safe(r.nome)}</strong>${infoVitaminas[r.nome.toLowerCase()]?` <button type="button" onclick="mostrarInfoVitamina('${r.nome.replace(/'/g,"\\'")}')" aria-label="O que é ${safe(r.nome)}" style="width:19px;height:19px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:10px;font-weight:800;cursor:pointer;vertical-align:middle">?</button>`:''} ${!ativo?'<span style="font-size:10px;background:#e2e8f0;color:#475569;padding:2px 7px;border-radius:999px;font-weight:800">⏸️ INATIVO</span>':''}<div class="small" style="color:var(--muted)">${r.tipo==='medicamento'?'Medicamento':'Vitamina/Suplemento'} · usado ${r.diasUso.length}x no total${horarios.length?' · ⏰ '+horarios.join(', '):''}${r.frequencia?' · 🔁 '+safe(r.frequencia):''}${r.custoMensal?' · 💰 '+money(n(r.custoMensal))+'/mês':''}</div>${r.observacao?`<div class="small" style="color:var(--ink);margin-top:4px;font-style:italic">📝 ${safe(r.observacao)}</div>`:''}</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn light" type="button" onclick="toggleDetalhesRemedio(${i})" aria-label="Ver/editar detalhes">${detalhesAbertos?'🔼':'⚙️'}</button><button class="btn light" type="button" onclick="_duplicarRemedio(${i})" aria-label="Duplicar item">📋</button><button class="btn light" type="button" onclick="_editarRemedio(${i})" aria-label="Editar nome">✏️</button><button class="btn danger" type="button" onclick="_removerRemedio(${i})" aria-label="Remover">🗑️</button></div></div>
     ${estoqueBaixo?`<div class="notice" style="border-left:4px solid #dc2626;margin-top:8px;font-size:12.5px">📦 Estoque baixo: só restam ${r.estoqueAtual}. Hora de repor!</div>`:''}
     ${ativo&&diasSemMarcar>=1?`<div class="notice" style="border-left:4px solid ${diasSemMarcar>=3?'#dc2626':'#d97706'};margin-top:8px;font-size:12.5px">⚠️ ${diasSemMarcar===1?'Você não marcou ontem':'Já são '+diasSemMarcar+' dias seguidos sem marcar'} — não esqueça de manter sua rotina!</div>`:''}
     ${detalhesAbertos?`<div style="background:var(--bg2,#f8fafc);border-radius:10px;padding:12px;margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
