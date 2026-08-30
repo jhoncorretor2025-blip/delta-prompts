@@ -321,7 +321,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.22';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.23';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -1967,34 +1967,57 @@ function _lerLinks(){
   }catch(e){l=null}
   if(!l){
     // primeira vez que a pessoa abre essa lista: ja vem com o link do MEI configurado
-    l=[{nome:'📋 Emissor de Nota Fiscal MEI (NFS-e Nacional)',url:'https://www.nfse.gov.br/EmissorNacional/Login',obs:''}];
+    l=[{nome:'📋 Emissor de Nota Fiscal MEI (NFS-e Nacional)',url:'https://www.nfse.gov.br/EmissorNacional/Login',obs:'',categoria:'Governo & Documentos',tipo:''}];
   }
   const linksIndicados=[
-    {nome:'🎬 Pluto TV (filmes e canais grátis, legal)',url:'https://pluto.tv/',obs:''},
-    {nome:'📺 Globoplay',url:'https://globoplay.globo.com/',obs:''},
-    {nome:'🛒 Mercado Play (filmes grátis, legal)',url:'https://play.mercadolivre.com.br/',obs:''},
-    {nome:'🍥 Crunchyroll (animes)',url:'https://www.crunchyroll.com/pt-br',obs:''},
+    {nome:'🎬 Pluto TV (filmes e canais grátis, legal)',url:'https://pluto.tv/',obs:'',categoria:'Filmes & Séries',tipo:'gratuito'},
+    {nome:'📺 Globoplay',url:'https://globoplay.globo.com/',obs:'',categoria:'Filmes & Séries',tipo:'pago'},
+    {nome:'🛒 Mercado Play (filmes grátis, legal)',url:'https://play.mercadolivre.com.br/',obs:'',categoria:'Filmes & Séries',tipo:'gratuito'},
+    {nome:'🍥 Crunchyroll (animes)',url:'https://www.crunchyroll.com/pt-br',obs:'',categoria:'Filmes & Séries',tipo:'pago'},
   ];
   let mudou=false;
   linksIndicados.forEach(novo=>{
     if(!l.some(x=>x.url===novo.url)){l.push(novo);mudou=true}
   });
+  // migracao: garantir que links antigos (sem categoria/tipo) nao quebrem
+  l.forEach(x=>{
+    if(x.categoria===undefined){x.categoria='Outros';mudou=true}
+    if(x.tipo===undefined){x.tipo='';mudou=true}
+  });
   if(mudou)try{localStorage.setItem('canivete-links',JSON.stringify(l))}catch(e){}
   return l;
 }
 function _salvarLinks(l){try{localStorage.setItem('canivete-links',JSON.stringify(l))}catch(e){}}
+const categoriasLinksSugeridas=['Governo & Documentos','Filmes & Séries','Trabalho','Financeiro','Saúde','Educação','Outros'];
 function addLinkImportante(){
   const l=_lerLinks();
-  l.push({nome:'Novo link',url:'',obs:''});
+  l.push({nome:'Novo link',url:'',obs:'',categoria:'Outros',tipo:''});
   _salvarLinks(l);renderLinks();
 }
 function renderLinks(){
   const el=document.getElementById('linksList');if(!el)return;
   const l=_lerLinks();
   if(!l.length){el.innerHTML='<div class="empty">🔗 Nenhum link guardado ainda.</div>';return}
-  el.innerHTML=l.map((x,i)=>{
-    const urlValida=x.url&&/^https?:\/\//.test(x.url);
-    return `<div class="goal"><div class="goalgrid"><div class="field"><label>Nome</label><input value="${safe(x.nome)}" oninput="_editarLink(${i},'nome',this.value)"></div><div class="field"><label>Link (URL)</label><input value="${safe(x.url)}" placeholder="https://..." oninput="_editarLink(${i},'url',this.value)"></div><div class="field"><label>Observação</label><input value="${safe(x.obs)}" oninput="_editarLink(${i},'obs',this.value)"></div></div><div class="row between" style="margin-top:10px">${urlValida?`<a href="${safe(x.url)}" target="_blank" rel="noopener" class="btn primary" style="text-decoration:none;min-height:36px;padding:0 14px;display:inline-flex;align-items:center">🔗 Abrir link</a>`:'<span></span>'}<button class="btn danger" type="button" onclick="_removerLink(${i})">🗑️ Excluir</button></div></div>`;
+
+  const grupos={};
+  l.forEach((x,i)=>{
+    const cat=x.categoria||'Outros';
+    if(!grupos[cat])grupos[cat]=[];
+    grupos[cat].push({...x,_i:i});
+  });
+
+  const ordemCategorias=categoriasLinksSugeridas.filter(c=>grupos[c]).concat(Object.keys(grupos).filter(c=>!categoriasLinksSugeridas.includes(c)));
+
+  el.innerHTML=ordemCategorias.map(cat=>{
+    const itens=grupos[cat];
+    return `<div style="margin-bottom:18px"><h3 style="font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)">${safe(cat)}</h3>`+
+    itens.map(x=>{
+      const i=x._i;
+      const urlValida=x.url&&/^https?:\/\//.test(x.url);
+      const tagTipo=x.tipo==='gratuito'?'<span style="font-size:10px;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:999px;font-weight:800">🆓 Gratuito</span>':x.tipo==='pago'?'<span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:999px;font-weight:800">💰 Pago</span>':'';
+      return `<div class="goal"><div class="row between" style="margin-bottom:8px">${tagTipo}<span></span></div><div class="goalgrid"><div class="field"><label>Nome</label><input value="${safe(x.nome)}" oninput="_editarLink(${i},'nome',this.value)"></div><div class="field"><label>Link (URL)</label><input value="${safe(x.url)}" placeholder="https://..." oninput="_editarLink(${i},'url',this.value)"></div><div class="field"><label>Observação</label><input value="${safe(x.obs)}" oninput="_editarLink(${i},'obs',this.value)"></div><div class="field"><label>Categoria</label><select onchange="_editarLink(${i},'categoria',this.value);renderLinks()">${categoriasLinksSugeridas.map(c=>`<option value="${c}" ${x.categoria===c?'selected':''}>${c}</option>`).join('')}</select></div><div class="field"><label>Gratuito ou pago?</label><select onchange="_editarLink(${i},'tipo',this.value);renderLinks()"><option value="" ${!x.tipo?'selected':''}>Não se aplica</option><option value="gratuito" ${x.tipo==='gratuito'?'selected':''}>🆓 Gratuito</option><option value="pago" ${x.tipo==='pago'?'selected':''}>💰 Pago</option></select></div></div><div class="row between" style="margin-top:10px">${urlValida?`<a href="${safe(x.url)}" target="_blank" rel="noopener" class="btn primary" style="text-decoration:none;min-height:36px;padding:0 14px;display:inline-flex;align-items:center">🔗 Abrir link</a>`:'<span></span>'}<button class="btn danger" type="button" onclick="_removerLink(${i})">🗑️ Excluir</button></div></div>`;
+    }).join('')+
+    `</div>`;
   }).join('');
 }
 function _editarLink(i,campo,valor){const l=_lerLinks();l[i][campo]=valor;_salvarLinks(l)}
