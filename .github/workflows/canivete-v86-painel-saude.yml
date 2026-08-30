@@ -1,0 +1,107 @@
+name: Canivete v8.6 - Painel Saúde
+
+on:
+  push:
+    paths:
+      - '.github/workflows/canivete-v86-painel-saude.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  painel-saude:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Aplicar painel de saúde
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          p = Path('canivete.html')
+          html = p.read_text(encoding='utf-8')
+          marker = 'CANIVETE-V86-PAINEL-SAUDE'
+
+          # Evita duplicação caso o workflow seja executado novamente.
+          if marker not in html:
+              css = r'''
+<style id="CANIVETE-V86-PAINEL-SAUDE">
+.saude86{display:none;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:0 0 16px;box-shadow:var(--shadow)}
+.saude86.show{display:block}
+.saude86-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.saude86-title{font-size:20px;font-weight:900}.saude86-sub{font-size:12px;color:var(--muted);margin-top:3px}
+.saude86-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.saude86-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--card);min-height:96px}
+.saude86-card b{display:block;font-size:20px;margin-top:7px}.saude86-card span{font-size:11px;color:var(--muted)}
+.saude86-card.blue86{background:#eff6ff;border-color:#bfdbfe}.saude86-card.green86{background:#f0fdf4;border-color:#bbf7d0}.saude86-card.purple86{background:#faf5ff;border-color:#e9d5ff}.saude86-card.orange86{background:#fff7ed;border-color:#fed7aa}
+.saude86-today{margin-top:12px;padding:13px;border:1px solid #dbeafe;background:#eff6ff;border-radius:13px}
+.saude86-today strong{display:block;margin-bottom:7px}.saude86-list{display:grid;gap:7px}.saude86-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 10px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:12px}.saude86-item small{color:var(--muted)}
+.saude86-rem{margin-top:12px;border:1px dashed #cbd5e1;border-radius:13px;padding:12px}.saude86-rem-title{font-weight:850;margin-bottom:5px}.saude86-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.saude86-btn{border:0;border-radius:9px;padding:9px 11px;font-weight:800;font-size:11px;background:#f1f5f9;color:#334155}.saude86-btn.primary86{background:var(--blue);color:#fff}
+.saude86-float{display:none}
+@media(max-width:760px){.saude86{padding:14px}.saude86-head{align-items:flex-start}.saude86-grid{grid-template-columns:1fr 1fr}.saude86-card{min-height:86px;padding:11px}.saude86-card b{font-size:18px}.saude86-float{display:block;position:fixed;right:16px;bottom:76px;z-index:35;border:0;border-radius:999px;background:var(--blue);color:#fff;padding:11px 14px;font-weight:900;box-shadow:0 8px 22px rgba(15,23,42,.22)}}
+</style>
+'''
+              js = r'''
+<script id="CANIVETE-V86-PAINEL-SAUDE">
+(function(){
+  const PANEL='canivete-saude86-panel';
+  function makePanel(){
+    if(document.getElementById(PANEL)) return;
+    const box=document.createElement('section');
+    box.id=PANEL; box.className='saude86';
+    box.innerHTML=`
+      <div class="saude86-head">
+        <div><div class="saude86-title">🩺 Painel de Saúde</div><div class="saude86-sub">Uma visão rápida do que merece sua atenção hoje.</div></div>
+        <button class="saude86-btn" type="button" data-saude-fechar>Fechar</button>
+      </div>
+      <div class="saude86-grid">
+        <div class="saude86-card blue86"><span>💊 Medicamentos hoje</span><b data-saude-med>0</b><span>para acompanhar</span></div>
+        <div class="saude86-card green86"><span>🌿 Suplementos hoje</span><b data-saude-sup>0</b><span>para acompanhar</span></div>
+        <div class="saude86-card purple86"><span>🩺 Consultas</span><b>0</b><span>próximas</span></div>
+        <div class="saude86-card orange86"><span>🔔 Lembretes</span><b data-saude-rem>0</b><span>configurados</span></div>
+      </div>
+      <div class="saude86-today"><strong>📅 Hoje</strong><div class="saude86-list" data-saude-hoje><div class="saude86-item">Nenhum lembrete configurado ainda. <small>Você poderá adicionar alarmes na próxima etapa.</small></div></div></div>
+      <div class="saude86-rem"><div class="saude86-rem-title">🔔 Lembretes &amp; Alarmes</div><div class="saude86-sub">Prepare a área para horários de medicamentos, suplementos, consultas e exames.</div><div class="saude86-actions"><button class="saude86-btn primary86" type="button" data-saude-alarme>+ Criar lembrete</button><button class="saude86-btn" type="button" data-saude-fechar>Voltar para Saúde</button></div></div>`;
+    document.body.appendChild(box);
+    box.querySelectorAll('[data-saude-fechar]').forEach(b=>b.onclick=()=>box.classList.remove('show'));
+    box.querySelector('[data-saude-alarme]').onclick=()=>alert('🔔 A área de lembretes está pronta para receber os alarmes na próxima etapa.');
+    return box;
+  }
+  function openPanel(){const p=makePanel();p.classList.add('show');p.scrollIntoView({behavior:'smooth',block:'start'});}
+  function addButton(){
+    if(document.getElementById('saude86-open')) return;
+    const b=document.createElement('button');b.id='saude86-open';b.className='saude86-float';b.textContent='🩺 Painel Saúde';b.onclick=openPanel;document.body.appendChild(b);
+  }
+  function detectHealth(){
+    const txt=(document.body.innerText||'').toLowerCase();
+    if(txt.includes('medicamentos') && (txt.includes('suplementos')||txt.includes('vitaminas'))){
+      addButton();
+      const existing=[...document.querySelectorAll('section,main,.card,.hero')].find(el=>{const t=(el.innerText||'').toLowerCase();return t.includes('medicamentos')&&t.includes('suplementos')&&t.includes('consultas');});
+      const p=makePanel();
+      if(existing && existing.parentNode && !p.classList.contains('show')) existing.parentNode.insertBefore(p,existing);
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',detectHealth); else detectHealth();
+  setTimeout(detectHealth,1200);
+})();
+</script>
+'''
+              html = html.replace('</head>', css + '</head>', 1)
+              html = html.replace('</body>', js + '</body>', 1)
+
+          # Atualiza a versão exibida pelo código quando existir uma constante conhecida.
+          html = re.sub(r"(APP_VERSION\s*=\s*['\"])8\.\d+(['\"])", r"\g<1>8.6\2", html, count=1)
+          html = re.sub(r"(version\s*[:=]\s*['\"]?)v?8\.\d+", r"\g<1>v8.6", html, count=1, flags=re.I)
+          p.write_text(html, encoding='utf-8')
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git diff --cached --quiet || git commit -m "feat: painel de saude v8.6"
+          git push

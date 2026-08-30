@@ -1,0 +1,96 @@
+name: Canivete v8.8 - UX UI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/canivete-ux-v88.yml'
+      - 'canivete.html'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ux-ui:
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Aplicar melhorias visuais e responsivas
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          p = Path('canivete.html')
+          html = p.read_text(encoding='utf-8')
+
+          css = r'''
+          /* CANIVETE V8.8 - UX/UI polish */
+          :root{--ux-space:16px;--ux-radius:16px;--ux-focus:rgba(37,99,235,.16)}
+          body{line-height:1.45;letter-spacing:-.01em}
+          .side{padding-top:18px;box-shadow:4px 0 18px rgba(15,23,42,.035)}
+          .brand{letter-spacing:-.025em}
+          .nav button{min-height:44px;font-weight:650;transition:background .15s,border-color .15s,transform .15s}
+          .nav button:hover{transform:translateX(2px)}
+          .nav button.active{font-weight:800;box-shadow:inset 3px 0 0 var(--blue)}
+          .main{padding-top:24px}
+          .top h1{letter-spacing:-.035em;font-weight:900}
+          .sub{max-width:760px}
+          .card{border-radius:var(--ux-radius);transition:box-shadow .18s,border-color .18s,transform .18s}
+          .card:hover{box-shadow:0 10px 30px rgba(15,23,42,.07)}
+          .cards .card{min-height:116px}
+          .metric{letter-spacing:-.03em}
+          .btn{transition:transform .12s,box-shadow .12s,background .12s}
+          .btn:hover{transform:translateY(-1px)}
+          .primary{box-shadow:0 5px 12px rgba(37,99,235,.18)}
+          .field input,.field select{transition:border-color .15s,box-shadow .15s}
+          .field label{text-transform:none;letter-spacing:0}
+          .pill{gap:4px}
+          .empty{background:rgba(248,250,252,.5)}
+          .expense-summary .stat{min-width:118px}
+          .expense-view{position:sticky;top:8px;z-index:8;backdrop-filter:blur(8px)}
+          .category{box-shadow:0 2px 10px rgba(15,23,42,.025)}
+          .cat-head{min-height:66px}
+          .cat-title{letter-spacing:-.01em}
+          button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #93c5fd;outline-offset:2px;box-shadow:0 0 0 4px var(--ux-focus)}
+          @media(max-width:760px){
+            .main{padding:14px 12px 96px}
+            .top h1{font-size:23px}
+            .top{margin-bottom:16px}
+            .card{padding:16px;border-radius:14px}
+            .cards{gap:10px}
+            .cards .card{min-height:104px}
+            .metric{font-size:23px}
+            .expense-view{top:4px}
+            .view-switch button{padding:9px 10px}
+            .cat-head{min-height:62px}
+            .bottom-nav button{min-height:52px}
+          }
+          '''
+
+          marker='/* CANIVETE V8.8 - UX/UI polish */'
+          if marker not in html:
+              html=html.replace('</head>', '<style>'+css+'</style>\n</head>', 1)
+
+          # Atualiza a constante de versão quando ela existir.
+          html=re.sub(r"(APP_VERSION\s*=\s*['\"])v?\d+(?:\.\d+)*(?=['\"])", r"\g<1>8.8", html, count=1)
+          html=re.sub(r"(APP_VERSION\s*=\s*['\"])(?:v?\d+(?:\.\d+)*)(['\"])", r"\g<1>8.8\2", html, count=1)
+
+          p.write_text(html, encoding='utf-8')
+
+      - name: Commit e publicar
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add canivete.html
+          if git diff --cached --quiet; then
+            echo 'Nenhuma alteração necessária.'
+            exit 0
+          fi
+          git commit -m 'feat: UX UI do Canivete v8.8 [skip ci]'
+          git push

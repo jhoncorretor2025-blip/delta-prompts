@@ -1,0 +1,25 @@
+name: Canivete v7.9
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Atualizar versão do Canivete
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('canivete.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('v7.8','v7.9').replace('V7.8','V7.9')
+          p.write_text(s,encoding='utf-8')
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git commit -m "chore(canivete): versão v7.9" || exit 0
+          git push

@@ -1,4 +1,4 @@
-name: Atualizar Canivete - Analise Financeira
+name: Atualizar Canivete - Analise e UX v8.9
 
 on:
   push:
@@ -16,57 +16,94 @@ jobs:
       - name: Baixar repositorio
         uses: actions/checkout@v4
 
-      - name: Atualizar Canivete
+      - name: Aplicar melhorias do Canivete v8.9
         run: |
           python3 <<'PY'
           from pathlib import Path
-          p = Path('canivete.html')
-          s = p.read_text(encoding='utf-8')
+          p=Path('canivete.html')
+          s=p.read_text(encoding='utf-8')
 
-          css = r'''
-          .analysis-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:16px}.analysis-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}.analysis-card h3{margin:0 0 7px;font-size:15px}.analysis-big{font-size:28px;font-weight:900;margin:5px 0}.analysis-list{display:grid;gap:9px;margin-top:12px}.analysis-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #eef1f5}.analysis-item:last-child{border-bottom:0}.analysis-name{min-width:0}.analysis-name strong{display:block;font-size:13px}.analysis-name small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.analysis-tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:800;white-space:nowrap}.tag-essential{background:#fef2f2;color:#991b1b}.tag-reducible{background:#ecfdf3;color:#166534}.tag-negotiable{background:#eff6ff;color:#1d4ed8}.tag-planned{background:#f5f3ff;color:#6d28d9}.scenario{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.scenario-box{border:1px solid var(--line);border-radius:12px;padding:13px;background:#f8fafc}.scenario-box strong{display:block;font-size:12px}.scenario-box b{display:block;font-size:21px;margin-top:5px}.analysis-note{background:#eff6ff;border:1px solid #dbeafe;color:#1e40af;border-radius:12px;padding:13px;font-size:13px;line-height:1.5;margin-top:12px}.analysis-warn{background:#fffbeb;border-color:#fde68a;color:#92400e}.analysis-good{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
-          @media(max-width:900px){.analysis-grid{grid-template-columns:1fr 1fr}}
-          @media(max-width:600px){.analysis-grid{grid-template-columns:1fr}.scenario{grid-template-columns:1fr}.analysis-card{padding:16px}.analysis-big{font-size:25px}}
+          # 1) Versao
+          s=s.replace("const APP_VERSION='8.8'", "const APP_VERSION='8.9'", 1)
+          s=s.replace('v8.7</span>', 'v8.9</span>')
+          s=s.replace('Canivete v8.7', 'Canivete v8.9')
+
+          # 2) Visual mobile e area de toque das abas de saude
+          css=r'''
+          /* CANIVETE V8.9 - UX MOBILE */
+          .health-tabs81{position:relative!important;z-index:1000!important;pointer-events:auto!important;isolation:isolate}
+          .health-tab81{position:relative!important;z-index:1001!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:rgba(37,99,235,.12);min-height:44px}
+          .v89-quick-help{margin:0 0 16px;padding:14px 16px;border:1px solid #dbeafe;background:#eff6ff;color:#1e40af;border-radius:14px;display:flex;align-items:center;gap:12px;line-height:1.45;font-size:13px}
+          .v89-quick-help strong{display:block;margin-bottom:2px}
+          .v89-advanced-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+          @media(max-width:760px){
+            .health-tabs81{margin-left:0!important;margin-right:0!important;top:4px!important}
+            .health-tab81{font-size:12px!important;padding:10px 6px!important;min-height:46px!important}
+            .v89-quick-help{padding:12px;font-size:12px;align-items:flex-start}
+            .v89-advanced-link{width:100%;justify-content:center}
+            .bottom-nav{z-index:40!important}
+          }
           '''
-          if '.analysis-grid{' not in s:
+          if 'CANIVETE V8.9 - UX MOBILE' not in s:
               s=s.replace('</style>',css+'</style>',1)
 
-          nav_old='<button type="button" data-page="projecoes">📈 Projeções</button>'
-          nav_new='<button type="button" data-page="projecoes">📈 Projeções</button><button type="button" data-page="analise">🧠 Análise</button>'
-          if 'data-page="analise"' not in s:
-              s=s.replace(nav_old,nav_new,1)
+          # 3) Orientacao simples no inicio do painel
+          marker='<section id="dashboard" class="section active">'
+          helpbox='<div class="v89-quick-help"><div style="font-size:25px">🧭</div><div><strong>Comece pelo essencial</strong><span>Preencha sua renda e suas despesas primeiro. Depois use Dívidas, Metas, Histórico e Análise para enxergar o futuro do seu dinheiro.</span></div></div>'
+          if 'v89-quick-help' not in s and marker in s:
+              s=s.replace(marker,marker+helpbox,1)
 
-          section=r'''
-          <section id="analise" class="section"><div class="card hero"><h2>🧠 Análise da sua vida financeira</h2><p class="sub">Entenda o que é essencial, o que pode ser reduzido e o que pode fazer diferença no futuro.</p><div class="notice">💡 Nem toda despesa deve ser cortada. Alimentação, impostos e outras obrigações fazem parte da vida. A análise destaca principalmente aquilo que pode ser ajustado.</div></div><div class="analysis-grid"><div class="analysis-card"><h3>🔴 Gastos difíceis de reduzir</h3><div class="analysis-big" id="aEssential">R$ 0,00</div><small class="small">Essenciais ou obrigatórios</small></div><div class="analysis-card"><h3>🟡 Gastos que podem ser negociados</h3><div class="analysis-big" id="aNegotiable">R$ 0,00</div><small class="small">Podem ter algum espaço para economia</small></div><div class="analysis-card"><h3>🟢 Potencial de economia</h3><div class="analysis-big green" id="aPotential">R$ 0,00</div><small class="small">Estimativa, não uma obrigação de corte</small></div></div><div class="grid two"><div class="card"><h2>🔎 Onde vale olhar primeiro?</h2><div id="analysisItems" class="analysis-list"></div></div><div class="card"><h2>🔮 O que pode acontecer no futuro?</h2><p class="sub">Veja o impacto de pequenas mudanças, sem assumir que você precisa cortar tudo.</p><div class="scenario"><div class="scenario-box"><strong>Hoje</strong><b id="scenarioCurrent">R$ 0,00</b><small class="small">sobra mensal estimada</small></div><div class="scenario-box"><strong>Com economia sugerida</strong><b class="green" id="scenarioBetter">R$ 0,00</b><small class="small">sobra mensal simulada</small></div></div><div class="analysis-note" id="scenarioYear">Em 12 meses, a diferença estimada seria de R$ 0,00.</div><div class="analysis-note analysis-warn">⚠️ A análise é uma orientação. Não significa que você deva deixar de pagar despesas essenciais ou obrigatórias.</div></div></div><div class="card" style="margin-top:16px"><h2>💡 Como interpretar</h2><div id="analysisAdvice" class="notice">Preencha suas despesas para receber uma orientação personalizada.</div></div><div class="step-actions"><span class="step-hint">Análise financeira</span><button class="btn continue" type="button" onclick="showPage('dashboard')">← Voltar ao painel</button></div></section>
+          # 4) Corrigir as abas no celular usando pointer events e uma troca direta de filtro
+          js=r'''
+          <script id="CANIVETE_V89_MOBILE_TABS">
+          (function(){
+            function ativarAba89(tipo){
+              document.querySelectorAll('#saude .health-tab81').forEach(function(b){b.classList.toggle('active',b.dataset.healthTab===tipo)});
+              if(typeof setFiltroTipoRemedio==='function') setFiltroTipoRemedio(tipo);
+              var sv=document.getElementById('sugestoesVitaminas'),sm=document.getElementById('sugestoesMedicamentos'),sc=document.getElementById('sugestoesChas');
+              if(sv&&sv.parentElement)sv.parentElement.style.display=tipo==='vitamina'?'block':'none';
+              if(sm&&sm.parentElement)sm.parentElement.style.display=tipo==='medicamento'?'block':'none';
+              if(sc&&sc.parentElement)sc.parentElement.style.display=tipo==='cha'?'block':'none';
+            }
+            function preparar(){
+              document.querySelectorAll('#saude .health-tab81').forEach(function(tab){
+                tab.style.pointerEvents='auto';tab.style.position='relative';tab.style.zIndex='1001';tab.style.touchAction='manipulation';
+                if(tab.dataset.v89ok)return;
+                tab.dataset.v89ok='1';
+                tab.addEventListener('pointerup',function(e){e.preventDefault();e.stopPropagation();ativarAba89(tab.dataset.healthTab)},{passive:false});
+                tab.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();ativarAba89(tab.dataset.healthTab)},{passive:false});
+              });
+            }
+            document.addEventListener('pointerdown',function(e){var t=e.target.closest&&e.target.closest('#saude .health-tab81');if(t){t.style.pointerEvents='auto';t.style.zIndex='1001'}},true);
+            document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('#saude .health-tab81');if(t)ativarAba89(t.dataset.healthTab)},true);
+            var mo=new MutationObserver(preparar);mo.observe(document.body,{subtree:true,childList:true});
+            if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',preparar);else preparar();
+          })();
+          </script>
           '''
-          if '<section id="analise"' not in s:
-              marker='<section id="projecoes" class="section">'
-              s=s.replace(marker,section+marker,1)
-
-          funcs=r'''
-          function classifyExpense(name){let x=String(name||'').toLowerCase();if(/iptu|imposto|taxa|aluguel|financiamento|condom|água|energia|alimenta|saúde|farmácia|licenciamento|seguro|empréstimo/.test(x))return ['essential','Essencial / obrigatório','tag-essential',0];if(/internet|telefone|combust|gasolina|manutenção|educação|curso|cartão|parcelamento/.test(x))return ['negotiable','Pode ser negociado','tag-negotiable',.08];if(/academia|roupas|higiene|lazer|entretenimento|bares|restaurante|besteira|uber|pets|presente|viagem|barbearia|salão|aplicativo|assinatura|netflix|compras|investimento/.test(x))return ['reducible','Pode ser reduzido','tag-reducible',.20];return ['planned','Avaliar','tag-planned',.10]}
-          function renderAnalysis(){let c=calc(),essential=0,negotiable=0,potential=0,items=[];d.expenses.forEach(e=>{let v=n(e.value),cl=classifyExpense(e.name);if(!v)return;if(cl[0]==='essential')essential+=v;else if(cl[0]==='negotiable'){negotiable+=v;potential+=v*cl[3]}else if(cl[0]==='reducible'){potential+=v*cl[3]}items.push({...e,v,cl})});items.sort((a,b)=>(b.v*b.cl[3])-(a.v*a.cl[3]));document.getElementById('aEssential').textContent=money(essential);document.getElementById('aNegotiable').textContent=money(negotiable);document.getElementById('aPotential').textContent=money(potential);let top=items.filter(x=>x.cl[3]>0).slice(0,8);document.getElementById('analysisItems').innerHTML=top.length?top.map(x=>`<div class="analysis-item"><div class="analysis-name"><strong>${x.icon||'🧾'} ${safe(x.name)}</strong><small>${money(x.v)}/mês · potencial estimado ${money(x.v*x.cl[3])}/mês</small></div><span class="analysis-tag ${x.cl[2]}">${x.cl[1]}</span></div>`).join(''):'<div class="empty">💡 Informe valores nas despesas para descobrir onde pode existir espaço para economia.</div>';let better=c.net+potential;document.getElementById('scenarioCurrent').textContent=money(c.net);document.getElementById('scenarioBetter').textContent=money(better);document.getElementById('scenarioYear').textContent=`Em 12 meses, uma economia de cerca de ${money(potential)}/mês representaria até ${money(potential*12)} de diferença.`;document.getElementById('analysisAdvice').textContent=potential>0?`Você não precisa cortar tudo. Comece pelas despesas marcadas como “Pode ser reduzido” e “Pode ser negociado”. Uma pequena redução mensal pode aumentar sua sobra e acelerar suas metas.`:'Preencha algumas despesas com valores para que o sistema possa identificar oportunidades de economia.'}
-          '''
-          if 'function classifyExpense(' not in s:
-              s=s.replace('function render(){',funcs+'\nfunction render(){',1)
-
-          s=s.replace('function refresh(){totals();status();projection();renderExpenseSummary()}','function refresh(){totals();status();projection();renderExpenseSummary();renderAnalysis()}')
-          if "analise:['Análise" not in s:
-              s=s.replace("projecoes:['Projeções','Veja o crescimento estimado.']}","projecoes:['Projeções','Veja o crescimento estimado.'],analise:['Análise financeira','Descubra onde pode economizar e o impacto no futuro.']}",1)
-
-          # Acesso para usuários que querem ir além do básico.
-          advanced='<a href="canivete-avancado.html" class="btn light" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">🧠 Visão Avançada</a>'
-          if 'canivete-avancado.html' not in s:
-              s=s.replace('<div class="actions"><button class="btn light" type="button" onclick="exportData()">⬇️ Exportar</button>', '<div class="actions">'+advanced+'<button class="btn light" type="button" onclick="exportData()">⬇️ Exportar</button>',1)
+          if 'CANIVETE_V89_MOBILE_TABS' not in s:
+              s=s.replace('</body>',js+'</body>',1)
 
           p.write_text(s,encoding='utf-8')
           PY
 
-      - name: Publicar alteracao
+      - name: Validar alteracao
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('canivete.html').read_text(encoding='utf-8')
+          assert "const APP_VERSION='8.9'" in s
+          assert 'CANIVETE_V89_MOBILE_TABS' in s
+          assert 'CANIVETE V8.9 - UX MOBILE' in s
+          assert s.count('<html')==1 and s.count('</html>')==1
+          print('Canivete v8.9 validado com sucesso')
+          PY
+
+      - name: Publicar
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add canivete.html
           git diff --cached --quiet && exit 0
-          git commit -m "Adicionar acesso à visão avançada"
+          git commit -m "Canivete v8.9 - UX mobile e navegacao [skip ci]"
           git push

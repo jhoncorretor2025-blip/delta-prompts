@@ -1,0 +1,76 @@
+name: Canivete v8.9 - UX, celular e navegacao
+
+on:
+  push:
+    paths:
+      - '.github/workflows/canivete-v89-melhorias.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  melhorar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+
+      - name: Aplicar melhorias v8.9
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p=Path('canivete.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("const APP_VERSION='8.8'", "const APP_VERSION='8.9'", 1)
+          s=s.replace('v8.7</span>', 'v8.9</span>')
+          s=s.replace('Canivete v8.7', 'Canivete v8.9')
+          s=s.replace('CANIVETE V8.8 - UX/UI polish', 'CANIVETE V8.9 - UX/UI polish')
+          css=r'''/* CANIVETE V8.9 - POLIMENTO FINAL */
+          .v89-quick-help{margin:0 0 16px;padding:14px 16px;border:1px solid #dbeafe;background:#eff6ff;color:#1e40af;border-radius:14px;display:flex;align-items:center;gap:12px;line-height:1.45;font-size:13px}
+          .v89-quick-help strong{display:block;margin-bottom:2px}.health-tabs81{position:relative!important;z-index:1000!important;pointer-events:auto!important;isolation:isolate}.health-tab81{position:relative!important;z-index:1001!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:rgba(37,99,235,.12);min-height:44px}
+          #saude .card{scroll-margin-top:78px}.v89-advanced-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none}.v89-critical{border-left:4px solid #2563eb!important}
+          @media(max-width:760px){.v89-quick-help{padding:12px;font-size:12px;align-items:flex-start}.v89-advanced-link{width:100%;justify-content:center}.health-tabs81{margin-left:0;margin-right:0;top:4px!important}.health-tab81{font-size:12px!important;padding:10px 6px!important}.v80-mobile-nav{z-index:45!important}.bottom-nav{z-index:40!important}}
+          '''
+          if 'CANIVETE V8.9 - POLIMENTO FINAL' not in s:s=s.replace('</style>',css+'</style>',1)
+          marker='<section id="dashboard" class="section active">'
+          helpbox='<div class="v89-quick-help v89-critical"><div style="font-size:25px">🧭</div><div><strong>Comece pelo essencial</strong><span>Preencha sua renda e suas despesas primeiro. Depois use Dívidas, Metas, Histórico e Análise para enxergar o futuro do seu dinheiro.</span></div></div>'
+          if 'v89-quick-help' not in s and marker in s:s=s.replace(marker,marker+helpbox,1)
+          s=s.replace('class="btn light" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">🧠 Visão Avançada</a>', 'class="btn light v89-advanced-link">🧠 Visão Avançada</a>', 1)
+          js=r'''<script id="CANIVETE_V89_MOBILE_UX">
+          (function(){
+            function atualizarVisualSaude89(tipo){
+              const tabs=document.querySelectorAll('.health-tab81');tabs.forEach(b=>b.classList.toggle('active',b.dataset.healthTab===tipo));
+              const context=document.querySelector('.health-context81');const textos={medicamento:'💊 Seus medicamentos em uso ou pausados. O histórico continua salvo.',vitamina:'🌿 Vitaminas e suplementos que você usa ou pretende retomar.',consulta:'🩺 Consultas médicas, acompanhamentos e valores pagos.',cha:'🍵 Chás e bebidas naturais que você deseja acompanhar.'};if(context)context.textContent=textos[tipo]||'';
+              if(typeof setFiltroTipoRemedio==='function')setFiltroTipoRemedio(tipo);
+              const sv=document.getElementById('sugestoesVitaminas'),sm=document.getElementById('sugestoesMedicamentos'),sc=document.getElementById('sugestoesChas');
+              if(sv&&sv.parentElement)sv.parentElement.style.display=tipo==='vitamina'?'block':'none';if(sm&&sm.parentElement)sm.parentElement.style.display=tipo==='medicamento'?'block':'none';if(sc&&sc.parentElement)sc.parentElement.style.display=tipo==='cha'?'block':'none';
+            }
+            function bindTabs89(){document.querySelectorAll('#saude .health-tab81').forEach(tab=>{tab.style.pointerEvents='auto';tab.style.position='relative';tab.style.zIndex='1001';if(!tab.dataset.v89bound){tab.dataset.v89bound='1';const acao=e=>{e.preventDefault();e.stopPropagation();atualizarVisualSaude89(tab.dataset.healthTab)};tab.addEventListener('pointerup',acao,{passive:false});tab.addEventListener('touchend',acao,{passive:false})}})}
+            document.addEventListener('pointerdown',e=>{const tab=e.target.closest&&e.target.closest('#saude .health-tab81');if(tab){tab.style.pointerEvents='auto';tab.style.zIndex='1001'}},true);
+            document.addEventListener('click',e=>{const tab=e.target.closest&&e.target.closest('#saude .health-tab81');if(tab)atualizarVisualSaude89(tab.dataset.healthTab)},true);
+            const obs=new MutationObserver(bindTabs89);obs.observe(document.body,{childList:true,subtree:true});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindTabs89);else bindTabs89();
+          })();</script>'''
+          if 'CANIVETE_V89_MOBILE_UX' not in s:s=s.replace('</body>',js+'</body>',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Validar
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('canivete.html').read_text(encoding='utf-8')
+          assert "const APP_VERSION='8.9'" in s
+          assert 'CANIVETE_V89_MOBILE_UX' in s
+          assert s.count('<html')==1 and s.count('</html>')==1
+          print('Validacao v8.9 OK')
+          PY
+
+      - name: Publicar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Canivete v8.9 - melhorias UX celular navegacao [skip ci]"
+          git push

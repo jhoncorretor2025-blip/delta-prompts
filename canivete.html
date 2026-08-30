@@ -11,7 +11,119 @@
 .analysis-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:16px}.analysis-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}.analysis-card h3{margin:0 0 7px;font-size:15px}.analysis-big{font-size:28px;font-weight:900;margin:5px 0}.analysis-list{display:grid;gap:9px;margin-top:12px}.analysis-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #eef1f5}.analysis-item:last-child{border-bottom:0}.analysis-name{min-width:0}.analysis-name strong{display:block;font-size:13px}.analysis-name small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.analysis-tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:800;white-space:nowrap}.tag-essential{background:#fef2f2;color:#991b1b}.tag-reducible{background:#ecfdf3;color:#166534}.tag-negotiable{background:#eff6ff;color:#1d4ed8}.tag-planned{background:#f5f3ff;color:#6d28d9}.scenario{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.scenario-box{border:1px solid var(--line);border-radius:12px;padding:13px;background:#f8fafc}.scenario-box strong{display:block;font-size:12px}.scenario-box b{display:block;font-size:21px;margin-top:5px}.analysis-note{background:#eff6ff;border:1px solid #dbeafe;color:#1e40af;border-radius:12px;padding:13px;font-size:13px;line-height:1.5;margin-top:12px}.analysis-warn{background:#fffbeb;border-color:#fde68a;color:#92400e}.analysis-good{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
 @media(max-width:900px){.analysis-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.analysis-grid{grid-template-columns:1fr}.scenario{grid-template-columns:1fr}.analysis-card{padding:16px}.analysis-big{font-size:25px}}
-</style></head>
+
+    /* CANIVETE-V80-UX */
+    .v80-version{display:inline-flex;align-items:center;gap:5px;margin:4px 12px 12px;padding:4px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:10px;font-weight:800}
+    .v80-nav-group{margin:10px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+    .v80-nav-group summary{list-style:none;cursor:pointer;padding:10px 12px;font-size:11px;font-weight:850;color:var(--muted);display:flex;align-items:center;gap:8px}
+    .v80-nav-group summary::-webkit-details-marker{display:none}
+    .v80-nav-group summary:after{content:'⌄';margin-left:auto;transition:.2s}
+    .v80-nav-group:not([open]) summary:after{transform:rotate(-90deg)}
+    .v80-nav-group .v80-group-body{padding:0 5px 5px}
+    .v80-nav-group .v80-group-body .nav button{margin:2px 0}
+    .v80-mode{width:100%;margin:4px 0 10px;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:10px;padding:9px 10px;font-size:11px;font-weight:800;text-align:left}
+    .v80-mode.active{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+    .v80-quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 16px}
+    .v80-quick-card{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px;box-shadow:var(--shadow)}
+    .v80-quick-card b{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}.v80-quick-card strong{font-size:18px}
+    .v80-start{border:1px solid #bfdbfe;background:#eff6ff;color:#1e40af;border-radius:14px;padding:14px;margin-bottom:16px}
+    .v80-start strong{display:block;margin-bottom:4px}.v80-start span{font-size:12px;line-height:1.5}
+    .v80-mobile-nav{display:none}
+    @media(max-width:760px){
+      .v80-quick{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v80-quick-card{padding:10px}.v80-quick-card strong{font-size:16px}
+      .v80-mobile-nav{position:fixed;left:10px;right:10px;bottom:10px;z-index:45;display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:7px;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(15,23,42,.16);backdrop-filter:blur(12px)}
+      [data-theme="dark"] .v80-mobile-nav{background:rgba(22,29,51,.96)}
+      .v80-mobile-nav button{border:0;background:transparent;color:var(--muted);border-radius:10px;padding:7px 3px;font-size:10px;font-weight:800;min-height:46px}.v80-mobile-nav button.active{background:#eef2ff;color:var(--blue)}
+      .v80-start{font-size:13px}.v80-nav-group{border-radius:10px}
+    }
+    
+
+    /* CANIVETE-V79-SAUDE */
+    #saude .health-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 16px}
+    #saude .health-stat{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 13px}
+    #saude .health-stat strong{display:block;font-size:19px;line-height:1.1}.health-stat span{display:block;margin-top:4px;font-size:10.5px;color:var(--muted)}
+    #saude #listaRemedios{display:grid;gap:10px}#saude #listaRemedios .health-item-card{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:15px;box-shadow:0 4px 16px rgba(15,23,42,.04)}
+    #saude .health-item-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}#saude .health-item-name{min-width:0}#saude .health-item-name strong{font-size:15px;line-height:1.3}
+    #saude .health-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}#saude .health-tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800}#saude .health-tag.type{background:#eff6ff;color:#1d4ed8}#saude .health-tag.active{background:#ecfdf3;color:#166534}#saude .health-tag.paused{background:#f1f5f9;color:#475569}#saude .health-tag.today{background:#dcfce7;color:#166534}
+    #saude .health-item-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}#saude .health-item-actions .btn{min-height:36px;font-size:11px;padding:7px 9px}#saude .health-use-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+    #saude .health-detail-panel{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}.v79-health-badge{display:inline-flex;vertical-align:middle;margin-left:6px;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:9px;font-weight:850}
+    @media(max-width:800px){#saude .health-summary{grid-template-columns:repeat(2,minmax(0,1fr))}#saude .health-item-head{display:block}#saude .health-item-actions{justify-content:flex-start;margin-top:10px}#saude .health-item-actions .btn{flex:1;min-width:74px}}
+    @media(max-width:430px){#saude .health-summary{gap:7px}#saude .health-stat{padding:10px}#saude .health-item-card{padding:12px!important}#saude .health-item-actions{display:grid;grid-template-columns:1fr 1fr}#saude .health-item-actions .btn{width:100%}}
+    
+
+/* CANIVETE-V80-SAUDE-CHA */
+#saude .pause-controls{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+#saude .pause-controls .btn{font-size:11px;min-height:36px;padding:7px 10px}
+#saude .pause-reason{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:6px 9px;border-radius:9px;background:#fff7ed;color:#9a3412;font-size:11px;font-weight:800}
+#saude .tea-box{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--card),var(--bg))}
+#saude .tea-box strong{font-size:13px}
+#saude .tea-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+#saude .tea-note{font-size:11px;color:var(--muted);margin-top:7px}
+@media(max-width:760px){#saude .pause-controls{display:grid;grid-template-columns:1fr 1fr}#saude .pause-controls .btn{width:100%}}
+
+/* CANIVETE V8.9 - POLIMENTO FINAL */
+.v89-quick-help{margin:0 0 16px;padding:14px 16px;border:1px solid #dbeafe;background:#eff6ff;color:#1e40af;border-radius:14px;display:flex;align-items:center;gap:12px;line-height:1.45;font-size:13px}
+.v89-quick-help strong{display:block;margin-bottom:2px}.health-tabs81{position:relative!important;z-index:1000!important;pointer-events:auto!important;isolation:isolate}.health-tab81{position:relative!important;z-index:1001!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:rgba(37,99,235,.12);min-height:44px}
+#saude .card{scroll-margin-top:78px}.v89-advanced-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none}.v89-critical{border-left:4px solid #2563eb!important}
+@media(max-width:760px){.v89-quick-help{padding:12px;font-size:12px;align-items:flex-start}.v89-advanced-link{width:100%;justify-content:center}.health-tabs81{margin-left:0;margin-right:0;top:4px!important}.health-tab81{font-size:12px!important;padding:10px 6px!important}.v80-mobile-nav{z-index:45!important}.bottom-nav{z-index:40!important}}
+
+/* CANIVETE V8.9 - UX MOBILE */
+.health-tabs81{position:relative!important;z-index:1000!important;pointer-events:auto!important;isolation:isolate}
+.health-tab81{position:relative!important;z-index:1001!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:rgba(37,99,235,.12);min-height:44px}
+.v89-quick-help{margin:0 0 16px;padding:14px 16px;border:1px solid #dbeafe;background:#eff6ff;color:#1e40af;border-radius:14px;display:flex;align-items:center;gap:12px;line-height:1.45;font-size:13px}
+.v89-quick-help strong{display:block;margin-bottom:2px}
+.v89-advanced-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+@media(max-width:760px){
+  .health-tabs81{margin-left:0!important;margin-right:0!important;top:4px!important}
+  .health-tab81{font-size:12px!important;padding:10px 6px!important;min-height:46px!important}
+  .v89-quick-help{padding:12px;font-size:12px;align-items:flex-start}
+  .v89-advanced-link{width:100%;justify-content:center}
+  .bottom-nav{z-index:40!important}
+}
+</style><style>
+/* CANIVETE V8.9 - UX/UI polish */
+:root{--ux-space:16px;--ux-radius:16px;--ux-focus:rgba(37,99,235,.16)}
+body{line-height:1.45;letter-spacing:-.01em}
+.side{padding-top:18px;box-shadow:4px 0 18px rgba(15,23,42,.035)}
+.brand{letter-spacing:-.025em}
+.nav button{min-height:44px;font-weight:650;transition:background .15s,border-color .15s,transform .15s}
+.nav button:hover{transform:translateX(2px)}
+.nav button.active{font-weight:800;box-shadow:inset 3px 0 0 var(--blue)}
+.main{padding-top:24px}
+.top h1{letter-spacing:-.035em;font-weight:900}
+.sub{max-width:760px}
+.card{border-radius:var(--ux-radius);transition:box-shadow .18s,border-color .18s,transform .18s}
+.card:hover{box-shadow:0 10px 30px rgba(15,23,42,.07)}
+.cards .card{min-height:116px}
+.metric{letter-spacing:-.03em}
+.btn{transition:transform .12s,box-shadow .12s,background .12s}
+.btn:hover{transform:translateY(-1px)}
+.primary{box-shadow:0 5px 12px rgba(37,99,235,.18)}
+.field input,.field select{transition:border-color .15s,box-shadow .15s}
+.field label{text-transform:none;letter-spacing:0}
+.pill{gap:4px}
+.empty{background:rgba(248,250,252,.5)}
+.expense-summary .stat{min-width:118px}
+.expense-view{position:sticky;top:8px;z-index:8;backdrop-filter:blur(8px)}
+.category{box-shadow:0 2px 10px rgba(15,23,42,.025)}
+.cat-head{min-height:66px}
+.cat-title{letter-spacing:-.01em}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #93c5fd;outline-offset:2px;box-shadow:0 0 0 4px var(--ux-focus)}
+@media(max-width:760px){
+  .main{padding:14px 12px 96px}
+  .top h1{font-size:23px}
+  .top{margin-bottom:16px}
+  .card{padding:16px;border-radius:14px}
+  .cards{gap:10px}
+  .cards .card{min-height:104px}
+  .metric{font-size:23px}
+  .expense-view{top:4px}
+  .view-switch button{padding:9px 10px}
+  .cat-head{min-height:62px}
+  .bottom-nav button{min-height:52px}
+}
+</style>
+</head>
 <body>
 <a href="#conteudoPrincipal" style="position:absolute;left:-9999px;top:0;z-index:9999;background:var(--blue);color:#fff;padding:12px 18px;border-radius:0 0 10px 0;font-weight:700;text-decoration:none" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Pular para o conteúdo</a>
 <div class="overlay" id="overlay" onclick="closeMenu()"></div><button type="button" id="btnVoltarTopo" onclick="voltarAoTopo()" aria-label="Voltar ao topo" style="display:none;position:fixed;right:16px;bottom:90px;z-index:35;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--blue);font-size:18px;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(15,23,42,.15)">↑</button>
@@ -47,7 +159,7 @@
 </div>
 
 <aside class="side" id="side"><div class="brand">🧰 Canivete Assistente<small>Seu painel financeiro pessoal</small></div><a class="back" href="/delta-prompts/index.html">← Voltar ao Delta Prompts</a><div style="padding:0 12px 10px"><input type="text" id="buscaMenuInput" aria-label="Buscar no menu" placeholder="🔍 Buscar no menu..." oninput="buscarNoMenu(this.value)" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"></div><div id="versaoTexto" style="padding:0 12px 10px;font-size:10px;color:#8a92a6">v5.1</div><button type="button" id="btnTemaCanivete" aria-label="Alternar entre modo claro e escuro" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🌙 Modo Escuro</button><button type="button" id="btnConfigurarPin" onclick="configurarPin()" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔒 Proteger com PIN</button><button type="button" id="btnAtualizarSistema" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;padding:10px;border-radius:9px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">🔄 Atualizar Sistema</button><div id="syncBox" style="padding:0 12px 16px;border-bottom:1px solid var(--line);margin-bottom:12px"><div id="syncStatusText" style="font-size:11px;color:#8a92a6;margin-bottom:8px;display:flex;align-items:center;gap:6px"><span id="syncBadgeDot" style="width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block"></span><span id="syncStatusLabel">🔒 Dados salvos só neste aparelho</span></div><button type="button" id="btnLoginCanivete" style="width:100%;border:1px solid var(--line);background:var(--card);color:var(--blue);padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔑 Entrar com Google</button><button type="button" id="btnLogoutCanivete" style="display:none;width:100%;border:1px solid #fecaca;background:var(--card);color:#dc2626;padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🚪 Sair</button></div><nav class="nav" id="nav" role="tablist" aria-label="Seções do Canivete"><button type="button" class="active" data-page="dashboard">📊 Financeiro</button><button type="button" data-page="perfil">👤 Meu Perfil</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">PLANEJAMENTO</div><button type="button" data-page="renda">💼 Renda & benefícios</button><button type="button" data-page="despesas">💸 Despesas</button><button type="button" data-page="dividas">💳 Dívidas <span class="badge" id="debtBadge">0</span></button><button type="button" data-page="patrimonio">🏦 Patrimônio</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">ACOMPANHAMENTO</div><button type="button" data-page="metas">🎯 Metas <span class="badge" id="goalBadge">0</span></button><button type="button" data-page="projecoes">📈 Projeções</button><button type="button" data-page="analise">🧠 Análise</button><button type="button" data-page="historico">📅 Histórico</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">EXTRAS</div><button type="button" data-page="compras">🛒 Lista de Compras <span class="badge" id="comprasBadge">0</span></button><button type="button" data-page="senhas">🔐 Senhas</button><button type="button" data-page="contatos">📇 Contatos Importantes</button><button type="button" data-page="datas">🎂 Datas Importantes <span class="badge" id="datasBadge">0</span></button><button type="button" data-page="links">🔗 Links Importantes</button><button type="button" data-page="saude">💊 Medicamentos & Vitaminas</button></nav></aside>
-<main class="main" id="conteudoPrincipal"><p style="font-size:12.5px;color:var(--muted);margin:0 0 10px"><a href="/delta-prompts/index.html" style="color:var(--blue);text-decoration:none;font-weight:700">🏠 Início</a> / Canivete Assistente</p><header class="top"><div><h1 id="title">Painel Financeiro</h1><p class="sub" id="subtitle">Veja quanto entra, quanto sai e quanto pode sobrar.</p></div><div class="actions"><a href="canivete-avancado.html" class="btn light" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">🧠 Visão Avançada</a><button class="btn light" type="button" onclick="exportarPDF()">📄 Relatório PDF</button><button class="btn light" type="button" onclick="exportarTXT()">📋 Copiar como Texto</button><button class="btn light" type="button" onclick="exportarCSV()">📊 Exportar CSV</button><button class="btn light" type="button" onclick="exportData()">⬇️ Exportar</button><button class="btn danger" type="button" onclick="resetData()">🗑️ Limpar</button></div></header>
+<main class="main" id="conteudoPrincipal"><p style="font-size:12.5px;color:var(--muted);margin:0 0 10px"><a href="/delta-prompts/index.html" style="color:var(--blue);text-decoration:none;font-weight:700">🏠 Início</a> / Canivete Assistente</p><header class="top"><div><h1 id="title">Painel Financeiro</h1><p class="sub" id="subtitle">Veja quanto entra, quanto sai e quanto pode sobrar.</p></div><div class="actions"><a href="canivete-avancado.html" class="btn light v89-advanced-link">🧠 Visão Avançada</a><button class="btn light" type="button" onclick="exportarPDF()">📄 Relatório PDF</button><button class="btn light" type="button" onclick="exportarTXT()">📋 Copiar como Texto</button><button class="btn light" type="button" onclick="exportarCSV()">📊 Exportar CSV</button><button class="btn light" type="button" onclick="exportData()">⬇️ Exportar</button><button class="btn danger" type="button" onclick="resetData()">🗑️ Limpar</button></div></header>
 <section id="dashboard" class="section active"><div id="lembretesWidget"></div><div id="sobraPorDia" style="margin-bottom:16px"></div><div class="card hero"><h2>👋 Organize sua vida financeira</h2><p class="sub"><strong>É simples:</strong> informe quanto recebe → seus gastos → o que já possui → suas metas.</p><div class="notice">🧭 Você pode começar pela renda e avançar passo a passo. Seus dados ficam salvos neste dispositivo — e também na nuvem, com segurança, se você entrar com sua conta Google no menu lateral.</div><div class="row" style="margin-top:14px;flex-wrap:wrap"><button class="btn primary" type="button" onclick="showPage('renda')">🚀 Começar agora</button><button class="btn light" type="button" onclick="showPage('despesas')">💸 Já quero informar gastos</button></div></div><div class="focus"><div class="label">💰 QUANTO PODE SOBRAR PARA VOCÊ</div><div class="value green" id="heroNet">R$ 0,00</div><div class="sub" id="heroExplain">Informe sua renda e suas despesas para descobrir.</div></div><div class="grid cards" style="margin-bottom:16px"><div class="card"><div class="metric-label">💵 Renda mensal</div><div class="metric blue" id="mIncome">R$ 0,00</div><div class="mini">Total estimado</div></div><div class="card"><div class="metric-label">💸 Despesas</div><div class="metric red" id="mExpenses">R$ 0,00</div><div class="mini" id="mExpensePct">0%</div><div class="mini" id="mExpensesAno">≈ R$ 0,00/ano</div></div><div class="card"><div class="metric-label">💰 Sobra</div><div class="metric green" id="mNet">R$ 0,00</div><div class="mini" id="mNetPct">0%</div></div><div class="card"><div class="metric-label">🏦 O que você já possui</div><div class="metric blue" id="mAssets">R$ 0,00</div><div class="mini">Total informado</div></div></div><div class="grid two"><div class="card"><h2>🧭 Diagnóstico financeiro</h2><div id="status" class="status attention"><strong>👋 Vamos começar</strong><small>Informe renda e despesas para receber seu diagnóstico.</small></div><div id="tips"></div></div><div class="card"><h2>📋 Resumo</h2><div class="summary"><div class="sum"><span>💵 Renda</span><strong id="sIncome">R$ 0,00</strong></div><div class="sum"><span>🎁 Benefícios</span><strong id="sBenefits">R$ 0,00</strong></div><div class="sum"><span>💸 Despesas</span><strong id="sExpenses">R$ 0,00</strong></div><div class="sum total"><span>💰 Sobra</span><strong id="sNet">R$ 0,00</strong></div></div></div></div><div id="comparativoMensal"></div><div id="comparativoCategorias"></div><div id="previsaoOcasional"></div><div id="resumoPessoas"></div><div class="card" style="margin-top:16px"><h2>🔔 Lembretes de vencimento</h2><p class="small" style="margin:-6px 0 12px;color:var(--muted)">O Canivete não envia mensagem sozinho (isso exigiria um servidor por trás). Mas você pode: gerar o texto pronto pra mandar no seu WhatsApp/e-mail com 1 clique, ou ativar avisos do navegador enquanto o Canivete estiver aberto numa aba.</p><div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn light" type="button" onclick="enviarLembretePorWhatsApp()">📱 Enviar por WhatsApp</button><button class="btn light" type="button" onclick="enviarLembretePorEmail()">✉️ Enviar por e-mail</button><button class="btn light" type="button" onclick="ativarNotificacaoPush()">🔔 Ativar aviso do navegador</button></div></div></section>
 
 <section id="perfil" class="section"><div class="card hero"><h2>👤 Meu Perfil</h2><p class="sub">Informações centrais suas, usadas por vários recursos do Canivete (hoje e no futuro) pra personalizar sugestões automaticamente. Preencher aqui é opcional, e você sempre pode ajustar depois.</p></div>
@@ -84,31 +196,32 @@
 
 <section id="links" class="section"><div class="card hero"><div class="row between"><div><h2>🔗 Links Importantes</h2><p class="sub">Guarde os links que você mais acessa (governo, banco, sistemas de trabalho) num lugar só.</p></div><button class="btn primary" type="button" onclick="addLinkImportante()">➕ Novo link</button></div></div><div class="card"><div id="linksList"></div></div></section>
 
-<section id="saude" class="section"><div class="card hero"><div><h2>💊 Medicamentos & Vitaminas</h2><p class="sub">Controle o que você toma e marque os dias que usou, pra acompanhar sua rotina. Isso é só uma organização pessoal — não é orientação médica, siga sempre as instruções do seu médico ou farmacêutico.</p></div></div>
+<section id="saude" class="section"><div class="card hero"><div><h2>🩺 Minha Saúde <span class="v79-health-badge">v8.9</span></h2><p class="sub">Organize medicamentos, suplementos, consultas e chás em um só lugar. Registre sua rotina e acompanhe seus horários e usos. Isso é apenas uma organização pessoal e não substitui orientação médica.</p></div></div>
 
 <div class="card"><h2>👤 Seu perfil</h2><p class="small">A sugestão automática de itens usa as informações do seu <a href="#" onclick="showPage('perfil');return false" style="color:var(--blue);font-weight:800">👤 Perfil central</a>. Preencha lá uma vez e vale pra cá e pra outros recursos futuros.</p></div>
 
-<div class="card"><h2>➕ Adicionar da minha lista</h2><p class="small">Digite um nome e escolha se é medicamento ou vitamina/suplemento, ou clique em um dos sugeridos abaixo pra adicionar rápido.</p><div class="form" style="margin-top:10px"><div class="field"><label for="novoRemedioNome">Nome</label><input id="novoRemedioNome" type="text" placeholder="Ex.: Paracetamol" aria-label="Nome do medicamento ou vitamina"></div><div class="field"><label for="novoRemedioTipo">Tipo</label><select id="novoRemedioTipo"><option value="medicamento">💊 Medicamento</option><option value="vitamina">🌿 Vitamina/Suplemento</option></select></div></div><button class="btn primary" type="button" onclick="addRemedioManual()" style="margin-top:12px">➕ Adicionar à minha lista</button>
+<div class="card"><h2>➕ Adicionar item</h2><p class="small">Digite o nome do que você usa ou escolha uma sugestão abaixo para adicionar rapidamente.</p><div class="form" style="margin-top:10px"><div class="field"><label for="novoRemedioNome">O que você usa?</label><input id="novoRemedioNome" type="text" placeholder="Ex.: Paracetamol, Vitamina D, Magnésio..." aria-label="Nome do item de saúde"></div><div class="field"><label for="novoRemedioTipo">Tipo</label><select id="novoRemedioTipo"><option value="medicamento">💊 Medicamento</option><option value="vitamina">🌿 Suplemento</option><option value="cha">🍵 Chá</option></select></div></div><button class="btn primary" type="button" onclick="addRemedioManual()" style="margin-top:12px">➕ Adicionar</button>
 
-<div style="margin-top:18px"><strong style="font-size:13px">🌿 Vitaminas/suplementos comuns (clique pra adicionar):</strong><div id="sugestoesVitaminas" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
-<div style="margin-top:16px"><strong style="font-size:13px">💊 Medicamentos comuns (clique pra adicionar):</strong><div id="sugestoesMedicamentos" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
+<div style="margin-top:18px"><strong style="font-size:13px">🌿 Suplementos comuns</strong><div id="sugestoesVitaminas" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
+<div style="margin-top:16px"><strong style="font-size:13px">💊 Sugestões de medicamentos</strong><div id="sugestoesMedicamentos" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
+<div style="margin-top:16px"><strong style="font-size:13px">🍵 Sugestões de chás</strong><div id="sugestoesChas" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
 </div>
 
-<div class="card"><h2>📋 Minha lista</h2><div class="row" style="gap:8px;margin-bottom:10px;flex-wrap:wrap"><input type="text" id="buscaRemedioInput" placeholder="🔍 Buscar na minha lista..." aria-label="Buscar item na minha lista" oninput="buscarRemedio()" style="flex:1;min-width:160px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"><button class="btn light" type="button" id="btnToggleHistoricoRemedios" onclick="toggleHistoricoRemedios()">📅 Ver últimos 30 dias</button><button class="btn light" type="button" id="btnModoCompactoRemedios" onclick="toggleModoCompactoRemedios()">📃 Ver lista compacta</button></div>
-<div class="row" style="gap:6px;margin-bottom:10px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted);align-self:center">Filtrar:</span><button class="btn light active" type="button" id="btnFiltroRemedio_todos" onclick="setFiltroTipoRemedio('todos')">Todos</button><button class="btn light" type="button" id="btnFiltroRemedio_medicamento" onclick="setFiltroTipoRemedio('medicamento')">💊 Medicamentos</button><button class="btn light" type="button" id="btnFiltroRemedio_vitamina" onclick="setFiltroTipoRemedio('vitamina')">🌿 Vitaminas</button><button class="btn light" type="button" id="btnFiltroRemedio_ativo" onclick="setFiltroTipoRemedio('ativo')">▶️ Só ativos</button></div>
-<div class="row" style="gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center"><span style="font-size:12px;color:var(--muted)">Ordenar por:</span><select onchange="setOrdenacaoRemedio(this.value)" style="padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-size:12px;background:var(--card);color:var(--ink)"><option value="adicao">Ordem de adição</option><option value="nome">Nome (A-Z)</option><option value="uso">Mais usado</option><option value="status">Status (ativos primeiro)</option></select><span style="margin-left:auto;display:flex;gap:6px"><button class="btn light" type="button" onclick="exportarListaRemedios()">📄 Exportar/Imprimir</button><button class="btn light" type="button" onclick="compartilharListaRemediosWhatsapp()">📲 WhatsApp</button></span></div>
+<div class="card"><h2>📋 Minha lista</h2><div class="row" style="gap:8px;margin-bottom:10px;flex-wrap:wrap"><input type="text" id="buscaRemedioInput" placeholder="🔍 Buscar na minha lista..." aria-label="Buscar item na minha lista" oninput="buscarRemedio()" style="flex:1;min-width:160px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"><button class="btn light" type="button" id="btnToggleHistoricoRemedios" onclick="toggleHistoricoRemedios()">📅 Histórico</button><button class="btn light" type="button" id="btnModoCompactoRemedios" onclick="toggleModoCompactoRemedios()">▤ Lista compacta</button></div>
+<div class="row" style="gap:6px;margin-bottom:10px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted);align-self:center">Mostrar:</span><button class="btn light active" type="button" id="btnFiltroRemedio_todos" onclick="setFiltroTipoRemedio('todos')">Todos</button><button class="btn light" type="button" id="btnFiltroRemedio_medicamento" onclick="setFiltroTipoRemedio('medicamento')">💊 Medicamentos</button><button class="btn light" type="button" id="btnFiltroRemedio_vitamina" onclick="setFiltroTipoRemedio('vitamina')">🌿 Suplementos</button><button class="btn light" type="button" id="btnFiltroRemedio_cha" onclick="setFiltroTipoRemedio('cha')">🍵 Chás</button><button class="btn light" type="button" id="btnFiltroRemedio_ativo" onclick="setFiltroTipoRemedio('ativo')">▶️ Só ativos</button></div>
+<div class="row" style="gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center"><span style="font-size:12px;color:var(--muted)">Ordenar por:</span><select onchange="setOrdenacaoRemedio(this.value)" style="padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-size:12px;background:var(--card);color:var(--ink)"><option value="adicao">Mais recentes</option><option value="nome">Nome (A-Z)</option><option value="uso">Mais usado</option><option value="status">Status (ativos primeiro)</option></select><span style="margin-left:auto;display:flex;gap:6px"><button class="btn light" type="button" onclick="exportarListaRemedios()">📄 Exportar/Imprimir</button><button class="btn light" type="button" onclick="compartilharListaRemediosWhatsapp()">📲 WhatsApp</button></span></div>
 <div id="listaRemedios"></div></div>
 
-<div class="card"><h2>📅 Consultas Médicas</h2><p class="small">Marque suas consultas e acompanhamentos. Se for consulta paga, a gente já ajuda a lançar o valor lá em Despesas, sem precisar fazer isso duas vezes.</p>
-<div class="form" style="margin-top:10px"><div class="field"><label for="novaConsultaMembro">Para quem é</label><select id="novaConsultaMembro" aria-label="Familiar da consulta"></select></div><div class="field"><label for="novaConsultaMedico">Médico/especialidade</label><input id="novaConsultaMedico" type="text" placeholder="Ex.: Dr. João - Cardiologista" aria-label="Nome do médico ou especialidade"></div><div class="field"><label for="novaConsultaData">Data da consulta</label><input id="novaConsultaData" type="date" aria-label="Data da consulta"></div><div class="field"><label for="novaConsultaTipo">É gratuita ou paga?</label><select id="novaConsultaTipo" onchange="document.getElementById('novaConsultaValorWrap').style.display=this.value==='paga'?'block':'none'"><option value="gratuita">🆓 Gratuita (SUS/convênio sem custo)</option><option value="paga">💰 Paga (particular)</option></select></div><div class="field" id="novaConsultaValorWrap" style="display:none"><label for="novaConsultaValor">Valor da consulta (R$)</label><input id="novaConsultaValor" type="number" min="0" step="0.01" placeholder="Ex.: 250" aria-label="Valor da consulta"></div></div>
-<button class="btn primary" type="button" onclick="addConsultaMedica()" style="margin-top:12px">➕ Marcar consulta</button>
+<div class="card"><h2>🩺 Consultas</h2><p class="small">Cadastre suas consultas e acompanhamentos. Se for uma consulta paga, o valor pode ser lançado nas Despesas para você não precisar cadastrar duas vezes.</p>
+<div class="form" style="margin-top:10px"><div class="field"><label for="novaConsultaMembro">Para quem é</label><select id="novaConsultaMembro" aria-label="Familiar da consulta"></select></div><div class="field"><label for="novaConsultaMedico">Médico ou especialidade</label><input id="novaConsultaMedico" type="text" placeholder="Ex.: Dr. João - Cardiologista" aria-label="Nome do médico ou especialidade"></div><div class="field"><label for="novaConsultaData">Quando é a consulta?</label><input id="novaConsultaData" type="date" aria-label="Data da consulta"></div><div class="field"><label for="novaConsultaTipo">A consulta é gratuita ou paga?</label><select id="novaConsultaTipo" onchange="document.getElementById('novaConsultaValorWrap').style.display=this.value==='paga'?'block':'none'"><option value="gratuita">🆓 Gratuita (SUS/convênio sem custo)</option><option value="paga">💰 Paga (particular)</option></select></div><div class="field" id="novaConsultaValorWrap" style="display:none"><label for="novaConsultaValor">Valor da consulta (R$)</label><input id="novaConsultaValor" type="number" min="0" step="0.01" placeholder="Ex.: 250" aria-label="Valor da consulta"></div></div>
+<button class="btn primary" type="button" onclick="addConsultaMedica()" style="margin-top:12px">➕ Adicionar consulta</button>
 <div id="listaConsultas" style="margin-top:16px"></div>
 </div>
 
-<div class="card"><h2>🏥 Condições de Saúde</h2><p class="small">Guarde aqui as condições que você tem, pra ter tudo num lugar só se precisar mostrar pra um médico novo. Isso é só um registro pessoal — não é diagnóstico nem substitui acompanhamento médico.</p>
+<div class="card"><h2>🏥 Condições de saúde</h2><p class="small">Guarde aqui condições de saúde que você já conhece e queira ter registradas. É apenas um registro pessoal e não é diagnóstico nem substitui acompanhamento médico.</p>
 <div class="form" style="margin-top:10px"><div class="field"><label for="novaCondicaoNome">Nome da condição</label><input id="novaCondicaoNome" type="text" placeholder="Ex.: Diabetes" aria-label="Nome da condição de saúde"></div></div>
 <button class="btn primary" type="button" onclick="addCondicaoManual()" style="margin-top:12px">➕ Adicionar</button>
-<div style="margin-top:18px"><strong style="font-size:13px">Sugestões rápidas (clique pra adicionar):</strong><div id="sugestoesCondicoes" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
+<div style="margin-top:18px"><strong style="font-size:13px">Sugestões rápidas</strong><div id="sugestoesCondicoes" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div></div>
 <div id="listaCondicoes" style="margin-top:16px"></div>
 </div>
 </section>
@@ -122,7 +235,7 @@
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='7.9';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.11';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();
@@ -855,7 +968,7 @@ function _editarContato(i,campo,valor){const l=_lerContatos();l[i][campo]=valor;
 function _removerContato(i){confirmarCanivete('Excluir este contato?',()=>{const l=_lerContatos();l.splice(i,1);_salvarContatos(l);renderContatos()})}
 
 // ===== LINKS IMPORTANTES =====
-const listaVitaminasSugeridas=['Creatina','Ashwagandha + Moringa + Maca Negra (combo)','Ashwagandha','Moringa','Maca Negra','Colágeno','Zinco','NAC (N-acetilcisteína)','Ômega 3','Vitamina D','Complexo B','Magnésio','Melatonina','Cúrcuma (Curcumina)','Coenzima Q10','Vitamina C','Própolis','Vitamina B12','Vitamina B6','Vitamina B9 (Ácido fólico)','Vitamina A','Vitamina E','Vitamina B1 (Tiamina)','Vitamina B2 (Riboflavina)','Vitamina B3 (Niacina)'];
+const listaVitaminasSugeridas=['Creatina','Ashwagandha + Moringa + Maca Negra (combo)','Ashwagandha','Moringa','Maca Negra','Colágeno','Zinco','NAC (N-acetilcisteína)','Ômega 3','Vitamina D','Complexo B','Magnésio','Melatonina','Cúrcuma (Curcumina)','Coenzima Q10','Vitamina C','Própolis','Vitamina B12','Vitamina B6','Vitamina B9 (Ácido fólico)','Vitamina A','Vitamina E','Vitamina B1 (Tiamina)','Vitamina B2 (Riboflavina)','Vitamina B3 (Niacina)','Multivitamínico / Multimineral','Vitamina K','Probiótico'];
 const infoVitaminas={
   'vitamina d':'Ossos, músculos e sistema imunológico',
   'vitamina c':'Antioxidante e sistema imunológico',
@@ -885,12 +998,30 @@ function mostrarInfoVitamina(nome){
   document.body.appendChild(overlay);
 }
 const listaMedicamentosSugeridos=['Paracetamol','Dorsilax','Dipirona','Ibuprofeno'];
+const listaChasSugeridos=['Camomila','Erva-doce','Hortelã','Chá verde','Hibisco','Gengibre','Melissa','Canela'];
 
 function _lerRemedios(){
   try{return JSON.parse(localStorage.getItem('canivete-remedios'))||[]}catch(e){return[]}
 }
+function limparItensSaudeAntigos(){
+  try{
+    const nomesRemover=new Set(['ashwagandha','moringa','maca negra','combo ashwagandha + moringa + maca negra']);
+    const lista=_lerRemedios();
+    const limpa=lista.filter(r=>!nomesRemover.has(String(r.nome||'').trim().toLowerCase()));
+    if(limpa.length!==lista.length)_salvarRemedios(limpa);
+  }catch(e){}
+}
 function _salvarRemedios(l){
   try{localStorage.setItem('canivete-remedios',JSON.stringify(l))}catch(e){}
+}
+function renderSugestoesChas(){
+  const el=document.getElementById('sugestoesChas');
+  if(!el)return;
+  const jaTem=_lerRemedios().map(r=>r.nome.toLowerCase());
+  el.innerHTML=listaChasSugeridos.map(nome=>{
+    const desabilitado=jaTem.includes(nome.toLowerCase());
+    return `<button type="button" class="btn light" style="font-size:11.5px;padding:6px 10px;${desabilitado?'opacity:.5;cursor:default':''}" ${desabilitado?'disabled':''} onclick="addRemedioRapido('${nome.replace(/'/g,"\\'")}','cha')">${desabilitado?'✓ ':'+ '}${nome}</button>`;
+  }).join('');
 }
 function renderSugestoesRemedios(){
   const elV=document.getElementById('sugestoesVitaminas');
@@ -906,6 +1037,7 @@ function renderSugestoesRemedios(){
     const desabilitado=jaTem.includes(nome.toLowerCase());
     return `<button type="button" class="btn light" style="font-size:11.5px;padding:6px 10px;${desabilitado?'opacity:.5;cursor:default':''}" ${desabilitado?'disabled':''} onclick="addRemedioRapido('${nome.replace(/'/g,"\\'")}','medicamento')">${desabilitado?'✓ ':'+ '}${nome}</button>`;
   }).join('');
+  renderSugestoesChas();
 }
 function _lerFamiliares(){
   try{return JSON.parse(localStorage.getItem('canivete-familiares'))||[]}catch(e){return[]}
@@ -1054,7 +1186,7 @@ function exportarListaRemedios(){
   txt+='═'.repeat(40)+'\n\n';
   l.forEach((r,i)=>{
     const horarios=r.horarios||(r.horarioConsumo?[r.horarioConsumo]:[]);
-    txt+=(i+1)+'. '+(r.tipo==='medicamento'?'💊':'🌿')+' '+r.nome+(r.ativo===false?' (INATIVO)':'')+'\n';
+    txt+=(i+1)+'. '+(r.tipo==='medicamento'?'💊':(r.tipo==='cha'?'🍵':'🌿'))+' '+r.nome+(r.ativo===false?' (INATIVO)':'')+'\n';
     if(r.dosagem)txt+='   Dosagem: '+r.dosagem+'\n';
     if(r.frequencia)txt+='   Frequência: '+r.frequencia+'\n';
     if(horarios.length)txt+='   Horário(s): '+horarios.join(', ')+'\n';
@@ -1079,7 +1211,7 @@ function compartilharListaRemediosWhatsapp(){
   if(!l.length){mostrarToastCanivete('Sua lista está vazia.');return}
   let txt='💊 *Minha lista de medicamentos/vitaminas*\n\n';
   l.forEach((r,i)=>{
-    txt+=(i+1)+'. '+(r.tipo==='medicamento'?'💊':'🌿')+' '+r.nome;
+    txt+=(i+1)+'. '+(r.tipo==='medicamento'?'💊':(r.tipo==='cha'?'🍵':'🌿'))+' '+r.nome;
     if(r.dosagem)txt+=' — '+r.dosagem;
     txt+='\n';
   });
@@ -1124,7 +1256,7 @@ let ordenacaoRemedioAtiva='adicao';
 let modoCompactoRemedios=false;
 function setFiltroTipoRemedio(v){
   filtroTipoRemedioAtivo=v;
-  ['todos','medicamento','vitamina','ativo'].forEach(tipo=>{
+  ['todos','medicamento','vitamina','cha','ativo'].forEach(tipo=>{
     const btn=document.getElementById('btnFiltroRemedio_'+tipo);
     if(btn)btn.classList.toggle('active',tipo===v);
   });
@@ -1137,7 +1269,7 @@ function setOrdenacaoRemedio(v){
 function toggleModoCompactoRemedios(){
   modoCompactoRemedios=!modoCompactoRemedios;
   const btn=document.getElementById('btnModoCompactoRemedios');
-  if(btn)btn.textContent=modoCompactoRemedios?'🗂️ Ver em cards':'📃 Ver lista compacta';
+  if(btn)btn.textContent=modoCompactoRemedios?'🗂️ Ver em cards':'▤ Lista compacta';
   renderListaRemedios();
 }
 function calcularDiasSemMarcar(r,hoje){
@@ -1169,7 +1301,7 @@ function toggleAtivoRemedio(i){
   l[i].ativo=!(l[i].ativo!==false);
   _salvarRemedios(l);
   renderListaRemedios();
-  mostrarToastCanivete(l[i].ativo?'▶️ Marcado como ativo.':'⏸️ Marcado como inativo.');
+  mostrarToastCanivete(l[i].ativo?'▶️ Marcado como ativo.':'⏸️ Item colocado em pausa.');
 }
 function renderListaRemedios(){
   const el=document.getElementById('listaRemedios');
@@ -1181,12 +1313,13 @@ function renderListaRemedios(){
   if(termoBusca)l=l.filter(r=>r.nome.toLowerCase().includes(termoBusca));
   if(filtroTipoRemedioAtivo==='medicamento')l=l.filter(r=>r.tipo==='medicamento');
   else if(filtroTipoRemedioAtivo==='vitamina')l=l.filter(r=>r.tipo==='vitamina');
+  else if(filtroTipoRemedioAtivo==='cha')l=l.filter(r=>r.tipo==='cha');
   else if(filtroTipoRemedioAtivo==='ativo')l=l.filter(r=>r.ativo!==false);
   if(ordenacaoRemedioAtiva==='nome')l=l.slice().sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));
   else if(ordenacaoRemedioAtiva==='uso')l=l.slice().sort((a,b)=>b.diasUso.length-a.diasUso.length);
   else if(ordenacaoRemedioAtiva==='status')l=l.slice().sort((a,b)=>(b.ativo!==false?1:0)-(a.ativo!==false?1:0));
-  if(!listaCompleta.length){el.innerHTML='<div class="empty">💊 Nenhum item adicionado ainda. Use a lista de sugestões acima ou adicione manualmente.</div>';return}
-  if(!l.length){el.innerHTML='<div class="empty">🔍 Nenhum item encontrado com esses filtros.</div>';return}
+  if(!listaCompleta.length){el.innerHTML='<div class="empty">💊 Nenhum item cadastrado ainda. Escolha uma sugestão acima ou adicione manualmente.</div>';return}
+  if(!l.length){el.innerHTML='<div class="empty">🔍 Nenhum item encontrado. Tente outro filtro ou nome.</div>';return}
   const hoje=new Date().toISOString().slice(0,10);
 
   if(modoCompactoRemedios){
@@ -1194,7 +1327,7 @@ function renderListaRemedios(){
       const i=r._i;
       const ativo=r.ativo!==false;
       const marcadoHoje=r.diasUso.includes(hoje);
-      return `<div class="row between" style="padding:9px 0;border-bottom:1px solid var(--line);${!ativo?'opacity:.55':''}"><span style="font-size:13px"><span style="color:var(--muted);font-weight:800">${i+1}.</span> ${r.tipo==='medicamento'?'💊':'🌿'} ${safe(r.nome)}${!ativo?' <span style="font-size:9.5px;color:#94a3b8">(inativo)</span>':''}</span><div style="display:flex;gap:5px;align-items:center"><button class="btn ${marcadoHoje?'primary':'light'}" type="button" style="font-size:11px;padding:5px 9px" onclick="toggleUsoHoje(${i})" ${!ativo?'disabled':''}>${marcadoHoje?'✅':'⬜'}</button><button class="btn light" type="button" style="font-size:11px;padding:5px 9px" onclick="toggleDetalhesRemedio(${i});toggleModoCompactoRemedios();toggleModoCompactoRemedios()" aria-label="Ver detalhes">⚙️</button></div></div>`;
+      return `<div class="row between" style="padding:9px 0;border-bottom:1px solid var(--line);${!ativo?'opacity:.55':''}"><span style="font-size:13px"><span style="color:var(--muted);font-weight:800">${i+1}.</span> ${r.tipo==='medicamento'?'💊':(r.tipo==='cha'?'🍵':'🌿')} ${safe(r.nome)}${!ativo?' <span style="font-size:9.5px;color:#94a3b8">(inativo)</span>':''}</span><div style="display:flex;gap:5px;align-items:center"><button class="btn ${marcadoHoje?'primary':'light'}" type="button" style="font-size:11px;padding:5px 9px" onclick="toggleUsoHoje(${i})" ${!ativo?'disabled':''}>${marcadoHoje?'✅':'⬜'}</button><button class="btn light" type="button" style="font-size:11px;padding:5px 9px" onclick="toggleDetalhesRemedio(${i});toggleModoCompactoRemedios();toggleModoCompactoRemedios()" aria-label="Ver detalhes">⚙️</button></div></div>`;
     }).join('');
     return;
   }
@@ -1214,9 +1347,9 @@ function renderListaRemedios(){
     const estoqueBaixo=r.estoqueAtual!==undefined&&r.estoqueAtual!==''&&r.estoqueMinimo!==undefined&&r.estoqueMinimo!==''&&Number(r.estoqueAtual)<=Number(r.estoqueMinimo);
     const detalhesAbertos=detalhesRemedioAbertos.has(i);
     const horarios=r.horarios||(r.horarioConsumo?[r.horarioConsumo]:[]);
-    return `<div class="goal" style="${!ativo?'opacity:.55':''}"><div class="row between"><div><strong><span style="color:var(--muted);font-weight:800">${i+1}.</span> ${r.tipo==='medicamento'?'💊':'🌿'} ${safe(r.nome)}</strong>${infoVitaminas[r.nome.toLowerCase()]?` <button type="button" onclick="mostrarInfoVitamina('${r.nome.replace(/'/g,"\\'")}')" aria-label="O que é ${safe(r.nome)}" style="width:19px;height:19px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:10px;font-weight:800;cursor:pointer;vertical-align:middle">?</button>`:''} ${!ativo?'<span style="font-size:10px;background:#e2e8f0;color:#475569;padding:2px 7px;border-radius:999px;font-weight:800">⏸️ INATIVO</span>':''}<div class="small" style="color:var(--muted)">${r.tipo==='medicamento'?'Medicamento':'Vitamina/Suplemento'} · usado ${r.diasUso.length}x no total${horarios.length?' · ⏰ '+horarios.join(', '):''}${r.frequencia?' · 🔁 '+safe(r.frequencia):''}${r.custoMensal?' · 💰 '+money(n(r.custoMensal))+'/mês':''}</div>${r.observacao?`<div class="small" style="color:var(--ink);margin-top:4px;font-style:italic">📝 ${safe(r.observacao)}</div>`:''}</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn light" type="button" onclick="toggleDetalhesRemedio(${i})" aria-label="Ver/editar detalhes">${detalhesAbertos?'🔼':'⚙️'}</button><button class="btn light" type="button" onclick="_duplicarRemedio(${i})" aria-label="Duplicar item">📋</button><button class="btn light" type="button" onclick="_editarRemedio(${i})" aria-label="Editar nome">✏️</button><button class="btn danger" type="button" onclick="_removerRemedio(${i})" aria-label="Remover">🗑️</button></div></div>
+    return `<div class="goal" style="${!ativo?'opacity:.55':''}"><div class="row between"><div><strong><span style="color:var(--muted);font-weight:800">${i+1}.</span> ${r.tipo==='medicamento'?'💊':(r.tipo==='cha'?'🍵':'🌿')} ${safe(r.nome)}</strong>${infoVitaminas[r.nome.toLowerCase()]?` <button type="button" onclick="mostrarInfoVitamina('${r.nome.replace(/'/g,"\\'")}')" aria-label="O que é ${safe(r.nome)}" style="width:19px;height:19px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:10px;font-weight:800;cursor:pointer;vertical-align:middle">?</button>`:''} ${!ativo?'<span style="font-size:10px;background:#e2e8f0;color:#475569;padding:2px 7px;border-radius:999px;font-weight:800">⏸️ INATIVO</span>':''}<div class="small" style="color:var(--muted)">${r.tipo==='medicamento'?'Medicamento':(r.tipo==='cha'?'Chá':'Suplemento')} · usado ${r.diasUso.length}x no total${horarios.length?' · ⏰ '+horarios.join(', '):''}${r.frequencia?' · 🔁 '+safe(r.frequencia):''}${r.custoMensal?' · 💰 '+money(n(r.custoMensal))+'/mês':''}</div>${r.observacao?`<div class="small" style="color:var(--ink);margin-top:4px;font-style:italic">📝 ${safe(r.observacao)}</div>`:''}</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn light" type="button" onclick="toggleDetalhesRemedio(${i})" aria-label="Ver/editar detalhes">${detalhesAbertos?'🔼':'⚙️'}</button><button class="btn light" type="button" onclick="_duplicarRemedio(${i})" aria-label="Duplicar item">📋</button><button class="btn light" type="button" onclick="_editarRemedio(${i})" aria-label="Editar nome">✏️</button><button class="btn danger" type="button" onclick="_removerRemedio(${i})" aria-label="Remover">🗑️</button></div></div>
     ${estoqueBaixo?`<div class="notice" style="border-left:4px solid #dc2626;margin-top:8px;font-size:12.5px">📦 Estoque baixo: só restam ${r.estoqueAtual}. Hora de repor!</div>`:''}
-    ${ativo&&diasSemMarcar>=1?`<div class="notice" style="border-left:4px solid ${diasSemMarcar>=3?'#dc2626':'#d97706'};margin-top:8px;font-size:12.5px">⚠️ ${diasSemMarcar===1?'Você não marcou ontem':'Já são '+diasSemMarcar+' dias seguidos sem marcar'} — não esqueça de manter sua rotina!</div>`:''}
+    ${ativo&&diasSemMarcar>=1?`<div class="notice" style="border-left:4px solid ${diasSemMarcar>=3?'#dc2626':'#d97706'};margin-top:8px;font-size:12.5px">⚠️ ${diasSemMarcar===1?'Você não marcou ontem':'Já são '+diasSemMarcar+' dias seguidos sem marcar'} — se você usou, registre o uso para manter seu histórico atualizado.</div>`:''}
     ${detalhesAbertos?`<div style="background:var(--bg2,#f8fafc);border-radius:10px;padding:12px;margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
       <div class="field"><label style="font-size:11.5px">💊 Dosagem/posologia</label><input type="text" value="${safe(r.dosagem||'')}" placeholder="Ex.: 1 comprimido" oninput="atualizarCampoRemedio(${i},'dosagem',this.value)" style="width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box"></div>
       <div class="field"><label style="font-size:11.5px">🔁 Frequência/intervalo</label><input type="text" value="${safe(r.frequencia||'')}" placeholder="Ex.: 1x ao dia, a cada 8h" oninput="atualizarCampoRemedio(${i},'frequencia',this.value)" style="width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box"></div>
@@ -1225,7 +1358,7 @@ function renderListaRemedios(){
       <div class="field"><label style="font-size:11.5px">💰 Custo mensal estimado (R$)</label><div style="display:flex;gap:6px"><input type="number" min="0" step="0.01" value="${r.custoMensal??''}" placeholder="Ex.: 45.90" oninput="atualizarCampoRemedio(${i},'custoMensal',this.value)" style="width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box"></div></div>
       <div class="field" style="grid-column:1/-1"><label style="font-size:11.5px">📝 Observações (ex.: efeitos notados, orientação do médico)</label><textarea oninput="atualizarCampoRemedio(${i},'observacao',this.value)" placeholder="Escreva aqui..." style="width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;box-sizing:border-box;min-height:50px;font-family:inherit">${safe(r.observacao||'')}</textarea></div>
       ${r.custoMensal&&n(r.custoMensal)>0?`<div style="grid-column:1/-1"><button class="btn light" type="button" onclick="_adicionarRemedioComoDespesa(${i})" style="font-size:12px">➕ Somar esse custo em Despesas</button></div>`:''}
-      <div class="field" style="grid-column:1/-1"><label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" ${ativo?'checked':''} onchange="toggleAtivoRemedio(${i})"> Tratamento ativo (desmarque se parou de usar, sem apagar o histórico)</label></div>
+      <div class="field" style="grid-column:1/-1"><label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" ${ativo?'checked':''} onchange="toggleAtivoRemedio(${i})"> Item ativo (desmarque se parou de usar; o histórico continua salvo)</label></div>
     </div>`:''}
     <div style="display:flex;gap:6px;margin-top:12px;align-items:center;flex-wrap:wrap">
       <button type="button" class="btn ${marcadoHoje?'primary':'light'}" style="font-size:12px" onclick="toggleUsoHoje(${i})" ${!ativo?'disabled':''}>${marcadoHoje?'✅ Usei hoje':'⬜ Marcar que usei hoje'}</button>
@@ -1239,7 +1372,7 @@ function renderListaRemedios(){
 function toggleHistoricoRemedios(){
   diasHistoricoRemedios=diasHistoricoRemedios===7?30:7;
   const btn=document.getElementById('btnToggleHistoricoRemedios');
-  if(btn)btn.textContent=diasHistoricoRemedios===7?'📅 Ver últimos 30 dias':'📅 Ver últimos 7 dias';
+  if(btn)btn.textContent=diasHistoricoRemedios===7?'📅 Histórico':'📅 Ver últimos 7 dias';
   renderListaRemedios();
 }
 function buscarRemedio(){renderListaRemedios()}
@@ -1288,7 +1421,7 @@ function renderListaConsultas(){
   const el=document.getElementById('listaConsultas');
   if(!el)return;
   const l=_lerConsultas();
-  if(!l.length){el.innerHTML='<div class="empty">📅 Nenhuma consulta marcada ainda.</div>';return}
+  if(!l.length){el.innerHTML='<div class="empty">📅 Nenhuma consulta cadastrada ainda.</div>';return}
   const hoje=new Date().toISOString().slice(0,10);
   const ordenada=l.map((c,i)=>({...c,_i:i})).sort((a,b)=>a.data.localeCompare(b.data));
   el.innerHTML=ordenada.map((c,idx)=>{
@@ -1899,5 +2032,344 @@ document.querySelectorAll('#nav button[data-page]').forEach(b=>{b.setAttribute('
 render();showPage('dashboard');carregarFirebaseCanivete();mostrarOnboardingSeNecessario();
 setTimeout(verificarEEnviarPush,1500);
 checarPinAoAbrir();
-renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();renderListaConsultas();renderListaFamiliares();atualizarSeletoresMembro();aplicarSugestaoPorGenero();
-</script></body></html>
+limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLinks();renderListaRemedios();renderSugestoesRemedios();renderListaCondicoes();renderSugestoesCondicoes();renderListaConsultas();renderListaFamiliares();atualizarSeletoresMembro();aplicarSugestaoPorGenero();
+</script><script>
+    /* CANIVETE-V80-UX */
+    (function(){
+      const ready=()=>{
+        const side=document.querySelector('.side');
+        const nav=document.querySelector('.nav');
+        if(!side||!nav) return;
+
+        // Versão visível no menu.
+        if(!document.querySelector('.v80-version')){
+          const brand=side.querySelector('.brand');
+          if(brand){const v=document.createElement('div');v.className='v80-version';v.textContent='🧰 Canivete v8.9';brand.insertAdjacentElement('afterend',v)}
+        }
+
+        // Modo simples/avançado: reduz a carga cognitiva sem remover funções.
+        if(!document.querySelector('.v80-mode')){
+          const btn=document.createElement('button');btn.className='v80-mode';btn.type='button';btn.textContent='✨ Modo simples';
+          const anchor=side.querySelector('.back')||side.querySelector('.brand');
+          if(anchor) anchor.insertAdjacentElement('afterend',btn);
+          const key='canivete-v80-mode';
+          const simple=localStorage.getItem(key)!=='advanced';
+          const setMode=(advanced)=>{
+            localStorage.setItem(key,advanced?'advanced':'simple');
+            btn.textContent=advanced?'🧠 Modo avançado':'✨ Modo simples';btn.classList.toggle('active',advanced);
+            document.documentElement.classList.toggle('v80-advanced',advanced);
+            side.querySelectorAll('.v80-nav-group').forEach(g=>{
+              const advancedGroup=g.dataset.advanced==='1';
+              if(advancedGroup) g.style.display=advanced?'':'none';
+            });
+          };
+          btn.addEventListener('click',()=>setMode(localStorage.getItem(key)==='advanced'?false:true));
+          window.__caniveteV80Mode=setMode;setMode(!simple);
+        }
+
+        // Organiza o menu existente em grupos, preservando os botões e seus eventos.
+        if(!nav.dataset.v80Grouped){
+          const buttons=[...nav.querySelectorAll(':scope > button')];
+          if(buttons.length>=5){
+            const groups=[
+              ['💰 Finanças',/(painel|início|renda|sal[aá]rio|despes|d[ií]vida|patrim[oô]nio|meta|proje|an[aá]lise|hist[oó]rico)/i,false],
+              ['🧰 Organização',/(compra|senha|contato|data|link)/i,true],
+              ['❤️ Pessoal',/(sa[uú]de|medic|vitamina)/i,true],
+              ['⚙️ Sistema',/(perfil|config|ajuda|tend[eê]n|sobre)/i,true]
+            ];
+            const original=buttons.slice();
+            nav.innerHTML='';
+            groups.forEach(([title,re,adv])=>{
+              const matched=original.filter(b=>re.test(b.textContent||''));
+              if(!matched.length) return;
+              const d=document.createElement('details');d.className='v80-nav-group';d.dataset.advanced=adv?'1':'0';
+              const s=document.createElement('summary');s.textContent=title;d.appendChild(s);
+              const body=document.createElement('div');body.className='v80-group-body';
+              matched.forEach(b=>body.appendChild(b));d.appendChild(body);nav.appendChild(d);
+              const k='canivete-v80-group-'+title;d.open=localStorage.getItem(k)!=='0';d.addEventListener('toggle',()=>localStorage.setItem(k,d.open?'1':'0'));
+            });
+            // Qualquer botão não classificado volta ao final para não perder nenhuma função.
+            const leftovers=original.filter(b=>!nav.contains(b));
+            if(leftovers.length){const d=document.createElement('details');d.className='v80-nav-group';d.open=true;const s=document.createElement('summary');s.textContent='☰ Outros';d.appendChild(s);const body=document.createElement('div');body.className='v80-group-body';leftovers.forEach(b=>body.appendChild(b));d.appendChild(body);nav.appendChild(d)}
+            nav.dataset.v80Grouped='1';
+          }
+        }
+
+        // Banner de início: orienta quem acabou de chegar sem esconder recursos avançados.
+        const firstSection=document.querySelector('.section.active')||document.querySelector('.section');
+        if(firstSection&&!document.querySelector('.v80-start')){
+          const box=document.createElement('div');box.className='v80-start';box.innerHTML='<strong>🚀 Comece pelo básico</strong><span>Preencha sua renda, despesas, dinheiro guardado e um objetivo. Depois use Análise, Dívidas, Patrimônio e Projeções para uma visão mais avançada.</span>';
+          firstSection.prepend(box);
+        }
+
+        // Atalhos móveis que acionam os botões originais.
+        if(!document.querySelector('.v80-mobile-nav')){
+          const m=document.createElement('nav');m.className='v80-mobile-nav';m.setAttribute('aria-label','Navegação rápida');
+          const items=[['🏠','Início',/in[ií]cio|painel/i],['💸','Despesas',/despes/i],['🎯','Metas',/meta/i],['🧠','Análise',/an[aá]lise/i],['☰','Mais',null]];
+          items.forEach(([ico,label,re])=>{const b=document.createElement('button');b.type='button';b.innerHTML=ico+'<br><span>'+label+'</span>';b.addEventListener('click',()=>{if(!re){side.classList.add('open');document.querySelector('.overlay')?.classList.add('open');return} const target=[...nav.querySelectorAll('button')].find(x=>re.test(x.textContent||''));if(target){target.click();m.querySelectorAll('button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}});m.appendChild(b)});document.body.appendChild(m);
+        }
+      };
+      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
+    })();
+    </script>
+
+    <script>
+    /* CANIVETE-V79-SAUDE */
+    (function(){function enhanceHealth(){const section=document.getElementById('saude'),list=document.getElementById('listaRemedios');if(!section||!list)return;const items=list.querySelectorAll(':scope > .goal');const data=typeof _lerRemedios==='function'?_lerRemedios():[];if(!data.length)return;const today=new Date().toISOString().slice(0,10);let ativos=0,pausados=0,usadosHoje=0;data.forEach(r=>{if(r.ativo!==false)ativos++;else pausados++;if((r.diasUso||[]).includes(today))usadosHoje++});let summary=document.getElementById('healthSummary79');if(!summary){summary=document.createElement('div');summary.id='healthSummary79';summary.className='health-summary';list.parentElement.insertBefore(summary,list)}summary.innerHTML='<div class="health-stat"><strong>'+data.length+'</strong><span>itens cadastrados</span></div><div class="health-stat"><strong>'+ativos+'</strong><span>ativos</span></div><div class="health-stat"><strong>'+pausados+'</strong><span>pausados</span></div><div class="health-stat"><strong>'+usadosHoje+'</strong><span>usados hoje</span></div>';items.forEach((card,idx)=>{const r=data[idx];if(!r)return;card.classList.add('health-item-card');const head=card.querySelector('.row.between');if(head)head.classList.add('health-item-head');const left=head?.querySelector('div');if(left)left.classList.add('health-item-name');const actions=head?.querySelector('div:last-child');if(actions)actions.classList.add('health-item-actions');if(left&&!left.querySelector('.health-tags')){const tags=document.createElement('div');tags.className='health-tags';const type=document.createElement('span');type.className='health-tag type';type.textContent=r.tipo==='medicamento'?'💊 Medicamento':'🌿 Suplemento';const status=document.createElement('span');status.className='health-tag '+(r.ativo!==false?'active':'paused');status.textContent=r.ativo!==false?'🟢 Ativo':'⏸️ Pausado';tags.append(type,status);if((r.diasUso||[]).includes(today)){const used=document.createElement('span');used.className='health-tag today';used.textContent='✅ Usado hoje';tags.append(used)}left.append(tags)}})}setTimeout(enhanceHealth,200);})();
+    </script>
+    
+\n<script>
+/* CANIVETE-V80-SAUDE-CHA */
+(function(){
+  window.suspenderRemedioV80=function(i,motivo){
+    const l=_lerRemedios(); if(!l[i])return;
+    l[i].ativo=false; l[i].motivoPausa=motivo||'Pausa temporária'; l[i].dataPausa=new Date().toISOString().slice(0,10);
+    _salvarRemedios(l); renderListaRemedios(); if(typeof renderSugestoesRemedios==='function')renderSugestoesRemedios();
+    if(typeof mostrarToastCanivete==='function')mostrarToastCanivete('⏸️ '+l[i].nome+' foi suspenso: '+l[i].motivoPausa);
+  };
+  window.retomarRemedioV80=function(i){
+    const l=_lerRemedios(); if(!l[i])return;
+    l[i].ativo=true; l[i].motivoPausa=''; l[i].dataRetomada=new Date().toISOString().slice(0,10);
+    _salvarRemedios(l); renderListaRemedios(); if(typeof renderSugestoesRemedios==='function')renderSugestoesRemedios();
+    if(typeof mostrarToastCanivete==='function')mostrarToastCanivete('▶️ '+l[i].nome+' voltou a ficar ativo.');
+  };
+  window.editarPausaRemedioV80=function(i){
+    const l=_lerRemedios(); if(!l[i])return;
+    const motivo=prompt('Por que você está suspendendo?\
+\
+Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.',l[i].motivoPausa||'Pausa temporária');
+    if(motivo===null)return;
+    l[i].ativo=false; l[i].motivoPausa=motivo.trim()||'Pausa temporária'; l[i].dataPausa=l[i].dataPausa||new Date().toISOString().slice(0,10);
+    _salvarRemedios(l); renderListaRemedios();
+  };
+  function enhanceV80(){
+    const section=document.getElementById('saude'),list=document.getElementById('listaRemedios');
+    if(!section||!list)return;
+    const cards=list.querySelectorAll(':scope > .goal');
+    cards.forEach(card=>{
+      const edit=Array.from(card.querySelectorAll('button')).find(b=>(b.getAttribute('onclick')||'').includes('_editarRemedio('));
+      if(!edit)return;
+      const m=(edit.getAttribute('onclick')||'').match(/_editarRemedio\\((\\d+)\\)/); if(!m)return;
+      const i=Number(m[1]); const l=_lerRemedios(); const r=l[i]; if(!r)return;
+      let controls=card.querySelector('.pause-controls');
+      if(!controls){
+        controls=document.createElement('div'); controls.className='pause-controls';
+        if(r.ativo!==false){
+          controls.innerHTML='<button class="btn light" type="button" onclick="suspenderRemedioV80('+i+',\'Pausa temporária\')">⏸️ Dar um tempo</button><button class="btn light" type="button" onclick="suspenderRemedioV80('+i+',\'Sem suplemento no momento\')">📦 Sem suplemento</button><button class="btn light" type="button" onclick="editarPausaRemedioV80('+i+')">📝 Outro motivo</button>';
+        }else{
+          controls.innerHTML='<button class="btn primary" type="button" onclick="retomarRemedioV80('+i+')">▶️ Retomar uso</button><button class="btn light" type="button" onclick="editarPausaRemedioV80('+i+')">📝 Alterar motivo</button>';
+        }
+        card.appendChild(controls);
+      }
+      if(r.ativo===false&&r.motivoPausa&&!card.querySelector('.pause-reason')){
+        const reason=document.createElement('div');reason.className='pause-reason';reason.textContent='⏸️ Suspenso: '+r.motivoPausa;
+        const controlsNow=card.querySelector('.pause-controls');card.insertBefore(reason,controlsNow||null);
+      }
+    });
+  }
+  const old=window.renderListaRemedios;
+  if(typeof old==='function'&&!old.__v80){
+    const wrapped=function(){old.apply(this,arguments);setTimeout(enhanceV80,0)};wrapped.__v80=true;window.renderListaRemedios=wrapped;
+  }
+  setTimeout(enhanceV80,300);
+  document.addEventListener('click',function(e){if(e.target.closest('#btnFiltroRemedio_cha'))setTimeout(enhanceV80,50)});
+})();
+</script>\n
+<!-- CANIVETE-V80-BADGE-FIX -->\n
+<!-- CANIVETE-V81-SAÚDE-ABAS -->
+<style>
+.health-tabs81{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px;padding:6px;background:var(--bg);border:1px solid var(--line);border-radius:15px;position:sticky;top:8px;z-index:15}
+.health-tab81{border:0;background:transparent;color:var(--muted);border-radius:10px;padding:11px 8px;font-size:12px;font-weight:850;cursor:pointer;transition:.15s}
+.health-tab81:hover{background:var(--card);color:var(--blue)}
+.health-tab81.active{background:var(--blue);color:#fff;box-shadow:0 3px 10px rgba(37,99,235,.18)}
+#saude .health-context81{margin:-5px 0 14px;padding:10px 12px;border-radius:11px;background:var(--bg);border:1px solid var(--line);font-size:12px;color:var(--muted)}
+@media(max-width:600px){.health-tabs81{grid-template-columns:repeat(2,1fr);position:sticky;top:5px}.health-tab81{min-height:44px;font-size:11px}}
+</style>
+<script>
+(function(){
+  function initSaudeAbas81(){
+    const section=document.getElementById('saude');
+    if(!section || section.dataset.v81==='1') return;
+    section.dataset.v81='1';
+    const hero=section.querySelector('.hero');
+    if(!hero) return;
+    const tabs=document.createElement('div');
+    tabs.className='health-tabs81';
+    tabs.innerHTML=`<button class="health-tab81 active" data-health-tab="medicamento">💊 Medicamentos</button><button class="health-tab81" data-health-tab="vitamina">🌿 Suplementos</button><button class="health-tab81" data-health-tab="consulta">🩺 Consultas</button><button class="health-tab81" data-health-tab="cha">🍵 Chás</button>`;
+    hero.insertAdjacentElement('afterend',tabs);
+    const cards=Array.from(section.children).filter(e=>e.classList.contains('card'));
+    const profile=cards.find(c=>c.textContent.includes('Seu perfil'));
+    const add=cards.find(c=>c.textContent.includes('Adicionar da minha lista'));
+    const list=cards.find(c=>c.querySelector('#listaRemedios'));
+    const consulta=cards.find(c=>c.querySelector('#listaConsultas')) || cards.find(c=>c.textContent.includes('Consultas Médicas'));
+    const cond=cards.find(c=>c.textContent.includes('Condições de Saúde'));
+    const obs=cards.find(c=>c.textContent.includes('Observações gerais'));
+    const stock=cards.find(c=>c.textContent.includes('Estoque'));
+    const context=document.createElement('div');
+    context.className='health-context81';
+    tabs.insertAdjacentElement('afterend',context);
+    function setTab(type){
+      tabs.querySelectorAll('.health-tab81').forEach(b=>b.classList.toggle('active',b.dataset.healthTab===type));
+      context.textContent={medicamento:'💊 Seus medicamentos em uso ou pausados. O histórico continua salvo.',vitamina:'🌿 Vitaminas e suplementos que você usa ou pretende retomar.',consulta:'🩺 Consultas médicas, acompanhamentos e valores pagos.',cha:'🍵 Chás e bebidas naturais que você deseja acompanhar.'}[type];
+      [profile,add,list,consulta,cond,obs,stock].forEach(c=>{if(c)c.style.display='none'});
+      if(type==='consulta'){if(consulta)consulta.style.display='block'}
+      else {if(profile)profile.style.display='block';if(add)add.style.display='block';if(list)list.style.display='block';if(cond)cond.style.display='block';if(obs)obs.style.display='block';if(stock)stock.style.display='block'}
+      const filter=document.getElementById('btnFiltroRemedio_'+type);
+      if(filter)filter.click();
+      const sv=document.getElementById('sugestoesVitaminas');
+      const sm=document.getElementById('sugestoesMedicamentos');
+      const sc=document.getElementById('sugestoesChas');
+      if(sv)sv.parentElement.style.display=type==='vitamina'?'block':'none';
+      if(sm)sm.parentElement.style.display=type==='medicamento'?'block':'none';
+      if(sc)sc.parentElement.style.display=type==='cha'?'block':'none';
+      const title=add?.querySelector('h2');
+      if(title)title.textContent=type==='medicamento'?'💊 Adicionar medicamento':type==='vitamina'?'🌿 Adicionar suplemento':type==='cha'?'🍵 Adicionar chá':'➕ Adicionar';
+    }
+    tabs.querySelectorAll('.health-tab81').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.healthTab)));
+    setTimeout(()=>setTab('medicamento'),50);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initSaudeAbas81);else initSaudeAbas81();
+  document.addEventListener('click',e=>{if(e.target.closest('[data-page="saude"]'))setTimeout(initSaudeAbas81,120)});
+})();
+</script>
+
+<!-- CANIVETE-V82-VITAMINAS -->
+<style>
+#saude .vitaminas-rapidas82{margin-top:16px;padding:14px;border:1px solid #dbeafe;border-radius:14px;background:var(--bg)}
+#saude .vitaminas-rapidas82 strong{display:block;font-size:13px;margin-bottom:4px}
+#saude .vitaminas-rapidas82 small{display:block;color:var(--muted);font-size:10.5px;margin-bottom:9px;line-height:1.4}
+#saude .vitaminas-rapidas82-list{display:flex;flex-wrap:wrap;gap:6px}
+#saude .vitaminas-rapidas82 .btn{font-size:11px;padding:7px 9px;min-height:34px}
+@media(max-width:600px){#saude .vitaminas-rapidas82-list{display:grid;grid-template-columns:1fr 1fr}#saude .vitaminas-rapidas82 .btn{width:100%;text-align:left}}
+</style>
+<script>
+(function(){
+  const nomes82=['Vitamina D','Magnésio','Ômega 3','Coenzima Q10','Multivitamínico / Multimineral','Vitamina C','Vitamina K','Complexo B','Probiótico','Zinco'];
+  function montar82(){
+    const section=document.getElementById('saude');
+    if(!section)return;
+    const add=Array.from(section.querySelectorAll('.card')).find(c=>c.textContent.includes('Adicionar da minha lista'));
+    if(!add)return;
+    let box=document.getElementById('vitaminasRapidas82');
+    if(!box){
+      box=document.createElement('div');
+      box.id='vitaminasRapidas82';
+      box.className='vitaminas-rapidas82';
+      box.innerHTML='<strong>🌿 10 vitaminas e suplementos comuns</strong><small>Clique em um item para adicionar rapidamente à sua lista.</small><div class="vitaminas-rapidas82-list"></div>';
+      add.appendChild(box);
+    }
+    const list=box.querySelector('.vitaminas-rapidas82-list');
+    if(!list)return;
+    let existentes=[];
+    try{existentes=_lerRemedios().map(r=>String(r.nome||'').toLowerCase())}catch(e){}
+    list.innerHTML=nomes82.map(nome=>{
+      const ja=existentes.includes(nome.toLowerCase());
+      return '<button type="button" class="btn light" '+(ja?'disabled':('onclick="addRemedioRapido(\''+nome.replace(/'/g,"\\'")+'\',\'vitamina\')"'))+' style="'+(ja?'opacity:.55;cursor:default':'')+'">'+(ja?'✓ ':'+ ')+nome+'</button>';
+    }).join('');
+  }
+  function iniciar82(){setTimeout(montar82,80);setTimeout(montar82,500)}
+  document.addEventListener('click',function(e){
+    if(e.target.closest('.health-tab81'))setTimeout(montar82,100);
+    if(e.target.closest('[data-page="saude"]'))setTimeout(montar82,150);
+  });
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar82);else iniciar82();
+})();
+</script>
+
+
+<!-- CANIVETE-V83-NAVEGACAO-SAUDE -->
+<script>
+(function(){
+  function sincronizar(){
+    const f=document.getElementById('btnFiltroRemedio_vitamina');
+    const t=document.querySelector('.health-tab81[data-health-tab="vitamina"]');
+    if(f && t && !f.dataset.sync83){
+      f.dataset.sync83='1';
+      f.addEventListener('click',function(){setTimeout(()=>t.click(),30)});
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sincronizar);else sincronizar();
+  document.addEventListener('click',e=>{if(e.target.closest('[data-page="saude"]'))setTimeout(sincronizar,180)});
+})();
+</script>
+
+\n<script>
+(function(){
+  function atualizarUsadosHoje(){
+    var botoes = Array.from(document.querySelectorAll('button'));
+    var usados = botoes.filter(function(b){
+      return /usado\\s+hoje/i.test((b.textContent||'').trim());
+    }).length;
+
+    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){
+      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());
+    });
+    labels.forEach(function(label){
+      var box = label.parentElement;
+      if(!box) return;
+      var numero = box.querySelector('.metric,.stat b,strong');
+      if(numero) numero.textContent = String(usados);
+    });
+
+    document.querySelectorAll('*').forEach(function(el){
+      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){
+        var candidatos = el.querySelectorAll('.metric,.stat b,strong');
+        if(candidatos.length) candidatos[0].textContent = String(usados);
+      }
+    });
+  }
+
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('button');
+    if(!b) return;
+    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){
+      setTimeout(atualizarUsadosHoje, 50);
+      setTimeout(atualizarUsadosHoje, 250);
+    }
+  }, true);
+
+  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });
+  obs.observe(document.body, {subtree:true, childList:true, characterData:true});
+  setTimeout(atualizarUsadosHoje, 300);
+  setTimeout(atualizarUsadosHoje, 1000);
+})();
+</script>\n<script id="CANIVETE_V89_MOBILE_UX">
+(function(){
+  function atualizarVisualSaude89(tipo){
+    const tabs=document.querySelectorAll('.health-tab81');tabs.forEach(b=>b.classList.toggle('active',b.dataset.healthTab===tipo));
+    const context=document.querySelector('.health-context81');const textos={medicamento:'💊 Seus medicamentos em uso ou pausados. O histórico continua salvo.',vitamina:'🌿 Vitaminas e suplementos que você usa ou pretende retomar.',consulta:'🩺 Consultas médicas, acompanhamentos e valores pagos.',cha:'🍵 Chás e bebidas naturais que você deseja acompanhar.'};if(context)context.textContent=textos[tipo]||'';
+    if(typeof setFiltroTipoRemedio==='function')setFiltroTipoRemedio(tipo);
+    const sv=document.getElementById('sugestoesVitaminas'),sm=document.getElementById('sugestoesMedicamentos'),sc=document.getElementById('sugestoesChas');
+    if(sv&&sv.parentElement)sv.parentElement.style.display=tipo==='vitamina'?'block':'none';if(sm&&sm.parentElement)sm.parentElement.style.display=tipo==='medicamento'?'block':'none';if(sc&&sc.parentElement)sc.parentElement.style.display=tipo==='cha'?'block':'none';
+  }
+  function bindTabs89(){document.querySelectorAll('#saude .health-tab81').forEach(tab=>{tab.style.pointerEvents='auto';tab.style.position='relative';tab.style.zIndex='1001';if(!tab.dataset.v89bound){tab.dataset.v89bound='1';const acao=e=>{e.preventDefault();e.stopPropagation();atualizarVisualSaude89(tab.dataset.healthTab)};tab.addEventListener('pointerup',acao,{passive:false});tab.addEventListener('touchend',acao,{passive:false})}})}
+  document.addEventListener('pointerdown',e=>{const tab=e.target.closest&&e.target.closest('#saude .health-tab81');if(tab){tab.style.pointerEvents='auto';tab.style.zIndex='1001'}},true);
+  document.addEventListener('click',e=>{const tab=e.target.closest&&e.target.closest('#saude .health-tab81');if(tab)atualizarVisualSaude89(tab.dataset.healthTab)},true);
+  const obs=new MutationObserver(bindTabs89);obs.observe(document.body,{childList:true,subtree:true});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindTabs89);else bindTabs89();
+})();</script>
+<script id="CANIVETE_V89_MOBILE_TABS">
+(function(){
+  function ativarAba89(tipo){
+    document.querySelectorAll('#saude .health-tab81').forEach(function(b){b.classList.toggle('active',b.dataset.healthTab===tipo)});
+    if(typeof setFiltroTipoRemedio==='function') setFiltroTipoRemedio(tipo);
+    var sv=document.getElementById('sugestoesVitaminas'),sm=document.getElementById('sugestoesMedicamentos'),sc=document.getElementById('sugestoesChas');
+    if(sv&&sv.parentElement)sv.parentElement.style.display=tipo==='vitamina'?'block':'none';
+    if(sm&&sm.parentElement)sm.parentElement.style.display=tipo==='medicamento'?'block':'none';
+    if(sc&&sc.parentElement)sc.parentElement.style.display=tipo==='cha'?'block':'none';
+  }
+  function preparar(){
+    document.querySelectorAll('#saude .health-tab81').forEach(function(tab){
+      tab.style.pointerEvents='auto';tab.style.position='relative';tab.style.zIndex='1001';tab.style.touchAction='manipulation';
+      if(tab.dataset.v89ok)return;
+      tab.dataset.v89ok='1';
+      tab.addEventListener('pointerup',function(e){e.preventDefault();e.stopPropagation();ativarAba89(tab.dataset.healthTab)},{passive:false});
+      tab.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();ativarAba89(tab.dataset.healthTab)},{passive:false});
+    });
+  }
+  document.addEventListener('pointerdown',function(e){var t=e.target.closest&&e.target.closest('#saude .health-tab81');if(t){t.style.pointerEvents='auto';t.style.zIndex='1001'}},true);
+  document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('#saude .health-tab81');if(t)ativarAba89(t.dataset.healthTab)},true);
+  var mo=new MutationObserver(preparar);mo.observe(document.body,{subtree:true,childList:true});
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',preparar);else preparar();
+})();
+</script>
+</body></html>

@@ -1,0 +1,38 @@
+name: Canivete v8.9 - Corrigir abas Saúde no celular
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Aplicar correção das abas
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          p = Path('canivete.html')
+          s = p.read_text(encoding='utf-8')
+          marker = 'CANIVETE_V89_HEALTH_TABS_FINAL'
+          if marker not in s:
+              css = '''\n<!-- CANIVETE_V89_HEALTH_TABS_FINAL -->\n<style id="CANIVETE_V89_HEALTH_TABS_FINAL">\n@media (max-width:760px){\n  .canivete-health-tabs-final{position:relative!important;z-index:999999!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px!important;pointer-events:auto!important;}\n  .canivete-health-tabs-final button{position:relative!important;z-index:1000000!important;display:flex!important;align-items:center!important;justify-content:center!important;min-height:56px!important;width:100%!important;margin:0!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-user-select:none!important;user-select:none!important;}\n  .canivete-health-tabs-final button *{pointer-events:none!important;}\n}\n</style>\n'''
+              js = '''\n<!-- CANIVETE_V89_HEALTH_TABS_FINAL_SCRIPT -->\n<script id="CANIVETE_V89_HEALTH_TABS_FINAL_SCRIPT">\n(function(){\n  const labels = ['medicamentos','suplementos','consultas','chás','chas'];\n  function normalize(v){ return (v||'').replace(/\\s+/g,' ').trim().toLowerCase(); }\n  function fix(){\n    const all = Array.from(document.querySelectorAll('button'));\n    const tabs = all.filter(b => labels.includes(normalize(b.textContent)));\n    if(tabs.length < 2) return;\n    const parent = tabs[0].parentElement;\n    if(parent){\n      parent.classList.add('canivete-health-tabs-final');\n      parent.style.position='relative'; parent.style.zIndex='999999'; parent.style.pointerEvents='auto';\n    }\n    tabs.forEach(b=>{\n      b.disabled=false; b.removeAttribute('disabled'); b.removeAttribute('aria-disabled'); b.removeAttribute('inert');\n      b.style.pointerEvents='auto'; b.style.touchAction='manipulation'; b.style.position='relative'; b.style.zIndex='1000000';\n      if(!b.dataset.caniveteTouchFix){\n        b.dataset.caniveteTouchFix='1';\n        b.addEventListener('pointerdown', function(){ b.style.pointerEvents='auto'; }, {passive:true});\n      }\n    });\n  }\n  fix();\n  document.addEventListener('DOMContentLoaded',fix,{once:true});\n  [200,600,1200,2500].forEach(t=>setTimeout(fix,t));\n  new MutationObserver(fix).observe(document.documentElement,{childList:true,subtree:true});\n})();\n</script>\n'''
+              if '</head>' in s: s=s.replace('</head>', css+'\n</head>',1)
+              if '</body>' in s: s=s.replace('</body>', js+'\n</body>',1)
+          s = re.sub(r'v8\\.[0-9]+','v8.9',s)
+          s = re.sub(r'(APP_VERSION\\s*=\\s*[\"\\'])8\\.[0-9]+([\"\\'])',r'\\g<1>8.9\\g<2>',s,count=1)
+          p.write_text(s,encoding='utf-8')
+      - name: Publicar alteração
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete.html
+          git diff --cached --quiet || git commit -m "fix: corrigir toque das abas de saúde no mobile v8.9"
+          git push
