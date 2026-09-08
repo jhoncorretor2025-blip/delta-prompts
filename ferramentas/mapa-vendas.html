@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Delta • Mapa de Calor de Vendas</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#172033;--muted:#687386;--line:#e4e8ef;--blue:#2563eb;--green:#16a34a;--red:#dc2626}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif}
+header{background:linear-gradient(135deg,#111827,#1d4ed8);color:#fff;padding:22px 28px}
+header h1{margin:0;font-size:26px}header p{margin:5px 0 0;color:#dbeafe}
+.wrap{max-width:1600px;margin:auto;padding:18px}.layout{display:grid;grid-template-columns:350px 1fr;gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 6px 22px #1018280b}
+h2{font-size:17px;margin:0 0 13px}.small{font-size:12px;color:var(--muted);line-height:1.45}
+.drop{border:2px dashed #93c5fd;background:#eff6ff;border-radius:14px;padding:24px;text-align:center;cursor:pointer}
+.drop:hover{background:#dbeafe}.drop b{display:block;font-size:16px;margin-bottom:5px}.drop span{font-size:12px;color:var(--muted)}
+input,select{width:100%;padding:10px;border:1px solid #d4d9e2;border-radius:9px;background:#fff;margin-bottom:10px}
+label{font-size:11px;font-weight:800;color:#4b5563;display:block;margin:9px 0 5px}
+button{border:0;border-radius:9px;padding:10px 12px;font-weight:800;cursor:pointer;background:var(--blue);color:#fff}
+button.secondary{background:#eef2ff;color:#3730a3}button.gray{background:#f3f4f6;color:#374151}
+.actions{display:flex;gap:7px;flex-wrap:wrap}.status{margin-top:10px;font-size:12px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.kpi small{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}.kpi strong{font-size:20px}
+.mapcard{padding:0;overflow:hidden}.maptop{padding:13px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.legend{display:flex;gap:6px;align-items:center;font-size:10px;color:#555}.grad{height:10px;width:140px;border-radius:8px;background:linear-gradient(90deg,#dbeafe,#93c5fd,#facc15,#fb923c,#ef4444,#991b1b)}
+#map{height:650px}.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px}
+.chartbox{height:340px}.tablewrap{max-height:430px;overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:9px;border-bottom:1px solid #edf0f4;white-space:nowrap;text-align:left}th{position:sticky;top:0;background:#f8fafc;z-index:2}.num{text-align:right}
+.bar{height:7px;background:#eef2f7;border-radius:10px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#60a5fa,#2563eb)}
+.pill{padding:3px 7px;border-radius:99px;background:#eef2ff;color:#3730a3;font-size:10px}.hint{padding:9px;background:#f8fafc;border-radius:10px;font-size:11px;color:var(--muted)}
+#file{display:none}
+@media(max-width:1150px){.layout{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:1fr}}
+@media(max-width:650px){.wrap{padding:10px}.kpis{grid-template-columns:1fr 1fr}.kpi strong{font-size:17px}#map{height:500px}.maptop{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<header><h1>🔥 Delta • Mapa de Vendas</h1><p>Dashboard comercial por município, região, período e vendedor.</p></header>
+
+<div class="wrap">
+  <div class="kpis">
+    <div class="kpi"><small>Registros filtrados</small><strong id="kReg">0</strong></div>
+    <div class="kpi"><small>Municípios</small><strong id="kMun">0</strong></div>
+    <div class="kpi"><small>Vendas</small><strong id="kTotal">R$ 0,00</strong></div>
+    <div class="kpi"><small>Ticket médio</small><strong id="kTicket">R$ 0,00</strong></div>
+    <div class="kpi"><small>Líder</small><strong id="kLeader">—</strong></div>
+  </div>
+
+  <div class="layout">
+    <aside>
+      <div class="card">
+        <h2>📊 1. Importar planilha</h2>
+        <div class="drop" id="drop"><b>Arraste o Excel aqui</b><span>ou clique para selecionar .xlsx, .xls ou .csv</span><input id="file" type="file" accept=".xlsx,.xls,.csv"></div>
+        <div id="config" style="display:none">
+          <h2 style="margin-top:18px">⚙️ 2. Configuração</h2>
+          <label>Aba</label><select id="sheet"></select>
+          <label>Município</label><select id="city"></select>
+          <label>UF</label><select id="state"></select>
+          <label>Valor</label><select id="value"></select>
+          <label>Data <span style="font-weight:400">(opcional)</span></label><select id="date"></select>
+          <label>Vendedor / corretor <span style="font-weight:400">(opcional)</span></label><select id="seller"></select>
+          <label>Equipe <span style="font-weight:400">(opcional)</span></label><select id="team"></select>
+          <label>Período inicial</label><input id="from" type="date">
+          <label>Período final</label><input id="to" type="date">
+          <label>Pesquisar cidade</label><input id="search" type="text" placeholder="Ex.: Canoas">
+          <div class="actions">
+            <button id="apply">🔥 Atualizar mapa</button>
+            <button class="secondary" id="export">⬇️ Exportar</button>
+            <button class="gray" id="reset">Limpar filtros</button>
+          </div>
+          <div id="status" class="status"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2>🎯 O que esta versão faz</h2>
+        <div class="hint">
+          <b>Mapa coroplético:</b> cada município do RS é preenchido conforme o volume de vendas.<br><br>
+          <b>Heatmap:</b> já aparece automaticamente sobre o mapa; dê duplo clique para ligar/desligar.<br><br>
+          <b>Dashboard:</b> ranking, Top 10, filtros, ticket médio e exportação.
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="card mapcard">
+        <div class="maptop">
+          <h2 style="margin:0">🗺️ Mapa dos municípios do Rio Grande do Sul</h2>
+          <div class="legend"><span>Baixo</span><div class="grad"></div><span>Alto</span></div>
+        </div>
+        <div id="map"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card"><h2>🏆 Top 10 municípios</h2><div class="chartbox"><canvas id="chartTop"></canvas></div></div>
+        <div class="card"><h2>👤 Vendas por vendedor</h2><div class="chartbox"><canvas id="chartSeller"></canvas></div></div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <h2>📋 Ranking completo</h2><div class="tablewrap" id="table"><div class="small">Importe uma planilha para começar.</div></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const GEO_URL='https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson/geojs-43-mun.json';
+let wb=null, raw=[], geo=null, geoLayer=null, heat=null, markers=L.layerGroup(), topChart=null, sellerChart=null;
+const map=L.map('map').setView([-30.2,-53.1],7); markers.addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap contributors'}).addTo(map);
+const $=id=>document.getElementById(id);
+$('drop').onclick=()=> $('file').click();
+$('file').onchange=e=>e.target.files[0]&&loadFile(e.target.files[0]);
+$('drop').ondragover=e=>{e.preventDefault();$('drop').style.background='#dbeafe'};
+$('drop').ondragleave=()=> $('drop').style.background='';
+$('drop').ondrop=e=>{e.preventDefault();$('drop').style.background='';e.dataTransfer.files[0]&&loadFile(e.dataTransfer.files[0])};
+$('sheet').onchange=loadSheet;$('apply').onclick=apply;$('reset').onclick=resetFilters;$('export').onclick=exportCSV;
+$('search').oninput=()=>raw.length&&updateAll(false);
+
+function norm(s){return String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()}
+function money(n){return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(n||0)}
+function num(v){
+ if(typeof v==='number')return v; let s=String(v??'').trim(); if(!s)return 0;
+ s=s.replace(/R\$|US\$|\$/gi,'').replace(/\s/g,'');
+ if(s.includes(',')&&s.includes('.')){if(s.lastIndexOf(',')>s.lastIndexOf('.'))s=s.replace(/\\./g,'').replace(',','.');else s=s.replace(/,/g,'')}
+ else if(s.includes(','))s=s.replace(',','.');
+ s=s.replace(/[^0-9.-]/g,'');let n=Number(s);return Number.isFinite(n)?n:0
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function find(h,keys){return h.find(x=>keys.some(k=>norm(x).includes(norm(k))))||''}
+function fill(id,h,selected='',blank=false){
+ $(id).innerHTML=(blank?'<option value="">— não utilizar —</option>':'')+h.map(x=>`<option value="${esc(x)}" ${x===selected?'selected':''}>${esc(x)}</option>`).join('')
+}
+async function loadFile(file){
+ try{
+  $('status').textContent='Lendo arquivo...';
+  wb=XLSX.read(await file.arrayBuffer(),{type:'array',cellDates:true});
+  $('sheet').innerHTML=wb.SheetNames.map((s,i)=>`<option value="${i}">${esc(s)}</option>`).join('');
+  $('config').style.display='block';loadSheet();
+ }catch(e){alert('Erro ao ler a planilha: '+e.message)}
+}
+function loadSheet(){
+ if(!wb)return;
+ const sheet=wb.Sheets[wb.SheetNames[+$('sheet').value||0]];
+ // Algumas planilhas exportadas de sistemas de BI têm uma ou mais linhas em branco
+ // (ou um título) ANTES do cabeçalho de verdade. Se a gente assumir de cara que a
+ // linha 1 é o cabeçalho, essas planilhas viram uma bagunça: os nomes de coluna saem
+ // como "__EMPTY" e a primeira linha de dados desaparece. Aqui a gente lê como matriz
+ // crua primeiro, acha a primeira linha que realmente tem conteúdo, e usa ELA como
+ // cabeçalho — funciona tanto pra planilha "normal" quanto pra essas com linha em branco.
+ const matriz=XLSX.utils.sheet_to_json(sheet,{header:1,defval:''});
+ const linhaCabecalho=matriz.findIndex(l=>l.some(c=>String(c??'').trim()!==''));
+ if(linhaCabecalho===-1){$('status').textContent='Aba sem dados.';raw=[];return}
+ raw=XLSX.utils.sheet_to_json(sheet,{defval:'',range:linhaCabecalho});
+ if(!raw.length){$('status').textContent='Aba sem dados.';return}
+ const h=Object.keys(raw[0]);
+ fill('city',h,find(h,['cidade','municipio','município','city']));
+ fill('state',h,find(h,['uf','estado','state']));
+ fill('value',h,find(h,['valor','venda','vendas','faturamento','total','amount','value','quantidade']));
+ fill('date',h,find(h,['data','date','emissao','emissão']),true);
+ fill('seller',h,find(h,['corretor','vendedor','consultor','seller']),true);
+ fill('team',h,find(h,['equipe','team','grupo']),true);
+ $('status').textContent=`${raw.length.toLocaleString('pt-BR')} registros carregados.`;
+ updateAll(false);
+}
+function dateValue(v){
+ if(v instanceof Date)return v;
+ if(typeof v==='number'){let d=new Date((v-25569)*86400000);return isNaN(d)?null:d}
+ let s=String(v||'').trim();if(!s)return null;
+ let d=new Date(s);if(!isNaN(d))return d;
+ let m=s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);if(m)return new Date(+m[3],+m[2]-1,+m[1]);
+ return null
+}
+function filteredRows(){
+ const city=$('city').value,state=$('state').value,value=$('value').value,date=$('date').value,seller=$('seller').value,team=$('team').value;
+ const q=norm($('search').value),from=$('from').value,to=$('to').value;
+ return raw.filter(r=>{
+  if(q&&!norm(r[city]).includes(q))return false;
+  if(date&&(from||to)){let d=dateValue(r[date]);if(!d)return false;let ds=d.toISOString().slice(0,10);if(from&&ds<from)return false;if(to&&ds>to)return false}
+  return true
+ })
+}
+function aggregate(data){
+ const city=$('city').value,state=$('state').value,value=$('value').value,seller=$('seller').value;
+ const g={};
+ data.forEach(r=>{let c=String(r[city]??'').trim();if(!c)return;let uf=String(r[state]??'').trim(),v=num(r[value]),key=norm(c)+'|'+norm(uf);
+  if(!g[key])g[key]={city:c,state:uf,value:0,count:0};g[key].value+=v;g[key].count++;
+ });
+ return Object.values(g).sort((a,b)=>b.value-a.value)
+}
+async function apply(){await updateAll(true)}
+async function updateAll(loadMap){
+ if(!raw.length)return;
+ const data=filteredRows(),cities=aggregate(data),total=data.reduce((s,r)=>s+num(r[$('value').value]),0);
+ $('kReg').textContent=data.length.toLocaleString('pt-BR');$('kMun').textContent=cities.length.toLocaleString('pt-BR');
+ $('kTotal').textContent=money(total);$('kTicket').textContent=money(data.length?total/data.length:0);$('kLeader').textContent=cities[0]?.city||'—';
+ renderTable(cities);renderCharts(cities,data);
+ if(loadMap)await drawMap(cities); else if(geo)styleGeo(cities);
+}
+async function drawMap(cities){
+ $('status').textContent='Carregando limites dos 497 municípios...';
+ if(!geo){try{geo=await (await fetch(GEO_URL)).json()}catch(e){$('status').textContent='Não foi possível carregar os limites do mapa. O heatmap continuará disponível.';return}}
+ styleGeo(cities);$('status').textContent=`Mapa atualizado: ${cities.length} municípios com vendas. A onda de calor foi calculada automaticamente pelos centros dos municípios.`;
+}
+function colorScale(t){
+ if(t<=0)return '#eef2f7';
+ const stops=['#dbeafe','#93c5fd','#facc15','#fb923c','#ef4444','#991b1b'];
+ return stops[Math.min(stops.length-1,Math.floor(t*(stops.length-0.01)))]
+}
+function geometryCentroid(geometry){
+  if(!geometry) return null;
+  const pts=[];
+  const walk=(x)=>{
+    if(Array.isArray(x)&&typeof x[0]==='number') pts.push(x);
+    else if(Array.isArray(x)) x.forEach(walk);
+  };
+  walk(geometry.coordinates);
+  if(!pts.length) return null;
+  let lon=0,lat=0;
+  pts.forEach(p=>{lon+=p[0];lat+=p[1]});
+  return {lat:lat/pts.length,lon:lon/pts.length};
+}
+
+function styleGeo(cities){
+ if(geoLayer)map.removeLayer(geoLayer);
+ markers.clearLayers();
+ if(heat){map.removeLayer(heat);heat=null}
+
+ const byName={};
+ cities.forEach(c=>{
+   const key=norm(c.city);
+   byName[key]=c;
+ });
+
+ const max=Math.max(...cities.map(c=>c.value),1);
+
+ // 1) Municípios coloridos: mantém o mapa geográfico visível.
+ geoLayer=L.geoJSON(geo,{
+  style:f=>{
+    const d=byName[norm(f.properties.name)];
+    const t=d?d.value/max:0;
+    return {
+      color:'#ffffff',
+      weight:.7,
+      fillColor:colorScale(t),
+      fillOpacity:d?.value?0.38:0.08
+    };
+  },
+  onEachFeature:(f,l)=>{
+    const d=byName[norm(f.properties.name)];
+    l.bindTooltip(f.properties.name,{sticky:true});
+    if(d){
+      l.on('click',()=>{
+        const center=l.getBounds().getCenter();
+        map.setView(center,9);
+        l.bindPopup(
+          `<b>${esc(d.city)}</b><br>`+
+          `Faturamento: <b>${money(d.value)}</b><br>`+
+          `Registros: ${d.count}<br>`+
+          `Posição: ${cities.indexOf(d)+1}º`
+        ).openPopup();
+      });
+    }
+  }
+ }).addTo(map);
+
+ // 2) AQUI ESTAVA O PROBLEMA DA V2:
+ // a versão anterior criava o heatmap somente se houvesse lat/lon,
+ // mas nunca preenchia essas coordenadas. Agora usamos o centroide
+ // do próprio município, sem geocodificação externa.
+ const pts=[];
+ geo.features.forEach(f=>{
+   const d=byName[norm(f.properties.name)];
+   if(!d || !d.value) return;
+   const c=geometryCentroid(f.geometry);
+   if(c) pts.push([c.lat,c.lon,d.value/max]);
+ });
+
+ if(pts.length){
+   heat=L.heatLayer(pts,{
+     radius:42,
+     blur:32,
+     maxZoom:10,
+     minOpacity:.30,
+     gradient:{
+       0.05:'#22c55e',
+       0.22:'#84cc16',
+       0.42:'#facc15',
+       0.62:'#fb923c',
+       0.80:'#ef4444',
+       1:'#991b1b'
+     }
+   }).addTo(map); // visível automaticamente
+ }
+
+ try{map.fitBounds(geoLayer.getBounds(),{padding:[15,15]})}catch(e){}
+}
+function renderTable(cities){
+ const max=cities[0]?.value||1;
+ $('table').innerHTML=cities.length?`<table><thead><tr><th>#</th><th>Município</th><th>UF</th><th>Registros</th><th class="num">Vendas</th><th>Participação no ranking</th></tr></thead><tbody>${cities.map((d,i)=>`<tr><td>${i+1}</td><td><b>${esc(d.city)}</b></td><td><span class="pill">${esc(d.state||'—')}</span></td><td>${d.count}</td><td class="num">${money(d.value)}</td><td><div class="bar"><i style="width:${Math.max(2,d.value/max*100)}%"></i></div></td></tr>`).join('')}</tbody></table>`:'<div class="small">Nenhum registro para os filtros atuais.</div>'
+}
+function renderCharts(cities,data){
+ const top=cities.slice(0,10),ctx=$('chartTop').getContext('2d');if(topChart)topChart.destroy();
+ topChart=new Chart(ctx,{type:'bar',data:{labels:top.map(x=>x.city),datasets:[{label:'Vendas',data:top.map(x=>x.value)}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>money(v)}}}}});
+ const sCol=$('seller').value,sg={};if(sCol)data.forEach(r=>{let s=String(r[sCol]||'Não informado').trim()||'Não informado';sg[s]=(sg[s]||0)+num(r[$('value').value])});
+ const sl=Object.entries(sg).sort((a,b)=>b[1]-a[1]).slice(0,10),c2=$('chartSeller').getContext('2d');if(sellerChart)sellerChart.destroy();
+ sellerChart=new Chart(c2,{type:'doughnut',data:{labels:sl.length?sl.map(x=>x[0]):['Sem coluna de vendedor'],datasets:[{data:sl.length?sl.map(x=>x[1]):[1]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+}
+function resetFilters(){$('from').value='';$('to').value='';$('search').value='';updateAll(false)}
+function exportCSV(){
+ const data=filteredRows(),cols=Object.keys(raw[0]||{});if(!data.length)return alert('Não há dados para exportar.');
+ const csv=[cols.join(';'),...data.map(r=>cols.map(c=>`"${String(r[c]??'').replace(/"/g,'""')}"`).join(';'))].join('\n');
+ const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='vendas_filtradas.csv';a.click();URL.revokeObjectURL(a.href)
+}
+// Duplo clique alterna a onda de calor.
+map.on('dblclick',()=>{
+  if(heat){
+    if(map.hasLayer(heat)) map.removeLayer(heat);
+    else heat.addTo(map);
+  }
+});
+map.doubleClickZoom.disable();
+</script>
+</body></html>
