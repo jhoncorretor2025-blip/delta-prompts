@@ -27,43 +27,75 @@ h1{font-size:1.4rem;margin:0 0 4px}
 .btn-primary:disabled{background:#334155;color:#94a3b8;cursor:not-allowed}
 .btn-light{background:#1c2a45;color:var(--ink);border:1px solid var(--line)}
 .btn-green{background:var(--green);color:#052e12}
+.btn-yellow{background:var(--yellow);color:#3a2b02}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-@media(max-width:640px){.stats{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
 .stat{background:#0d1526;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
-.stat .num{font-size:1.5rem;font-weight:900}
-.stat .lbl{font-size:.72rem;color:var(--muted);margin-top:2px}
+.stat .num{font-size:1.4rem;font-weight:900}
+.stat .lbl{font-size:.7rem;color:var(--muted);margin-top:2px}
 .stat.novo .num{color:var(--green)}
-.stat.igual .num{color:var(--muted)}
+.stat.repetido .num{color:var(--yellow)}
 .stat.total .num{color:var(--blue)}
-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:.82rem}
-th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
-th{color:var(--muted);font-weight:700;font-size:.72rem;text-transform:uppercase}
-tr:hover{background:rgba(255,255,255,.02)}
-.tag{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:999px}
-.tag-novo{background:rgba(34,197,94,.15);color:var(--green)}
+.tabs{display:flex;gap:8px;margin-top:16px;border-bottom:1px solid var(--line);padding-bottom:10px;flex-wrap:wrap}
+.tabbtn{background:none;border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:999px;font-size:.8rem;font-weight:700;cursor:pointer}
+.tabbtn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tag{display:inline-block;font-size:.66rem;font-weight:800;padding:2px 7px;border-radius:999px;margin-left:6px}
+.tag-novo{background:rgba(34,197,94,.18);color:var(--green)}
+.tag-repetido{background:rgba(234,179,8,.18);color:var(--yellow)}
+.tag-arquivo1{background:rgba(148,163,184,.18);color:#cbd5e1}
 .empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:.85rem}
 .status{font-size:.82rem;color:var(--muted);margin-top:10px;min-height:18px}
 .hidden{display:none}
-.valor{text-align:right;font-variant-numeric:tabular-nums}
+
+.demo-card{border:1px solid #334155;border-radius:6px;margin-bottom:14px;overflow:hidden;background:#0d1526}
+.demo-head{display:grid;grid-template-columns:1fr 130px;border-bottom:1px solid #334155}
+.demo-head-left{padding:8px 10px;font-size:.74rem;line-height:1.55}
+.demo-head-left b{display:inline-block;width:105px;color:var(--muted);font-weight:700}
+.demo-head-right{border-left:1px solid #334155;display:flex;flex-direction:column}
+.demo-head-right .cell{flex:1;padding:6px 8px;text-align:center;border-bottom:1px solid #334155}
+.demo-head-right .cell:last-child{border-bottom:0}
+.demo-head-right .cell .lbl{font-size:.62rem;color:var(--muted)}
+.demo-head-right .cell .val{font-size:.82rem;font-weight:800}
+.demo-itens{padding:8px 10px;font-size:.74rem;line-height:1.7;color:#c7d0e0}
+.demo-itens .item{display:inline-block;min-width:31%;margin-right:1%}
+.demo-totais{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #334155}
+.demo-totais .cell{padding:6px 8px;text-align:center;border-right:1px solid #334155}
+.demo-totais .cell:last-child{border-right:0}
+.demo-totais .lbl{font-size:.62rem;color:var(--muted)}
+.demo-totais .val{font-size:.9rem;font-weight:900}
+.demo-badges{padding:6px 10px;background:#0a1120;font-size:.68rem}
+
+@media print{
+  body{background:#fff;color:#000;padding:0}
+  .card:not(.print-area),.dropzones,.tabs,.status,h1,.sub,.btn{display:none!important}
+  .print-area{border:none;box-shadow:none;padding:0;margin:0}
+  .demo-card{border-color:#000;background:#fff;color:#000;break-inside:avoid}
+  .demo-head-left b{color:#333}
+  .demo-head-right{border-color:#000}
+  .demo-head-right .cell{border-color:#000}
+  .demo-totais{border-color:#000}
+  .demo-totais .cell{border-color:#000}
+  .demo-itens{color:#000}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>🔍 Comparador de Demonstrativos</h1>
-  <p class="sub">Compare dois arquivos de demonstrativos (PDF) e veja só o que é novo no segundo arquivo — identificado pelo campo <strong>Imov./Contr.</strong></p>
+  <p class="sub">Compare dois arquivos de demonstrativos (PDF) e veja o que é novo, repetido, ou só de um deles — identificado pelo campo <strong>Imov./Contr.</strong></p>
 
   <div class="card">
     <div class="dropzones">
       <div class="drop" id="drop1">
         <input type="file" id="file1" accept="application/pdf">
-        <div class="label">📄 Arquivo mais antigo</div>
+        <div class="label">📄 Arquivo 1 (mais antigo)</div>
         <div class="info">O demonstrativo de antes (ex.: dia 4 a 8)</div>
         <div class="filename" id="filename1"></div>
       </div>
       <div class="drop" id="drop2">
         <input type="file" id="file2" accept="application/pdf">
-        <div class="label">📄 Arquivo mais novo</div>
+        <div class="label">📄 Arquivo 2 (mais novo)</div>
         <div class="info">O demonstrativo mais recente (ex.: de hoje)</div>
         <div class="filename" id="filename2"></div>
       </div>
@@ -76,15 +108,26 @@ tr:hover{background:rgba(255,255,255,.02)}
 
   <div class="card hidden" id="cardResultado">
     <div class="stats">
-      <div class="stat total"><div class="num" id="statAntigo">0</div><div class="lbl">No arquivo antigo</div></div>
-      <div class="stat total"><div class="num" id="statNovo">0</div><div class="lbl">No arquivo novo</div></div>
-      <div class="stat novo"><div class="num" id="statDiferenca">0</div><div class="lbl">Novos (só no arquivo novo)</div></div>
+      <div class="stat total"><div class="num" id="statArquivo1">0</div><div class="lbl">Arquivo 1</div></div>
+      <div class="stat total"><div class="num" id="statArquivo2">0</div><div class="lbl">Arquivo 2</div></div>
+      <div class="stat novo"><div class="num" id="statNovos">0</div><div class="lbl">Só no Arquivo 2 (novos)</div></div>
+      <div class="stat repetido"><div class="num" id="statRepetidos">0</div><div class="lbl">Repetidos (nos dois)</div></div>
     </div>
-    <div class="row" style="margin-top:16px">
-      <button class="btn btn-green" id="btnBaixarPdf">⬇️ Baixar PDF só com os novos</button>
-      <button class="btn btn-light" id="btnBaixarCsv">📊 Baixar CSV / Excel</button>
+
+    <div class="tabs">
+      <button class="tabbtn active" data-tab="novos">🆕 Novos</button>
+      <button class="tabbtn" data-tab="repetidos">🔁 Repetidos</button>
+      <button class="tabbtn" data-tab="apenas1">📄 Só no Arquivo 1</button>
+      <button class="tabbtn" data-tab="todos">📋 Todos</button>
     </div>
-    <div id="listaResultado"></div>
+
+    <div class="row" style="margin-top:14px">
+      <button class="btn btn-green" id="btnBaixarPdf">⬇️ Baixar PDF (visão atual)</button>
+      <button class="btn btn-light" id="btnBaixarCsv">📊 Baixar CSV (visão atual)</button>
+      <button class="btn btn-yellow" id="btnImprimir">🖨️ Imprimir visão atual</button>
+    </div>
+
+    <div id="listaResultado" class="print-area"></div>
   </div>
 </div>
 
@@ -93,39 +136,27 @@ const { jsPDF } = window.jspdf;
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 let arquivo1 = null, arquivo2 = null;
+let todosOsRegistros = [];
+let abaAtiva = 'novos';
 
 function configurarDrop(dropId, inputId, filenameId, onFile) {
   const drop = document.getElementById(dropId);
   const input = document.getElementById(inputId);
   const filenameEl = document.getElementById(filenameId);
   input.addEventListener('change', () => {
-    if (input.files[0]) {
-      filenameEl.textContent = '✅ ' + input.files[0].name;
-      onFile(input.files[0]);
-    }
+    if (input.files[0]) { filenameEl.textContent = '✅ ' + input.files[0].name; onFile(input.files[0]); }
   });
   ['dragover','dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('dragover'); }));
   ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('dragover'); }));
   drop.addEventListener('drop', e => {
     const f = e.dataTransfer.files[0];
-    if (f && f.type === 'application/pdf') {
-      input.files = e.dataTransfer.files;
-      filenameEl.textContent = '✅ ' + f.name;
-      onFile(f);
-    }
+    if (f && f.type === 'application/pdf') { input.files = e.dataTransfer.files; filenameEl.textContent = '✅ ' + f.name; onFile(f); }
   });
 }
-
 configurarDrop('drop1','file1','filename1', f => { arquivo1 = f; atualizarBotao(); });
 configurarDrop('drop2','file2','filename2', f => { arquivo2 = f; atualizarBotao(); });
+function atualizarBotao() { document.getElementById('btnComparar').disabled = !(arquivo1 && arquivo2); }
 
-function atualizarBotao() {
-  document.getElementById('btnComparar').disabled = !(arquivo1 && arquivo2);
-}
-
-// Reconstrói o texto do PDF respeitando a posição visual (linha por linha, esquerda pra
-// direita) — necessário porque este PDF (gerado por TCPDF) grava os textos numa ordem
-// interna diferente da ordem visual, então uma extração "corrida" simples embaralha tudo.
 async function extrairTextoComLinhas(arquivo) {
   const buffer = await arquivo.arrayBuffer();
   const doc = await pdfjsLib.getDocument({ data: buffer }).promise;
@@ -141,10 +172,7 @@ async function extrairTextoComLinhas(arquivo) {
       linha.itens.push({ x: item.transform[4], texto: item.str });
     });
     linhas.sort((a, b) => b.y - a.y);
-    linhas.forEach(l => {
-      l.itens.sort((a, b) => a.x - b.x);
-      textoCompleto += l.itens.map(i => i.texto).join(' ') + '\n';
-    });
+    linhas.forEach(l => { l.itens.sort((a, b) => a.x - b.x); textoCompleto += l.itens.map(i => i.texto).join(' ') + '\n'; });
   }
   return textoCompleto;
 }
@@ -166,16 +194,20 @@ function parseDemonstrativos(textoCompleto) {
     const serieRegistro = (bloco.match(/Série\/Registro\s*:\s*([\d\s\/]+?)\s{2,}/) || [])[1]?.trim() || '';
     const vencimento = (bloco.match(/Série\/Registro[\s\S]*?(\d{2}\/\d{2}\/\d{4})/) || [])[1] || '';
 
+    const secaoItens = bloco.split(/\d{2}\/\d{2}\/\d{4}/)[1]?.split(/Total até o vencimento/)[0] || '';
+    const regexItem = /(\d{4}-[A-ZÇÃÕÁÉÍÓÚÂÊÎÔÛÀ0-9º°\.\(\)\/ ]+?)\s+(-?[\d.]+,\d{2})(?=\s|$)/g;
+    const itens = [];
+    let mi;
+    while ((mi = regexItem.exec(secaoItens)) !== null) itens.push({ descricao: mi[1].trim(), valor: mi[2] });
+
     const totaisMatch = bloco.match(/Total até o vencimento\s+Total de multa\+juros\s+Total pago\s*\n?\s*([\d.,]+)\s+([\d.,]+)\s+([\d.,]+)/);
     const totalVencimento = totaisMatch ? totaisMatch[1] : '';
     const totalMultaJuros = totaisMatch ? totaisMatch[2] : '';
     const totalPago = totaisMatch ? totaisMatch[3] : '';
 
-    return { codigo, endereco, locatario, locador, serieRegistro, competencia, vencimento, totalVencimento, totalMultaJuros, totalPago };
+    return { codigo, endereco, locatario, locador, serieRegistro, competencia, vencimento, itens, totalVencimento, totalMultaJuros, totalPago };
   }).filter(r => r.codigo);
 }
-
-let registrosNovosGlobal = [];
 
 document.getElementById('btnComparar').addEventListener('click', async () => {
   const status = document.getElementById('status');
@@ -184,108 +216,216 @@ document.getElementById('btnComparar').addEventListener('click', async () => {
   status.textContent = '⏳ Lendo os PDFs...';
 
   try {
-    const [textoAntigo, textoNovo] = await Promise.all([
-      extrairTextoComLinhas(arquivo1),
-      extrairTextoComLinhas(arquivo2),
-    ]);
+    const [texto1, texto2] = await Promise.all([extrairTextoComLinhas(arquivo1), extrairTextoComLinhas(arquivo2)]);
+    const registros1 = parseDemonstrativos(texto1);
+    const registros2 = parseDemonstrativos(texto2);
 
-    const registrosAntigo = parseDemonstrativos(textoAntigo);
-    const registrosNovo = parseDemonstrativos(textoNovo);
-
-    if (!registrosAntigo.length || !registrosNovo.length) {
+    if (!registros1.length || !registros2.length) {
       status.textContent = '⚠️ Não consegui reconhecer nenhum demonstrativo em um dos arquivos. Confirme se são PDFs do mesmo modelo (com o campo "Imov./Contr.").';
       btn.disabled = false;
       return;
     }
 
-    const codigosAntigos = new Set(registrosAntigo.map(r => r.codigo));
-    const apenasNovos = registrosNovo.filter(r => !codigosAntigos.has(r.codigo));
+    const mapa = new Map();
+    registros1.forEach(r => mapa.set(r.codigo, { ...r, arquivos: ['Arquivo 1'] }));
+    registros2.forEach(r => {
+      if (mapa.has(r.codigo)) {
+        const existente = mapa.get(r.codigo);
+        mapa.set(r.codigo, { ...r, arquivos: [...existente.arquivos, 'Arquivo 2'] });
+      } else {
+        mapa.set(r.codigo, { ...r, arquivos: ['Arquivo 2'] });
+      }
+    });
+    todosOsRegistros = [...mapa.values()];
 
-    registrosNovosGlobal = apenasNovos;
-
-    document.getElementById('statAntigo').textContent = registrosAntigo.length;
-    document.getElementById('statNovo').textContent = registrosNovo.length;
-    document.getElementById('statDiferenca').textContent = apenasNovos.length;
-
-    const lista = document.getElementById('listaResultado');
-    if (!apenasNovos.length) {
-      lista.innerHTML = '<div class="empty">✅ Nenhum demonstrativo novo — os dois arquivos têm os mesmos imóveis/contratos.</div>';
-    } else {
-      lista.innerHTML = `<table><thead><tr><th>Imov./Contr.</th><th>Endereço</th><th>Locatário</th><th>Vencimento</th><th class="valor">Total</th></tr></thead><tbody>${
-        apenasNovos.map(r => `<tr><td>${escapeHtml(r.codigo)} <span class="tag tag-novo">novo</span></td><td>${escapeHtml(r.endereco)}</td><td>${escapeHtml(r.locatario)}</td><td>${escapeHtml(r.vencimento)}</td><td class="valor">R$ ${escapeHtml(r.totalVencimento)}</td></tr>`).join('')
-      }</tbody></table>`;
-    }
+    document.getElementById('statArquivo1').textContent = registros1.length;
+    document.getElementById('statArquivo2').textContent = registros2.length;
+    document.getElementById('statNovos').textContent = todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === 'Arquivo 2').length;
+    document.getElementById('statRepetidos').textContent = todosOsRegistros.filter(r => r.arquivos.length === 2).length;
 
     document.getElementById('cardResultado').classList.remove('hidden');
-    status.textContent = `✅ Comparação concluída: ${apenasNovos.length} demonstrativo(s) novo(s) de ${registrosNovo.length} no arquivo mais recente.`;
+    renderizarAba();
+    status.textContent = `✅ Comparação concluída.`;
   } catch (e) {
     status.textContent = '❌ Erro ao processar: ' + e.message;
   }
   btn.disabled = false;
 });
 
-function escapeHtml(s) {
-  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function registrosDaAba(aba) {
+  if (aba === 'novos') return todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === 'Arquivo 2');
+  if (aba === 'repetidos') return todosOsRegistros.filter(r => r.arquivos.length === 2);
+  if (aba === 'apenas1') return todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === 'Arquivo 1');
+  return todosOsRegistros;
 }
 
+function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function tagArquivos(arquivos) {
+  if (arquivos.length === 2) return '<span class="tag tag-repetido">🔁 Repetido (Arquivo 1 e 2)</span>';
+  if (arquivos[0] === 'Arquivo 2') return '<span class="tag tag-novo">🆕 Só no Arquivo 2</span>';
+  return '<span class="tag tag-arquivo1">📄 Só no Arquivo 1</span>';
+}
+
+function renderCard(r) {
+  const itensHtml = r.itens.map(i => `<span class="item">${escapeHtml(i.descricao)} <b>${escapeHtml(i.valor)}</b></span>`).join('');
+  return `<div class="demo-card">
+    <div class="demo-badges">Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong> ${tagArquivos(r.arquivos)}</div>
+    <div class="demo-head">
+      <div class="demo-head-left">
+        <div><b>Imov./Contr.</b>: ${escapeHtml(r.codigo)} - ${escapeHtml(r.endereco)}</div>
+        <div><b>Locatário</b>: ${escapeHtml(r.locatario)}</div>
+        <div><b>Locador</b>: ${escapeHtml(r.locador)}</div>
+        <div><b>Série/Registro</b>: ${escapeHtml(r.serieRegistro)}</div>
+      </div>
+      <div class="demo-head-right">
+        <div class="cell"><div class="lbl">Competência</div><div class="val">${escapeHtml(r.competencia)}</div></div>
+        <div class="cell"><div class="lbl">Vencimento</div><div class="val">${escapeHtml(r.vencimento)}</div></div>
+      </div>
+    </div>
+    <div class="demo-itens">${itensHtml}</div>
+    <div class="demo-totais">
+      <div class="cell"><div class="lbl">Total até o vencimento</div><div class="val">${escapeHtml(r.totalVencimento)}</div></div>
+      <div class="cell"><div class="lbl">Total de multa+juros</div><div class="val">${escapeHtml(r.totalMultaJuros)}</div></div>
+      <div class="cell"><div class="lbl">Total pago</div><div class="val">${escapeHtml(r.totalPago)}</div></div>
+    </div>
+  </div>`;
+}
+
+function renderizarAba() {
+  const registros = registrosDaAba(abaAtiva);
+  const lista = document.getElementById('listaResultado');
+  if (!registros.length) {
+    const msgs = { novos: 'Nenhum demonstrativo novo.', repetidos: 'Nenhum demonstrativo repetido nos dois arquivos.', apenas1: 'Nenhum demonstrativo exclusivo do Arquivo 1.', todos: 'Nenhum demonstrativo encontrado.' };
+    lista.innerHTML = `<div class="empty">✅ ${msgs[abaAtiva]}</div>`;
+    return;
+  }
+  lista.innerHTML = registros.map(renderCard).join('');
+}
+
+document.querySelectorAll('.tabbtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    abaAtiva = btn.dataset.tab;
+    renderizarAba();
+  });
+});
+
+document.getElementById('btnImprimir').addEventListener('click', () => window.print());
+
 document.getElementById('btnBaixarCsv').addEventListener('click', () => {
-  if (!registrosNovosGlobal.length) return;
+  const registros = registrosDaAba(abaAtiva);
+  if (!registros.length) return;
   const cols = ['codigo','endereco','locatario','locador','serieRegistro','competencia','vencimento','totalVencimento','totalMultaJuros','totalPago'];
-  const cabecalhos = ['Imov./Contr.','Endereço','Locatário','Locador','Série/Registro','Competência','Vencimento','Total até o vencimento','Total multa+juros','Total pago'];
-  const csv = [cabecalhos.join(';'), ...registrosNovosGlobal.map(r => cols.map(c => `"${String(r[c]??'').replace(/"/g,'""')}"`).join(';'))].join('\n');
+  const cabecalhos = ['Imov./Contr.','Endereço','Locatário','Locador','Série/Registro','Competência','Vencimento','Total até o vencimento','Total multa+juros','Total pago','Aparece em'];
+  const linhas = registros.map(r => [...cols.map(c => `"${String(r[c]??'').replace(/"/g,'""')}"`), `"${r.arquivos.join(' e ')}"`].join(';'));
+  const csv = [cabecalhos.join(';'), ...linhas].join('\n');
   const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'demonstrativos_novos.csv';
+  a.download = `demonstrativos_${abaAtiva}.csv`;
   a.click();
   URL.revokeObjectURL(a.href);
 });
 
 document.getElementById('btnBaixarPdf').addEventListener('click', () => {
-  if (!registrosNovosGlobal.length) return;
+  const registros = registrosDaAba(abaAtiva);
+  if (!registros.length) return;
   const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
-  const margem = 40;
+  const margem = 36;
   let y = margem;
   const larguraPagina = pdf.internal.pageSize.getWidth();
   const alturaPagina = pdf.internal.pageSize.getHeight();
+  const larguraUtil = larguraPagina - margem * 2;
 
-  pdf.setFontSize(16);
-  pdf.setFont(undefined, 'bold');
-  pdf.text('Demonstrativos Novos', margem, y);
-  y += 18;
-  pdf.setFontSize(9);
-  pdf.setFont(undefined, 'normal');
-  pdf.setTextColor(100);
-  pdf.text(`${registrosNovosGlobal.length} demonstrativo(s) que aparecem só no arquivo mais recente — gerado em ${new Date().toLocaleDateString('pt-BR')}`, margem, y);
-  y += 20;
-  pdf.setTextColor(0);
+  const titulos = { novos: 'Demonstrativos Novos', repetidos: 'Demonstrativos Repetidos', apenas1: 'Demonstrativos só no Arquivo 1', todos: 'Todos os Demonstrativos' };
 
-  registrosNovosGlobal.forEach((r, idx) => {
-    const blocoAltura = 100;
-    if (y + blocoAltura > alturaPagina - margem) { pdf.addPage(); y = margem; }
+  function cabecalhoPagina() {
+    pdf.setFontSize(9);
+    pdf.setTextColor(37,99,235);
+    pdf.setFont(undefined,'bold');
+    pdf.text('Delta', margem, y);
+    pdf.setFontSize(14);
+    pdf.setTextColor(0);
+    pdf.text(titulos[abaAtiva] || 'Demonstrativos', margem, y + 16);
+    pdf.setFontSize(8);
+    pdf.setTextColor(120);
+    pdf.setFont(undefined,'normal');
+    pdf.text(`${registros.length} registro(s) — gerado em ${new Date().toLocaleDateString('pt-BR')}`, margem, y + 28);
+    pdf.setTextColor(0);
+    y += 40;
+  }
+  cabecalhoPagina();
 
-    pdf.setDrawColor(210);
-    pdf.setLineWidth(0.5);
-    pdf.roundedRect(margem, y, larguraPagina - margem * 2, blocoAltura - 10, 4, 4);
+  registros.forEach((r) => {
+    const numLinhasItens = Math.ceil(r.itens.length / 3);
+    const alturaBloco = 44 + 12 + numLinhasItens * 11 + 34 + 12;
+    if (y + alturaBloco > alturaPagina - margem) { pdf.addPage(); y = margem; cabecalhoPagina(); }
 
-    let ty = y + 16;
-    const tx = margem + 12;
-    pdf.setFont(undefined, 'bold');
-    pdf.setFontSize(10);
-    pdf.text(`${idx + 1}. Imov./Contr.: ${r.codigo} — ${r.endereco}`, tx, ty);
-    ty += 14;
-    pdf.setFont(undefined, 'normal');
-    pdf.setFontSize(8.5);
-    pdf.text(`Locatário: ${r.locatario}`, tx, ty); ty += 12;
-    pdf.text(`Locador: ${r.locador}`, tx, ty); ty += 12;
-    pdf.text(`Série/Registro: ${r.serieRegistro}    Competência: ${r.competencia}    Vencimento: ${r.vencimento}`, tx, ty); ty += 12;
-    pdf.setFont(undefined, 'bold');
-    pdf.text(`Total até o vencimento: R$ ${r.totalVencimento}     Multa+juros: R$ ${r.totalMultaJuros}     Total pago: R$ ${r.totalPago}`, tx, ty);
+    const xIni = margem, xFim = margem + larguraUtil;
+    const larguraDireita = 110;
+    const xDireita = xFim - larguraDireita;
 
-    y += blocoAltura;
+    pdf.setDrawColor(120);
+    pdf.setLineWidth(0.6);
+    const alturaCaixaCabecalho = 44;
+    pdf.rect(xIni, y, larguraUtil, alturaCaixaCabecalho);
+    pdf.line(xDireita, y, xDireita, y + alturaCaixaCabecalho);
+    pdf.line(xDireita, y + alturaCaixaCabecalho/2, xFim, y + alturaCaixaCabecalho/2);
+
+    let ty = y + 10;
+    pdf.setFontSize(7.5);
+    pdf.setFont(undefined,'normal');
+    pdf.text(`Imov./Contr.  : ${r.codigo} - ${r.endereco}`, xIni + 6, ty); ty += 9;
+    pdf.text(`Locatário     : ${r.locatario}`, xIni + 6, ty); ty += 9;
+    pdf.text(`Locador       : ${r.locador}`, xIni + 6, ty); ty += 9;
+    pdf.text(`Série/Registro: ${r.serieRegistro}`, xIni + 6, ty);
+
+    pdf.setFontSize(7);
+    pdf.setTextColor(100);
+    pdf.text('Competência', xDireita + larguraDireita/2, y + 9, { align: 'center' });
+    pdf.text('Vencimento', xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 9, { align: 'center' });
+    pdf.setFontSize(9);
+    pdf.setTextColor(0);
+    pdf.setFont(undefined,'bold');
+    pdf.text(r.competencia, xDireita + larguraDireita/2, y + 20, { align: 'center' });
+    pdf.text(r.vencimento, xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 20, { align: 'center' });
+    pdf.setFont(undefined,'normal');
+
+    y += alturaCaixaCabecalho + 12;
+
+    pdf.setFontSize(7);
+    pdf.setTextColor(30);
+    const colW = larguraUtil / 3;
+    r.itens.forEach((item, idx) => {
+      const col = idx % 3, lin = Math.floor(idx / 3);
+      pdf.text(`${item.descricao}  ${item.valor}`, xIni + col * colW, y + lin * 11);
+    });
+    y += numLinhasItens * 11 + 6;
+
+    const alturaTotais = 22;
+    pdf.setDrawColor(120);
+    pdf.rect(xIni, y, larguraUtil, alturaTotais);
+    pdf.line(xIni + larguraUtil/3, y, xIni + larguraUtil/3, y + alturaTotais);
+    pdf.line(xIni + larguraUtil*2/3, y, xIni + larguraUtil*2/3, y + alturaTotais);
+    pdf.setFontSize(6.5);
+    pdf.setTextColor(100);
+    pdf.text('Total até o vencimento', xIni + larguraUtil/6, y + 8, { align: 'center' });
+    pdf.text('Total de multa+juros', xIni + larguraUtil/2, y + 8, { align: 'center' });
+    pdf.text('Total pago', xIni + larguraUtil*5/6, y + 8, { align: 'center' });
+    pdf.setFontSize(9.5);
+    pdf.setTextColor(0);
+    pdf.setFont(undefined,'bold');
+    pdf.text(r.totalVencimento, xIni + larguraUtil/6, y + 18, { align: 'center' });
+    pdf.text(r.totalMultaJuros, xIni + larguraUtil/2, y + 18, { align: 'center' });
+    pdf.text(r.totalPago, xIni + larguraUtil*5/6, y + 18, { align: 'center' });
+    pdf.setFont(undefined,'normal');
+
+    y += alturaTotais + 12;
   });
 
-  pdf.save('demonstrativos_novos.pdf');
+  pdf.save(`demonstrativos_${abaAtiva}.pdf`);
 });
 </script>
 </body>
