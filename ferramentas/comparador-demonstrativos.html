@@ -10,30 +10,30 @@
 :root{--bg:#0b1220;--card:#111a2e;--line:#22304d;--ink:#e8edf7;--muted:#8a95ab;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#eab308}
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);padding:18px}
-.wrap{max-width:1000px;margin:0 auto}
+.wrap{max-width:1050px;margin:0 auto}
 h1{font-size:1.4rem;margin:0 0 4px}
 .sub{color:var(--muted);font-size:.85rem;margin:0 0 20px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
-.dropzones{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:640px){.dropzones{grid-template-columns:1fr}}
-.drop{border:2px dashed var(--line);border-radius:12px;padding:22px 14px;text-align:center;cursor:pointer;transition:.15s;position:relative}
+.dropzones{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:20px 12px;text-align:center;cursor:pointer;transition:.15s;position:relative}
 .drop:hover,.drop.dragover{border-color:var(--blue);background:rgba(59,130,246,.08)}
 .drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
-.drop .label{font-weight:800;font-size:.95rem;margin-bottom:6px}
-.drop .info{font-size:.78rem;color:var(--muted)}
-.drop .filename{margin-top:8px;font-size:.8rem;color:var(--green);font-weight:700;word-break:break-all}
+.drop .label{font-weight:800;font-size:.9rem;margin-bottom:5px}
+.drop .info{font-size:.74rem;color:var(--muted)}
+.drop .filename{margin-top:8px;font-size:.78rem;color:var(--green);font-weight:700;word-break:break-all}
+.drop .btnremove{position:absolute;top:6px;right:6px;background:rgba(239,68,68,.15);color:var(--red);border:0;border-radius:6px;width:22px;height:22px;font-size:12px;cursor:pointer;z-index:2}
 .btn{border:0;border-radius:10px;padding:12px 18px;font-weight:800;font-size:.9rem;cursor:pointer;transition:.15s}
 .btn-primary{background:var(--blue);color:#fff}
 .btn-primary:disabled{background:#334155;color:#94a3b8;cursor:not-allowed}
 .btn-light{background:#1c2a45;color:var(--ink);border:1px solid var(--line)}
 .btn-green{background:var(--green);color:#052e12}
 .btn-yellow{background:var(--yellow);color:#3a2b02}
+.btn-sm{padding:8px 12px;font-size:.78rem;border-radius:8px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
-@media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:14px}
 .stat{background:#0d1526;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
-.stat .num{font-size:1.4rem;font-weight:900}
-.stat .lbl{font-size:.7rem;color:var(--muted);margin-top:2px}
+.stat .num{font-size:1.35rem;font-weight:900}
+.stat .lbl{font-size:.68rem;color:var(--muted);margin-top:2px}
 .stat.novo .num{color:var(--green)}
 .stat.repetido .num{color:var(--yellow)}
 .stat.total .num{color:var(--blue)}
@@ -44,9 +44,18 @@ h1{font-size:1.4rem;margin:0 0 4px}
 .tag-novo{background:rgba(34,197,94,.18);color:var(--green)}
 .tag-repetido{background:rgba(234,179,8,.18);color:var(--yellow)}
 .tag-arquivo1{background:rgba(148,163,184,.18);color:#cbd5e1}
+.tag-atrasado{background:rgba(239,68,68,.2);color:#fca5a5}
 .empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:.85rem}
 .status{font-size:.82rem;color:var(--muted);margin-top:10px;min-height:18px}
 .hidden{display:none}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.toolbar input[type=text]{flex:1;min-width:180px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem}
+.toolbar select{padding:10px 10px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.82rem}
+.somatotal{margin-top:10px;font-size:.85rem;color:var(--muted)}
+.somatotal b{color:var(--ink);font-size:1rem}
+.progresso{height:8px;background:#0d1526;border-radius:999px;overflow:hidden;margin-top:10px}
+.progresso .barra{height:100%;background:var(--blue);width:0%;transition:.2s}
+.aviso-duplicado{background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.4);color:#fde68a;padding:10px 12px;border-radius:9px;font-size:.8rem;margin-top:10px}
 
 .demo-card{border:1px solid #334155;border-radius:6px;margin-bottom:14px;overflow:hidden;background:#0d1526}
 .demo-head{display:grid;grid-template-columns:1fr 130px;border-bottom:1px solid #334155}
@@ -57,6 +66,7 @@ h1{font-size:1.4rem;margin:0 0 4px}
 .demo-head-right .cell:last-child{border-bottom:0}
 .demo-head-right .cell .lbl{font-size:.62rem;color:var(--muted)}
 .demo-head-right .cell .val{font-size:.82rem;font-weight:800}
+.demo-head-right .cell.atrasado .val{color:var(--red)}
 .demo-itens{padding:8px 10px;font-size:.74rem;line-height:1.7;color:#c7d0e0}
 .demo-itens .item{display:inline-block;min-width:31%;margin-right:1%}
 .demo-totais{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #334155}
@@ -68,14 +78,11 @@ h1{font-size:1.4rem;margin:0 0 4px}
 
 @media print{
   body{background:#fff;color:#000;padding:0}
-  .card:not(.print-area),.dropzones,.tabs,.status,h1,.sub,.btn{display:none!important}
+  .card:not(.print-area),.dropzones,.tabs,.status,h1,.sub,.btn,.toolbar,.progresso{display:none!important}
   .print-area{border:none;box-shadow:none;padding:0;margin:0}
   .demo-card{border-color:#000;background:#fff;color:#000;break-inside:avoid}
   .demo-head-left b{color:#333}
-  .demo-head-right{border-color:#000}
-  .demo-head-right .cell{border-color:#000}
-  .demo-totais{border-color:#000}
-  .demo-totais .cell{border-color:#000}
+  .demo-head-right,.demo-head-right .cell,.demo-totais,.demo-totais .cell{border-color:#000}
   .demo-itens{color:#000}
 }
 </style>
@@ -83,43 +90,36 @@ h1{font-size:1.4rem;margin:0 0 4px}
 <body>
 <div class="wrap">
   <h1>🔍 Comparador de Demonstrativos</h1>
-  <p class="sub">Compare dois arquivos de demonstrativos (PDF) e veja o que é novo, repetido, ou só de um deles — identificado pelo campo <strong>Imov./Contr.</strong></p>
+  <p class="sub">Compare demonstrativos (PDF) e veja o que é novo, repetido, ou só de um arquivo — identificado pelo campo <strong>Imov./Contr.</strong></p>
 
   <div class="card">
-    <div class="dropzones">
-      <div class="drop" id="drop1">
-        <input type="file" id="file1" accept="application/pdf">
-        <div class="label">📄 Arquivo 1 (mais antigo)</div>
-        <div class="info">O demonstrativo de antes (ex.: dia 4 a 8)</div>
-        <div class="filename" id="filename1"></div>
-      </div>
-      <div class="drop" id="drop2">
-        <input type="file" id="file2" accept="application/pdf">
-        <div class="label">📄 Arquivo 2 (mais novo)</div>
-        <div class="info">O demonstrativo mais recente (ex.: de hoje)</div>
-        <div class="filename" id="filename2"></div>
-      </div>
-    </div>
-    <div class="row" style="margin-top:16px">
+    <div class="dropzones" id="dropzonesWrap"></div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn btn-light btn-sm" id="btnAddArquivo">➕ Adicionar outro arquivo</button>
       <button class="btn btn-primary" id="btnComparar" disabled>🔍 Comparar arquivos</button>
     </div>
+    <div class="progresso hidden" id="progressoWrap"><div class="barra" id="progressoBarra"></div></div>
+    <div id="avisoDuplicado"></div>
     <div class="status" id="status"></div>
   </div>
 
   <div class="card hidden" id="cardResultado">
-    <div class="stats">
-      <div class="stat total"><div class="num" id="statArquivo1">0</div><div class="lbl">Arquivo 1</div></div>
-      <div class="stat total"><div class="num" id="statArquivo2">0</div><div class="lbl">Arquivo 2</div></div>
-      <div class="stat novo"><div class="num" id="statNovos">0</div><div class="lbl">Só no Arquivo 2 (novos)</div></div>
-      <div class="stat repetido"><div class="num" id="statRepetidos">0</div><div class="lbl">Repetidos (nos dois)</div></div>
-    </div>
+    <div class="stats" id="statsWrap"></div>
 
-    <div class="tabs">
-      <button class="tabbtn active" data-tab="novos">🆕 Novos</button>
-      <button class="tabbtn" data-tab="repetidos">🔁 Repetidos</button>
-      <button class="tabbtn" data-tab="apenas1">📄 Só no Arquivo 1</button>
-      <button class="tabbtn" data-tab="todos">📋 Todos</button>
+    <div class="tabs" id="tabsWrap"></div>
+
+    <div class="toolbar">
+      <input type="text" id="buscaInput" placeholder="🔍 Buscar por código, endereço, locatário ou locador...">
+      <select id="ordenarSelect">
+        <option value="original">Ordem original</option>
+        <option value="valor_desc">Maior valor primeiro</option>
+        <option value="valor_asc">Menor valor primeiro</option>
+        <option value="nome">Nome do locatário (A-Z)</option>
+        <option value="vencimento">Vencimento (mais próximo primeiro)</option>
+      </select>
+      <select id="locadorSelect"><option value="">Todos os locadores</option></select>
     </div>
+    <div class="somatotal" id="somaTotal"></div>
 
     <div class="row" style="margin-top:14px">
       <button class="btn btn-green" id="btnBaixarPdf">⬇️ Baixar PDF (visão atual)</button>
@@ -135,29 +135,91 @@ h1{font-size:1.4rem;margin:0 0 4px}
 const { jsPDF } = window.jspdf;
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-let arquivo1 = null, arquivo2 = null;
+const STORAGE_KEY = 'comparadorDemonstrativos_ultimaComparacao';
+const MAX_ARQUIVOS = 6;
+let listaArquivos = [null, null]; // File objects, na ordem
 let todosOsRegistros = [];
+let nomesArquivos = [];
 let abaAtiva = 'novos';
 
-function configurarDrop(dropId, inputId, filenameId, onFile) {
-  const drop = document.getElementById(dropId);
-  const input = document.getElementById(inputId);
-  const filenameEl = document.getElementById(filenameId);
-  input.addEventListener('change', () => {
-    if (input.files[0]) { filenameEl.textContent = '✅ ' + input.files[0].name; onFile(input.files[0]); }
+// ---------- Dropzones dinâmicas (melhoria #9: suporte a vários arquivos) ----------
+function renderDropzones() {
+  const wrap = document.getElementById('dropzonesWrap');
+  wrap.innerHTML = listaArquivos.map((f, i) => `
+    <div class="drop" data-idx="${i}">
+      <div class="row" style="position:absolute;top:6px;right:6px;gap:4px;z-index:2">
+        ${i > 0 ? `<button type="button" class="btnremove" data-mover="${i}:-1" title="Mover pra cima" style="position:static;background:rgba(59,130,246,.15);color:var(--blue)">↑</button>` : ''}
+        ${i < listaArquivos.length - 1 ? `<button type="button" class="btnremove" data-mover="${i}:1" title="Mover pra baixo" style="position:static;background:rgba(59,130,246,.15);color:var(--blue)">↓</button>` : ''}
+        ${listaArquivos.length > 2 ? `<button type="button" class="btnremove" data-remove="${i}" style="position:static" title="Remover">✕</button>` : ''}
+      </div>
+      <input type="file" accept="application/pdf" data-input="${i}">
+      <div class="label">📄 Arquivo ${i + 1} ${i === listaArquivos.length - 1 && listaArquivos.length > 2 ? '(mais novo)' : i === 0 ? '(mais antigo)' : ''}</div>
+      <div class="info">${i === 0 ? 'O demonstrativo de antes' : i === listaArquivos.length - 1 ? 'O demonstrativo mais recente' : 'Um demonstrativo intermediário'}</div>
+      <div class="filename">${f ? '✅ ' + f.name : ''}</div>
+    </div>
+  `).join('');
+
+  wrap.querySelectorAll('input[type=file]').forEach(input => {
+    const idx = +input.dataset.input;
+    const drop = input.closest('.drop');
+    input.addEventListener('change', () => { if (input.files[0]) { listaArquivos[idx] = input.files[0]; renderDropzones(); atualizarBotao(); } });
+    ['dragover','dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('dragover'); }));
+    ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('dragover'); }));
+    drop.addEventListener('drop', e => {
+      const f = e.dataTransfer.files[0];
+      if (f && f.type === 'application/pdf') { listaArquivos[idx] = f; renderDropzones(); atualizarBotao(); }
+    });
   });
-  ['dragover','dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('dragover'); }));
-  ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('dragover'); }));
-  drop.addEventListener('drop', e => {
-    const f = e.dataTransfer.files[0];
-    if (f && f.type === 'application/pdf') { input.files = e.dataTransfer.files; filenameEl.textContent = '✅ ' + f.name; onFile(f); }
+  wrap.querySelectorAll('[data-remove]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      listaArquivos.splice(+btn.dataset.remove, 1);
+      renderDropzones();
+      atualizarBotao();
+    });
+  });
+  // Melhoria #3: reordenar arquivos (mover pra cima/baixo) — cobre o caso de inverter qual é o mais antigo/novo
+  wrap.querySelectorAll('[data-mover]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const [idx, dir] = btn.dataset.mover.split(':').map(Number);
+      const novoIdx = idx + dir;
+      if (novoIdx < 0 || novoIdx >= listaArquivos.length) return;
+      [listaArquivos[idx], listaArquivos[novoIdx]] = [listaArquivos[novoIdx], listaArquivos[idx]];
+      renderDropzones();
+      atualizarBotao();
+    });
   });
 }
-configurarDrop('drop1','file1','filename1', f => { arquivo1 = f; atualizarBotao(); });
-configurarDrop('drop2','file2','filename2', f => { arquivo2 = f; atualizarBotao(); });
-function atualizarBotao() { document.getElementById('btnComparar').disabled = !(arquivo1 && arquivo2); }
+renderDropzones();
 
-async function extrairTextoComLinhas(arquivo) {
+document.getElementById('btnAddArquivo').addEventListener('click', () => {
+  if (listaArquivos.length >= MAX_ARQUIVOS) { alert('Máximo de ' + MAX_ARQUIVOS + ' arquivos por comparação.'); return; }
+  listaArquivos.push(null);
+  renderDropzones();
+  atualizarBotao();
+});
+
+function atualizarBotao() {
+  document.getElementById('btnComparar').disabled = listaArquivos.some(f => !f) || listaArquivos.length < 2;
+  verificarArquivosDuplicados();
+}
+
+// ---------- Melhoria #6: avisar se dois arquivos parecem ser o mesmo ----------
+function verificarArquivosDuplicados() {
+  const avisoEl = document.getElementById('avisoDuplicado');
+  const validos = listaArquivos.filter(Boolean);
+  const chaves = validos.map(f => f.name + '|' + f.size);
+  const duplicadas = chaves.filter((c, i) => chaves.indexOf(c) !== i);
+  if (duplicadas.length) {
+    avisoEl.innerHTML = '<div class="aviso-duplicado">⚠️ Parece que você selecionou o mesmo arquivo mais de uma vez (mesmo nome e tamanho). Confira antes de comparar.</div>';
+  } else {
+    avisoEl.innerHTML = '';
+  }
+}
+
+// ---------- Extração e parsing (mesma lógica já validada, com progresso) ----------
+async function extrairTextoComLinhas(arquivo, onProgresso) {
   const buffer = await arquivo.arrayBuffer();
   const doc = await pdfjsLib.getDocument({ data: buffer }).promise;
   let textoCompleto = '';
@@ -173,6 +235,7 @@ async function extrairTextoComLinhas(arquivo) {
     });
     linhas.sort((a, b) => b.y - a.y);
     linhas.forEach(l => { l.itens.sort((a, b) => a.x - b.x); textoCompleto += l.itens.map(i => i.texto).join(' ') + '\n'; });
+    if (onProgresso) onProgresso(p, doc.numPages);
   }
   return textoCompleto;
 }
@@ -209,52 +272,133 @@ function parseDemonstrativos(textoCompleto) {
   }).filter(r => r.codigo);
 }
 
+function paraNumero(valorBr) { return parseFloat(String(valorBr || '0').replace(/\./g, '').replace(',', '.')) || 0; }
+function paraData(dataBr) { const [d,m,a] = String(dataBr||'').split('/'); return (d&&m&&a) ? new Date(+a,+m-1,+d) : null; }
+function estaAtrasado(dataBr) { const d = paraData(dataBr); if (!d) return false; const hoje = new Date(); hoje.setHours(0,0,0,0); return d < hoje; }
+
 document.getElementById('btnComparar').addEventListener('click', async () => {
   const status = document.getElementById('status');
   const btn = document.getElementById('btnComparar');
   btn.disabled = true;
   status.textContent = '⏳ Lendo os PDFs...';
+  const progressoWrap = document.getElementById('progressoWrap');
+  const progressoBarra = document.getElementById('progressoBarra');
+  progressoWrap.classList.remove('hidden');
+  progressoBarra.style.width = '0%';
 
   try {
-    const [texto1, texto2] = await Promise.all([extrairTextoComLinhas(arquivo1), extrairTextoComLinhas(arquivo2)]);
-    const registros1 = parseDemonstrativos(texto1);
-    const registros2 = parseDemonstrativos(texto2);
+    const arquivosValidos = listaArquivos.filter(Boolean);
+    nomesArquivos = arquivosValidos.map((_, i) => 'Arquivo ' + (i + 1));
 
-    if (!registros1.length || !registros2.length) {
+    // Melhoria #7: barra de progresso real, acompanhando pagina a pagina de cada arquivo
+    let totalPaginasEstimado = 0, paginasFeitas = 0;
+    const textos = [];
+    for (const arq of arquivosValidos) {
+      const texto = await extrairTextoComLinhas(arq, (pAtual, pTotal) => {
+        paginasFeitas++;
+        totalPaginasEstimado = Math.max(totalPaginasEstimado, paginasFeitas + (pTotal - pAtual));
+        const pct = Math.min(95, Math.round((paginasFeitas / Math.max(totalPaginasEstimado,1)) * 100));
+        progressoBarra.style.width = pct + '%';
+      });
+      textos.push(texto);
+    }
+    progressoBarra.style.width = '100%';
+
+    const registrosPorArquivo = textos.map(parseDemonstrativos);
+
+    if (registrosPorArquivo.some(r => !r.length)) {
       status.textContent = '⚠️ Não consegui reconhecer nenhum demonstrativo em um dos arquivos. Confirme se são PDFs do mesmo modelo (com o campo "Imov./Contr.").';
       btn.disabled = false;
+      setTimeout(() => progressoWrap.classList.add('hidden'), 600);
       return;
     }
 
     const mapa = new Map();
-    registros1.forEach(r => mapa.set(r.codigo, { ...r, arquivos: ['Arquivo 1'] }));
-    registros2.forEach(r => {
-      if (mapa.has(r.codigo)) {
-        const existente = mapa.get(r.codigo);
-        mapa.set(r.codigo, { ...r, arquivos: [...existente.arquivos, 'Arquivo 2'] });
-      } else {
-        mapa.set(r.codigo, { ...r, arquivos: ['Arquivo 2'] });
-      }
+    registrosPorArquivo.forEach((registros, i) => {
+      registros.forEach(r => {
+        if (mapa.has(r.codigo)) {
+          const existente = mapa.get(r.codigo);
+          mapa.set(r.codigo, { ...r, arquivos: [...existente.arquivos, nomesArquivos[i]] });
+        } else {
+          mapa.set(r.codigo, { ...r, arquivos: [nomesArquivos[i]] });
+        }
+      });
     });
     todosOsRegistros = [...mapa.values()];
 
-    document.getElementById('statArquivo1').textContent = registros1.length;
-    document.getElementById('statArquivo2').textContent = registros2.length;
-    document.getElementById('statNovos').textContent = todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === 'Arquivo 2').length;
-    document.getElementById('statRepetidos').textContent = todosOsRegistros.filter(r => r.arquivos.length === 2).length;
+    // Melhoria #8: lembrar a última comparação
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ todosOsRegistros, nomesArquivos, nomesArquivosOriginais: arquivosValidos.map(a=>a.name) }));
+    } catch (e) {}
 
+    montarStatsEAbas();
     document.getElementById('cardResultado').classList.remove('hidden');
+    popularLocadores();
     renderizarAba();
     status.textContent = `✅ Comparação concluída.`;
   } catch (e) {
     status.textContent = '❌ Erro ao processar: ' + e.message;
   }
   btn.disabled = false;
+  setTimeout(() => progressoWrap.classList.add('hidden'), 600);
 });
 
+// ---------- Restaurar última comparação (melhoria #8) ----------
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    const salvo = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+    if (salvo && salvo.todosOsRegistros?.length) {
+      todosOsRegistros = salvo.todosOsRegistros;
+      nomesArquivos = salvo.nomesArquivos;
+      document.getElementById('status').textContent = `♻️ Restaurada a última comparação (${(salvo.nomesArquivosOriginais||[]).join(', ')}). Envie novos arquivos pra fazer outra.`;
+      montarStatsEAbas();
+      document.getElementById('cardResultado').classList.remove('hidden');
+      popularLocadores();
+      renderizarAba();
+    }
+  } catch (e) {}
+});
+
+function montarStatsEAbas() {
+  const totalArquivos = nomesArquivos.length;
+  const statsWrap = document.getElementById('statsWrap');
+  statsWrap.innerHTML = nomesArquivos.map(nome => {
+    const qtd = todosOsRegistros.filter(r => r.arquivos.includes(nome)).length;
+    return `<div class="stat total"><div class="num">${qtd}</div><div class="lbl">${nome}</div></div>`;
+  }).join('') +
+  `<div class="stat novo"><div class="num">${todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === nomesArquivos[totalArquivos-1]).length}</div><div class="lbl">Novos (só no mais recente)</div></div>` +
+  `<div class="stat repetido"><div class="num">${todosOsRegistros.filter(r => r.arquivos.length > 1).length}</div><div class="lbl">Aparecem em mais de 1</div></div>`;
+
+  const tabsWrap = document.getElementById('tabsWrap');
+  const abas = [
+    { id: 'novos', label: '🆕 Novos' },
+    { id: 'repetidos', label: '🔁 Repetidos (2+)' },
+  ];
+  if (totalArquivos > 2) abas.push({ id: 'todosArquivos', label: '⭐ Em todos os arquivos' });
+  abas.push({ id: 'apenas1', label: '📄 Só no Arquivo 1' }, { id: 'todos', label: '📋 Todos' });
+  tabsWrap.innerHTML = abas.map(a => `<button class="tabbtn${a.id===abaAtiva?' active':''}" data-tab="${a.id}">${a.label}</button>`).join('');
+  tabsWrap.querySelectorAll('.tabbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabsWrap.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      abaAtiva = btn.dataset.tab;
+      renderizarAba();
+    });
+  });
+}
+
+function popularLocadores() {
+  const select = document.getElementById('locadorSelect');
+  const nomes = [...new Set(todosOsRegistros.map(r => r.locador))].sort();
+  select.innerHTML = '<option value="">Todos os locadores</option>' + nomes.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
+}
+
 function registrosDaAba(aba) {
-  if (aba === 'novos') return todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === 'Arquivo 2');
-  if (aba === 'repetidos') return todosOsRegistros.filter(r => r.arquivos.length === 2);
+  const totalArquivos = nomesArquivos.length;
+  const ultimoArquivo = nomesArquivos[totalArquivos - 1];
+  if (aba === 'novos') return todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === ultimoArquivo);
+  if (aba === 'repetidos') return todosOsRegistros.filter(r => r.arquivos.length > 1);
+  if (aba === 'todosArquivos') return todosOsRegistros.filter(r => r.arquivos.length === totalArquivos);
   if (aba === 'apenas1') return todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === 'Arquivo 1');
   return todosOsRegistros;
 }
@@ -262,15 +406,16 @@ function registrosDaAba(aba) {
 function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function tagArquivos(arquivos) {
-  if (arquivos.length === 2) return '<span class="tag tag-repetido">🔁 Repetido (Arquivo 1 e 2)</span>';
-  if (arquivos[0] === 'Arquivo 2') return '<span class="tag tag-novo">🆕 Só no Arquivo 2</span>';
-  return '<span class="tag tag-arquivo1">📄 Só no Arquivo 1</span>';
+  if (arquivos.length > 1) return `<span class="tag tag-repetido">🔁 Repetido (${arquivos.join(', ')})</span>`;
+  if (arquivos[0] === nomesArquivos[nomesArquivos.length - 1] && nomesArquivos.length > 1) return '<span class="tag tag-novo">🆕 Só no ' + arquivos[0] + '</span>';
+  return `<span class="tag tag-arquivo1">📄 Só no ${arquivos[0]}</span>`;
 }
 
 function renderCard(r) {
   const itensHtml = r.itens.map(i => `<span class="item">${escapeHtml(i.descricao)} <b>${escapeHtml(i.valor)}</b></span>`).join('');
+  const atrasado = estaAtrasado(r.vencimento);
   return `<div class="demo-card">
-    <div class="demo-badges">Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong> ${tagArquivos(r.arquivos)}</div>
+    <div class="demo-badges">Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong> ${tagArquivos(r.arquivos)} ${atrasado ? '<span class="tag tag-atrasado">⏰ Vencimento atrasado</span>' : ''}</div>
     <div class="demo-head">
       <div class="demo-head-left">
         <div><b>Imov./Contr.</b>: ${escapeHtml(r.codigo)} - ${escapeHtml(r.endereco)}</div>
@@ -280,7 +425,7 @@ function renderCard(r) {
       </div>
       <div class="demo-head-right">
         <div class="cell"><div class="lbl">Competência</div><div class="val">${escapeHtml(r.competencia)}</div></div>
-        <div class="cell"><div class="lbl">Vencimento</div><div class="val">${escapeHtml(r.vencimento)}</div></div>
+        <div class="cell${atrasado ? ' atrasado' : ''}"><div class="lbl">Vencimento</div><div class="val">${escapeHtml(r.vencimento)}</div></div>
       </div>
     </div>
     <div class="demo-itens">${itensHtml}</div>
@@ -292,30 +437,54 @@ function renderCard(r) {
   </div>`;
 }
 
-function renderizarAba() {
-  const registros = registrosDaAba(abaAtiva);
-  const lista = document.getElementById('listaResultado');
-  if (!registros.length) {
-    const msgs = { novos: 'Nenhum demonstrativo novo.', repetidos: 'Nenhum demonstrativo repetido nos dois arquivos.', apenas1: 'Nenhum demonstrativo exclusivo do Arquivo 1.', todos: 'Nenhum demonstrativo encontrado.' };
-    lista.innerHTML = `<div class="empty">✅ ${msgs[abaAtiva]}</div>`;
-    return;
+// ---------- Melhorias #1 busca, #5 ordenar, #10 filtro por locador, #2 soma total ----------
+function aplicarFiltrosEOrdenacao(registros) {
+  const termoBusca = (document.getElementById('buscaInput').value || '').toLowerCase().trim();
+  const locadorFiltro = document.getElementById('locadorSelect').value;
+  const criterioOrdem = document.getElementById('ordenarSelect').value;
+
+  let resultado = registros;
+  if (termoBusca) {
+    resultado = resultado.filter(r =>
+      r.codigo.toLowerCase().includes(termoBusca) ||
+      r.endereco.toLowerCase().includes(termoBusca) ||
+      r.locatario.toLowerCase().includes(termoBusca) ||
+      r.locador.toLowerCase().includes(termoBusca)
+    );
   }
-  lista.innerHTML = registros.map(renderCard).join('');
+  if (locadorFiltro) resultado = resultado.filter(r => r.locador === locadorFiltro);
+
+  resultado = [...resultado];
+  if (criterioOrdem === 'valor_desc') resultado.sort((a,b) => paraNumero(b.totalVencimento) - paraNumero(a.totalVencimento));
+  else if (criterioOrdem === 'valor_asc') resultado.sort((a,b) => paraNumero(a.totalVencimento) - paraNumero(b.totalVencimento));
+  else if (criterioOrdem === 'nome') resultado.sort((a,b) => a.locatario.localeCompare(b.locatario));
+  else if (criterioOrdem === 'vencimento') resultado.sort((a,b) => (paraData(a.vencimento)||0) - (paraData(b.vencimento)||0));
+
+  return resultado;
 }
 
-document.querySelectorAll('.tabbtn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    abaAtiva = btn.dataset.tab;
-    renderizarAba();
-  });
-});
+function renderizarAba() {
+  let registros = registrosDaAba(abaAtiva);
+  registros = aplicarFiltrosEOrdenacao(registros);
 
+  const lista = document.getElementById('listaResultado');
+  if (!registros.length) {
+    lista.innerHTML = `<div class="empty">✅ Nenhum demonstrativo encontrado com esses filtros.</div>`;
+  } else {
+    lista.innerHTML = registros.map(renderCard).join('');
+  }
+
+  const soma = registros.reduce((s, r) => s + paraNumero(r.totalVencimento), 0);
+  document.getElementById('somaTotal').innerHTML = `${registros.length} demonstrativo(s) nesta visão — total somado: <b>R$ ${soma.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b>`;
+}
+
+document.getElementById('buscaInput').addEventListener('input', renderizarAba);
+document.getElementById('ordenarSelect').addEventListener('change', renderizarAba);
+document.getElementById('locadorSelect').addEventListener('change', renderizarAba);
 document.getElementById('btnImprimir').addEventListener('click', () => window.print());
 
 document.getElementById('btnBaixarCsv').addEventListener('click', () => {
-  const registros = registrosDaAba(abaAtiva);
+  const registros = aplicarFiltrosEOrdenacao(registrosDaAba(abaAtiva));
   if (!registros.length) return;
   const cols = ['codigo','endereco','locatario','locador','serieRegistro','competencia','vencimento','totalVencimento','totalMultaJuros','totalPago'];
   const cabecalhos = ['Imov./Contr.','Endereço','Locatário','Locador','Série/Registro','Competência','Vencimento','Total até o vencimento','Total multa+juros','Total pago','Aparece em'];
@@ -330,7 +499,7 @@ document.getElementById('btnBaixarCsv').addEventListener('click', () => {
 });
 
 document.getElementById('btnBaixarPdf').addEventListener('click', () => {
-  const registros = registrosDaAba(abaAtiva);
+  const registros = aplicarFiltrosEOrdenacao(registrosDaAba(abaAtiva));
   if (!registros.length) return;
   const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
   const margem = 36;
@@ -339,7 +508,7 @@ document.getElementById('btnBaixarPdf').addEventListener('click', () => {
   const alturaPagina = pdf.internal.pageSize.getHeight();
   const larguraUtil = larguraPagina - margem * 2;
 
-  const titulos = { novos: 'Demonstrativos Novos', repetidos: 'Demonstrativos Repetidos', apenas1: 'Demonstrativos só no Arquivo 1', todos: 'Todos os Demonstrativos' };
+  const titulos = { novos: 'Demonstrativos Novos', repetidos: 'Demonstrativos Repetidos', todosArquivos: 'Em todos os arquivos', apenas1: 'Demonstrativos só no Arquivo 1', todos: 'Todos os Demonstrativos' };
 
   function cabecalhoPagina() {
     pdf.setFontSize(9);
@@ -387,10 +556,11 @@ document.getElementById('btnBaixarPdf').addEventListener('click', () => {
     pdf.text('Competência', xDireita + larguraDireita/2, y + 9, { align: 'center' });
     pdf.text('Vencimento', xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 9, { align: 'center' });
     pdf.setFontSize(9);
-    pdf.setTextColor(0);
+    pdf.setTextColor(estaAtrasado(r.vencimento) ? 200 : 0, estaAtrasado(r.vencimento) ? 40 : 0, estaAtrasado(r.vencimento) ? 40 : 0);
     pdf.setFont(undefined,'bold');
     pdf.text(r.competencia, xDireita + larguraDireita/2, y + 20, { align: 'center' });
     pdf.text(r.vencimento, xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 20, { align: 'center' });
+    pdf.setTextColor(0);
     pdf.setFont(undefined,'normal');
 
     y += alturaCaixaCabecalho + 12;
