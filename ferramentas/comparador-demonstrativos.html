@@ -369,11 +369,11 @@ function renderDropzones() {
       <div class="row" style="position:absolute;top:6px;right:6px;gap:4px;z-index:2">
         ${i > 0 ? `<button type="button" class="btnremove" data-mover="${i}:-1" title="Mover pra cima" style="position:static;background:rgba(59,130,246,.15);color:var(--blue)">↑</button>` : ''}
         ${i < listaArquivos.length - 1 ? `<button type="button" class="btnremove" data-mover="${i}:1" title="Mover pra baixo" style="position:static;background:rgba(59,130,246,.15);color:var(--blue)">↓</button>` : ''}
-        ${listaArquivos.length > 2 ? `<button type="button" class="btnremove" data-remove="${i}" style="position:static" title="Remover">✕</button>` : ''}
+        ${listaArquivos.length > 1 ? `<button type="button" class="btnremove" data-remove="${i}" style="position:static" title="Remover">✕</button>` : ''}
       </div>
       <input type="file" accept="application/pdf" data-input="${i}">
-      <div class="label">📄 Arquivo ${i + 1} ${i === listaArquivos.length - 1 && listaArquivos.length > 2 ? '(mais novo)' : i === 0 ? '(mais antigo)' : ''}</div>
-      <div class="info">${i === 0 ? 'O demonstrativo de antes' : i === listaArquivos.length - 1 ? 'O demonstrativo mais recente' : 'Um demonstrativo intermediário'}</div>
+      <div class="label">📄 Arquivo ${i + 1} ${listaArquivos.length === 1 ? '' : (i === listaArquivos.length - 1 && listaArquivos.length > 2 ? '(mais novo)' : i === 0 ? '(mais antigo)' : '')}</div>
+      <div class="info">${listaArquivos.length === 1 ? 'Pode mandar só este, sem precisar comparar com outro' : (i === 0 ? 'O demonstrativo de antes' : i === listaArquivos.length - 1 ? 'O demonstrativo mais recente' : 'Um demonstrativo intermediário')}</div>
       <div class="filename">${f ? '✅ ' + f.name : ''}</div>
     </div>
   `).join('');
@@ -419,8 +419,12 @@ document.getElementById('btnAddArquivo').addEventListener('click', () => {
   atualizarBotao();
 });
 
+// Aceita processar com 1 arquivo só (sem comparação, só pra pesquisar dentro dele) ou 2+
+// (comparação de verdade). Slots vazios no meio não travam mais o botão.
 function atualizarBotao() {
-  document.getElementById('btnComparar').disabled = listaArquivos.some(f => !f) || listaArquivos.length < 2;
+  const preenchidos = listaArquivos.filter(Boolean).length;
+  document.getElementById('btnComparar').disabled = preenchidos < 1;
+  document.getElementById('btnComparar').textContent = preenchidos === 1 ? '🔍 Processar arquivo' : '🔍 Comparar arquivos';
   verificarArquivosDuplicados();
 }
 
@@ -544,6 +548,9 @@ document.getElementById('btnComparar').addEventListener('click', async () => {
     });
     todosOsRegistros = [...mapa.values()];
 
+    // Com 1 arquivo só não existe "novo"/"repetido" pra comparar — parte direto pra "Todos"
+    abaAtiva = arquivosValidos.length === 1 ? 'todos' : 'novos';
+
     // Melhoria #8: lembrar a última comparação
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ todosOsRegistros, nomesArquivos, nomesArquivosOriginais: arquivosValidos.map(a=>a.name) }));
@@ -553,7 +560,7 @@ document.getElementById('btnComparar').addEventListener('click', async () => {
     document.getElementById('cardResultado').classList.remove('hidden');
     popularLocadores();
     renderizarAba();
-    status.textContent = `✅ Comparação concluída.`;
+    status.textContent = arquivosValidos.length === 1 ? `✅ Arquivo processado — use a busca abaixo pra achar um imóvel.` : `✅ Comparação concluída.`;
   } catch (e) {
     status.textContent = '❌ Erro ao processar: ' + e.message;
   }
@@ -580,22 +587,25 @@ window.addEventListener('DOMContentLoaded', () => {
 function montarStatsEAbas() {
   const totalArquivos = nomesArquivos.length;
   const statsWrap = document.getElementById('statsWrap');
-  statsWrap.innerHTML = nomesArquivos.map(nome => {
+  const statsBase = nomesArquivos.map(nome => {
     const qtd = todosOsRegistros.filter(r => r.arquivos.includes(nome)).length;
     return `<div class="stat total"><div class="num">${qtd}</div><div class="lbl">${nome}</div></div>`;
-  }).join('') +
-  `<div class="stat novo"><div class="num">${todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === nomesArquivos[totalArquivos-1]).length}</div><div class="lbl">Novos (só no mais recente)</div></div>` +
-  `<div class="stat repetido"><div class="num">${todosOsRegistros.filter(r => r.arquivos.length > 1).length}</div><div class="lbl">Aparecem em mais de 1</div></div>`;
+  }).join('');
+  statsWrap.innerHTML = totalArquivos === 1 ? statsBase : statsBase +
+    `<div class="stat novo"><div class="num">${todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === nomesArquivos[totalArquivos-1]).length}</div><div class="lbl">Novos (só no mais recente)</div></div>` +
+    `<div class="stat repetido"><div class="num">${todosOsRegistros.filter(r => r.arquivos.length > 1).length}</div><div class="lbl">Aparecem em mais de 1</div></div>`;
 
   renderGraficoTotais();
 
   const tabsWrap = document.getElementById('tabsWrap');
-  const abas = [
+  // Com 1 arquivo só não existe "novo"/"repetido"/"em todos" pra comparar — só faz
+  // sentido mostrar Todos (pra buscar um imóvel dentro dele) + Garantidos/Comissão.
+  const abas = totalArquivos === 1 ? [{ id: 'todos', label: '📋 Todos' }] : [
     { id: 'novos', label: '🆕 Novos' },
     { id: 'repetidos', label: '🔁 Repetidos (2+)' },
   ];
   if (totalArquivos > 2) abas.push({ id: 'todosArquivos', label: '⭐ Em todos os arquivos' });
-  abas.push({ id: 'apenas1', label: '📄 Só no Arquivo 1' }, { id: 'todos', label: '📋 Todos' });
+  if (totalArquivos > 1) abas.push({ id: 'apenas1', label: '📄 Só no Arquivo 1' }, { id: 'todos', label: '📋 Todos' });
   if (lerGarantidos().length) abas.push({ id: 'garantidos', label: '🛡️ Garantidos' });
   if (lerComissao().length) abas.push({ id: 'comissao', label: '🏷️ Comissão' });
   tabsWrap.innerHTML = abas.map(a => `<button class="tabbtn${a.id===abaAtiva?' active':''}" data-tab="${a.id}">${a.label}</button>`).join('');
