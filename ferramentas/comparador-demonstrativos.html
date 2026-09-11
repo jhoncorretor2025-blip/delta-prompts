@@ -146,36 +146,60 @@ h1{font-size:1.4rem;margin:0 0 4px}
   </div>
 
   <div id="abaConfiguracao" class="hidden">
-  <div class="card">
-    <div class="row between" style="cursor:pointer;align-items:center" id="toggleConfig">
-      <strong>⚙️ Configuração — Imóveis Garantidos</strong>
-      <span id="configToggleIcon">▼</span>
-    </div>
-    <div id="configBody">
-      <p class="sub" style="margin:8px 0 0">Cadastre aqui os imóveis que precisam de um alerta especial sempre que aparecerem numa comparação. Você pode editar ou apagar quando quiser.</p>
-      <div class="row" style="margin-top:12px">
-        <input type="text" id="novoImovelCodigo" placeholder="Código do imóvel (ex: 2981)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
-        <input type="text" id="novoContratoCodigo" placeholder="Código do contrato (ex: 1393)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
-        <button class="btn btn-primary btn-sm" id="btnAddGarantido">➕ Adicionar</button>
-      </div>
-      <div id="tabelaGarantidos" style="margin-top:12px"></div>
-    </div>
+  <div class="tabs" style="margin-top:0">
+    <button class="tabbtn active" id="btnSubComissao">🏷️ Comissão</button>
+    <button class="tabbtn" id="btnSubGarantidos">🛡️ Garantidos</button>
   </div>
 
+  <div id="subComissao">
   <div class="card">
-    <div class="row between" style="cursor:pointer;align-items:center" id="toggleComissao">
-      <strong>🏷️ Configuração — Imóveis com Comissão</strong>
-      <span id="comissaoToggleIcon">▼</span>
+    <p class="sub" style="margin:0">Cadastre os imóveis com comissão, mês a mês (a comissão sempre vence todo dia 20). Marque como repassada quando já tiver recebido.</p>
+    <div class="row" style="margin-top:12px;align-items:flex-end">
+      <div style="flex:1;min-width:120px">
+        <label class="small" style="color:var(--muted);display:block;margin-bottom:4px">Código do imóvel</label>
+        <input type="text" id="comImovelInput" placeholder="Ex: 2981" style="width:100%;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+      </div>
+      <div style="flex:1;min-width:120px">
+        <label class="small" style="color:var(--muted);display:block;margin-bottom:4px">Código do contrato</label>
+        <input type="text" id="comContratoInput" placeholder="Ex: 1393 (opcional)" style="width:100%;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+      </div>
+      <div style="flex:1;min-width:120px">
+        <label class="small" style="color:var(--muted);display:block;margin-bottom:4px">Mês da comissão</label>
+        <input type="month" id="comMesInput" style="width:100%;padding:9px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+      </div>
+      <button class="btn btn-primary btn-sm" id="btnComSalvar">➕ Adicionar</button>
     </div>
-    <div id="comissaoBody">
-      <p class="sub" style="margin:8px 0 0">Cole aqui a lista de imóveis que têm comissão — um por linha, do jeito que você já tem anotado (só o código do imóvel, ou "imóvel — contrato"). O sistema identifica os códigos sozinho.</p>
-      <textarea id="listaComissaoTextarea" placeholder="Exemplos de linhas aceitas:&#10;2981&#10;3403 — 725&#10;1206/001206" style="width:100%;min-height:90px;margin-top:10px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem;font-family:inherit;resize:vertical"></textarea>
+    <div class="status" id="statusComUnico"></div>
+
+    <details style="margin-top:14px">
+      <summary style="cursor:pointer;font-size:.82rem;color:var(--muted)">📋 Ou colar uma lista inteira de uma vez</summary>
+      <div class="row" style="margin-top:10px;align-items:flex-end">
+        <div style="flex:1;min-width:160px">
+          <label class="small" style="color:var(--muted);display:block;margin-bottom:4px">Mês que vale pra lista inteira</label>
+          <input type="month" id="comMesLoteInput" style="width:100%;padding:9px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+        </div>
+      </div>
+      <textarea id="listaComissaoTextarea" placeholder="Exemplos de linhas aceitas:&#10;2981&#10;3403 — 725&#10;1206/001206" style="width:100%;min-height:80px;margin-top:10px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem;font-family:inherit;resize:vertical"></textarea>
       <div class="row" style="margin-top:10px">
-        <button class="btn btn-primary btn-sm" id="btnProcessarComissao">📥 Processar e salvar lista</button>
+        <button class="btn btn-light btn-sm" id="btnProcessarComissao">📥 Processar lista inteira</button>
       </div>
       <div class="status" id="statusComissao"></div>
-      <div id="tabelaComissao" style="margin-top:12px"></div>
+    </details>
+
+    <div id="tabelaComissao" style="margin-top:16px"></div>
+  </div>
+  </div>
+
+  <div id="subGarantidos" class="hidden">
+  <div class="card">
+    <p class="sub" style="margin:0">Cadastre aqui os imóveis que precisam de um alerta especial sempre que aparecerem numa comparação. Você pode editar ou apagar quando quiser.</p>
+    <div class="row" style="margin-top:12px">
+      <input type="text" id="novoImovelCodigo" placeholder="Código do imóvel (ex: 2981)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+      <input type="text" id="novoContratoCodigo" placeholder="Código do contrato (ex: 1393)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+      <button class="btn btn-primary btn-sm" id="btnAddGarantido">➕ Adicionar</button>
     </div>
+    <div id="tabelaGarantidos" style="margin-top:12px"></div>
+  </div>
   </div>
   </div>
 
@@ -257,13 +281,6 @@ document.getElementById('btnAddGarantido').addEventListener('click', () => {
   renderTabelaGarantidos();
   if (todosOsRegistros.length) renderizarAba();
 });
-document.getElementById('toggleConfig').addEventListener('click', () => {
-  const body = document.getElementById('configBody');
-  const icon = document.getElementById('configToggleIcon');
-  const escondido = body.style.display === 'none';
-  body.style.display = escondido ? '' : 'none';
-  icon.textContent = escondido ? '▼' : '▶';
-});
 renderTabelaGarantidos();
 
 // ---------- Imóveis com Comissão: cola uma lista solta de números, o sistema entende os códigos ----------
@@ -272,38 +289,26 @@ function lerComissao() {
   try { return JSON.parse(localStorage.getItem(COMISSAO_KEY)) || []; } catch (e) { return []; }
 }
 function salvarComissao(lista) { try { localStorage.setItem(COMISSAO_KEY, JSON.stringify(lista)); } catch (e) {} }
-function ehComissao(codigoCompleto) {
-  const partes = String(codigoCompleto || '').split('/');
-  if (partes.length !== 2) return false;
+
+// Formatos: o <input type="month"> usa "AAAA-MM"; a competência dos demonstrativos usa "MM/AAAA".
+function mesInputParaCompetencia(v) { if (!v) return ''; const [a, m] = v.split('-'); return m + '/' + a; }
+function competenciaParaMesInput(c) { if (!c) return ''; const [m, a] = c.split('/'); return a + '-' + m; }
+
+// Acha a entrada de comissão que bate com esse demonstrativo (imóvel + contrato, e mês se informado)
+function buscarComissao(r) {
+  const partes = String(r.codigo || '').split('/');
+  if (partes.length !== 2) return null;
   const imovelNum = parseInt(partes[0], 10);
   const contratoNum = parseInt(partes[1], 10);
-  return lerComissao().some(c => {
+  return lerComissao().find(c => {
     if (parseInt(c.imovel, 10) !== imovelNum) return false;
-    if (c.contrato === '' || c.contrato == null) return true; // sem contrato informado = casa só pelo imóvel
-    return parseInt(c.contrato, 10) === contratoNum;
-  });
+    if (c.contrato !== '' && c.contrato != null && parseInt(c.contrato, 10) !== contratoNum) return false;
+    if (c.mes && c.mes !== r.competencia) return false; // sem mês definido = casa com qualquer competência
+    return true;
+  }) || null;
 }
+function ehComissao(r) { return !!buscarComissao(r); }
 
-// ---------- Marcar comissão como já recebida: por imóvel + competência, pra distinguir
-// o pagamento de cada mês (o mesmo imóvel aparece de novo no mês seguinte, mas é outra comissão) ----------
-const RECEBIDAS_KEY = 'comparadorDemonstrativos_comissoesRecebidas';
-function chaveRecebimento(r) { return r.codigo + '|' + r.competencia; }
-function lerRecebidas() {
-  try { return JSON.parse(localStorage.getItem(RECEBIDAS_KEY)) || []; } catch (e) { return []; }
-}
-function salvarRecebidas(lista) { try { localStorage.setItem(RECEBIDAS_KEY, JSON.stringify(lista)); } catch (e) {} }
-function comissaoRecebida(r) { return lerRecebidas().includes(chaveRecebimento(r)); }
-function toggleComissaoRecebida(chave) {
-  const l = lerRecebidas();
-  const idx = l.indexOf(chave);
-  if (idx === -1) l.push(chave); else l.splice(idx, 1);
-  salvarRecebidas(l);
-  renderizarAba();
-}
-
-// Interpreta cada linha da lista colada: aceita só um número (código do imóvel), ou dois
-// números juntos (imóvel e contrato, separados por —, -, /, espaço ou qualquer coisa que
-// não seja dígito) — igual ao formato que o usuário já usa nos Imóveis Garantidos.
 function interpretarListaComissao(texto) {
   const linhas = String(texto || '').split('\n').map(l => l.trim()).filter(Boolean);
   const novos = [];
@@ -318,16 +323,18 @@ function interpretarListaComissao(texto) {
 
 document.getElementById('btnProcessarComissao').addEventListener('click', () => {
   const texto = document.getElementById('listaComissaoTextarea').value;
+  const mes = mesInputParaCompetencia(document.getElementById('comMesLoteInput').value);
   const { novos, ignoradas } = interpretarListaComissao(texto);
   const status = document.getElementById('statusComissao');
   if (!novos.length) { status.textContent = '⚠️ Não encontrei nenhum código de imóvel nessa lista.'; return; }
 
   const atual = lerComissao();
-  const chaveExistente = new Set(atual.map(c => c.imovel + '|' + (c.contrato || '')));
+  const chaveExistente = new Set(atual.map(c => c.imovel + '|' + (c.contrato || '') + '|' + (c.mes || '')));
   let adicionados = 0;
   novos.forEach(n => {
-    const chave = n.imovel + '|' + (n.contrato || '');
-    if (!chaveExistente.has(chave)) { atual.push(n); chaveExistente.add(chave); adicionados++; }
+    const entrada = { ...n, mes, repassado: false };
+    const chave = entrada.imovel + '|' + (entrada.contrato || '') + '|' + (entrada.mes || '');
+    if (!chaveExistente.has(chave)) { atual.push(entrada); chaveExistente.add(chave); adicionados++; }
   });
   salvarComissao(atual);
   document.getElementById('listaComissaoTextarea').value = '';
@@ -335,9 +342,41 @@ document.getElementById('btnProcessarComissao').addEventListener('click', () => 
   if (todosOsRegistros.length) renderizarAba();
 
   let msg = `✅ ${adicionados} imóvel(is) com comissão adicionado(s)`;
-  if (novos.length - adicionados > 0) msg += ` (${novos.length - adicionados} já estava(m) na lista)`;
+  if (novos.length - adicionados > 0) msg += ` (${novos.length - adicionados} já estava(m) na lista com esse mês)`;
   if (ignoradas.length) msg += `. ⚠️ ${ignoradas.length} linha(s) não reconhecida(s): ${ignoradas.join(' | ')}`;
   status.textContent = msg;
+});
+
+// Form único (imóvel + contrato + mês): serve tanto pra adicionar quanto pra editar uma
+// linha existente — ao clicar "Editar" na tabela, os campos são preenchidos e o índice
+// fica guardado em comEditandoIndice; salvar de novo atualiza em vez de duplicar.
+let comEditandoIndice = null;
+function limparFormComissao() {
+  document.getElementById('comImovelInput').value = '';
+  document.getElementById('comContratoInput').value = '';
+  document.getElementById('comMesInput').value = '';
+  document.getElementById('btnComSalvar').textContent = '➕ Adicionar';
+  comEditandoIndice = null;
+}
+document.getElementById('btnComSalvar').addEventListener('click', () => {
+  const imovel = document.getElementById('comImovelInput').value.trim();
+  const contrato = document.getElementById('comContratoInput').value.trim();
+  const mes = mesInputParaCompetencia(document.getElementById('comMesInput').value);
+  const status = document.getElementById('statusComUnico');
+  if (!imovel) { status.textContent = '⚠️ Preencha ao menos o código do imóvel.'; return; }
+
+  const lista = lerComissao();
+  if (comEditandoIndice != null) {
+    lista[comEditandoIndice] = { ...lista[comEditandoIndice], imovel, contrato, mes };
+    status.textContent = '✅ Alterações salvas.';
+  } else {
+    lista.push({ imovel, contrato, mes, repassado: false });
+    status.textContent = '✅ Adicionado.';
+  }
+  salvarComissao(lista);
+  limparFormComissao();
+  renderTabelaComissao();
+  if (todosOsRegistros.length) renderizarAba();
 });
 
 function renderTabelaComissao() {
@@ -345,24 +384,46 @@ function renderTabelaComissao() {
   const el = document.getElementById('tabelaComissao');
   if (!lista.length) { el.innerHTML = '<div class="empty" style="padding:14px 0">Nenhum imóvel com comissão cadastrado ainda.</div>'; return; }
   el.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:.82rem">
-    <thead><tr><th style="text-align:left;padding:6px;color:var(--muted);font-size:.72rem">Código do Imóvel</th><th style="text-align:left;padding:6px;color:var(--muted);font-size:.72rem">Código do Contrato</th><th></th></tr></thead>
+    <thead><tr>
+      <th style="text-align:left;padding:6px;color:var(--muted);font-size:.72rem">Imóvel</th>
+      <th style="text-align:left;padding:6px;color:var(--muted);font-size:.72rem">Contrato</th>
+      <th style="text-align:left;padding:6px;color:var(--muted);font-size:.72rem">Mês</th>
+      <th style="text-align:left;padding:6px;color:var(--muted);font-size:.72rem">Status</th>
+      <th></th>
+    </tr></thead>
     <tbody>${lista.map((c, i) => `
       <tr style="border-top:1px solid var(--line)">
-        <td style="padding:6px"><input type="text" value="${escapeHtml(c.imovel)}" data-edit-comissao-imovel="${i}" style="width:100%;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.8rem"></td>
-        <td style="padding:6px"><input type="text" value="${escapeHtml(c.contrato || '')}" placeholder="(qualquer um)" data-edit-comissao-contrato="${i}" style="width:100%;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.8rem"></td>
-        <td style="padding:6px;text-align:right"><button class="btn-sm" data-remover-comissao="${i}" style="background:rgba(239,68,68,.15);color:var(--red);border:0;border-radius:6px;padding:6px 10px;cursor:pointer">🗑️</button></td>
+        <td style="padding:6px">${escapeHtml(c.imovel)}</td>
+        <td style="padding:6px">${escapeHtml(c.contrato || '—')}</td>
+        <td style="padding:6px">${escapeHtml(c.mes || 'qualquer mês')}</td>
+        <td style="padding:6px">
+          <button data-toggle-repassado="${i}" class="btn-sm" style="border:0;border-radius:999px;padding:5px 10px;cursor:pointer;font-weight:800;font-size:.72rem;background:${c.repassado ? 'rgba(34,197,94,.18)' : 'rgba(148,163,184,.18)'};color:${c.repassado ? '#4ade80' : '#94a3b8'}">${c.repassado ? '✅ Repassado' : '⬜ Pendente'}</button>
+        </td>
+        <td style="padding:6px;text-align:right;white-space:nowrap">
+          <button class="btn-sm" data-editar-comissao="${i}" style="background:rgba(59,130,246,.15);color:var(--blue);border:0;border-radius:6px;padding:6px 10px;cursor:pointer;margin-right:4px">✏️</button>
+          <button class="btn-sm" data-remover-comissao="${i}" style="background:rgba(239,68,68,.15);color:var(--red);border:0;border-radius:6px;padding:6px 10px;cursor:pointer">🗑️</button>
+        </td>
       </tr>`).join('')}</tbody></table>`;
 
-  el.querySelectorAll('[data-edit-comissao-imovel]').forEach(input => {
-    input.addEventListener('change', () => {
-      const l = lerComissao(); l[+input.dataset.editComissaoImovel].imovel = input.value.trim(); salvarComissao(l);
+  el.querySelectorAll('[data-toggle-repassado]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const l = lerComissao();
+      const idx = +btn.dataset.toggleRepassado;
+      l[idx].repassado = !l[idx].repassado;
+      salvarComissao(l);
+      renderTabelaComissao();
       if (todosOsRegistros.length) renderizarAba();
     });
   });
-  el.querySelectorAll('[data-edit-comissao-contrato]').forEach(input => {
-    input.addEventListener('change', () => {
-      const l = lerComissao(); l[+input.dataset.editComissaoContrato].contrato = input.value.trim(); salvarComissao(l);
-      if (todosOsRegistros.length) renderizarAba();
+  el.querySelectorAll('[data-editar-comissao]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const c = lerComissao()[+btn.dataset.editarComissao];
+      document.getElementById('comImovelInput').value = c.imovel;
+      document.getElementById('comContratoInput').value = c.contrato || '';
+      document.getElementById('comMesInput').value = competenciaParaMesInput(c.mes);
+      document.getElementById('btnComSalvar').textContent = '💾 Salvar edição';
+      comEditandoIndice = +btn.dataset.editarComissao;
+      document.getElementById('comImovelInput').scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   });
   el.querySelectorAll('[data-remover-comissao]').forEach(btn => {
@@ -373,14 +434,21 @@ function renderTabelaComissao() {
     });
   });
 }
-document.getElementById('toggleComissao').addEventListener('click', () => {
-  const body = document.getElementById('comissaoBody');
-  const icon = document.getElementById('comissaoToggleIcon');
-  const escondido = body.style.display === 'none';
-  body.style.display = escondido ? '' : 'none';
-  icon.textContent = escondido ? '▼' : '▶';
-});
 renderTabelaComissao();
+
+// ---------- Sub-abas dentro de Configuração: Comissão (padrão) e Garantidos ----------
+document.getElementById('btnSubComissao').addEventListener('click', () => {
+  document.getElementById('btnSubComissao').classList.add('active');
+  document.getElementById('btnSubGarantidos').classList.remove('active');
+  document.getElementById('subComissao').classList.remove('hidden');
+  document.getElementById('subGarantidos').classList.add('hidden');
+});
+document.getElementById('btnSubGarantidos').addEventListener('click', () => {
+  document.getElementById('btnSubGarantidos').classList.add('active');
+  document.getElementById('btnSubComissao').classList.remove('active');
+  document.getElementById('subGarantidos').classList.remove('hidden');
+  document.getElementById('subComissao').classList.add('hidden');
+});
 
 // ---------- Abas principais: Consultar vs Configuração, pra deixar a página organizada ----------
 document.getElementById('btnAbaConsultar').addEventListener('click', () => {
@@ -719,7 +787,7 @@ function registrosDaAba(aba) {
   if (aba === 'todosArquivos') return todosOsRegistros.filter(r => r.arquivos.length === totalArquivos);
   if (aba === 'apenas1') return todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === 'Arquivo 1');
   if (aba === 'garantidos') return todosOsRegistros.filter(r => ehGarantido(r.codigo));
-  if (aba === 'comissao') return todosOsRegistros.filter(r => ehComissao(r.codigo));
+  if (aba === 'comissao') return todosOsRegistros.filter(r => ehComissao(r));
   return todosOsRegistros;
 }
 
@@ -734,14 +802,13 @@ function tagArquivos(arquivos) {
 function renderCard(r) {
   const itensHtml = r.itens.map(i => `<span class="item">${escapeHtml(i.descricao)} <b>${escapeHtml(i.valor)}</b></span>`).join('');
   const garantido = ehGarantido(r.codigo);
-  const comissao = ehComissao(r.codigo);
-  const recebida = comissao && comissaoRecebida(r);
-  const chave = escapeHtml(chaveRecebimento(r));
-  const borda = recebida ? '#22c55e' : (garantido ? '#f59e0b' : (comissao ? '#a855f7' : null));
-  return `<div class="demo-card"${borda ? ` style="border:2px solid ${borda};box-shadow:0 0 0 1px ${borda} inset${recebida ? ';opacity:.72' : ''}"` : ''}>
+  const entradaComissao = buscarComissao(r);
+  const comissao = !!entradaComissao;
+  const repassado = comissao && entradaComissao.repassado;
+  const borda = repassado ? '#22c55e' : (garantido ? '#f59e0b' : (comissao ? '#a855f7' : null));
+  return `<div class="demo-card"${borda ? ` style="border:2px solid ${borda};box-shadow:0 0 0 1px ${borda} inset${repassado ? ';opacity:.72' : ''}"` : ''}>
     <div class="demo-badges" style="display:flex;align-items:center;flex-wrap:wrap;gap:4px">
-      <span>Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong></span> ${tagArquivos(r.arquivos)} ${garantido ? '<span class="tag" style="background:rgba(245,158,11,.22);color:#fbbf24">🛡️ IMÓVEL GARANTIDO</span>' : ''} ${comissao ? '<span class="tag" style="background:rgba(168,85,247,.22);color:#d8b4fe">🏷️ COMISSÃO</span>' : ''}
-      ${comissao ? `<label style="margin-left:auto;display:flex;align-items:center;gap:5px;cursor:pointer;font-weight:700;color:${recebida ? '#4ade80' : '#94a3b8'}"><input type="checkbox" data-toggle-recebida="${chave}" ${recebida ? 'checked' : ''} style="width:15px;height:15px;cursor:pointer">${recebida ? '✅ Comissão recebida' : '⬜ Marcar como recebida'}</label>` : ''}
+      <span>Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong></span> ${tagArquivos(r.arquivos)} ${garantido ? '<span class="tag" style="background:rgba(245,158,11,.22);color:#fbbf24">🛡️ IMÓVEL GARANTIDO</span>' : ''} ${comissao ? `<span class="tag" style="background:rgba(168,85,247,.22);color:#d8b4fe">🏷️ COMISSÃO${repassado ? ' ✅ REPASSADA' : ' — PENDENTE'}</span>` : ''}
     </div>
     <div class="demo-head">
       <div class="demo-head-left">
@@ -796,21 +863,17 @@ function renderizarAba() {
 
   const lista = document.getElementById('listaResultado');
   const garantidosEncontrados = registros.filter(r => ehGarantido(r.codigo));
-  const comissaoEncontrados = registros.filter(r => ehComissao(r.codigo));
-  const comissaoRecebidasCount = comissaoEncontrados.filter(r => comissaoRecebida(r)).length;
+  const comissaoEncontrados = registros.filter(r => ehComissao(r));
+  const comissaoRecebidasCount = comissaoEncontrados.filter(r => buscarComissao(r)?.repassado).length;
   const alertaHtml =
     (garantidosEncontrados.length ? `<div class="aviso-duplicado" style="background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.45);color:#fde68a">🛡️ <b>${garantidosEncontrados.length} imóvel(is) garantido(s)</b> aparece(m) nesta visão: ${garantidosEncontrados.map(r=>escapeHtml(r.codigo)).join(', ')}</div>` : '') +
-    (comissaoEncontrados.length ? `<div class="aviso-duplicado" style="background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.45);color:#e9d5ff">🏷️ <b>${comissaoEncontrados.length} imóvel(is) com comissão</b> aparece(m) nesta visão — <b>${comissaoRecebidasCount} já recebida(s)</b>, ${comissaoEncontrados.length - comissaoRecebidasCount} pendente(s)</div>` : '');
+    (comissaoEncontrados.length ? `<div class="aviso-duplicado" style="background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.45);color:#e9d5ff">🏷️ <b>${comissaoEncontrados.length} imóvel(is) com comissão</b> aparece(m) nesta visão — <b>${comissaoRecebidasCount} já repassada(s)</b>, ${comissaoEncontrados.length - comissaoRecebidasCount} pendente(s)</div>` : '');
 
   if (!registros.length) {
     lista.innerHTML = `<div class="empty">✅ Nenhum demonstrativo encontrado com esses filtros.</div>`;
   } else {
     lista.innerHTML = alertaHtml + registros.map(renderCard).join('');
   }
-
-  lista.querySelectorAll('[data-toggle-recebida]').forEach(chk => {
-    chk.addEventListener('change', () => toggleComissaoRecebida(chk.dataset.toggleRecebida));
-  });
 
   const soma = registros.reduce((s, r) => s + paraNumero(r.totalVencimento), 0);
   document.getElementById('somaTotal').innerHTML = `${registros.length} demonstrativo(s) nesta visão — total somado: <b>R$ ${soma.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b>`;
