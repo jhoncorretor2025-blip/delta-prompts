@@ -44,7 +44,6 @@ h1{font-size:1.4rem;margin:0 0 4px}
 .tag-novo{background:rgba(34,197,94,.18);color:var(--green)}
 .tag-repetido{background:rgba(234,179,8,.18);color:var(--yellow)}
 .tag-arquivo1{background:rgba(148,163,184,.18);color:#cbd5e1}
-.tag-atrasado{background:rgba(239,68,68,.2);color:#fca5a5}
 .empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:.85rem}
 .status{font-size:.82rem;color:var(--muted);margin-top:10px;min-height:18px}
 .hidden{display:none}
@@ -66,7 +65,6 @@ h1{font-size:1.4rem;margin:0 0 4px}
 .demo-head-right .cell:last-child{border-bottom:0}
 .demo-head-right .cell .lbl{font-size:.62rem;color:var(--muted)}
 .demo-head-right .cell .val{font-size:.82rem;font-weight:800}
-.demo-head-right .cell.atrasado .val{color:var(--red)}
 .demo-itens{padding:8px 10px;font-size:.74rem;line-height:1.7;color:#c7d0e0}
 .demo-itens .item{display:inline-block;min-width:31%;margin-right:1%}
 .demo-totais{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #334155}
@@ -495,7 +493,6 @@ function parseDemonstrativos(textoCompleto) {
 
 function paraNumero(valorBr) { return parseFloat(String(valorBr || '0').replace(/\./g, '').replace(',', '.')) || 0; }
 function paraData(dataBr) { const [d,m,a] = String(dataBr||'').split('/'); return (d&&m&&a) ? new Date(+a,+m-1,+d) : null; }
-function estaAtrasado(dataBr) { const d = paraData(dataBr); if (!d) return false; const hoje = new Date(); hoje.setHours(0,0,0,0); return d < hoje; }
 
 document.getElementById('btnComparar').addEventListener('click', async () => {
   const status = document.getElementById('status');
@@ -599,6 +596,8 @@ function montarStatsEAbas() {
   ];
   if (totalArquivos > 2) abas.push({ id: 'todosArquivos', label: '⭐ Em todos os arquivos' });
   abas.push({ id: 'apenas1', label: '📄 Só no Arquivo 1' }, { id: 'todos', label: '📋 Todos' });
+  if (lerGarantidos().length) abas.push({ id: 'garantidos', label: '🛡️ Garantidos' });
+  if (lerComissao().length) abas.push({ id: 'comissao', label: '🏷️ Comissão' });
   tabsWrap.innerHTML = abas.map(a => `<button class="tabbtn${a.id===abaAtiva?' active':''}" data-tab="${a.id}">${a.label}</button>`).join('');
   tabsWrap.querySelectorAll('.tabbtn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -668,6 +667,8 @@ function registrosDaAba(aba) {
   if (aba === 'repetidos') return todosOsRegistros.filter(r => r.arquivos.length > 1);
   if (aba === 'todosArquivos') return todosOsRegistros.filter(r => r.arquivos.length === totalArquivos);
   if (aba === 'apenas1') return todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === 'Arquivo 1');
+  if (aba === 'garantidos') return todosOsRegistros.filter(r => ehGarantido(r.codigo));
+  if (aba === 'comissao') return todosOsRegistros.filter(r => ehComissao(r.codigo));
   return todosOsRegistros;
 }
 
@@ -681,12 +682,11 @@ function tagArquivos(arquivos) {
 
 function renderCard(r) {
   const itensHtml = r.itens.map(i => `<span class="item">${escapeHtml(i.descricao)} <b>${escapeHtml(i.valor)}</b></span>`).join('');
-  const atrasado = estaAtrasado(r.vencimento);
   const garantido = ehGarantido(r.codigo);
   const comissao = ehComissao(r.codigo);
   const borda = garantido ? '#f59e0b' : (comissao ? '#a855f7' : null);
   return `<div class="demo-card"${borda ? ` style="border:2px solid ${borda};box-shadow:0 0 0 1px ${borda} inset"` : ''}>
-    <div class="demo-badges">Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong> ${tagArquivos(r.arquivos)} ${atrasado ? '<span class="tag tag-atrasado">⏰ Vencimento atrasado</span>' : ''} ${garantido ? '<span class="tag" style="background:rgba(245,158,11,.22);color:#fbbf24">🛡️ IMÓVEL GARANTIDO</span>' : ''} ${comissao ? '<span class="tag" style="background:rgba(168,85,247,.22);color:#d8b4fe">🏷️ COMISSÃO</span>' : ''}</div>
+    <div class="demo-badges">Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong> ${tagArquivos(r.arquivos)} ${garantido ? '<span class="tag" style="background:rgba(245,158,11,.22);color:#fbbf24">🛡️ IMÓVEL GARANTIDO</span>' : ''} ${comissao ? '<span class="tag" style="background:rgba(168,85,247,.22);color:#d8b4fe">🏷️ COMISSÃO</span>' : ''}</div>
     <div class="demo-head">
       <div class="demo-head-left">
         <div><b>Imov./Contr.</b>: ${escapeHtml(r.codigo)} - ${escapeHtml(r.endereco)}</div>
@@ -696,7 +696,7 @@ function renderCard(r) {
       </div>
       <div class="demo-head-right">
         <div class="cell"><div class="lbl">Competência</div><div class="val">${escapeHtml(r.competencia)}</div></div>
-        <div class="cell${atrasado ? ' atrasado' : ''}"><div class="lbl">Vencimento</div><div class="val">${escapeHtml(r.vencimento)}</div></div>
+        <div class="cell"><div class="lbl">Vencimento</div><div class="val">${escapeHtml(r.vencimento)}</div></div>
       </div>
     </div>
     <div class="demo-itens">${itensHtml}</div>
@@ -808,7 +808,7 @@ function desenharCardPdf(pdf, r, xIni, y, larguraUtil) {
   pdf.text('Competência', xDireita + larguraDireita/2, y + 9, { align: 'center' });
   pdf.text('Vencimento', xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 9, { align: 'center' });
   pdf.setFontSize(9);
-  pdf.setTextColor(estaAtrasado(r.vencimento) ? 200 : 0, estaAtrasado(r.vencimento) ? 40 : 0, estaAtrasado(r.vencimento) ? 40 : 0);
+  pdf.setTextColor(0);
   pdf.setFont(undefined,'bold');
   pdf.text(r.competencia, xDireita + larguraDireita/2, y + 20, { align: 'center' });
   pdf.text(r.vencimento, xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 20, { align: 'center' });
@@ -857,7 +857,7 @@ document.getElementById('btnBaixarPdf').addEventListener('click', () => {
   const alturaPagina = pdf.internal.pageSize.getHeight();
   const larguraUtil = larguraPagina - margem * 2;
 
-  const titulos = { novos: 'Demonstrativos Novos', repetidos: 'Demonstrativos Repetidos', todosArquivos: 'Em todos os arquivos', apenas1: 'Demonstrativos só no Arquivo 1', todos: 'Todos os Demonstrativos' };
+  const titulos = { novos: 'Demonstrativos Novos', repetidos: 'Demonstrativos Repetidos', todosArquivos: 'Em todos os arquivos', apenas1: 'Demonstrativos só no Arquivo 1', todos: 'Todos os Demonstrativos', garantidos: 'Imóveis Garantidos', comissao: 'Imóveis com Comissão' };
 
   function cabecalhoPagina() {
     pdf.setFontSize(9);
