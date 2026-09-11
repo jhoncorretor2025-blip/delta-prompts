@@ -136,7 +136,12 @@ h1{font-size:1.4rem;margin:0 0 4px}
   </div>
 
   <div class="card hidden" id="cardResultado">
+    <div class="row between" style="align-items:center;margin-bottom:6px">
+      <strong style="font-size:.9rem">📊 Resultado da comparação</strong>
+      <button class="btn btn-light btn-sm" id="btnNovaComparacao">🔄 Nova Comparação</button>
+    </div>
     <div class="stats" id="statsWrap"></div>
+    <div id="graficoTotaisWrap" style="margin-top:16px;background:#0d1526;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center"></div>
 
     <div class="tabs" id="tabsWrap"></div>
 
@@ -585,6 +590,8 @@ function montarStatsEAbas() {
   `<div class="stat novo"><div class="num">${todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === nomesArquivos[totalArquivos-1]).length}</div><div class="lbl">Novos (só no mais recente)</div></div>` +
   `<div class="stat repetido"><div class="num">${todosOsRegistros.filter(r => r.arquivos.length > 1).length}</div><div class="lbl">Aparecem em mais de 1</div></div>`;
 
+  renderGraficoTotais();
+
   const tabsWrap = document.getElementById('tabsWrap');
   const abas = [
     { id: 'novos', label: '🆕 Novos' },
@@ -602,6 +609,51 @@ function montarStatsEAbas() {
     });
   });
 }
+
+// Melhoria: gráfico de barras (SVG nativo, sem depender de biblioteca externa) comparando
+// o total em R$ de cada arquivo — dá pra ver de cara se o volume subiu ou caiu.
+function renderGraficoTotais() {
+  const wrap = document.getElementById('graficoTotaisWrap');
+  const totais = nomesArquivos.map(nome =>
+    todosOsRegistros.filter(r => r.arquivos.includes(nome)).reduce((s, r) => s + paraNumero(r.totalVencimento), 0)
+  );
+  const maxValor = Math.max(...totais, 1);
+  const alturaMaxBarra = 110;
+  const larguraBarra = Math.min(90, Math.max(40, 420 / totais.length - 16));
+  const espacamento = 24;
+  const larguraTotal = totais.length * (larguraBarra + espacamento) + espacamento;
+  const alturaSvg = alturaMaxBarra + 56;
+
+  let svg = `<svg viewBox="0 0 ${larguraTotal} ${alturaSvg}" style="width:100%;max-width:${larguraTotal}px;height:auto">`;
+  totais.forEach((valor, i) => {
+    const alturaBarra = maxValor > 0 ? (valor / maxValor) * alturaMaxBarra : 0;
+    const x = espacamento + i * (larguraBarra + espacamento);
+    const y = alturaMaxBarra - alturaBarra + 20;
+    const cor = i === totais.length - 1 ? '#22c55e' : '#3b82f6';
+    svg += `<text x="${x + larguraBarra/2}" y="${y - 8}" text-anchor="middle" font-size="11" font-weight="700" fill="#e8edf7">R$ ${valor.toLocaleString('pt-BR',{maximumFractionDigits:0})}</text>`;
+    svg += `<rect x="${x}" y="${y}" width="${larguraBarra}" height="${Math.max(alturaBarra,2)}" fill="${cor}" rx="5"></rect>`;
+    svg += `<text x="${x + larguraBarra/2}" y="${alturaMaxBarra + 40}" text-anchor="middle" font-size="11" fill="#8a95ab">${escapeHtml(nomesArquivos[i])}</text>`;
+  });
+  svg += `</svg>`;
+  wrap.innerHTML = `<div style="font-size:.78rem;color:var(--muted);margin-bottom:6px">📈 Total em R$ por arquivo</div>` + svg;
+}
+
+// Melhoria: "Nova Comparação" — reseta tudo sem precisar recarregar a página inteira.
+document.getElementById('btnNovaComparacao').addEventListener('click', () => {
+  if (!confirm('Isso vai limpar o resultado atual da tela. Os arquivos PDF em si não são apagados do seu computador. Continuar?')) return;
+  listaArquivos = [null, null];
+  todosOsRegistros = [];
+  nomesArquivos = [];
+  abaAtiva = 'novos';
+  renderDropzones();
+  atualizarBotao();
+  document.getElementById('cardResultado').classList.add('hidden');
+  document.getElementById('buscaInput').value = '';
+  document.getElementById('ordenarSelect').value = 'original';
+  document.getElementById('status').textContent = '';
+  try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 function popularLocadores() {
   const select = document.getElementById('locadorSelect');
