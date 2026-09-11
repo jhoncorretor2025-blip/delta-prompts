@@ -284,6 +284,23 @@ function ehComissao(codigoCompleto) {
   });
 }
 
+// ---------- Marcar comissão como já recebida: por imóvel + competência, pra distinguir
+// o pagamento de cada mês (o mesmo imóvel aparece de novo no mês seguinte, mas é outra comissão) ----------
+const RECEBIDAS_KEY = 'comparadorDemonstrativos_comissoesRecebidas';
+function chaveRecebimento(r) { return r.codigo + '|' + r.competencia; }
+function lerRecebidas() {
+  try { return JSON.parse(localStorage.getItem(RECEBIDAS_KEY)) || []; } catch (e) { return []; }
+}
+function salvarRecebidas(lista) { try { localStorage.setItem(RECEBIDAS_KEY, JSON.stringify(lista)); } catch (e) {} }
+function comissaoRecebida(r) { return lerRecebidas().includes(chaveRecebimento(r)); }
+function toggleComissaoRecebida(chave) {
+  const l = lerRecebidas();
+  const idx = l.indexOf(chave);
+  if (idx === -1) l.push(chave); else l.splice(idx, 1);
+  salvarRecebidas(l);
+  renderizarAba();
+}
+
 // Interpreta cada linha da lista colada: aceita só um número (código do imóvel), ou dois
 // números juntos (imóvel e contrato, separados por —, -, /, espaço ou qualquer coisa que
 // não seja dígito) — igual ao formato que o usuário já usa nos Imóveis Garantidos.
@@ -718,9 +735,14 @@ function renderCard(r) {
   const itensHtml = r.itens.map(i => `<span class="item">${escapeHtml(i.descricao)} <b>${escapeHtml(i.valor)}</b></span>`).join('');
   const garantido = ehGarantido(r.codigo);
   const comissao = ehComissao(r.codigo);
-  const borda = garantido ? '#f59e0b' : (comissao ? '#a855f7' : null);
-  return `<div class="demo-card"${borda ? ` style="border:2px solid ${borda};box-shadow:0 0 0 1px ${borda} inset"` : ''}>
-    <div class="demo-badges">Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong> ${tagArquivos(r.arquivos)} ${garantido ? '<span class="tag" style="background:rgba(245,158,11,.22);color:#fbbf24">🛡️ IMÓVEL GARANTIDO</span>' : ''} ${comissao ? '<span class="tag" style="background:rgba(168,85,247,.22);color:#d8b4fe">🏷️ COMISSÃO</span>' : ''}</div>
+  const recebida = comissao && comissaoRecebida(r);
+  const chave = escapeHtml(chaveRecebimento(r));
+  const borda = recebida ? '#22c55e' : (garantido ? '#f59e0b' : (comissao ? '#a855f7' : null));
+  return `<div class="demo-card"${borda ? ` style="border:2px solid ${borda};box-shadow:0 0 0 1px ${borda} inset${recebida ? ';opacity:.72' : ''}"` : ''}>
+    <div class="demo-badges" style="display:flex;align-items:center;flex-wrap:wrap;gap:4px">
+      <span>Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong></span> ${tagArquivos(r.arquivos)} ${garantido ? '<span class="tag" style="background:rgba(245,158,11,.22);color:#fbbf24">🛡️ IMÓVEL GARANTIDO</span>' : ''} ${comissao ? '<span class="tag" style="background:rgba(168,85,247,.22);color:#d8b4fe">🏷️ COMISSÃO</span>' : ''}
+      ${comissao ? `<label style="margin-left:auto;display:flex;align-items:center;gap:5px;cursor:pointer;font-weight:700;color:${recebida ? '#4ade80' : '#94a3b8'}"><input type="checkbox" data-toggle-recebida="${chave}" ${recebida ? 'checked' : ''} style="width:15px;height:15px;cursor:pointer">${recebida ? '✅ Comissão recebida' : '⬜ Marcar como recebida'}</label>` : ''}
+    </div>
     <div class="demo-head">
       <div class="demo-head-left">
         <div><b>Imov./Contr.</b>: ${escapeHtml(r.codigo)} - ${escapeHtml(r.endereco)}</div>
@@ -775,15 +797,20 @@ function renderizarAba() {
   const lista = document.getElementById('listaResultado');
   const garantidosEncontrados = registros.filter(r => ehGarantido(r.codigo));
   const comissaoEncontrados = registros.filter(r => ehComissao(r.codigo));
+  const comissaoRecebidasCount = comissaoEncontrados.filter(r => comissaoRecebida(r)).length;
   const alertaHtml =
     (garantidosEncontrados.length ? `<div class="aviso-duplicado" style="background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.45);color:#fde68a">🛡️ <b>${garantidosEncontrados.length} imóvel(is) garantido(s)</b> aparece(m) nesta visão: ${garantidosEncontrados.map(r=>escapeHtml(r.codigo)).join(', ')}</div>` : '') +
-    (comissaoEncontrados.length ? `<div class="aviso-duplicado" style="background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.45);color:#e9d5ff">🏷️ <b>${comissaoEncontrados.length} imóvel(is) com comissão</b> aparece(m) nesta visão: ${comissaoEncontrados.map(r=>escapeHtml(r.codigo)).join(', ')}</div>` : '');
+    (comissaoEncontrados.length ? `<div class="aviso-duplicado" style="background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.45);color:#e9d5ff">🏷️ <b>${comissaoEncontrados.length} imóvel(is) com comissão</b> aparece(m) nesta visão — <b>${comissaoRecebidasCount} já recebida(s)</b>, ${comissaoEncontrados.length - comissaoRecebidasCount} pendente(s)</div>` : '');
 
   if (!registros.length) {
     lista.innerHTML = `<div class="empty">✅ Nenhum demonstrativo encontrado com esses filtros.</div>`;
   } else {
     lista.innerHTML = alertaHtml + registros.map(renderCard).join('');
   }
+
+  lista.querySelectorAll('[data-toggle-recebida]').forEach(chk => {
+    chk.addEventListener('change', () => toggleComissaoRecebida(chk.dataset.toggleRecebida));
+  });
 
   const soma = registros.reduce((s, r) => s + paraNumero(r.totalVencimento), 0);
   document.getElementById('somaTotal').innerHTML = `${registros.length} demonstrativo(s) nesta visão — total somado: <b>R$ ${soma.toLocaleString('pt-BR', {minimumFractionDigits:2})}</b>`;
