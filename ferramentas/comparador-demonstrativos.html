@@ -186,7 +186,8 @@ h1{font-size:1.4rem;margin:0 0 4px}
       <div class="status" id="statusComissao"></div>
     </details>
 
-    <div id="tabelaComissao" style="margin-top:16px"></div>
+    <div id="statsComissaoConfig" style="margin-top:16px"></div>
+    <div id="tabelaComissao" style="margin-top:10px"></div>
   </div>
   </div>
 
@@ -381,7 +382,23 @@ document.getElementById('btnComSalvar').addEventListener('click', () => {
 
 function renderTabelaComissao() {
   const lista = lerComissao();
+  const statsEl = document.getElementById('statsComissaoConfig');
   const el = document.getElementById('tabelaComissao');
+
+  const total = lista.length;
+  const repassados = lista.filter(c => c.repassado).length;
+  const pendentes = total - repassados;
+  const porMes = {};
+  lista.forEach(c => { const m = c.mes || 'Sem mês definido'; porMes[m] = (porMes[m] || 0) + 1; });
+  const mesesOrdenados = Object.keys(porMes).sort();
+
+  statsEl.innerHTML = `<div class="stats" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat total"><div class="num">${total}</div><div class="lbl">Contrato(s) de comissão</div></div>
+      <div class="stat repetido"><div class="num">${pendentes}</div><div class="lbl">Pendente(s)</div></div>
+      <div class="stat novo"><div class="num">${repassados}</div><div class="lbl">Repassado(s)</div></div>
+    </div>` +
+    (mesesOrdenados.length ? `<div class="small" style="color:var(--muted);margin-top:8px">📅 Por mês: ${mesesOrdenados.map(m => `<b style="color:var(--ink)">${escapeHtml(m)}</b> (${porMes[m]})`).join(' &nbsp;•&nbsp; ')}</div>` : '');
+
   if (!lista.length) { el.innerHTML = '<div class="empty" style="padding:14px 0">Nenhum imóvel com comissão cadastrado ainda.</div>'; return; }
   el.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:.82rem">
     <thead><tr>
