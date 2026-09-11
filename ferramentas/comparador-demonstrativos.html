@@ -158,6 +158,10 @@ h1{font-size:1.4rem;margin:0 0 4px}
       <button class="btn btn-light" id="btnBaixarCsv">📊 Baixar CSV (visão atual)</button>
       <button class="btn btn-yellow" id="btnImprimir">🖨️ Imprimir visão atual</button>
     </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn" id="btnRelatorioCompleto" style="background:linear-gradient(135deg,#3b82f6,#a855f7);color:#fff">📦 Gerar Relatório Completo (tudo já separado)</button>
+      <span class="small" style="color:var(--muted);font-size:.78rem">Um único PDF com Novos, Repetidos e Só-em-cada-arquivo, cada um na sua própria seção — sem precisar clicar aba por aba.</span>
+    </div>
 
     <div id="listaResultado" class="print-area"></div>
   </div>
@@ -719,6 +723,78 @@ document.getElementById('btnBaixarCsv').addEventListener('click', () => {
   URL.revokeObjectURL(a.href);
 });
 
+// Calcula a altura (em pt) que um card de demonstrativo vai ocupar no PDF
+function alturaCardPdf(r) {
+  const numLinhasItens = Math.ceil(r.itens.length / 3);
+  return 44 + 12 + numLinhasItens * 11 + 34 + 12;
+}
+
+// Desenha um card de demonstrativo no PDF a partir da posição Y dada, retorna o novo Y
+function desenharCardPdf(pdf, r, xIni, y, larguraUtil) {
+  const xFim = xIni + larguraUtil;
+  const larguraDireita = 110;
+  const xDireita = xFim - larguraDireita;
+  const numLinhasItens = Math.ceil(r.itens.length / 3);
+
+  pdf.setDrawColor(120);
+  pdf.setLineWidth(0.6);
+  const alturaCaixaCabecalho = 44;
+  pdf.rect(xIni, y, larguraUtil, alturaCaixaCabecalho);
+  pdf.line(xDireita, y, xDireita, y + alturaCaixaCabecalho);
+  pdf.line(xDireita, y + alturaCaixaCabecalho/2, xFim, y + alturaCaixaCabecalho/2);
+
+  let ty = y + 10;
+  pdf.setFontSize(7.5);
+  pdf.setFont(undefined,'normal');
+  pdf.text(`Imov./Contr.  : ${r.codigo} - ${r.endereco}`, xIni + 6, ty); ty += 9;
+  pdf.text(`Locatário     : ${r.locatario}`, xIni + 6, ty); ty += 9;
+  pdf.text(`Locador       : ${r.locador}`, xIni + 6, ty); ty += 9;
+  pdf.text(`Série/Registro: ${r.serieRegistro}`, xIni + 6, ty);
+
+  pdf.setFontSize(7);
+  pdf.setTextColor(100);
+  pdf.text('Competência', xDireita + larguraDireita/2, y + 9, { align: 'center' });
+  pdf.text('Vencimento', xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 9, { align: 'center' });
+  pdf.setFontSize(9);
+  pdf.setTextColor(estaAtrasado(r.vencimento) ? 200 : 0, estaAtrasado(r.vencimento) ? 40 : 0, estaAtrasado(r.vencimento) ? 40 : 0);
+  pdf.setFont(undefined,'bold');
+  pdf.text(r.competencia, xDireita + larguraDireita/2, y + 20, { align: 'center' });
+  pdf.text(r.vencimento, xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 20, { align: 'center' });
+  pdf.setTextColor(0);
+  pdf.setFont(undefined,'normal');
+
+  y += alturaCaixaCabecalho + 12;
+
+  pdf.setFontSize(7);
+  pdf.setTextColor(30);
+  const colW = larguraUtil / 3;
+  r.itens.forEach((item, idx) => {
+    const col = idx % 3, lin = Math.floor(idx / 3);
+    pdf.text(`${item.descricao}  ${item.valor}`, xIni + col * colW, y + lin * 11);
+  });
+  y += numLinhasItens * 11 + 6;
+
+  const alturaTotais = 22;
+  pdf.setDrawColor(120);
+  pdf.rect(xIni, y, larguraUtil, alturaTotais);
+  pdf.line(xIni + larguraUtil/3, y, xIni + larguraUtil/3, y + alturaTotais);
+  pdf.line(xIni + larguraUtil*2/3, y, xIni + larguraUtil*2/3, y + alturaTotais);
+  pdf.setFontSize(6.5);
+  pdf.setTextColor(100);
+  pdf.text('Total até o vencimento', xIni + larguraUtil/6, y + 8, { align: 'center' });
+  pdf.text('Total de multa+juros', xIni + larguraUtil/2, y + 8, { align: 'center' });
+  pdf.text('Total pago', xIni + larguraUtil*5/6, y + 8, { align: 'center' });
+  pdf.setFontSize(9.5);
+  pdf.setTextColor(0);
+  pdf.setFont(undefined,'bold');
+  pdf.text(r.totalVencimento, xIni + larguraUtil/6, y + 18, { align: 'center' });
+  pdf.text(r.totalMultaJuros, xIni + larguraUtil/2, y + 18, { align: 'center' });
+  pdf.text(r.totalPago, xIni + larguraUtil*5/6, y + 18, { align: 'center' });
+  pdf.setFont(undefined,'normal');
+
+  return y + alturaTotais + 12;
+}
+
 document.getElementById('btnBaixarPdf').addEventListener('click', () => {
   const registros = aplicarFiltrosEOrdenacao(registrosDaAba(abaAtiva));
   if (!registros.length) return;
@@ -749,74 +825,78 @@ document.getElementById('btnBaixarPdf').addEventListener('click', () => {
   cabecalhoPagina();
 
   registros.forEach((r) => {
-    const numLinhasItens = Math.ceil(r.itens.length / 3);
-    const alturaBloco = 44 + 12 + numLinhasItens * 11 + 34 + 12;
-    if (y + alturaBloco > alturaPagina - margem) { pdf.addPage(); y = margem; cabecalhoPagina(); }
-
-    const xIni = margem, xFim = margem + larguraUtil;
-    const larguraDireita = 110;
-    const xDireita = xFim - larguraDireita;
-
-    pdf.setDrawColor(120);
-    pdf.setLineWidth(0.6);
-    const alturaCaixaCabecalho = 44;
-    pdf.rect(xIni, y, larguraUtil, alturaCaixaCabecalho);
-    pdf.line(xDireita, y, xDireita, y + alturaCaixaCabecalho);
-    pdf.line(xDireita, y + alturaCaixaCabecalho/2, xFim, y + alturaCaixaCabecalho/2);
-
-    let ty = y + 10;
-    pdf.setFontSize(7.5);
-    pdf.setFont(undefined,'normal');
-    pdf.text(`Imov./Contr.  : ${r.codigo} - ${r.endereco}`, xIni + 6, ty); ty += 9;
-    pdf.text(`Locatário     : ${r.locatario}`, xIni + 6, ty); ty += 9;
-    pdf.text(`Locador       : ${r.locador}`, xIni + 6, ty); ty += 9;
-    pdf.text(`Série/Registro: ${r.serieRegistro}`, xIni + 6, ty);
-
-    pdf.setFontSize(7);
-    pdf.setTextColor(100);
-    pdf.text('Competência', xDireita + larguraDireita/2, y + 9, { align: 'center' });
-    pdf.text('Vencimento', xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 9, { align: 'center' });
-    pdf.setFontSize(9);
-    pdf.setTextColor(estaAtrasado(r.vencimento) ? 200 : 0, estaAtrasado(r.vencimento) ? 40 : 0, estaAtrasado(r.vencimento) ? 40 : 0);
-    pdf.setFont(undefined,'bold');
-    pdf.text(r.competencia, xDireita + larguraDireita/2, y + 20, { align: 'center' });
-    pdf.text(r.vencimento, xDireita + larguraDireita/2, y + alturaCaixaCabecalho/2 + 20, { align: 'center' });
-    pdf.setTextColor(0);
-    pdf.setFont(undefined,'normal');
-
-    y += alturaCaixaCabecalho + 12;
-
-    pdf.setFontSize(7);
-    pdf.setTextColor(30);
-    const colW = larguraUtil / 3;
-    r.itens.forEach((item, idx) => {
-      const col = idx % 3, lin = Math.floor(idx / 3);
-      pdf.text(`${item.descricao}  ${item.valor}`, xIni + col * colW, y + lin * 11);
-    });
-    y += numLinhasItens * 11 + 6;
-
-    const alturaTotais = 22;
-    pdf.setDrawColor(120);
-    pdf.rect(xIni, y, larguraUtil, alturaTotais);
-    pdf.line(xIni + larguraUtil/3, y, xIni + larguraUtil/3, y + alturaTotais);
-    pdf.line(xIni + larguraUtil*2/3, y, xIni + larguraUtil*2/3, y + alturaTotais);
-    pdf.setFontSize(6.5);
-    pdf.setTextColor(100);
-    pdf.text('Total até o vencimento', xIni + larguraUtil/6, y + 8, { align: 'center' });
-    pdf.text('Total de multa+juros', xIni + larguraUtil/2, y + 8, { align: 'center' });
-    pdf.text('Total pago', xIni + larguraUtil*5/6, y + 8, { align: 'center' });
-    pdf.setFontSize(9.5);
-    pdf.setTextColor(0);
-    pdf.setFont(undefined,'bold');
-    pdf.text(r.totalVencimento, xIni + larguraUtil/6, y + 18, { align: 'center' });
-    pdf.text(r.totalMultaJuros, xIni + larguraUtil/2, y + 18, { align: 'center' });
-    pdf.text(r.totalPago, xIni + larguraUtil*5/6, y + 18, { align: 'center' });
-    pdf.setFont(undefined,'normal');
-
-    y += alturaTotais + 12;
+    if (y + alturaCardPdf(r) > alturaPagina - margem) { pdf.addPage(); y = margem; cabecalhoPagina(); }
+    y = desenharCardPdf(pdf, r, margem, y, larguraUtil);
   });
 
   pdf.save(`demonstrativos_${abaAtiva}.pdf`);
+});
+
+// ---------- Melhoria "Avançado": um clique gera um único PDF com TODAS as categorias já
+// separadas em seções (Novos, Repetidos, Só em cada arquivo, Em todos), sem precisar
+// clicar aba por aba e exportar uma de cada vez. ----------
+function categorizarTodosOsRegistros() {
+  const total = nomesArquivos.length;
+  const categorias = [];
+  const maisRecente = nomesArquivos[total - 1];
+  categorias.push({ titulo: 'NOVOS (só no ' + maisRecente + ', o mais recente)', registros: todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === maisRecente) });
+  categorias.push({ titulo: 'REPETIDOS (aparecem em mais de 1 arquivo)', registros: todosOsRegistros.filter(r => r.arquivos.length > 1) });
+  if (total > 2) categorias.push({ titulo: 'EM TODOS OS ' + total + ' ARQUIVOS', registros: todosOsRegistros.filter(r => r.arquivos.length === total) });
+  for (let i = 0; i < total - 1; i++) {
+    const nome = nomesArquivos[i];
+    const exclusivos = todosOsRegistros.filter(r => r.arquivos.length === 1 && r.arquivos[0] === nome);
+    if (exclusivos.length) categorias.push({ titulo: 'SÓ NO ' + nome.toUpperCase(), registros: exclusivos });
+  }
+  return categorias.filter(c => c.registros.length > 0);
+}
+
+document.getElementById('btnRelatorioCompleto').addEventListener('click', () => {
+  if (!todosOsRegistros.length) { alert('Compare os arquivos primeiro.'); return; }
+  const categorias = categorizarTodosOsRegistros();
+  if (!categorias.length) { alert('Nada pra mostrar — nenhuma categoria tem registros.'); return; }
+
+  const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
+  const margem = 36;
+  let y = margem;
+  const larguraPagina = pdf.internal.pageSize.getWidth();
+  const alturaPagina = pdf.internal.pageSize.getHeight();
+  const larguraUtil = larguraPagina - margem * 2;
+
+  // Capa com o resumo de tudo
+  pdf.setFontSize(9); pdf.setTextColor(37,99,235); pdf.setFont(undefined,'bold');
+  pdf.text('Delta', margem, y);
+  pdf.setFontSize(16); pdf.setTextColor(0);
+  pdf.text('Relatório Completo — Comparação de Demonstrativos', margem, y + 20);
+  pdf.setFontSize(8); pdf.setTextColor(120); pdf.setFont(undefined,'normal');
+  pdf.text(`Arquivos: ${nomesArquivos.join(', ')} — gerado em ${new Date().toLocaleDateString('pt-BR')}`, margem, y + 34);
+  y += 50;
+  pdf.setFontSize(10); pdf.setTextColor(0); pdf.setFont(undefined,'bold');
+  pdf.text('Resumo:', margem, y); y += 16;
+  pdf.setFont(undefined,'normal'); pdf.setFontSize(9);
+  categorias.forEach(cat => { pdf.text(`• ${cat.titulo}: ${cat.registros.length} registro(s)`, margem + 8, y); y += 14; });
+  y += 10;
+
+  function tituloSecao(titulo, qtd) {
+    if (y + 40 > alturaPagina - margem) { pdf.addPage(); y = margem; }
+    pdf.setDrawColor(59,130,246);
+    pdf.setFillColor(239,246,255);
+    pdf.rect(margem, y, larguraUtil, 26, 'FD');
+    pdf.setFontSize(11); pdf.setTextColor(30,64,175); pdf.setFont(undefined,'bold');
+    pdf.text(`${titulo}  (${qtd})`, margem + 8, y + 17);
+    pdf.setTextColor(0); pdf.setFont(undefined,'normal');
+    y += 36;
+  }
+
+  categorias.forEach(cat => {
+    pdf.addPage(); y = margem;
+    tituloSecao(cat.titulo, cat.registros.length);
+    cat.registros.forEach(r => {
+      if (y + alturaCardPdf(r) > alturaPagina - margem) { pdf.addPage(); y = margem; }
+      y = desenharCardPdf(pdf, r, margem, y, larguraUtil);
+    });
+  });
+
+  pdf.save('relatorio_completo_demonstrativos.pdf');
 });
 </script>
 </body>
