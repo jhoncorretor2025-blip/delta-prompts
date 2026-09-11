@@ -90,6 +90,13 @@ h1{font-size:1.4rem;margin:0 0 4px}
   <h1>🔍 Comparador de Demonstrativos</h1>
   <p class="sub">Compare demonstrativos (PDF) e veja o que é novo, repetido, ou só de um arquivo — identificado pelo campo <strong>Imov./Contr.</strong></p>
 
+  <div class="tabs" style="margin-top:0;border-bottom:2px solid var(--line);padding-bottom:14px;margin-bottom:16px">
+    <button class="tabbtn active" id="btnAbaConsultar" style="font-size:.9rem;padding:10px 20px">🔍 Consultar</button>
+    <button class="tabbtn" id="btnAbaConfiguracao" style="font-size:.9rem;padding:10px 20px">⚙️ Configuração</button>
+  </div>
+
+  <div id="abaConsultar">
+
   <div class="card">
     <div class="dropzones" id="dropzonesWrap"></div>
     <div class="row" style="margin-top:14px">
@@ -100,40 +107,7 @@ h1{font-size:1.4rem;margin:0 0 4px}
     <div id="avisoDuplicado"></div>
     <div class="status" id="status"></div>
   </div>
-
-  <div class="card">
-    <div class="row between" style="cursor:pointer;align-items:center" id="toggleConfig">
-      <strong>⚙️ Configuração — Imóveis Garantidos</strong>
-      <span id="configToggleIcon">▼</span>
-    </div>
-    <div id="configBody">
-      <p class="sub" style="margin:8px 0 0">Cadastre aqui os imóveis que precisam de um alerta especial sempre que aparecerem numa comparação. Você pode editar ou apagar quando quiser.</p>
-      <div class="row" style="margin-top:12px">
-        <input type="text" id="novoImovelCodigo" placeholder="Código do imóvel (ex: 2981)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
-        <input type="text" id="novoContratoCodigo" placeholder="Código do contrato (ex: 1393)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
-        <button class="btn btn-primary btn-sm" id="btnAddGarantido">➕ Adicionar</button>
-      </div>
-      <div id="tabelaGarantidos" style="margin-top:12px"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="row between" style="cursor:pointer;align-items:center" id="toggleComissao">
-      <strong>🏷️ Configuração — Imóveis com Comissão</strong>
-      <span id="comissaoToggleIcon">▼</span>
-    </div>
-    <div id="comissaoBody">
-      <p class="sub" style="margin:8px 0 0">Cole aqui a lista de imóveis que têm comissão — um por linha, do jeito que você já tem anotado (só o código do imóvel, ou "imóvel — contrato"). O sistema identifica os códigos sozinho.</p>
-      <textarea id="listaComissaoTextarea" placeholder="Exemplos de linhas aceitas:&#10;2981&#10;3403 — 725&#10;1206/001206" style="width:100%;min-height:90px;margin-top:10px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem;font-family:inherit;resize:vertical"></textarea>
-      <div class="row" style="margin-top:10px">
-        <button class="btn btn-primary btn-sm" id="btnProcessarComissao">📥 Processar e salvar lista</button>
-      </div>
-      <div class="status" id="statusComissao"></div>
-      <div id="tabelaComissao" style="margin-top:12px"></div>
-    </div>
-  </div>
-
-  <div class="card hidden" id="cardResultado">
+<div class="card hidden" id="cardResultado">
     <div class="row between" style="align-items:center;margin-bottom:6px">
       <strong style="font-size:.9rem">📊 Resultado da comparação</strong>
       <button class="btn btn-light btn-sm" id="btnNovaComparacao">🔄 Nova Comparação</button>
@@ -169,6 +143,42 @@ h1{font-size:1.4rem;margin:0 0 4px}
     <div id="listaResultado" class="print-area"></div>
   </div>
 </div>
+  </div>
+
+  <div id="abaConfiguracao" class="hidden">
+  <div class="card">
+    <div class="row between" style="cursor:pointer;align-items:center" id="toggleConfig">
+      <strong>⚙️ Configuração — Imóveis Garantidos</strong>
+      <span id="configToggleIcon">▼</span>
+    </div>
+    <div id="configBody">
+      <p class="sub" style="margin:8px 0 0">Cadastre aqui os imóveis que precisam de um alerta especial sempre que aparecerem numa comparação. Você pode editar ou apagar quando quiser.</p>
+      <div class="row" style="margin-top:12px">
+        <input type="text" id="novoImovelCodigo" placeholder="Código do imóvel (ex: 2981)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+        <input type="text" id="novoContratoCodigo" placeholder="Código do contrato (ex: 1393)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+        <button class="btn btn-primary btn-sm" id="btnAddGarantido">➕ Adicionar</button>
+      </div>
+      <div id="tabelaGarantidos" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row between" style="cursor:pointer;align-items:center" id="toggleComissao">
+      <strong>🏷️ Configuração — Imóveis com Comissão</strong>
+      <span id="comissaoToggleIcon">▼</span>
+    </div>
+    <div id="comissaoBody">
+      <p class="sub" style="margin:8px 0 0">Cole aqui a lista de imóveis que têm comissão — um por linha, do jeito que você já tem anotado (só o código do imóvel, ou "imóvel — contrato"). O sistema identifica os códigos sozinho.</p>
+      <textarea id="listaComissaoTextarea" placeholder="Exemplos de linhas aceitas:&#10;2981&#10;3403 — 725&#10;1206/001206" style="width:100%;min-height:90px;margin-top:10px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem;font-family:inherit;resize:vertical"></textarea>
+      <div class="row" style="margin-top:10px">
+        <button class="btn btn-primary btn-sm" id="btnProcessarComissao">📥 Processar e salvar lista</button>
+      </div>
+      <div class="status" id="statusComissao"></div>
+      <div id="tabelaComissao" style="margin-top:12px"></div>
+    </div>
+  </div>
+  </div>
+
 
 <script>
 const { jsPDF } = window.jspdf;
@@ -354,6 +364,20 @@ document.getElementById('toggleComissao').addEventListener('click', () => {
   icon.textContent = escondido ? '▼' : '▶';
 });
 renderTabelaComissao();
+
+// ---------- Abas principais: Consultar vs Configuração, pra deixar a página organizada ----------
+document.getElementById('btnAbaConsultar').addEventListener('click', () => {
+  document.getElementById('btnAbaConsultar').classList.add('active');
+  document.getElementById('btnAbaConfiguracao').classList.remove('active');
+  document.getElementById('abaConsultar').classList.remove('hidden');
+  document.getElementById('abaConfiguracao').classList.add('hidden');
+});
+document.getElementById('btnAbaConfiguracao').addEventListener('click', () => {
+  document.getElementById('btnAbaConfiguracao').classList.add('active');
+  document.getElementById('btnAbaConsultar').classList.remove('active');
+  document.getElementById('abaConfiguracao').classList.remove('hidden');
+  document.getElementById('abaConsultar').classList.add('hidden');
+});
 
 const MAX_ARQUIVOS = 6;
 let listaArquivos = [null, null]; // File objects, na ordem
