@@ -103,6 +103,22 @@ h1{font-size:1.4rem;margin:0 0 4px}
     <div class="status" id="status"></div>
   </div>
 
+  <div class="card">
+    <div class="row between" style="cursor:pointer;align-items:center" id="toggleConfig">
+      <strong>⚙️ Configuração — Imóveis Garantidos</strong>
+      <span id="configToggleIcon">▼</span>
+    </div>
+    <div id="configBody">
+      <p class="sub" style="margin:8px 0 0">Cadastre aqui os imóveis que precisam de um alerta especial sempre que aparecerem numa comparação. Você pode editar ou apagar quando quiser.</p>
+      <div class="row" style="margin-top:12px">
+        <input type="text" id="novoImovelCodigo" placeholder="Código do imóvel (ex: 2981)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+        <input type="text" id="novoContratoCodigo" placeholder="Código do contrato (ex: 1393)" style="flex:1;min-width:140px;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.85rem">
+        <button class="btn btn-primary btn-sm" id="btnAddGarantido">➕ Adicionar</button>
+      </div>
+      <div id="tabelaGarantidos" style="margin-top:12px"></div>
+    </div>
+  </div>
+
   <div class="card hidden" id="cardResultado">
     <div class="stats" id="statsWrap"></div>
 
@@ -136,6 +152,86 @@ const { jsPDF } = window.jspdf;
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 const STORAGE_KEY = 'comparadorDemonstrativos_ultimaComparacao';
+const GARANTIDOS_KEY = 'comparadorDemonstrativos_imoveisGarantidos';
+
+// ---------- Imóveis Garantidos: configuração editável, com alerta quando aparecem ----------
+function lerGarantidos() {
+  try {
+    const salvos = JSON.parse(localStorage.getItem(GARANTIDOS_KEY));
+    if (salvos) return salvos;
+  } catch (e) {}
+  // Lista inicial, só na primeiríssima vez que a ferramenta é aberta (sem nada salvo ainda)
+  const padrao = [
+    { imovel: '2981', contrato: '1393' },
+    { imovel: '3403', contrato: '725' },
+    { imovel: '1206', contrato: '1206' },
+    { imovel: '308', contrato: '308' },
+    { imovel: '1338', contrato: '1338' },
+  ];
+  salvarGarantidos(padrao);
+  return padrao;
+}
+function salvarGarantidos(lista) {
+  try { localStorage.setItem(GARANTIDOS_KEY, JSON.stringify(lista)); } catch (e) {}
+}
+function ehGarantido(codigoCompleto) {
+  const partes = String(codigoCompleto || '').split('/');
+  if (partes.length !== 2) return false;
+  const imovelNum = parseInt(partes[0], 10);
+  const contratoNum = parseInt(partes[1], 10);
+  return lerGarantidos().some(g => parseInt(g.imovel, 10) === imovelNum && parseInt(g.contrato, 10) === contratoNum);
+}
+function renderTabelaGarantidos() {
+  const lista = lerGarantidos();
+  const el = document.getElementById('tabelaGarantidos');
+  if (!lista.length) { el.innerHTML = '<div class="empty" style="padding:14px 0">Nenhum imóvel garantido cadastrado ainda.</div>'; return; }
+  el.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:.82rem">
+    <thead><tr><th style="text-align:left;padding:6px;color:var(--muted);font-size:.72rem">Código do Imóvel</th><th style="text-align:left;padding:6px;color:var(--muted);font-size:.72rem">Código do Contrato</th><th></th></tr></thead>
+    <tbody>${lista.map((g, i) => `
+      <tr style="border-top:1px solid var(--line)">
+        <td style="padding:6px"><input type="text" value="${escapeHtml(g.imovel)}" data-edit-imovel="${i}" style="width:100%;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.8rem"></td>
+        <td style="padding:6px"><input type="text" value="${escapeHtml(g.contrato)}" data-edit-contrato="${i}" style="width:100%;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:#0d1526;color:var(--ink);font-size:.8rem"></td>
+        <td style="padding:6px;text-align:right"><button class="btn-sm" data-remover-garantido="${i}" style="background:rgba(239,68,68,.15);color:var(--red);border:0;border-radius:6px;padding:6px 10px;cursor:pointer">🗑️</button></td>
+      </tr>`).join('')}</tbody></table>`;
+
+  el.querySelectorAll('[data-edit-imovel]').forEach(input => {
+    input.addEventListener('change', () => {
+      const l = lerGarantidos(); l[+input.dataset.editImovel].imovel = input.value.trim(); salvarGarantidos(l);
+      if (todosOsRegistros.length) renderizarAba();
+    });
+  });
+  el.querySelectorAll('[data-edit-contrato]').forEach(input => {
+    input.addEventListener('change', () => {
+      const l = lerGarantidos(); l[+input.dataset.editContrato].contrato = input.value.trim(); salvarGarantidos(l);
+      if (todosOsRegistros.length) renderizarAba();
+    });
+  });
+  el.querySelectorAll('[data-remover-garantido]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const l = lerGarantidos(); l.splice(+btn.dataset.removerGarantido, 1); salvarGarantidos(l);
+      renderTabelaGarantidos();
+      if (todosOsRegistros.length) renderizarAba();
+    });
+  });
+}
+document.getElementById('btnAddGarantido').addEventListener('click', () => {
+  const imovel = document.getElementById('novoImovelCodigo').value.trim();
+  const contrato = document.getElementById('novoContratoCodigo').value.trim();
+  if (!imovel || !contrato) { alert('Preencha o código do imóvel e do contrato.'); return; }
+  const l = lerGarantidos(); l.push({ imovel, contrato }); salvarGarantidos(l);
+  document.getElementById('novoImovelCodigo').value = '';
+  document.getElementById('novoContratoCodigo').value = '';
+  renderTabelaGarantidos();
+  if (todosOsRegistros.length) renderizarAba();
+});
+document.getElementById('toggleConfig').addEventListener('click', () => {
+  const body = document.getElementById('configBody');
+  const icon = document.getElementById('configToggleIcon');
+  const escondido = body.style.display === 'none';
+  body.style.display = escondido ? '' : 'none';
+  icon.textContent = escondido ? '▼' : '▶';
+});
+renderTabelaGarantidos();
 const MAX_ARQUIVOS = 6;
 let listaArquivos = [null, null]; // File objects, na ordem
 let todosOsRegistros = [];
@@ -414,8 +510,9 @@ function tagArquivos(arquivos) {
 function renderCard(r) {
   const itensHtml = r.itens.map(i => `<span class="item">${escapeHtml(i.descricao)} <b>${escapeHtml(i.valor)}</b></span>`).join('');
   const atrasado = estaAtrasado(r.vencimento);
-  return `<div class="demo-card">
-    <div class="demo-badges">Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong> ${tagArquivos(r.arquivos)} ${atrasado ? '<span class="tag tag-atrasado">⏰ Vencimento atrasado</span>' : ''}</div>
+  const garantido = ehGarantido(r.codigo);
+  return `<div class="demo-card"${garantido ? ' style="border:2px solid #f59e0b;box-shadow:0 0 0 1px #f59e0b inset"' : ''}>
+    <div class="demo-badges">Imov./Contr.: <strong>${escapeHtml(r.codigo)}</strong> ${tagArquivos(r.arquivos)} ${atrasado ? '<span class="tag tag-atrasado">⏰ Vencimento atrasado</span>' : ''} ${garantido ? '<span class="tag" style="background:rgba(245,158,11,.22);color:#fbbf24">🛡️ IMÓVEL GARANTIDO</span>' : ''}</div>
     <div class="demo-head">
       <div class="demo-head-left">
         <div><b>Imov./Contr.</b>: ${escapeHtml(r.codigo)} - ${escapeHtml(r.endereco)}</div>
@@ -468,10 +565,15 @@ function renderizarAba() {
   registros = aplicarFiltrosEOrdenacao(registros);
 
   const lista = document.getElementById('listaResultado');
+  const garantidosEncontrados = registros.filter(r => ehGarantido(r.codigo));
+  const alertaHtml = garantidosEncontrados.length
+    ? `<div class="aviso-duplicado" style="background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.45);color:#fde68a">🛡️ <b>${garantidosEncontrados.length} imóvel(is) garantido(s)</b> aparece(m) nesta visão: ${garantidosEncontrados.map(r=>escapeHtml(r.codigo)).join(', ')}</div>`
+    : '';
+
   if (!registros.length) {
     lista.innerHTML = `<div class="empty">✅ Nenhum demonstrativo encontrado com esses filtros.</div>`;
   } else {
-    lista.innerHTML = registros.map(renderCard).join('');
+    lista.innerHTML = alertaHtml + registros.map(renderCard).join('');
   }
 
   const soma = registros.reduce((s, r) => s + paraNumero(r.totalVencimento), 0);
