@@ -42,7 +42,7 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="menu-loader.js?v=20260908d" defer></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="deltaMenuBackdrop"></div><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="menu-loader.js?v=20260908d" defer></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
@@ -50,6 +50,7 @@
 <p>Escolha seu objetivo, pesquise uma necessidade ou explore prompts, Skills, agentes e packs organizados por nível de uso.</p>
 
 <div class="hero-stats" id="heroStats"></div>
+<a href="#descreveProblemaSection" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:13px;font-weight:800;color:var(--p);text-decoration:none">🧩 Não sabe o que procurar? Descreve o problema →</a>
 <div id="pessoasOnline" style="display:none;margin-top:8px;font-size:13px;color:#15803d;font-weight:700"></div>
 
 <div class="search" id="buscar"><span aria-hidden="true">🔎</span><input id="busca-global" type="search" autocomplete="off" aria-label="Buscar no Delta Prompts" placeholder="O que você quer fazer hoje?"><button type="button" id="btnMicBuscaHome" title="Falar o que você precisa" aria-label="Buscar por voz" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:20px;cursor:pointer;display:none">🎤</button><div class="suggestions" id="suggestions"></div></div>
@@ -80,7 +81,7 @@
 
 <div id="promptDoDiaBox" style="margin:24px 0;padding:22px;border-radius:18px;background:linear-gradient(135deg,#eef2ff,#fff);border:1px solid #c7d2fe"></div>
 
-<div style="margin:24px 0;padding:22px;border-radius:18px;background:#fff;border:1px solid var(--border)">
+<div id="descreveProblemaSection" style="margin:24px 0;padding:22px;border-radius:18px;background:#fff;border:1px solid var(--border)">
   <h3 style="margin:0 0 6px">🧩 Não sabe qual prompt usar? Descreve o problema</h3>
   <p style="color:#667085;font-size:14px;margin:0 0 14px">Não precisa saber o nome técnico — só escreva com suas palavras o que você precisa fazer.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -91,7 +92,7 @@
 </div>
 
 <section class="section white" id="exemplos-section"><div class="container"><div class="head"><h2>✨ Veja como funciona</h2><p>Alguns prompts prontos de verdade — é só copiar e usar.</p></div>
-<div class="list-grid" style="grid-template-columns:repeat(3,1fr)">
+<div class="list-grid">
 <div class="card"><div class="icon">🧒📖</div><h3>Explicação Simples (5 anos)</h3><p style="font-size:13.5px;margin:6px 0 12px">Explique o tema [TÓPICO] como se eu fosse uma criança de 5 anos, com analogias fáceis e sem jargão técnico.</p><div style="display:flex;gap:8px"><button type="button" class="exemplo-copiar" data-texto="Explique o tema [INSIRA TÓPICO] como se eu fosse uma criança de 5 anos.
 
 Inclua:
@@ -288,6 +289,12 @@ function renderHistorico(){
 
 // ===== ONBOARDING RÁPIDO =====
 function iniciarOnboarding(){
+  // Esse card ficava duplicado com o modal de boas-vindas (que já pergunta a mesma coisa
+  // e agora tem opção de pular). Mantém só a flag marcada, sem exibir o card de novo.
+  try{localStorage.setItem('deltaOnboardingFeito','1')}catch(e){}
+  return;
+}
+function iniciarOnboardingAntigo(){
   try{
     if(localStorage.getItem('deltaOnboardingFeito'))return;
     if(localStorage.getItem('deltaUltimaPagina')){localStorage.setItem('deltaOnboardingFeito','1');return}

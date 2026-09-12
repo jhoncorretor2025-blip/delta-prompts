@@ -47,3 +47,34 @@ body:has(#filtrosNivel) .contador{padding:7px 10px!important;border-radius:999px
 .delta-bottom-nav{display:none}
 @media(max-width:760px){.delta-bottom-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:1000;left:10px;right:10px;bottom:10px;background:#fff;border:1px solid #e5e7eb;border-radius:17px;box-shadow:0 12px 35px rgba(25,28,65,.18);overflow:hidden}.delta-bottom-nav a,.delta-bottom-nav button{border:0;background:#fff;padding:10px 4px;text-align:center;text-decoration:none;color:#202236;font-size:11px;font-weight:800;font-family:inherit;cursor:pointer}.delta-bottom-nav span{display:block;font-size:20px;margin-bottom:2px}body:has(.delta-bottom-nav){padding-bottom:78px}.theme-toggle{bottom:96px!important}#deltaModoSimplesBtn{bottom:96px!important;font-size:12px!important;padding:9px 14px!important}#deltaModoLeituraBtn{bottom:148px!important;font-size:12px!important;padding:9px 14px!important}#deltaVoltarTopoBtn{bottom:200px!important}}
 [data-theme="dark"] .delta-bottom-nav,[data-theme="dark"] .delta-bottom-nav a,[data-theme="dark"] .delta-bottom-nav button{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.12);color:var(--text-primary,#eaeaea)}
+
+/* Correção: cards de exemplo (Explicação Simples, Hábitos, Legenda) ficavam sempre em
+   3 colunas fixas via style inline, cortando o conteúdo no celular sem dar pra rolar até ele.
+   O index.html já tem @media(max-width:760px){.list-grid{grid-template-columns:1fr}} nativo —
+   só precisava parar de sobrescrever isso com o style inline (removido no HTML). */
+
+/* Correção: botões flutuantes "Modo Leitura" e "Modo Simples" (esquerda) ficavam próximos
+   demais um do outro (52px de distância, mas são botões com texto, mais altos que isso) e
+   se sobrepunham ao conteúdo da página em várias seções. Aumentando o espaçamento real. */
+#deltaModoLeituraBtn{bottom:14px!important}
+#deltaModoSimplesBtn{bottom:74px!important}
+/* Empilhamento da coluna direita (privado/favoritar/cor/voltar ao topo) com mais respiro
+   entre cada um, e um pouco mais alto do rodapé pra não ficar colado na barra inferior. */
+#deltaVoltarTopoBtn{bottom:160px!important}
+#deltaCorWrap{bottom:224px!important}
+#deltaFavPaginaBtn{bottom:288px!important}
+#deltaModoPrivadoBtn{bottom:352px!important}
+
+/* Correção: ao abrir o menu lateral no celular, o resto da tela continuava totalmente
+   visível e clicável (inclusive os botões flutuantes por cima do próprio menu aberto).
+   Adiciona um fundo escurecido atrás do menu, como é padrão em apps mobile. */
+#deltaMenuBackdrop{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:2500}
+html.menu-open #deltaMenuBackdrop{display:block}
+
+/* Correção: título principal ainda ficava grande demais em celulares comuns (~390px de
+   largura), quebrando em 3-4 linhas e empurrando o conteúdo útil pra baixo. Emojis dos
+   cards/ícones também ocupavam espaço vertical desproporcional numa tela pequena. */
+@media(max-width:480px){
+  .hero h1{font-size:30px!important}
+  .card .icon,.path .emoji,.item .emoji{font-size:22px!important}
+}
