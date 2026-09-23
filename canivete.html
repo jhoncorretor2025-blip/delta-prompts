@@ -266,6 +266,37 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </div>
 </div>
 <div class="card"><h2>📤 Compartilhar Resumo</h2><p class="small" style="color:var(--muted)">Gera um arquivo simples (só leitura) com seu resumo financeiro, pra mandar pro cônjuge ou contador por WhatsApp ou e-mail. <strong>Nunca inclui senhas, contatos ou dados de saúde</strong> — só os números financeiros.</p><button class="btn primary" type="button" onclick="gerarResumoCompartilhavel()">📤 Gerar resumo pra compartilhar</button></div>
+
+<div class="card"><h2>🔔 Notificações Automáticas (grátis, mesmo com o app fechado)</h2>
+<p class="small" style="color:var(--muted)">Isso avisa você na tela de bloqueio do celular, sem precisar deixar o Canivete aberto — usando um "robô" gratuito rodando no GitHub. Precisa de um passo único de configuração (é rápido, tem o passo a passo abaixo).</p>
+
+<div class="form" style="margin-top:12px">
+<div class="field"><label for="notifNtfyTopic">1️⃣ Nome único do seu canal de aviso</label><input id="notifNtfyTopic" type="text" placeholder="ex: canivete-jhonatan-8291" oninput="d.notifNtfyTopic=this.value;save()"></div>
+<p class="small" style="color:var(--muted);margin-top:-4px">Instale o app grátis <strong>ntfy</strong> (Android/iPhone) e "inscreva-se" nesse mesmo nome de canal lá dentro. Escolha um nome que ninguém mais vá adivinhar.</p>
+
+<div class="field"><label for="notifHorarioVencimentos">2️⃣ Horário do dia pra avisar de contas</label><input id="notifHorarioVencimentos" type="time" oninput="d.notifHorarioVencimentos=this.value;save()"></div>
+
+<div class="field"><label for="notifDiasAntes">3️⃣ Avisar quantos dias antes de vencer?</label><input id="notifDiasAntes" type="number" min="0" max="15" value="3" oninput="d.notifDiasAntes=this.value;save()"></div>
+
+<p class="small" style="color:var(--muted)">O horário de treino da academia e as despesas com dia de vencimento já cadastrados no Canivete são usados automaticamente — não precisa digitar de novo.</p>
+
+<details style="margin-top:6px"><summary style="cursor:pointer;font-size:13px;color:var(--muted)">📨 (Opcional) Também quero receber pelo Telegram</summary>
+<div class="field" style="margin-top:8px"><label for="notifTelegramChatId">Seu Chat ID do Telegram</label><input id="notifTelegramChatId" type="text" placeholder="ex: 123456789" oninput="d.notifTelegramChatId=this.value;save()"></div>
+<p class="small" style="color:var(--muted)">Crie um bot grátis conversando com <strong>@BotFather</strong> no Telegram, e descubra seu Chat ID conversando com <strong>@userinfobot</strong>. O token do bot é cadastrado separadamente no GitHub (passo abaixo), nunca aqui.</p>
+</details>
+
+<button class="btn primary" type="button" style="margin-top:14px" onclick="gerarConfigNotificacoes()">📋 Gerar e copiar configuração</button>
+<div id="notifPassoAPasso" style="display:none;margin-top:14px;padding:12px;border-radius:10px;background:var(--bg2,#f5f6fa)">
+<p class="small"><strong>Passo a passo (uma vez só):</strong></p>
+<ol class="small" style="padding-left:18px;line-height:1.7">
+<li>Clique em <a href="https://github.com/jhoncorretor2025-blip/delta-prompts/edit/main/canivete-notificacoes-config.json" target="_blank" rel="noopener">editar o arquivo de configuração no GitHub</a></li>
+<li>Apague tudo que estiver lá e cole (Ctrl+V) o que acabou de ser copiado</li>
+<li>Role até o final da página e clique em "Commit changes"</li>
+<li>Se for usar Telegram: vá em <a href="https://github.com/jhoncorretor2025-blip/delta-prompts/settings/secrets/actions" target="_blank" rel="noopener">Settings → Secrets → Actions</a> e crie um secret chamado <code>TELEGRAM_BOT_TOKEN</code> com o token que o @BotFather te deu</li>
+</ol>
+</div>
+</div>
+</div>
 <div class="card"><h2>📦 Uso de Armazenamento</h2><div id="detalheArmazenamento"></div></div>
 </section>
 
@@ -710,7 +741,7 @@ function renderCalculoFerias(){
   el.innerHTML=`<div class="notice" style="border-left:4px solid ${corBorda};margin-top:8px">${mensagem}<br><small style="color:var(--muted)">⚠️ Esse é um cálculo aproximado, baseado só no ano de entrada e na quantidade que você informou — não considera faltas, afastamentos, data exata de admissão nem regras específicas do seu contrato. Use só como uma noção geral; confirme sempre com o RH da sua empresa.</small></div>`;
 }
 function toggleCamposCLT(){const el=document.getElementById('camposCLT');if(el)el.style.display=d.tipoTrabalho==='clt'?'block':'none';const elApos=document.getElementById('camposAposentado');if(elApos)elApos.style.display=d.tipoTrabalho==='aposentado'?'block':'none';renderCalculoFerias()}
-function showPage(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));let p=document.getElementById(id);if(!p)return;p.classList.add('active');document.querySelectorAll('#nav button').forEach(b=>{const ativo=b.dataset.page===id;b.classList.toggle('active',ativo);if(b.dataset.page)b.setAttribute('aria-selected',ativo?'true':'false')});document.querySelectorAll('.bn-item[data-page]').forEach(b=>{const ativo=b.dataset.page===id;b.classList.toggle('active',ativo);b.setAttribute('aria-current',ativo?'page':'false')});let names={dashboard:['Painel Financeiro','Veja quanto entra, quanto sai e quanto pode sobrar.'],perfil:['Meu Perfil','Informações centrais usadas por vários recursos do Canivete.'],configuracoes:['Configurações','Backup dos seus dados e informações sobre o armazenamento do Canivete.'],buscaglobal:['Busca','Procure algo em todas as seções do Canivete de uma vez.'],calendario:['Calendário','Vencimentos de despesas, Datas Importantes e Consultas Médicas, tudo num só calendário.'],renda:['Renda & benefícios','Informe como você recebe e seus benefícios.'],despesas:['Despesas','Cadastre e organize seus gastos mensais.'],dividas:['Dívidas','Acompanhe quanto falta pagar e quando você termina de pagar.'],patrimonio:['Patrimônio','Veja quanto você já possui.'],metas:['Metas','Transforme planos em objetivos.'],projecoes:['Projeções','Veja o crescimento estimado.'],analise:['Análise financeira','Descubra onde pode economizar e o impacto no futuro.'],historico:['Histórico mensal','Compare sua evolução financeira mês a mês.'],compras:['Lista de Compras','Marque o que já comprou e o que ainda falta.'],senhas:['Senhas','Guarde login e senha de sites e apps de forma organizada.'],contatos:['Contatos Importantes','Médico, dentista, encanador — tudo num só lugar.'],datas:['Datas Importantes','Aniversários, documentos e garantias, sem esquecer.'],links:['Links Importantes','Seus links mais usados, guardados num lugar só.'],saude:['Medicamentos & Vitaminas','Controle o que você toma e marque os dias que usou.'],academia:['Academia','Acompanhe seus treinos e o status da sua matrícula.'],meutime:['Meu Time','Escolha seu time do Brasileirão 2026 e tenha um atalho rápido pra ver a tabela atualizada e as notícias.'],habitos:['Hábitos','Acompanhe hábitos do dia a dia e veja sua sequência de dias seguidos.'],veiculo:['Manutenção do Veículo','Registre trocas, revisões e documentos do seu veículo.'],estudos:['Cursos & Estudos','Acompanhe seus cursos, progresso e certificados.'],jogos:['Jogos','Acesso rápido pros seus jogos.'],mapavendas:['Mapa de Vendas','Dashboard comercial com mapa de calor por município, filtros e ranking.'],comparador:['Comparador de Demonstrativos','Compare dois PDFs de demonstrativos e veja só o que é novo.']};document.getElementById('title').textContent=names[id][0];document.getElementById('subtitle').textContent=names[id][1];closeMenu();window.scrollTo(0,0);renderAvisoArmazenamento();if(id==='configuracoes')renderDetalheArmazenamento();if(id==='calendario')renderCalendarioUnificado()}
+function showPage(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));let p=document.getElementById(id);if(!p)return;p.classList.add('active');document.querySelectorAll('#nav button').forEach(b=>{const ativo=b.dataset.page===id;b.classList.toggle('active',ativo);if(b.dataset.page)b.setAttribute('aria-selected',ativo?'true':'false')});document.querySelectorAll('.bn-item[data-page]').forEach(b=>{const ativo=b.dataset.page===id;b.classList.toggle('active',ativo);b.setAttribute('aria-current',ativo?'page':'false')});let names={dashboard:['Painel Financeiro','Veja quanto entra, quanto sai e quanto pode sobrar.'],perfil:['Meu Perfil','Informações centrais usadas por vários recursos do Canivete.'],configuracoes:['Configurações','Backup dos seus dados e informações sobre o armazenamento do Canivete.'],buscaglobal:['Busca','Procure algo em todas as seções do Canivete de uma vez.'],calendario:['Calendário','Vencimentos de despesas, Datas Importantes e Consultas Médicas, tudo num só calendário.'],renda:['Renda & benefícios','Informe como você recebe e seus benefícios.'],despesas:['Despesas','Cadastre e organize seus gastos mensais.'],dividas:['Dívidas','Acompanhe quanto falta pagar e quando você termina de pagar.'],patrimonio:['Patrimônio','Veja quanto você já possui.'],metas:['Metas','Transforme planos em objetivos.'],projecoes:['Projeções','Veja o crescimento estimado.'],analise:['Análise financeira','Descubra onde pode economizar e o impacto no futuro.'],historico:['Histórico mensal','Compare sua evolução financeira mês a mês.'],compras:['Lista de Compras','Marque o que já comprou e o que ainda falta.'],senhas:['Senhas','Guarde login e senha de sites e apps de forma organizada.'],contatos:['Contatos Importantes','Médico, dentista, encanador — tudo num só lugar.'],datas:['Datas Importantes','Aniversários, documentos e garantias, sem esquecer.'],links:['Links Importantes','Seus links mais usados, guardados num lugar só.'],saude:['Medicamentos & Vitaminas','Controle o que você toma e marque os dias que usou.'],academia:['Academia','Acompanhe seus treinos e o status da sua matrícula.'],meutime:['Meu Time','Escolha seu time do Brasileirão 2026 e tenha um atalho rápido pra ver a tabela atualizada e as notícias.'],habitos:['Hábitos','Acompanhe hábitos do dia a dia e veja sua sequência de dias seguidos.'],veiculo:['Manutenção do Veículo','Registre trocas, revisões e documentos do seu veículo.'],estudos:['Cursos & Estudos','Acompanhe seus cursos, progresso e certificados.'],jogos:['Jogos','Acesso rápido pros seus jogos.'],mapavendas:['Mapa de Vendas','Dashboard comercial com mapa de calor por município, filtros e ranking.'],comparador:['Comparador de Demonstrativos','Compare dois PDFs de demonstrativos e veja só o que é novo.']};document.getElementById('title').textContent=names[id][0];document.getElementById('subtitle').textContent=names[id][1];closeMenu();window.scrollTo(0,0);renderAvisoArmazenamento();if(id==='configuracoes'){renderDetalheArmazenamento();document.getElementById('notifNtfyTopic').value=d.notifNtfyTopic||'';document.getElementById('notifHorarioVencimentos').value=d.notifHorarioVencimentos||'09:00';document.getElementById('notifDiasAntes').value=d.notifDiasAntes||3;document.getElementById('notifTelegramChatId').value=d.notifTelegramChatId||''}if(id==='calendario')renderCalendarioUnificado()}
 // ===== #3 DÍVIDAS =====
 function addDivida(){d.dividas.push({nome:'Nova dívida',saldo:0,juros:0,parcela:0});save();renderDividas();document.getElementById('debtBadge').textContent=d.dividas.length;showPage('dividas')}
 function renderDividas(){
@@ -1054,7 +1085,7 @@ h1{font-size:22px}h2{font-size:16px;margin-top:28px}table{width:100%;border-coll
 <table>${linhasCategorias||'<tr><td style="padding:8px;color:#999">Nenhuma despesa cadastrada</td></tr>'}</table>
 ${linhasMetas?`<h2>🎯 Metas</h2><table>${linhasMetas}</table>`:''}
 <div class="aviso">🔒 Por segurança, este resumo NUNCA inclui senhas, contatos pessoais ou dados de saúde — só o retrato financeiro acima.</div>
-\n<script id="CANIVETE_V84_USADO_HOJE">\n(function(){\n  function atualizarUsadosHoje(){\n    var botoes = Array.from(document.querySelectorAll('button'));\n    var usados = botoes.filter(function(b){\n      return /usado\\s+hoje/i.test((b.textContent||'').trim());\n    }).length;\n\n    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){\n      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());\n    });\n    labels.forEach(function(label){\n      var box = label.parentElement;\n      if(!box) return;\n      var numero = box.querySelector('.metric,.stat b,strong');\n      if(numero) numero.textContent = String(usados);\n    });\n\n    document.querySelectorAll('*').forEach(function(el){\n      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){\n        var candidatos = el.querySelectorAll('.metric,.stat b,strong');\n        if(candidatos.length) candidatos[0].textContent = String(usados);\n      }\n    });\n  }\n\n  document.addEventListener('click', function(e){\n    var b = e.target.closest && e.target.closest('button');\n    if(!b) return;\n    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){\n      setTimeout(atualizarUsadosHoje, 50);\n      setTimeout(atualizarUsadosHoje, 250);\n    }\n  }, true);\n\n  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });\n  obs.observe(document.body, {subtree:true, childList:true, characterData:true});\n  setTimeout(atualizarUsadosHoje, 300);\n  setTimeout(atualizarUsadosHoje, 1000);\n})();\n<\/script>\n</body></html>`;
+</body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const link=document.createElement('a');
   link.href=URL.createObjectURL(blob);
@@ -1062,6 +1093,30 @@ ${linhasMetas?`<h2>🎯 Metas</h2><table>${linhasMetas}</table>`:''}
   link.click();
   URL.revokeObjectURL(link.href);
   mostrarToastCanivete('✅ Resumo baixado! Pode enviar esse arquivo por WhatsApp ou e-mail.');
+}
+
+// ---------- Melhoria: Notificações Automáticas (grátis) — monta o arquivo de configuração
+// que o GitHub Actions vai ler pra saber quando avisar (academia + vencimentos), puxando
+// automaticamente o que já está cadastrado no Canivete, sem precisar digitar tudo de novo. ----------
+function gerarConfigNotificacoes(){
+  const vencimentos=d.expenses
+    .filter(e=>e.vencimento&&n(e.value)>0)
+    .map(e=>({nome:e.name,dia:Number(e.vencimento),avisarDiasAntes:Number(d.notifDiasAntes)||3}));
+  const config={
+    academiaHorario:d.academiaStatus==='ativo'?(d.academiaHorarioTreino||''):'',
+    horarioVencimentos:d.notifHorarioVencimentos||'09:00',
+    ntfyTopic:d.notifNtfyTopic||'',
+    telegramChatId:d.notifTelegramChatId||'',
+    vencimentos
+  };
+  const texto=JSON.stringify(config,null,2);
+  navigator.clipboard.writeText(texto).then(()=>{
+    document.getElementById('notifPassoAPasso').style.display='block';
+    mostrarToastCanivete('✅ Configuração copiada! Agora siga o passo a passo abaixo.');
+  }).catch(()=>{
+    prompt('Copie manualmente o texto abaixo (Ctrl+C):',texto);
+    document.getElementById('notifPassoAPasso').style.display='block';
+  });
 }
 function setFiltroFormaPagamento(valor){
   filtroFormaPagamentoAtivo=valor;
