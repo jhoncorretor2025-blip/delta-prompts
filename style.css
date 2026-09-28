@@ -1041,7 +1041,7 @@ body.category-page .card .tags{
    Usa recursos existentes; não cria uma nova área funcional.
    ========================================================= */
 .descoberta-section{background:#fff}
-.descoberta-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.descoberta-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .descoberta-card{display:flex;align-items:flex-start;gap:11px;min-width:0;padding:16px;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--delta-border,#e6e8f0);border-radius:16px;box-shadow:0 4px 14px rgba(40,42,90,.04);text-align:left;cursor:pointer;transition:border-color .16s,box-shadow .16s,transform .16s}
 .descoberta-card:hover{border-color:#cfd4ff;box-shadow:0 8px 22px rgba(91,92,226,.09);transform:translateY(-1px)}
 .descoberta-icon{font-size:25px;line-height:1;flex:0 0 auto}
