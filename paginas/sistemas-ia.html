@@ -57,7 +57,7 @@
 @media(max-width:850px){.journey{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:720px){#lista-prompts,.journey{grid-template-columns:1fr}.theme-toggle{bottom:90px}}</style></head><body><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
-<h1>🧩 Sistemas com IA <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.5</span></h1>
+<h1>🧩 Sistemas com IA <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.6</span></h1>
 <p>Do planejamento ao sistema pronto: encontre prompts para criar, desenvolver, revisar e evoluir aplicativos, dashboards e produtos digitais.</p>
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">💡 Como usar <span>⌄</span></button><div class="info-body">Escolha a fase do seu projeto, filtre por categoria e nível, e abra o prompt completo. Os campos entre colchetes viram campinhos pra preencher antes de copiar.</div></section>
@@ -400,7 +400,14 @@ aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSk
 
 // ===== MODO GUIADO: JÁ TENHO SISTEMA, QUERO MELHORAR =====
 (function(){
-  const ORDEM_MELHORAR=['sys-5','sys-13','sys-10','sys-8','sys-7','sys-6','sys-11','sys-12','sys-9'];
+  // Fluxo completo de melhoria: inclui os prompts de produto, UX, técnico,
+  // segurança, dados, IA, qualidade, acessibilidade, performance e roadmap.
+  // Os 5 prompts de criação do zero ficam no modo "Meu Primeiro Sistema".
+  const ORDEM_MELHORAR=[
+    'sys-5','sys-6','sys-11','sys-7','sys-12','sys-14','sys-8','sys-9','sys-10',
+    'sys-4','sys-13','sys-15','sys-16','sys-20','sys-21','sys-18','sys-17','sys-25',
+    'sys-24','sys-22','sys-23','sys-19'
+  ];
   let passos=[];
   let passoAtual=0;
   const modal=document.getElementById('modalGuiado');
@@ -411,7 +418,8 @@ aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSk
     conteudo.innerHTML=`
       <button type="button" id="fecharGuiado" style="position:absolute;top:16px;right:16px;border:0;background:#f1f5f9;border-radius:999px;width:32px;height:32px;cursor:pointer;font-size:15px">✕</button>
       <div style="font-size:12px;font-weight:800;color:#16a34a;margin-bottom:6px">PASSO ${passoAtual+1} DE ${total}</div>
-      <div style="display:flex;gap:4px;margin-bottom:16px">${passos.map((_,i)=>`<span style="flex:1;height:5px;border-radius:999px;background:${i<=passoAtual?'#16a34a':'#e5e7eb'}"></span>`).join('')}</div>
+      <div style="display:flex;gap:4px;margin-bottom:16px;overflow:hidden">${passos.map((_,i)=>`<span style="flex:1;min-width:3px;height:5px;border-radius:999px;background:${i<=passoAtual?'#16a34a':'#e5e7eb'}"></span>`).join('')}</div>
+      <div style="display:inline-flex;gap:6px;align-items:center;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800;margin-bottom:8px">${p.categoria}</div>
       <h3 style="margin:0 0 8px">${p.titulo}</h3>
       <p style="color:#667085;margin:0 0 14px;font-size:14px">💡 ${p.quando}</p>
       <div style="white-space:pre-wrap;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px;font-size:13.5px;max-height:220px;overflow-y:auto">${p.prompt}</div>
@@ -426,17 +434,18 @@ aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSk
     document.getElementById('fecharGuiado').addEventListener('click',fecharModal);
     document.getElementById('guiadoCopiar').addEventListener('click',()=>{registrarUso(p.id);navigator.clipboard.writeText(p.prompt).then(()=>mostrarToast('📋 Prompt copiado!'))});
     document.getElementById('guiadoAnterior').addEventListener('click',()=>{if(passoAtual>0){passoAtual--;renderPasso()}});
-    document.getElementById('guiadoProximo').addEventListener('click',()=>{if(passoAtual<total-1){passoAtual++;renderPasso()}else{fecharModal()}});
+    document.getElementById('guiadoProximo').addEventListener('click',()=>{if(passoAtual<total-1){passoAtual++;renderPasso()}else{fecharModal()}}); 
   }
   function abrirModal(){
     passos=ORDEM_MELHORAR.map(id=>prompts.find(p=>p.id===id)).filter(Boolean);
-    passoAtual=0;modal.style.display='flex';renderPasso();
+    passoAtual=0;
+    modal.style.display='flex';
+    renderPasso();
   }
   function fecharModal(){modal.style.display='none'}
   document.getElementById('btnModoGuiadoMelhorar').addEventListener('click',abrirModal);
   modal.addEventListener('click',e=>{if(e.target===modal)fecharModal()});
 })();
-
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 montarCats();
 atualizarStats();
