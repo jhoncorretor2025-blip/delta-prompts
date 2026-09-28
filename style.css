@@ -952,3 +952,85 @@ body.category-page .card .tags{
   .path b{width:100%;justify-content:center}
 }
 /* ===== FIM CTA HIERARCHY V0.8 ===== */
+
+
+/* =========================================================
+   DELTA DESKTOP UX — V0.9
+   Ajustes somente para desktop; regras mobile existentes preservadas.
+   ========================================================= */
+@media(min-width:1201px){
+  #menu{flex-basis:232px;width:232px}
+  main{padding-left:clamp(28px,3vw,56px);padding-right:clamp(28px,3vw,56px)}
+  main>h1,main>p,body.category-page main>section,body.category-page main>.top-bar,
+  body.category-page main>.filtros-container,body.category-page main>.toolbar-extra,
+  body.category-page main>.sugerir-box,body.category-page main>#lista{
+    max-width:1220px;margin-left:auto;margin-right:auto;
+  }
+  .delta-page-header{max-width:1220px}
+  .perfis-financas{gap:16px}
+  .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+  .list-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .visual-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  body.category-page #lista{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:16px;
+    align-items:start;
+  }
+  body.category-page #lista>.card{height:100%;margin:0}
+}
+@media(min-width:901px){
+  main{padding-top:34px}
+  body.category-page main{padding-top:22px}
+  body.category-page main>h1{margin-bottom:6px;letter-spacing:-.025em}
+  body.category-page main>p{max-width:760px;line-height:1.55}
+  .top-bar{
+    max-width:1180px;
+    margin:22px auto 10px;
+    padding:12px 14px!important;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid var(--delta-border);
+    border-radius:14px;
+    background:#fff;
+    box-shadow:0 4px 16px rgba(25,28,65,.045);
+  }
+  .top-bar input{min-height:46px!important}
+  .top-bar select{min-height:46px!important}
+  .btn-mais-filtros{min-height:42px!important}
+  .contador{margin-left:auto;white-space:nowrap}
+  .filtros-container{
+    max-width:1180px;
+    margin:0 auto 12px!important;
+    padding:14px 16px!important;
+    border:1px solid var(--delta-border);
+    border-radius:14px;
+    background:#fafbff;
+  }
+  .filtros-container .filtros{padding:4px 0!important}
+  .toolbar-extra{
+    max-width:1180px;
+    margin:6px auto 18px!important;
+    justify-content:flex-end;
+  }
+  .toolbar-extra button{min-height:38px!important}
+  .section-title{max-width:1180px;margin-left:auto;margin-right:auto}
+  #jornadaPerfis{max-width:1180px;margin-left:auto;margin-right:auto}
+  .recomendados,.passos,.atalhos,.combinacoes{max-width:1180px}
+}
+@media(min-width:901px) and (max-width:1200px){
+  main{padding-left:28px;padding-right:28px}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  body.category-page #lista{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(min-width:901px) and (max-width:1100px){
+  #menu{flex-basis:220px;width:220px}
+  #menu .sidebar{padding-left:16px;padding-right:16px}
+  main{padding-left:22px;padding-right:22px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.category-page #lista{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* =========================================================
+   FIM DELTA DESKTOP UX — V0.9
+   ========================================================= */
