@@ -533,3 +533,192 @@ body.category-page .prompt-text {
   #descreveProblemaSection>div{flex-direction:column}
   #descreveProblemaSection input,#descreveProblemaSection button{width:100%;min-width:0!important}
 }
+
+
+/* =========================================================
+   DELTA DESIGN SYSTEM — V0.3
+   Padrão visual compartilhado. Não altera regras de negócio.
+   ========================================================= */
+:root{
+  --delta-accent:#5b5ce2;
+  --delta-accent-dark:#4338ca;
+  --delta-accent-light:#eef2ff;
+  --delta-bg:#f4f6fb;
+  --delta-surface:#ffffff;
+  --delta-text:#202236;
+  --delta-text-secondary:#667085;
+  --delta-text-muted:#8a92a6;
+  --delta-border:#e6e8f0;
+  --delta-success:#16a34a;
+  --delta-warning:#d97706;
+  --delta-danger:#dc2626;
+  --delta-radius-sm:8px;
+  --delta-radius-md:10px;
+  --delta-radius-card:16px;
+  --delta-radius-pill:999px;
+  --delta-space-1:4px;
+  --delta-space-2:8px;
+  --delta-space-3:12px;
+  --delta-space-4:16px;
+  --delta-space-5:20px;
+  --delta-space-6:24px;
+  --delta-space-7:32px;
+  --delta-space-8:40px;
+  --delta-shadow-card:0 4px 16px rgba(15,23,42,.05);
+  --delta-shadow-hover:0 12px 30px rgba(91,92,226,.12);
+}
+
+/* Base */
+body{background:var(--delta-bg);color:var(--delta-text)}
+main{max-width:none}
+button,input,select,textarea{font-family:inherit}
+
+/* Cabeçalhos de páginas de categoria */
+body.category-page main>h1{
+  color:var(--delta-text);
+  font-size:clamp(30px,4vw,42px);
+  line-height:1.12;
+  letter-spacing:-.025em;
+  margin-bottom:10px;
+}
+body.category-page main>h1+p{
+  color:var(--delta-text-secondary);
+  font-size:16px;
+  line-height:1.6;
+  margin-bottom:24px;
+}
+
+/* Cards: um padrão, mantendo classes e comportamentos existentes */
+body.category-page .card,
+.biblioteca-hero+.card,
+.card{
+  border-color:var(--delta-border);
+  border-radius:var(--delta-radius-card);
+  box-shadow:var(--delta-shadow-card);
+}
+.card:hover{box-shadow:var(--delta-shadow-hover)}
+.card p{color:inherit}
+
+/* Evita hover agressivo em blocos que são apenas informativos */
+.card.info-collapsible:hover,
+.card.jornada:hover,
+.card.secao-destaque:hover,
+.card.ferramenta:hover{transform:none}
+
+/* Cabeçalho/área de filtros compartilhada */
+body.category-page .top-bar,
+body.category-page .filtros,
+.top-bar,
+.filtros-container{
+  border-color:var(--delta-border);
+  border-radius:var(--delta-radius-card);
+  background:var(--delta-surface);
+  box-shadow:var(--delta-shadow-card);
+}
+body.category-page .top-bar input,
+body.category-page .top-bar select{
+  border-color:var(--delta-border);
+  border-radius:var(--delta-radius-md);
+  color:var(--delta-text);
+}
+body.category-page .top-bar input:focus,
+body.category-page .top-bar select:focus,
+.filtros-container input:focus,
+.filtros-container select:focus{
+  outline:3px solid rgba(91,92,226,.13);
+  outline-offset:1px;
+  border-color:var(--delta-accent)!important;
+}
+
+/* Botões principais e ações */
+.acoes button,
+.card-actions button,
+.btn-primary,
+button.btn-primary{
+  min-height:44px;
+  border-radius:var(--delta-radius-md);
+  background:var(--delta-accent);
+  color:#fff;
+  font-weight:800;
+}
+.acoes button:hover,
+.card-actions button:hover,
+.btn-primary:hover{
+  background:var(--delta-accent-dark);
+}
+.btn-secondary,
+button.btn-secondary{
+  min-height:44px;
+  border-radius:var(--delta-radius-md);
+  border:1px solid var(--delta-border);
+  background:var(--delta-accent-light);
+  color:var(--delta-accent-dark);
+  font-weight:800;
+}
+
+/* Tags */
+.tag{
+  border-radius:var(--delta-radius-pill);
+  background:var(--delta-accent-light);
+  color:var(--delta-accent-dark);
+  border:1px solid #e0e4ff;
+}
+
+/* Níveis sem alterar o significado atual */
+.nivel-basico{border-radius:var(--delta-radius-pill)}
+.nivel-intermediario{border-radius:var(--delta-radius-pill)}
+.nivel-avancado{border-radius:var(--delta-radius-pill)}
+
+/* Campos */
+body.category-page input,
+body.category-page select,
+body.category-page textarea{
+  min-height:44px;
+  border-radius:var(--delta-radius-md);
+  border-color:var(--delta-border);
+}
+
+/* Espaçamento e largura dos conteúdos principais */
+body.category-page main{
+  max-width:1180px;
+  margin:0 auto;
+}
+body.category-page .top-bar,
+body.category-page .filtros,
+body.category-page .filtros-container{
+  margin-top:20px;
+  margin-bottom:20px;
+}
+
+/* Breadcrumb */
+.breadcrumb{
+  color:var(--delta-text-secondary);
+  font-size:13px;
+}
+.breadcrumb a{color:var(--delta-accent-dark)}
+
+/* Estados vazios */
+.empty,
+.empty-state,
+.vazio{
+  border-radius:var(--delta-radius-card);
+}
+
+/* Acessibilidade de foco consistente */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:3px solid rgba(91,92,226,.25);
+  outline-offset:2px;
+}
+
+/* Mobile: mesmo padrão, menos espaço lateral */
+@media(max-width:760px){
+  body.category-page main{width:100%}
+  body.category-page main>h1{font-size:clamp(28px,8vw,36px)}
+  .card{border-radius:14px}
+  .top-bar,.filtros-container{border-radius:14px}
+  .acoes button,.card-actions button,.btn-primary,.btn-secondary{min-height:44px}
+}
