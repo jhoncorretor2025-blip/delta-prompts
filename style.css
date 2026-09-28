@@ -932,3 +932,23 @@ body.category-page .card .tags{
 
 /* DELTA JOURNEY — V0.7 */
 #jornadaPerfis{position:relative;margin:16px 0 20px;padding:22px}#jornadaPerfis h3{margin:0 0 6px}#jornadaPerfis>p{margin:0 0 16px;color:var(--delta-text-secondary)}#jornadaPerfis .fechar-jornada{position:absolute;right:14px;top:12px;border:0;background:transparent;color:var(--delta-text-muted);cursor:pointer;font-weight:700}.perfis-financas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}#jornadaPerfis .perfil-card{display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-align:left;padding:16px;border:1px solid var(--delta-border);background:#fff;border-radius:14px;cursor:pointer;transition:.16s}#jornadaPerfis .perfil-card:hover,#jornadaPerfis .perfil-card.ativo{border-color:#cfd4ff;background:var(--delta-accent-light);box-shadow:0 6px 18px rgba(91,92,226,.08)}#jornadaPerfis .perfil-emoji{font-size:24px}#jornadaPerfis .perfil-card strong{color:var(--delta-text)}#jornadaPerfis .perfil-card span:last-child{color:var(--delta-text-secondary);font-size:13px;line-height:1.45}.recomendacao-perfil{margin-top:14px;padding:16px;border-radius:14px;background:#f8f8ff;border:1px solid #e0e4ff}.recomendacao-perfil h4{margin:0 0 6px;color:var(--delta-accent-dark)}.recomendacao-perfil p{margin:0 0 8px;color:var(--delta-text-secondary)}.recomendacao-perfil li{margin:7px 0}.recomendacao-perfil button{border:0;background:none;color:var(--delta-accent-dark);font-weight:800;cursor:pointer;text-align:left}.reabrir-jornada{display:none;margin:8px 0 18px;border:1px solid #cfd4ff;background:var(--delta-accent-light);color:var(--delta-accent-dark);border-radius:999px;padding:9px 14px;font-weight:800;cursor:pointer}@media(max-width:760px){.perfis-financas{grid-template-columns:1fr}#jornadaPerfis{padding:18px 16px}}
+
+
+/* ===== CTA HIERARCHY V0.8 ===== */
+.hero .search input{font-weight:600}
+.hero .search input::placeholder{color:#667085;font-weight:500}
+.path b{display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding:9px 12px;border-radius:10px;background:var(--delta-accent-light,#eef2ff);color:var(--delta-accent-dark,#4338ca);font-size:13px;font-weight:900}
+.path:hover b{background:var(--delta-accent,#5b5ce2);color:#fff}
+.acoes{align-items:stretch}
+.acoes .copiar{order:-1;min-height:44px;flex:1.4 1 180px;box-shadow:0 5px 14px rgba(91,92,226,.16)}
+.acoes button:not(.copiar){min-height:44px;flex:0 1 auto}
+.ver-mais{padding:7px 0;min-height:36px}
+.btn-mais-filtros,.btn-limpar-filtros{min-height:40px}
+.toolbar-extra{align-items:center}
+.toolbar-extra button{min-height:40px}
+@media(max-width:600px){
+  .acoes .copiar{flex-basis:100%;width:100%}
+  .acoes button:not(.copiar){flex:1 1 0;min-width:0}
+  .path b{width:100%;justify-content:center}
+}
+/* ===== FIM CTA HIERARCHY V0.8 ===== */
