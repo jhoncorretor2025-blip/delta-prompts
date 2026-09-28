@@ -1066,3 +1066,68 @@ body.category-page .card .tags{
 /* =========================================================
    FIM DELTA DESCOBERTA — V1.0
    ========================================================= */
+
+
+/* =========================================================
+   DELTA CATEGORIAS — V1.1
+   Padronização visual compartilhada sem alterar regras de negócio.
+   ========================================================= */
+body.category-page .top-bar,
+body.category-page .filtros-container,
+body.category-page .toolbar-extra,
+body.category-page .sugerir-box{
+  width:100%;
+  max-width:1180px;
+  margin-left:auto;
+  margin-right:auto;
+}
+body.category-page .top-bar{
+  gap:10px;
+}
+body.category-page .top-bar button,
+body.category-page .toolbar-extra button,
+body.category-page .btn-mais-filtros,
+body.category-page .btn-limpar-filtros{
+  min-height:42px;
+  border-radius:10px;
+}
+body.category-page .top-bar input,
+body.category-page .top-bar select{
+  min-height:46px;
+}
+body.category-page .filtros-container{
+  border:1px solid var(--delta-border);
+  background:var(--delta-surface);
+}
+body.category-page .toolbar-extra{
+  align-items:center;
+}
+body.category-page .toolbar-extra button:hover{
+  border-color:#cfd4ff;
+  background:var(--delta-accent-light);
+  color:var(--delta-accent-dark);
+}
+body.category-page .acoes .copiar{
+  min-height:44px;
+  font-weight:900;
+}
+body.category-page .acoes button:not(.copiar){
+  min-height:44px;
+}
+body.category-page .contador{
+  font-weight:800;
+}
+@media(max-width:760px){
+  body.category-page .top-bar,
+  body.category-page .toolbar-extra{
+    width:100%;
+  }
+  body.category-page .toolbar-extra button,
+  body.category-page .toolbar-extra select{
+    min-height:42px;
+  }
+  body.category-page .acoes .copiar{
+    width:100%;
+    flex-basis:100%;
+  }
+}
