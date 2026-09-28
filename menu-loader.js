@@ -1,7 +1,7 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.7
+// DELTA SITE VERSION: V1.8
 window.DELTA_SITE_VERSION='V1.7';
 (function(){
   function deltaMostrarVersao(){
