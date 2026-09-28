@@ -505,3 +505,5 @@ body.category-page .prompt-text {
   .search input{height:60px;font-size:15px}
   .section-title h2{font-size:24px}
 }
+
+@media(max-width:760px){#deltaSiteVersion{bottom:calc(88px + env(safe-area-inset-bottom))!important;right:12px!important;font-size:9px!important;opacity:.88}}
