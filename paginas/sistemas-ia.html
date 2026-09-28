@@ -61,6 +61,7 @@
 <p>Do planejamento ao sistema pronto: encontre prompts para criar, desenvolver, revisar e evoluir aplicativos, dashboards e produtos digitais.</p>
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">💡 Como usar <span>⌄</span></button><div class="info-body">Escolha a fase do seu projeto, filtre por categoria e nível, e abra o prompt completo. Os campos entre colchetes viram campinhos pra preencher antes de copiar.</div></section>
+<section class="card" id="linkPadraoCard"><h3>🔗 Cole o link do seu sistema aqui uma vez</h3><p style="margin:0 0 12px;color:#667085;font-size:14px">Salve o endereço do seu sistema para preencher automaticamente os campos <strong>[LINK]</strong> dos prompts.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><input type="text" id="linkPadraoInput" placeholder="https://meusistema.com.br" style="flex:1;min-width:220px;padding:12px 14px;border-radius:10px;border:1px solid #e6e8f0;font:inherit"><button type="button" id="linkPadraoSalvar" style="border:0;background:#5b5ce2;color:#fff;font-weight:800;border-radius:10px;padding:12px 20px;cursor:pointer">💾 Salvar</button></div></section>
 
 <div class="journey" id="journey">
   <button data-fase="todos" class="ativo"><strong>✨ Todos</strong><small>Ver todos os prompts</small></button>
@@ -94,6 +95,7 @@
 </section>
 <button type="button" class="reabrir-jornada" id="reabrirJornada" title="Ver orientação de por onde começar">🧭 Ver "por onde começar"</button>
 
+<button type="button" id="btnModoGuiado" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed #5b5ce2;background:#f8f8ff;color:#5b5ce2;font-weight:800;font-size:15px;padding:16px;border-radius:14px;cursor:pointer;margin:16px 0 10px">🎯 Modo Guiado: Meu Primeiro Sistema (passo a passo)</button>
 <button type="button" id="btnModoGuiadoMelhorar" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed #16a34a;background:#f0fdf4;color:#15803d;font-weight:800;font-size:15px;padding:16px;border-radius:14px;cursor:pointer;margin:0 0 20px">🔧 Modo Guiado: Já Tenho Sistema, Quero Melhorar (passo a passo, na ordem certa)</button>
 
 <div id="modalGuiado" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:3000;align-items:center;justify-content:center;padding:20px">
@@ -128,7 +130,7 @@
   </div>
 </div>
 
-<div id="lista-prompts"></div>
+<datalist id="listaProjetosGlobal"></datalist><div id="lista-prompts"></div>
 
 </main>
 <div class="toast" id="toast">✓ Copiado!</div>
@@ -210,7 +212,7 @@ function atualizarFeedbackUI(id){
 }
 
 // ===== CAMPOS EDITÁVEIS =====
-function textoFinal(id){const p=getItem(id);if(!p)return'';let t=p.prompt;(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+function textoFinal(id){const p=getItem(id);if(!p)return'';let t=p.prompt;const linkPadrao=carregarLinkSistema();if(linkPadrao)t=t.replace(/\[LINK\]/g,linkPadrao);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
 
 // ===== AÇÕES =====
 async function copiarTexto(t){try{await navigator.clipboard.writeText(t);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
@@ -298,6 +300,9 @@ function criarCard(p){
   `;
   atualizarBtnFav(p.id,card.querySelector('.favoritar'));
   atualizarFeedbackUI(p.id);
+  const extra=document.createElement('div');extra.className='sistema-meta-extra';
+  extra.innerHTML='<input class="projeto-input" list="listaProjetosGlobal" data-projeto="'+p.id+'" value="'+String(projetoDoSistema(p.id)||'').replace(/"/g,'&quot;')+'" placeholder="📁 Projeto (opcional)"><button type="button" class="aplicado-btn '+(estaAplicadoSistema(p.id)?'aplicado':'')+'" data-acao="aplicado" data-id="'+p.id+'">'+(estaAplicadoSistema(p.id)?'✅ Já Apliquei':'⬜ Marcar como Aplicado')+'</button>';
+  card.appendChild(extra);
   return card;
 }
 
@@ -427,4 +432,19 @@ render();
 window.addEventListener('delta:favoritos-updated',atualizarStats);
 if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
 if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
+
+function carregarLinkSistema(){try{return localStorage.getItem('deltaSistemasLinkPadrao')||''}catch(e){return''}}
+function salvarLinkSistema(v){try{if(v)localStorage.setItem('deltaSistemasLinkPadrao',v.trim());else localStorage.removeItem('deltaSistemasLinkPadrao')}catch(e){}}
+function _loadProjetosSistemas(){try{return JSON.parse(localStorage.getItem('deltaSistemasProjetos'))||{}}catch(e){return{}}}
+function _saveProjetosSistemas(v){try{localStorage.setItem('deltaSistemasProjetos',JSON.stringify(v))}catch(e){}}
+function projetoDoSistema(id){return _loadProjetosSistemas()[id]||''}
+function salvarProjetoSistema(id,nome){const p=_loadProjetosSistemas();if(nome&&nome.trim())p[id]=nome.trim();else delete p[id];_saveProjetosSistemas(p);atualizarDatalistProjetosSistemas()}
+function atualizarDatalistProjetosSistemas(){const dl=document.getElementById('listaProjetosGlobal');if(!dl)return;const p=_loadProjetosSistemas();dl.innerHTML=[...new Set(Object.values(p).filter(Boolean))].map(x=>'<option value="'+String(x).replace(/"/g,'&quot;')+'">').join('')}
+function _loadAplicadosSistemas(){try{return JSON.parse(localStorage.getItem('deltaSistemasAplicados'))||[]}catch(e){return[]}}
+function _saveAplicadosSistemas(v){try{localStorage.setItem('deltaSistemasAplicados',JSON.stringify(v))}catch(e){}}
+function estaAplicadoSistema(id){return _loadAplicadosSistemas().includes(id)}
+function toggleAplicadoSistema(id,btn){let a=_loadAplicadosSistemas();const i=a.indexOf(id);if(i<0){a.push(id);mostrarToast('✅ Marcado como já aplicado!')}else{a.splice(i,1);mostrarToast('Desmarcado')}_saveAplicadosSistemas(a);if(btn){btn.textContent=i<0?'✅ Já Apliquei':'⬜ Marcar como Aplicado';btn.classList.toggle('aplicado',i<0)}}
+function primeiroSistemaGuiado(){const modal=document.getElementById('modalGuiado'),box=document.getElementById('modalGuiadoConteudo');if(!modal||!box)return;const passos=['🚀 Criar meu primeiro sistema do zero','🧭 Criar menu e navegação do sistema','🧱 Criar sistema visual e componentes','🤖 Briefing completo para Studio IA'];box.innerHTML='<button type="button" onclick="document.getElementById(\'modalGuiado\').style.display=\'none\'" style="float:right;border:0;background:none;font-size:20px;cursor:pointer">✕</button><h3>🎯 Meu Primeiro Sistema</h3><p style="color:#667085">Siga esta ordem para sair da ideia e chegar a uma primeira versão organizada.</p><ol>'+passos.map((t,i)=>'<li style="margin:10px 0"><button type="button" data-guia-titulo="'+t.replace(/"/g,'&quot;')+'" style="border:0;background:none;color:#4338ca;font-weight:800;cursor:pointer;text-align:left">'+(i+1)+'. '+t+' →</button></li>').join('')+'</ol>';box.querySelectorAll('[data-guia-titulo]').forEach(b=>b.onclick=()=>{const p=prompts.find(x=>x.titulo===b.dataset.guiaTitulo);if(p){modal.style.display='none';irPara(p.id)}});modal.style.display='flex'}
+function prepararRecursosSistemas(){const inp=document.getElementById('linkPadraoInput');if(inp)inp.value=carregarLinkSistema();const save=document.getElementById('linkPadraoSalvar');if(save)save.onclick=()=>{const v=inp.value.trim();if(v&&!/^https?:\/\//i.test(v)){mostrarToast('Use um endereço começando com http:// ou https://');return}salvarLinkSistema(v);mostrarToast(v?'🔗 Link salvo!':'🗑️ Link removido');render()};const guia=document.getElementById('btnModoGuiado');if(guia)guia.onclick=primeiroSistemaGuiado;const lista=document.getElementById('lista-prompts');if(lista){lista.addEventListener('change',e=>{const el=e.target.closest('.projeto-input');if(el){salvarProjetoSistema(el.dataset.projeto,el.value);mostrarToast('📁 Projeto salvo')}});lista.addEventListener('click',e=>{const b=e.target.closest('button[data-acao="aplicado"]');if(b)toggleAplicadoSistema(b.dataset.id,b)})}atualizarDatalistProjetosSistemas()}
+setTimeout(prepararRecursosSistemas,0);
 </script></body></html>
