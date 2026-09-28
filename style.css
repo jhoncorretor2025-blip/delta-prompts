@@ -485,3 +485,23 @@ body.category-page .prompt-text {
     padding-right: 18px;
   }
 }
+
+
+/* ===== UX v2026.09.28.02 ===== */
+#menu .sidebar{scrollbar-gutter:stable}
+#menu input[type="search"]:focus{outline:3px solid rgba(91,92,226,.16);outline-offset:1px;border-color:#5b5ce2!important}
+@media(min-width:901px){
+  main{padding:48px clamp(28px,4vw,60px)}
+}
+@media(max-width:760px){
+  #menu .sidebar{padding-top:72px;padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+  #menu .sidebar>div:first-of-type{position:sticky;top:0;z-index:5;padding-top:2px!important;padding-bottom:10px!important;background:#fff}
+  .delta-bottom-nav{bottom:calc(10px + env(safe-area-inset-bottom))}
+  body:has(.delta-bottom-nav){padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+}
+@media(max-width:480px){
+  main{padding-left:14px;padding-right:14px}
+  .container{width:min(100%,calc(100% - 20px))}
+  .search input{height:60px;font-size:15px}
+  .section-title h2{font-size:24px}
+}
