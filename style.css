@@ -507,3 +507,8 @@ body.category-page .prompt-text {
 }
 
 @media(max-width:760px){#deltaSiteVersion{bottom:calc(88px + env(safe-area-inset-bottom))!important;right:12px!important;font-size:9px!important;opacity:.88}}
+
+
+/* ===== VERSAO VISIVEL DO SITE ===== */
+#deltaSiteVersion{top:14px!important;right:16px!important;bottom:auto!important}
+@media(max-width:760px){#deltaSiteVersion{top:10px!important;right:10px!important;font-size:10px!important;padding:6px 9px!important}}
