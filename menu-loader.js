@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V0.9
-window.DELTA_SITE_VERSION='V0.9';
+// DELTA SITE VERSION: V1.0
+window.DELTA_SITE_VERSION='V1.0';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -1329,4 +1329,27 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',normalizarCTAs,{once:true});
   else normalizarCTAs();
   setTimeout(normalizarCTAs,600);
+})();
+
+
+/* ===== DESCOBERTA V1.0 ===== */
+(function(){
+  function prepararDescoberta(){
+    var btn=document.querySelector('[data-descoberta="buscar"]');
+    if(btn)btn.addEventListener('click',function(){
+      var input=document.getElementById('busca-global')||document.querySelector('input[type="search"]');
+      var alvo=document.getElementById('buscar')||input;
+      if(alvo&&alvo.scrollIntoView)alvo.scrollIntoView({behavior:'smooth',block:'center'});
+      setTimeout(function(){if(input){input.focus();input.select&&input.select()}},350);
+    });
+    var cont=document.getElementById('descobertaContinuar');
+    var card=document.getElementById('continuarCard');
+    if(cont&&card&&card.getAttribute('href')&&card.getAttribute('href')!=='#'){
+      cont.href=card.getAttribute('href');
+      cont.style.display='flex';
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',prepararDescoberta,{once:true});
+  else prepararDescoberta();
+  setTimeout(prepararDescoberta,800);
 })();
