@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.1
-window.DELTA_SITE_VERSION='V1.1';
+// DELTA SITE VERSION: V1.2
+window.DELTA_SITE_VERSION='V1.2';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -1384,4 +1384,32 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',aplicarPadraoCategorias,{once:true});
   else aplicarPadraoCategorias();
   setTimeout(aplicarPadraoCategorias,700);
+})();
+
+
+/* ===== INTEGRACAO DE DESCOBERTA V1.2 ===== */
+(function(){
+  function prepararDescobertaV12(){
+    var problema=document.querySelector('[data-descoberta="problema"]');
+    if(problema && problema.dataset.deltaDescobertaV12!=='1'){
+      problema.addEventListener('click',function(){
+        var alvo=document.getElementById('descreveProblemaSection');
+        var input=document.getElementById('encaixaInput');
+        if(alvo&&alvo.scrollIntoView)alvo.scrollIntoView({behavior:'smooth',block:'center'});
+        setTimeout(function(){if(input){input.focus();input.select&&input.select()}},350);
+      });
+      problema.dataset.deltaDescobertaV12='1';
+      problema.setAttribute('aria-label','Descrever um problema para encontrar um prompt');
+    }
+    document.querySelectorAll('.descoberta-card').forEach(function(card){
+      if(card.dataset.deltaDescobertaV12==='1')return;
+      card.addEventListener('keydown',function(e){
+        if((e.key==='Enter'||e.key===' ')&&card.tagName==='BUTTON'){e.preventDefault();card.click();}
+      });
+      card.dataset.deltaDescobertaV12='1';
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',prepararDescobertaV12,{once:true});
+  else prepararDescobertaV12();
+  setTimeout(prepararDescobertaV12,900);
 })();
