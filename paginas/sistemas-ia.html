@@ -57,7 +57,7 @@
 @media(max-width:850px){.journey{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:720px){#lista-prompts,.journey{grid-template-columns:1fr}.theme-toggle{bottom:90px}}</style></head><body><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
-<h1>🧩 Sistemas com IA <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.7</span></h1>
+<h1>🧩 Sistemas com IA <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.8</span></h1>
 <p>Do planejamento ao sistema pronto: encontre prompts para criar, desenvolver, revisar e evoluir aplicativos, dashboards e produtos digitais.</p>
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">💡 Como usar <span>⌄</span></button><div class="info-body">Escolha a fase do seu projeto, filtre por categoria e nível, e abra o prompt completo. Os campos entre colchetes viram campinhos pra preencher antes de copiar.</div></section>
@@ -400,13 +400,12 @@ aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSk
 
 // ===== MODO GUIADO: JÁ TENHO SISTEMA, QUERO MELHORAR =====
 (function(){
-  // Fluxo completo de melhoria: inclui os prompts de produto, UX, técnico,
-  // segurança, dados, IA, qualidade, acessibilidade, performance e roadmap.
+  // Fluxo de melhoria em 18 etapas, priorizando diagnóstico, estrutura, validação e evolução.
   // Os 5 prompts de criação do zero ficam no modo "Meu Primeiro Sistema".
   const ORDEM_MELHORAR=[
-    'sys-5','sys-6','sys-11','sys-7','sys-12','sys-14','sys-8','sys-9','sys-10',
-    'sys-4','sys-13','sys-15','sys-16','sys-20','sys-21','sys-18','sys-17','sys-25',
-    'sys-24','sys-22','sys-23','sys-19'
+    // 18 etapas, sem repetir diagnósticos que se sobrepõem.
+    'sys-5','sys-7','sys-14','sys-8','sys-9','sys-10','sys-4','sys-13','sys-15',
+    'sys-21','sys-20','sys-16','sys-18','sys-25','sys-24','sys-22','sys-23','sys-19'
   ];
   let passos=[];
   let passoAtual=0;
