@@ -1316,5 +1316,3 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
     if(botaoParecidos&&e.target!==botaoParecidos)removerBotao();
   });
 })();
-
-<style>@media(max-width:760px){#deltaSiteVersion{bottom:calc(88px + env(safe-area-inset-bottom))!important;right:12px!important;font-size:9px!important;opacity:.88}}</style>
