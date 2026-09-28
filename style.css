@@ -722,3 +722,128 @@ textarea:focus-visible{
   .top-bar,.filtros-container{border-radius:14px}
   .acoes button,.card-actions button,.btn-primary,.btn-secondary{min-height:44px}
 }
+
+
+/* =========================================================
+   DELTA COMPONENT SYSTEM — V0.4
+   Cards, ações, tags, estados e mobile.
+   Apenas apresentação; não altera regras de negócio.
+   ========================================================= */
+.delta-card,
+body.category-page .card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:var(--delta-space-3);
+  overflow:hidden;
+}
+.delta-card-title,
+body.category-page .card h2,
+body.category-page .card h3{
+  color:var(--delta-text);
+  line-height:1.25;
+  letter-spacing:-.015em;
+}
+.delta-card-description,
+body.category-page .card .descricao,
+body.category-page .card>p{
+  color:var(--delta-text-secondary);
+  line-height:1.55;
+}
+.delta-card-tags,
+body.category-page .card .tags{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px;
+}
+.delta-card-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:auto;
+  padding-top:4px;
+}
+.delta-card-actions button,
+.delta-card-actions a,
+.card .acoes button,
+.card .acoes a{
+  min-height:44px;
+}
+.delta-tag,
+.tag,
+.nivel,
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:28px;
+  padding:4px 10px;
+  border-radius:var(--delta-radius-pill);
+  font-size:12px;
+  line-height:1.2;
+  font-weight:700;
+}
+.delta-tag{background:var(--delta-accent-light);color:var(--delta-accent-dark);border:1px solid #e0e4ff}
+.delta-tag-success{background:#ecfdf3;color:#166534;border-color:#bbf7d0}
+.delta-tag-warning{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+.delta-tag-danger{background:#fef2f2;color:#b91c1c;border-color:#fecaca}
+.delta-btn,
+.btn-primary,.btn-secondary{
+  min-height:44px;
+  padding:10px 16px;
+  border-radius:var(--delta-radius-md);
+  transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+}
+.delta-btn-primary{background:var(--delta-accent);color:#fff;border:1px solid var(--delta-accent);font-weight:800}
+.delta-btn-primary:hover{background:var(--delta-accent-dark);border-color:var(--delta-accent-dark)}
+.delta-btn-secondary{background:#fff;color:var(--delta-accent-dark);border:1px solid var(--delta-border);font-weight:800}
+.delta-btn-secondary:hover{background:var(--delta-accent-light);border-color:#cfd4ff}
+.delta-btn-icon{
+  width:44px;min-width:44px;height:44px;padding:0!important;
+  display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--delta-border);border-radius:var(--delta-radius-md);
+  background:#fff;color:var(--delta-text-secondary);
+}
+.delta-btn-icon:hover{color:var(--delta-accent-dark);background:var(--delta-accent-light);border-color:#cfd4ff}
+.delta-empty,
+.delta-loading,
+.delta-success,
+.delta-error{
+  border:1px solid var(--delta-border);
+  border-radius:var(--delta-radius-card);
+  padding:24px;
+  background:var(--delta-surface);
+}
+.delta-empty{text-align:center;color:var(--delta-text-secondary)}
+.delta-loading{color:var(--delta-text-secondary)}
+.delta-success{border-color:#bbf7d0;background:#f0fdf4;color:#166534}
+.delta-error{border-color:#fecaca;background:#fef2f2;color:#991b1b}
+.card:focus-within{border-color:#cfd4ff;box-shadow:0 8px 24px rgba(91,92,226,.10)}
+@media(max-width:760px){
+  .delta-card,
+  body.category-page .card{
+    padding:16px;
+    gap:10px;
+  }
+  .delta-card-title,
+  body.category-page .card h2,
+  body.category-page .card h3{font-size:18px}
+  .delta-card-actions,
+  .card .acoes{
+    width:100%;
+  }
+  .delta-card-actions .delta-btn,
+  .delta-card-actions .delta-btn-primary,
+  .delta-card-actions .delta-btn-secondary,
+  .card .acoes button:first-child{
+    flex:1 1 100%;
+    width:100%;
+  }
+  .delta-tag,.tag,.nivel,.badge{min-height:30px}
+}
+@media(max-width:480px){
+  .delta-card,
+  body.category-page .card{border-radius:14px}
+  .delta-card-actions{gap:7px}
+}
