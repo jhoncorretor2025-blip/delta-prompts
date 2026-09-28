@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.2
-window.DELTA_SITE_VERSION='V1.2';
+// DELTA SITE VERSION: V1.3
+window.DELTA_SITE_VERSION='V1.3';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -1412,4 +1412,34 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',prepararDescobertaV12,{once:true});
   else prepararDescobertaV12();
   setTimeout(prepararDescobertaV12,900);
+})();
+
+/* ===== FEEDBACK DE BUSCA V1.3 ===== */
+(function(){
+  function prepararFeedbackBuscaV13(){
+    var input=document.getElementById('busca-global');
+    var box=document.getElementById('search-results');
+    if(!input||!box||input.dataset.deltaFeedbackV13==='1')return;
+    var obs=new MutationObserver(function(){
+      var grid=document.getElementById('results-grid');
+      if(!grid)return;
+      var texto=(grid.textContent||'').replace(/\s+/g,' ').trim();
+      if(!texto && input.value.trim()){
+        var vazio=grid.querySelector('.delta-busca-vazia-v13');
+        if(!vazio){
+          grid.innerHTML='<div class="delta-busca-vazia-v13" role="status"><strong>😕 Não encontramos algo exato.</strong><span>Tente descrever a tarefa de outra forma ou use “Descrever meu problema”.</span><button type="button" data-delta-acao-problema="1">🧩 Descrever meu problema</button></div>';
+          var b=grid.querySelector('[data-delta-acao-problema]');
+          if(b)b.addEventListener('click',function(){
+            var alvo=document.getElementById('descreveProblemaSection'),inp=document.getElementById('encaixaInput');
+            if(alvo)alvo.scrollIntoView({behavior:'smooth',block:'center'});
+            setTimeout(function(){if(inp)inp.focus()},350);
+          });
+        }
+      }
+    });
+    obs.observe(box,{childList:true,subtree:true});
+    input.dataset.deltaFeedbackV13='1';
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',prepararFeedbackBuscaV13,{once:true});else prepararFeedbackBuscaV13();
+  setTimeout(prepararFeedbackBuscaV13,1200);
 })();
