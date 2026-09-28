@@ -1,6 +1,21 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
+// DELTA SITE VERSION: v2026.09.28.01
+window.DELTA_SITE_VERSION='v2026.09.28.01';
+(function(){
+  function deltaMostrarVersao(){
+    if(!document.body||document.getElementById('deltaSiteVersion'))return;
+    var el=document.createElement('div');
+    el.id='deltaSiteVersion';
+    el.textContent=window.DELTA_SITE_VERSION;
+    el.title='Versão atual do Delta Prompts';
+    el.setAttribute('aria-label','Versão atual do Delta Prompts: '+window.DELTA_SITE_VERSION);
+    el.style.cssText='position:fixed;right:14px;bottom:14px;z-index:1390;padding:5px 9px;border:1px solid #e5e7eb;border-radius:999px;background:rgba(255,255,255,.92);color:#667085;font-size:10px;font-weight:800;box-shadow:0 4px 12px rgba(20,20,40,.08);pointer-events:none;backdrop-filter:blur(6px)';
+    document.body.appendChild(el);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',deltaMostrarVersao,{once:true});else deltaMostrarVersao();
+})();
 window.deltaModoPrivadoAtivo=function(){try{return localStorage.getItem('deltaModoPrivado')==='true'}catch(e){return false}};
 (function(){try{var p=location.pathname;var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';if(!isIndex&&!window.deltaModoPrivadoAtivo()){localStorage.setItem('deltaUltimaPagina',JSON.stringify({path:p,ts:Date.now()}))}}catch(e){}})();
 
