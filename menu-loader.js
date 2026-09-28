@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V0.7
-window.DELTA_SITE_VERSION='V0.7';
+// DELTA SITE VERSION: V0.8
+window.DELTA_SITE_VERSION='V0.8';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -1315,4 +1315,18 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   document.addEventListener('mousedown',function(e){
     if(botaoParecidos&&e.target!==botaoParecidos)removerBotao();
   });
+})();
+
+
+/* CTA hierarchy V0.8 — labels only, no feature removal */
+(function(){
+  function normalizarCTAs(){
+    document.querySelectorAll('.acoes .copiar').forEach(function(btn){
+      var t=(btn.textContent||'').trim();
+      if(t==='📋 Copiar') btn.textContent='📋 Copiar e usar';
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',normalizarCTAs,{once:true});
+  else normalizarCTAs();
+  setTimeout(normalizarCTAs,600);
 })();
