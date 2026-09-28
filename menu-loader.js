@@ -1353,3 +1353,35 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   else prepararDescoberta();
   setTimeout(prepararDescoberta,800);
 })();
+
+
+/* ===== PADRONIZACAO DE CATEGORIAS V1.1 ===== */
+(function(){
+  function aplicarPadraoCategorias(){
+    var raiz=document.body&&document.body.classList.contains('category-page')?document.body:document;
+    var mapa={
+      '🎛️ Mais filtros':'🎛️ Filtrar resultados',
+      'Mais filtros':'🎛️ Filtrar resultados',
+      '📥 Exportar todos':'📥 Exportar prompts',
+      'Exportar todos':'📥 Exportar prompts',
+      '💡 Sugerir um prompt':'💡 Sugerir conteúdo',
+      'Sugerir um prompt':'💡 Sugerir conteúdo',
+      '💡 Sugerir um modelo':'💡 Sugerir modelo',
+      'Sugerir um modelo':'💡 Sugerir modelo',
+      '💡 Sugerir um agente':'💡 Sugerir agente',
+      'Sugerir um agente':'💡 Sugerir agente'
+    };
+    var seletores='button,a';
+    raiz.querySelectorAll(seletores).forEach(function(el){
+      var atual=(el.textContent||'').replace(/\\s+/g,' ').trim();
+      if(!mapa[atual]||el.dataset.deltaPadraoV11==='1')return;
+      el.textContent=mapa[atual];
+      el.dataset.deltaPadraoV11='1';
+      if(atual.indexOf('Mais filtros')!==-1)el.setAttribute('aria-label','Filtrar resultados');
+    });
+    document.documentElement.setAttribute('data-delta-site-version','V1.1');
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',aplicarPadraoCategorias,{once:true});
+  else aplicarPadraoCategorias();
+  setTimeout(aplicarPadraoCategorias,700);
+})();
