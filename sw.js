@@ -1,4 +1,5 @@
-const CACHE_NAME = 'delta-prompts-shell-v5';
+// DELTA SITE VERSION: v2026.09.28.03
+const CACHE_NAME = 'delta-prompts-shell-v6';
 const SHELL_URLS = [
   '/delta-prompts/index.html',
   '/delta-prompts/style.css',
@@ -24,6 +25,14 @@ self.addEventListener('activate', (event) => {
 // Estratégia: tenta a rede primeiro (site atualiza sempre), cai pro cache só se estiver offline.
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  if (url.pathname === '/delta-prompts/menu-loader.js') {
+    event.respondWith(
+      fetch('/delta-prompts/menu-loader.js?v=20260928c', { cache: 'no-store' })
+        .catch(() => fetch(event.request))
+    );
+    return;
+  }
   event.respondWith(
     fetch(event.request)
       .then((resposta) => {
