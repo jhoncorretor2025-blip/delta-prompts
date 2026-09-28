@@ -1131,3 +1131,56 @@ body.category-page .contador{
     flex-basis:100%;
   }
 }
+
+
+/* =========================================================
+   DELTA UX — V1.3
+   Hierarquia, feedback e responsividade da Home.
+   ========================================================= */
+.busca-ajuda-v13{
+  margin:7px 0 0 6px;
+  font-size:12.5px;
+  color:var(--muted);
+}
+.problema-v13{
+  margin:24px 0;
+  padding:22px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fff,#f8f9ff);
+  border:1px solid var(--border);
+  box-shadow:0 5px 18px rgba(40,42,90,.04);
+}
+.problema-v13 h3{
+  margin:5px 0 6px;
+  font-size:20px;
+}
+.problema-v13>p{
+  color:#667085;
+  font-size:14px;
+  margin:0 0 14px;
+}
+.problema-v13 input{
+  min-height:48px!important;
+  border-color:#d9dcef!important;
+}
+.problema-v13 button{
+  min-height:48px!important;
+  padding:12px 22px!important;
+}
+.descoberta-section .head h2{
+  margin-bottom:6px;
+}
+.descoberta-section .head p{
+  max-width:680px;
+}
+@media(max-width:760px){
+  .busca-ajuda-v13{margin-left:2px}
+  .problema-v13{padding:17px;margin:18px 0}
+  .problema-v13 h3{font-size:18px}
+  .problema-v13 input,.problema-v13 button{width:100%;min-height:48px!important}
+  .hero .search input{font-size:16px!important}
+  .quick{overflow-x:auto;flex-wrap:nowrap!important;scrollbar-width:none;padding-bottom:4px}
+  .quick::-webkit-scrollbar{display:none}
+  .quick button{flex:0 0 auto}
+  .descoberta-card{min-height:78px;align-items:center}
+}
