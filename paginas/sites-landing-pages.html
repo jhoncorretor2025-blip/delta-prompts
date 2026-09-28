@@ -2,7 +2,7 @@
 .count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(79,70,229,.12);color:#4f46e5}
 .filtros .ativo .count-badge,.journey button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
 .journey .count-badge{position:absolute;top:12px;right:14px}
-.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
+.evolucao-sites{margin:16px 0 20px;padding:18px;border:1px solid #e6e8f0;border-radius:18px;background:linear-gradient(135deg,#fafbff,#fff)}.evolucao-sites h3{margin:0 0 5px}.evolucao-sub{margin:0 0 14px;color:#667085;font-size:13px}.evo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.evo-item{padding:13px;border:1px solid #e6e8f0;border-radius:13px;background:#fff}.evo-item strong{display:block;font-size:20px;color:#4f46e5}.evo-item span{font-size:12px;color:#667085}.evo-acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.evo-acoes button{border:1px solid #dfe3ed;background:#fff;border-radius:10px;padding:9px 12px;font-weight:800;cursor:pointer;color:#344054}.evo-acoes button.principal{background:#5b5ce2;color:#fff;border-color:#5b5ce2}.evo-categorias{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.evo-cat{border:0;border-radius:999px;padding:6px 9px;background:#f2f4f7;color:#475467;font-size:11px;font-weight:800;cursor:pointer}.evo-cat.ok{background:#dcfce7;color:#166534}@media(max-width:700px){.evo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}.stats-bar{font-size:13px;color:#667085;margin:10px 0 4px;font-weight:600}
 .toolbar-extra{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 20px}
 .toolbar-extra button{border:1px solid #e6e8f0;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
 .toolbar-extra button:hover{background:#eef2ff;color:#4f46e5}
@@ -91,7 +91,7 @@
 </style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Sites & Landing Pages</p>
-<header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.10</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
+<header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.11</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Qual caminho escolher? <span>⌄</span></button><div class="info-body"><b>🟢 Criando do zero:</b> para quem ainda vai começar. <b>🟡 Site em andamento:</b> para quem já tem a página inicial ou parte do projeto e travou. <b>🔴 Site pronto:</b> para quem quer melhorar UX, visual, navegação, conversão e estrutura.</div></section>
 
@@ -102,6 +102,23 @@
     <input type="text" id="linkPadraoInput" placeholder="https://meusite.com.br" style="flex:1;min-width:220px;padding:12px 14px;border-radius:10px;border:1px solid #e6e8f0;font:inherit">
     <button type="button" id="linkPadraoSalvar" style="border:0;background:#5b5ce2;color:#fff;font-weight:800;border-radius:10px;padding:12px 20px;cursor:pointer">💾 Salvar</button>
   </div>
+</section>
+
+<section class="evolucao-sites" id="evolucaoSites" aria-label="Painel de evolução do site">
+  <h3>📊 Painel de Evolução</h3>
+  <p class="evolucao-sub">Acompanhe o que você já trabalhou e descubra o próximo passo sem precisar procurar.</p>
+  <div class="evo-grid">
+    <div class="evo-item"><strong id="evoTotal">0</strong><span>prompts disponíveis</span></div>
+    <div class="evo-item"><strong id="evoAplicados">0%</strong><span>jornada aplicada</span></div>
+    <div class="evo-item"><strong id="evoCategorias">0</strong><span>categorias trabalhadas</span></div>
+    <div class="evo-item"><strong id="evoProximo">—</strong><span>próximo passo</span></div>
+  </div>
+  <div class="evo-acoes">
+    <button type="button" class="principal" id="btnEvoContinuar">▶️ Continuar jornada</button>
+    <button type="button" id="btnEvoPendentes">📋 Ver não aplicados</button>
+    <button type="button" id="btnEvoTodos">🔄 Ver todos</button>
+  </div>
+  <div class="evo-categorias" id="evoCategoriasLista"></div>
 </section>
 
 <section class="card jornada-perfis" id="jornadaPerfis"><button type="button" class="fechar-jornada" id="fecharJornada">✕ Pular</button><h3>🧭 Por onde eu começo?</h3><p>Escolha a situação que mais parece com você agora — e veja uma sequência de prompts para começar sem ficar perdido.</p><div class="perfis-financas"><button type="button" class="perfil-card" data-perfil="iniciante"><span class="perfil-emoji">🌱</span><strong>Nunca criei um site</strong><span>Tenho uma ideia e quero criar minha primeira página.</span></button><button type="button" class="perfil-card" data-perfil="andamento"><span class="perfil-emoji">🛠️</span><strong>Já comecei meu site</strong><span>Tenho uma base e quero saber o próximo passo.</span></button><button type="button" class="perfil-card" data-perfil="pronto"><span class="perfil-emoji">🚀</span><strong>Meu site está pronto</strong><span>Quero melhorar visual, UX, conversão e profissionalismo.</span></button></div><div id="recomendacaoPerfil" class="recomendacao-perfil" style="display:none"></div></section><button type="button" class="reabrir-jornada" id="reabrirJornada">🧭 Ver "por onde começar"</button>
@@ -389,6 +406,28 @@ function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').v
 // ===== ESTATÍSTICAS =====
 function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Sites & Landing Pages').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> prompt'+(favs===1?'':'s')+' · 🌐 <strong>'+prompts.length+'</strong> prompts disponíveis'}
 
+// ===== PAINEL DE EVOLUÇÃO =====
+function atualizarPainelEvolucao(){
+  const total=prompts.length;
+  const aplicados=_loadAplicados().filter(id=>prompts.some(p=>p.id===id));
+  const pct=total?Math.round(aplicados.length/total*100):0;
+  const cats=[...new Set(prompts.map(p=>p.categoria))];
+  const catsAplicadas=[...new Set(aplicados.map(id=>{const p=prompts.find(x=>x.id===id);return p&&p.categoria}).filter(Boolean))];
+  const proximo=prompts.find(p=>!aplicados.includes(p.id));
+  document.getElementById('evoTotal').textContent=total;
+  document.getElementById('evoAplicados').textContent=pct+'%';
+  document.getElementById('evoCategorias').textContent=catsAplicadas.length+'/'+cats.length;
+  document.getElementById('evoProximo').textContent=proximo?proximo.categoria:'Concluído ✓';
+  const box=document.getElementById('evoCategoriasLista');
+  box.innerHTML=cats.map(cat=>{const n=prompts.filter(p=>p.categoria===cat).length;const a=prompts.filter(p=>p.categoria===cat&&aplicados.includes(p.id)).length;return '<button type="button" class="evo-cat '+(a===n?'ok':'')+'" data-evo-cat="'+cat.replace(/"/g,'&quot;')+'">📂 '+cat+' '+a+'/'+n+'</button>'}).join('');
+  box.querySelectorAll('[data-evo-cat]').forEach(b=>b.onclick=()=>{fase='todos';tema=b.dataset.evoCat;busca.value='';document.querySelectorAll('#journey button').forEach(x=>x.classList.toggle('ativo',x.dataset.fase==='todos'));criarTemas();render();document.getElementById('lista-prompts').scrollIntoView({behavior:'smooth',block:'start'})});
+}
+function evoVerPendentes(){fase='todos';tema='Todos';busca.value='';document.querySelectorAll('#journey button').forEach(x=>x.classList.toggle('ativo',x.dataset.fase==='todos'));const pend=_loadAplicados();const nao=prompts.filter(p=>!pend.includes(p.id));lista.innerHTML=nao.length?nao.map(p=>criarCard(p)).join(''):'<p>🎉 Todos os prompts estão marcados como aplicados!</p>';contador.textContent=nao.length+' de '+prompts.length+' não aplicados';atualizarContadoresJourney();atualizarBadgeFiltros();document.getElementById('lista-prompts').scrollIntoView({behavior:'smooth',block:'start'})}
+function evoContinuar(){const ids=['site-2','site-3','site-5','site-4','site-6','site-7','site-8','site-10'];const aplicados=_loadAplicados();const prox=ids.map(id=>prompts.find(p=>p.id===id)).find(p=>p&&!aplicados.includes(p.id))||prompts.find(p=>!aplicados.includes(p.id));if(prox){irPara(prox.id)}else{mostrarToast('🎉 Jornada concluída!')}}
+document.getElementById('btnEvoContinuar').addEventListener('click',evoContinuar);
+document.getElementById('btnEvoPendentes').addEventListener('click',evoVerPendentes);
+document.getElementById('btnEvoTodos').addEventListener('click',()=>{limparFiltros();document.getElementById('lista-prompts').scrollIntoView({behavior:'smooth',block:'start'})});
+
 // ===== TEMA =====
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 
@@ -490,6 +529,7 @@ function render(){
   atualizarBadgeFiltros();
   atualizarDatalistProjetos();
   atualizarSelectExportarProjeto();
+  atualizarPainelEvolucao();
 }
 
 lista.addEventListener('click',e=>{
@@ -617,6 +657,7 @@ aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}c
 criarTemas();
 atualizarStats();
 render();
+atualizarPainelEvolucao();
 window.addEventListener('delta:favoritos-updated',atualizarStats);
 if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
 if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
