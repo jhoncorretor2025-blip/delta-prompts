@@ -91,7 +91,7 @@
 </style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Sites & Landing Pages</p>
-<header class="page-head"><h1>🌐 Sites & Landing Pages</h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
+<header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.9</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Qual caminho escolher? <span>⌄</span></button><div class="info-body"><b>🟢 Criando do zero:</b> para quem ainda vai começar. <b>🟡 Site em andamento:</b> para quem já tem a página inicial ou parte do projeto e travou. <b>🔴 Site pronto:</b> para quem quer melhorar UX, visual, navegação, conversão e estrutura.</div></section>
 
@@ -114,7 +114,7 @@
 </div>
 
 <button type="button" id="btnModoGuiado" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed #5b5ce2;background:#f8f8ff;color:#5b5ce2;font-weight:800;font-size:15px;padding:16px;border-radius:14px;cursor:pointer;margin:16px 0 10px">🎯 Modo Guiado: Meu Primeiro Site (passo a passo)</button>
-<button type="button" id="btnModoGuiadoMelhorar" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed #16a34a;background:#f0fdf4;color:#15803d;font-weight:800;font-size:15px;padding:16px;border-radius:14px;cursor:pointer;margin:0 0 16px">🔧 Modo Guiado: Já Tenho Site, Quero Melhorar (passo a passo, na ordem certa)</button>
+<button type="button" id="btnModoGuiadoMelhorar" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed #16a34a;background:#f0fdf4;color:#15803d;font-weight:800;font-size:15px;padding:16px;border-radius:14px;cursor:pointer;margin:0 0 16px">🔧 Modo Guiado: Já Tenho Site, Quero Melhorar (18 etapas por categoria)</button>
 
 <div id="modalGuiado" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:3000;align-items:center;justify-content:center;padding:20px">
   <div style="background:#fff;border-radius:20px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:26px;position:relative" id="modalGuiadoConteudo">
@@ -558,7 +558,11 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
 
 // ===== MODO GUIADO: MEU PRIMEIRO SITE / MELHORAR SITE EXISTENTE =====
 (function(){
-  const ORDEM_MELHORAR=['site-0','site-15','site-17','site-16','site-1','site-18','site-19','site-13','site-14'];
+  const ORDEM_MELHORAR=[
+    // 18 etapas por categoria: diagnóstico → experiência → estrutura → conversão → qualidade → evolução.
+    'site-0','site-20','site-29','site-22','site-15','site-19','site-24','site-13','site-14',
+    'site-16','site-18','site-27','site-28','site-40','site-42','site-36','site-30','site-31'
+  ];
   let passos=[];
   let passoAtual=0;
   const modal=document.getElementById('modalGuiado');
@@ -569,7 +573,8 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
     conteudo.innerHTML=`
       <button type="button" id="fecharGuiado" style="position:absolute;top:16px;right:16px;border:0;background:#f1f5f9;border-radius:999px;width:32px;height:32px;cursor:pointer;font-size:15px">✕</button>
       <div style="font-size:12px;font-weight:800;color:#5b5ce2;margin-bottom:6px">PASSO ${passoAtual+1} DE ${total}</div>
-      <div style="display:flex;gap:4px;margin-bottom:16px">${passos.map((_,i)=>`<span style="flex:1;height:5px;border-radius:999px;background:${i<=passoAtual?'#5b5ce2':'#e5e7eb'}"></span>`).join('')}</div>
+      <div style="display:flex;gap:4px;margin-bottom:14px;overflow:hidden">${passos.map((_,i)=>`<span style="flex:1;min-width:3px;height:5px;border-radius:999px;background:${i<=passoAtual?'#5b5ce2':'#e5e7eb'}"></span>`).join('')}</div>
+      <div style="display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800;margin-bottom:8px">📂 ${p.categoria}</div>
       <h3 style="margin:0 0 8px">${p.titulo}</h3>
       <p style="color:#667085;margin:0 0 14px;font-size:14px">💡 ${p.quando}</p>
       <div style="white-space:pre-wrap;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px;font-size:13.5px;max-height:220px;overflow-y:auto">${p.prompt}</div>
