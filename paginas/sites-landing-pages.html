@@ -91,7 +91,7 @@
 </style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260929a"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Sites & Landing Pages</p>
-<header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.12</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
+<header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.13</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Qual caminho escolher? <span>⌄</span></button><div class="info-body"><b>🟢 Criando do zero:</b> para quem ainda vai começar. <b>🟡 Site em andamento:</b> para quem já tem a página inicial ou parte do projeto e travou. <b>🔴 Site pronto:</b> para quem quer melhorar UX, visual, navegação, conversão e estrutura.</div></section>
 
@@ -176,7 +176,213 @@
 const D=(fase,categoria,titulo,quando,prompt,en)=>({fase,categoria,titulo,quando,prompt,en});
 const dadosBrutos=[D('andamento','Melhorias','Melhorar Meu Site Atual','Para descobrir melhorias reais sem desmontar o que ja funciona.','Analise este site ou sistema: [LINK / DESCRICAO / CODIGO / PRINTS]. Publico principal: [PUBLICO]. Objetivo principal: [OBJETIVO].\n\nPrimeiro faca um inventario do que ja existe: paginas, secoes, menus, componentes, funcionalidades, formularios, integracoes e fluxos. Separe o que foi confirmado, o que parece existir e o que nao foi possivel confirmar.\n\nDepois proponha exatamente 20 melhorias que tragam valor real. Nao repita recursos existentes e nao crie variacoes artificiais apenas para completar a lista. Para cada melhoria informe: problema ou oportunidade, solucao, beneficio para o usuario, prioridade, dificuldade, dependencias, risco de implementacao e qual pagina ou componente seria afetado.\n\nTambem identifique 5 melhorias de baixo risco que podem ser feitas primeiro. Finalize com uma ordem de implementacao por etapas, preservando o que ja funciona e evitando reconstrucoes desnecessarias.\n\nSe uma mudanca puder ser feita apenas com HTML/CSS/JS sem alterar a logica principal, destaque isso. Se nao conseguir confirmar algo, escreva "nao foi possivel confirmar".','Analyze this site or system: [LINK / DESCRIPTION / CODE / SCREENSHOTS]. Main audience: [AUDIENCE]. Main goal: [GOAL].\n\nFirst inventory what already exists: pages, sections, menus, components, features, forms, integrations, and flows. Separate what is confirmed, what appears to exist, and what could not be confirmed.\n\nThen propose exactly 20 improvements that add real value. Do not repeat existing features or create artificial variations just to fill the list. For each improvement include: problem or opportunity, solution, user benefit, priority, difficulty, dependencies, implementation risk, and affected page or component.\n\nAlso identify 5 low-risk improvements that can be implemented first. Finish with an implementation sequence that preserves what already works and avoids unnecessary rebuilds.\n\nIf a change can be made only with HTML/CSS/JS without changing the main logic, highlight that. If something cannot be confirmed, write "could not be confirmed".'),
 D('andamento','Visual','Deixar Meu Site Mais Visual e Profissional','Para transformar a aparencia sem perder a identidade e a funcionalidade.','Atue como especialista senior em UX/UI, Design System e design digital. Analise meu site: [LINK/PRINTS/CODIGO]. Publico principal: [PUBLICO]. Objetivo principal: [OBJETIVO].\n\nPrimeiro descreva a percepcao visual atual e identifique o que ja esta bom. Depois faca uma auditoria em: hierarquia visual, layout, grid, espacamento, cores, contraste, tipografia, imagens, icones, cards, botoes, CTAs, formularios, bordas, sombras, estados de interacao e consistencia entre paginas.\n\nSugira exatamente 10 melhorias visuais. Para cada uma informe: problema observado, mudanca recomendada, motivo, impacto para o usuario, prioridade, dificuldade e onde aplicar.\n\nDepois crie uma mini direcao de Design System com paleta, tipografia, escala de espacamentos, raio de borda, sombras, estilo de botoes, cards e icones. Inclua uma secao separada para celular e outra para computador. Verifique tambem contraste, legibilidade e foco visivel.\n\nNao invente elementos que nao foram confirmados. Preserve o que funciona e prefira ajustes pontuais a uma reformulacao total. Finalize com as 5 mudancas que devem ser feitas primeiro.','Act as a senior UX/UI, Design System, and digital design specialist. Analyze my site: [LINK/SCREENSHOTS/CODE]. Main audience: [AUDIENCE]. Main goal: [GOAL].\n\nFirst describe the current visual perception and identify what is already good. Then audit visual hierarchy, layout, grid, spacing, colors, contrast, typography, images, icons, cards, buttons, CTAs, forms, borders, shadows, interaction states, and consistency across pages.\n\nSuggest exactly 10 visual improvements. For each include: observed problem, recommended change, reason, user impact, priority, difficulty, and where to apply it.\n\nThen create a mini Design System direction covering palette, typography, spacing scale, border radius, shadows, button style, cards, and icons. Include separate sections for mobile and desktop. Also check contrast, readability, and visible focus.\n\nDo not invent elements that were not confirmed. Preserve what works and prefer targeted adjustments over a total redesign. Finish with the 5 changes to implement first.'),
-D('andamento','Design & UX/UI','Auditoria Visual Profissional — 10 Melhorias','Para encontrar os 10 ajustes visuais que mais elevam a qualidade percebida.','Atue como diretor de arte e especialista em UX/UI. Analise [LINK/PRINTS/CODIGO]. Entregue um diagnostico visual objetivo e exatamente 10 melhorias. Avalie hierarquia, alinhamento, espacamento, proporcao, cores, contraste, tipografia, imagens, icones, cards, botoes e consistencia. Para cada item informe: antes, depois, motivo, impacto, prioridade, dificuldade e pagina afetada. Nao invente problemas que nao puder verificar. Finalize com um plano de implementacao do menor risco para o maior.','Act as an art director and UX/UI specialist. Analyze [LINK/SCREENSHOTS/CODE]. Provide an objective visual diagnosis and exactly 10 improvements. Evaluate hierarchy, alignment, spacing, proportion, colors, contrast, typography, images, icons, cards, buttons, and consistency. For each item include: before, after, reason, impact, priority, difficulty, and affected page. Do not invent problems you cannot verify. Finish with an implementation plan from lowest risk to highest.'),
+D('andamento','Design & UX/UI','Auditoria Visual Profissional — 10 Melhorias','Para encontrar os 10 ajustes visuais que mais elevam a qualidade percebida.','Atue como Diretor de Arte, Especialista em UX/UI e Design de Interfaces.
+
+Analise visualmente o sistema/site:
+[LINK DO SITE]
+
+Se necessario, considere tambem:
+[PRINTS OU PAGINAS ESPECIFICAS]
+
+OBJETIVO DO SITE:
+[OBJETIVO]
+
+PUBLICO:
+[PUBLICO]
+
+Faca uma auditoria visual objetiva, baseada somente no que puder ser realmente observado.
+
+REGRAS DE ANALISE:
+- Nao invente problemas.
+- Nao presuma que um recurso existe ou nao existe sem verificar.
+- Diferencie problemas visuais confirmados de pontos que nao puderam ser avaliados.
+- Nao sugira mudancas apenas por preferencia pessoal.
+- Preserve elementos que ja funcionam bem.
+- Prefira ajustes pontuais a uma reformulacao total.
+- Analise desktop e mobile quando ambos puderem ser avaliados.
+- Se uma pagina, componente ou comportamento nao puder ser verificado, escreva "nao foi possivel verificar".
+
+AVALIE:
+1. Hierarquia visual
+2. Alinhamento
+3. Espacamento e respiro
+4. Proporcao e distribuicao dos elementos
+5. Cores e paleta
+6. Contraste e legibilidade
+7. Tipografia
+8. Imagens e elementos visuais
+9. Icones
+10. Cards e componentes
+11. Botoes e CTAs
+12. Formularios e campos
+13. Navegacao
+14. Consistencia entre componentes e paginas
+15. Responsividade
+16. Estados visuais: hover, foco, ativo, desabilitado, erro e sucesso
+17. Acessibilidade visual
+18. Aparencia geral e percepcao de profissionalismo
+
+DIAGNOSTICO GERAL:
+Antes das melhorias, informe de forma objetiva:
+- O que esta funcionando bem.
+- Principais problemas visuais encontrados.
+- Nivel de consistencia visual.
+- Principais oportunidades.
+- Situacao do desktop.
+- Situacao do mobile, se puder ser verificada.
+
+ENTREGA:
+Entregue EXATAMENTE 10 melhorias.
+Nao entregue 9 nem 11.
+Escolha somente melhorias que tenham impacto real e que possam ser justificadas pelo que foi observado.
+
+Para cada melhoria use exatamente esta estrutura:
+
+### 1. [Nome da melhoria]
+
+**Antes:** O que existe atualmente e qual problema foi observado.
+
+**Depois:** Como a interface deveria ficar.
+
+**Motivo:** Por que a alteracao melhora a interface ou a experiencia.
+
+**Impacto:** Baixo / Medio / Alto
+
+**Prioridade:** Baixa / Media / Alta
+
+**Dificuldade:** Baixa / Media / Alta
+
+**Pagina afetada:** Pagina, secao ou componente especifico.
+
+**Evidencia:** O que foi observado que justifica esta recomendacao.
+
+Inclua tambem, quando relevante, se a alteracao pode ser feita apenas com HTML/CSS/JS sem mudar a logica principal.
+
+PLANO DE IMPLEMENTACAO:
+Depois das 10 melhorias, organize a execucao do menor risco para o maior:
+
+### Fase 1 — Baixo risco
+Alteracoes visuais que nao devem modificar a logica do sistema.
+
+### Fase 2 — Medio risco
+Alteracoes envolvendo componentes, layout, navegacao ou comportamento visual.
+
+### Fase 3 — Maior risco
+Alteracoes estruturais que podem afetar varias paginas ou funcionalidades.
+
+Para cada fase informe:
+- melhorias envolvidas;
+- risco de quebrar funcionalidades;
+- dependencias;
+- ordem recomendada.
+
+REGRA FINAL:
+O objetivo nao e apenas deixar o site mais bonito. O objetivo e deixa-lo mais claro, organizado, profissional, consistente, facil de usar e visualmente equilibrado.
+
+Nao invente problemas e nao proponha reconstrucoes desnecessarias.','Act as an Art Director, UX/UI Specialist, and Interface Design expert.
+
+Visually analyze:
+[SITE LINK]
+
+If necessary, also consider:
+[SCREENSHOTS OR SPECIFIC PAGES]
+
+SITE GOAL:
+[GOAL]
+
+AUDIENCE:
+[AUDIENCE]
+
+Perform an objective visual audit based only on what can actually be observed.
+
+ANALYSIS RULES:
+- Do not invent problems.
+- Do not assume a feature exists or does not exist without verifying it.
+- Clearly separate confirmed visual problems from points that could not be evaluated.
+- Do not recommend changes based only on personal preference.
+- Preserve elements that already work well.
+- Prefer targeted adjustments over a total redesign.
+- Analyze desktop and mobile when both can be evaluated.
+- If a page, component, or behavior cannot be verified, write "could not be verified".
+
+EVALUATE:
+1. Visual hierarchy
+2. Alignment
+3. Spacing and breathing room
+4. Proportion and element distribution
+5. Colors and palette
+6. Contrast and readability
+7. Typography
+8. Images and visual elements
+9. Icons
+10. Cards and components
+11. Buttons and CTAs
+12. Forms and fields
+13. Navigation
+14. Consistency across components and pages
+15. Responsiveness
+16. Visual states: hover, focus, active, disabled, error, and success
+17. Visual accessibility
+18. Overall appearance and perceived professionalism
+
+GENERAL DIAGNOSIS:
+Before the improvements, briefly state:
+- What is already working well.
+- Main visual problems found.
+- Level of visual consistency.
+- Main opportunities.
+- Desktop situation.
+- Mobile situation, if it can be verified.
+
+DELIVERY:
+Provide EXACTLY 10 improvements.
+Do not provide 9 or 11.
+Choose only improvements with real impact that can be justified by what was observed.
+
+For each improvement use exactly this structure:
+
+### 1. [Improvement name]
+
+**Before:** What currently exists and what problem was observed.
+
+**After:** How the interface should look.
+
+**Reason:** Why the change improves the interface or experience.
+
+**Impact:** Low / Medium / High
+
+**Priority:** Low / Medium / High
+
+**Difficulty:** Low / Medium / High
+
+**Affected page:** Specific page, section, or component.
+
+**Evidence:** What was observed that justifies the recommendation.
+
+When relevant, also state whether the change can be implemented with HTML/CSS/JS without changing the main logic.
+
+IMPLEMENTATION PLAN:
+After the 10 improvements, organize execution from lowest risk to highest:
+
+### Phase 1 — Low risk
+Visual changes that should not modify system logic.
+
+### Phase 2 — Medium risk
+Changes involving components, layout, navigation, or visual behavior.
+
+### Phase 3 — Higher risk
+Structural changes that may affect multiple pages or features.
+
+For each phase include:
+- improvements involved;
+- risk of breaking functionality;
+- dependencies;
+- recommended order.
+
+FINAL RULE:
+The goal is not simply to make the site prettier. The goal is to make it clearer, more organized, professional, consistent, easy to use, and visually balanced.
+
+Do not invent problems or recommend unnecessary rebuilds.'),
 D('andamento','Design & UX/UI','Auditoria UX/UI Completa','Para analisar a experiencia antes de mudar o visual.','Analise [LINK/PRINTS/CODIGO] como especialista em UX/UI. Avalie jornada, arquitetura da informacao, navegacao, clareza dos textos, hierarquia visual, formularios, CTAs, feedbacks, erros, acessibilidade, responsividade e consistencia. Separe problemas confirmados de hipoteses. Crie uma tabela com problema, evidencia, impacto, prioridade, dificuldade e recomendacao. Finalize com 10 acoes praticas em ordem de implementacao.','Analyze [LINK/SCREENSHOTS/CODE] as a UX/UI specialist. Evaluate user journey, information architecture, navigation, content clarity, visual hierarchy, forms, CTAs, feedback, errors, accessibility, responsiveness, and consistency. Separate confirmed problems from hypotheses. Create a table with problem, evidence, impact, priority, difficulty, and recommendation. Finish with 10 practical actions in implementation order.'),
 D('andamento','Design & UX/UI','Criar Design System do Meu Site','Para deixar todas as paginas com a mesma linguagem visual.','A partir de [LINK/PRINTS/CODIGO], crie uma especificacao de Design System para este site. Defina cores e estados, tipografia e tamanhos, espacamentos, grid, raios, sombras, botoes, links, inputs, cards, badges, modais, tabelas e mensagens. Mostre regras de uso e exemplos. Priorize reutilizacao e nao altere a logica do sistema.','Based on [LINK/SCREENSHOTS/CODE], create a Design System specification for this site. Define colors and states, typography and sizes, spacing, grid, radii, shadows, buttons, links, inputs, cards, badges, modals, tables, and messages. Show usage rules and examples. Prioritize reuse and do not change system logic.'),
 D('andamento','Design & UX/UI','Melhorar Hierarquia Visual','Para fazer o usuario entender a pagina mais rapido.','Analise [LINK/PRINTS]. Identifique onde o olhar do usuario deve ir primeiro, segundo e terceiro. Revise titulos, subtitulos, tamanhos, pesos, contraste, espacamento, agrupamento e CTAs. Proponha uma nova hierarquia para cada pagina importante e explique o motivo. Nao aumente elementos apenas para chamar atencao.','Analyze [LINK/SCREENSHOTS]. Identify where the user attention should go first, second, and third. Review headings, subheadings, sizes, weights, contrast, spacing, grouping, and CTAs. Propose a new hierarchy for each important page and explain why. Do not enlarge elements just to attract attention.'),
