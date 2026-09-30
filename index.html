@@ -8,7 +8,7 @@
 .modo-simples-hero-link:hover{color:var(--p)}
 [data-modo-simples="true"] .modo-simples-hero-link{color:#16a34a;font-weight:800}
 .hero-stats a{color:var(--p);font-weight:800;text-decoration:none}
-.quick.historico{margin-top:8px}
+.prompts-leigos-home{margin-top:16px;padding:18px;border:1px solid #dbe4ff;border-radius:18px;background:linear-gradient(135deg,#f8faff,#fff);box-shadow:0 6px 20px rgba(40,42,90,.06)}.prompts-leigos-head h3{margin:7px 0 4px;font-size:20px}.prompts-leigos-head p{margin:0;color:var(--muted);font-size:13px}.prompts-leigos-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.prompt-leigo-card{display:block;padding:14px;border:1px solid var(--border);border-radius:14px;background:#fff;text-decoration:none;color:inherit;transition:.15s}.prompt-leigo-card:hover{transform:translateY(-1px);box-shadow:0 5px 15px rgba(40,42,90,.08)}.prompt-leigo-card strong{display:block;font-size:13.5px;line-height:1.35;margin-bottom:5px}.prompt-leigo-card small{display:block;color:var(--muted);font-size:11.5px;line-height:1.4}.prompt-leigo-card .usar{display:inline-block;margin-top:9px;color:var(--p);font-size:11.5px;font-weight:800}@media(max-width:899px){.prompts-leigos-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.prompts-leigos-home{padding:15px}.prompts-leigos-grid{grid-template-columns:1fr}}.quick.historico{margin-top:8px}
 .quick.historico .historico-label{display:flex;align-items:center;font-size:12px;color:var(--muted);font-weight:700;padding-right:4px;flex:0 0 auto}
 .quick.historico{background:#f8f8ff;border:1px dashed #d8d9f5;border-radius:12px;padding:8px 10px;margin-top:8px}
 .quick.historico button{background:#fff;border:1px solid #e0e0f5}
@@ -59,6 +59,17 @@
 <div class="quick"><button data-search="imagem">🎨 Imagens</button><button data-search="estudo">📚 Estudo</button><button data-search="marketing">📣 Marketing</button><button data-search="notebook">📚 NotebookLM</button><button data-search="skill">🧠 Skills</button><button data-search="imobiliario">🏠 Imobiliário</button><button data-search="vendas">🛒 Vendas</button><button data-search="redes sociais">📱 Redes Sociais</button><button data-search="programação">💻 Programação</button><button data-search="automação">⚙️ Automação</button><button data-search="saúde">🧠 Saúde</button><button data-search="finanças">💰 Finanças</button></div>
 
 <button type="button" id="btnModoSimplesHero" class="modo-simples-hero-link">🧓 Sou iniciante / prefiro um modo mais simples</button>
+
+<div id="promptsLeigosHome" class="prompts-leigos-home" style="display:none">
+  <div class="prompts-leigos-head">
+    <div>
+      <span class="tag">🌱 PARA QUEM ESTÁ COMEÇANDO</span>
+      <h3>Prompts simples para começar agora</h3>
+      <p>Você não precisa entender de IA. Escolha uma tarefa e veja um exemplo pronto.</p>
+    </div>
+  </div>
+  <div id="promptsLeigosGrid" class="prompts-leigos-grid"></div>
+</div>
 
 <div class="quick historico" id="historicoBusca" style="display:none"></div>
 
@@ -609,6 +620,30 @@ const btnModoSimplesHero=document.getElementById('btnModoSimplesHero');
 function atualizarBtnModoSimplesHero(){const lig=document.documentElement.getAttribute('data-modo-simples')==='true';btnModoSimplesHero.textContent=lig?'🧓 Modo Simples ligado — clique pra desligar':'🧓 Sou iniciante / prefiro um modo mais simples'}
 btnModoSimplesHero.addEventListener('click',()=>{const lig=document.documentElement.getAttribute('data-modo-simples')==='true';document.documentElement.setAttribute('data-modo-simples',lig?'false':'true');try{localStorage.setItem('deltaModoSimples',lig?'false':'true')}catch(e){}location.reload()});
 atualizarBtnModoSimplesHero();
+
+async function renderPromptsLeigosHome(){
+  const box=document.getElementById('promptsLeigosHome');
+  const grid=document.getElementById('promptsLeigosGrid');
+  if(!box||!grid)return;
+  const ativo=document.documentElement.getAttribute('data-modo-simples')==='true';
+  if(!ativo){box.style.display='none';return}
+  box.style.display='block';
+  grid.innerHTML='<div style="color:var(--muted);font-size:13px">🔄 Carregando sugestões simples...</div>';
+  try{
+    const res=await fetch('search-index.js?v=20260930-simple');
+    const txt=await res.text();
+    const ini=txt.indexOf('['), fim=txt.lastIndexOf(']');
+    const idx=JSON.parse(txt.slice(ini,fim+1));
+    const paginasPermitidas=new Set(['🎨 Prompts para Transformação de Imagens com IA','📚 Estudo Estratégico com IA','🗣️ Comunicação Profissional com IA','📱 Prompts para Redes Sociais','📲 WhatsApp Profissional','💰 Finanças Pessoais com IA','🍳 Culinária & Receitas com IA','🧠💚 Saúde Inteligente com IA','🏠 Imobiliário Estratégico com IA']);
+    const excluir=/^(todos|intermediario|avancado|basico|#|filtros|categoria|objetivo)/i;
+    const vistos=new Set();
+    const itens=idx.filter(x=>paginasPermitidas.has(x.pagina)&&x.titulo&&!excluir.test(String(x.titulo).trim())&&String(x.titulo).length>8).filter(x=>{const k=x.titulo+'|'+x.pagina;if(vistos.has(k))return false;vistos.add(k);return true}).slice(0,12);
+    grid.innerHTML=itens.length?itens.map(x=>'<a class="prompt-leigo-card" href="'+x.link+'"><strong>✨ '+x.titulo+'</strong><small>'+String(x.resumo||'Prompt pronto para você usar.').slice(0,115)+'…</small><span class="usar">Ver e usar →</span></a>').join(''):'<div style="color:var(--muted);font-size:13px">Não encontrei sugestões agora. Use a busca acima 🙂</div>';
+  }catch(e){
+    grid.innerHTML='<div style="color:var(--muted);font-size:13px">Use a busca acima para encontrar um prompt simples 🙂</div>';
+  }
+}
+renderPromptsLeigosHome();
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 render();
