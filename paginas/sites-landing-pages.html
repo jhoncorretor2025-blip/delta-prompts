@@ -375,7 +375,9 @@ function textoBase(id){const p=getItem(id);if(!p)return'';return idiomaAtivo[id]
 function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';const pre=document.getElementById('prompt-'+id),btn=document.getElementById('idioma-'+id);if(pre)pre.textContent=textoBase(id);if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}}
 
 // ===== CAMPOS EDITÁVEIS =====
-function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
+function valorPadraoCampo(ph){if(/LINK/i.test(ph)){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}}return''}
+function substituirPlaceholders(texto,p){let t=String(texto||'');(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+p.id+'-'+idx);const val=(el&&el.value.trim())||valorPadraoCampo(ph);if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}')+'\\]','g');t=t.replace(re,val)}});return t}
+function textoFinal(id){const p=getItem(id);if(!p)return'';return substituirPlaceholders(textoBase(id),p)}
 
 // ===== AÇÕES =====
 async function copiarTexto(t){try{await navigator.clipboard.writeText(t);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
@@ -495,7 +497,7 @@ function criarCard(p){
     <h3>${p.titulo}</h3>
     <p class="quando"><span aria-hidden="true">💡</span> ${p.quando}</p>
     ${p.placeholders.length?`<button type="button" class="btn-toggle-campos" data-acao="togglecampos" data-id="${p.id}" aria-expanded="false">✏️ Preencher campos (${p.placeholders.length})</button><div class="campos-preenchimento" id="campos-${p.id}">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/LINK/i.test(ph)?(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
-    <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
+    <div class="prompt-text" id="prompt-${p.id}">${substituirPlaceholders(p.prompt,p)}</div>
     <button class="ver" type="button" data-acao="ver" data-id="${p.id}" aria-label="Ver prompt completo de ${p.titulo}">Ver prompt completo</button>
     <div class="acoes">
       <button class="copiar" data-acao="copiar" data-id="${p.id}" aria-label="Copiar prompt ${p.titulo}"><span aria-hidden="true">📋</span> Copiar</button>
@@ -659,8 +661,10 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
   const btn=document.getElementById('linkPadraoSalvar');
   try{input.value=localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){}
   btn.addEventListener('click',()=>{
-    try{localStorage.setItem('deltaSiteLinkPadrao',input.value.trim())}catch(e){}
-    mostrarToast('🔗 Link salvo! Já preenchido nos prompts.');
+    const valor=input.value.trim();
+    if(!valor){mostrarToast('⚠️ Cole um link antes de salvar.');input.focus();return}
+    try{localStorage.setItem('deltaSiteLinkPadrao',valor)}catch(e){}
+    mostrarToast('🔗 Link salvo! Agora ele será usado automaticamente nos prompts.');
     render();
   });
 })();
