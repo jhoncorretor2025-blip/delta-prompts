@@ -33,7 +33,7 @@ jobs:
               assert s.count('<script') == s.count('</script>'), f'{p}: tags script desbalanceadas'
               assert s.count('<section') >= 27, f'{p}: poucas sections'
               assert s.count('data-page=') >= 27, f'{p}: poucos itens de menu'
-              assert "const APP_VERSION='8.9'" in s, f'{p}: APP_VERSION não está em 8.9'
+              assert "const APP_VERSION='8.10'" in s, f'{p}: APP_VERSION não está em 8.10'
               assert 'CANIVETE_V90_MENUS_CORRIGIDOS' in s, f'{p}: menu V90 não encontrado'
               assert 'CANIVETE_SW_UPDATE_V28' in s, f'{p}: atualização do Service Worker não encontrada'
               assert "EXTRAS · VIDA PRÁTICA" in s, f'{p}: grupo Vida Prática ausente'
