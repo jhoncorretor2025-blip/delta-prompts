@@ -1290,54 +1290,6 @@ ${linhasMetas?`<h2>🎯 Metas</h2><table>${linhasMetas}</table>`:''}
 
 
 
-<!-- CANIVETE-V99-FIX-VERSAO-SIDEBAR -->
-<style id="CANIVETE_V99_VERSION_FIX_STYLE">
-/* Remove definitivamente as versões exibidas dentro da barra lateral.
-   A versão do cabeçalho principal continua preservada. */
-#side .v80-version,
-#side #versaoTexto,
-#side .canivete-version-badge,
-#side .canivete-single-version-v812,
-#side .canivete-single-version-v813{
-  display:none!important;
-}
-</style>
-<script id="CANIVETE_V99_VERSION_FIX_SCRIPT">
-(function(){
-  'use strict';
-  function limparVersoesSidebar(){
-    const side=document.getElementById('side');
-    if(!side)return;
-    side.querySelectorAll(
-      '.v80-version,#versaoTexto,.canivete-version-badge,'+
-      '.canivete-single-version-v812,.canivete-single-version-v813'
-    ).forEach(function(el){el.remove()});
-  }
-
-  function iniciar(){
-    limparVersoesSidebar();
-
-    const side=document.getElementById('side');
-    if(!side)return;
-
-    const observer=new MutationObserver(function(){
-      limparVersoesSidebar();
-    });
-    observer.observe(side,{childList:true,subtree:true});
-  }
-
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',iniciar,{once:true});
-  }else{
-    iniciar();
-  }
-
-  setTimeout(limparVersoesSidebar,100);
-  setTimeout(limparVersoesSidebar,500);
-  setTimeout(limparVersoesSidebar,1000);
-})();
-</script>
-
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const link=document.createElement('a');
@@ -5100,5 +5052,41 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   window.CANIVETE_UX_VERSION=VERSION;
 })();
 </script>
+
+<!-- CANIVETE-V99-FIX-VERSAO-SIDEBAR -->
+<style id="CANIVETE_V99_VERSION_FIX_STYLE">
+/* As versões do sistema continuam disponíveis internamente, mas não são exibidas na barra lateral. */
+#side .v80-version,
+#side #versaoTexto,
+#side .canivete-version-badge,
+#side .canivete-single-version-v812,
+#side .canivete-single-version-v813{
+  display:none!important;
+}
+</style>
+<script id="CANIVETE_V99_VERSION_FIX_SCRIPT">
+(function(){
+  'use strict';
+  function limparVersoesSidebar(){
+    const side=document.getElementById('side');
+    if(!side)return;
+    side.querySelectorAll('.v80-version,#versaoTexto,.canivete-version-badge,.canivete-single-version-v812,.canivete-single-version-v813')
+      .forEach(function(el){el.remove()});
+  }
+  function iniciar(){
+    limparVersoesSidebar();
+    const side=document.getElementById('side');
+    if(!side)return;
+    const observer=new MutationObserver(limparVersoesSidebar);
+    observer.observe(side,{childList:true,subtree:true});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar,{once:true});
+  else iniciar();
+  setTimeout(limparVersoesSidebar,100);
+  setTimeout(limparVersoesSidebar,500);
+  setTimeout(limparVersoesSidebar,1000);
+})();
+</script>
+
 </body>
 </html>
