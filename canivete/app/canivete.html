@@ -1287,193 +1287,7 @@ h1{font-size:22px}h2{font-size:16px;margin-top:28px}table{width:100%;border-coll
 ${linhasMetas?`<h2>🎯 Metas</h2><table>${linhasMetas}</table>`:''}
 <div class="aviso">🔒 Por segurança, este resumo NUNCA inclui senhas, contatos pessoais ou dados de saúde — só o retrato financeiro acima.</div>
 \n<script id="CANIVETE_V84_USADO_HOJE">\n(function(){\n  function atualizarUsadosHoje(){\n    var botoes = Array.from(document.querySelectorAll('button'));\n    var usados = botoes.filter(function(b){\n      return /usado\\s+hoje/i.test((b.textContent||'').trim());\n    }).length;\n\n    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){\n      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());\n    });\n    labels.forEach(function(label){\n      var box = label.parentElement;\n      if(!box) return;\n      var numero = box.querySelector('.metric,.stat b,strong');\n      if(numero) numero.textContent = String(usados);\n    });\n\n    document.querySelectorAll('*').forEach(function(el){\n      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){\n        var candidatos = el.querySelectorAll('.metric,.stat b,strong');\n        if(candidatos.length) candidatos[0].textContent = String(usados);\n      }\n    });\n  }\n\n  document.addEventListener('click', function(e){\n    var b = e.target.closest && e.target.closest('button');\n    if(!b) return;\n    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){\n      setTimeout(atualizarUsadosHoje, 50);\n      setTimeout(atualizarUsadosHoje, 250);\n    }\n  }, true);\n\n  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });\n  obs.observe(document.body, {subtree:true, childList:true, characterData:true});\n  setTimeout(atualizarUsadosHoje, 300);\n  setTimeout(atualizarUsadosHoje, 1000);\n})();\n</script>\n
-<!-- CANIVETE-V90-MENUS-CORRIGIDOS -->
-<style>
-.v90-menu-group{margin:8px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
-.v90-menu-group summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:10.5px;font-weight:850;color:var(--muted);letter-spacing:.04em;user-select:none}
-.v90-menu-group summary::-webkit-details-marker{display:none}
-.v90-menu-group summary::after{content:'›';margin-left:auto;font-size:18px;line-height:1;transition:transform .15s}
-.v90-menu-group[open] summary::after{transform:rotate(90deg)}
-.v90-menu-group-body{padding:2px 5px 6px}
-.v90-menu-group-body .nav-v90-btn{margin:2px 0!important}
-.v90-menu-group.v90-active-group{border-color:#bfdbfe}
-.v90-menu-search-hit{background:#eef2ff!important;color:var(--blue2)!important;border-color:#dbe4ff!important}
-@media(max-width:760px){
-  .v90-menu-group{margin:6px 0}
-  .v90-menu-group summary{min-height:42px;padding:10px}
-  .v90-menu-group-body{padding:2px 4px 5px}
-}
-.canivete-menu-utility-hidden{display:none!important}\n</style>\n<script id="CANIVETE_V90_MENUS_CORRIGIDOS">
-(function(){
-  'use strict';
 
-  const GROUPS=[
-    {id:'principal',icon:'🏠',title:'PRINCIPAL',open:true,items:['dashboard','perfil','calendario','buscaglobal','configuracoes']},
-    {id:'planejamento',icon:'💼',title:'PLANEJAMENTO',open:true,items:['renda','despesas','dividas','patrimonio']},
-    {id:'acompanhamento',icon:'📈',title:'ACOMPANHAMENTO',open:false,items:['metas','projecoes','analise','historico']},
-    {id:'extras_vida',icon:'🛒',title:'EXTRAS · VIDA PRÁTICA',open:false,items:['compras','senhas','contatos','datas','links']},
-    {id:'extras_saude',icon:'❤️',title:'EXTRAS · SAÚDE & ROTINA',open:false,items:['saude','academia','habitos','veiculo','estudos']},
-    {id:'extras_ferramentas',icon:'🎮',title:'EXTRAS · ENTRETENIMENTO & FERRAMENTAS',open:false,items:['meutime','jogos','mapavendas','comparador']}
-  ];
-
-  function organizar(){
-    const nav=document.getElementById('nav');
-    if(!nav || nav.dataset.v90Ready==='1') return false;
-
-    const all=[...nav.querySelectorAll('button[data-page]')];
-    const byPage=new Map(all.map(b=>[b.dataset.page,b]));
-    if(!byPage.size) return false;
-
-    // Remove agrupamentos antigos, mas preserva os próprios botões.
-    nav.querySelectorAll('.v80-nav-group,.v90-menu-group').forEach(g=>g.remove());
-
-    // Remove títulos/divisores antigos e qualquer resto que tenha ficado dentro do nav.
-    [...nav.children].forEach(el=>{
-      if(el.matches('button[data-page]')) return;
-      el.remove();
-    });
-
-    const usados=new Set();
-
-    GROUPS.forEach(group=>{
-      const details=document.createElement('details');
-      details.className='v90-menu-group';
-      details.dataset.v90Group=group.id;
-      details.open=group.open;
-
-      const summary=document.createElement('summary');
-      summary.innerHTML='<span>'+group.icon+'</span><span>'+group.title+'</span>';
-      details.appendChild(summary);
-
-      const body=document.createElement('div');
-      body.className='v90-menu-group-body';
-
-      group.items.forEach(page=>{
-        const btn=byPage.get(page);
-        if(!btn) return;
-        btn.classList.add('nav-v90-btn');
-        body.appendChild(btn);
-        usados.add(page);
-      });
-
-      if(body.children.length){
-        details.appendChild(body);
-        nav.appendChild(details);
-      }
-    });
-
-    // Se algum novo menu for adicionado no futuro e não estiver no mapa acima,
-    // ele não desaparece: fica automaticamente em "OUTROS".
-    const leftovers=all.filter(b=>!usados.has(b.dataset.page));
-    if(leftovers.length){
-      const details=document.createElement('details');
-      details.className='v90-menu-group';
-      details.dataset.v90Group='outros';
-      details.open=true;
-      const summary=document.createElement('summary');
-      summary.innerHTML='<span>☰</span><span>OUTROS</span>';
-      details.appendChild(summary);
-      const body=document.createElement('div');
-      body.className='v90-menu-group-body';
-      leftovers.forEach(btn=>{
-        btn.classList.add('nav-v90-btn');
-        body.appendChild(btn);
-      });
-      details.appendChild(body);
-      nav.appendChild(details);
-    }
-
-    nav.dataset.v90Ready='1';
-    return true;
-  }
-
-  function garantirClique(){
-    const nav=document.getElementById('nav');
-    if(!nav || nav.dataset.v90ClickReady==='1') return;
-    nav.dataset.v90ClickReady='1';
-
-    // Clique robusto: cada botão recebe diretamente o seu showPage.
-    // Não bloqueamos os listeners existentes, evitando que uma versão antiga
-    // do menu impeça a navegação.
-    nav.querySelectorAll('button[data-page]').forEach(btn=>{
-      btn.addEventListener('click',function(){
-        const page=this.dataset.page;
-        if(page && typeof window.showPage==='function') window.showPage(page);
-      });
-    });
-  }
-
-  function marcarGrupoAtivo(page){
-    document.querySelectorAll('.v90-menu-group').forEach(group=>{
-      const ativo=!!group.querySelector('button[data-page="'+page+'"].active');
-      group.classList.toggle('v90-active-group',ativo);
-    });
-  }
-
-  function integrarShowPage(){
-    if(typeof window.showPage!=='function' || window.showPage.__v90Wrapped) return;
-    const original=window.showPage;
-    const wrapped=function(id){
-      const result=original.apply(this,arguments);
-      setTimeout(function(){
-        marcarGrupoAtivo(id);
-        const btn=document.querySelector('#nav button[data-page="'+id+'"]');
-        const group=btn&&btn.closest('.v90-menu-group');
-        if(group && window.innerWidth<=760) group.open=true;
-      },0);
-      return result;
-    };
-    wrapped.__v90Wrapped=true;
-    window.showPage=wrapped;
-  }
-
-  function integrarBusca(){
-    if(typeof window.buscarNoMenu!=='function' || window.buscarNoMenu.__v90Wrapped) return;
-    const original=window.buscarNoMenu;
-    const wrapped=function(termo){
-      const result=original.apply(this,arguments);
-      const q=String(termo||'').toLowerCase().trim();
-      document.querySelectorAll('.v90-menu-group').forEach(group=>{
-        let achou=false;
-        group.querySelectorAll('button[data-page]').forEach(btn=>{
-          const hit=!!q && (btn.textContent||'').toLowerCase().includes(q);
-          btn.classList.toggle('v90-menu-search-hit',hit);
-          if(hit) achou=true;
-        });
-        if(q && achou) group.open=true;
-        if(!q && group.dataset.v90Group!=='principal' && group.dataset.v90Group!=='planejamento') group.open=false;
-      });
-      return result;
-    };
-    wrapped.__v90Wrapped=true;
-    window.buscarNoMenu=wrapped;
-  }
-
-  function ocultarUtilitarios(){
-    ['btnTemaCanivete','btnConfigurarPin'].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el) el.classList.add('canivete-menu-utility-hidden');
-    });
-  }
-
-  function iniciar(){
-    organizar();
-    ocultarUtilitarios();
-    garantirClique();
-    integrarShowPage();
-    integrarBusca();
-    setTimeout(function(){
-      integrarShowPage();
-      integrarBusca();
-      const atual=document.querySelector('#nav button.active[data-page]')?.dataset.page||'dashboard';
-      marcarGrupoAtivo(atual);
-    },100);
-  }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',iniciar,{once:true});
-  else iniciar();
-})();
-</script>
 
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
@@ -3596,6 +3410,194 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
       if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
     })();
     </script>
+<!-- CANIVETE-V90-MENUS-CORRIGIDOS -->
+<style>
+.v90-menu-group{margin:8px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.v90-menu-group summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:10.5px;font-weight:850;color:var(--muted);letter-spacing:.04em;user-select:none}
+.v90-menu-group summary::-webkit-details-marker{display:none}
+.v90-menu-group summary::after{content:'›';margin-left:auto;font-size:18px;line-height:1;transition:transform .15s}
+.v90-menu-group[open] summary::after{transform:rotate(90deg)}
+.v90-menu-group-body{padding:2px 5px 6px}
+.v90-menu-group-body .nav-v90-btn{margin:2px 0!important}
+.v90-menu-group.v90-active-group{border-color:#bfdbfe}
+.v90-menu-search-hit{background:#eef2ff!important;color:var(--blue2)!important;border-color:#dbe4ff!important}
+@media(max-width:760px){
+  .v90-menu-group{margin:6px 0}
+  .v90-menu-group summary{min-height:42px;padding:10px}
+  .v90-menu-group-body{padding:2px 4px 5px}
+}
+.canivete-menu-utility-hidden{display:none!important}\n</style>\n<script id="CANIVETE_V90_MENUS_CORRIGIDOS">
+(function(){
+  'use strict';
+
+  const GROUPS=[
+    {id:'principal',icon:'🏠',title:'PRINCIPAL',open:true,items:['dashboard','perfil','calendario','buscaglobal','configuracoes']},
+    {id:'planejamento',icon:'💼',title:'PLANEJAMENTO',open:true,items:['renda','despesas','dividas','patrimonio']},
+    {id:'acompanhamento',icon:'📈',title:'ACOMPANHAMENTO',open:false,items:['metas','projecoes','analise','historico']},
+    {id:'extras_vida',icon:'🛒',title:'EXTRAS · VIDA PRÁTICA',open:false,items:['compras','senhas','contatos','datas','links']},
+    {id:'extras_saude',icon:'❤️',title:'EXTRAS · SAÚDE & ROTINA',open:false,items:['saude','academia','habitos','veiculo','estudos']},
+    {id:'extras_ferramentas',icon:'🎮',title:'EXTRAS · ENTRETENIMENTO & FERRAMENTAS',open:false,items:['meutime','jogos','mapavendas','comparador']}
+  ];
+
+  function organizar(){
+    const nav=document.getElementById('nav');
+    if(!nav || nav.dataset.v90Ready==='1') return false;
+
+    const all=[...nav.querySelectorAll('button[data-page]')];
+    const byPage=new Map(all.map(b=>[b.dataset.page,b]));
+    if(!byPage.size) return false;
+
+    // Remove agrupamentos antigos, mas preserva os próprios botões.
+    nav.querySelectorAll('.v80-nav-group,.v90-menu-group').forEach(g=>g.remove());
+
+    // Remove títulos/divisores antigos e qualquer resto que tenha ficado dentro do nav.
+    [...nav.children].forEach(el=>{
+      if(el.matches('button[data-page]')) return;
+      el.remove();
+    });
+
+    const usados=new Set();
+
+    GROUPS.forEach(group=>{
+      const details=document.createElement('details');
+      details.className='v90-menu-group';
+      details.dataset.v90Group=group.id;
+      details.open=group.open;
+
+      const summary=document.createElement('summary');
+      summary.innerHTML='<span>'+group.icon+'</span><span>'+group.title+'</span>';
+      details.appendChild(summary);
+
+      const body=document.createElement('div');
+      body.className='v90-menu-group-body';
+
+      group.items.forEach(page=>{
+        const btn=byPage.get(page);
+        if(!btn) return;
+        btn.classList.add('nav-v90-btn');
+        body.appendChild(btn);
+        usados.add(page);
+      });
+
+      if(body.children.length){
+        details.appendChild(body);
+        nav.appendChild(details);
+      }
+    });
+
+    // Se algum novo menu for adicionado no futuro e não estiver no mapa acima,
+    // ele não desaparece: fica automaticamente em "OUTROS".
+    const leftovers=all.filter(b=>!usados.has(b.dataset.page));
+    if(leftovers.length){
+      const details=document.createElement('details');
+      details.className='v90-menu-group';
+      details.dataset.v90Group='outros';
+      details.open=true;
+      const summary=document.createElement('summary');
+      summary.innerHTML='<span>☰</span><span>OUTROS</span>';
+      details.appendChild(summary);
+      const body=document.createElement('div');
+      body.className='v90-menu-group-body';
+      leftovers.forEach(btn=>{
+        btn.classList.add('nav-v90-btn');
+        body.appendChild(btn);
+      });
+      details.appendChild(body);
+      nav.appendChild(details);
+    }
+
+    nav.dataset.v90Ready='1';
+    return true;
+  }
+
+  function garantirClique(){
+    const nav=document.getElementById('nav');
+    if(!nav || nav.dataset.v90ClickReady==='1') return;
+    nav.dataset.v90ClickReady='1';
+
+    // Clique robusto: cada botão recebe diretamente o seu showPage.
+    // Não bloqueamos os listeners existentes, evitando que uma versão antiga
+    // do menu impeça a navegação.
+    nav.querySelectorAll('button[data-page]').forEach(btn=>{
+      btn.addEventListener('click',function(){
+        const page=this.dataset.page;
+        if(page && typeof window.showPage==='function') window.showPage(page);
+      });
+    });
+  }
+
+  function marcarGrupoAtivo(page){
+    document.querySelectorAll('.v90-menu-group').forEach(group=>{
+      const ativo=!!group.querySelector('button[data-page="'+page+'"].active');
+      group.classList.toggle('v90-active-group',ativo);
+    });
+  }
+
+  function integrarShowPage(){
+    if(typeof window.showPage!=='function' || window.showPage.__v90Wrapped) return;
+    const original=window.showPage;
+    const wrapped=function(id){
+      const result=original.apply(this,arguments);
+      setTimeout(function(){
+        marcarGrupoAtivo(id);
+        const btn=document.querySelector('#nav button[data-page="'+id+'"]');
+        const group=btn&&btn.closest('.v90-menu-group');
+        if(group && window.innerWidth<=760) group.open=true;
+      },0);
+      return result;
+    };
+    wrapped.__v90Wrapped=true;
+    window.showPage=wrapped;
+  }
+
+  function integrarBusca(){
+    if(typeof window.buscarNoMenu!=='function' || window.buscarNoMenu.__v90Wrapped) return;
+    const original=window.buscarNoMenu;
+    const wrapped=function(termo){
+      const result=original.apply(this,arguments);
+      const q=String(termo||'').toLowerCase().trim();
+      document.querySelectorAll('.v90-menu-group').forEach(group=>{
+        let achou=false;
+        group.querySelectorAll('button[data-page]').forEach(btn=>{
+          const hit=!!q && (btn.textContent||'').toLowerCase().includes(q);
+          btn.classList.toggle('v90-menu-search-hit',hit);
+          if(hit) achou=true;
+        });
+        if(q && achou) group.open=true;
+        if(!q && group.dataset.v90Group!=='principal' && group.dataset.v90Group!=='planejamento') group.open=false;
+      });
+      return result;
+    };
+    wrapped.__v90Wrapped=true;
+    window.buscarNoMenu=wrapped;
+  }
+
+  function ocultarUtilitarios(){
+    ['btnTemaCanivete','btnConfigurarPin'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.classList.add('canivete-menu-utility-hidden');
+    });
+  }
+
+  function iniciar(){
+    organizar();
+    ocultarUtilitarios();
+    garantirClique();
+    integrarShowPage();
+    integrarBusca();
+    setTimeout(function(){
+      integrarShowPage();
+      integrarBusca();
+      const atual=document.querySelector('#nav button.active[data-page]')?.dataset.page||'dashboard';
+      marcarGrupoAtivo(atual);
+    },100);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',iniciar,{once:true});
+  else iniciar();
+})();
+</script>
+
 
     <script>
     /* CANIVETE-V79-SAUDE */
