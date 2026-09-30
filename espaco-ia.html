@@ -660,22 +660,23 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 (function(){
 'use strict';
 function df(id){return document.getElementById(id)}
+function toastLocal(msg){var t=df('toast');if(!t)return;t.textContent=msg;t.classList.add('show');clearTimeout(window.__dflToast);window.__dflToast=setTimeout(function(){t.classList.remove('show')},1800)}
 function dftab(tab){var b=document.querySelector('.tabs button[data-tab="'+tab+'"]');if(b)b.click()}
 function dfgoto(id){var e=df(id);if(e)e.scrollIntoView({behavior:'smooth',block:'start'})}
 function dfSmart(){
   dftab('criar');setTimeout(function(){var c=df('cContexto'),o=df('cObjetivo');if(c)c.focus();if(o)o.value='';if(c)c.value='Quero realizar uma tarefa com ajuda de IA. Descreva aqui o que você precisa fazer.'},120);
-  if(typeof toast==='function')toast('🧠 Montador inteligente aberto');
+  toastLocal('🧠 Montador inteligente aberto');
 }
 function dfAssistant(){dftab('pro');setTimeout(function(){dfgoto('pro-orchestrator');var i=df('proOrq');if(i)i.focus()},120)}
 function dfImprove(){dftab('melhorar');setTimeout(function(){var i=df('melhorarInput');if(i)i.focus()},120)}
 function dfVariables(){
   var txt=localStorage.getItem('deltaUltimoPromptCriado')||localStorage.getItem('deltaUltimoPromptMelhorado')||'';
-  if(txt&&typeof abrirPersonalizador==='function'){abrirPersonalizador({titulo:'Prompt com variáveis',texto:txt},function(out){localStorage.setItem('deltaUltimoPromptMelhorado',out);toast('🧩 Variáveis aplicadas')});return}
-  dftab('criar');setTimeout(function(){var b=df('personalizarCriado');if(b)b.click();else toast('🧩 Crie um prompt primeiro para preencher variáveis')},120);
+  if(txt){dftab('criar');setTimeout(function(){var b=df('personalizarCriado');if(b)b.click();else toastLocal('🧩 Crie um prompt primeiro para preencher variáveis')},120);return}
+  dftab('criar');setTimeout(function(){var b=df('personalizarCriado');if(b)b.click();else toastLocal('🧩 Crie um prompt primeiro para preencher variáveis')},120);
 }
 function dfVersions(){dftab('pro');setTimeout(function(){dfgoto('pro-versions')},120)}
 function dfCollections(){dftab('meus');setTimeout(function(){dfgoto('colecoesLista')},120)}
-function dfShare(){var txt=localStorage.getItem('deltaUltimoPromptCriado')||localStorage.getItem('deltaUltimoPromptMelhorado')||'';if(txt&&typeof compartilhar==='function'){compartilhar({titulo:'Meu prompt do Delta',texto:txt,categoria:'Meus Prompts'});return}toast('🔗 Crie ou abra um prompt primeiro para compartilhar')}
+function dfShare(){var txt=localStorage.getItem('deltaUltimoPromptCriado')||localStorage.getItem('deltaUltimoPromptMelhorado')||'';if(txt){dftab('criar');setTimeout(function(){var b=df('compartilharCriado');if(b)b.click();else toastLocal('🔗 Crie ou abra um prompt primeiro para compartilhar')},120);return}toastLocal('🔗 Crie ou abra um prompt primeiro para compartilhar')}
 function dfStats(){dftab('pro');setTimeout(function(){dfgoto('pro-stats')},120)}
 function dfBind(){
   document.querySelectorAll('[data-df]').forEach(function(b){b.addEventListener('click',function(){
