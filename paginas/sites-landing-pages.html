@@ -376,7 +376,7 @@ function alternarIdioma(id){idiomaAtivo[id]=idiomaAtivo[id]==='en'?'pt':'en';con
 
 // ===== CAMPOS EDITÁVEIS =====
 function valorPadraoCampo(ph){if(/LINK/i.test(ph)){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}}return''}
-function substituirPlaceholders(texto,p){let t=String(texto||'');(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+p.id+'-'+idx);const val=(el&&el.value.trim())||valorPadraoCampo(ph);if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\function textoFinal(id){const p=getItem(id);if(!p)return'';let t=textoBase(id);(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}')+'\\]','g');t=t.replace(re,val)}});return t}
+function substituirPlaceholders(texto,p){let t=String(texto||'');(p.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+p.id+'-'+idx);const val=(el&&el.value.trim())||valorPadraoCampo(ph);if(val)t=t.split('['+ph+']').join(val)});return t}
 function textoFinal(id){const p=getItem(id);if(!p)return'';return substituirPlaceholders(textoBase(id),p)}
 
 // ===== AÇÕES =====
@@ -660,13 +660,15 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
   const input=document.getElementById('linkPadraoInput');
   const btn=document.getElementById('linkPadraoSalvar');
   try{input.value=localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){}
-  btn.addEventListener('click',()=>{
-    const valor=input.value.trim();
-    if(!valor){mostrarToast('⚠️ Cole um link antes de salvar.');input.focus();return}
-    try{localStorage.setItem('deltaSiteLinkPadrao',valor)}catch(e){}
-    mostrarToast('🔗 Link salvo! Agora ele será usado automaticamente nos prompts.');
-    render();
-  });
+  if(input&&btn){
+    btn.addEventListener('click',()=>{
+      const valor=input.value.trim();
+      if(!valor){mostrarToast('⚠️ Cole um link antes de salvar.');input.focus();return}
+      try{localStorage.setItem('deltaSiteLinkPadrao',valor)}catch(e){}
+      mostrarToast('🔗 Link salvo! Agora ele será usado automaticamente nos prompts.');
+      render();
+    });
+  }
 })();
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
