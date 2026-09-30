@@ -1276,7 +1276,7 @@ h1{font-size:22px}h2{font-size:16px;margin-top:28px}table{width:100%;border-coll
 <table>${linhasCategorias||'<tr><td style="padding:8px;color:#999">Nenhuma despesa cadastrada</td></tr>'}</table>
 ${linhasMetas?`<h2>🎯 Metas</h2><table>${linhasMetas}</table>`:''}
 <div class="aviso">🔒 Por segurança, este resumo NUNCA inclui senhas, contatos pessoais ou dados de saúde — só o retrato financeiro acima.</div>
-\n<script id="CANIVETE_V84_USADO_HOJE">\n(function(){\n  function atualizarUsadosHoje(){\n    var botoes = Array.from(document.querySelectorAll('button'));\n    var usados = botoes.filter(function(b){\n      return /usado\\s+hoje/i.test((b.textContent||'').trim());\n    }).length;\n\n    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){\n      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());\n    });\n    labels.forEach(function(label){\n      var box = label.parentElement;\n      if(!box) return;\n      var numero = box.querySelector('.metric,.stat b,strong');\n      if(numero) numero.textContent = String(usados);\n    });\n\n    document.querySelectorAll('*').forEach(function(el){\n      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){\n        var candidatos = el.querySelectorAll('.metric,.stat b,strong');\n        if(candidatos.length) candidatos[0].textContent = String(usados);\n      }\n    });\n  }\n\n  document.addEventListener('click', function(e){\n    var b = e.target.closest && e.target.closest('button');\n    if(!b) return;\n    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){\n      setTimeout(atualizarUsadosHoje, 50);\n      setTimeout(atualizarUsadosHoje, 250);\n    }\n  }, true);\n\n  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });\n  obs.observe(document.body, {subtree:true, childList:true, characterData:true});\n  setTimeout(atualizarUsadosHoje, 300);\n  setTimeout(atualizarUsadosHoje, 1000);\n})();\n</script>\n</body></html>`;
+\n</body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const link=document.createElement('a');
   link.href=URL.createObjectURL(blob);
@@ -3403,7 +3403,8 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
     (function(){function enhanceHealth(){const section=document.getElementById('saude'),list=document.getElementById('listaRemedios');if(!section||!list)return;const items=list.querySelectorAll(':scope > .goal');const data=typeof _lerRemedios==='function'?_lerRemedios():[];if(!data.length)return;const today=new Date().toISOString().slice(0,10);let ativos=0,pausados=0,usadosHoje=0;data.forEach(r=>{if(r.ativo!==false)ativos++;else pausados++;if((r.diasUso||[]).includes(today))usadosHoje++});let summary=document.getElementById('healthSummary79');if(!summary){summary=document.createElement('div');summary.id='healthSummary79';summary.className='health-summary';list.parentElement.insertBefore(summary,list)}summary.innerHTML='<div class="health-stat"><strong>'+data.length+'</strong><span>itens cadastrados</span></div><div class="health-stat"><strong>'+ativos+'</strong><span>ativos</span></div><div class="health-stat"><strong>'+pausados+'</strong><span>pausados</span></div><div class="health-stat"><strong>'+usadosHoje+'</strong><span>usados hoje</span></div>';items.forEach((card,idx)=>{const r=data[idx];if(!r)return;card.classList.add('health-item-card');const head=card.querySelector('.row.between');if(head)head.classList.add('health-item-head');const left=head?.querySelector('div');if(left)left.classList.add('health-item-name');const actions=head?.querySelector('div:last-child');if(actions)actions.classList.add('health-item-actions');if(left&&!left.querySelector('.health-tags')){const tags=document.createElement('div');tags.className='health-tags';const type=document.createElement('span');type.className='health-tag type';type.textContent=r.tipo==='medicamento'?'💊 Medicamento':'🌿 Suplemento';const status=document.createElement('span');status.className='health-tag '+(r.ativo!==false?'active':'paused');status.textContent=r.ativo!==false?'🟢 Ativo':'⏸️ Pausado';tags.append(type,status);if((r.diasUso||[]).includes(today)){const used=document.createElement('span');used.className='health-tag today';used.textContent='✅ Usado hoje';tags.append(used)}left.append(tags)}})}setTimeout(enhanceHealth,200);})();
     </script>
     
-\n<script>
+
+<script>
 /* CANIVETE-V80-SAUDE-CHA */
 (function(){
   window.suspenderRemedioV80=function(i,motivo){
@@ -3459,8 +3460,10 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   setTimeout(enhanceV80,300);
   document.addEventListener('click',function(e){if(e.target.closest('#btnFiltroRemedio_cha'))setTimeout(enhanceV80,50)});
 })();
-</script>\n
-<!-- CANIVETE-V80-BADGE-FIX -->\n
+</script>
+
+<!-- CANIVETE-V80-BADGE-FIX -->
+
 <!-- CANIVETE-V81-SAÚDE-ABAS -->
 <style>
 .health-tabs81{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px;padding:6px;background:var(--bg);border:1px solid var(--line);border-radius:15px;position:sticky;top:8px;z-index:15}
@@ -3564,7 +3567,8 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 
 <!-- CANIVETE-V83-NAVEGACAO-SAUDE (sincronizacao cruzada removida - causava loop revertendo filtro pra vitamina) -->
 
-\n<script>
+
+<script>
 (function(){
   function atualizarUsadosHoje(){
     var botoes = Array.from(document.querySelectorAll('button'));
@@ -3604,7 +3608,8 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   setTimeout(atualizarUsadosHoje, 300);
   setTimeout(atualizarUsadosHoje, 1000);
 })();
-</script>\n<script id="CANIVETE_V89_MOBILE_TABS">
+</script>
+<script id="CANIVETE_V89_MOBILE_TABS">
 (function(){
   function ativarAba89(tipo){
     document.querySelectorAll('#saude .health-tab81').forEach(function(b){b.classList.toggle('active',b.dataset.healthTab===tipo)});
@@ -3629,5 +3634,47 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 })();
 </script>
 \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<script id="CANIVETE_V84_USADO_HOJE">\n(function(){\n  function atualizarUsadosHoje(){\n    var botoes = Array.from(document.querySelectorAll('button'));\n    var usados = botoes.filter(function(b){\n      return /usado\\s+hoje/i.test((b.textContent||'').trim());\n    }).length;\n\n    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){\n      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());\n    });\n    labels.forEach(function(label){\n      var box = label.parentElement;\n      if(!box) return;\n      var numero = box.querySelector('.metric,.stat b,strong');\n      if(numero) numero.textContent = String(usados);\n    });\n\n    document.querySelectorAll('*').forEach(function(el){\n      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){\n        var candidatos = el.querySelectorAll('.metric,.stat b,strong');\n        if(candidatos.length) candidatos[0].textContent = String(usados);\n      }\n    });\n  }\n\n  document.addEventListener('click', function(e){\n    var b = e.target.closest && e.target.closest('button');\n    if(!b) return;\n    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){\n      setTimeout(atualizarUsadosHoje, 50);\n      setTimeout(atualizarUsadosHoje, 250);\n    }\n  }, true);\n\n  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });\n  obs.observe(document.body, {subtree:true, childList:true, characterData:true});\n  setTimeout(atualizarUsadosHoje, 300);\n  setTimeout(atualizarUsadosHoje, 1000);\n})();\n</script>\n</body>
+\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+<script id="CANIVETE_V84_USADO_HOJE">
+(function(){
+  function atualizarUsadosHoje(){
+    var botoes = Array.from(document.querySelectorAll('button'));
+    var usados = botoes.filter(function(b){
+      return /usado\\s+hoje/i.test((b.textContent||'').trim());
+    }).length;
+
+    var labels = Array.from(document.querySelectorAll('*')).filter(function(el){
+      return el.children.length === 0 && /usadas?\\s+hoje/i.test((el.textContent||'').trim());
+    });
+    labels.forEach(function(label){
+      var box = label.parentElement;
+      if(!box) return;
+      var numero = box.querySelector('.metric,.stat b,strong');
+      if(numero) numero.textContent = String(usados);
+    });
+
+    document.querySelectorAll('*').forEach(function(el){
+      if(el.children.length && /usadas?\\s+hoje/i.test((el.textContent||'').trim()) && (el.textContent||'').length < 80){
+        var candidatos = el.querySelectorAll('.metric,.stat b,strong');
+        if(candidatos.length) candidatos[0].textContent = String(usados);
+      }
+    });
+  }
+
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('button');
+    if(!b) return;
+    if(/marcar\\s+que\\s+usei\\s+hoje|usar\\s+hoje|usado\\s+hoje/i.test((b.textContent||'').trim())){
+      setTimeout(atualizarUsadosHoje, 50);
+      setTimeout(atualizarUsadosHoje, 250);
+    }
+  }, true);
+
+  var obs = new MutationObserver(function(){ atualizarUsadosHoje(); });
+  obs.observe(document.body, {subtree:true, childList:true, characterData:true});
+  setTimeout(atualizarUsadosHoje, 300);
+  setTimeout(atualizarUsadosHoje, 1000);
+})();
+</script>
+</body>
 </html>
