@@ -3535,7 +3535,7 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
         }
 
         // Organiza o menu existente em grupos, preservando os botões e seus eventos.
-        if(!nav.dataset.v80Grouped){
+        if(!nav.dataset.v80Grouped && !nav.dataset.v90Ready){
           const buttons=[...nav.querySelectorAll(':scope > button')];
           if(buttons.length>=5){
             const groups=[
