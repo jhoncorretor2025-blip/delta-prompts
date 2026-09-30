@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="delta-version" content="V1.14">
+<meta name="delta-version" content="V1.15">
 <meta name="description" content="Espaço IA do Delta Prompts: pesquisar, personalizar, criar, melhorar, salvar, compartilhar e testar prompts.">
 <meta name="theme-color" content="#5b5ce2">
-<title>Espaço IA | Delta Prompts V1.14</title>
+<title>Espaço IA | Delta Prompts V1.15</title>
 <link rel="icon" href="/delta-prompts/favicon.ico">
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <style>
@@ -34,6 +34,73 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 .import-note{padding:11px 12px;border-radius:11px;background:#fff7ed;border:1px solid #fed7aa;color:#92400e;font-size:12.5px}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,1fr)}.ai-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.wrap{width:min(100% - 20px,1200px)}.hero{padding-top:20px}.hero-top{align-items:flex-start}.search-row{grid-template-columns:1fr}.grid,.two,.three{grid-template-columns:1fr}.ai-grid{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}.tools>*{width:100%;max-width:none}.share-line{grid-template-columns:1fr}.panel{padding:14px}.section{padding-bottom:32px}}
+
+/* V1.15 · MOBILE ANDROID — ajustes isolados, sem alterar o layout desktop */
+@media(max-width:650px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  body{min-width:0}
+  .wrap{width:calc(100% - 20px);max-width:100%;min-width:0}
+  .hero{padding-left:0;padding-right:0}
+  .hero-top{gap:8px;flex-wrap:wrap}
+  .hero-top .back{font-size:13px}
+  .ver{font-size:10px;padding:5px 8px}
+  h1{font-size:clamp(28px,9vw,38px)}
+  .hero p{font-size:14px;line-height:1.5}
+  .tabs{margin-right:-10px;padding-right:10px;scroll-snap-type:x proximity}
+  .tabs button{min-height:44px;padding:10px 13px;scroll-snap-align:start}
+  .section{min-width:0;overflow:visible}
+  .panel{width:100%;max-width:100%;min-width:0;padding:14px;border-radius:15px}
+  .stats,.pro-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-width:0}
+  .stat{min-width:0;overflow:hidden}
+  .stat strong{font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tools{display:grid;grid-template-columns:1fr;gap:8px}
+  .tools>*{width:100%;min-width:0;max-width:none!important}
+  .grid{width:100%;min-width:0}
+  .card{width:100%;min-width:0;overflow:hidden;padding:13px}
+  .card h3{overflow-wrap:anywhere}
+  .preview{width:100%;max-width:100%;overflow:auto;overflow-wrap:anywhere}
+  .actions{width:100%;min-width:0}
+  .actions button,.actions a{min-height:44px;min-width:0;overflow-wrap:anywhere}
+  .share-line{width:100%;min-width:0}
+  .share-line>*{min-width:0;width:100%}
+  .three{width:100%;min-width:0}
+  .field-wrap,.field,.select,textarea,input{min-width:0;max-width:100%}
+  input,select,textarea{font-size:16px!important}
+  .output{width:100%;max-width:100%;overflow:auto;overflow-wrap:anywhere}
+  .list,.list-item{min-width:0;max-width:100%}
+  .list-item{align-items:flex-start;flex-wrap:wrap}
+  .list-item span{min-width:0;overflow-wrap:anywhere}
+  .ai-grid{width:100%;min-width:0}
+  .ai{min-width:0}
+  .results-info{align-items:flex-start;flex-direction:column}
+  .results-info>*{max-width:100%}
+  .delta-pro-intro{overflow:hidden}
+  .delta-pro-nav{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;max-width:100%;padding-bottom:5px;scrollbar-width:none}
+  .delta-pro-nav::-webkit-scrollbar{display:none}
+  .delta-pro-nav button{flex:0 0 auto;min-height:44px;white-space:nowrap}
+  .pro-box,.pro-gap{min-width:0;max-width:100%}
+  .pro-title{gap:8px;align-items:flex-start}
+  .pro-title>*{min-width:0}
+  .pro-bar-row{grid-template-columns:minmax(0,1fr) auto!important;min-width:0}
+  .pro-bar-row>div{min-width:0}
+  .pro-bar{width:100%;max-width:100%;overflow:hidden}
+  .delta-card-pro-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-width:0}
+  .delta-card-pro-actions button{min-height:42px;min-width:0}
+  .modal{padding:10px}
+  .modal-box{width:100%;max-width:100%;max-height:90vh;padding:15px}
+  .toast{width:calc(100% - 24px);text-align:center}
+}
+@media(max-width:380px){
+  .wrap{width:calc(100% - 16px)}
+  .stats,.pro-stats-grid{grid-template-columns:1fr 1fr}
+  .actions{gap:6px}
+  .actions button,.actions a{font-size:12px;padding:8px 6px}
+  .panel{padding:12px}
+}
+@media(min-width:651px){
+  /* Desktop/tablet: mantém a estrutura atual sem compactação mobile. */
+  .wrap{min-width:0}
+}
 [data-theme="dark"] body{background:#0f1424;color:#eaeaea}[data-theme="dark"] .hero{background:linear-gradient(135deg,#171b35,#0f1424)}[data-theme="dark"] .panel,[data-theme="dark"] .card,[data-theme="dark"] .stat,[data-theme="dark"] .ai,[data-theme="dark"] .list-item,[data-theme="dark"] .modal-box,[data-theme="dark"] .field,[data-theme="dark"] .select,[data-theme="dark"] .search-row input,[data-theme="dark"] .quick button{background:#16213e;border-color:rgba(255,255,255,.12);color:#eaeaea}[data-theme="dark"] .hero p,[data-theme="dark"] .small,[data-theme="dark"] .meta,[data-theme="dark"] .ai small{color:#aab2c3}[data-theme="dark"] .preview,[data-theme="dark"] .output{background:#0f1424;border-color:rgba(255,255,255,.12);color:#d7deea}[data-theme="dark"] .tabs button{background:#16213e;color:#eaeaea;border-color:rgba(255,255,255,.12)}[data-theme="dark"] .tabs button.active{background:var(--p);color:#fff}
 </style>
 </head>
@@ -43,7 +110,7 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 
 <header class="hero">
 <div class="wrap">
-<div class="hero-top"><a class="back" href="/delta-prompts/">← Voltar ao Delta</a><span class="ver">Delta V1.14</span></div>
+<div class="hero-top"><a class="back" href="/delta-prompts/">← Voltar ao Delta</a><span class="ver">Delta V1.15</span></div>
 <h1>🧠 Espaço <span>IA</span></h1>
 <p>Um lugar único para encontrar, personalizar, criar, melhorar, salvar e compartilhar seus prompts — sem perder o que você já tem.</p>
 <div class="tabs" role="tablist">
@@ -187,7 +254,7 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 </section>
 
 <section id="pro" class="section tab" style="display:none">
-<div class="panel delta-pro-intro"><span class="badge">V1.14 · CENTRAL DE FERRAMENTAS</span><h2 style="margin:8px 0 4px">🚀 10 ferramentas para trabalhar melhor com prompts</h2><p class="small">Tudo funciona no seu aparelho. Seus prompts atuais continuam intactos e as novas funções usam áreas próprias.</p>
+<div class="panel delta-pro-intro"><span class="badge">V1.15 · CENTRAL DE FERRAMENTAS</span><h2 style="margin:8px 0 4px">🚀 10 ferramentas para trabalhar melhor com prompts</h2><p class="small">Tudo funciona no seu aparelho. Seus prompts atuais continuam intactos e as novas funções usam áreas próprias.</p>
 <div class="delta-pro-nav">
 <button type="button" data-progo="pro-builder">1. 🧭 Perguntas</button><button type="button" data-progo="pro-recommender">2. 🎯 Escolher</button><button type="button" data-progo="pro-tester">3. 🧪 Testar</button><button type="button" data-progo="pro-versions">4. 🔄 Versões</button><button type="button" data-progo="pro-packs">5. 📦 Packs</button><button type="button" data-progo="pro-tags">6. 🏷️ Tags</button><button type="button" data-progo="pro-pinned">7. 📌 Fixados</button><button type="button" data-progo="pro-stats">8. 📊 Estatísticas</button><button type="button" data-progo="pro-notes">9. 📝 Notas</button><button type="button" data-progo="pro-sync">10. 🔁 Transferir</button>
 </div></div>
