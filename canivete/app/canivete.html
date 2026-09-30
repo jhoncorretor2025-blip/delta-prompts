@@ -1293,8 +1293,7 @@ ${linhasMetas?`<h2>🎯 Metas</h2><table>${linhasMetas}</table>`:''}
   .v90-menu-group summary{min-height:42px;padding:10px}
   .v90-menu-group-body{padding:2px 4px 5px}
 }
-</style>
-<script id="CANIVETE_V90_MENUS_CORRIGIDOS">
+.canivete-menu-utility-hidden{display:none!important}\n</style>\n<script id="CANIVETE_V90_MENUS_CORRIGIDOS">
 (function(){
   'use strict';
 
@@ -1440,8 +1439,16 @@ ${linhasMetas?`<h2>🎯 Metas</h2><table>${linhasMetas}</table>`:''}
     window.buscarNoMenu=wrapped;
   }
 
+  function ocultarUtilitarios(){
+    ['btnTemaCanivete','btnConfigurarPin'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.classList.add('canivete-menu-utility-hidden');
+    });
+  }
+
   function iniciar(){
     organizar();
+    ocultarUtilitarios();
     garantirClique();
     integrarShowPage();
     integrarBusca();
