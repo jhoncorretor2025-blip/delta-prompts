@@ -715,7 +715,11 @@ function renderUsageV17(){
 }
 function installUsage(){
   var m=qid('usageMetrics'),top=qid('usageTop');if(!m||!top)return;
-  var obs=new MutationObserver(function(){if(!window.__dvupgrading){window.__dvupgrading=true;setTimeout(function(){window.__dvupgrading=false;renderUsageV17()},40)}});
+  var obs=new MutationObserver(function(){
+    if(window.__dvSelfUpdate)return;
+    window.__dvSelfUpdate=true;
+    setTimeout(function(){renderUsageV17();window.__dvSelfUpdate=false},40);
+  });
   obs.observe(m,{childList:true,subtree:true});
   document.addEventListener('click',function(e){var b=e.target.closest('[data-pro-act],#usageClear,#syncExport,#syncImport,[data-act]');if(b)setTimeout(renderUsageV17,150)});
   setTimeout(renderUsageV17,200);
