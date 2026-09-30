@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="delta-version" content="V1.16">
+<meta name="delta-version" content="V1.17">
 <meta name="description" content="Espaço IA do Delta Prompts: pesquisar, personalizar, criar, melhorar, salvar, compartilhar e testar prompts.">
 <meta name="theme-color" content="#5b5ce2">
-<title>Espaço IA | Delta Prompts V1.16</title>
+<title>Espaço IA | Delta Prompts V1.17</title>
 <link rel="icon" href="/delta-prompts/favicon.ico">
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <style>
@@ -35,7 +35,7 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,1fr)}.ai-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.wrap{width:min(100% - 20px,1200px)}.hero{padding-top:20px}.hero-top{align-items:flex-start}.search-row{grid-template-columns:1fr}.grid,.two,.three{grid-template-columns:1fr}.ai-grid{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}.tools>*{width:100%;max-width:none}.share-line{grid-template-columns:1fr}.panel{padding:14px}.section{padding-bottom:32px}}
 
-/* V1.16 · MOBILE PREMIUM — foco em leitura de estatísticas e uso com uma mão */
+/* V1.17 · MOBILE PREMIUM — foco em leitura de estatísticas e uso com uma mão */
 @media(max-width:650px){
   .hero{padding-bottom:14px}
   .tabs{padding-top:12px}
@@ -129,6 +129,39 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 }
 [data-theme="dark"] body{background:#0f1424;color:#eaeaea}[data-theme="dark"] .hero{background:linear-gradient(135deg,#171b35,#0f1424)}[data-theme="dark"] .panel,[data-theme="dark"] .card,[data-theme="dark"] .stat,[data-theme="dark"] .ai,[data-theme="dark"] .list-item,[data-theme="dark"] .modal-box,[data-theme="dark"] .field,[data-theme="dark"] .select,[data-theme="dark"] .search-row input,[data-theme="dark"] .quick button{background:#16213e;border-color:rgba(255,255,255,.12);color:#eaeaea}[data-theme="dark"] .hero p,[data-theme="dark"] .small,[data-theme="dark"] .meta,[data-theme="dark"] .ai small{color:#aab2c3}[data-theme="dark"] .preview,[data-theme="dark"] .output{background:#0f1424;border-color:rgba(255,255,255,.12);color:#d7deea}[data-theme="dark"] .tabs button{background:#16213e;color:#eaeaea;border-color:rgba(255,255,255,.12)}[data-theme="dark"] .tabs button.active{background:var(--p);color:#fff}
 </style>
+<style id="delta-v17-enhancements">
+/* V1.17 · camada de melhorias sem alterar a estrutura desktop existente */
+.delta-orchestrator{border:1px solid #dfe2ff;background:linear-gradient(180deg,#fff,#fafaff)}
+.delta-search-suggestions{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 0}
+.delta-search-suggestions button{border:1px solid var(--border);background:#fff;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:800;cursor:pointer}
+.delta-search-suggestions button:hover,.delta-search-suggestions button:focus-visible{border-color:#b8bcff;outline:none}
+.delta-help{margin-top:8px;padding:10px 12px;border-radius:11px;background:#f8f9ff;border:1px dashed #cfd4ff;font-size:12px;color:var(--muted)}
+.delta-counter{font-size:11px;color:var(--muted);text-align:right;margin-top:-3px}
+.delta-field-ok{border-color:#a7d9b5!important;box-shadow:0 0 0 3px rgba(22,163,74,.06)}
+.delta-field-warn{border-color:#f0b27b!important;box-shadow:0 0 0 3px rgba(234,88,12,.06)}
+.delta-action-strip{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.delta-action-strip button{border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 10px;font-weight:800;cursor:pointer}
+.delta-score-badge{display:inline-flex;align-items:center;gap:5px;margin-top:2px;padding:5px 8px;border-radius:999px;background:#f8f9ff;border:1px solid #e2e5ef;font-size:11px;font-weight:900;color:#4b5563}
+.delta-usage-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;margin-top:14px}
+.delta-usage-day{min-width:0;text-align:center}
+.delta-usage-value{font-size:10px;font-weight:900;color:var(--muted);height:16px}
+.delta-usage-track{height:76px;border:1px solid var(--border);border-radius:10px;background:#f8fafc;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.delta-usage-fill{width:70%;min-height:3px;background:var(--p);border-radius:8px 8px 0 0}
+.delta-usage-label{font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap}
+.delta-usage-subtitle{font-weight:900;font-size:13px;margin-top:15px}
+[data-theme="dark"] .delta-orchestrator{background:#16213e;border-color:rgba(255,255,255,.12)}
+[data-theme="dark"] .delta-search-suggestions button,[data-theme="dark"] .delta-action-strip button{background:#16213e;color:#eaeaea;border-color:rgba(255,255,255,.12)}
+[data-theme="dark"] .delta-help,[data-theme="dark"] .delta-score-badge,[data-theme="dark"] .delta-usage-track{background:#0f1424;border-color:rgba(255,255,255,.12);color:#cbd5e1}
+@media(max-width:650px){
+  .delta-search-suggestions{overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}
+  .delta-search-suggestions button{flex:0 0 auto;min-height:40px}
+  .delta-action-strip{display:grid;grid-template-columns:1fr 1fr}
+  .delta-action-strip button{min-height:42px}
+  .delta-usage-chart{gap:5px}
+  .delta-usage-track{height:64px}
+  .delta-usage-label{font-size:9px}
+}
+</style>
 </head>
 <body>
 <div id="menu"><div style="width:240px;min-height:100vh"></div></div>
@@ -136,7 +169,7 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 
 <header class="hero">
 <div class="wrap">
-<div class="hero-top"><a class="back" href="/delta-prompts/">← Voltar ao Delta</a><span class="ver">Delta V1.16</span></div>
+<div class="hero-top"><a class="back" href="/delta-prompts/">← Voltar ao Delta</a><span class="ver">Delta V1.17</span></div>
 <h1>🧠 Espaço <span>IA</span></h1>
 <p>Um lugar único para encontrar, personalizar, criar, melhorar, salvar e compartilhar seus prompts — sem perder o que você já tem.</p>
 <div class="tabs" role="tablist">
@@ -280,10 +313,18 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 </section>
 
 <section id="pro" class="section tab" style="display:none">
-<div class="panel delta-pro-intro"><span class="badge">V1.16 · CENTRAL DE FERRAMENTAS</span><h2 style="margin:8px 0 4px">🚀 10 ferramentas para trabalhar melhor com prompts</h2><p class="small">Tudo funciona no seu aparelho. Seus prompts atuais continuam intactos e as novas funções usam áreas próprias.</p>
+<div class="panel delta-pro-intro"><span class="badge">V1.17 · CENTRAL DE FERRAMENTAS</span><h2 style="margin:8px 0 4px">🚀 11 ferramentas para trabalhar melhor com prompts</h2><p class="small">Tudo funciona no seu aparelho. Seus prompts atuais continuam intactos e as novas funções usam áreas próprias.</p>
 <div class="delta-pro-nav">
 <button type="button" data-progo="pro-builder">1. 🧭 Perguntas</button><button type="button" data-progo="pro-recommender">2. 🎯 Escolher</button><button type="button" data-progo="pro-tester">3. 🧪 Testar</button><button type="button" data-progo="pro-versions">4. 🔄 Versões</button><button type="button" data-progo="pro-packs">5. 📦 Packs</button><button type="button" data-progo="pro-tags">6. 🏷️ Tags</button><button type="button" data-progo="pro-pinned">7. 📌 Fixados</button><button type="button" data-progo="pro-stats">8. 📊 Estatísticas</button><button type="button" data-progo="pro-notes">9. 📝 Notas</button><button type="button" data-progo="pro-sync">10. 🔁 Transferir</button>
 </div></div>
+<div id="pro-orchestrator" class="panel pro-box pro-gap delta-orchestrator">
+<span class="badge">11 · FAÇA POR MIM</span>
+<h2>🪄 Diga o que você precisa e eu encontro o caminho</h2>
+<p class="small">Escreva a tarefa em linguagem natural. O Delta identifica a função mais adequada e leva você direto para ela.</p>
+<textarea id="proOrq" class="field" rows="5" placeholder="Ex.: quero criar um prompt para anunciar uma casa e responder interessados no WhatsApp."></textarea>
+<div class="actions" style="margin-top:8px"><button class="btn primary" id="proOrqBtn">🪄 Encontrar o melhor caminho</button><button class="btn ghost" id="proOrqClear">Limpar</button></div>
+<div id="proOrqOut" class="list" style="margin-top:10px"><span class="small">Descreva uma tarefa para receber uma indicação.</span></div>
+</div>
 <div id="pro-builder" class="panel pro-box"><div class="pro-title"><span class="badge">01 · BUILDER POR PERGUNTAS</span><span id="dqProgress" class="small"></span></div><h2>🧭 Monte um prompt respondendo perguntas</h2><div id="dqQuestion"></div><div class="dq-progress"><span id="dqProgressBar"></span></div><div class="actions"><button class="btn ghost" id="dqPrev">← Voltar</button><button class="btn secondary" id="dqNext">Próxima →</button><button class="btn primary" id="dqGenerate">✨ Gerar prompt</button><button class="btn ghost" id="dqCopy">📋 Copiar</button><button class="btn ghost" id="dqSave">💾 Salvar</button></div><div id="dqOut" class="output" style="margin-top:10px">Responda às perguntas para montar seu prompt.</div></div>
 <div id="pro-recommender" class="two pro-gap"><div class="panel pro-box"><span class="badge">02 · QUAL PROMPT USAR?</span><h2>🎯 Descreva sua tarefa</h2><textarea id="proRecInput" class="field" rows="7" placeholder="Ex.: preciso anunciar uma casa para aluguel e responder os interessados no WhatsApp."></textarea><button class="btn primary" id="proRecBtn" style="margin-top:8px">🎯 Encontrar prompts</button></div><div class="panel pro-box"><span class="badge">RECOMENDAÇÕES</span><div id="proRecOut" class="list"></div></div></div>
 <div id="pro-tester" class="two pro-gap"><div class="panel pro-box"><span class="badge">03 · TESTADOR DE PROMPT</span><h2>🧪 Veja o que está faltando</h2><textarea id="proTestInput" class="field" rows="12" placeholder="Cole seu prompt aqui..."></textarea><button class="btn primary" id="proTestBtn" style="margin-top:8px">🧪 Analisar prompt</button></div><div class="panel pro-box"><span class="badge">DIAGNÓSTICO</span><div id="proTestOut" class="output">O diagnóstico aparecerá aqui.</div></div></div>
@@ -540,6 +581,185 @@ var obs=new MutationObserver(decorateCards);if($('resultados'))obs.observe($('re
 var proTab=document.querySelector('.tabs button[data-tab="pro"]');if(proTab){proTab.addEventListener('click',function(){document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('active',x===proTab)});document.querySelectorAll('.tab').forEach(function(x){x.style.display='none'});$('pro').style.display='block';history.replaceState(null,'','#pro');renderPacks();renderTags();renderPins();renderNotes();renderUsage();decorateCards()})}
 function init(){renderDQ();renderPacks();renderTags();renderPins();renderNotes();renderUsage();decorateCards()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+<script id="delta-v17-enhancements-script">
+(function(){
+'use strict';
+var V='V1.17', DRAFT_KEY='deltaEspacoIADraftV17', USAGE_KEY='deltaPromptUsageLog';
+function qs(s){return document.querySelector(s)}
+function qid(id){return document.getElementById(id)}
+function esc2(v){return String(v??'').replace(/[&<>"']/g,function(m){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]})}
+function safeGet(key,fallback){try{var v=JSON.parse(localStorage.getItem(key)||'null');return v==null?fallback:v}catch(e){return fallback}}
+function toast2(msg){if(typeof window.toast==='function'){window.toast(msg);return}var t=qid('toast');if(!t)return;t.textContent=msg;t.classList.add('show');clearTimeout(window.__dvt);window.__dvt=setTimeout(function(){t.classList.remove('show')},2400)}
+function copy2(text){
+  text=String(text||'');
+  if(!text){toast2('⚠️ Nada para copiar');return Promise.resolve(false)}
+  if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(text).then(function(){toast2('📋 Copiado para a área de transferência');return true}).catch(fallback);
+  return fallback();
+  function fallback(){try{var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();var ok=document.execCommand('copy');ta.remove();toast2(ok?'📋 Copiado':'⚠️ Não foi possível copiar');return Promise.resolve(ok)}catch(e){toast2('⚠️ Não foi possível copiar');return Promise.resolve(false)}}
+}
+function installSearchUX(){
+  var input=qid('busca'), row=qs('.search-row'); if(!input||!row||input.dataset.v17)return;
+  input.dataset.v17='1';
+  var box=document.createElement('div'); box.className='delta-search-suggestions'; box.id='deltaSearchSuggestions';
+  row.insertAdjacentElement('afterend',box);
+  function build(){
+    var hist=safeGet('deltaBuscaHistorico',[]), parts=[];
+    if(Array.isArray(hist)) hist.slice(0,4).forEach(function(x){var v=typeof x==='string'?x:(x&&x.termo)||'';if(v&&parts.indexOf(v)<0)parts.push(v)});
+    var idx=Array.isArray(window.deltaSearchIndex)?window.deltaSearchIndex:[];
+    idx.slice(0,40).forEach(function(x){var c=(x&&x.categoria)||'';if(c&&parts.indexOf(c)<0&&parts.length<8)parts.push(c)});
+    var defaults=['Anúncio de imóvel','WhatsApp','Vendas','Marketing'];
+    defaults.forEach(function(v){if(parts.indexOf(v)<0&&parts.length<8)parts.push(v)});
+    box.innerHTML=parts.slice(0,8).map(function(v){return '<button type="button" data-search-suggest="'+esc2(v)+'">'+esc2(v)+'</button>'}).join('');
+  }
+  box.addEventListener('click',function(e){var b=e.target.closest('[data-search-suggest]');if(!b)return;input.value=b.dataset.searchSuggest;input.focus();var go=qid('btnBuscar');if(go)go.click()});
+  build();
+  input.addEventListener('input',function(){
+    clearTimeout(window.__dvsrch);
+    window.__dvsrch=setTimeout(function(){if(input.value.trim().length>=3){var go=qid('btnBuscar');if(go)go.click()}},280);
+  });
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();var go=qid('btnBuscar');if(go)go.click()}});
+}
+function installKeyboard(){
+  document.addEventListener('keydown',function(e){
+    if(e.key==='/' && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){var i=qid('busca');if(i){e.preventDefault();i.focus()}}
+    if(e.key==='Escape'){
+      var m=qid('modal');if(m&&m.classList.contains('show')){var x=qid('fecharModal');if(x)x.click()}
+      var p=qid('deltaProModal');if(p)p.remove();
+    }
+  });
+}
+function installCounters(){
+  ['cContexto','cObjetivo','melhorarInput','proRecInput','proTestInput','proVerInput'].forEach(function(id){
+    var el=qid(id);if(!el||el.dataset.v17count)return;el.dataset.v17count='1';
+    var box=document.createElement('div');box.className='delta-counter';box.id='cnt-'+id;
+    el.insertAdjacentElement('afterend',box);
+    function up(){box.textContent=String(el.value||'').length+' caracteres'}
+    el.addEventListener('input',up);up();
+  });
+}
+function draftFields(){return ['cContexto','cObjetivo','cPublico','cTom','cFormato','cRegras'].map(function(id){var e=qid(id);return e?e.value:''})}
+function saveDraft(){try{localStorage.setItem(DRAFT_KEY,JSON.stringify({ts:Date.now(),v:draftFields()}))}catch(e){}}
+function installDraft(){
+  var ids=['cContexto','cObjetivo','cPublico','cTom','cFormato','cRegras'], saved=safeGet(DRAFT_KEY,null);
+  ids.forEach(function(id){var e=qid(id);if(!e||e.dataset.v17draft)return;e.dataset.v17draft='1';e.addEventListener('input',function(){clearTimeout(window.__dvad);window.__dvad=setTimeout(saveDraft,500)})});
+  if(saved&&Array.isArray(saved.v)&&saved.v.some(function(x){return String(x||'').trim()})){
+    var empty=ids.every(function(id){var e=qid(id);return !e||!String(e.value||'').trim()});
+    if(empty){
+      ids.forEach(function(id,i){var e=qid(id);if(e&&saved.v[i]!=null)e.value=saved.v[i]});
+      var note=document.createElement('div');note.className='delta-help';note.textContent='💾 Rascunho recuperado automaticamente deste aparelho.';var panel=qid('gerarCriado');if(panel&&panel.parentElement)panel.parentElement.insertAdjacentElement('beforebegin',note);
+    }
+  }
+}
+function markBuilder(){
+  ['cContexto','cObjetivo','cPublico','cRegras'].forEach(function(id){var e=qid(id);if(!e||e.dataset.v17mark)return;e.dataset.v17mark='1';e.addEventListener('input',function(){e.classList.toggle('delta-field-warn',id!=='cPublico'&&!String(e.value||'').trim());e.classList.toggle('delta-field-ok',!!String(e.value||'').trim())})});
+}
+function upgradeTestActions(){
+  var out=qid('proTestOut');if(!out||out.dataset.v17obs)return;out.dataset.v17obs='1';
+  var obs=new MutationObserver(function(){
+    if(!out.textContent.trim()||out.dataset.v17busy)return;
+    out.dataset.v17busy='1';
+    setTimeout(function(){
+      var old=out.parentElement&&out.parentElement.querySelector('.delta-action-strip[data-test-actions]');
+      if(old)old.remove();
+      var strip=document.createElement('div');strip.className='delta-action-strip';strip.dataset.testActions='1';
+      strip.innerHTML='<button type="button" data-test-send="improve">🛠️ Enviar para Melhorar</button><button type="button" data-test-send="versions">🔄 Criar versões</button>';
+      out.insertAdjacentElement('afterend',strip);
+      strip.addEventListener('click',function(e){
+        var b=e.target.closest('[data-test-send]'),src=qid('proTestInput');if(!b||!src||!src.value.trim())return;
+        if(b.dataset.testSend==='improve'){
+          var inp=qid('melhorarInput');var tab=qs('.tabs button[data-tab="melhorar"]');if(inp)inp.value=src.value;if(tab)tab.click();setTimeout(function(){if(inp)inp.focus()},120);toast2('🛠️ Prompt enviado para Melhorar');
+        }else{
+          var inp2=qid('proVerInput');if(inp2)inp2.value=src.value;var tab2=qs('.tabs button[data-tab="pro"]');if(tab2)tab2.click();setTimeout(function(){var target=qid('pro-versions');if(target)target.scrollIntoView({behavior:'smooth',block:'start'});},120);toast2('🔄 Prompt enviado para Versões');
+        }
+      });
+      out.dataset.v17busy='';
+    },30);
+  });
+  obs.observe(out,{childList:true,subtree:true,characterData:true});
+}
+function qualityBadge(card){
+  if(!card||card.querySelector('.delta-score-badge'))return;
+  var text=(card.innerText||'').toLowerCase(), score=0;
+  if(text.length>80)score+=20;if(/objetivo|tarefa|quero|preciso/.test(text))score+=20;if(/contexto|situação|cenário/.test(text))score+=15;
+  if(/formato|lista|tabela|passo a passo/.test(text))score+=15;if(/regras|não invent|limite|critério/.test(text))score+=15;if(/exemplo|modelo/.test(text))score+=10;
+  score=Math.min(95,Math.max(35,score));
+  var meta=card.querySelector('.meta')||card.querySelector('small');if(!meta)return;
+  var b=document.createElement('span');b.className='delta-score-badge';b.textContent='🧠 Estrutura estimada '+score+'/100';meta.insertAdjacentElement('afterend',b);
+}
+function installCardQuality(){
+  var root=qid('resultados');if(!root||root.dataset.v17q)return;root.dataset.v17q='1';
+  var obs=new MutationObserver(function(){root.querySelectorAll('.card').forEach(qualityBadge)});obs.observe(root,{childList:true,subtree:true});
+  root.querySelectorAll('.card').forEach(qualityBadge);
+}
+function renderUsageV17(){
+  var m=qid('usageMetrics'),top=qid('usageTop');if(!m||!top||window.__dvupdating)return;
+  var a=safeGet(USAGE_KEY,[]);if(!Array.isArray(a))a=[];
+  var now=Date.now(), day=86400000, startToday=new Date();startToday.setHours(0,0,0,0);
+  var t=startToday.getTime(), last7=a.filter(function(x){return x.ts>=t-6*day}), last30=a.filter(function(x){return x.ts>=t-29*day});
+  var daysActive={};last30.forEach(function(x){daysActive[new Date(x.ts).toISOString().slice(0,10)]=1});
+  var card=function(n,l){return '<div class="stat"><strong>'+n+'</strong><span class="small">'+l+'</span></div>'};
+  window.__dvupdating=true;
+  m.innerHTML=card(a.length,'Ações totais')+card(a.filter(function(x){return x.ts>=t}).length,'Hoje')+card(last7.length,'7 dias')+card(last30.length,'30 dias')+card(Object.keys(a.reduce(function(o,x){o[x.id]=1;return o},{})).length,'Prompts usados')+card(Object.keys(daysActive).length,'Dias ativos / 30');
+  var names=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'], arr=[];
+  for(var i=6;i>=0;i--){var dt=new Date(t-i*day), ds=dt.toISOString().slice(0,10), n=last7.filter(function(x){return new Date(x.ts).toISOString().slice(0,10)===ds}).length;arr.push({ds:ds,label:names[dt.getDay()],n:n})}
+  var max=Math.max.apply(null,arr.map(function(x){return x.n}).concat([1]));
+  var usageCount={};a.forEach(function(x){usageCount[x.id]=(usageCount[x.id]||0)+1});
+  var rows=Object.keys(usageCount).map(function(id){var tt=typeof window.meta==='function'?window.meta(id):null;return{id:id,n:usageCount[id],titulo:tt&&tt.titulo?tt.titulo:id}}).sort(function(x,y){return y.n-x.n}).slice(0,5);
+  var html='<div class="delta-usage-subtitle">📈 Atividade nos últimos 7 dias</div><div class="delta-usage-chart">'+arr.map(function(x){return '<div class="delta-usage-day"><div class="delta-usage-value">'+x.n+'</div><div class="delta-usage-track"><span class="delta-usage-fill" style="height:'+Math.max(4,Math.round(x.n/max*100))+'%"></span></div><div class="delta-usage-label">'+x.label+'</div></div>'}).join('')+'</div>';
+  html+='<div class="delta-usage-subtitle">🏆 Prompts mais utilizados</div>';
+  html+=rows.length?rows.map(function(x){return '<div class="pro-bar-row"><div><strong style="font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc2(x.titulo)+'</strong><div class="pro-bar"><span style="width:'+Math.round(x.n/rows[0].n*100)+'%"></span></div></div><strong>'+x.n+'</strong></div>'}).join(''):'<span class="small">Ainda não há uso registrado.</span>';
+  top.innerHTML=html;
+  window.__dvupdating=false;
+}
+function installUsage(){
+  var m=qid('usageMetrics'),top=qid('usageTop');if(!m||!top)return;
+  var obs=new MutationObserver(function(){if(!window.__dvupgrading){window.__dvupgrading=true;setTimeout(function(){window.__dvupgrading=false;renderUsageV17()},40)}});
+  obs.observe(m,{childList:true,subtree:true});
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-pro-act],#usageClear,#syncExport,#syncImport,[data-act]');if(b)setTimeout(renderUsageV17,150)});
+  setTimeout(renderUsageV17,200);
+}
+function orchestrator(){
+  var input=qid('proOrq'), out=qid('proOrqOut'), btn=qid('proOrqBtn'), clear=qid('proOrqClear');if(!input||!out||!btn||input.dataset.v17)return;input.dataset.v17='1';
+  var routes=[
+    {id:'pro-recommender',icon:'🎯',name:'Encontrar prompts',keys:['qual prompt','encontrar','achar','anunciar','whatsapp','responder cliente','modelo pronto']},
+    {id:'melhorar',icon:'🛠️',name:'Melhorar prompt',keys:['melhorar','aperfeiçoar','deixar profissional','corrigir meu prompt']},
+    {id:'pro-tester',icon:'🧪',name:'Testar prompt',keys:['testar','avaliar meu prompt','ver o que falta','diagnosticar']},
+    {id:'pro-versions',icon:'🔄',name:'Criar versões',keys:['versão','variações','variante','mais curto','mais completo','adaptar para']},
+    {id:'pro-builder',icon:'🧭',name:'Montar do zero',keys:['criar prompt','montar prompt','do zero','preciso de um prompt']}
+  ];
+  function go(route,q){
+    var tab=qs('.tabs button[data-tab="'+(route.id==='melhorar'?'melhorar':'pro')+'"]');if(tab)tab.click();
+    setTimeout(function(){
+      var target=qid(route.id);if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+      if(route.id==='pro-recommender'&&qid('proRecInput'))qid('proRecInput').value=q;
+      if(route.id==='pro-tester'&&qid('proTestInput'))qid('proTestInput').value=q;
+      if(route.id==='pro-versions'&&qid('proVerInput'))qid('proVerInput').value=q;
+      if(route.id==='melhorar'&&qid('melhorarInput'))qid('melhorarInput').value=q;
+    },120);
+  }
+  btn.onclick=function(){
+    var q=String(input.value||'').trim();if(!q){toast2('⚠️ Descreva o que você quer fazer');input.focus();return}
+    var nq=q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    var scored=routes.map(function(r){var s=0;r.keys.forEach(function(k){if(nq.indexOf(k)>-1)s+=k.length>10?3:2});return{r:r,s:s}}).sort(function(a,b){return b.s-a.s});
+    var best=scored[0];if(best.s===0)best=scored.find(function(x){return x.r.id==='pro-builder'});
+    var alt=scored.filter(function(x){return x!==best&&x.s>0}).slice(0,2);
+    var items=[{r:best.r,lead:'Melhor encaixe',why:'Sua descrição combina mais com esta ferramenta.'}].concat(alt.map(function(x){return{r:x.r,lead:'Também pode ajudar',why:'Há sinais na sua tarefa que combinam com ela.'}}));
+    out.innerHTML=items.map(function(x){return '<div class="pro-card"><strong>'+x.r.icon+' '+esc2(x.lead)+': '+esc2(x.r.name)+'</strong><small>'+esc2(x.why)+'</small><div class="delta-action-strip"><button type="button" data-orq-go="'+esc2(x.r.id)+'">Abrir ferramenta</button></div></div>'}).join('');
+    out.querySelectorAll('[data-orq-go]').forEach(function(b){b.onclick=function(){var r=routes.find(function(x){return x.id===b.dataset.orqGo})||routes[routes.length-1];go(r,q)}});
+  };
+  clear.onclick=function(){input.value='';out.innerHTML='<span class="small">Descreva uma tarefa para receber uma indicação.</span>';input.focus()};
+}
+function wireProgo(){
+  document.querySelectorAll('[data-progo]').forEach(function(b){if(b.dataset.v17)return;b.dataset.v17='1';b.addEventListener('click',function(){setTimeout(function(){var t=qid(b.dataset.progo);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})},100)})});
+}
+function initV17(){
+  installSearchUX();installKeyboard();installCounters();installDraft();markBuilder();upgradeTestActions();installCardQuality();installUsage();orchestrator();wireProgo();
+  window.addEventListener('pagehide',saveDraft);
+  setTimeout(renderUsageV17,700);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initV17,{once:true});else initV17();
 })();
 </script>
 </body>
