@@ -3340,11 +3340,7 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
         const nav=document.querySelector('.nav');
         if(!side||!nav) return;
 
-        // Versão visível no menu.
-        if(!document.querySelector('.v80-version')){
-          const brand=side.querySelector('.brand');
-          if(brand){const v=document.createElement('div');v.className='v80-version';v.textContent='🧰 Canivete v8.17';brand.insertAdjacentElement('afterend',v)}
-        }
+        // A versão não é exibida na barra lateral. Ela fica apenas no cabeçalho principal.
 
         // Modo simples/avançado: reduz a carga cognitiva sem remover funções.
         if(!document.querySelector('.v80-mode')){
@@ -4356,15 +4352,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
     /* Remove todas as versões duplicadas do cabeçalho/menu. */
     side.querySelectorAll('.v80-version,#versaoTexto,.canivete-version-badge').forEach(function(el){el.remove()});
 
-    let badge=side.querySelector('.canivete-single-version-v812');
-    if(!badge){
-      badge=document.createElement('div');
-      badge.className='canivete-single-version-v812';
-      badge.setAttribute('aria-label','Versão do Canivete');
-      const brand=side.querySelector('.brand');
-      if(brand)brand.insertAdjacentElement('afterend',badge);
-    }
-    badge.textContent='🧰 Canivete v'+VERSION;
+    // Nenhuma versão deve ser criada na barra lateral.
 
     /* Minha conta fica realmente no fim da fila do menu. */
     if(sync){
@@ -4473,10 +4461,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   function uniqueVersion(){
     const side=document.getElementById('side');
     if(side)side.querySelectorAll('.v80-version,#versaoTexto,.canivete-version-badge,.canivete-single-version-v812').forEach(function(el){el.remove()});
-    if(side){
-      const badge=document.createElement('div');badge.className='canivete-single-version-v813';badge.textContent='🧰 Canivete v'+VERSION;
-      const brand=side.querySelector('.brand');if(brand)brand.insertAdjacentElement('afterend',badge);
-    }
+    // Nenhuma versão deve ser criada na barra lateral.
     document.querySelectorAll('.v79-health-badge').forEach(function(el){el.remove()});
   }
   function init(){
