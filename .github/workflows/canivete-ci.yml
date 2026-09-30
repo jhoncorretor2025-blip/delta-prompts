@@ -1,0 +1,66 @@
+name: Canivete - Validação e estabilidade
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'canivete.html'
+      - 'canivete/app/canivete.html'
+      - 'sw.js'
+      - 'menu-loader.js'
+      - '.github/workflows/canivete-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validar estrutura do Canivete
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          files = [Path('canivete.html'), Path('canivete/app/canivete.html')]
+
+          for p in files:
+              s = p.read_text(encoding='utf-8')
+              assert s.count('<script') == s.count('</script>'), f'{p}: tags script desbalanceadas'
+              assert s.count('<section') >= 27, f'{p}: poucas sections'
+              assert s.count('data-page=') >= 27, f'{p}: poucos itens de menu'
+              assert "const APP_VERSION='8.9'" in s, f'{p}: APP_VERSION não está em 8.9'
+              assert 'CANIVETE_V90_MENUS_CORRIGIDOS' in s, f'{p}: menu V90 não encontrado'
+              assert 'CANIVETE_SW_UPDATE_V28' in s, f'{p}: atualização do Service Worker não encontrada'
+              assert "EXTRAS · VIDA PRÁTICA" in s, f'{p}: grupo Vida Prática ausente'
+              assert "EXTRAS · SAÚDE & ROTINA" in s, f'{p}: grupo Saúde & Rotina ausente'
+              assert "EXTRAS · ENTRETENIMENTO & FERRAMENTAS" in s, f'{p}: grupo Entretenimento ausente'
+
+          print('Estrutura HTML/JS básica: OK')
+
+      - name: Validar JavaScript embutido
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          import subprocess
+          import tempfile
+
+          for p in [Path('canivete.html'), Path('canivete/app/canivete.html')]:
+              s = p.read_text(encoding='utf-8')
+              scripts = re.findall(r'<script(?:\\s[^>]*)?>([\\s\\S]*?)</script>', s, flags=re.I)
+              for i, js in enumerate(scripts, 1):
+                  if not js.strip():
+                      continue
+                  with tempfile.NamedTemporaryFile('w', suffix='.js', encoding='utf-8', delete=False) as f:
+                      f.write(js)
+                      name=f.name
+                  result=subprocess.run(['node','--check',name],text=True,capture_output=True)
+                  if result.returncode:
+                      print(result.stderr)
+                      raise SystemExit(f'{p}: erro de sintaxe no script #{i}')
+          print('JavaScript embutido: OK')
