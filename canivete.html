@@ -211,7 +211,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
   </div>
 </div>
 
-<aside class="side" id="side"><div class="brand">🧰 Canivete Assistente<small>Seu painel financeiro pessoal</small></div><a class="back" href="/delta-prompts/index.html">← Voltar ao Delta Prompts</a><div style="padding:0 12px 10px"><input type="text" id="buscaMenuInput" aria-label="Buscar no menu" placeholder="🔍 Buscar no menu..." oninput="buscarNoMenu(this.value)" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"></div><div id="versaoTexto" style="padding:0 12px 10px;font-size:10px;color:#8a92a6">v8.15</div><button type="button" id="btnTemaCanivete" aria-label="Alternar entre modo claro e escuro" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🌙 Modo Escuro</button><button type="button" id="btnConfigurarPin" onclick="configurarPin()" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔒 Proteger com PIN</button><button type="button" id="btnAtualizarSistema" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;padding:10px;border-radius:9px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">🔄 Atualizar Sistema</button><div id="syncBox" style="padding:0 12px 16px;border-bottom:1px solid var(--line);margin-bottom:12px"><div id="syncStatusText" style="font-size:11px;color:#8a92a6;margin-bottom:8px;display:flex;align-items:center;gap:6px"><span id="syncBadgeDot" style="width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block"></span><span id="syncStatusLabel">🔒 Dados salvos só neste aparelho</span></div><button type="button" id="btnLoginCanivete" style="width:100%;border:1px solid var(--line);background:var(--card);color:var(--blue);padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔑 Entrar com Google</button><button type="button" id="btnLogoutCanivete" style="display:none;width:100%;border:1px solid #fecaca;background:var(--card);color:#dc2626;padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🚪 Sair</button></div><nav class="nav" id="nav" role="tablist" aria-label="Seções do Canivete"><button type="button" class="active" data-page="dashboard">📊 Financeiro</button><button type="button" data-page="perfil">👤 Meu Perfil</button><button type="button" data-page="calendario">📅 Calendário</button><button type="button" data-page="buscaglobal">🔍 Busca</button><button type="button" data-page="configuracoes">⚙️ Configurações</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">PLANEJAMENTO</div><button type="button" data-page="renda">💼 Renda & benefícios</button><button type="button" data-page="despesas">💸 Despesas</button><button type="button" data-page="dividas">💳 Dívidas <span class="badge" id="debtBadge">0</span></button><button type="button" data-page="patrimonio">🏦 Patrimônio</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">ACOMPANHAMENTO</div><button type="button" data-page="metas">🎯 Metas <span class="badge" id="goalBadge">0</span></button><button type="button" data-page="projecoes">📈 Projeções</button><button type="button" data-page="analise">🧠 Análise</button><button type="button" data-page="historico">📅 Histórico</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">EXTRAS</div><button type="button" data-page="compras">🛒 Lista de Compras <span class="badge" id="comprasBadge">0</span></button><button type="button" data-page="senhas">🔐 Senhas</button><button type="button" data-page="contatos">📇 Contatos Importantes</button><button type="button" data-page="datas">🎂 Datas Importantes <span class="badge" id="datasBadge">0</span></button><button type="button" data-page="academia">🏋️ Academia</button><button type="button" data-page="meutime">⚽ Meu Time</button><button type="button" data-page="habitos">🔁 Hábitos</button><button type="button" data-page="veiculo">🚗 Manutenção do Veículo</button><button type="button" data-page="estudos">🎓 Cursos & Estudos</button><button type="button" data-page="jogos">🎮 Jogos</button><button type="button" data-page="mapavendas">🔥 Mapa de Vendas</button><button type="button" data-page="comparador">🔍 Comparador de Demonstrativos</button><button type="button" data-page="links">🔗 Links Importantes</button><button type="button" data-page="saude">💊 Medicamentos & Vitaminas</button></nav></aside>
+<aside class="side" id="side"><div class="brand">🧰 Canivete Assistente<small>Seu painel financeiro pessoal</small></div><a class="back" href="/delta-prompts/index.html">← Voltar ao Delta Prompts</a><div style="padding:0 12px 10px"><input type="text" id="buscaMenuInput" aria-label="Buscar no menu" placeholder="🔍 Buscar no menu..." oninput="buscarNoMenu(this.value)" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"></div><div id="versaoTexto" style="padding:0 12px 10px;font-size:10px;color:#8a92a6">v8.16</div><button type="button" id="btnTemaCanivete" aria-label="Alternar entre modo claro e escuro" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🌙 Modo Escuro</button><button type="button" id="btnConfigurarPin" onclick="configurarPin()" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔒 Proteger com PIN</button><button type="button" id="btnAtualizarSistema" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;padding:10px;border-radius:9px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">🔄 Atualizar Sistema</button><div id="syncBox" style="padding:0 12px 16px;border-bottom:1px solid var(--line);margin-bottom:12px"><div id="syncStatusText" style="font-size:11px;color:#8a92a6;margin-bottom:8px;display:flex;align-items:center;gap:6px"><span id="syncBadgeDot" style="width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block"></span><span id="syncStatusLabel">🔒 Dados salvos só neste aparelho</span></div><button type="button" id="btnLoginCanivete" style="width:100%;border:1px solid var(--line);background:var(--card);color:var(--blue);padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔑 Entrar com Google</button><button type="button" id="btnLogoutCanivete" style="display:none;width:100%;border:1px solid #fecaca;background:var(--card);color:#dc2626;padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🚪 Sair</button></div><nav class="nav" id="nav" role="tablist" aria-label="Seções do Canivete"><button type="button" class="active" data-page="dashboard">📊 Financeiro</button><button type="button" data-page="perfil">👤 Meu Perfil</button><button type="button" data-page="calendario">📅 Calendário</button><button type="button" data-page="buscaglobal">🔍 Busca</button><button type="button" data-page="configuracoes">⚙️ Configurações</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">PLANEJAMENTO</div><button type="button" data-page="renda">💼 Renda & benefícios</button><button type="button" data-page="despesas">💸 Despesas</button><button type="button" data-page="dividas">💳 Dívidas <span class="badge" id="debtBadge">0</span></button><button type="button" data-page="patrimonio">🏦 Patrimônio</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">ACOMPANHAMENTO</div><button type="button" data-page="metas">🎯 Metas <span class="badge" id="goalBadge">0</span></button><button type="button" data-page="projecoes">📈 Projeções</button><button type="button" data-page="analise">🧠 Análise</button><button type="button" data-page="historico">📅 Histórico</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">EXTRAS</div><button type="button" data-page="compras">🛒 Lista de Compras <span class="badge" id="comprasBadge">0</span></button><button type="button" data-page="senhas">🔐 Senhas</button><button type="button" data-page="contatos">📇 Contatos Importantes</button><button type="button" data-page="datas">🎂 Datas Importantes <span class="badge" id="datasBadge">0</span></button><button type="button" data-page="academia">🏋️ Academia</button><button type="button" data-page="meutime">⚽ Meu Time</button><button type="button" data-page="habitos">🔁 Hábitos</button><button type="button" data-page="veiculo">🚗 Manutenção do Veículo</button><button type="button" data-page="estudos">🎓 Cursos & Estudos</button><button type="button" data-page="jogos">🎮 Jogos</button><button type="button" data-page="mapavendas">🔥 Mapa de Vendas</button><button type="button" data-page="comparador">🔍 Comparador de Demonstrativos</button><button type="button" data-page="links">🔗 Links Importantes</button><button type="button" data-page="saude">💊 Medicamentos & Vitaminas</button></nav></aside>
 <main class="main" id="conteudoPrincipal"><p style="font-size:12.5px;color:var(--muted);margin:0 0 10px"><a href="/delta-prompts/index.html" style="color:var(--blue);text-decoration:none;font-weight:700">🏠 Início</a> / Canivete Assistente</p><header class="top"><div><h1 id="title">Painel Financeiro</h1><p class="sub" id="subtitle">Veja quanto entra, quanto sai e quanto pode sobrar.</p></div><div class="actions"><a href="canivete-avancado.html" class="btn light v89-advanced-link">🧠 Visão Avançada</a><button class="btn light" type="button" onclick="exportarPDF()">📄 Relatório PDF</button><button class="btn light" type="button" onclick="exportarTXT()">📋 Copiar como Texto</button><button class="btn light" type="button" onclick="exportarCSV()">📊 Exportar CSV</button><button class="btn light" type="button" onclick="exportData()">⬇️ Exportar</button><button class="btn danger" type="button" onclick="resetData()">🗑️ Limpar</button></div></header>
 <section id="dashboard" class="section active"><div id="bannerLoginWidget"></div><div class="lembreteBackupWidget"></div><div id="resumoTudoWidget"></div><div id="lembretesWidget"></div><div id="sobraPorDia" style="margin-bottom:16px"></div><div class="card hero"><h2>👋 Organize sua vida financeira</h2><p class="sub"><strong>É simples:</strong> informe quanto recebe → seus gastos → o que já possui → suas metas.</p><div class="notice">🧭 Você pode começar pela renda e avançar passo a passo. Seus dados ficam salvos neste dispositivo — e também na nuvem, com segurança, se você entrar com sua conta Google no menu lateral.</div><div class="row" style="margin-top:14px;flex-wrap:wrap"><button class="btn primary" type="button" onclick="showPage('renda')">🚀 Começar agora</button><button class="btn light" type="button" onclick="showPage('despesas')">💸 Já quero informar gastos</button></div></div><div class="focus"><div class="label">💰 QUANTO PODE SOBRAR PARA VOCÊ</div><div class="value green" id="heroNet">R$ 0,00</div><div class="sub" id="heroExplain">Informe sua renda e suas despesas para descobrir.</div></div><div class="grid cards" style="margin-bottom:16px"><div class="card"><div class="metric-label">💵 Renda mensal</div><div class="metric blue" id="mIncome">R$ 0,00</div><div class="mini">Total estimado</div></div><div class="card"><div class="metric-label">💸 Despesas</div><div class="metric red" id="mExpenses">R$ 0,00</div><div class="mini" id="mExpensePct">0%</div><div class="mini" id="mExpensesAno">≈ R$ 0,00/ano</div></div><div class="card"><div class="metric-label">💰 Sobra</div><div class="metric green" id="mNet">R$ 0,00</div><div class="mini" id="mNetPct">0%</div></div><div class="card"><div class="metric-label">🏦 O que você já possui</div><div class="metric blue" id="mAssets">R$ 0,00</div><div class="mini">Total informado</div></div></div><div class="grid two"><div class="card"><h2>🧭 Diagnóstico financeiro</h2><div id="status" class="status attention"><strong>👋 Vamos começar</strong><small>Informe renda e despesas para receber seu diagnóstico.</small></div><div id="tips"></div></div><div class="card"><h2>📋 Resumo</h2><div class="summary"><div class="sum"><span>💵 Renda</span><strong id="sIncome">R$ 0,00</strong></div><div class="sum"><span>🎁 Benefícios</span><strong id="sBenefits">R$ 0,00</strong></div><div class="sum"><span>💸 Despesas</span><strong id="sExpenses">R$ 0,00</strong></div><div class="sum total"><span>💰 Sobra</span><strong id="sNet">R$ 0,00</strong></div></div></div></div><div id="comparativoMensal"></div><div id="comparativoCategorias"></div><div id="previsaoOcasional"></div><div id="resumoPessoas"></div><div class="card" style="margin-top:16px"><h2>🔔 Lembretes de vencimento</h2><p class="small" style="margin:-6px 0 12px;color:var(--muted)">O Canivete não envia mensagem sozinho (isso exigiria um servidor por trás). Mas você pode: gerar o texto pronto pra mandar no seu WhatsApp/e-mail com 1 clique, ou ativar avisos do navegador enquanto o Canivete estiver aberto numa aba.</p><div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn light" type="button" onclick="enviarLembretePorWhatsApp()">📱 Enviar por WhatsApp</button><button class="btn light" type="button" onclick="enviarLembretePorEmail()">✉️ Enviar por e-mail</button><button class="btn light" type="button" onclick="ativarNotificacaoPush()">🔔 Ativar aviso do navegador</button></div></div></section>
 
@@ -335,7 +335,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 
 <section id="links" class="section"><div class="card hero"><div class="row between"><div><h2>🔗 Links Importantes</h2><p class="sub">Guarde os links que você mais acessa (governo, banco, sistemas de trabalho) num lugar só.</p></div><button class="btn primary" type="button" onclick="addLinkImportante()">➕ Novo link</button></div></div><div class="card"><div id="linksList"></div></div></section>
 
-<section id="saude" class="section"><div class="card hero"><div><h2>🩺 Minha Saúde <span class="v79-health-badge">v8.15</span></h2><p class="sub">Organize medicamentos, suplementos, consultas e chás em um só lugar. Registre sua rotina e acompanhe seus horários e usos. Isso é apenas uma organização pessoal e não substitui orientação médica.</p></div></div>
+<section id="saude" class="section"><div class="card hero"><div><h2>🩺 Minha Saúde <span class="v79-health-badge">v8.16</span></h2><p class="sub">Organize medicamentos, suplementos, consultas e chás em um só lugar. Registre sua rotina e acompanhe seus horários e usos. Isso é apenas uma organização pessoal e não substitui orientação médica.</p></div></div>
 
 <div class="card"><h2>👤 Seu perfil</h2><p class="small">A sugestão automática de itens usa as informações do seu <a href="#" onclick="showPage('perfil');return false" style="color:var(--blue);font-weight:800">👤 Perfil central</a>. Preencha lá uma vez e vale pra cá e pra outros recursos futuros.</p></div>
 
@@ -444,7 +444,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.15';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.16';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();window.d=d;window.APP_VERSION=APP_VERSION;window.__caniveteSetData=function(novo){d=novo||{};window.d=d;};
@@ -3342,7 +3342,7 @@ limparItensSaudeAntigos();renderSenhas();renderContatos();renderDatas();renderLi
         // Versão visível no menu.
         if(!document.querySelector('.v80-version')){
           const brand=side.querySelector('.brand');
-          if(brand){const v=document.createElement('div');v.className='v80-version';v.textContent='🧰 Canivete v8.15';brand.insertAdjacentElement('afterend',v)}
+          if(brand){const v=document.createElement('div');v.className='v80-version';v.textContent='🧰 Canivete v8.16';brand.insertAdjacentElement('afterend',v)}
         }
 
         // Modo simples/avançado: reduz a carga cognitiva sem remover funções.
@@ -4246,7 +4246,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V92_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.15');
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.16');
 
   function sincronizarVersoes(){
     const side=document.getElementById('versaoTexto');
@@ -4344,7 +4344,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V93_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.15');
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.16');
 
   function organizarMenu(){
     const side=document.getElementById('side');
@@ -4420,7 +4420,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V94_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.15');
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.16');
   const MERGES=[
     {key:'perfilSaude',icon:'👤',label:'Perfil & Saúde',members:['perfil','saude'],defaultPage:'perfil',titles:{perfil:['👤 Perfil & Saúde','Dados pessoais, família e informações de saúde.'],saude:['👤 Perfil & Saúde','Medicamentos, suplementos, consultas e condições de saúde.']}},
     {key:'agendaDatas',icon:'📅',label:'Agenda & Datas',members:['calendario','datas'],defaultPage:'calendario',titles:{calendario:['📅 Agenda & Datas','Calendário, vencimentos e datas importantes.'],datas:['📅 Agenda & Datas','Aniversários, documentos, garantias e outras datas.']}},
@@ -4519,7 +4519,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V95_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.15');
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.16');
 
   function escapeHtml(v){
     return String(v??'').replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]});
@@ -4635,7 +4635,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V96_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.15');
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.16');
 
   const GROUPS=[
     {key:'financeiro',icon:'💰',label:'Financeiro',items:[
@@ -4803,6 +4803,179 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 
   setTimeout(init,650);
   window.CANIVETE_SITE_MAP_VERSION=VERSION;
+})();
+</script>
+
+<!-- CANIVETE-V97-DESKTOP-POLISH -->
+<style id="CANIVETE_V97_STYLE">
+/* Desktop: melhora densidade sem tocar no layout mobile */
+@media (min-width:761px){
+  .main{padding-top:22px}
+  .top{align-items:center}
+  .top>div:first-child{min-width:0}
+  .top .actions{align-items:center;justify-content:flex-end;flex-wrap:nowrap}
+  .top .actions>.btn,
+  .top .actions>.v89-advanced-link{white-space:nowrap}
+  .v97-more-actions{position:relative;display:none}
+  .v97-more-actions summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:10px 14px;border-radius:10px;background:#f2f2f3;color:#344054;font-weight:750;white-space:nowrap}
+  .v97-more-actions summary::-webkit-details-marker{display:none}
+  .v97-more-actions[open] summary{background:#e8eefc;color:var(--blue2)}
+  .v97-more-popover{position:absolute;right:0;top:calc(100% + 8px);z-index:70;min-width:230px;padding:7px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px rgba(15,23,42,.14)}
+  .v97-more-popover .btn{display:flex;width:100%;justify-content:flex-start;margin:2px 0;text-align:left;box-shadow:none}
+  .v97-more-popover .btn:hover{transform:none}
+  .v97-desktop-secondary{display:none!important}
+
+  .cards{gap:14px}
+  .cards .card{min-height:110px}
+  .card{padding:18px}
+  .small{font-size:12px}
+  .mini{font-size:11.5px}
+  .sub{font-size:13px}
+  .metric-label{font-size:12px}
+  .metric{font-size:27px}
+
+  /* Desktop: filtros com hierarquia visual */
+  #despesas #buscaDespesaInput{min-height:46px;font-size:14px;background:var(--card);margin-bottom:10px}
+  #despesas .v97-filter-shell{border:1px solid var(--line);border-radius:13px;background:var(--bg);padding:10px;margin-bottom:12px}
+  #despesas .v97-filter-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding-top:9px;margin-top:9px;border-top:1px solid var(--line)}
+  #despesas .v97-filter-row:first-child{padding-top:0;margin-top:0;border-top:0}
+  #despesas .v97-filter-row>span{font-weight:800;color:var(--muted);font-size:11px;min-width:max-content}
+  #despesas .v97-filter-row .btn{min-height:38px;padding:8px 11px;font-size:11px}
+  #despesas .v97-tool-row{justify-content:flex-end;border-top:0;padding-top:0;margin-top:0}
+  #despesas .v97-filter-active{box-shadow:inset 0 0 0 2px rgba(37,99,235,.10)}
+  #despesas .expense-summary{align-items:center}
+  #despesas .expense-summary .stat{min-height:58px;display:flex;flex-direction:column;justify-content:center}
+  #despesas .expense-summary .view-switch{margin-left:auto}
+
+  /* Desktop médio */
+  .side{width:238px}
+  .main{margin-left:238px}
+}
+@media (min-width:1101px){
+  .side{width:246px}
+  .main{margin-left:246px;padding-right:30px;max-width:calc(100vw - 246px)}
+}
+@media (min-width:1400px){
+  .main{max-width:1720px}
+}
+@media (min-width:1700px){
+  .main{padding-left:30px;padding-right:40px}
+}
+@media (min-width:761px) and (max-width:1050px){
+  .side{width:230px}
+  .main{margin-left:230px;padding:18px 20px 28px}
+  .top{margin-bottom:16px}
+  .top h1{font-size:27px}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media (min-width:761px) and (max-width:900px){
+  .top .actions{justify-content:stretch}
+  .top .actions>.btn,
+  .top .actions>.v89-advanced-link{font-size:11px;padding:9px 10px}
+}
+
+/* O campo "Mais ações" só substitui os botões extras no desktop.
+   No mobile, os botões originais continuam visíveis. */
+@media (max-width:760px){
+  .v97-more-actions{display:none!important}
+  #despesas .v97-filter-shell{display:contents}
+  #despesas .v97-filter-row{border:0;padding-top:0;margin-top:0}
+  #despesas .v97-filter-row>span{font-size:12px}
+}
+</style>
+<script id="CANIVETE_V97_SCRIPT">
+(function(){
+  'use strict';
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.16');
+
+  function prepararAcoesDesktop(){
+    const actions=document.querySelector('.top .actions');
+    if(!actions||actions.dataset.v97Ready==='1')return;
+    const originals=Array.from(actions.children).filter(function(el){
+      return el.matches('button.btn');
+    });
+    if(!originals.length)return;
+
+    const details=document.createElement('details');
+    details.className='v97-more-actions';
+    details.innerHTML='<summary>⋮ Mais ações</summary><div class="v97-more-popover"></div>';
+    const pop=details.querySelector('.v97-more-popover');
+
+    originals.forEach(function(original){
+      const clone=original.cloneNode(true);
+      clone.classList.remove('v97-desktop-secondary');
+      pop.appendChild(clone);
+      original.classList.add('v97-desktop-secondary');
+    });
+
+    const advanced=actions.querySelector('.v89-advanced-link');
+    if(advanced)actions.insertBefore(details,advanced.nextSibling);
+    else actions.appendChild(details);
+    actions.dataset.v97Ready='1';
+  }
+
+  function organizarFiltrosDespesas(){
+    const sec=document.getElementById('despesas');
+    const input=document.getElementById('buscaDespesaInput');
+    if(!sec||!input||sec.dataset.v97Filters==='1')return;
+
+    const summary=input.nextElementSibling;
+    const tags=document.getElementById('seletorTagsDespesa');
+    const paymentRow=tags?.nextElementSibling;
+    const typeRow=paymentRow?.nextElementSibling;
+    if(!summary||!paymentRow||!typeRow)return;
+
+    const shell=document.createElement('div');
+    shell.className='v97-filter-shell';
+
+    const searchWrap=document.createElement('div');
+    searchWrap.className='v97-filter-row';
+    searchWrap.appendChild(input);
+    shell.appendChild(searchWrap);
+
+    if(summary?.classList.contains('row')){
+      summary.classList.add('v97-filter-row','v97-tool-row');
+      shell.appendChild(summary);
+    }
+    if(tags){
+      tags.classList.add('v97-filter-row');
+      shell.appendChild(tags);
+    }
+    paymentRow.classList.add('v97-filter-row');
+    shell.appendChild(paymentRow);
+    typeRow.classList.add('v97-filter-row');
+    shell.appendChild(typeRow);
+
+    input.parentElement?.insertBefore(shell,input);
+    shell.appendChild(input);
+    sec.dataset.v97Filters='1';
+  }
+
+  function marcarAcaoSelecionada(){
+    document.querySelectorAll('#despesas .btn.active,#despesas .light.active').forEach(function(btn){
+      btn.classList.add('v97-filter-active');
+    });
+  }
+
+  function fecharAoClicarFora(){
+    document.addEventListener('click',function(e){
+      document.querySelectorAll('.v97-more-actions[open]').forEach(function(details){
+        if(!details.contains(e.target))details.open=false;
+      });
+    });
+  }
+
+  function init(){
+    prepararAcoesDesktop();
+    organizarFiltrosDespesas();
+    marcarAcaoSelecionada();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+  setTimeout(init,500);
+  fecharAoClicarFora();
+  window.CANIVETE_DESKTOP_VERSION=VERSION;
 })();
 </script>
 </body>
