@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="delta-version" content="V1.18">
+<meta name="delta-version" content="V1.19">
 <meta name="description" content="Espaço IA do Delta Prompts: pesquisar, personalizar, criar, melhorar, salvar, compartilhar e testar prompts.">
 <meta name="theme-color" content="#5b5ce2">
-<title>Espaço IA | Delta Prompts V1.18</title>
+<title>Espaço IA | Delta Prompts V1.19</title>
 <link rel="icon" href="/delta-prompts/favicon.ico">
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <style>
@@ -203,6 +203,19 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 /* acabamento premium do Espaço IA */
 .hero-top .back{display:inline-flex;align-items:center;gap:5px}
 .hero-top .back:hover{text-decoration:underline}
+
+/* V1.19 · CENTRAL DE FUNÇÕES */
+.delta-new-functions{margin:18px 0 0;padding:20px;border:1px solid #e1e5f2;border-radius:20px;background:linear-gradient(135deg,#ffffff,#f8f9ff);box-shadow:0 8px 24px rgba(40,42,90,.05)}
+.delta-new-functions-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:14px}
+.delta-new-functions-head h2{margin:0 0 4px;font-size:20px}.delta-new-functions-head p{margin:0;color:var(--muted);font-size:13px}
+.delta-function-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.delta-function-card{border:1px solid #e2e5f0;background:#fff;border-radius:15px;padding:14px;text-align:left;cursor:pointer;min-width:0;transition:.16s;box-shadow:0 2px 8px rgba(30,35,90,.025)}
+.delta-function-card:hover{transform:translateY(-2px);border-color:#cfd4ff;box-shadow:0 9px 20px rgba(91,92,226,.10)}
+.delta-function-card .icon{font-size:22px;display:block;margin-bottom:7px}.delta-function-card strong{display:block;font-size:13.5px}.delta-function-card small{display:block;color:var(--muted);font-size:11.5px;line-height:1.4;margin-top:4px}
+.delta-learn-box{display:none;margin-top:12px;padding:16px;border-radius:15px;background:#f7f5ff;border:1px solid #ddd9ff}
+.delta-learn-box.show{display:block}.delta-learn-box h3{margin:0 0 6px}.delta-learn-box p{margin:0 0 10px;color:var(--muted);font-size:13px}.delta-learn-parts{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.delta-learn-part{padding:9px;background:#fff;border:1px solid #e6e3ff;border-radius:10px}.delta-learn-part strong{display:block;font-size:11px;color:#4338ca}.delta-learn-part span{font-size:11px;color:var(--muted)}
+@media(max-width:900px){.delta-function-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.delta-learn-parts{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.delta-new-functions{padding:15px}.delta-new-functions-head{display:block}.delta-function-grid{grid-template-columns:1fr 1fr}.delta-function-card{padding:12px}.delta-learn-parts{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -211,7 +224,7 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 
 <header class="hero">
 <div class="wrap">
-<div class="hero-top"><a class="back" href="/delta-prompts/">← Voltar ao Delta</a><span class="ver">Delta V1.18</span></div>
+<div class="hero-top"><a class="back" href="/delta-prompts/">← Voltar ao Delta</a><span class="ver">Delta V1.19</span></div>
 <h1>🧠 Espaço <span>IA</span></h1>
 <p>Um lugar único para encontrar, personalizar, criar, melhorar, salvar e compartilhar seus prompts — sem perder o que você já tem.</p>
 <div class="tabs" role="tablist">
@@ -230,6 +243,24 @@ h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{col
 <div class="panel">
 <div class="search-row"><input id="busca" type="search" autocomplete="off" placeholder="Ex.: criar anúncio para imóvel, responder cliente, estudar..."><button class="btn primary" id="btnBuscar">🔎 Buscar</button></div>
 <div class="quick" id="quickCats"></div>
+<div class="delta-new-functions">
+  <div class="delta-new-functions-head"><div><span class="badge">✨ NOVO</span><h2>Central de funções inteligentes</h2><p>Ferramentas rápidas para criar, melhorar, organizar e aprender a usar seus prompts.</p></div></div>
+  <div class="delta-function-grid">
+    <button type="button" class="delta-function-card" data-df="smart"><span class="icon">🧠</span><strong>Prompt Inteligente</strong><small>Transforme uma ideia simples em um prompt estruturado.</small></button>
+    <button type="button" class="delta-function-card" data-df="assistant"><span class="icon">🎯</span><strong>O que você quer fazer?</strong><small>Descreva a tarefa e o Delta encontra o caminho.</small></button>
+    <button type="button" class="delta-function-card" data-df="improve"><span class="icon">🪄</span><strong>Melhorar prompt</strong><small>Envie qualquer prompt para o revisor.</small></button>
+    <button type="button" class="delta-function-card" data-df="variables"><span class="icon">🧩</span><strong>Variáveis inteligentes</strong><small>Preencha campos e reutilize seus prompts.</small></button>
+    <button type="button" class="delta-function-card" data-df="versions"><span class="icon">🔄</span><strong>Histórico de versões</strong><small>Crie e compare versões pelo Espaço IA.</small></button>
+    <button type="button" class="delta-function-card" data-df="collections"><span class="icon">🗂️</span><strong>Minhas coleções</strong><small>Organize seus prompts por assunto.</small></button>
+    <button type="button" class="delta-function-card" data-df="share"><span class="icon">🔗</span><strong>Compartilhar</strong><small>Gere um link ou copie para enviar.</small></button>
+    <button type="button" class="delta-function-card" data-df="stats"><span class="icon">📊</span><strong>Meu uso da IA</strong><small>Veja sua atividade e prompts mais usados.</small></button>
+  </div>
+  <div id="deltaLearnBox" class="delta-learn-box">
+    <h3>📚 Modo Aprender</h3>
+    <p>Quando você abrir um prompt, use esta visão para entender como ele foi estruturado.</p>
+    <div class="delta-learn-parts"><div class="delta-learn-part"><strong>CONTEXTO</strong><span>O cenário da tarefa.</span></div><div class="delta-learn-part"><strong>OBJETIVO</strong><span>O resultado esperado.</span></div><div class="delta-learn-part"><strong>INSTRUÇÕES</strong><span>O que a IA deve fazer.</span></div><div class="delta-learn-part"><strong>REGRAS</strong><span>Limites e critérios.</span></div><div class="delta-learn-part"><strong>FORMATO</strong><span>Como entregar o resultado.</span></div></div>
+  </div>
+</div>
 <div class="stats">
 <div class="stat"><strong id="stResultados">0</strong><span class="small">Resultados</span></div>
 <div class="stat"><strong id="stFav">0</strong><span class="small">Favoritos</span></div>
@@ -623,6 +654,37 @@ var obs=new MutationObserver(decorateCards);if($('resultados'))obs.observe($('re
 var proTab=document.querySelector('.tabs button[data-tab="pro"]');if(proTab){proTab.addEventListener('click',function(){document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('active',x===proTab)});document.querySelectorAll('.tab').forEach(function(x){x.style.display='none'});$('pro').style.display='block';history.replaceState(null,'','#pro');renderPacks();renderTags();renderPins();renderNotes();renderUsage();decorateCards()})}
 function init(){renderDQ();renderPacks();renderTags();renderPins();renderNotes();renderUsage();decorateCards()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+<script>
+(function(){
+'use strict';
+function df(id){return document.getElementById(id)}
+function dftab(tab){var b=document.querySelector('.tabs button[data-tab="'+tab+'"]');if(b)b.click()}
+function dfgoto(id){var e=df(id);if(e)e.scrollIntoView({behavior:'smooth',block:'start'})}
+function dfSmart(){
+  dftab('criar');setTimeout(function(){var c=df('cContexto'),o=df('cObjetivo');if(c)c.focus();if(o)o.value='';if(c)c.value='Quero realizar uma tarefa com ajuda de IA. Descreva aqui o que você precisa fazer.'},120);
+  if(typeof toast==='function')toast('🧠 Montador inteligente aberto');
+}
+function dfAssistant(){dftab('pro');setTimeout(function(){dfgoto('pro-orchestrator');var i=df('proOrq');if(i)i.focus()},120)}
+function dfImprove(){dftab('melhorar');setTimeout(function(){var i=df('melhorarInput');if(i)i.focus()},120)}
+function dfVariables(){
+  var txt=localStorage.getItem('deltaUltimoPromptCriado')||localStorage.getItem('deltaUltimoPromptMelhorado')||'';
+  if(txt&&typeof abrirPersonalizador==='function'){abrirPersonalizador({titulo:'Prompt com variáveis',texto:txt},function(out){localStorage.setItem('deltaUltimoPromptMelhorado',out);toast('🧩 Variáveis aplicadas')});return}
+  dftab('criar');setTimeout(function(){var b=df('personalizarCriado');if(b)b.click();else toast('🧩 Crie um prompt primeiro para preencher variáveis')},120);
+}
+function dfVersions(){dftab('pro');setTimeout(function(){dfgoto('pro-versions')},120)}
+function dfCollections(){dftab('meus');setTimeout(function(){dfgoto('colecoesLista')},120)}
+function dfShare(){var txt=localStorage.getItem('deltaUltimoPromptCriado')||localStorage.getItem('deltaUltimoPromptMelhorado')||'';if(txt&&typeof compartilhar==='function'){compartilhar({titulo:'Meu prompt do Delta',texto:txt,categoria:'Meus Prompts'});return}toast('🔗 Crie ou abra um prompt primeiro para compartilhar')}
+function dfStats(){dftab('pro');setTimeout(function(){dfgoto('pro-stats')},120)}
+function dfBind(){
+  document.querySelectorAll('[data-df]').forEach(function(b){b.addEventListener('click',function(){
+    var a=b.dataset.df;
+    if(a==='smart')dfSmart();if(a==='assistant')dfAssistant();if(a==='improve')dfImprove();if(a==='variables')dfVariables();if(a==='versions')dfVersions();if(a==='collections')dfCollections();if(a==='share')dfShare();if(a==='stats')dfStats();
+  })});
+  var learn=df('deltaLearnBox');document.addEventListener('dblclick',function(e){var card=e.target.closest&&e.target.closest('.card');if(!card||!learn)return;learn.classList.add('show');learn.scrollIntoView({behavior:'smooth',block:'nearest'});});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',dfBind,{once:true});else dfBind();
 })();
 </script>
 <script id="delta-v17-enhancements-script">
