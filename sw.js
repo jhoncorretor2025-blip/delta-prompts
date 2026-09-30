@@ -1,5 +1,5 @@
-// DELTA SITE VERSION: V1.11
-const CACHE_NAME = 'delta-prompts-shell-v27';
+// DELTA SITE VERSION: V1.12
+const CACHE_NAME = 'delta-prompts-shell-v28';
 const SHELL_URLS = [
   '/delta-prompts/index.html',
   '/delta-prompts/style.css',
@@ -33,6 +33,18 @@ self.addEventListener('fetch', (event) => {
     );
     return;
   }
+  // Documentos HTML: sempre busca uma cópia nova na rede.
+  // Isso evita que o navegador/CDN devolva uma versão antiga do site.
+  if (event.request.destination === 'document' || url.pathname.endsWith('.html')) {
+    const pedidoNovo = new Request(event.request, { cache: 'no-store' });
+    event.respondWith(
+      fetch(pedidoNovo)
+        .then((resposta) => resposta)
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((resposta) => {
