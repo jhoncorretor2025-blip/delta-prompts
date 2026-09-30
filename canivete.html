@@ -447,7 +447,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 const APP_VERSION='8.9';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
-let d=load();
+let d=load();window.d=d;window.APP_VERSION=APP_VERSION;window.__caniveteSetData=function(novo){d=novo||{};window.d=d;};
 function load(){let x=null;for(const k of [KEY,'canivete-assistente-v8','canivete-assistente-v7','canivete-assistente-v6','canivete-assistente-v5','canivete-assistente-v4','canivete-assistente-v3']){try{x=JSON.parse(localStorage.getItem(k)||'null')}catch(e){}if(x)break}if(!x)x={salary:0,frequency:'monthly',commission:0,hasCommission:false,otherIncome:0,saved:0,bank:0,investments:0,expenses:[],benefits:[{name:'Vale-alimentação',value:0,type:'uso'},{name:'Vale-refeição',value:0,type:'uso'},{name:'Vale-transporte',value:0,type:'uso'}],goals:[]};x.expenses=x.expenses||[];x.despesasArquivadas=x.despesasArquivadas||[];defaults.forEach(a=>{const jaExiste=x.expenses.some(e=>String(e.name).toLowerCase()===a[0].toLowerCase());const foiArquivada=x.despesasArquivadas.some(e=>String(e.name).toLowerCase()===a[0].toLowerCase());if(!jaExiste&&!foiArquivada)x.expenses.push({name:a[0],icon:a[1],value:0,cat:a[2]})});x.expenses.forEach(e=>{let a=defaults.find(a=>String(a[0]).toLowerCase()===String(e.name).toLowerCase());if(a){e.icon=e.icon||a[1];e.cat=e.cat||a[2]}e.fixo=e.fixo!==false;e.vencimento=e.vencimento||null;e.quem=e.quem||'';e.compartilhada=e.compartilhada||false;e.dividirCom=e.dividirCom||'';e.reembolsado=e.reembolsado||false;e.pago=e.pago||false;e.parcelaAtual=e.parcelaAtual||null;e.totalParcelas=e.totalParcelas||null;e.fixado=e.fixado||false;e.obs=e.obs||'';e.foto=e.foto||null;e.formaPagamento=e.formaPagamento||((e.totalParcelas&&Number(e.totalParcelas)>1)?'cartao':'avista');e.dataPagamento=e.dataPagamento||'';if(!e.tipoDespesa){e.tipoDespesa=(e.totalParcelas&&Number(e.totalParcelas)>1)?'parcelada':(e.fixo!==false?'fixa':'ocasional')}e.fixo=e.tipoDespesa!=='ocasional'});x.benefits=x.benefits||[];x.goals=x.goals||[];x.hasCommission=!!x.hasCommission;x.dividas=x.dividas||[];x.historico=x.historico||[];x.categoriasCustom=x.categoriasCustom||[];x.pessoas=x.pessoas||[];x.lastSaved=x.lastSaved||null;x.payDay1=x.payDay1||null;x.payDay2=x.payDay2||null;x.compras=x.compras||[];x.diaFechamentoFatura=x.diaFechamentoFatura||null;x.coresCategorias=x.coresCategorias||{};x.historicoPorCategoria=x.historicoPorCategoria||[];return x}
 let _timeoutIndicadorSalvo=null;
 // ---------- Melhoria: cor de destaque customizavel (alem de claro/escuro) ----------
@@ -546,7 +546,7 @@ function verificarDadosVaziosEDetectarBackup(){
     if(dadosParecemVazios(registro.dados))return; // o backup tambem esta vazio, nao adianta oferecer
     const quando=new Date(registro.quando).toLocaleString('pt-BR');
     if(!confirm(`Seus dados atuais parecem vazios, mas encontramos uma cópia salva de ${quando} guardada neste navegador. Quer restaurar essa cópia?`))return;
-    d=registro.dados;
+    d=registro.dados;window.d=d;
     localStorage.setItem(KEY,JSON.stringify(d));
     registrarCategoriasCustom();render();
     mostrarToastCanivete('✅ Dados restaurados a partir da cópia de segurança!');
@@ -3104,7 +3104,7 @@ function mostrarAvisoConflitoSync(nuvemAtual){
   </div>`;
   document.body.appendChild(overlay);
   overlay.querySelector('#btnUsarNuvem').addEventListener('click',()=>{
-    d=Object.assign({},d,nuvemAtual);
+    d=Object.assign({},d,nuvemAtual);window.d=d;
     localStorage.setItem(KEY,JSON.stringify(d));
     registrarCategoriasCustom();render();
     ultimoLastSavedConhecido=nuvemAtual.lastSaved;
@@ -3146,7 +3146,7 @@ function aoLogarCanivete(user){
   renderBannerLogin();
   deltaFirebaseModulo.obterCaniveteDaNuvem(user.uid).then(nuvem=>{
     if(nuvem&&(!d.lastSaved||(nuvem.lastSaved&&nuvem.lastSaved>d.lastSaved))){
-      d=Object.assign({},d,nuvem);localStorage.setItem(KEY,JSON.stringify(d));registrarCategoriasCustom();render();
+      d=Object.assign({},d,nuvem);window.d=d;localStorage.setItem(KEY,JSON.stringify(d));registrarCategoriasCustom();render();
       mostrarToastCanivete('☁️ Dados sincronizados da nuvem!');
       ultimoLastSavedConhecido=d.lastSaved;
     }else{ultimoLastSavedConhecido=(nuvem&&nuvem.lastSaved)||d.lastSaved||Date.now();agendarSyncNuvem()}
@@ -4032,7 +4032,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
     if(!snap)return;
     Object.keys(localStorage).forEach(k=>{if(k&&k.indexOf('canivete')===0)localStorage.removeItem(k)});
     Object.keys(snap.local||{}).forEach(k=>localStorage.setItem(k,String(snap.local[k])));
-    if(snap.principal&&typeof snap.principal==='object')window.d=clone(snap.principal);
+    if(snap.principal&&typeof snap.principal==='object'&&typeof window.__caniveteSetData==='function')window.__caniveteSetData(clone(snap.principal));
     if(typeof window.render==='function')window.render();
     ['renderCompras','renderSenhas','renderContatos','renderDatas','renderLinks','renderListaHabitos','renderVeiculo','renderListaCursos','renderListaManutencoes','renderListaRemedios','renderListaConsultas','renderListaCondicoes'].forEach(fn=>{if(typeof window[fn]==='function')window[fn]()});
   }
