@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="delta-version" content="V1.13">
+<meta name="description" content="Espaço IA do Delta Prompts: pesquisar, personalizar, criar, melhorar, salvar, compartilhar e testar prompts.">
+<meta name="theme-color" content="#5b5ce2">
+<title>Espaço IA | Delta Prompts V1.13</title>
+<link rel="icon" href="/delta-prompts/favicon.ico">
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<style>
+:root{--p:#5b5ce2;--pd:#4243bb;--bg:#f5f6fb;--text:#202236;--muted:#667085;--border:#e5e7ef;--card:#fff;--soft:#eef2ff;--ok:#15803d;--danger:#b91c1c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+.wrap{width:min(1200px,calc(100% - 28px));margin:auto}
+.hero{padding:30px 0 22px;background:linear-gradient(135deg,#eef2ff,#fff)}
+.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.back{font-weight:900;color:var(--p);text-decoration:none}.ver{padding:6px 10px;border-radius:999px;background:#ececff;color:var(--pd);font-size:11px;font-weight:900}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:22px 0 7px}h1 span{color:var(--p)}.hero p{max-width:800px;color:var(--muted);margin:0}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:16px 0 2px}.tabs button{white-space:nowrap;border:1px solid var(--border);background:#fff;color:var(--text);padding:10px 14px;border-radius:999px;font-weight:800;cursor:pointer}.tabs button.active{background:var(--p);color:#fff;border-color:var(--p)}
+.section{padding:20px 0 42px}.panel{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:0 6px 20px rgba(30,35,90,.05)}
+.search-row{display:grid;grid-template-columns:1fr auto;gap:10px}.search-row input,.field,.select{width:100%;min-height:46px;border:1px solid var(--border);border-radius:12px;padding:11px 13px;background:#fff;color:var(--text);font:inherit}.search-row input{font-size:16px;border:2px solid #cfd2ff}.search-row button{min-height:46px}
+.btn{border:0;border-radius:11px;padding:10px 14px;font-weight:900;cursor:pointer}.primary{background:var(--p);color:#fff}.secondary{background:var(--soft);color:var(--pd)}.ghost{background:#fff;border:1px solid var(--border);color:var(--text)}.danger{background:#fee2e2;color:var(--danger)}
+.quick{display:flex;gap:8px;overflow-x:auto;padding:10px 0}.quick button{flex:0 0 auto;border:1px solid var(--border);background:#fff;padding:8px 11px;border-radius:999px;font-weight:800;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}.stat{padding:13px;border:1px solid var(--border);border-radius:13px;background:#fff}.stat strong{display:block;font-size:24px}.small{font-size:12px;color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}.tools>*{min-height:42px}.tools .field{max-width:280px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.card{display:flex;flex-direction:column;gap:9px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:15px;min-width:0}.card h3{margin:0;line-height:1.25;font-size:17px}.meta{font-size:12px;color:var(--muted);font-weight:700}.preview{background:#f8fafc;border:1px solid #edf0f5;border-radius:11px;padding:12px;font-size:13px;line-height:1.5;white-space:pre-wrap;max-height:135px;overflow:auto}.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.actions button{min-height:40px;border:0;border-radius:10px;padding:8px 9px;font-weight:800;cursor:pointer}.action-main{background:var(--p);color:#fff}.action-soft{background:#eef2ff;color:#4338ca}.action-green{background:#ecfdf3;color:#166534}.action-warn{background:#fff7ed;color:#9a3412}.action-red{background:#fee2e2;color:#991b1b}
+.results-info{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 10px}.empty{text-align:center;padding:28px;border:2px dashed var(--border);border-radius:15px;color:var(--muted);grid-column:1/-1}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stack{display:flex;flex-direction:column;gap:10px}.field-label{font-weight:900;font-size:13px}.field-wrap{display:flex;flex-direction:column;gap:6px}
+.output{white-space:pre-wrap;background:#f8f9ff;border:1px dashed #cfd4ff;border-radius:13px;padding:14px;line-height:1.5;min-height:80px}
+.list{display:flex;flex-direction:column;gap:7px}.list-item{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid var(--border);border-radius:11px;background:#fff}.list-item span{flex:1;min-width:0}.list-item small{display:block;color:var(--muted)}
+.ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.ai{border:1px solid var(--border);border-radius:13px;padding:13px;background:#fff;cursor:pointer;text-align:left}.ai.active{border-color:#b7bbff;background:#f5f3ff}.ai strong{display:block}.ai small{color:var(--muted)}
+.badge{display:inline-flex;align-items:center;padding:5px 8px;border-radius:999px;background:var(--soft);color:var(--pd);font-size:11px;font-weight:900}
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.62);z-index:6000;display:none;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.modal-box{width:min(620px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:20px;padding:20px}.modal-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.modal-head h2{margin:0}.modal-close{border:0;background:#f1f5f9;border-radius:9px;padding:8px 11px;font-weight:900;cursor:pointer}.vars{display:flex;flex-direction:column;gap:9px;margin:14px 0}.share-line{display:grid;grid-template-columns:1fr auto;gap:8px}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#172033;color:#fff;padding:11px 16px;border-radius:11px;z-index:8000;transition:.22s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.import-note{padding:11px 12px;border-radius:11px;background:#fff7ed;border:1px solid #fed7aa;color:#92400e;font-size:12.5px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,1fr)}.ai-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.wrap{width:min(100% - 20px,1200px)}.hero{padding-top:20px}.hero-top{align-items:flex-start}.search-row{grid-template-columns:1fr}.grid,.two,.three{grid-template-columns:1fr}.ai-grid{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}.tools>*{width:100%;max-width:none}.share-line{grid-template-columns:1fr}.panel{padding:14px}.section{padding-bottom:32px}}
+[data-theme="dark"] body{background:#0f1424;color:#eaeaea}[data-theme="dark"] .hero{background:linear-gradient(135deg,#171b35,#0f1424)}[data-theme="dark"] .panel,[data-theme="dark"] .card,[data-theme="dark"] .stat,[data-theme="dark"] .ai,[data-theme="dark"] .list-item,[data-theme="dark"] .modal-box,[data-theme="dark"] .field,[data-theme="dark"] .select,[data-theme="dark"] .search-row input,[data-theme="dark"] .quick button{background:#16213e;border-color:rgba(255,255,255,.12);color:#eaeaea}[data-theme="dark"] .hero p,[data-theme="dark"] .small,[data-theme="dark"] .meta,[data-theme="dark"] .ai small{color:#aab2c3}[data-theme="dark"] .preview,[data-theme="dark"] .output{background:#0f1424;border-color:rgba(255,255,255,.12);color:#d7deea}[data-theme="dark"] .tabs button{background:#16213e;color:#eaeaea;border-color:rgba(255,255,255,.12)}[data-theme="dark"] .tabs button.active{background:var(--p);color:#fff}
+</style>
+</head>
+<body>
+<div id="menu"><div style="width:240px;min-height:100vh"></div></div>
+<script src="/delta-prompts/menu-loader.js?v=20260929b"></script>
+
+<header class="hero">
+<div class="wrap">
+<div class="hero-top"><a class="back" href="/delta-prompts/">← Voltar ao Delta</a><span class="ver">Delta V1.13</span></div>
+<h1>🧠 Espaço <span>IA</span></h1>
+<p>Um lugar único para encontrar, personalizar, criar, melhorar, salvar e compartilhar seus prompts — sem perder o que você já tem.</p>
+<div class="tabs" role="tablist">
+<button class="active" data-tab="buscar">🔎 Buscar</button>
+<button data-tab="criar">✨ Criar prompt</button>
+<button data-tab="melhorar">🛠️ Melhorar</button>
+<button data-tab="meus">⭐ Meu espaço</button>
+<button data-tab="config">⚙️ Configurações</button>
+</div>
+</div>
+</header>
+
+<main class="wrap">
+<section id="buscar" class="section tab">
+<div class="panel">
+<div class="search-row"><input id="busca" type="search" autocomplete="off" placeholder="Ex.: criar anúncio para imóvel, responder cliente, estudar..."><button class="btn primary" id="btnBuscar">🔎 Buscar</button></div>
+<div class="quick" id="quickCats"></div>
+<div class="stats">
+<div class="stat"><strong id="stResultados">0</strong><span class="small">Resultados</span></div>
+<div class="stat"><strong id="stFav">0</strong><span class="small">Favoritos</span></div>
+<div class="stat"><strong id="stMeus">0</strong><span class="small">Meus prompts</span></div>
+<div class="stat"><strong id="stRecentes">0</strong><span class="small">Recentes</span></div>
+</div>
+<div class="tools">
+<select id="filtroCategoria" class="select"><option value="">Todas as áreas</option></select>
+<select id="filtroNivel" class="select"><option value="">Todos os níveis</option><option value="basico">Básico</option><option value="intermediario">Intermediário</option><option value="avancado">Avançado</option></select>
+<select id="ordenacao" class="select"><option value="relevancia">Relevância</option><option value="az">A–Z</option><option value="recentes">Recentes</option></select>
+<button class="btn ghost" id="limparBusca">Limpar</button>
+</div>
+</div>
+<div class="results-info"><div><span class="badge" id="resultadoLabel">Prontos para buscar</span></div><a href="/delta-prompts/prompt_pro.html" class="back">⚡ Gerador Pro</a></div>
+<div id="resultados" class="grid"></div>
+</section>
+
+<section id="criar" class="section tab" style="display:none">
+<div class="two">
+<div class="panel stack">
+<span class="badge">01 · MONTADOR INTELIGENTE</span>
+<h2 style="margin:0">✨ Crie seu prompt do zero</h2>
+<div class="field-wrap"><label class="field-label">Contexto</label><textarea id="cContexto" class="field" rows="4" placeholder="O que está acontecendo? Para qual negócio, projeto ou situação?"></textarea></div>
+<div class="field-wrap"><label class="field-label">Objetivo</label><textarea id="cObjetivo" class="field" rows="4" placeholder="O que você quer que a IA entregue?"></textarea></div>
+<div class="three">
+<div class="field-wrap"><label class="field-label">Público</label><input id="cPublico" class="field" placeholder="Ex.: clientes"></div>
+<div class="field-wrap"><label class="field-label">Tom</label><select id="cTom" class="select"><option>profissional e claro</option><option>persuasivo</option><option>casual e próximo</option><option>didático e simples</option><option>estratégico e direto</option></select></div>
+<div class="field-wrap"><label class="field-label">Formato</label><select id="cFormato" class="select"><option>lista prática</option><option>passo a passo</option><option>tabela</option><option>plano de ação</option><option>texto pronto</option></select></div>
+</div>
+<div class="field-wrap"><label class="field-label">Regras e restrições</label><input id="cRegras" class="field" placeholder="Ex.: não inventar dados, usar português do Brasil"></div>
+<div class="actions"><button class="btn primary" id="gerarCriado">✨ Gerar prompt</button><button class="btn secondary" id="salvarCriado">💾 Salvar nos meus prompts</button></div>
+</div>
+<div class="panel">
+<span class="badge">02 · RESULTADO</span>
+<h2 style="margin:0">Seu prompt</h2>
+<div id="criadoOut" class="output">Preencha contexto e objetivo e clique em “Gerar prompt”.</div>
+<div class="actions" style="margin-top:10px">
+<button class="btn primary" id="copiarCriado">📋 Copiar</button>
+<button class="btn secondary" id="abrirCriado">🤖 Abrir na IA</button>
+<button class="btn ghost" id="personalizarCriado">🧩 Personalizar variáveis</button>
+<button class="btn ghost" id="compartilharCriado">🔗 Compartilhar</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="melhorar" class="section tab" style="display:none">
+<div class="two">
+<div class="panel stack">
+<span class="badge">03 · REVISOR DE PROMPTS</span>
+<h2 style="margin:0">🛠️ Melhorar um prompt</h2>
+<textarea id="melhorarInput" class="field" rows="13" placeholder="Cole aqui um prompt que você já usa..."></textarea>
+<div class="actions"><button class="btn primary" id="btnMelhorar">🛠️ Analisar e melhorar</button><button class="btn ghost" id="btnCarregarUltimo">↩️ Usar último criado</button></div>
+</div>
+<div class="panel stack">
+<span class="badge">04 · VERSÃO MELHORADA</span>
+<div id="melhorarOut" class="output">O resultado aparecerá aqui.</div>
+<div class="actions"><button class="btn primary" id="copiarMelhorado">📋 Copiar melhorado</button><button class="btn secondary" id="salvarMelhorado">💾 Salvar como novo prompt</button></div>
+</div>
+</div>
+</section>
+
+<section id="meus" class="section tab" style="display:none">
+<div class="two">
+<div class="panel">
+<span class="badge">05 · MEUS PROMPTS</span>
+<h2 style="margin:8px 0 4px">📦 Biblioteca pessoal</h2>
+<p class="small">Integra com a biblioteca existente do Delta. Nada é apagado daqui.</p>
+<div id="meusLista" class="list"></div>
+</div>
+<div class="panel">
+<span class="badge">06 · RECENTES & BUSCAS</span>
+<h2 style="margin:8px 0 4px">🕐 Atividade recente</h2>
+<div id="recentesLista" class="list"></div>
+</div>
+</div>
+<div class="two" style="margin-top:14px">
+<div class="panel">
+<span class="badge">07 · COLEÇÕES</span>
+<h2 style="margin:8px 0 4px">🗂️ Organizar por coleção</h2>
+<div class="share-line"><input id="colecaoNova" class="field" placeholder="Ex.: Imobiliário, Marketing, Delta..."><button class="btn primary" id="criarColecao">＋ Criar</button></div>
+<div id="colecoesLista" class="list" style="margin-top:10px"></div>
+</div>
+<div class="panel">
+<span class="badge">08 · BACKUP</span>
+<h2 style="margin:8px 0 4px">💾 Seus dados</h2>
+<p class="small">Exporte seus prompts e preferências. O backup fica no seu aparelho.</p>
+<div class="actions"><button class="btn primary" id="exportarBackup">📥 Exportar JSON</button><button class="btn secondary" id="importarBackup">📤 Importar JSON</button><input id="backupFile" type="file" accept="application/json" hidden></div>
+<div id="backupOut" class="output" style="margin-top:10px"></div>
+</div>
+</div>
+</section>
+
+<section id="config" class="section tab" style="display:none">
+<div class="two">
+<div class="panel">
+<span class="badge">09 · IA PADRÃO</span>
+<h2 style="margin:8px 0 4px">🤖 Escolha sua IA principal</h2>
+<p class="small">A escolha fica salva neste aparelho. Você pode trocar a qualquer momento.</p>
+<div id="aiGrid" class="ai-grid"></div>
+</div>
+<div class="panel">
+<span class="badge">10 · AÇÕES RÁPIDAS</span>
+<h2 style="margin:8px 0 4px">⚡ Atalhos</h2>
+<div class="list">
+<div class="list-item"><span><strong>⌨️ Tecla “/”</strong><small>Foca a busca quando você não está digitando.</small></span></div>
+<div class="list-item"><span><strong>🧩 Personalizar</strong><small>Detecta [VARIÁVEIS] e preenche sem alterar o original.</small></span></div>
+<div class="list-item"><span><strong>🔗 Compartilhar</strong><small>Gera um link portátil do prompt.</small></span></div>
+<div class="list-item"><span><strong>⭐ Favoritar</strong><small>Usa o mesmo sistema de favoritos do Delta.</small></span></div>
+</div>
+</div>
+</div>
+<div class="panel" style="margin-top:14px">
+<span class="badge">11 · COMPARAÇÃO DE VERSÕES</span>
+<h2 style="margin:8px 0 4px">🔄 Compare duas versões</h2>
+<div class="two">
+<div class="field-wrap"><label class="field-label">Versão A</label><textarea id="versaoA" class="field" rows="9" placeholder="Cole a versão antiga"></textarea></div>
+<div class="field-wrap"><label class="field-label">Versão B</label><textarea id="versaoB" class="field" rows="9" placeholder="Cole a versão nova"></textarea></div>
+</div>
+<button class="btn secondary" id="compararVersoes">🔎 Comparar</button>
+<div id="comparacaoOut" class="output" style="margin-top:10px"></div>
+</div>
+</section>
+</main>
+
+<div id="modal" class="modal" aria-hidden="true"><div class="modal-box">
+<div class="modal-head"><h2 id="modalTitle">Personalizar prompt</h2><button class="modal-close" id="fecharModal">✕</button></div>
+<div id="modalBody"></div>
+<div class="actions" style="margin-top:12px"><button class="btn primary" id="modalConfirmar">✅ Aplicar</button><button class="btn ghost" id="modalCancelar">Cancelar</button></div>
+</div></div>
+<div id="toast" class="toast"></div>
+
+<script src="/delta-prompts/search-index.js"></script>
+<script>
+(function(){
+'use strict';
+const KEY_FAV='deltaFavoritos', KEY_MEUS='deltaPrompts', KEY_REC='deltaPromptsRecentes', KEY_BUS='deltaBuscaHistorico', KEY_COL='deltaWorkspaceColecoes', KEY_IA='deltaIAEscolhida';
+const $=id=>document.getElementById(id);
+const safe=(fn,fb)=>{try{return fn()}catch(e){return fb}};
+const read=(k,fb)=>safe(()=>JSON.parse(localStorage.getItem(k)||''),fb);
+const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}};
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const clean=s=>String(s??'').trim();
+const getFav=()=>{const a=read(KEY_FAV,[]);return Array.isArray(a)?a:[]};
+const getMeus=()=>{const a=read(KEY_MEUS,[]);return Array.isArray(a)?a:[]};
+const getRec=()=>{const a=read(KEY_REC,[]);return Array.isArray(a)?a:[]};
+let resultados=[], criadoAtual='', melhoradoAtual='', buscaAtual='';
+
+const IA={
+ chatgpt:{nome:'ChatGPT',emoji:'🤖',url:'https://chatgpt.com/'},
+ gemini:{nome:'Gemini',emoji:'✨',url:'https://gemini.google.com/app'},
+ claude:{nome:'Claude',emoji:'🧡',url:'https://claude.ai/new'},
+ perplexity:{nome:'Perplexity',emoji:'🌐',url:'https://www.perplexity.ai/'},
+ notebooklm:{nome:'NotebookLM',emoji:'📚',url:'https://notebooklm.google.com/'},
+ comet:{nome:'Comet',emoji:'🌊',url:'https://comet.perplexity.ai/'}
+};
+function iaAtual(){return localStorage.getItem(KEY_IA)||'chatgpt'}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),1800)}
+async function copiar(texto){if(!clean(texto))return false;try{await navigator.clipboard.writeText(texto);toast('📋 Copiado para a área de transferência');return true}catch(e){const ta=document.createElement('textarea');ta.value=texto;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('📋 Copiado');return true}}
+function abrirIA(texto,provider){const ia=IA[provider||iaAtual()]||IA.chatgpt;copiar(texto);window.open(ia.url,'_blank','noopener');toast(ia.emoji+' Prompt copiado e '+ia.nome+' aberto')}
+function registrarRec(item){if(!item||!item.id)return;let a=getRec().filter(x=>String(x.id)!==String(item.id));a.unshift({...item,ts:Date.now()});write(KEY_REC,a.slice(0,30))}
+function isFav(id){return getFav().some(x=>String(x.id)===String(id))}
+function favoritar(item){let a=getFav(),i=a.findIndex(x=>String(x.id)===String(item.id));if(i<0){a.unshift({...item,createdAt:Date.now()});write(KEY_FAV,a);toast('❤️ Adicionado aos favoritos')}else{a.splice(i,1);write(KEY_FAV,a);toast('🤍 Removido dos favoritos')}window.dispatchEvent(new CustomEvent('delta:favoritos-updated'));renderStats()}
+function salvarMeuPrompt(item){let a=getMeus(),i=a.findIndex(x=>String(x.id)===String(item.id));if(i<0){a.unshift({...item,criadoEm:Date.now()});write(KEY_MEUS,a);toast('💾 Salvo na sua biblioteca')}else toast('ℹ️ Esse prompt já está na biblioteca');renderStats();renderMeus()}
+function promptItemFromIndex(x,i){return{id:'idx-'+i,titulo:clean(x.titulo)||'Prompt',texto:clean(x.resumo),categoria:clean(x.pagina)||'Geral',nivel:['basico','intermediario','avancado'].includes(x.titulo)?x.titulo:'',url:x.link}}
+function normalizarIndice(){const a=Array.isArray(window.deltaSearchIndex)?window.deltaSearchIndex:[];return a.map(promptItemFromIndex).filter(x=>x.texto&&x.titulo&&!/^(todos|intermediario|avancado|basico|lista-prompts|nenhum)/i.test(x.titulo))}
+function score(x,t){const q=t.toLowerCase().split(/\s+/).filter(Boolean);const hay=(x.titulo+' '+x.texto+' '+x.categoria).toLowerCase();let s=0;q.forEach(w=>{if(x.titulo.toLowerCase().includes(w))s+=7;if(x.categoria.toLowerCase().includes(w))s+=4;if(x.texto.toLowerCase().includes(w))s+=2});return s}
+function montarCategorias(){const all=normalizarIndice().map(x=>x.categoria).filter(Boolean);const cats=[...new Set(all)].sort((a,b)=>a.localeCompare(b,'pt-BR'));$('filtroCategoria').innerHTML='<option value="">Todas as áreas</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('')}
+function executarBusca(){const t=clean($('busca').value);buscaAtual=t;if(t){let h=read(KEY_BUS,[]);h=h.filter(x=>x.toLowerCase()!==t.toLowerCase());h.unshift(t);write(KEY_BUS,h.slice(0,8))}
+let arr=normalizarIndice();const cat=$('filtroCategoria').value,nivel=$('filtroNivel').value;if(cat)arr=arr.filter(x=>x.categoria===cat);if(nivel)arr=arr.filter(x=>x.nivel===nivel);
+if(t)arr=arr.map(x=>({...x,_score:score(x,t)})).filter(x=>x._score>0).sort((a,b)=>b._score-a._score);else arr=arr.slice(0,24);
+const ord=$('ordenacao').value;if(ord==='az')arr.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));if(ord==='recentes')arr=[...getRec().map(r=>arr.find(x=>x.id===r.id)||r).filter(Boolean),...arr].slice(0,30);
+resultados=arr;renderResultados();renderStats()}
+function renderResultados(){const box=$('resultados');$('stResultados').textContent=resultados.length;$('resultadoLabel').textContent=buscaAtual?resultados.length+' resultado'+(resultados.length===1?'':'s'):'Sugestões para começar';if(!resultados.length){box.innerHTML='<div class="empty"><strong>🔎 Nenhum prompt encontrado.</strong><br>Tente outra descrição, como “anúncio de imóvel”, “cliente bravo”, “estudar” ou “criar conteúdo”.</div>';return}
+box.innerHTML=resultados.map(x=>{const fav=isFav(x.id);return '<article class="card"><span class="badge">'+esc(x.categoria)+'</span><h3>'+esc(x.titulo)+'</h3><div class="meta">'+(x.nivel?('Nível: '+esc(x.nivel)):'Prompt pronto para usar')+'</div><div class="preview">'+esc(x.texto)+'</div><div class="actions"><button class="action-main" data-act="copy" data-id="'+esc(x.id)+'">📋 Copiar</button><button class="action-soft" data-act="personalizar" data-id="'+esc(x.id)+'">🧩 Personalizar</button><button class="action-green" data-act="ia" data-id="'+esc(x.id)+'">🤖 Abrir IA</button><button class="action-warn" data-act="fav" data-id="'+esc(x.id)+'">'+(fav?'❤️ Favoritado':'🤍 Favoritar')+'</button><button class="action-soft" data-act="save" data-id="'+esc(x.id)+'">💾 Meus prompts</button><button class="action-soft" data-act="share" data-id="'+esc(x.id)+'">🔗 Compartilhar</button></div></article>'}).join('')}
+function acharItem(id){return resultados.find(x=>String(x.id)===String(id))||getRec().find(x=>String(x.id)===String(id))||getMeus().find(x=>String(x.id)===String(id))}
+function abrirPersonalizador(item,onDone){const texto=item.texto||item.conteudo||'';const vars=[...new Set((texto.match(/\[[^\]]+\]/g)||[]))];if(!vars.length){toast('ℹ️ Este prompt não possui variáveis entre [colchetes]');return}
+$('modalTitle').textContent='🧩 Personalizar: '+(item.titulo||'Prompt');$('modalBody').innerHTML='<p class="small">Preencha os campos. O original não será alterado.</p><div class="vars">'+vars.map((v,i)=>'<div class="field-wrap"><label class="field-label">'+esc(v.slice(1,-1))+'</label><input class="field" data-var="'+i+'" placeholder="Digite '+esc(v.slice(1,-1).toLowerCase())+'"></div>').join('')+'</div>';
+$('modal').classList.add('show');$('modal').setAttribute('aria-hidden','false');
+$('modalConfirmar').onclick=async()=>{let out=texto;vars.forEach((v,i)=>{const el=document.querySelector('[data-var="'+i+'"]');out=out.split(v).join(clean(el&&el.value)||v)});$('modal').classList.remove('show');toast('✅ Prompt personalizado');if(onDone)onDone(out)}}
+function compartilhar(item){const payload=btoa(unescape(encodeURIComponent(JSON.stringify({v:1,titulo:item.titulo,texto:item.texto,categoria:item.categoria})))) ;const url=location.origin+location.pathname+'#prompt='+payload;copiar(url).then(()=>toast('🔗 Link do prompt copiado'));history.replaceState(null,'', '#prompt='+payload)}
+function melhorarTexto(t){t=clean(t);if(!t)return '';const linhas=['VERSÃO MELHORADA','', 'ATUE COMO:', 'Um especialista experiente no assunto do pedido.', '', 'CONTEXTO / OBJETIVO:', t, '', 'INSTRUÇÕES:', '1. Entenda o objetivo e o contexto antes de responder.', '2. Seja específico, prático e organizado.', '3. Não invente dados; sinalize o que estiver faltando.', '4. Adapte a linguagem ao público e ao objetivo.', '5. Quando houver alternativas, apresente opções com prós e contras sem presumir a escolha.', '', 'FORMATO:', 'Entregue a resposta com títulos claros, passos quando úteis e um resultado final pronto para uso.', '', 'CHECAGEM FINAL:', 'Antes de concluir, revise se todos os requisitos foram atendidos.'];return linhas.join('\n')}
+function gerarCriado(){const c=clean($('cContexto').value),o=clean($('cObjetivo').value);if(!c||!o){toast('⚠️ Preencha contexto e objetivo');return}
+criadoAtual=['Atue como um especialista experiente no assunto abaixo.','', '## Contexto',c,'','## Objetivo',o,'','## Público-alvo',clean($('cPublico').value)||'o público mais adequado ao contexto','','## Tom de voz',clean($('cTom').value),'','## Formato da resposta',clean($('cFormato').value),'','## Regras e restrições',clean($('cRegras').value)||'Não invente dados. Explique quando faltar informação essencial.','','## Requisitos', '1. Analise o contexto antes de responder.','2. Entregue conteúdo específico e aplicável.','3. Use exemplos práticos quando ajudarem.','4. Evite generalidades e frases vagas.','5. Revise a resposta antes de concluir.','','Agora execute a tarefa e entregue o resultado final.'].join('\n');$('criadoOut').textContent=criadoAtual;localStorage.setItem('deltaUltimoPromptCriado',criadoAtual);toast('✨ Prompt criado')}
+function salvarCriado(){if(!clean(criadoAtual)){gerarCriado();if(!clean(criadoAtual))return}salvarMeuPrompt({id:'meu-'+Date.now(),titulo:'Prompt criado no Espaço IA',texto:criadoAtual,categoria:'Meus Prompts',objetivo:clean($('cObjetivo').value),favorito:false})}
+function melhorar(){const t=clean($('melhorarInput').value);if(!t){toast('⚠️ Cole um prompt primeiro');return}melhoradoAtual=melhorarTexto(t);$('melhorarOut').textContent=melhoradoAtual;localStorage.setItem('deltaUltimoPromptMelhorado',melhoradoAtual);toast('🛠️ Prompt analisado e melhorado')}
+function salvarMelhorado(){if(!clean(melhoradoAtual)){melhorar();if(!clean(melhoradoAtual))return}salvarMeuPrompt({id:'meu-'+Date.now(),titulo:'Prompt melhorado no Espaço IA',texto:melhoradoAtual,categoria:'Meus Prompts',favorito:false})}
+function renderStats(){const f=getFav(),m=getMeus(),r=getRec();$('stFav').textContent=f.length;$('stMeus').textContent=m.length;$('stRecentes').textContent=r.length}
+function renderMeus(){const m=getMeus().slice(0,12),box=$('meusLista'),rec=getRec().slice(0,12),rb=$('recentesLista');box.innerHTML=m.length?m.map(x=>'<div class="list-item"><span><strong>'+esc(x.titulo||'Meu prompt')+'</strong><small>'+esc(x.categoria||'Geral')+'</small></span><button class="btn secondary" data-meu-copy="'+esc(x.id)+'">📋</button></div>').join(''):'<span class="small">Nenhum prompt personalizado salvo ainda.</span>';rb.innerHTML=rec.length?rec.map(x=>'<div class="list-item"><span><strong>'+esc(x.titulo||'Prompt')+'</strong><small>'+new Date(x.ts||Date.now()).toLocaleString('pt-BR')+'</small></span><button class="btn secondary" data-rec-open="'+esc(x.id)+'">↗</button></div>').join(''):'<span class="small">Você ainda não utilizou prompts por aqui.</span>'}
+function renderColecoes(){const a=read(KEY_COL,[]);$('colecoesLista').innerHTML=a.length?a.map((x,i)=>'<div class="list-item"><span>🗂️ '+esc(x)+'</span><button class="btn ghost" data-del-col="'+i+'">Excluir</button></div>').join(''):'<span class="small">Crie uma coleção para organizar seus prompts.</span>'}
+function renderIA(){const atual=iaAtual();$('aiGrid').innerHTML=Object.entries(IA).map(([id,x])=>'<button class="ai '+(id===atual?'active':'')+'" data-ia="'+id+'"><strong>'+x.emoji+' '+x.nome+(id===atual?' ✓':'')+'</strong><small>'+x.url.replace(/^https?:\/\//,'').split('/')[0]+'</small></button>').join('')}
+function comparar(){const a=clean($('versaoA').value),b=clean($('versaoB').value);if(!a||!b){toast('⚠️ Preencha as duas versões');return}const wa=a.split(/\s+/).filter(Boolean),wb=b.split(/\s+/).filter(Boolean),setA=new Set(wa.map(x=>x.toLowerCase())),setB=new Set(wb.map(x=>x.toLowerCase())),rem=wa.filter(x=>!setB.has(x.toLowerCase())).slice(0,60),add=wb.filter(x=>!setA.has(x.toLowerCase())).slice(0,60);$('comparacaoOut').textContent='RESUMO\nVersão A: '+wa.length+' palavras\nVersão B: '+wb.length+' palavras\n\nREMOVIDAS / DIFERENTES EM A\n'+(rem.join(' ')||'Nenhuma diferença identificada pelo comparador simples.')+'\n\nADICIONADAS / DIFERENTES EM B\n'+(add.join(' ')||'Nenhuma diferença identificada pelo comparador simples.')}
+function montarQuick(){const cats=['Imobiliário','Marketing','Vendas','Estudo','Imagens','Trabalho','Agentes de IA','Automação com IA','WhatsApp Profissional'];$('quickCats').innerHTML=cats.map(c=>'<button data-quick="'+esc(c)+'">'+esc(c)+'</button>').join('')}
+function analisarBackup(){const payload={versao:1,data:Date.now(),favoritos:getFav(),meusPrompts:getMeus(),recentes:getRec(),buscas:read(KEY_BUS,[]),colecoes:read(KEY_COL,[]),ia:iaAtual()};return payload}
+function exportarBackup(){const blob=new Blob([JSON.stringify(analisarBackup(),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='delta-prompts-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url);$('backupOut').textContent='✅ Backup exportado com sucesso.'}
+function tratarImport(e){const f=e.target.files&&e.target.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const d=JSON.parse(fr.result);if(Array.isArray(d.favoritos))write(KEY_FAV,d.favoritos);if(Array.isArray(d.meusPrompts))write(KEY_MEUS,d.meusPrompts);if(Array.isArray(d.recentes))write(KEY_REC,d.recentes);if(Array.isArray(d.buscas))write(KEY_BUS,d.buscas);if(Array.isArray(d.colecoes))write(KEY_COL,d.colecoes);if(d.ia&&IA[d.ia])localStorage.setItem(KEY_IA,d.ia);$('backupOut').textContent='✅ Backup importado. Seus dados locais foram atualizados.';renderStats();renderMeus();renderColecoes();renderIA()}catch(err){$('backupOut').textContent='⚠️ Arquivo inválido ou incompatível.'}};fr.readAsText(f)}
+function abrirDoHash(){const m=location.hash.match(/^#prompt=(.+)$/);if(!m)return;try{const p=JSON.parse(decodeURIComponent(escape(atob(m[1]))));if(p&&p.texto){abrirPersonalizador({titulo:p.titulo,texto:p.texto,categoria:p.categoria},out=>{criadoAtual=out;document.querySelector('.tabs button[data-tab="criar"]').click();$('criadoOut').textContent=out})}}catch(e){toast('⚠️ Link de prompt inválido')}}
+function ligarTabs(){document.querySelectorAll('.tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab').forEach(x=>x.style.display='none');btn.classList.add('active');$(btn.dataset.tab).style.display='block';history.replaceState(null,'','#'+btn.dataset.tab);if(btn.dataset.tab==='meus'){renderMeus();renderColecoes()}if(btn.dataset.tab==='config')renderIA()}))}
+$('btnBuscar').onclick=executarBusca;$('busca').addEventListener('keydown',e=>{if(e.key==='Enter')executarBusca()});$('busca').addEventListener('input',()=>{clearTimeout($('busca')._t);$('busca')._t=setTimeout(executarBusca,250)});$('filtroCategoria').onchange=executarBusca;$('filtroNivel').onchange=executarBusca;$('ordenacao').onchange=executarBusca;$('limparBusca').onclick=()=>{$('busca').value='';$('filtroCategoria').value='';$('filtroNivel').value='';$('ordenacao').value='relevancia';executarBusca()};
+$('quickCats').addEventListener('click',e=>{const b=e.target.closest('[data-quick]');if(!b)return;$('busca').value=b.dataset.quick;executarBusca()});
+$('resultados').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const x=acharItem(b.dataset.id);if(!x)return;registrarRec(x);if(b.dataset.act==='copy')copiar(x.texto);if(b.dataset.act==='personalizar')abrirPersonalizador(x,copiar);if(b.dataset.act==='ia')abrirIA(x.texto);if(b.dataset.act==='fav')favoritar(x);if(b.dataset.act==='save')salvarMeuPrompt({id:'meu-'+x.id,titulo:x.titulo,texto:x.texto,categoria:x.categoria,url:x.url});if(b.dataset.act==='share')compartilhar(x);renderStats()});
+$('gerarCriado').onclick=gerarCriado;$('salvarCriado').onclick=salvarCriado;$('copiarCriado').onclick=()=>copiar(criadoAtual);$('abrirCriado').onclick=()=>abrirIA(criadoAtual);$('personalizarCriado').onclick=()=>abrirPersonalizador({titulo:'Prompt criado',texto:criadoAtual},out=>{$('criadoOut').textContent=out;criadoAtual=out});$('compartilharCriado').onclick=()=>compartilhar({titulo:'Prompt criado no Espaço IA',texto:criadoAtual,categoria:'Meus Prompts'});
+$('btnMelhorar').onclick=melhorar;$('btnCarregarUltimo').onclick=()=>{$('melhorarInput').value=localStorage.getItem('deltaUltimoPromptCriado')||''};$('copiarMelhorado').onclick=()=>copiar(melhoradoAtual);$('salvarMelhorado').onclick=salvarMelhorado;
+$('meusLista').addEventListener('click',e=>{const b=e.target.closest('[data-meu-copy]');if(!b)return;const x=getMeus().find(x=>String(x.id)===String(b.dataset.meuCopy));if(x)copiar(x.texto||x.conteudo)});
+$('recentesLista').addEventListener('click',e=>{const b=e.target.closest('[data-rec-open]');if(!b)return;const x=getRec().find(x=>String(x.id)===String(b.dataset.recOpen));if(x){$('busca').value=x.titulo;document.querySelector('.tabs button[data-tab="buscar"]').click();executarBusca()}});
+$('criarColecao').onclick=()=>{const n=clean($('colecaoNova').value);if(!n)return;const a=read(KEY_COL,[]);if(!a.includes(n))a.push(n);write(KEY_COL,a);$('colecaoNova').value='';renderColecoes();toast('🗂️ Coleção criada')};
+$('colecoesLista').addEventListener('click',e=>{const b=e.target.closest('[data-del-col]');if(!b)return;const a=read(KEY_COL,[]);a.splice(Number(b.dataset.delCol),1);write(KEY_COL,a);renderColecoes()});
+$('aiGrid').addEventListener('click',e=>{const b=e.target.closest('[data-ia]');if(!b)return;localStorage.setItem(KEY_IA,b.dataset.ia);renderIA();toast('🤖 IA padrão: '+IA[b.dataset.ia].nome)});
+$('exportarBackup').onclick=exportarBackup;$('importarBackup').onclick=()=>$('backupFile').click();$('backupFile').addEventListener('change',tratarImport);$('compararVersoes').onclick=comparar;
+$('fecharModal').onclick=()=>{$('modal').classList.remove('show');$('modal').setAttribute('aria-hidden','true')};$('modalCancelar').onclick=$('fecharModal').onclick;
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){e.preventDefault();$('busca').focus()}if(e.key==='Escape')$('modal').classList.remove('show')});
+ligarTabs();montarCategorias();montarQuick();renderStats();renderMeus();renderColecoes();renderIA();executarBusca();abrirDoHash();
+})();
+</script>
+</body>
+</html>
