@@ -208,6 +208,7 @@ const getFav=()=>{const a=read(KEY_FAV,[]);return Array.isArray(a)?a:[]};
 const getMeus=()=>{const a=read(KEY_MEUS,[]);return Array.isArray(a)?a:[]};
 const getRec=()=>{const a=read(KEY_REC,[]);return Array.isArray(a)?a:[]};
 let resultados=[], criadoAtual='', melhoradoAtual='', buscaAtual='';
+const fullPromptCache=new Map();
 
 const IA={
  chatgpt:{nome:'ChatGPT',emoji:'🤖',url:'https://chatgpt.com/'},
@@ -230,13 +231,55 @@ function normalizarIndice(){const a=Array.isArray(window.deltaSearchIndex)?windo
 function score(x,t){const q=t.toLowerCase().split(/\s+/).filter(Boolean);const hay=(x.titulo+' '+x.texto+' '+x.categoria).toLowerCase();let s=0;q.forEach(w=>{if(x.titulo.toLowerCase().includes(w))s+=7;if(x.categoria.toLowerCase().includes(w))s+=4;if(x.texto.toLowerCase().includes(w))s+=2});return s}
 function montarCategorias(){const all=normalizarIndice().map(x=>x.categoria).filter(Boolean);const cats=[...new Set(all)].sort((a,b)=>a.localeCompare(b,'pt-BR'));$('filtroCategoria').innerHTML='<option value="">Todas as áreas</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('')}
 function executarBusca(){const t=clean($('busca').value);buscaAtual=t;if(t){let h=read(KEY_BUS,[]);h=h.filter(x=>x.toLowerCase()!==t.toLowerCase());h.unshift(t);write(KEY_BUS,h.slice(0,8))}
-let arr=normalizarIndice();const cat=$('filtroCategoria').value,nivel=$('filtroNivel').value;if(cat)arr=arr.filter(x=>x.categoria===cat);if(nivel)arr=arr.filter(x=>x.nivel===nivel);
+let arr=normalizarIndice();const cat=$('filtroCategoria').value,nivel=$('filtroNivel').value;if(cat)arr=arr.filter(x=>x.categoria===cat);if(nivel){const disponiveis=arr.filter(x=>x.nivel);if(disponiveis.length)arr=disponiveis.filter(x=>x.nivel===nivel);}
 if(t)arr=arr.map(x=>({...x,_score:score(x,t)})).filter(x=>x._score>0).sort((a,b)=>b._score-a._score);else arr=arr.slice(0,24);
 const ord=$('ordenacao').value;if(ord==='az')arr.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));if(ord==='recentes')arr=[...getRec().map(r=>arr.find(x=>x.id===r.id)||r).filter(Boolean),...arr].slice(0,30);
 resultados=arr;renderResultados();renderStats()}
 function renderResultados(){const box=$('resultados');$('stResultados').textContent=resultados.length;$('resultadoLabel').textContent=buscaAtual?resultados.length+' resultado'+(resultados.length===1?'':'s'):'Sugestões para começar';if(!resultados.length){box.innerHTML='<div class="empty"><strong>🔎 Nenhum prompt encontrado.</strong><br>Tente outra descrição, como “anúncio de imóvel”, “cliente bravo”, “estudar” ou “criar conteúdo”.</div>';return}
-box.innerHTML=resultados.map(x=>{const fav=isFav(x.id);return '<article class="card"><span class="badge">'+esc(x.categoria)+'</span><h3>'+esc(x.titulo)+'</h3><div class="meta">'+(x.nivel?('Nível: '+esc(x.nivel)):'Prompt pronto para usar')+'</div><div class="preview">'+esc(x.texto)+'</div><div class="actions"><button class="action-main" data-act="copy" data-id="'+esc(x.id)+'">📋 Copiar</button><button class="action-soft" data-act="personalizar" data-id="'+esc(x.id)+'">🧩 Personalizar</button><button class="action-green" data-act="ia" data-id="'+esc(x.id)+'">🤖 Abrir IA</button><button class="action-warn" data-act="fav" data-id="'+esc(x.id)+'">'+(fav?'❤️ Favoritado':'🤍 Favoritar')+'</button><button class="action-soft" data-act="save" data-id="'+esc(x.id)+'">💾 Meus prompts</button><button class="action-soft" data-act="share" data-id="'+esc(x.id)+'">🔗 Compartilhar</button></div></article>'}).join('')}
+box.innerHTML=resultados.map(x=>{const fav=isFav(x.id);return '<article class="card"><span class="badge">'+esc(x.categoria)+'</span><h3>'+esc(x.titulo)+'</h3><div class="meta">'+(x.nivel?('Nível: '+esc(x.nivel)):'Prompt pronto para usar')+'</div><div class="preview">'+esc(x.texto)+'</div><div class="actions"><button class="action-main" data-act="copy" data-id="'+esc(x.id)+'">📋 Copiar completo</button><button class="action-soft" data-act="personalizar" data-id="'+esc(x.id)+'">🧩 Personalizar</button><button class="action-green" data-act="ia" data-id="'+esc(x.id)+'">🤖 Abrir IA</button><button class="action-warn" data-act="fav" data-id="'+esc(x.id)+'">'+(fav?'❤️ Favoritado':'🤍 Favoritar')+'</button><button class="action-soft" data-act="save" data-id="'+esc(x.id)+'">💾 Meus prompts</button><button class="action-soft" data-act="share" data-id="'+esc(x.id)+'">🔗 Compartilhar</button><a class="btn ghost" href="'+esc(x.url)+'" target="_blank" rel="noopener" style="grid-column:1/-1;text-align:center;text-decoration:none">🌐 Abrir página original</a></div></article>'}).join('')}
 function acharItem(id){return resultados.find(x=>String(x.id)===String(id))||getRec().find(x=>String(x.id)===String(id))||getMeus().find(x=>String(x.id)===String(id))}
+async function resolverPromptCompleto(item){
+  if(!item)return '';
+  if(item._fullText)return item._fullText;
+  const cacheKey=(item.url||'')+'|'+(item.titulo||'');
+  if(fullPromptCache.has(cacheKey))return fullPromptCache.get(cacheKey);
+  const fallback=clean(item.texto||item.conteudo||'');
+  if(!item.url){fullPromptCache.set(cacheKey,fallback);return fallback}
+  try{
+    const url=new URL(item.url,location.origin).href;
+    const res=await fetch(url,{cache:'force-cache'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const html=await res.text();
+    const titulo=String(item.titulo||'');
+    const marcado=titulo.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const candidatos=["titulo:'"+marcado+"'","titulo:\""+titulo.replace(/\\/g,'\\\\').replace(/\"/g,'\\\"')+"\"","titulo:`"+titulo.replace(/\\/g,'\\\\').replace(/`/g,'\\`')+"`"];
+    let pos=-1;
+    for(const m of candidatos){pos=html.indexOf(m);if(pos!==-1)break}
+    if(pos!==-1){
+      const ppos=html.indexOf('prompt:',pos);
+      if(ppos!==-1){
+        const ini=html.indexOf('`',ppos);
+        if(ini!==-1){
+          let fim=ini+1,esc=false;
+          for(;fim<html.length;fim++){
+            const ch=html[fim];
+            if(ch==='`'&&!esc)break;
+            if(ch==='\\'&&!esc)esc=true;else esc=false;
+          }
+          if(fim<html.length){
+            let full=html.slice(ini+1,fim);
+            full=full.replace(/\\`/g,'`');
+            fullPromptCache.set(cacheKey,full);
+            item._fullText=full;
+            return full;
+          }
+        }
+      }
+    }
+  }catch(e){}
+  fullPromptCache.set(cacheKey,fallback);
+  return fallback;
+}
 function abrirPersonalizador(item,onDone){const texto=item.texto||item.conteudo||'';const vars=[...new Set((texto.match(/\[[^\]]+\]/g)||[]))];if(!vars.length){toast('ℹ️ Este prompt não possui variáveis entre [colchetes]');return}
 $('modalTitle').textContent='🧩 Personalizar: '+(item.titulo||'Prompt');$('modalBody').innerHTML='<p class="small">Preencha os campos. O original não será alterado.</p><div class="vars">'+vars.map((v,i)=>'<div class="field-wrap"><label class="field-label">'+esc(v.slice(1,-1))+'</label><input class="field" data-var="'+i+'" placeholder="Digite '+esc(v.slice(1,-1).toLowerCase())+'"></div>').join('')+'</div>';
 $('modal').classList.add('show');$('modal').setAttribute('aria-hidden','false');
@@ -261,7 +304,7 @@ function abrirDoHash(){const m=location.hash.match(/^#prompt=(.+)$/);if(!m)retur
 function ligarTabs(){document.querySelectorAll('.tabs button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab').forEach(x=>x.style.display='none');btn.classList.add('active');$(btn.dataset.tab).style.display='block';history.replaceState(null,'','#'+btn.dataset.tab);if(btn.dataset.tab==='meus'){renderMeus();renderColecoes()}if(btn.dataset.tab==='config')renderIA()}))}
 $('btnBuscar').onclick=executarBusca;$('busca').addEventListener('keydown',e=>{if(e.key==='Enter')executarBusca()});$('busca').addEventListener('input',()=>{clearTimeout($('busca')._t);$('busca')._t=setTimeout(executarBusca,250)});$('filtroCategoria').onchange=executarBusca;$('filtroNivel').onchange=executarBusca;$('ordenacao').onchange=executarBusca;$('limparBusca').onclick=()=>{$('busca').value='';$('filtroCategoria').value='';$('filtroNivel').value='';$('ordenacao').value='relevancia';executarBusca()};
 $('quickCats').addEventListener('click',e=>{const b=e.target.closest('[data-quick]');if(!b)return;$('busca').value=b.dataset.quick;executarBusca()});
-$('resultados').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const x=acharItem(b.dataset.id);if(!x)return;registrarRec(x);if(b.dataset.act==='copy')copiar(x.texto);if(b.dataset.act==='personalizar')abrirPersonalizador(x,copiar);if(b.dataset.act==='ia')abrirIA(x.texto);if(b.dataset.act==='fav')favoritar(x);if(b.dataset.act==='save')salvarMeuPrompt({id:'meu-'+x.id,titulo:x.titulo,texto:x.texto,categoria:x.categoria,url:x.url});if(b.dataset.act==='share')compartilhar(x);renderStats()});
+$('resultados').addEventListener('click',async e=>{const b=e.target.closest('[data-act]');if(!b)return;const x=acharItem(b.dataset.id);if(!x)return;registrarRec(x);if(b.dataset.act==='fav'){favoritar(x);return}const texto=await resolverPromptCompleto(x);if(!texto){toast('⚠️ Não foi possível recuperar o prompt completo');return}const item={...x,texto:texto,conteudo:texto};if(b.dataset.act==='copy')copiar(texto);if(b.dataset.act==='personalizar')abrirPersonalizador(item,copiar);if(b.dataset.act==='ia')abrirIA(texto);if(b.dataset.act==='save')salvarMeuPrompt({id:'meu-'+x.id,titulo:x.titulo,texto:texto,categoria:x.categoria,url:x.url});if(b.dataset.act==='share')compartilhar(item);renderStats();renderResultados()});
 $('gerarCriado').onclick=gerarCriado;$('salvarCriado').onclick=salvarCriado;$('copiarCriado').onclick=()=>copiar(criadoAtual);$('abrirCriado').onclick=()=>abrirIA(criadoAtual);$('personalizarCriado').onclick=()=>abrirPersonalizador({titulo:'Prompt criado',texto:criadoAtual},out=>{$('criadoOut').textContent=out;criadoAtual=out});$('compartilharCriado').onclick=()=>compartilhar({titulo:'Prompt criado no Espaço IA',texto:criadoAtual,categoria:'Meus Prompts'});
 $('btnMelhorar').onclick=melhorar;$('btnCarregarUltimo').onclick=()=>{$('melhorarInput').value=localStorage.getItem('deltaUltimoPromptCriado')||''};$('copiarMelhorado').onclick=()=>copiar(melhoradoAtual);$('salvarMelhorado').onclick=salvarMelhorado;
 $('meusLista').addEventListener('click',e=>{const b=e.target.closest('[data-meu-copy]');if(!b)return;const x=getMeus().find(x=>String(x.id)===String(b.dataset.meuCopy));if(x)copiar(x.texto||x.conteudo)});
