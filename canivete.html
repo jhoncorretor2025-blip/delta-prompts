@@ -5093,5 +5093,320 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 })();
 </script>
 
+
+<!-- CANIVETE-V100-MENU-STABILIZER -->
+<style id="CANIVETE_V100_MENU_STYLE">
+/* V100: estabiliza definitivamente o menu lateral e remove sobras de versões anteriores. */
+#side{
+  width:246px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+#side .brand,#side .back,#side>div[style*="padding:0 12px 10px"]{
+  flex:0 0 auto;
+}
+#side #nav{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:5px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  padding:4px 3px 14px 0!important;
+  margin:0!important;
+  scrollbar-gutter:stable;
+}
+#side #nav>div:not(#syncBox){
+  display:none!important;
+}
+#side #nav>.nav-v100-direct{
+  flex:0 0 auto;
+  width:100%;
+}
+#side #nav .v90-menu-group,
+#side #nav .canivete-nav-group-v815{
+  flex:0 0 auto;
+  width:100%;
+}
+#side #nav .v100-group-summary{
+  display:flex!important;
+  align-items:center!important;
+  gap:9px!important;
+  min-height:44px!important;
+  padding:10px 12px!important;
+  cursor:pointer!important;
+  color:var(--ink)!important;
+  background:var(--card)!important;
+  border:0!important;
+}
+#side #nav .v100-group-summary::after{
+  content:'›';
+  margin-left:auto;
+  font-size:18px;
+  line-height:1;
+  color:#94a3b8;
+  transition:transform .16s ease;
+}
+#side #nav .v90-menu-group[open] .v100-group-summary::after{
+  transform:rotate(90deg);
+}
+#side #nav .v90-menu-group[open] .v100-group-summary{
+  background:#f8fafc!important;
+  color:var(--blue2)!important;
+}
+#side #nav .canivete-nav-body-v815{
+  border-top:1px solid var(--line)!important;
+  padding:4px 7px 7px!important;
+}
+#side #nav .v90-menu-group-body,
+#side #nav .canivete-nav-body-v815{
+  flex:0 0 auto;
+}
+#side #nav .nav-v90-btn{
+  width:100%!important;
+  min-height:44px!important;
+  margin:2px 0!important;
+  white-space:normal!important;
+}
+#side #nav .nav-v100-direct{
+  min-height:44px!important;
+}
+#side #nav #syncBox{
+  order:9999;
+  flex:0 0 auto;
+  width:100%;
+  margin:10px 0 0!important;
+  padding:14px 8px 8px!important;
+  border-top:1px solid var(--line)!important;
+  border-bottom:0!important;
+}
+#side #nav .canivete-account-title-v815,
+#side #nav .canivete-account-title-v812{
+  color:var(--muted)!important;
+}
+@media (min-width:761px){
+  .main{margin-left:246px!important}
+}
+@media (min-width:761px) and (max-width:1100px){
+  #side{width:230px}
+  .main{margin-left:230px!important}
+}
+@media (max-width:760px){
+  #side{width:min(88vw,340px);overflow:hidden}
+  #side #nav{padding-right:2px!important}
+  #side #nav .v100-group-summary{min-height:48px!important;padding:12px!important}
+  #side #nav .nav-v90-btn,
+  #side #nav .nav-v100-direct{min-height:48px!important}
+  .main{margin-left:0!important}
+}
+</style>
+<script id="CANIVETE_V100_MENU_SCRIPT">
+(function(){
+  'use strict';
+
+  const GROUPS=[
+    {key:'financeiro',icon:'💰',label:'Financeiro',items:[
+      ['renda','💵 Renda & Benefícios','debtBadge'],
+      ['despesas','💸 Despesas'],
+      ['dividas','💳 Dívidas','debtBadge'],
+      ['patrimonio','🏦 Patrimônio'],
+      ['metas','🎯 Metas','goalBadge'],
+      ['projecoes','📈 Projeções'],
+      ['analise','🧠 Análise'],
+      ['historico','📜 Histórico']
+    ]},
+    {key:'vida',icon:'👤',label:'Minha Vida',items:[
+      ['perfil','👤 Perfil'],
+      ['saude','❤️ Saúde'],
+      ['academia','🏋️ Academia'],
+      ['habitos','🔁 Hábitos'],
+      ['veiculo','🚗 Veículo'],
+      ['estudos','🎓 Estudos & Cursos']
+    ]},
+    {key:'agenda',icon:'📅',label:'Agenda & Organização',items:[
+      ['calendario','📅 Calendário'],
+      ['datas','🎂 Datas Importantes','datasBadge'],
+      ['contatos','📇 Contatos'],
+      ['links','🔗 Links'],
+      ['senhas','🔐 Senhas']
+    ]},
+    {key:'entretenimento',icon:'🎮',label:'Entretenimento',items:[
+      ['meutime','⚽ Meu Time'],
+      ['jogos','🎮 Jogos']
+    ]},
+    {key:'ferramentas',icon:'🧰',label:'Ferramentas',items:[
+      ['mapavendas','🔥 Mapa de Vendas'],
+      ['comparador','🔍 Comparador de Demonstrativos']
+    ]}
+  ];
+
+  const DIRECT=[
+    ['dashboard','🏠 Início'],
+    ['compras','🛒 Compras','comprasBadge'],
+    ['buscaglobal','🔎 Busca'],
+    ['configuracoes','⚙️ Configurações']
+  ];
+
+  function esc(v){return String(v??'').replace(/[&<>"']/g,function(ch){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[ch]})}
+
+  function bindButton(btn){
+    if(!btn||btn.dataset.v100Bound==='1')return;
+    btn.dataset.v100Bound='1';
+    btn.addEventListener('click',function(){
+      const page=this.dataset.page;
+      if(page&&typeof window.showPage==='function')window.showPage(page);
+    });
+  }
+
+  function makeButton(btn,parent,label,badgeId,current,direct){
+    if(!btn)return;
+    btn.classList.remove('canivete-hidden-merged-btn-v813');
+    btn.removeAttribute('aria-hidden');
+    btn.classList.add('nav-v90-btn');
+    if(direct)btn.classList.add('nav-v100-direct');
+    btn.classList.remove('nav-v100-direct');
+    if(direct)btn.classList.add('nav-v100-direct');
+    if(label)btn.textContent=label;
+    const badge=badgeId&&document.getElementById(badgeId);
+    if(badge){
+      const old=btn.querySelector('.badge');
+      if(old&&old!==badge)old.remove();
+      badge.removeAttribute('style');
+      if(!btn.contains(badge))btn.appendChild(badge);
+    }
+    btn.classList.toggle('active',btn.dataset.page===current);
+    bindButton(btn);
+    parent.appendChild(btn);
+  }
+
+  function build(){
+    const nav=document.getElementById('nav');
+    if(!nav||nav.dataset.v100Ready==='1')return false;
+
+    const current=nav.querySelector('button.active[data-page]')?.dataset.page||document.querySelector('.section.active')?.id||'dashboard';
+    const buttons=[...nav.querySelectorAll('button[data-page]')];
+    const byPage=new Map();
+    buttons.forEach(btn=>{if(!byPage.has(btn.dataset.page))byPage.set(btn.dataset.page,btn)});
+
+    /* Recupera qualquer botão que alguma versão anterior tenha ocultado. */
+    nav.querySelectorAll('button[data-page]').forEach(btn=>{
+      btn.style.removeProperty('display');
+      btn.hidden=false;
+      btn.removeAttribute('aria-hidden');
+    });
+
+    const sync=document.getElementById('syncBox');
+    const accountTitle=sync&&sync.querySelector('.canivete-account-title-v812,.canivete-account-title-v815');
+    nav.innerHTML='';
+
+    DIRECT.forEach(item=>makeButton(byPage.get(item[0]),nav,item[1],item[2],current,true));
+
+    GROUPS.forEach((group,idx)=>{
+      const details=document.createElement('details');
+      details.className='v90-menu-group canivete-nav-group-v815 canivete-v100-group';
+      details.dataset.v100Group=group.key;
+      const summary=document.createElement('summary');
+      summary.className='v100-group-summary';
+      summary.innerHTML='<span>'+esc(group.icon)+'</span><span>'+esc(group.label)+'</span>';
+      details.appendChild(summary);
+
+      const body=document.createElement('div');
+      body.className='v90-menu-group-body canivete-nav-body-v815';
+
+      group.items.forEach(item=>makeButton(byPage.get(item[0]),body,item[1],item[2],current,false));
+      details.appendChild(body);
+
+      const saved=localStorage.getItem('canivete-v100-group-'+group.key);
+      details.open=saved!==null?saved==='1':(idx===0);
+      details.addEventListener('toggle',function(){
+        try{localStorage.setItem('canivete-v100-group-'+group.key,details.open?'1':'0')}catch(e){}
+      });
+      nav.appendChild(details);
+    });
+
+    /* Qualquer botão que apareça no futuro e não esteja no mapa continua acessível. */
+    const usados=new Set(DIRECT.map(x=>x[0]));
+    GROUPS.forEach(g=>g.items.forEach(x=>usados.add(x[0])));
+    const extra=buttons.filter(btn=>!usados.has(btn.dataset.page));
+    if(extra.length){
+      const details=document.createElement('details');
+      details.className='v90-menu-group canivete-nav-group-v815 canivete-v100-group';
+      details.open=true;
+      const summary=document.createElement('summary');
+      summary.className='v100-group-summary';
+      summary.innerHTML='<span>☰</span><span>Outros</span>';
+      details.appendChild(summary);
+      const body=document.createElement('div');
+      body.className='v90-menu-group-body canivete-nav-body-v815';
+      extra.forEach(btn=>makeButton(btn,body,btn.textContent.trim(),null,current,false));
+      details.appendChild(body);
+      nav.appendChild(details);
+    }
+
+    if(sync){
+      if(!accountTitle){
+        const title=document.createElement('div');
+        title.className='canivete-account-title-v815';
+        title.innerHTML='<span>👤</span><span>Minha conta</span>';
+        sync.insertBefore(title,sync.firstChild);
+      }
+      nav.appendChild(sync);
+    }
+
+    nav.dataset.v100Ready='1';
+
+    /* Garante que a lateral comece no topo; não carrega a posição estranha de uma versão antiga. */
+    requestAnimationFrame(()=>{nav.scrollTop=0});
+    setTimeout(()=>{nav.scrollTop=0},120);
+
+    /* Mantém a seção atual visível no grupo correspondente. */
+    const activeBtn=nav.querySelector('button[data-page="'+CSS.escape(current)+'"]');
+    const activeGroup=activeBtn&&activeBtn.closest('.canivete-v100-group');
+    if(activeGroup)activeGroup.open=true;
+
+    return true;
+  }
+
+  function syncActive(){
+    const nav=document.getElementById('nav');
+    const active=document.querySelector('.section.active')?.id||'dashboard';
+    if(!nav)return;
+    nav.querySelectorAll('button[data-page]').forEach(btn=>{
+      btn.classList.toggle('active',btn.dataset.page===active);
+    });
+    nav.querySelectorAll('.canivete-v100-group').forEach(group=>{
+      const has=!!group.querySelector('button[data-page="'+CSS.escape(active)+'"]');
+      if(has)group.open=true;
+    });
+  }
+
+  function limparSobras(){
+    const nav=document.getElementById('nav');
+    if(!nav)return;
+    nav.querySelectorAll('button[data-page]').forEach(bindButton);
+    nav.querySelectorAll(':scope > div:not(#syncBox)').forEach(el=>el.remove());
+  }
+
+  function init(){
+    build();
+    limparSobras();
+    syncActive();
+    const nav=document.getElementById('nav');
+    if(nav)nav.scrollTop=0;
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+  setTimeout(init,600);
+  setTimeout(()=>{const nav=document.getElementById('nav');if(nav){nav.scrollTop=0;syncActive()}},1200);
+
+  window.addEventListener('resize',function(){
+    const nav=document.getElementById('nav');
+    if(nav&&window.innerWidth<=760)nav.scrollTop=0;
+  });
+})();
+</script>
 </body>
 </html>
