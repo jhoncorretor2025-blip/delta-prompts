@@ -3104,20 +3104,40 @@ function mostrarAvisoConflitoSync(nuvemAtual){
     </div>
   </div>`;
   document.body.appendChild(overlay);
-  overlay.querySelector('#btnUsarNuvem').addEventListener('click',()=>{
-    d=Object.assign({},d,nuvemAtual);window.d=d;
-    localStorage.setItem(KEY,JSON.stringify(d));
-    registrarCategoriasCustom();render();
-    ultimoLastSavedConhecido=nuvemAtual.lastSaved;
-    overlay.remove();
-    mostrarToastCanivete('☁️ Dados da nuvem aplicados.');
+  const btnNuvem=overlay.querySelector('#btnUsarNuvem');
+  const btnLocal=overlay.querySelector('#btnManterLocal');
+
+  btnNuvem.addEventListener('click',()=>{
+    try{
+      // Fecha primeiro o conflito para garantir que um erro durante o render não
+      // deixe o botão aparentando estar "travado".
+      d=Object.assign({},d,nuvemAtual);
+      window.d=d;
+      ultimoLastSavedConhecido=nuvemAtual.lastSaved||d.lastSaved||Date.now();
+      localStorage.setItem(KEY,JSON.stringify(d));
+      overlay.remove();
+      registrarCategoriasCustom();
+      render();
+      mostrarToastCanivete('☁️ Dados da nuvem aplicados.');
+    }catch(e){
+      console.error('Erro ao aplicar dados da nuvem:',e);
+      overlay.remove();
+      mostrarToastCanivete('⚠️ Não foi possível aplicar os dados da nuvem. Seus dados locais foram preservados.');
+    }
   });
-  overlay.querySelector('#btnManterLocal').addEventListener('click',async()=>{
-    d.lastSaved=Date.now();
-    await deltaFirebaseModulo.pushCaniveteToCloud(usuarioLogado.uid,d);
-    ultimoLastSavedConhecido=d.lastSaved;
-    overlay.remove();
-    mostrarToastCanivete('💾 Seus dados foram mantidos e enviados pra nuvem.');
+
+  btnLocal.addEventListener('click',async()=>{
+    try{
+      d.lastSaved=Date.now();
+      await deltaFirebaseModulo.pushCaniveteToCloud(usuarioLogado.uid,d);
+      ultimoLastSavedConhecido=d.lastSaved;
+      overlay.remove();
+      mostrarToastCanivete('💾 Seus dados foram mantidos e enviados pra nuvem.');
+    }catch(e){
+      console.error('Erro ao manter dados locais na nuvem:',e);
+      overlay.remove();
+      mostrarToastCanivete('⚠️ Não foi possível enviar os dados locais para a nuvem.');
+    }
   });
 }
 function updateSyncBadge(state){
