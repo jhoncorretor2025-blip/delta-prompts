@@ -372,4 +372,26 @@ render();
 window.addEventListener('delta:favoritos-updated',atualizarStats);
 window.addEventListener('delta-auth-changed',function(){if(isAdminGames()){document.getElementById('btnAdminGames').style.display='inline-block'}else{document.getElementById('btnAdminGames').style.display='none'}});
 setTimeout(function(){if(!isAdminGames())document.getElementById('btnAdminGames').style.display='none'},1200);
-</script></body></html>
+</script>
+<script>
+(function(){
+  function garantirGames(){
+    try{
+      var lista=document.getElementById('lista');
+      if(!lista)return;
+      if(lista.children.length===0 || !lista.innerHTML.trim()){
+        if(typeof render==='function'){render();}
+      }
+    }catch(e){
+      var lista=document.getElementById('lista');
+      if(lista && !lista.innerHTML.trim()){
+        lista.innerHTML='<div style="padding:24px;text-align:center;border:1px solid #e5e7eb;border-radius:16px"><strong>🎮 Os prompts estão carregando...</strong><br><small>Atualize a página uma vez para concluir o carregamento.</small></div>';
+      }
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',garantirGames);else garantirGames();
+  setTimeout(garantirGames,300);
+  setTimeout(garantirGames,1200);
+})();
+</script>
+</body></html>
