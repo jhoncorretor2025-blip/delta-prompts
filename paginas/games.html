@@ -38,6 +38,9 @@
 [data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
 [data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica{color:#a0a0a0}
+
+.tipo-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}.tipo-tabs button{border:1px solid #ddd;border-radius:12px;background:#fff;padding:10px 14px;font-weight:800;cursor:pointer}.tipo-tabs button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}.tipo-count{font-size:11px;padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.08)}.tipo-tabs button.ativo .tipo-count{background:rgba(255,255,255,.2)}
+.admin-games{display:none;border:1px solid #f59e0b;background:#fffbeb;border-radius:16px;padding:14px;margin:0 0 20px}.admin-games.show{display:block}.admin-games h3{margin:0 0 8px}.admin-games .admin-actions{display:flex;gap:8px;flex-wrap:wrap}.admin-games button{border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer}.btn-admin-primary{background:#5b5ce2;color:#fff}.btn-admin-danger{background:#fee2e2;color:#991b1b}.btn-admin-muted{background:#fff;border:1px solid #e5e7eb!important;color:#475467}.gerenciar-item{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;padding:8px;border-top:1px solid #fde68a}.gerenciar-item span{flex:1;font-weight:700;font-size:13px}.card .excluir-prompt{display:none}.modo-admin .card .excluir-prompt{display:inline-flex;background:#fee2e2;color:#991b1b}.modo-admin .card{position:relative}[data-theme="dark"] .tipo-tabs button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}[data-theme="dark"] .admin-games{background:#2b2110;border-color:#8a6415}
 </style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
 <h1>🎮 Games com IA</h1>
@@ -49,11 +52,11 @@
   <input id="busca" type="search" placeholder="🔎 Buscar modelo para games...">
   <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
 </div>
-<div class="filtros" id="filtrosCategoria"></div>
+<div class="tipo-tabs" id="tipoTabs"></div><div class="filtros" id="filtrosCategoria"></div><div class="admin-games" id="adminGames"><h3>🔐 Gerenciamento de Games</h3><p style="margin:0 0 10px;font-size:13px;color:#667085">Modo administrador: criar e excluir itens individualmente neste dispositivo.</p><div class="admin-actions"><button class="btn-admin-primary" id="btnNovoPrompt">➕ Criar novo prompt</button><button class="btn-admin-muted" id="btnExportarAdmin">📤 Exportar biblioteca</button></div><div id="gerenciarLista"></div></div>
 
 <div class="toolbar-extra">
   <button id="btnExportar">📥 Exportar todos</button>
-  <button id="btnSugerir">💡 Sugerir um modelo</button>
+  <button id="btnSugerir">💡 Sugerir um modelo</button><button id="btnAdminGames">🔐 Gerenciar</button>
 </div>
 <div class="sugerir-box" id="sugerirBox" style="display:none">
   <textarea id="sugestaoTexto" placeholder="Descreva o jogo ou prompt que você gostaria de ver aqui..."></textarea>
@@ -95,8 +98,19 @@ const dadosBrutos=[
 {categoria:'⚔️ Estratégia',nivel:'avancado',titulo:'📊 Tier List Explicada',quando:'Quando quiser comparar opções usando critérios claros.',prompt:'Crie uma comparação atualizada de [CATEGORIA] em [JOGO].\n\nDefina critérios objetivos e organize as opções por níveis.\n\nPara cada opção explique:\n• Pontos fortes\n• Pontos fracos\n• Melhor situação de uso\n• Para qual tipo de jogador é indicada\n\nConsidere a versão atual do jogo e informe quando os dados podem ter mudado.',en:'Create an updated comparison of [CATEGORY] in [GAME].\n\nDefine objective criteria and organize the options into tiers.\n\nFor each option explain:\n• Strengths\n• Weaknesses\n• Best use situation\n• Which type of player it suits\n\nConsider the current game version and note when data may have changed.'}
 ];
 
+
+{tipo:'criar',categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'🐦 Flappy Bird',quando:'Para criar um jogo de habilidade simples, viciante e responsivo.',prompt:'Crie um jogo estilo Flappy Bird completo em um único arquivo HTML, usando Canvas, CSS e JavaScript puro. O jogador controla um personagem com toque/click/tecla espaço para fazê-lo subir e precisa passar por pares de obstáculos sem colidir. Inclua: tela inicial com botão Jogar, suporte a celular e PC, pontuação, recorde salvo em localStorage, dificuldade progressiva, efeitos sonoros opcionais sem arquivos externos, pausa, Game Over e reiniciar. A física deve ser simples e responsiva. Não use bibliotecas externas.',en:'Create a complete Flappy Bird-style game in a single HTML file using Canvas, CSS and vanilla JavaScript. The player controls a character with touch/click/space to make it rise and must pass through pairs of obstacles without colliding. Include: start screen with Play button, mobile and PC support, score, high score saved in localStorage, progressive difficulty, optional sound effects without external files, pause, Game Over and restart. Keep the physics simple and responsive. Do not use external libraries.'},
+{tipo:'criar',categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'🧱 Breakout / Arkanoid',quando:'Para criar um jogo de quebrar blocos com bola e raquete.',prompt:'Crie um jogo Breakout/Arkanoid completo em um único arquivo HTML usando Canvas e JavaScript puro. Uma raquete controlada por teclado, mouse e toque deve rebater uma bola para destruir blocos. Inclua: diferentes tipos de blocos, vidas, pontuação, níveis, aumento gradual de velocidade, recorde salvo em localStorage, tela inicial, pause, Game Over, vitória e reiniciar. O layout deve ser responsivo para celular e PC. Não use bibliotecas externas.',en:'Create a complete Breakout/Arkanoid game in a single HTML file using Canvas and vanilla JavaScript. A paddle controlled by keyboard, mouse and touch must bounce a ball to destroy blocks. Include: different block types, lives, score, levels, gradual speed increase, high score saved in localStorage, start screen, pause, Game Over, victory and restart. The layout must be responsive for mobile and PC. Do not use external libraries.'},
+{tipo:'criar',categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'👾 Space Invaders',quando:'Para criar um clássico de nave contra ondas de inimigos.',prompt:'Crie um Space Invaders completo em um único arquivo HTML com Canvas, CSS e JavaScript puro. O jogador controla uma nave na parte inferior e atira em formações de inimigos que descem gradualmente. Inclua controles por teclado e toque, inimigos com movimento lateral, tiros, colisões, vidas, pontuação, recorde local, ondas/níveis, dificuldade progressiva, bônus ocasionais, pausa, tela de Game Over e reinício. Funcione muito bem em celular e PC. Não use bibliotecas externas.',en:'Create a complete Space Invaders game in a single HTML file with Canvas, CSS and vanilla JavaScript. The player controls a ship at the bottom and shoots formations of enemies that gradually descend. Include keyboard and touch controls, lateral enemy movement, shots, collisions, lives, score, local high score, waves/levels, progressive difficulty, occasional bonuses, pause, Game Over and restart. Make it work well on mobile and PC. Do not use external libraries.'},
+{tipo:'criar',categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'🏎️ Corrida Infinita',quando:'Para criar um jogo de corrida em que a pista fica cada vez mais difícil.',prompt:'Crie um jogo de corrida infinita completo em um único arquivo HTML usando Canvas e JavaScript puro. O jogador controla um carro e precisa desviar de veículos e obstáculos enquanto a pista se move continuamente. Inclua controles por teclado e toque, velocidade crescente, pontuação por distância, moedas ou itens coletáveis, vidas, recorde salvo em localStorage, dificuldade progressiva, efeitos visuais, pausa, Game Over, reiniciar e tela inicial. Deve ser responsivo para celular e PC. Não use bibliotecas externas.',en:'Create a complete endless racing game in a single HTML file using Canvas and vanilla JavaScript. The player controls a car and must avoid vehicles and obstacles while the track continuously moves. Include keyboard and touch controls, increasing speed, distance-based score, coins or collectibles, lives, high score saved in localStorage, progressive difficulty, visual effects, pause, Game Over, restart and start screen. It must be responsive for mobile and PC. Do not use external libraries.'},
+{tipo:'criar',categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'⚔️ Arena de Sobrevivência',quando:'Para criar um jogo de sobrevivência contra ondas de inimigos.',prompt:'Crie um jogo de Arena de Sobrevivência completo em um único arquivo HTML usando Canvas e JavaScript puro. O jogador controla um personagem em uma arena e precisa sobreviver a ondas de inimigos. Inclua movimento por teclado e joystick/toque no celular, inimigos com comportamentos variados, vida, dano, ataques, experiência, evolução do personagem, escolhas de melhoria a cada nível, moedas/itens, pontuação, recorde local, ondas progressivas, chefe a cada 5 ondas, pausa, Game Over e reiniciar. O jogo deve ser leve e responsivo. Não use bibliotecas externas.',en:'Create a complete Survival Arena game in a single HTML file using Canvas and vanilla JavaScript. The player controls a character in an arena and must survive enemy waves. Include keyboard movement and mobile joystick/touch, enemies with varied behaviors, health, damage, attacks, experience, character progression, upgrade choices at each level, coins/items, score, local high score, progressive waves, a boss every 5 waves, pause, Game Over and restart. Keep it lightweight and responsive. Do not use external libraries.'},
+{tipo:'criar',categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'🔢 2048',quando:'Para criar o clássico puzzle de combinar números.',prompt:'Crie o jogo 2048 completo em um único arquivo HTML, usando HTML, CSS e JavaScript puro. O tabuleiro deve ser 4x4 e permitir combinar números iguais deslizando as peças. Inclua controles por setas, WASD, swipe e botões de toque, pontuação, melhor pontuação salva em localStorage, botão desfazer opcional, novo jogo, detecção de vitória e Game Over, animações suaves e layout responsivo. Não use bibliotecas externas.',en:'Create the complete 2048 game in a single HTML file using HTML, CSS and vanilla JavaScript. The board must be 4x4 and allow equal numbers to merge when tiles slide. Include arrow keys, WASD, swipe and touch buttons, score, best score saved in localStorage, optional undo, new game, win and Game Over detection, smooth animations and responsive layout. Do not use external libraries.'},
+{tipo:'criar',categoria:'🕹️ Criar Jogos',nivel:'basico',titulo:'🟢 Genius / Simon',quando:'Para criar um jogo de memória baseado em sequência de cores e sons.',prompt:'Crie um jogo estilo Genius/Simon completo em um único arquivo HTML. Mostre uma sequência de 4 cores/botões e faça o jogador repetir a sequência. A cada rodada, acrescente um novo passo. Inclua suporte a toque e mouse, animações, sons simples usando Web Audio API sem arquivos externos, níveis, pontuação, recorde em localStorage, botão iniciar, pausa, Game Over e reiniciar. A interface deve funcionar muito bem no celular. Não use bibliotecas externas.',en:'Create a complete Simon/Genius-style game in a single HTML file. Show a sequence of 4 colored buttons and make the player repeat it. Add one new step each round. Include touch and mouse support, animations, simple sounds using the Web Audio API without external files, levels, score, high score in localStorage, start button, pause, Game Over and restart. The interface must work very well on mobile. Do not use external libraries.'},
+{tipo:'criar',categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'🚢 Batalha Naval',quando:'Para criar Batalha Naval completa para 2 jogadores no mesmo dispositivo.',prompt:'Crie um jogo de Batalha Naval completo em um único arquivo HTML, para 2 jogadores no mesmo dispositivo. Cada jogador deve posicionar seus navios secretamente em um tabuleiro 10x10 e depois alternar ataques. Implemente navios com tamanhos tradicionais, posicionamento horizontal/vertical, validação para não sobrepor embarcações, tiros acertados/errados, marcação de água, afundamento, turno atual, vitória, botão de nova partida e interface responsiva. Inclua uma tela para esconder o tabuleiro do jogador anterior durante a troca de turno. Não use bibliotecas externas.',en:'Create a complete Battleship game in a single HTML file for 2 players on the same device. Each player must secretly place ships on a 10x10 board and then take turns attacking. Implement traditional ship sizes, horizontal/vertical placement, validation to prevent overlapping ships, hit/miss shots, water marking, sinking, current turn, victory, new game button and responsive interface. Include a screen to hide the previous player’s board during turn changes. Do not use external libraries.'}
+
 const prompts=dadosBrutos.map((x,i)=>{
-  const obj={id:'game-'+i,categoria:x.categoria,nivel:x.nivel,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:i<10};
+  const tipo=x.tipo || (x.categoria==='🕹️ Criar Jogos' ? 'criar' : /melhorar|pontuação e níveis/i.test(x.titulo+' '+x.quando) ? 'melhorar' : 'outros');
+  const obj={id:'game-'+i,categoria:x.categoria,nivel:x.nivel,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:i<10,tipo};
   obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
   return obj;
 });
@@ -239,6 +253,23 @@ function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').v
 function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Games').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🎮 <strong>'+prompts.length+'</strong> modelos disponíveis'}
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 
+
+function montarTipos(){
+ const cont=document.getElementById('tipoTabs');if(!cont)return;
+ const tipos=[['todos','🎮 Todos'],['criar','🆕 Criar Novo Jogo'],['melhorar','🛠️ Melhorar Jogo Existente'],['outros','📚 Outros']];
+ const atual=window.tipoGamesAtual||'todos';
+ cont.innerHTML=tipos.map(function(t){const n=t[0]==='todos'?prompts.length:prompts.filter(function(p){return p.tipo===t[0]}).length;return '<button class="'+(atual===t[0]?'ativo':'')+'" data-tipo="'+t[0]+'">'+t[1]+' <span class="tipo-count">'+n+'</span></button>'}).join('');
+ cont.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){window.tipoGamesAtual=b.dataset.tipo;montarTipos();render()})});
+}
+function isAdminGames(){try{return !!(window.deltaAuth&&window.deltaAuth.currentUser&&window.deltaAuth.currentUser.email==='jhoncorretor2025@gmail.com')}catch(e){return false}}
+function _loadExcluidosGames(){try{return JSON.parse(localStorage.getItem('deltaGamesExcluidos'))||[]}catch(e){return[]}}
+function _saveExcluidosGames(a){try{localStorage.setItem('deltaGamesExcluidos',JSON.stringify(a))}catch(e){}}
+function excluirGame(id){var p=getItem(id);if(!p)return;if(!isAdminGames()){mostrarToast('🔒 Acesso reservado ao administrador');return}if(!confirm('Excluir somente este prompt?\n\n'+p.titulo+'\n\nA exclusão vale para este dispositivo.'))return;var a=_loadExcluidosGames();if(a.indexOf(id)<0)a.push(id);_saveExcluidosGames(a);render();atualizarStats();if(document.getElementById('adminGames').classList.contains('show'))renderGerenciarGames();mostrarToast('🗑️ Prompt excluído')}
+function renderGerenciarGames(){var box=document.getElementById('gerenciarLista');if(!box)return;var excl=_loadExcluidosGames();box.innerHTML=prompts.filter(function(p){return excl.indexOf(p.id)<0}).map(function(p){return '<div class="gerenciar-item"><span>'+p.titulo+'</span><button class="btn-admin-danger" data-gerenciar-excluir="'+p.id+'">🗑️ Excluir</button></div>'}).join('')||'<div class="vazio-mini">Nenhum prompt disponível.</div>';box.querySelectorAll('[data-gerenciar-excluir]').forEach(function(b){b.addEventListener('click',function(){excluirGame(b.dataset.gerenciarExcluir)})})}
+function abrirGerenciadorGames(){if(!isAdminGames()){mostrarToast('🔒 Acesso reservado ao administrador');return}document.getElementById('adminGames').classList.toggle('show');document.body.classList.toggle('modo-admin');if(document.getElementById('adminGames').classList.contains('show'))renderGerenciarGames())}
+function novoPromptGames(){if(!isAdminGames()){mostrarToast('🔒 Acesso reservado ao administrador');return}var titulo=window.prompt('Nome do novo prompt:');if(!titulo)return;var jogo=window.prompt('Descreva o jogo que o prompt deve criar:');if(!jogo)return;var novo={id:'custom-'+Date.now(),categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'🎮 '+titulo,quando:'Prompt personalizado criado pelo administrador.',prompt:'Crie um jogo completo chamado '+titulo+'. '+jogo+'\n\nInclua suporte para celular e PC, controles por teclado e toque, pontuação, recorde em localStorage, dificuldade progressiva, tela inicial, pause, Game Over, reiniciar e interface responsiva. Use HTML, CSS e JavaScript puro em um único arquivo.',promptEn:'Create a complete game called '+titulo+'. '+jogo+'\n\nInclude mobile and PC support, keyboard and touch controls, score, localStorage high score, progressive difficulty, start screen, pause, Game Over, restart and responsive interface. Use HTML, CSS and vanilla JavaScript in a single file.',novo:true,tipo:'criar',placeholders:[]};var personalizados=[];try{personalizados=JSON.parse(localStorage.getItem('deltaGamesPersonalizados'))||[]}catch(e){}personalizados.push(novo);localStorage.setItem('deltaGamesPersonalizados',JSON.stringify(personalizados));window.location.reload()}
+function carregarPersonalizados(){var arr=[];try{arr=JSON.parse(localStorage.getItem('deltaGamesPersonalizados'))||[]}catch(e){}arr.forEach(function(p){if(!dadosBrutos.some(function(x){return x.titulo===p.titulo}))dadosBrutos.push(p)})}
+
 function montarFiltroCategoria(){
   const cont=document.getElementById('filtrosCategoria');
   const categorias=[...new Set(prompts.map(p=>p.categoria))];
@@ -249,9 +280,11 @@ function montarFiltroCategoria(){
 
 function render(){
   const termo=norm(document.getElementById('busca').value);
+  const tipoAtual=window.tipoGamesAtual||'todos';
+  const excluidos=_loadExcluidosGames();
   const filtrados=prompts.filter(p=>{
     const texto=norm([p.titulo,p.quando,p.categoria,p.prompt].join(' '));
-    return(!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual);
+    return !excluidos.includes(p.id) && (!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual)&&(tipoAtual==='todos'||p.tipo===tipoAtual);
   });
   document.getElementById('contador').textContent=filtrados.length+' de '+prompts.length+' modelos';
   const lista=document.getElementById('lista');
@@ -267,7 +300,7 @@ function render(){
         <button class="favoritar" data-acao="favoritar" data-id="${p.id}">🤍 Favoritar</button>
         <button data-acao="chat" data-id="${p.id}">🤖 ChatGPT</button>
         <button data-acao="gemini" data-id="${p.id}">✨ Gemini</button>
-        <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button>
+        <button class="compartilhar" data-acao="compartilhar" data-id="${p.id}">🔗 Compartilhar</button><button class="excluir-prompt" data-acao="excluir" data-id="${p.id}">🗑️ Excluir</button>
         <button class="idioma" id="idioma-${p.id}" data-acao="idioma" data-id="${p.id}">🌐 View in English</button>
       </div>
       <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" data-acao="fbup" data-id="${p.id}">👍 0</button><button id="fbdown-${p.id}" data-acao="fbdown" data-id="${p.id}">👎 0</button></div>
@@ -288,17 +321,25 @@ document.getElementById('lista').addEventListener('click',e=>{
   else if(acao==='compartilhar')compartilhar(id);
   else if(acao==='fbup')darFeedback(id,'up');
   else if(acao==='fbdown')darFeedback(id,'down');
+  else if(acao==='excluir')excluirGame(id);
 });
 
 document.getElementById('busca').addEventListener('input',render);
 document.getElementById('btnExportar').addEventListener('click',exportarTodos);
 document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
+document.getElementById('btnAdminGames').addEventListener('click',abrirGerenciadorGames);
+document.getElementById('btnNovoPrompt').addEventListener('click',novoPromptGames);
+document.getElementById('btnExportarAdmin').addEventListener('click',exportarTodos);
 document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
+carregarPersonalizados();
+montarTipos();
 montarFiltroCategoria();
 atualizarStats();
 render();
 window.addEventListener('delta:favoritos-updated',atualizarStats);
+window.addEventListener('delta-auth-changed',function(){if(isAdminGames()){document.getElementById('btnAdminGames').style.display='inline-block'}else{document.getElementById('btnAdminGames').style.display='none'}});
+setTimeout(function(){if(!isAdminGames())document.getElementById('btnAdminGames').style.display='none'},1200);
 </script></body></html>
