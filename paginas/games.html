@@ -261,7 +261,7 @@ function montarTipos(){
  cont.innerHTML=tipos.map(function(t){const n=t[0]==='todos'?prompts.length:prompts.filter(function(p){return p.tipo===t[0]}).length;return '<button class="'+(atual===t[0]?'ativo':'')+'" data-tipo="'+t[0]+'">'+t[1]+' <span class="tipo-count">'+n+'</span></button>'}).join('');
  cont.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){window.tipoGamesAtual=b.dataset.tipo;montarTipos();render()})});
 }
-function isAdminGames(){try{return !!(window.deltaAuth&&window.deltaAuth.currentUser&&window.deltaAuth.currentUser.email==='jhoncorretor2025@gmail.com')}catch(e){return false}}
+function isAdminGames(){try{return !!(window.deltaUser&&window.deltaUser.email==='jhoncorretor2025@gmail.com')}catch(e){return false}}
 function _loadExcluidosGames(){try{return JSON.parse(localStorage.getItem('deltaGamesExcluidos'))||[]}catch(e){return[]}}
 function _saveExcluidosGames(a){try{localStorage.setItem('deltaGamesExcluidos',JSON.stringify(a))}catch(e){}}
 function excluirGame(id){var p=getItem(id);if(!p)return;if(!isAdminGames()){mostrarToast('🔒 Acesso reservado ao administrador');return}if(!confirm('Excluir somente este prompt?\n\n'+p.titulo+'\n\nA exclusão vale para este dispositivo.'))return;var a=_loadExcluidosGames();if(a.indexOf(id)<0)a.push(id);_saveExcluidosGames(a);render();atualizarStats();if(document.getElementById('adminGames').classList.contains('show'))renderGerenciarGames();mostrarToast('🗑️ Prompt excluído')}
