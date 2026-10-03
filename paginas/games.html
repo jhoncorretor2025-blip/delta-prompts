@@ -39,8 +39,9 @@
 [data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica{color:#a0a0a0}
 
+.complexidade-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}.complexidade-tabs button{border:1px solid #ddd;border-radius:12px;background:#fff;padding:10px 14px;font-weight:800;cursor:pointer}.complexidade-tabs button.ativo{background:#16a34a;color:#fff;border-color:#16a34a}.complexidade-count{font-size:11px;padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.08)}.complexidade-tabs button.ativo .complexidade-count{background:rgba(255,255,255,.2)}.complexidade-info{font-size:12px;color:#667085;margin:-6px 0 14px}.complexidade-badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800;margin-left:6px}.complexidade-facil{background:#dcfce7;color:#166534}.complexidade-medio{background:#fef9c3;color:#854d0e}.complexidade-dificil{background:#fee2e2;color:#991b1b}
 .tipo-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}.tipo-tabs button{border:1px solid #ddd;border-radius:12px;background:#fff;padding:10px 14px;font-weight:800;cursor:pointer}.tipo-tabs button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}.tipo-count{font-size:11px;padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.08)}.tipo-tabs button.ativo .tipo-count{background:rgba(255,255,255,.2)}
-.admin-games{display:none;border:1px solid #f59e0b;background:#fffbeb;border-radius:16px;padding:14px;margin:0 0 20px}.admin-games.show{display:block}.admin-games h3{margin:0 0 8px}.admin-games .admin-actions{display:flex;gap:8px;flex-wrap:wrap}.admin-games button{border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer}.btn-admin-primary{background:#5b5ce2;color:#fff}.btn-admin-danger{background:#fee2e2;color:#991b1b}.btn-admin-muted{background:#fff;border:1px solid #e5e7eb!important;color:#475467}.gerenciar-item{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;padding:8px;border-top:1px solid #fde68a}.gerenciar-item span{flex:1;font-weight:700;font-size:13px}.card .excluir-prompt{display:none}.modo-admin .card .excluir-prompt{display:inline-flex;background:#fee2e2;color:#991b1b}.modo-admin .card{position:relative}[data-theme="dark"] .tipo-tabs button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}[data-theme="dark"] .admin-games{background:#2b2110;border-color:#8a6415}
+.admin-games{display:none;border:1px solid #f59e0b;background:#fffbeb;border-radius:16px;padding:14px;margin:0 0 20px}.admin-games.show{display:block}.admin-games h3{margin:0 0 8px}.admin-games .admin-actions{display:flex;gap:8px;flex-wrap:wrap}.admin-games button{border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer}.btn-admin-primary{background:#5b5ce2;color:#fff}.btn-admin-danger{background:#fee2e2;color:#991b1b}.btn-admin-muted{background:#fff;border:1px solid #e5e7eb!important;color:#475467}.gerenciar-item{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;padding:8px;border-top:1px solid #fde68a}.gerenciar-item span{flex:1;font-weight:700;font-size:13px}.card .excluir-prompt{display:none}.modo-admin .card .excluir-prompt{display:inline-flex;background:#fee2e2;color:#991b1b}.modo-admin .card{position:relative}[data-theme="dark"] .complexidade-tabs button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}[data-theme="dark"] .complexidade-info{color:#a0a0a0}[data-theme="dark"] .tipo-tabs button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}[data-theme="dark"] .admin-games{background:#2b2110;border-color:#8a6415}
 </style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
 <h1>🎮 Games com IA</h1>
@@ -52,7 +53,7 @@
   <input id="busca" type="search" placeholder="🔎 Buscar modelo para games...">
   <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
 </div>
-<div class="tipo-tabs" id="tipoTabs"></div><div class="filtros" id="filtrosCategoria"></div><div class="admin-games" id="adminGames"><h3>🔐 Gerenciamento de Games</h3><p style="margin:0 0 10px;font-size:13px;color:#667085">Modo administrador: criar e excluir itens individualmente neste dispositivo.</p><div class="admin-actions"><button class="btn-admin-primary" id="btnNovoPrompt">➕ Criar novo prompt</button><button class="btn-admin-muted" id="btnExportarAdmin">📤 Exportar biblioteca</button></div><div id="gerenciarLista"></div></div>
+<div class="complexidade-tabs" id="complexidadeTabs"></div><div class="complexidade-info">💡 <strong>Fácil</strong>: geralmente funciona com poucas alterações · <strong>Médio</strong>: pode precisar de ajustes e manutenção · <strong>Difícil</strong>: tende a exigir mais testes, melhorias e atualizações.</div><div class="tipo-tabs" id="tipoTabs"></div><div class="filtros" id="filtrosCategoria"></div><div class="admin-games" id="adminGames"><h3>🔐 Gerenciamento de Games</h3><p style="margin:0 0 10px;font-size:13px;color:#667085">Modo administrador: criar e excluir itens individualmente neste dispositivo.</p><div class="admin-actions"><button class="btn-admin-primary" id="btnNovoPrompt">➕ Criar novo prompt</button><button class="btn-admin-muted" id="btnExportarAdmin">📤 Exportar biblioteca</button></div><div id="gerenciarLista"></div></div>
 
 <div class="toolbar-extra">
   <button id="btnExportar">📥 Exportar todos</button>
@@ -130,13 +131,14 @@ const dadosBrutos=[
 {categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'🏎️ Corrida de Kart',quando:'Para criar um jogo do gênero 🏎️ Corrida de Kart.',prompt:'Crie um jogo de corrida de kart completo em um único arquivo HTML usando CSS e JavaScript puro. O jogador controla um kart em uma pista. Inclua aceleração, freio, direção, colisão, adversários com IA, voltas, cronômetro, posição, linha de chegada, pelo menos 3 pistas, diferentes atributos de karts, itens de velocidade e obstáculos. Inclua seleção de pista, resultados, desbloqueios, recordes, teclado, toque e salvamento no localStorage. Crie identidade visual original.',en:'Crie um jogo de corrida de kart completo em um único arquivo HTML usando CSS e JavaScript puro. O jogador controla um kart em uma pista. Inclua aceleração, freio, direção, colisão, adversários com IA, voltas, cronômetro, posição, linha de chegada, pelo menos 3 pistas, diferentes atributos de karts, itens de velocidade e obstáculos. Inclua seleção de pista, resultados, desbloqueios, recordes, teclado, toque e salvamento no localStorage. Crie identidade visual original.',tipo:'criar'},
 const prompts=dadosBrutos.map((x,i)=>{
   const tipo=x.tipo || (x.categoria==='🕹️ Criar Jogos' ? 'criar' : /melhorar|pontuação e níveis/i.test(x.titulo+' '+x.quando) ? 'melhorar' : 'outros');
-  const obj={id:'game-'+i,categoria:x.categoria,nivel:x.nivel,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:i<10,tipo};
+  const complexidade=x.complexidade || (x.nivel==='basico'?'facil':x.nivel==='intermediario'?'medio':'dificil'); const obj={id:'game-'+i,categoria:x.categoria,nivel:x.nivel,complexidade,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:i<10,tipo};
   obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
   return obj;
 });
 
 const idiomaAtivo={};
 let categoriaAtual='todos';
+let complexidadeAtual='todos';
 
 function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
@@ -274,6 +276,14 @@ function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Games')
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 
 
+function montarComplexidade(){
+ const cont=document.getElementById('complexidadeTabs');if(!cont)return;
+ const tipos=[['todos','🎮 Todos'],['facil','🟢 Fácil'],['medio','🟡 Médio'],['dificil','🔴 Difícil']];
+ const atual=complexidadeAtual;
+ cont.innerHTML=tipos.map(function(t){const n=t[0]==='todos'?prompts.length:prompts.filter(function(p){return p.complexidade===t[0]}).length;return '<button class="'+(atual===t[0]?'ativo':'')+'" data-complexidade="'+t[0]+'">'+t[1]+' <span class="complexidade-count">'+n+'</span></button>'}).join('');
+ cont.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){complexidadeAtual=b.dataset.complexidade;montarComplexidade();render()})});
+}
+
 function montarTipos(){
  const cont=document.getElementById('tipoTabs');if(!cont)return;
  const tipos=[['todos','🎮 Todos'],['criar','🆕 Criar Novo Jogo'],['melhorar','🛠️ Melhorar Jogo Existente'],['outros','📚 Outros']];
@@ -287,7 +297,7 @@ function _saveExcluidosGames(a){try{localStorage.setItem('deltaGamesExcluidos',J
 function excluirGame(id){var p=getItem(id);if(!p)return;if(!isAdminGames()){mostrarToast('🔒 Acesso reservado ao administrador');return}if(!confirm('Excluir somente este prompt?\n\n'+p.titulo+'\n\nA exclusão vale para este dispositivo.'))return;var a=_loadExcluidosGames();if(a.indexOf(id)<0)a.push(id);_saveExcluidosGames(a);render();atualizarStats();if(document.getElementById('adminGames').classList.contains('show'))renderGerenciarGames();mostrarToast('🗑️ Prompt excluído')}
 function renderGerenciarGames(){var box=document.getElementById('gerenciarLista');if(!box)return;var excl=_loadExcluidosGames();box.innerHTML=prompts.filter(function(p){return excl.indexOf(p.id)<0}).map(function(p){return '<div class="gerenciar-item"><span>'+p.titulo+'</span><button class="btn-admin-danger" data-gerenciar-excluir="'+p.id+'">🗑️ Excluir</button></div>'}).join('')||'<div class="vazio-mini">Nenhum prompt disponível.</div>';box.querySelectorAll('[data-gerenciar-excluir]').forEach(function(b){b.addEventListener('click',function(){excluirGame(b.dataset.gerenciarExcluir)})})}
 function abrirGerenciadorGames(){if(!isAdminGames()){mostrarToast('🔒 Acesso reservado ao administrador');return}document.getElementById('adminGames').classList.toggle('show');document.body.classList.toggle('modo-admin');if(document.getElementById('adminGames').classList.contains('show'))renderGerenciarGames())}
-function novoPromptGames(){if(!isAdminGames()){mostrarToast('🔒 Acesso reservado ao administrador');return}var titulo=window.prompt('Nome do novo prompt:');if(!titulo)return;var jogo=window.prompt('Descreva o jogo que o prompt deve criar:');if(!jogo)return;var novo={id:'custom-'+Date.now(),categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'🎮 '+titulo,quando:'Prompt personalizado criado pelo administrador.',prompt:'Crie um jogo completo chamado '+titulo+'. '+jogo+'\n\nInclua suporte para celular e PC, controles por teclado e toque, pontuação, recorde em localStorage, dificuldade progressiva, tela inicial, pause, Game Over, reiniciar e interface responsiva. Use HTML, CSS e JavaScript puro em um único arquivo.',promptEn:'Create a complete game called '+titulo+'. '+jogo+'\n\nInclude mobile and PC support, keyboard and touch controls, score, localStorage high score, progressive difficulty, start screen, pause, Game Over, restart and responsive interface. Use HTML, CSS and vanilla JavaScript in a single file.',novo:true,tipo:'criar',placeholders:[]};var personalizados=[];try{personalizados=JSON.parse(localStorage.getItem('deltaGamesPersonalizados'))||[]}catch(e){}personalizados.push(novo);localStorage.setItem('deltaGamesPersonalizados',JSON.stringify(personalizados));window.location.reload()}
+function novoPromptGames(){if(!isAdminGames()){mostrarToast('🔒 Acesso reservado ao administrador');return}var titulo=window.prompt('Nome do novo prompt:');if(!titulo)return;var jogo=window.prompt('Descreva o jogo que o prompt deve criar:');if(!jogo)return;var novo={id:'custom-'+Date.now(),categoria:'🕹️ Criar Jogos',nivel:'intermediario',titulo:'🎮 '+titulo,quando:'Prompt personalizado criado pelo administrador.',prompt:'Crie um jogo completo chamado '+titulo+'. '+jogo+'\n\nInclua suporte para celular e PC, controles por teclado e toque, pontuação, recorde em localStorage, dificuldade progressiva, tela inicial, pause, Game Over, reiniciar e interface responsiva. Use HTML, CSS e JavaScript puro em um único arquivo.',promptEn:'Create a complete game called '+titulo+'. '+jogo+'\n\nInclude mobile and PC support, keyboard and touch controls, score, localStorage high score, progressive difficulty, start screen, pause, Game Over, restart and responsive interface. Use HTML, CSS and vanilla JavaScript in a single file.',novo:true,tipo:'criar',complexidade:'medio',placeholders:[]};var personalizados=[];try{personalizados=JSON.parse(localStorage.getItem('deltaGamesPersonalizados'))||[]}catch(e){}personalizados.push(novo);localStorage.setItem('deltaGamesPersonalizados',JSON.stringify(personalizados));window.location.reload()}
 function carregarPersonalizados(){var arr=[];try{arr=JSON.parse(localStorage.getItem('deltaGamesPersonalizados'))||[]}catch(e){}arr.forEach(function(p){if(!prompts.some(function(x){return x.titulo===p.titulo}))prompts.push(p)})}
 
 function montarFiltroCategoria(){
@@ -304,13 +314,13 @@ function render(){
   const excluidos=_loadExcluidosGames();
   const filtrados=prompts.filter(p=>{
     const texto=norm([p.titulo,p.quando,p.categoria,p.prompt].join(' '));
-    return !excluidos.includes(p.id) && (!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual)&&(tipoAtual==='todos'||p.tipo===tipoAtual);
+    return !excluidos.includes(p.id) && (!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual)&&(tipoAtual==='todos'||p.tipo===tipoAtual)&&(complexidadeAtual==='todos'||p.complexidade===complexidadeAtual);
   });
   document.getElementById('contador').textContent=filtrados.length+' de '+prompts.length+' modelos';
   const lista=document.getElementById('lista');
   lista.innerHTML=filtrados.length?filtrados.map(p=>`
     <section class="card" id="card-${p.id}">
-      <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span>
+      <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span><span class="complexidade-badge complexidade-${p.complexidade}">${p.complexidade==='facil'?'🟢 Fácil':p.complexidade==='medio'?'🟡 Médio':'🔴 Difícil'}</span>
       <h3>${p.titulo}</h3>
       <p style="color:#667085;font-size:14px">📌 ${p.quando}</p>
       ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
@@ -355,6 +365,7 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 carregarPersonalizados();
+montarComplexidade();
 montarTipos();
 montarFiltroCategoria();
 atualizarStats();
