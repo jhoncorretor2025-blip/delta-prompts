@@ -298,14 +298,49 @@ function alternarIdioma(id){
   if(pre)pre.textContent=textoFinal(id);
   if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}
 }
-async function copiarPorId(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id));mostrarToast('📋 Copiado!')}catch(e){mostrarToast('Não foi possível copiar')}}
-async function abrirChat(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
-async function abrirGemini(id){registrarUso(id);try{await navigator.clipboard.writeText(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://gemini.google.com/app','_blank'),300)}
+async function copiarTextoDelta(texto){
+  if(!texto)return false;
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(texto);
+      return true;
+    }
+  }catch(e){}
+  try{
+    const ta=document.createElement('textarea');
+    ta.value=texto;
+    ta.setAttribute('readonly','');
+    ta.style.position='fixed';
+    ta.style.top='-9999px';
+    ta.style.left='-9999px';
+    ta.style.opacity='0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0,ta.value.length);
+    const ok=document.execCommand('copy');
+    document.body.removeChild(ta);
+    if(ok)return true;
+  }catch(e){}
+  return false;
+}
+async function copiarPorId(id){
+  registrarUso(id);
+  try{
+    const texto=textoFinal(id);
+    const ok=await copiarTextoDelta(texto);
+    mostrarToast(ok?'📋 Prompt copiado!':'⚠️ Não foi possível copiar. Selecione o texto e use Ctrl+C.');
+  }catch(e){
+    mostrarToast('⚠️ Não foi possível copiar. Tente Ctrl+C.');
+  }
+}
+async function abrirChat(id){registrarUso(id);try{await copiarTextoDelta(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
+async function abrirGemini(id){registrarUso(id);try{await copiarTextoDelta(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://gemini.google.com/app','_blank'),300)}
 function compartilhar(id){
   const p=getItem(id);if(!p)return;
   const texto='🎮 '+p.titulo+'\n\n'+textoFinal(id)+'\n\n— via Delta Prompts';
   if(navigator.share){navigator.share({title:p.titulo,text:texto}).catch(()=>{})}
-  else{navigator.clipboard.writeText(texto).then(()=>mostrarToast('🔗 Copiado! Cole onde quiser compartilhar.'))}
+  else{copiarTextoDelta(texto).then(ok=>mostrarToast(ok?'🔗 Copiado! Cole onde quiser compartilhar.':'⚠️ Não foi possível copiar.'))}
 }
 function exportarTodos(){
   const linhas=prompts.map(p=>p.titulo+' ('+p.categoria+')\n'+p.prompt);
