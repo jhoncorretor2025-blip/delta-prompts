@@ -53,7 +53,7 @@
 @media(max-width:760px){.games-tools{grid-template-columns:1fr}.games-tools select,.games-tools button{width:100%}.top-bar{margin:12px 0}.complexidade-tabs,.tipo-tabs,.filtros{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:thin}.complexidade-tabs button,.tipo-tabs button,.filtros button{flex:0 0 auto}.acoes button{flex:1 1 auto;min-height:44px}.card .prompt-text{max-height:220px}.games-hero{padding:16px}.games-mini-stats span{font-size:11px}}
 </style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
-<section class="games-hero" aria-labelledby="games-title"><div class="games-hero-top"><div><h1 id="games-title">🎮 Games com IA</h1><p>Prompts para <strong>criar jogos novos</strong> e para <strong>melhorar jogos que você já tem</strong>. Encontre, copie e use na IA que preferir.</p></div><span class="games-version" title="Versão da página">⚙️ Games v2026.10.03</span></div><div class="games-mini-stats" id="gamesMiniStats"></div></section>
+<section class="games-hero" aria-labelledby="games-title"><div class="games-hero-top"><div><h1 id="games-title">🎮 Games com IA</h1><p>Prompts para <strong>criar jogos novos</strong> e para <strong>melhorar jogos que você já tem</strong>. Encontre, copie e use na IA que preferir.</p></div><span class="games-version" title="Versão da página">⚙️ Games v2026.10.04</span></div><div class="games-mini-stats" id="gamesMiniStats"></div></section>
 <div class="stats-bar" id="statsBar"></div>
 <div class="games-tools"><input id="busca" type="search" aria-label="Buscar prompts de games" placeholder="🔎 Buscar por jogo, melhoria, celular, online..."><select id="ordenarGames" aria-label="Ordenar prompts"><option value="padrao">↕️ Ordem padrão</option><option value="az">🔤 A–Z</option><option value="usados">🔥 Mais usados</option></select><button id="btnFavoritosGames" type="button" aria-pressed="false">🤍 Favoritos</button></div>
 <div class="filter-summary"><small id="resumoFiltrosGames">Todos os filtros ativos</small><button class="limpar-games" id="btnLimparGames" type="button">✕ Limpar filtros</button></div>
@@ -351,7 +351,7 @@ function render(){
   if(ordemGamesAtual==='az')filtrados.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));
   if(ordemGamesAtual==='usados'){const usos=_loadUsos();filtrados.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0));}
   const totalAtivo=prompts.filter(p=>!excluidos.includes(p.id)).length;
-  document.getElementById('contador').textContent=filtrados.length+' de '+totalAtivo+' modelos';
+  const contadorEl=document.getElementById('contador');if(contadorEl)contadorEl.textContent=filtrados.length+' de '+totalAtivo+' modelos';
   const resumo=document.getElementById('resumoFiltrosGames');if(resumo)resumo.textContent=(soFavoritosGames?'⭐ Favoritos · ':'')+(tipoAtual==='todos'?'':tipoAtual==='criar'?'🆕 Criar · ':'🛠️ Melhorar · ')+(complexidadeAtual==='todos'?'':complexidadeAtual==='facil'?'🟢 Fácil · ':complexidadeAtual==='medio'?'🟡 Médio · ':'🔴 Difícil · ')+(categoriaAtual==='todos'?'Todas as categorias':categoriaAtual);
   const lista=document.getElementById('lista');
   lista.innerHTML=filtrados.length?filtrados.map(p=>`
@@ -359,7 +359,7 @@ function render(){
       <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span><span class="complexidade-badge complexidade-${p.complexidade}">${p.complexidade==='facil'?'🟢 Fácil':p.complexidade==='medio'?'🟡 Médio':'🔴 Difícil'}</span>
       <h3>${p.titulo}</h3>
       <p style="color:#667085;font-size:14px">📌 ${p.quando}</p>
-      ${p.placeholders.length?`<div class="campos-preenchimento">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+      ${(Array.isArray(p.placeholders)?p.placeholders:[]).length?`<div class="campos-preenchimento">${(Array.isArray(p.placeholders)?p.placeholders:[]).map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
       <div class="prompt-text" id="prompt-${p.id}">${p.prompt}</div>
       <div class="acoes">
         <button data-acao="copiar" data-id="${p.id}">📋 Copiar</button>
