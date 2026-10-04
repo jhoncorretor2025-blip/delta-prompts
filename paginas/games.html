@@ -59,7 +59,7 @@
 @media(max-width:760px){.games-tools{grid-template-columns:1fr}.games-tools select,.games-tools button{width:100%}.top-bar{margin:12px 0}.complexidade-tabs,.tipo-tabs,.filtros{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:thin}.complexidade-tabs button,.tipo-tabs button,.filtros button{flex:0 0 auto}.acoes button{flex:1 1 auto;min-height:44px}.card .prompt-text{max-height:220px}.games-hero{padding:16px}.games-mini-stats span{font-size:11px}}
 </style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
-<section class="games-hero" aria-labelledby="games-title"><div class="games-hero-top"><div><h1 id="games-title">🎮 Games com IA</h1><p>Prompts para <strong>criar jogos novos</strong> e para <strong>melhorar jogos que você já tem</strong>. Encontre, copie e use na IA que preferir.</p></div><span class="games-version" title="Versão da página">⚙️ Games v2026.10.04</span></div><div class="games-mini-stats" id="gamesMiniStats"></div></section>
+<section class="games-hero" aria-labelledby="games-title"><div class="games-hero-top"><div><h1 id="games-title">🎮 Games com IA</h1><p>Prompts para <strong>criar jogos novos</strong> e para <strong>melhorar jogos que você já tem</strong>. Encontre, copie e use na IA que preferir.</p></div><span class="games-version" title="Versão da página">⚙️ Games v2026.10.05</span></div><div class="games-mini-stats" id="gamesMiniStats"></div></section>
 <div class="stats-bar" id="statsBar"></div>
 <div class="games-tools"><input id="busca" type="search" aria-label="Buscar prompts de games" placeholder="🔎 Buscar por jogo, melhoria, celular, online..."><select id="ordenarGames" aria-label="Ordenar prompts"><option value="padrao">↕️ Ordem padrão</option><option value="az">🔤 A–Z</option><option value="usados">🔥 Mais usados</option></select><button id="btnFavoritosGames" type="button" aria-pressed="false">🤍 Favoritos</button></div>
 <div class="filter-summary"><small id="resumoFiltrosGames">Todos os filtros ativos</small><span id="contador" style="font-size:12px;font-weight:800;color:#667085"></span><button class="limpar-games" id="btnLimparGames" type="button">✕ Limpar filtros</button></div><div id="gamesPagination" class="games-pagination" aria-label="Paginação dos prompts"></div>
@@ -163,6 +163,13 @@ const dadosBrutos=[
 const prompts=dadosBrutos.map((x,i)=>{
   const tipo=x.tipo || (x.categoria==='🕹️ Criar Jogos' ? 'criar' : /melhorar|pontuação e níveis/i.test(x.titulo+' '+x.quando) ? 'melhorar' : 'outros');
   const complexidade=x.complexidade || (x.nivel==='basico'?'facil':x.nivel==='intermediario'?'medio':'dificil'); const obj={id:'game-'+i,categoria:x.categoria,nivel:x.nivel,complexidade,titulo:x.titulo,quando:x.quando,prompt:x.prompt,promptEn:x.en,novo:i<10,tipo};
+  if(tipo==='melhorar'){
+    const objetivo=(x.titulo||'Melhoria do jogo').replace(/^[^\p{L}\p{N}]*/u,'');
+    const contexto=x.quando||'Melhore a experiência geral do jogo.';
+    obj.prompt='Jogo que quero melhorar: [NOME DO JOGO]\\n\\nAtue como especialista em melhoria de jogos criados com IA. Trabalhe na versão atual do jogo "[NOME DO JOGO]" que já está no contexto/projeto.\\n\\nObjetivo desta melhoria: '+objetivo+'.\\n'+contexto+'\\n\\nFaça a melhoria diretamente no jogo existente, sem recriá-lo do zero e sem remover funcionalidades que já funcionam. Preserve a mecânica principal, regras, pontuação, progresso e recursos existentes. Melhore somente o que for necessário para atingir o objetivo, mantendo o jogo estável, responsivo e funcionando no PC e no celular quando aplicável.\\n\\nEntregue a versão completa atualizada do jogo, pronta para testar. No final, verifique se a melhoria foi aplicada corretamente e se nenhuma funcionalidade importante foi quebrada.';
+    obj.promptEn='Game I want to improve: [GAME NAME]\\n\\nAct as a specialist in improving AI-generated games. Work on the current version of the game "[GAME NAME]" already available in the current context/project.\\n\\nImprovement goal: '+objetivo+'.\\n'+contexto+'\\n\\nImprove the existing game directly. Do not rebuild it from scratch or remove features that already work. Preserve the core mechanics, rules, score, progress and existing functionality. Change only what is necessary to achieve the goal, keeping the game stable, responsive and working on desktop and mobile when applicable.\\n\\nReturn the complete updated game ready to test. Before finishing, verify that the improvement works and that no important functionality was broken.';
+    obj.placeholders=['NOME DO JOGO'];
+  }
   obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
   return obj;
 });
@@ -172,7 +179,7 @@ let categoriaAtual='todos';
 let complexidadeAtual='todos';
 let ordemGamesAtual='padrao';
 let soFavoritosGames=false;
-const GAMES_VERSION='2026.10.04';
+const GAMES_VERSION='2026.10.05';
 let paginaGamesAtual=1;
 const GAMES_POR_PAGINA=15;
 
