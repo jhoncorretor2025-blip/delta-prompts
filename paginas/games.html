@@ -339,12 +339,14 @@ function montarFiltroCategoria(){
 }
 
 function render(){
-  const termo=norm(document.getElementById('busca').value);
+  const termo=norm(document.getElementById('busca').value).trim();
   const tipoAtual=window.tipoGamesAtual||'todos';
   const excluidos=_loadExcluidosGames();
   let filtrados=prompts.filter(p=>{
     const texto=norm([p.titulo,p.quando,p.categoria,p.prompt].join(' '));
-    return !excluidos.includes(p.id) && (!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual)&&(tipoAtual==='todos'||p.tipo===tipoAtual)&&(complexidadeAtual==='todos'||p.complexidade===complexidadeAtual)&&(!soFavoritosGames||isFav(p.id));
+    const palavrasBusca=termo?termo.split(/\s+/).filter(Boolean):[];
+    const buscaOk=!palavrasBusca.length||palavrasBusca.every(pl=>texto.includes(pl));
+    return !excluidos.includes(p.id) && buscaOk&&(categoriaAtual==='todos'||p.categoria===categoriaAtual)&&(tipoAtual==='todos'||p.tipo===tipoAtual)&&(complexidadeAtual==='todos'||p.complexidade===complexidadeAtual)&&(!soFavoritosGames||isFav(p.id));
   });
   if(ordemGamesAtual==='az')filtrados.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));
   if(ordemGamesAtual==='usados'){const usos=_loadUsos();filtrados.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0));}
