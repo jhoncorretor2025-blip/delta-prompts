@@ -298,21 +298,19 @@ function alternarIdioma(id){
   if(pre)pre.textContent=textoFinal(id);
   if(btn){btn.textContent=idiomaAtivo[id]==='en'?'🇧🇷 Ver em Português':'🌐 View in English';btn.classList.toggle('ativo-en',idiomaAtivo[id]==='en')}
 }
-async function copiarTextoDelta(texto){
-  if(!texto)return false;
-  try{
-    if(navigator.clipboard && window.isSecureContext){
-      await navigator.clipboard.writeText(texto);
-      return true;
-    }
-  }catch(e){}
+function copiarTextoDelta(texto){
+  if(!texto)return Promise.resolve(false);
+
+  // Fallback síncrono: precisa acontecer diretamente durante o clique.
   try{
     const ta=document.createElement('textarea');
     ta.value=texto;
     ta.setAttribute('readonly','');
     ta.style.position='fixed';
-    ta.style.top='-9999px';
+    ta.style.top='0';
     ta.style.left='-9999px';
+    ta.style.width='1px';
+    ta.style.height='1px';
     ta.style.opacity='0';
     document.body.appendChild(ta);
     ta.focus();
@@ -320,19 +318,20 @@ async function copiarTextoDelta(texto){
     ta.setSelectionRange(0,ta.value.length);
     const ok=document.execCommand('copy');
     document.body.removeChild(ta);
-    if(ok)return true;
+    if(ok)return Promise.resolve(true);
   }catch(e){}
-  return false;
+
+  // Clipboard moderno como segunda tentativa.
+  if(navigator.clipboard){
+    return navigator.clipboard.writeText(texto).then(()=>true).catch(()=>false);
+  }
+  return Promise.resolve(false);
 }
 async function copiarPorId(id){
   registrarUso(id);
-  try{
-    const texto=textoFinal(id);
-    const ok=await copiarTextoDelta(texto);
-    mostrarToast(ok?'📋 Prompt copiado!':'⚠️ Não foi possível copiar. Selecione o texto e use Ctrl+C.');
-  }catch(e){
-    mostrarToast('⚠️ Não foi possível copiar. Tente Ctrl+C.');
-  }
+  const texto=textoFinal(id);
+  const ok=await copiarTextoDelta(texto);
+  mostrarToast(ok?'📋 Prompt copiado!':'⚠️ Não foi possível copiar. Tente selecionar o texto e usar Ctrl+C.');
 }
 async function abrirChat(id){registrarUso(id);try{await copiarTextoDelta(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
 async function abrirGemini(id){registrarUso(id);try{await copiarTextoDelta(textoFinal(id))}catch(e){}mostrarToast('✓ Copiado! Abrindo...');setTimeout(()=>window.open('https://gemini.google.com/app','_blank'),300)}
