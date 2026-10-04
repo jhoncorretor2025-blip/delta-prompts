@@ -42,17 +42,21 @@
 .complexidade-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}.complexidade-tabs button{border:1px solid #ddd;border-radius:12px;background:#fff;padding:10px 14px;font-weight:800;cursor:pointer}.complexidade-tabs button.ativo{background:#16a34a;color:#fff;border-color:#16a34a}.complexidade-count{font-size:11px;padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.08)}.complexidade-tabs button.ativo .complexidade-count{background:rgba(255,255,255,.2)}.complexidade-info{font-size:12px;color:#667085;margin:-6px 0 14px}.complexidade-badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800;margin-left:6px}.complexidade-facil{background:#dcfce7;color:#166534}.complexidade-medio{background:#fef9c3;color:#854d0e}.complexidade-dificil{background:#fee2e2;color:#991b1b}
 .tipo-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}.tipo-tabs button{border:1px solid #ddd;border-radius:12px;background:#fff;padding:10px 14px;font-weight:800;cursor:pointer}.tipo-tabs button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}.tipo-count{font-size:11px;padding:2px 7px;border-radius:999px;background:rgba(0,0,0,.08)}.tipo-tabs button.ativo .tipo-count{background:rgba(255,255,255,.2)}
 .admin-games{display:none;border:1px solid #f59e0b;background:#fffbeb;border-radius:16px;padding:14px;margin:0 0 20px}.admin-games.show{display:block}.admin-games h3{margin:0 0 8px}.admin-games .admin-actions{display:flex;gap:8px;flex-wrap:wrap}.admin-games button{border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer}.btn-admin-primary{background:#5b5ce2;color:#fff}.btn-admin-danger{background:#fee2e2;color:#991b1b}.btn-admin-muted{background:#fff;border:1px solid #e5e7eb!important;color:#475467}.gerenciar-item{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;padding:8px;border-top:1px solid #fde68a}.gerenciar-item span{flex:1;font-weight:700;font-size:13px}.card .excluir-prompt{display:none}.modo-admin .card .excluir-prompt{display:inline-flex;background:#fee2e2;color:#991b1b}.modo-admin .card{position:relative}[data-theme="dark"] .complexidade-tabs button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}[data-theme="dark"] .complexidade-info{color:#a0a0a0}[data-theme="dark"] .tipo-tabs button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}[data-theme="dark"] .admin-games{background:#2b2110;border-color:#8a6415}
+
+/* ===== DELTA GAMES UX 2026.10 ===== */
+.games-hero{margin:16px 0 18px;padding:20px;border:1px solid var(--border,#e5e7eb);border-radius:20px;background:linear-gradient(135deg,#f8fafc,#eef2ff)}
+.games-hero-top{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}.games-hero h1{margin:0 0 6px}.games-hero p{margin:0;color:#667085;max-width:760px;line-height:1.55}.games-version{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid #e5e7eb;font-size:11px;font-weight:900;color:#475467;white-space:nowrap}.games-mini-stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.games-mini-stats span{padding:7px 10px;border-radius:999px;background:#fff;border:1px solid #e5e7eb;font-size:12px;font-weight:800;color:#475467}
+.games-tools{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;margin:16px 0 12px}.games-tools input{width:100%;box-sizing:border-box}.games-tools select,.games-tools button{padding:12px;border:1px solid #ddd;border-radius:12px;background:#fff;font-weight:800;color:#334155;cursor:pointer}.games-tools button.ativo{background:#5b5ce2;color:#fff;border-color:#5b5ce2}
+.filter-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:8px 0 12px}.filter-summary small{color:#667085}.limpar-games{border:0;background:none;color:#5b5ce2;font-weight:800;cursor:pointer;padding:5px}
+.card{scroll-margin-top:18px}.card .prompt-text{max-height:260px;overflow:auto}.card .prompt-text:focus{outline:2px solid #5b5ce2;outline-offset:2px}
+[data-theme="dark"] .games-hero{background:linear-gradient(135deg,#111827,#17213e);border-color:rgba(255,255,255,.12)}[data-theme="dark"] .games-version,[data-theme="dark"] .games-mini-stats span,[data-theme="dark"] .games-tools select,[data-theme="dark"] .games-tools button{background:#0f1424;border-color:rgba(255,255,255,.14);color:#cbd5e1}
+@media(max-width:760px){.games-tools{grid-template-columns:1fr}.games-tools select,.games-tools button{width:100%}.top-bar{margin:12px 0}.complexidade-tabs,.tipo-tabs,.filtros{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:thin}.complexidade-tabs button,.tipo-tabs button,.filtros button{flex:0 0 auto}.acoes button{flex:1 1 auto;min-height:44px}.card .prompt-text{max-height:220px}.games-hero{padding:16px}.games-mini-stats span{font-size:11px}}
 </style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
-<h1>🎮 Games com IA</h1>
-<p>Prompts pra jogar melhor os jogos que você já joga, e prompts pra <strong>criar seus próprios jogos simples</strong> — do jogo da velha ao plataforma, prontos pra colar numa IA e testar na hora.</p>
-
+<section class="games-hero" aria-labelledby="games-title"><div class="games-hero-top"><div><h1 id="games-title">🎮 Games com IA</h1><p>Prompts para <strong>criar jogos novos</strong> e para <strong>melhorar jogos que você já tem</strong>. Encontre, copie e use na IA que preferir.</p></div><span class="games-version" title="Versão da página">⚙️ Games v2026.10.03</span></div><div class="games-mini-stats" id="gamesMiniStats"></div></section>
 <div class="stats-bar" id="statsBar"></div>
-
-<div class="top-bar">
-  <input id="busca" type="search" placeholder="🔎 Buscar modelo para games...">
-  <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
-</div>
+<div class="games-tools"><input id="busca" type="search" aria-label="Buscar prompts de games" placeholder="🔎 Buscar por jogo, melhoria, celular, online..."><select id="ordenarGames" aria-label="Ordenar prompts"><option value="padrao">↕️ Ordem padrão</option><option value="az">🔤 A–Z</option><option value="usados">🔥 Mais usados</option></select><button id="btnFavoritosGames" type="button" aria-pressed="false">🤍 Favoritos</button></div>
+<div class="filter-summary"><small id="resumoFiltrosGames">Todos os filtros ativos</small><button class="limpar-games" id="btnLimparGames" type="button">✕ Limpar filtros</button></div>
 <div class="complexidade-tabs" id="complexidadeTabs"></div><div class="complexidade-info">💡 <strong>Fácil</strong>: geralmente funciona com poucas alterações · <strong>Médio</strong>: pode precisar de ajustes e manutenção · <strong>Difícil</strong>: tende a exigir mais testes, melhorias e atualizações.</div><div class="tipo-tabs" id="tipoTabs"></div><div class="filtros" id="filtrosCategoria"></div><div class="admin-games" id="adminGames"><h3>🔐 Gerenciamento de Games</h3><p style="margin:0 0 10px;font-size:13px;color:#667085">Modo administrador: criar e excluir itens individualmente neste dispositivo.</p><div class="admin-actions"><button class="btn-admin-primary" id="btnNovoPrompt">➕ Criar novo prompt</button><button class="btn-admin-muted" id="btnExportarAdmin">📤 Exportar biblioteca</button></div><div id="gerenciarLista"></div></div>
 
 <div class="toolbar-extra">
@@ -154,6 +158,9 @@ const prompts=dadosBrutos.map((x,i)=>{
 const idiomaAtivo={};
 let categoriaAtual='todos';
 let complexidadeAtual='todos';
+let ordemGamesAtual='padrao';
+let soFavoritosGames=false;
+const GAMES_VERSION='2026.10.03';
 
 function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
@@ -287,20 +294,22 @@ function exportarTodos(){
 }
 function toggleSugerir(){const box=document.getElementById('sugerirBox');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
 function copiarSugestao(){const texto=document.getElementById('sugestaoTexto').value.trim();if(!texto){mostrarToast('Escreva sua ideia antes de copiar 🙂');return}navigator.clipboard.writeText('💡 Sugestão para o Delta Prompts (Games):\n\n'+texto).then(()=>mostrarToast('📋 Sugestão copiada! Envie pra gente 💌'))}
-function atualizarStats(){const favs=_loadFav().filter(f=>f.categoria==='Games').length;document.getElementById('statsBar').innerHTML='⭐ Você já favoritou <strong>'+favs+'</strong> modelo'+(favs===1?'':'s')+' · 🎮 <strong>'+prompts.length+'</strong> modelos disponíveis'}
+function atualizarStats(){const excl=_loadExcluidosGames();const total=prompts.filter(p=>!excl.includes(p.id)).length;const favs=_loadFav().filter(f=>f.categoria==='Games'&&!excl.includes(f.id)).length;const el=document.getElementById('statsBar');if(el)el.innerHTML='⭐ <strong>'+favs+'</strong> favorito'+(favs===1?'':'s')+' · 🎮 <strong>'+total+'</strong> modelos ativos';const mini=document.getElementById('gamesMiniStats');if(mini)mini.innerHTML='<span>🎮 '+total+' ativos</span><span>🆕 '+prompts.filter(p=>p.tipo==='criar'&&!excl.includes(p.id)).length+' para criar</span><span>🛠️ '+prompts.filter(p=>p.tipo==='melhorar'&&!excl.includes(p.id)).length+' para melhorar</span>'}
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 
 
 function montarComplexidade(){
  const cont=document.getElementById('complexidadeTabs');if(!cont)return;
+ const excl=_loadExcluidosGames(); const vis=prompts.filter(p=>!excl.includes(p.id));
  const tipos=[['todos','🎮 Todos'],['facil','🟢 Fácil'],['medio','🟡 Médio'],['dificil','🔴 Difícil']];
  const atual=complexidadeAtual;
- cont.innerHTML=tipos.map(function(t){const n=t[0]==='todos'?prompts.length:prompts.filter(function(p){return p.complexidade===t[0]}).length;return '<button class="'+(atual===t[0]?'ativo':'')+'" data-complexidade="'+t[0]+'">'+t[1]+' <span class="complexidade-count">'+n+'</span></button>'}).join('');
+ cont.innerHTML=tipos.map(function(t){const n=t[0]==='todos'?vis.length:vis.filter(function(p){return p.complexidade===t[0]}).length;return '<button class="'+(atual===t[0]?'ativo':'')+'" data-complexidade="'+t[0]+'">'+t[1]+' <span class="complexidade-count">'+n+'</span></button>'}).join('');
  cont.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){complexidadeAtual=b.dataset.complexidade;montarComplexidade();render()})});
 }
 
 function montarTipos(){
  const cont=document.getElementById('tipoTabs');if(!cont)return;
+ const excl=_loadExcluidosGames(); const vis=prompts.filter(p=>!excl.includes(p.id));
  const tipos=[['todos','🎮 Todos'],['criar','🆕 Criar Novo Jogo'],['melhorar','🛠️ Melhorar Jogo Existente'],['outros','📚 Outros']];
  const atual=window.tipoGamesAtual||'todos';
  cont.innerHTML=tipos.map(function(t){const n=t[0]==='todos'?prompts.length:prompts.filter(function(p){return p.tipo===t[0]}).length;return '<button class="'+(atual===t[0]?'ativo':'')+'" data-tipo="'+t[0]+'">'+t[1]+' <span class="tipo-count">'+n+'</span></button>'}).join('');
@@ -317,9 +326,9 @@ function carregarPersonalizados(){var arr=[];try{arr=JSON.parse(localStorage.get
 
 function montarFiltroCategoria(){
   const cont=document.getElementById('filtrosCategoria');
-  const categorias=[...new Set(prompts.map(p=>p.categoria))];
-  cont.innerHTML='<button class="'+(categoriaAtual==='todos'?'ativo':'')+'" data-categoria="todos">Todos <span class="count-badge">'+prompts.length+'</span></button>'+
-    categorias.map(c=>{const n=prompts.filter(p=>p.categoria===c).length;return `<button class="${categoriaAtual===c?'ativo':''}" data-categoria="${c}">${c} <span class="count-badge">${n}</span></button>`}).join('');
+  const excl=_loadExcluidosGames(); const vis=prompts.filter(p=>!excl.includes(p.id)); const categorias=[...new Set(vis.map(p=>p.categoria))];
+  cont.innerHTML='<button class="'+(categoriaAtual==='todos'?'ativo':'')+'" data-categoria="todos">Todos <span class="count-badge">'+vis.length+'</span></button>'+
+    categorias.map(c=>{const n=vis.filter(p=>p.categoria===c).length;return `<button class="${categoriaAtual===c?'ativo':''}" data-categoria="${c}">${c} <span class="count-badge">${n}</span></button>`}).join('');
   cont.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{categoriaAtual=b.dataset.categoria;montarFiltroCategoria();render()}));
 }
 
@@ -327,11 +336,15 @@ function render(){
   const termo=norm(document.getElementById('busca').value);
   const tipoAtual=window.tipoGamesAtual||'todos';
   const excluidos=_loadExcluidosGames();
-  const filtrados=prompts.filter(p=>{
+  let filtrados=prompts.filter(p=>{
     const texto=norm([p.titulo,p.quando,p.categoria,p.prompt].join(' '));
-    return !excluidos.includes(p.id) && (!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual)&&(tipoAtual==='todos'||p.tipo===tipoAtual)&&(complexidadeAtual==='todos'||p.complexidade===complexidadeAtual);
+    return !excluidos.includes(p.id) && (!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual)&&(tipoAtual==='todos'||p.tipo===tipoAtual)&&(complexidadeAtual==='todos'||p.complexidade===complexidadeAtual)&&(!soFavoritosGames||isFav(p.id));
   });
-  document.getElementById('contador').textContent=filtrados.length+' de '+prompts.length+' modelos';
+  if(ordemGamesAtual==='az')filtrados.sort((a,b)=>a.titulo.localeCompare(b.titulo,'pt-BR'));
+  if(ordemGamesAtual==='usados'){const usos=_loadUsos();filtrados.sort((a,b)=>(usos[b.id]||0)-(usos[a.id]||0));}
+  const totalAtivo=prompts.filter(p=>!excluidos.includes(p.id)).length;
+  document.getElementById('contador').textContent=filtrados.length+' de '+totalAtivo+' modelos';
+  const resumo=document.getElementById('resumoFiltrosGames');if(resumo)resumo.textContent=(soFavoritosGames?'⭐ Favoritos · ':'')+(tipoAtual==='todos'?'':tipoAtual==='criar'?'🆕 Criar · ':'🛠️ Melhorar · ')+(complexidadeAtual==='todos'?'':complexidadeAtual==='facil'?'🟢 Fácil · ':complexidadeAtual==='medio'?'🟡 Médio · ':'🔴 Difícil · ')+(categoriaAtual==='todos'?'Todas as categorias':categoriaAtual);
   const lista=document.getElementById('lista');
   lista.innerHTML=filtrados.length?filtrados.map(p=>`
     <section class="card" id="card-${p.id}">
@@ -370,6 +383,9 @@ document.getElementById('lista').addEventListener('click',e=>{
 });
 
 document.getElementById('busca').addEventListener('input',render);
+document.getElementById('ordenarGames').addEventListener('change',e=>{ordemGamesAtual=e.target.value;render()});
+document.getElementById('btnFavoritosGames').addEventListener('click',()=>{soFavoritosGames=!soFavoritosGames;const b=document.getElementById('btnFavoritosGames');b.classList.toggle('ativo',soFavoritosGames);b.textContent=soFavoritosGames?'❤️ Favoritos ativos':'🤍 Favoritos';b.setAttribute('aria-pressed',String(soFavoritosGames));render()});
+document.getElementById('btnLimparGames').addEventListener('click',()=>{categoriaAtual='todos';complexidadeAtual='todos';window.tipoGamesAtual='todos';soFavoritosGames=false;ordemGamesAtual='padrao';document.getElementById('busca').value='';document.getElementById('ordenarGames').value='padrao';const b=document.getElementById('btnFavoritosGames');b.classList.remove('ativo');b.textContent='🤍 Favoritos';b.setAttribute('aria-pressed','false');montarComplexidade();montarTipos();montarFiltroCategoria();render()});
 document.getElementById('btnExportar').addEventListener('click',exportarTodos);
 document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
 document.getElementById('btnAdminGames').addEventListener('click',abrirGerenciadorGames);
