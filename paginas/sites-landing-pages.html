@@ -608,7 +608,7 @@ function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();con
 // ===== POPULARIDADE =====
 function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaSitesUsos'))||{}}catch(e){return{}}}
 function _saveUsos(o){try{localStorage.setItem('deltaSitesUsos',JSON.stringify(o))}catch(e){}}
-function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);try{const hoje=new Date().toISOString().slice(0,10);const datas=JSON.parse(localStorage.getItem('deltaUsageDates')||'[]');if(!datas.includes(hoje)){datas.push(hoje);localStorage.setItem('deltaUsageDates',JSON.stringify(datas.slice(-365)));}}catch(e){}try{localStorage.setItem('deltaLastUse',Date.now())}catch(e){}const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
 
 // ===== FEEDBACK =====
 function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaSitesFeedback'))||{}}catch(e){return{}}}
