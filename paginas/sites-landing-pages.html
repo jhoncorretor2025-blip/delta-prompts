@@ -767,7 +767,7 @@ function criarCard(p){
     <div class="meta"><span class="tag">${faseLabel(p.fase)}</span><span class="tag">${p.categoria}</span><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}"><span aria-hidden="true">🔥</span> Usado ${usoCount}x</span></div>
     <h3>${p.titulo}</h3>
     <p class="quando"><span aria-hidden="true">💡</span> ${p.quando}</p>
-    ${p.placeholders.length?${p.placeholders.some(ph=>/LINK|SITE|URL/i.test(ph))?`<div class="site-picker"><span style="font-size:11.5px;color:#667085">🌐 Site:</span><button type="button" data-acao="abrirsites" data-id="${p.id}">Escolher salvo</button></div><div class="site-picker-list" id="sites-${p.id}"></div>`:""}<span style="font-size:11.5px;color:#667085">🌐 Site:</span><button type="button" data-acao="abrirsites" data-id="${p.id}">escolher salvo</button></div><div class="site-picker-list" id="sites-${p.id}"></div>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/LINK/i.test(ph)?(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    ${p.placeholders.length?`<div class="site-picker"><span style="font-size:11.5px;color:#667085">🌐 Site:</span><button type="button" data-acao="abrirsites" data-id="${p.id}">escolher salvo</button></div><div class="site-picker-list" id="sites-${p.id}"></div><button type="button" class="btn-toggle-campos" data-acao="togglecampos" data-id="${p.id}" aria-expanded="false">✏️ Preencher campos (${p.placeholders.length})</button><div class="campos-preenchimento" id="campos-${p.id}">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/LINK/i.test(ph)?(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
     <div class="prompt-text" id="prompt-${p.id}">${substituirPlaceholders(p.prompt,p)}</div>
     <button class="ver" type="button" data-acao="ver" data-id="${p.id}" aria-label="Ver prompt completo de ${p.titulo}">Ver prompt completo</button>
     <div class="acoes">
@@ -794,6 +794,8 @@ function criarCard(p){
   atualizarBtnFav(p.id,card.querySelector('.favoritar'));
   atualizarBtnAplicado(p.id,card.querySelector('.aplicado-btn'));
   atualizarFeedbackUI(p.id);
+  const temCampoSite=(p.placeholders||[]).some(ph=>/LINK|SITE|URL/i.test(ph));
+  if(!temCampoSite){const picker=card.querySelector('.site-picker');const pickerList=card.querySelector('.site-picker-list');if(picker)picker.remove();if(pickerList)pickerList.remove();}
   return card;
 }
 
