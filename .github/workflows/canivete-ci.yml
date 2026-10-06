@@ -32,7 +32,7 @@ jobs:
               s = p.read_text(encoding='utf-8')
               # HTML exportado dentro do JavaScript pode usar <\/script> para escapar
               # o fechamento interno sem encerrar o script principal da página.
-              script_open = len(re.findall(r'<script\\b[^>]*>', s, flags=re.I))
+              script_open = len(re.findall(r'<script\b[^>]*>', s, flags=re.I))
               script_close = len(re.findall(r'</script>', s, flags=re.I))
               script_escaped_close = len(re.findall(r'<\\/script>', s, flags=re.I))
               assert script_open == script_close + script_escaped_close, f'{p}: tags script desbalanceadas'
