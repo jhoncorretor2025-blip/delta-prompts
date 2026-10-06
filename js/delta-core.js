@@ -1,10 +1,10 @@
-/* Delta Prompts — núcleo compartilhado V1.23
+/* Delta Prompts — núcleo compartilhado V1.24
    Responsabilidade: armazenamento, projetos, atividades, resultados e XP.
    Compatível com dados antigos da V1.16.
 */
 (function(){
   'use strict';
-  const KEY={projects:'deltaProjects',xp:'deltaXP',usage:'deltaUsageDates',activities:'deltaActivities',results:'deltaResults',checkpoints:'deltaProjectCheckpoints'};
+  const KEY={projects:'deltaProjects',xp:'deltaXP',usage:'deltaUsageDates',activities:'deltaActivities',results:'deltaResults',checkpoints:'deltaProjectCheckpoints',audits:'deltaProjectAudits'};
   function read(k,fallback){try{const v=localStorage.getItem(k);return v===null?fallback:JSON.parse(v)}catch(e){return fallback}}
   function write(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
   function today(){return new Date().toISOString().slice(0,10)}
@@ -36,6 +36,36 @@
   function projectCheckpoints(projectId){const all=read(KEY.checkpoints,[]);return all.filter(x=>x.projectId===projectId).sort((a,b)=>(b.ts||0)-(a.ts||0))}
   function saveCheckpoint(data){const item=Object.assign({id:uid('chk'),date:today(),ts:Date.now(),status:'registrado'},data);const all=read(KEY.checkpoints,[]);all.unshift(item);write(KEY.checkpoints,all.slice(0,300));if(item.projectId){updateProject(item.projectId,{nextStep:item.nextStep||'Revisar próxima etapa',lastCheckpointId:item.id})}recordActivity({type:'checkpoint',title:item.title||'Checkpoint do projeto',projectId:item.projectId||null});return item}
   function projectContinuity(projectId){const proj=projects().find(x=>x.id===projectId);return {project:proj||null,checkpoints:projectCheckpoints(projectId),rule:'Preservar → Mapear → Alterar → Testar → Atualizar estado'}}
+  function clampScore(v){v=Number(v);return Number.isFinite(v)?Math.max(0,Math.min(100,Math.round(v))):null}
+  function projectAudits(projectId){return read(KEY.audits,[]).filter(x=>!projectId||x.projectId===projectId).sort((a,b)=>(b.ts||0)-(a.ts||0))}
+  function saveAudit(data){
+    if(!data||!data.projectId)return null;
+    const s=data.scores||{},scores={
+      functionality:clampScore(s.functionality),
+      ux:clampScore(s.ux),
+      mobile:clampScore(s.mobile),
+      performance:clampScore(s.performance),
+      accessibility:clampScore(s.accessibility),
+      security:clampScore(s.security)
+    };
+    const vals=Object.values(scores).filter(v=>v!==null);
+    if(!vals.length)return null;
+    const total=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+    const item=Object.assign({id:uid('audit'),date:today(),ts:Date.now(),projectId:data.projectId,scores,total,findings:String(data.findings||'').trim(),notes:String(data.notes||'').trim(),source:String(data.source||'Auditoria registrada no Delta').trim()},data,{scores,total});
+    const all=read(KEY.audits,[]);all.unshift(item);write(KEY.audits,all.slice(0,100));
+    updateProject(item.projectId,{nextStep:item.nextStep||'Corrigir os achados da auditoria',lastAuditId:item.id});
+    recordActivity({type:'audit',title:'Auditoria registrada',projectId:item.projectId,status:'auditoria',score:total});
+    return item
+  }
+  function projectHealth(projectId){
+    const audit=projectAudits(projectId)[0];
+    if(!audit)return {score:null,audited:false,audit:null,resolutionRate:null,components:{}};
+    const rs=read(KEY.results,[]).filter(x=>x.projectId===projectId);
+    const done=rs.filter(x=>x.status==='funcionou').length;
+    const resolution=rs.length?Math.round(done/rs.length*100):null;
+    const score=resolution===null?audit.total:Math.round(audit.total*.7+resolution*.3);
+    return {score,audited:true,audit, resolutionRate:resolution, components:{auditoria:audit.total,resolucao:resolution===null?null:resolution}}
+  }
   function xp(amount,reason){
     const value=Math.max(0,Number(read(KEY.xp,0))||0)+Number(amount||0);write(KEY.xp,value);
     markUsage();recordActivity({type:'xp',title:reason||'Uso do Delta',xp:Number(amount||0)});
@@ -59,7 +89,7 @@
         updateProject(proj.id,{nextStep:next});
       }
     }
-    const item=Object.assign({id:uid('res'),date:today(),ts:Date.now(),status:'testar'},data);
+    const item=Object.assign({id:uid('res'),date:today(),ts:Date.now(),status:'testar'},data,{category:data.category||data.categoria||''});
     list.unshift(item);write(KEY.results,list.slice(0,200));
     markUsage();recordActivity({type:'result',title:data.title||'Resultado registrado',status:item.status,projectId:data.projectId||null});
     return item
@@ -68,5 +98,5 @@
     const activities=read(KEY.activities,[]),results=read(KEY.results,[]);
     const completed=results.filter(x=>x.status==='funcionou').length,partial=results.filter(x=>x.status==='parcial').length,failed=results.filter(x=>x.status==='falhou').length;return {xp:Number(read(KEY.xp,0))||0,projects:projects().length,activities:activities.length,results:results.length,completed,partial,failed,resolutionRate:results.length?Math.round(completed/results.length*100):0}
   }
-  window.Delta={KEY,read,write,projects,saveProjects,addProject,updateProject,removeProject,xp,markUsage,recordActivity,recordResult,stats,projectCheckpoints,saveCheckpoint,projectContinuity,today};
+  window.Delta={KEY,read,write,projects,saveProjects,addProject,updateProject,removeProject,xp,markUsage,recordActivity,recordResult,stats,projectCheckpoints,saveCheckpoint,projectContinuity,projectAudits,saveAudit,projectHealth,today};
 })();
