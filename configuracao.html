@@ -16,7 +16,7 @@
 .pasta-config a[aria-current="page"]{color:#5b5ce2}
 [data-theme="dark"] .pasta-config{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .pasta-config a{color:#e2e8f0}
-</style></head><body id="configuracao-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260928c"></script><main>
+.sites-salvos{display:grid;gap:10px}.site-salvo{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}.site-salvo-main{min-width:0;flex:1}.site-salvo-main strong,.site-salvo-main small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-salvo-main small{color:#667085;font-size:12px;margin-top:2px}.site-salvo button{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:800}.site-salvo-form{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;margin-top:12px}.site-salvo-form input{padding:11px 12px;border:1px solid #e5e7eb;border-radius:10px;font:inherit}@media(max-width:650px){.site-salvo-form{grid-template-columns:1fr}}</style></head><body id="configuracao-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260928c"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Configuração</p>
 <h1>⚙️ Configuração</h1>
@@ -48,7 +48,7 @@
   </div>
 </section>
 
-<section class="card">
+<section class="card" id="sitesSalvosConfig"><h3>🌐 Meus sites salvos</h3><p style="margin:0 0 12px;color:#667085;font-size:14px">Salve os sites que você usa nos seus projetos. Nos prompts que pedem <strong>[LINK]</strong>, você poderá escolher um deles sem copiar e colar novamente.</p><div class="site-salvo-form"><input id="siteSalvoNome" placeholder="Nome: Delta Prompts"><input id="siteSalvoUrl" placeholder="https://meusite.com.br" inputmode="url"><button type="button" id="btnSalvarSiteSalvo" style="border:0;background:#5b5ce2;color:#fff;border-radius:10px;padding:11px 15px;font-weight:800;cursor:pointer">➕ Salvar site</button></div><div id="sitesSalvosLista" class="sites-salvos" style="margin-top:12px"></div><p id="sitesSalvosLogin" style="display:none;color:#667085;font-size:12.5px;margin:10px 0 0">🔐 Entre na sua conta para manter seus sites sincronizados entre aparelhos.</p></section><section class="card">
   <h3>🏠 Preenchimento Automático</h3>
   <p style="margin:0 0 14px;color:#667085;font-size:14px">Preencha uma vez, e qualquer prompt do site que peça isso já vem preenchido sozinho.</p>
   <div style="display:flex;flex-direction:column;gap:10px" id="camposDadosPadrao"></div>
@@ -116,6 +116,19 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 
 function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+
+// ===== SITES SALVOS =====
+(function(){
+  var lista=document.getElementById('sitesSalvosLista'),nome=document.getElementById('siteSalvoNome'),url=document.getElementById('siteSalvoUrl'),btn=document.getElementById('btnSalvarSiteSalvo'),aviso=document.getElementById('sitesSalvosLogin');
+  if(!lista)return;
+  function ler(){try{var x=JSON.parse(localStorage.getItem('deltaSitesSalvos')||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
+  function esc(v){return String(v||'').replace(/[&<>"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})}
+  function render(){var x=ler();lista.innerHTML=x.length?x.map(function(s,i){return '<div class="site-salvo"><div class="site-salvo-main"><strong>🌐 '+esc(s.name||s.url)+'</strong><small>'+esc(s.url)+'</small></div><button type="button" data-remover-site="'+i+'">🗑️</button></div>'}).join(''):'<div style="color:#667085;font-size:13px;padding:10px 0">Nenhum site salvo ainda.</div>';if(aviso)aviso.style.display=window.deltaUser?'none':'block'}
+  function salvar(x){try{localStorage.setItem('deltaSitesSalvos',JSON.stringify(x))}catch(e){}window.dispatchEvent(new CustomEvent('delta:sites-updated'));render()}
+  btn.onclick=function(){var n=nome.value.trim(),u=url.value.trim();if(!u){url.focus();mostrarToast('⚠️ Informe o link do site.');return}if(!n)n=u;if(!/^https?:\/\//i.test(u))u='https://'+u;var x=ler().filter(function(s){return s.url!==u});x.unshift({name:n,url:u,ts:Date.now()});salvar(x.slice(0,50));nome.value='';url.value='';mostrarToast('🌐 Site salvo!')};
+  lista.addEventListener('click',function(e){var b=e.target.closest('[data-remover-site]');if(!b)return;var x=ler();x.splice(Number(b.dataset.removerSite),1);salvar(x);mostrarToast('🗑️ Site removido.')});
+  window.addEventListener('delta:sites-updated',render);window.addEventListener('delta-auth-changed',render);render();
+})();
 
 // ===== PERSONALIZAR ORDEM DO MENU =====
 (function(){
