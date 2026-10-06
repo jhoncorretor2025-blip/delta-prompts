@@ -418,11 +418,11 @@ function copiarSugestaoHome(){
 
 // ===== RENDERIZAÇÃO DE CARDS/ITENS =====
 function card(x){
-  return `<a class="card" href="${x.l}"><div class="icon" aria-hidden="true">${x.i}</div><h3>${x.n}${x.new?' <span class="new">NOVO</span>':''}</h3><p>${x.d}</p><button type="button" class="share-btn" onclick="compartilharCategoria('${x.n.replace(/'/g,"\\'")}','${x.l}',event)" title="Compartilhar ${x.n}" aria-label="Compartilhar ${x.n}">🔗</button></a>`;
+  return `<article class="card card-interactive"><a class="card-main-link" href="${x.l}"><div class="icon" aria-hidden="true">${x.i}</div><h3>${x.n}${x.new?' <span class="new">NOVO</span>':''}</h3><p>${x.d}</p></a><button type="button" class="share-btn" onclick="compartilharCategoria('${x.n.replace(/'/g,"\\'")}','${x.l}',event)" title="Compartilhar ${x.n}" aria-label="Compartilhar ${x.n}">🔗</button></article>`;
 }
 function item(x){
   const fixado=_loadFixadas().includes(x.n);
-  return `<a class="item" href="${x.l}"><span class="emoji" aria-hidden="true">${x.i}</span><span><strong>${x.n}</strong><small>${x.d}</small></span><span class="item-actions"><button type="button" class="pin-btn" onclick="event.preventDefault();event.stopPropagation();alternarFixado('${x.n.replace(/'/g,"\\'")}')" title="${fixado?'Remover dos fixados':'Fixar categoria'}" aria-label="${fixado?'Remover dos fixados':'Fixar categoria'} ${x.n}">${fixado?'📌':'📍'}</button><button type="button" class="share-btn" onclick="event.preventDefault();event.stopPropagation();compartilharCategoria('${x.n.replace(/'/g,"\\'")}','${x.l}',event)" title="Compartilhar ${x.n}" aria-label="Compartilhar ${x.n}">🔗</button><span class="arrow" aria-hidden="true">→</span></span></a>`;
+  return `<article class="item item-interactive"><a class="item-main-link" href="${x.l}"><span class="emoji" aria-hidden="true">${x.i}</span><span><strong>${x.n}</strong><small>${x.d}</small></span><span class="arrow" aria-hidden="true">→</span></a><span class="item-actions"><button type="button" class="pin-btn" onclick="alternarFixado('${x.n.replace(/'/g,"\\'")}')" title="${fixado?'Remover dos fixados':'Fixar categoria'}" aria-label="${fixado?'Remover dos fixados':'Fixar categoria'} ${x.n}">${fixado?'📌':'📍'}</button><button type="button" class="share-btn" onclick="compartilharCategoria('${x.n.replace(/'/g,"\\'")}','${x.l}',event)" title="Compartilhar ${x.n}" aria-label="Compartilhar ${x.n}">🔗</button></span></article>`;
 }
 function render(){
   document.getElementById('popular-grid').innerHTML=populares.map(n=>card(itens.find(x=>x.n===n))).join('');
