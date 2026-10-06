@@ -873,7 +873,7 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
 
 // ===== JORNADA V1.19: BÁSICA / AVANÇADA / EXTRA =====
 (function(){
- const J={basica:['site-13','site-14','site-16','site-15','site-18','site-17','site-19','site-20','site-21','site-22','site-23','site-0','site-1','site-6','site-8','site-9','site-24','site-25','site-27','site-28','site-29','site-26','site-30'],avancada:['site-2','site-3','site-4','site-5','site-7','site-10','site-11','site-12','site-31','site-32','site-33','site-34','site-35','site-36','site-37','site-38','site-39','site-40','site-41','site-42','site-43','site-44','site-45','site-46','site-47','site-48','site-50','site-51','site-52','site-53','site-54','site-55','site-56','site-57','site-58'],extra:['site-50']};
+ const J={basica:['site-13','site-14','site-16','site-15','site-18','site-17','site-19','site-20','site-21','site-22','site-23','site-0','site-1','site-6','site-8','site-9','site-24','site-25','site-27','site-28','site-29','site-26','site-30'],avancada:['site-2','site-3','site-4','site-5','site-7','site-10','site-11','site-12','site-31','site-32','site-33','site-34','site-35','site-36','site-37','site-38','site-39','site-40','site-41','site-42','site-43','site-44','site-45','site-46','site-47','site-48','site-49','site-51','site-52','site-53','site-54','site-55','site-56','site-57','site-58'],extra:['site-50']};
  let passos=[],atual=0,modo='';
  const modal=document.getElementById('modalGuiado'),box=document.getElementById('modalGuiadoConteudo');
  function abrir(tipo){modo=tipo;passos=J[tipo].map(id=>prompts.find(p=>p.id===id)).filter(Boolean);atual=0;if(!passos.length){mostrarToast('⚠️ Jornada sem prompts.');return}modal.style.display='flex';window.modoGuiadoAtivo=true;renderPasso()}
