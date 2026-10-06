@@ -94,10 +94,12 @@
   .prompt-card{padding:14px}
   .acoes button{flex:1 1 45%}
 }
-.evo-acoes button:not(.principal){opacity:.82}.evo-acoes button:not(.principal):hover{opacity:1}.toolbar-extra{gap:8px}.toolbar-extra button{white-space:nowrap}@media(max-width:700px){#jornadaNiveis>div{grid-template-columns:1fr!important}}\n</style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/js/delta-core.js"></script><script src="/delta-prompts/js/sites/storage.js"></script><script src="/delta-prompts/menu-loader.js?v=20261005-v20"></script><main>
+.evo-acoes button:not(.principal){opacity:.82}.evo-acoes button:not(.principal):hover{opacity:1}.toolbar-extra{gap:8px}.toolbar-extra button{white-space:nowrap}@media(max-width:700px){#jornadaNiveis>div{grid-template-columns:1fr!important}}\n
+.site-picker{margin:2px 0 7px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.site-picker button{border:0;background:none;color:#667085;font-size:11.5px;padding:1px 0;text-decoration:underline;cursor:pointer}.site-picker button:hover{color:#5b5ce2}.site-picker-list{display:none;gap:6px;flex-wrap:wrap;margin:0 0 8px}.site-picker-list.open{display:flex}.site-chip{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 10px;color:#344054;font-size:12px;font-weight:700;cursor:pointer}.site-chip:hover{border-color:#5b5ce2;color:#4f46e5}.site-picker-login{font-size:11px;color:#98a2b3}
+</style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/js/delta-core.js"></script><script src="/delta-prompts/js/sites/storage.js"></script><script src="/delta-prompts/menu-loader.js?v=20261005-v20"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Sites & Landing Pages</p>
-<header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.19</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
+<header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.21</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Qual caminho escolher? <span>⌄</span></button><div class="info-body"><b>🟢 Criando do zero:</b> para quem ainda vai começar. <b>🟡 Site em andamento:</b> para quem já tem a página inicial ou parte do projeto e travou. <b>🔴 Site pronto:</b> para quem quer melhorar UX, visual, navegação, conversão e estrutura.</div></section>
 
@@ -765,7 +767,7 @@ function criarCard(p){
     <div class="meta"><span class="tag">${faseLabel(p.fase)}</span><span class="tag">${p.categoria}</span><span class="uso-badge" id="uso-${p.id}" style="${usoCount>0?'':'display:none'}"><span aria-hidden="true">🔥</span> Usado ${usoCount}x</span></div>
     <h3>${p.titulo}</h3>
     <p class="quando"><span aria-hidden="true">💡</span> ${p.quando}</p>
-    ${p.placeholders.length?`<button type="button" class="btn-toggle-campos" data-acao="togglecampos" data-id="${p.id}" aria-expanded="false">✏️ Preencher campos (${p.placeholders.length})</button><div class="campos-preenchimento" id="campos-${p.id}">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/LINK/i.test(ph)?(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
+    ${p.placeholders.length?`<div class="site-picker"><span style="font-size:11.5px;color:#667085">🌐 Site:</span><button type="button" data-acao="abrirsites" data-id="${p.id}">escolher salvo</button></div><div class="site-picker-list" id="sites-${p.id}"></div><button type="button" class="btn-toggle-campos" data-acao="togglecampos" data-id="${p.id}" aria-expanded="false">✏️ Preencher campos (${p.placeholders.length})</button><div class="campos-preenchimento" id="campos-${p.id}">${p.placeholders.map((ph,idx)=>`<label class="campo-label">✏️ ${ph}<input type="text" id="campo-${p.id}-${idx}" value="${/LINK/i.test(ph)?(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})().replace(/"/g,'&quot;'):''}" placeholder="Preencha antes de copiar (opcional)"></label>`).join('')}</div>`:''}
     <div class="prompt-text" id="prompt-${p.id}">${substituirPlaceholders(p.prompt,p)}</div>
     <button class="ver" type="button" data-acao="ver" data-id="${p.id}" aria-label="Ver prompt completo de ${p.titulo}">Ver prompt completo</button>
     <div class="acoes">
@@ -878,6 +880,12 @@ document.getElementById('selectExportarProjeto').addEventListener('change',e=>{i
 document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
 document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
+
+// ===== SELETOR DE SITES SALVOS V1.21 =====
+function sitesSalvosLocais(){try{var x=JSON.parse(localStorage.getItem('deltaSitesSalvos')||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
+function abrirSitesSalvos(id){var box=document.getElementById('sites-'+id);if(!box)return;var lista=sitesSalvosLocais();if(!lista.length){box.classList.add('open');box.innerHTML='<span style="font-size:12px;color:#667085">'+(window.deltaUser?'Nenhum site salvo. Cadastre em ⚙️ Configuração.':'Entre na conta e salve seus sites em ⚙️ Configuração.')+'</span>';return}box.innerHTML=lista.map(function(s,i){return '<button type="button" class="site-chip" data-site-index="'+i+'" data-site-id="'+id+'">🌐 '+String(s.name||s.url).replace(/[&<>"]/g,'')+'</button>'}).join('');box.classList.add('open')}
+function escolherSiteSalvo(id,index){var lista=sitesSalvosLocais(),s=lista[Number(index)];if(!s)return;var card=document.getElementById('card-'+id);if(!card)return;card.querySelectorAll('.campo-label input').forEach(function(inp){var label=inp.closest('.campo-label');if(label&&/LINK|SITE|URL/i.test(label.textContent)){inp.value=s.url;inp.dispatchEvent(new Event('input',{bubbles:true}))}});try{localStorage.setItem('deltaSiteLinkPadrao',s.url)}catch(e){}var box=document.getElementById('sites-'+id);if(box)box.classList.remove('open');mostrarToast('🌐 '+(s.name||'Site')+' selecionado!')}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-acao="abrirsites"]');if(b){e.preventDefault();e.stopPropagation();abrirSitesSalvos(b.dataset.id);return}var x=e.target.closest('[data-site-index]');if(x){e.preventDefault();e.stopPropagation();escolherSiteSalvo(x.dataset.siteId,x.dataset.siteIndex)}},true);
 
 // ===== JORNADA V1.19: BÁSICA / AVANÇADA / EXTRA =====
 (function(){
