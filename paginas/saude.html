@@ -197,6 +197,15 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
   </div>
 </section>
 
+<section class="card" id="exclusoesPadraoSaudeCard">
+  <h3>🚫 O que você NÃO quer que a IA aprofunde? (opcional)</h3>
+  <p style="margin:0 0 12px;color:#667085;font-size:14px">Defina assuntos que você prefere não aprofundar. Esta preferência <strong>nunca substitui nem oculta alertas de segurança, sinais de urgência, informações relevantes de exames ou a recomendação de procurar um profissional.</strong></p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <input type="text" id="exclusoesPadraoSaudeInput" placeholder="Ex: não aprofundar em suplementos" style="flex:1;min-width:220px;padding:12px 14px;border-radius:10px;border:1px solid #e6e8f0;font:inherit">
+    <button type="button" id="exclusoesPadraoSaudeSalvar" style="border:0;background:#16a34a;color:#fff;font-weight:800;border-radius:10px;padding:12px 20px;cursor:pointer">💾 Salvar</button>
+  </div>
+</section>
+
 <section class="card" aria-label="Aviso importante sobre saúde">
   <h3>⚠️ Informação com segurança</h3>
   <p>Estes prompts ajudam a organizar informações e perguntas para profissionais. Eles não servem para diagnosticar, prescrever medicamentos, interromper tratamentos ou substituir atendimento de saúde.</p>
@@ -285,6 +294,7 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
 
 <div class="toolbar-extra">
   <button id="btnExportar">📥 Exportar todos</button>
+  <select id="selectExportarProjetoSaude" style="border:1px solid #e6e8f0;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer;display:none"></select>
   <button id="btnSugerir">💡 Sugerir um modelo</button>
 </div>
 
@@ -296,6 +306,13 @@ Prompts estratégicos para organizar saúde física, mental e hábitos com clare
   </div>
 </div>
 
+<button type="button" id="btnModoGuiadoSaude" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed #16a34a;background:#f7fdf9;color:#16a34a;font-weight:800;font-size:15px;padding:16px;border-radius:14px;cursor:pointer;margin:16px 0">🎯 Modo Guiado: Organizar minha jornada de saúde (passo a passo)</button>
+
+<div id="modalGuiadoSaude" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:3000;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:20px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:26px;position:relative" id="modalGuiadoSaudeConteudo"></div>
+</div>
+
+<datalist id="listaProjetosSaudeGlobal"></datalist>
 <div id="lista-prompts"></div>
 
 </main>
@@ -770,6 +787,26 @@ function atualizarFeedbackUI(id){
   if(g&&g.obterFeedbackGlobal){g.obterFeedbackGlobal(id).then(r=>{if(up)up.textContent='👍 '+(r.up||0);if(down)down.textContent='👎 '+(r.down||0)})}
 }
 
+// ===== RECURSOS PESSOAIS — PARIDADE COM A PÁGINA ESTUDO =====
+function _loadSaudeAplicados(){try{return JSON.parse(localStorage.getItem('deltaSaudeAplicados'))||[]}catch(e){return[]}}
+function _saveSaudeAplicados(l){try{localStorage.setItem('deltaSaudeAplicados',JSON.stringify(l))}catch(e){}}
+function estaAplicadoSaude(id){return _loadSaudeAplicados().includes(id)}
+function toggleAplicadoSaude(id){let l=_loadSaudeAplicados();const i=l.indexOf(id);if(i===-1){l.push(id);mostrarToast('✅ Marcado como já usado!')}else{l.splice(i,1);mostrarToast('Desmarcado')} _saveSaudeAplicados(l);atualizarBtnAplicadoSaude(id);atualizarStats()}
+function atualizarBtnAplicadoSaude(id){const b=document.getElementById('aplicado-'+id);if(!b)return;const ap=estaAplicadoSaude(id);b.textContent=ap?'✅ Já Usei':'⬜ Marcar como Já Usei';b.classList.toggle('aplicado',ap)}
+function _loadProjetosSaude(){try{return JSON.parse(localStorage.getItem('deltaSaudeProjetos'))||{}}catch(e){return{}}}
+function _saveProjetosSaude(o){try{localStorage.setItem('deltaSaudeProjetos',JSON.stringify(o))}catch(e){}}
+function projetoDoPromptSaude(id){return _loadProjetosSaude()[id]||''}
+function todosProjetosSaude(){return[...new Set(Object.values(_loadProjetosSaude()).filter(Boolean))]}
+function moverParaProjetoSaude(id,nome){const p=_loadProjetosSaude();nome=(nome||'').trim();if(nome)p[id]=nome;else delete p[id];_saveProjetosSaude(p);atualizarDatalistProjetosSaude();atualizarSelectExportarProjetoSaude();atualizarFiltros()}
+function atualizarDatalistProjetosSaude(){const dl=document.getElementById('listaProjetosSaudeGlobal');if(!dl)return;dl.innerHTML=todosProjetosSaude().map(p=>'<option value="'+String(p).replace(/"/g,'&quot;')+'"></option>').join('')}
+function exportarPorProjetoSaude(nome){const ids=Object.entries(_loadProjetosSaude()).filter(([id,proj])=>proj===nome).map(([id])=>id);const itens=promptsSaude.filter(p=>ids.includes(p.id));if(!itens.length){mostrarToast('Esse tópico está vazio');return}const conteudo='🗂️ TÓPICO DE SAÚDE: '+nome.toUpperCase()+' — DELTA PROMPTS\n\n'+itens.map(p=>p.titulo+'\nCategoria: '+p.categoria+' | Nível: '+(p.nivel==='avancado'?'🔴 Avançado':p.nivel==='intermediario'?'🟡 Intermediário':'🟢 Básico')+'\n\n'+p.prompt).join('\n\n'+'─'.repeat(40)+'\n\n');const blob=new Blob([conteudo],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='delta-prompts-saude-'+nome.toLowerCase().replace(/\s+/g,'-')+'.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);mostrarToast('📥 Tópico "'+nome+'" exportado!')}
+function atualizarSelectExportarProjetoSaude(){const sel=document.getElementById('selectExportarProjetoSaude');if(!sel)return;const projetos=todosProjetosSaude();if(!projetos.length){sel.style.display='none';return}sel.style.display='inline-block';sel.innerHTML='<option value="">📥 Exportar um tópico...</option>'+projetos.map(p=>'<option value="'+String(p).replace(/"/g,'&quot;')+'">🗂️ '+String(p).replace(/</g,'&lt;')+'</option>').join('')}
+function _loadPreferenciaSaude(){try{return JSON.parse(localStorage.getItem('deltaSaudePreferenciaIA'))||{}}catch(e){return{}}}
+function _savePreferenciaSaude(o){try{localStorage.setItem('deltaSaudePreferenciaIA',JSON.stringify(o))}catch(e){}}
+function darPreferenciaIASaude(id,ia){const pref=_loadPreferenciaSaude();const atual=pref[id];const g=window.deltaAuth;if(atual===ia){delete pref[id];if(g&&g.registrarPreferenciaIA)g.registrarPreferenciaIA(id,ia,-1)}else{if(atual&&g&&g.registrarPreferenciaIA)g.registrarPreferenciaIA(id,atual,-1);pref[id]=ia;if(g&&g.registrarPreferenciaIA)g.registrarPreferenciaIA(id,ia,1)}_savePreferenciaSaude(pref);atualizarPreferenciaSaudeUI(id);mostrarToast(atual===ia?'Marcação removida':'✅ Valeu por avaliar!')}
+function atualizarPreferenciaSaudeUI(id){const p=_loadPreferenciaSaude()[id];['chatgpt','gemini','empate'].forEach(ia=>{const b=document.getElementById('pref'+ia+'-'+id);if(b)b.classList.toggle('marcado',p===ia)})}
+function toggleMaisAcoesSaude(id){const menu=document.getElementById('maisacoes-'+id);if(!menu)return;const aberto=menu.classList.contains('show');document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show'));if(!aberto)menu.classList.add('show')}
+document.addEventListener('click',e=>{if(e.target.closest('.mais-acoes-wrap'))return;document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show')});
 // ===== PAINEL MAIS FILTROS =====
 function contarFiltrosAtivosSaude(){let n=0;if(estadoFiltroNivel!=='todos')n++;if(estadoFiltroCategoria!=='todas')n++;return n}
 function atualizarBadgeFiltrosSaude(){
@@ -811,8 +848,19 @@ function textoFinal(id){
   (p.placeholders||[]).forEach((ph,idx)=>{
     const el=document.getElementById('campo-'+id+'-'+idx);
     const val=el?el.value.trim():'';
+    if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\function textoFinal(id){
+  const p=getItem(id);if(!p)return'';
+  let t=p.prompt;
+  (p.placeholders||[]).forEach((ph,idx)=>{
+    const el=document.getElementById('campo-'+id+'-'+idx);
+    const val=el?el.value.trim():'';
     if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}
   });
+  return t;
+}')+'\\]','g');t=t.replace(re,val)}
+  });
+  let foco='';try{foco=localStorage.getItem('deltaSaudeExclusoesPadrao')||''}catch(e){}
+  if(foco.trim())t+='\\n\\nPreferência de foco do usuário: não aprofunde estes assuntos, salvo quando forem necessários para segurança, sinais de urgência, interpretação fiel de exames/laudos, interações relevantes, contraindicações ou orientação para procurar atendimento: '+foco.trim()+'.';
   return t;
 }
 
@@ -883,6 +931,7 @@ function criarCard(p){
   const usos=_loadUsos();
   const usoCount=usos[p.id]||0;
   const relacionados=promptsSaude.filter(d=>d.categoria===p.categoria&&d.id!==p.id).slice(0,3);
+  const projetoAtual=projetoDoPromptSaude(p.id);
 
   const card=document.createElement('div');
   card.className='card';
@@ -906,6 +955,19 @@ function criarCard(p){
           <button onclick="chatPorId('${p.id}')">💬 ChatGPT</button>
           <button onclick="geminiPorId('${p.id}')">🔷 Gemini</button>
           <button class="compartilhar" onclick="compartilhar('${p.id}')">🔗 Compartilhar</button>
+          <div class="mais-acoes-wrap">
+            <button type="button" class="btn-mais-acoes" onclick="toggleMaisAcoesSaude('${p.id}')" aria-haspopup="true" aria-label="Mais ações de ${p.titulo}">⋯</button>
+            <div class="mais-acoes-menu" id="maisacoes-${p.id}">
+              <button class="aplicado-btn" id="aplicado-${p.id}" onclick="toggleAplicadoSaude('${p.id}')">⬜ Marcar como Já Usei</button>
+              <button id="prefchat-${p.id}" onclick="darPreferenciaIASaude('${p.id}','chatgpt')">🤖 ChatGPT respondeu melhor</button>
+              <button id="prefgemini-${p.id}" onclick="darPreferenciaIASaude('${p.id}','gemini')">✨ Gemini respondeu melhor</button>
+              <button id="prefempate-${p.id}" onclick="darPreferenciaIASaude('${p.id}','empate')">🤝 Empate</button>
+            </div>
+          </div>
+      </div>
+      <div class="projeto-row">
+        <input type="text" class="select-projeto" list="listaProjetosSaudeGlobal" value="${String(projetoAtual).replace(/"/g,'&quot;')}" placeholder="🗂️ Sem tópico (digite pra criar)" onchange="moverParaProjetoSaude('${p.id}',this.value)" aria-label="Tópico de saúde de ${p.titulo}">
+        ${projetoAtual?`<button type="button" class="btn-novo-projeto" onclick="moverParaProjetoSaude('${p.id}','')">🗑️ Tirar do tópico</button>`:''}
       </div>
       <div class="feedback-row"><span style="font-size:12px;color:#8a92a6">Esse modelo te ajudou?</span><button id="fbup-${p.id}" onclick="darFeedback('${p.id}','up')">👍 0</button><button id="fbdown-${p.id}" onclick="darFeedback('${p.id}','down')">👎 0</button></div>
       ${relacionados.length ? `<div class="relacionadas"><strong>🔗 Modelos relacionados</strong>${relacionados.map(r=>`<button class="chip-relacionada" onclick="irPara('${r.id}')">${r.titulo}</button>`).join('')}</div>` : ''}
@@ -913,6 +975,8 @@ function criarCard(p){
 
   atualizarBtnFav(p.id, card.querySelector('.favoritar'));
   atualizarFeedbackUI(p.id);
+  atualizarBtnAplicadoSaude(p.id);
+  atualizarPreferenciaSaudeUI(p.id);
   return card;
 }
 
@@ -989,6 +1053,12 @@ document.getElementById('btnSugerir').addEventListener('click', toggleSugerir);
 document.getElementById('btnCopiarSugestao').addEventListener('click', copiarSugestao);
 document.getElementById('btnMaisFiltros').addEventListener('click', toggleMaisFiltrosSaude);
 document.getElementById('btnLimparFiltros').addEventListener('click', limparFiltrosSaude);
+document.getElementById('selectExportarProjetoSaude').addEventListener('change',e=>{if(e.target.value){exportarPorProjetoSaude(e.target.value);e.target.value=''}});
+document.getElementById('exclusoesPadraoSaudeSalvar').addEventListener('click',()=>{
+  const v=document.getElementById('exclusoesPadraoSaudeInput').value.trim();
+  try{localStorage.setItem('deltaSaudeExclusoesPadrao',v)}catch(e){}
+  mostrarToast(v?'🚫 Preferência salva; alertas de segurança continuam protegidos.':'Preferência removida.');
+});
 document.getElementById('themeToggle').addEventListener('click', () => {
   const atual = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   aplicarTema(atual);
@@ -1012,6 +1082,30 @@ function mostrarTrilhaSaude(perfil){
 }
 document.querySelectorAll('.perfil-card').forEach(b=>b.addEventListener('click',()=>mostrarTrilhaSaude(b.dataset.perfil)));
 
+// ===== MODO GUIADO DE SAÚDE =====
+(function(){
+  const modal=document.getElementById('modalGuiadoSaude'),conteudo=document.getElementById('modalGuiadoSaudeConteudo'),btn=document.getElementById('btnModoGuiadoSaude');
+  if(!modal||!conteudo||!btn)return;let passos=[],atual=0;
+  function renderPasso(){
+    const p=passos[atual],total=passos.length;
+    conteudo.innerHTML='<button type="button" id="fecharGuiadoSaude" style="position:absolute;top:16px;right:16px;border:0;background:#f1f5f9;border-radius:999px;width:32px;height:32px;cursor:pointer">✕</button>'+
+      '<div style="font-size:12px;font-weight:800;color:#16a34a;margin-bottom:6px">🩺 JORNADA DA SAÚDE</div>'+
+      '<div style="font-size:12px;font-weight:800;color:#5b5ce2;margin-bottom:6px">PASSO '+(atual+1)+' DE '+total+'</div>'+
+      '<div style="display:flex;gap:4px;margin-bottom:16px">'+passos.map((_,i)=>'<span style="flex:1;height:5px;border-radius:999px;background:'+(i<=atual?'#16a34a':'#e5e7eb')+'"></span>').join('')+'</div>'+
+      '<span style="display:inline-flex;padding:5px 10px;border-radius:999px;background:#f0fdf4;color:#16a34a;font-size:12px;font-weight:800;margin-bottom:8px">📂 '+p.categoria+'</span>'+
+      '<h3 style="margin:0 0 8px">'+p.titulo+'</h3>'+
+      '<p style="color:#667085;margin:0 0 14px;font-size:14px">💡 '+p.quando+'</p>'+
+      '<div style="white-space:pre-wrap;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px;font-size:13.5px;max-height:220px;overflow-y:auto">'+p.prompt+'</div>'+
+      '<div style="display:flex;gap:10px;margin-top:18px"><button type="button" id="guiadoSaudeCopiar" style="flex:1;border:0;background:#16a34a;color:#fff;font-weight:800;padding:12px;border-radius:10px;cursor:pointer">📋 Copiar este prompt</button></div>'+
+      '<div style="display:flex;justify-content:space-between;margin-top:12px"><button type="button" id="guiadoSaudeAnterior" '+(atual===0?'disabled':'')+' style="border:0;background:none;color:'+(atual===0?'#c8ccd6':'#16a34a')+';font-weight:800">← Anterior</button><button type="button" id="guiadoSaudeProximo" style="border:0;background:none;color:#16a34a;font-weight:800">'+(atual===total-1?'Finalizar ✓':'Próximo →')+'</button></div>';
+    document.getElementById('fecharGuiadoSaude').onclick=()=>modal.style.display='none';
+    document.getElementById('guiadoSaudeCopiar').onclick=()=>{registrarUso(p.id);copiarPrompt(textoFinal(p.id))};
+    document.getElementById('guiadoSaudeAnterior').onclick=()=>{if(atual>0){atual--;renderPasso()}};
+    document.getElementById('guiadoSaudeProximo').onclick=()=>{if(atual<total-1){atual++;renderPasso()}else{modal.style.display='none'}};
+  }
+  btn.addEventListener('click',()=>{passos=ordemCategorias.map(cat=>promptsSaude.find(p=>p.categoria===cat)).filter(Boolean);if(!passos.length){mostrarToast('Não encontramos etapas suficientes agora.');return}atual=0;modal.style.display='flex';renderPasso()});
+  modal.addEventListener('click',e=>{if(e.target===modal)modal.style.display='none'});
+})();
 // ===== PULAR / REABRIR A ORIENTAÇÃO =====
 const jornadaBox=document.getElementById('jornadaPerfis');
 const reabrirBtn=document.getElementById('reabrirJornada');
@@ -1037,13 +1131,23 @@ aplicarEstadoJornada((function(){try{return localStorage.getItem('deltaJornadaSk
     atualizarFiltros();
   });
 })();
+(function(){
+  const input=document.getElementById('exclusoesPadraoSaudeInput');
+  if(!input)return;
+  try{input.value=localStorage.getItem('deltaSaudeExclusoesPadrao')||''}catch(e){}
+})();
 
 
+atualizarDatalistProjetosSaude();
+atualizarSelectExportarProjetoSaude();
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 atualizarStats();
 atualizarFiltros();
 window.addEventListener('delta:favoritos-updated', atualizarStats);
-if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
+if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{
+  document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')));
+  document.querySelectorAll('[id^="prefchat-"]').forEach(b=>atualizarPreferenciaSaudeUI(b.id.replace('prefchat-','')));
+})}
 if (location.hash) { setTimeout(() => destacarCard(location.hash.slice(1)), 400); }
 
 </script>
