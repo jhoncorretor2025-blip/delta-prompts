@@ -1336,125 +1336,9 @@ html{overflow-x:hidden}
 </script>
 <!-- FIM CANIVETE-V103-5-MELHORIAS -->
 
-<!-- CANIVETE-V105-VERSION-VISIBLE -->
-<style id="CANIVETE_V105_VERSION_VISIBLE_STYLE">
-/* Único indicador visível da versão do Canivete. Remove selos legados do V91 e anteriores. */
-.canivete-version-visible{display:inline-flex!important;align-items:center!important;width:max-content!important;margin:4px 0 0 8px!important;padding:4px 9px!important;border:1px solid #bfdbfe!important;border-radius:999px!important;background:#eff6ff!important;color:#1d4ed8!important;font-size:10px!important;font-weight:800!important;line-height:1!important;vertical-align:middle!important;box-sizing:border-box!important}
-[data-theme="dark"] .canivete-version-visible{background:#1e293b!important;border-color:#334155!important;color:#93c5fd!important}
-</style>
-<script id="CANIVETE_V105_VERSION_VISIBLE_SCRIPT">
-(function(){
-  'use strict';
-  const RELEASE='8.21';
-  function garantirVersao(){
-    const title=document.querySelector('.top h1');
-    if(!title||!title.parentElement)return;
-    /* Remove o selo legado criado pela V91 dentro do H1. */
-    title.querySelectorAll('#caniveteTopVersion,.canivete-version-badge').forEach(function(el){el.remove()});
-    Array.from(title.querySelectorAll('*')).forEach(function(el){
-      if(/^v\\d+(?:\\.\\d+)+$/i.test((el.textContent||'').trim()))el.remove();
-    });
-    const parent=title.parentElement;
-    let current=parent.querySelector('.canivete-version-visible');
-    Array.from(parent.children).forEach(function(el){
-      if(el===title||el===current)return;
-      const txt=(el.textContent||'').trim();
-      if(/^v\\d+(?:\\.\\d+)+$/i.test(txt))el.remove();
-    });
-    current=parent.querySelector('.canivete-version-visible');
-    if(current && current.textContent.trim()==='v'+RELEASE){
-      current.setAttribute('data-canivete-version',RELEASE);
-      return;
-    }
-    if(current)current.remove();
-    current=document.createElement('span');
-    current.className='canivete-version-visible';
-    current.setAttribute('data-canivete-version',RELEASE);
-    current.textContent='v'+RELEASE;
-    title.insertAdjacentElement('afterend',current);
-  }
-  function iniciar(){
-    garantirVersao();
-    const parent=document.querySelector('.top h1')?.parentElement;
-    if(parent && !parent.dataset.caniveteVersionObserver){
-      const observer=new MutationObserver(garantirVersao);
-      observer.observe(parent,{childList:true,subtree:true});
-      parent.dataset.caniveteVersionObserver='1';
-    }
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar,{once:true});
-  else iniciar();
-  [100,400,900,1600].forEach(function(ms){setTimeout(garantirVersao,ms)});
-})();
-</script>
 
-<!-- CANIVETE-V106-CARD-CONTROLES-LATERAIS -->
-<style id="CANIVETE_V106_CARD_STYLE">
-.canivete-tools-card{margin:0 8px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:0 4px 14px rgba(15,23,42,.045);overflow:hidden}
-.canivete-tools-card__head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 11px;border-bottom:1px solid var(--line);background:var(--bg)}
-.canivete-tools-card__title{font-size:11px;font-weight:850;color:var(--ink);display:flex;align-items:center;gap:7px}
-.canivete-tools-card__toggle{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;min-width:30px;height:30px;padding:0 8px;font-size:11px;font-weight:850;cursor:pointer}
-.canivete-tools-card__body{display:grid;gap:8px;padding:10px}
-.canivete-tools-card.is-collapsed .canivete-tools-card__body{display:none}
-.canivete-tools-card .v80-mode{width:100%;margin:0!important}
-.canivete-tools-card .canivete-menu-search-wrap{padding:0!important;margin:0!important}
-.canivete-tools-card #btnMinhaSaudeIA{width:100%!important;margin:0!important}
-@media(max-width:760px){.canivete-tools-card{margin-left:8px;margin-right:8px}.canivete-tools-card__body{padding:9px}.canivete-tools-card__head{padding:9px 10px}}
-</style>
-<script id="CANIVETE_V106_CARD_SCRIPT">
-(function(){
-  'use strict';
-  const KEY='canivete-v106-tools-card-collapsed';
-  function montarCard(){
-    const side=document.getElementById('side');
-    if(!side||side.querySelector('.canivete-tools-card'))return;
-    const mode=side.querySelector('.v80-mode');
-    const searchInput=document.getElementById('buscaMenuInput');
-    const searchWrap=searchInput&&searchInput.parentElement;
-    const health=document.getElementById('btnMinhaSaudeIA');
-    if(!mode||!searchWrap||!health)return;
-    const anchor=side.querySelector('.back');
-    if(!anchor)return;
-    const card=document.createElement('section');
-    card.className='canivete-tools-card';
-    card.setAttribute('aria-label','Controles rápidos da lateral');
-    const head=document.createElement('div');
-    head.className='canivete-tools-card__head';
-    const title=document.createElement('div');
-    title.className='canivete-tools-card__title';
-    title.innerHTML='<span>🧰</span><span>Atalhos</span>';
-    const toggle=document.createElement('button');
-    toggle.type='button';
-    toggle.className='canivete-tools-card__toggle';
-    toggle.setAttribute('aria-controls','caniveteToolsCardBody');
-    toggle.setAttribute('aria-label','Minimizar atalhos');
-    const body=document.createElement('div');
-    body.className='canivete-tools-card__body';
-    body.id='caniveteToolsCardBody';
-    searchWrap.classList.add('canivete-menu-search-wrap');
-    body.appendChild(mode);
-    body.appendChild(searchWrap);
-    body.appendChild(health);
-    head.appendChild(title);head.appendChild(toggle);
-    card.appendChild(head);card.appendChild(body);
-    anchor.insertAdjacentElement('afterend',card);
-    function setCollapsed(collapsed){
-      card.classList.toggle('is-collapsed',collapsed);
-      toggle.textContent=collapsed?'＋':'−';
-      toggle.setAttribute('aria-expanded',collapsed?'false':'true');
-      toggle.setAttribute('aria-label',collapsed?'Expandir atalhos':'Minimizar atalhos');
-      try{localStorage.setItem(KEY,collapsed?'1':'0')}catch(e){}
-    }
-    let collapsed=false;try{collapsed=localStorage.getItem(KEY)==='1'}catch(e){}
-    toggle.addEventListener('click',function(){setCollapsed(!card.classList.contains('is-collapsed'))});
-    setCollapsed(collapsed);
-  }
-  function init(){montarCard()}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
-  else init();
-  [150,500,1000,1800].forEach(function(ms){setTimeout(init,ms)});
-})();
-</script>
+
+
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const link=document.createElement('a');
@@ -5159,6 +5043,124 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   else init();
   setTimeout(init,450);
   window.CANIVETE_UX_VERSION=VERSION;
+})();
+</script>
+<!-- CANIVETE-V105-VERSION-VISIBLE -->
+<style id="CANIVETE_V105_VERSION_VISIBLE_STYLE">
+/* Único indicador visível da versão do Canivete. Remove selos legados do V91 e anteriores. */
+.canivete-version-visible{display:inline-flex!important;align-items:center!important;width:max-content!important;margin:4px 0 0 8px!important;padding:4px 9px!important;border:1px solid #bfdbfe!important;border-radius:999px!important;background:#eff6ff!important;color:#1d4ed8!important;font-size:10px!important;font-weight:800!important;line-height:1!important;vertical-align:middle!important;box-sizing:border-box!important}
+[data-theme="dark"] .canivete-version-visible{background:#1e293b!important;border-color:#334155!important;color:#93c5fd!important}
+</style>
+<script id="CANIVETE_V105_VERSION_VISIBLE_SCRIPT">
+(function(){
+  'use strict';
+  const RELEASE='8.21';
+  function garantirVersao(){
+    const title=document.querySelector('.top h1');
+    if(!title||!title.parentElement)return;
+    /* Remove o selo legado criado pela V91 dentro do H1. */
+    title.querySelectorAll('#caniveteTopVersion,.canivete-version-badge').forEach(function(el){el.remove()});
+    Array.from(title.querySelectorAll('*')).forEach(function(el){
+      if(/^v\\d+(?:\\.\\d+)+$/i.test((el.textContent||'').trim()))el.remove();
+    });
+    const parent=title.parentElement;
+    let current=parent.querySelector('.canivete-version-visible');
+    Array.from(parent.children).forEach(function(el){
+      if(el===title||el===current)return;
+      const txt=(el.textContent||'').trim();
+      if(/^v\\d+(?:\\.\\d+)+$/i.test(txt))el.remove();
+    });
+    current=parent.querySelector('.canivete-version-visible');
+    if(current && current.textContent.trim()==='v'+RELEASE){
+      current.setAttribute('data-canivete-version',RELEASE);
+      return;
+    }
+    if(current)current.remove();
+    current=document.createElement('span');
+    current.className='canivete-version-visible';
+    current.setAttribute('data-canivete-version',RELEASE);
+    current.textContent='v'+RELEASE;
+    title.insertAdjacentElement('afterend',current);
+  }
+  function iniciar(){
+    garantirVersao();
+    const parent=document.querySelector('.top h1')?.parentElement;
+    if(parent && !parent.dataset.caniveteVersionObserver){
+      const observer=new MutationObserver(garantirVersao);
+      observer.observe(parent,{childList:true,subtree:true});
+      parent.dataset.caniveteVersionObserver='1';
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar,{once:true});
+  else iniciar();
+  [100,400,900,1600].forEach(function(ms){setTimeout(garantirVersao,ms)});
+})();
+</script>
+<!-- CANIVETE-V106-CARD-CONTROLES-LATERAIS -->
+<style id="CANIVETE_V106_CARD_STYLE">
+.canivete-tools-card{margin:0 8px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:0 4px 14px rgba(15,23,42,.045);overflow:hidden}
+.canivete-tools-card__head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 11px;border-bottom:1px solid var(--line);background:var(--bg)}
+.canivete-tools-card__title{font-size:11px;font-weight:850;color:var(--ink);display:flex;align-items:center;gap:7px}
+.canivete-tools-card__toggle{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;min-width:30px;height:30px;padding:0 8px;font-size:11px;font-weight:850;cursor:pointer}
+.canivete-tools-card__body{display:grid;gap:8px;padding:10px}
+.canivete-tools-card.is-collapsed .canivete-tools-card__body{display:none}
+.canivete-tools-card .v80-mode{width:100%;margin:0!important}
+.canivete-tools-card .canivete-menu-search-wrap{padding:0!important;margin:0!important}
+.canivete-tools-card #btnMinhaSaudeIA{width:100%!important;margin:0!important}
+@media(max-width:760px){.canivete-tools-card{margin-left:8px;margin-right:8px}.canivete-tools-card__body{padding:9px}.canivete-tools-card__head{padding:9px 10px}}
+</style>
+<script id="CANIVETE_V106_CARD_SCRIPT">
+(function(){
+  'use strict';
+  const KEY='canivete-v106-tools-card-collapsed';
+  function montarCard(){
+    const side=document.getElementById('side');
+    if(!side||side.querySelector('.canivete-tools-card'))return;
+    const mode=side.querySelector('.v80-mode');
+    const searchInput=document.getElementById('buscaMenuInput');
+    const searchWrap=searchInput&&searchInput.parentElement;
+    const health=document.getElementById('btnMinhaSaudeIA');
+    if(!mode||!searchWrap||!health)return;
+    const anchor=side.querySelector('.back');
+    if(!anchor)return;
+    const card=document.createElement('section');
+    card.className='canivete-tools-card';
+    card.setAttribute('aria-label','Controles rápidos da lateral');
+    const head=document.createElement('div');
+    head.className='canivete-tools-card__head';
+    const title=document.createElement('div');
+    title.className='canivete-tools-card__title';
+    title.innerHTML='<span>🧰</span><span>Atalhos</span>';
+    const toggle=document.createElement('button');
+    toggle.type='button';
+    toggle.className='canivete-tools-card__toggle';
+    toggle.setAttribute('aria-controls','caniveteToolsCardBody');
+    toggle.setAttribute('aria-label','Minimizar atalhos');
+    const body=document.createElement('div');
+    body.className='canivete-tools-card__body';
+    body.id='caniveteToolsCardBody';
+    searchWrap.classList.add('canivete-menu-search-wrap');
+    body.appendChild(mode);
+    body.appendChild(searchWrap);
+    body.appendChild(health);
+    head.appendChild(title);head.appendChild(toggle);
+    card.appendChild(head);card.appendChild(body);
+    anchor.insertAdjacentElement('afterend',card);
+    function setCollapsed(collapsed){
+      card.classList.toggle('is-collapsed',collapsed);
+      toggle.textContent=collapsed?'＋':'−';
+      toggle.setAttribute('aria-expanded',collapsed?'false':'true');
+      toggle.setAttribute('aria-label',collapsed?'Expandir atalhos':'Minimizar atalhos');
+      try{localStorage.setItem(KEY,collapsed?'1':'0')}catch(e){}
+    }
+    let collapsed=false;try{collapsed=localStorage.getItem(KEY)==='1'}catch(e){}
+    toggle.addEventListener('click',function(){setCollapsed(!card.classList.contains('is-collapsed'))});
+    setCollapsed(collapsed);
+  }
+  function init(){montarCard()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+  [150,500,1000,1800].forEach(function(ms){setTimeout(init,ms)});
 })();
 </script>
 </body>
