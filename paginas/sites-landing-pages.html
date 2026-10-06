@@ -917,7 +917,56 @@ document.addEventListener('click',function(e){var b=e.target.closest('[data-acao
  let passos=[],atual=0,modo='';
  const modal=document.getElementById('modalGuiado'),box=document.getElementById('modalGuiadoConteudo');
  function abrir(tipo){modo=tipo;passos=J[tipo].map(id=>prompts.find(p=>p.id===id)).filter(Boolean);atual=0;if(!passos.length){mostrarToast('⚠️ Jornada sem prompts.');return}modal.style.display='flex';window.modoGuiadoAtivo=true;renderPasso()}
- function renderPasso(){const p=passos[atual],total=passos.length;const cor=modo==='basica'?'#16a34a':'#dc2626';const nome=modo==='basica'?'🟢 JORNADA BÁSICA':'🔴 JORNADA AVANÇADA';box.innerHTML='<button type="button" id="fecharGuiado" style="position:absolute;top:16px;right:16px;border:0;background:#f1f5f9;border-radius:999px;width:32px;height:32px;cursor:pointer">✕</button><div style="font-size:12px;font-weight:800;color:'+cor+';margin-bottom:6px">'+nome+'</div><div style="font-size:12px;font-weight:800;color:#5b5ce2;margin-bottom:6px">PASSO '+(atual+1)+' DE '+total+'</div><div style="display:inline-flex;padding:5px 10px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800;margin-bottom:8px">📂 '+p.categoria+'</div><h3 style="margin:0 0 8px">'+p.titulo+'</h3><p style="color:#667085;margin:0 0 14px;font-size:14px">💡 '+p.quando+'</p><div style="white-space:pre-wrap;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px;font-size:13.5px;max-height:220px;overflow-y:auto">'+p.prompt+'</div><div style="display:flex;gap:10px;margin-top:18px"><button type="button" id="guiadoCopiar" style="flex:1;border:0;background:#5b5ce2;color:#fff;font-weight:800;padding:12px;border-radius:10px;cursor:pointer">📋 Copiar e usar este prompt</button></div><div style="display:flex;justify-content:space-between;margin-top:12px"><button type="button" id="guiadoAnterior" '+(atual===0?'disabled':'')+' style="border:0;background:none;color:#5b5ce2;font-weight:800;cursor:pointer">← Voltar</button><button type="button" id="guiadoProximo" style="border:0;background:none;color:#5b5ce2;font-weight:800;cursor:pointer">'+(atual===total-1?'Concluir ✓':'Próximo →')+'</button></div>';document.getElementById('fecharGuiado').onclick=fechar;document.getElementById('guiadoCopiar').onclick=()=>{registrarUso(p.id);copiarTexto(textoFinal(p.id))};document.getElementById('guiadoAnterior').onclick=()=>{if(atual>0){atual--;renderPasso()}};document.getElementById('guiadoProximo').onclick=()=>{if(atual<total-1){atual++;renderPasso()}else{fechar()}}}
+ function obterResultadoEsperado(p){
+   const cat=String(p.categoria||'').toLowerCase();
+   const tit=String(p.titulo||'').toLowerCase();
+   if(/debug|bug|erro|qualidade|diagn/.test(cat+' '+tit))return'Identificar o problema com evidências e definir uma correção segura para esta etapa.';
+   if(/visual|ux|design|apar[eê]ncia/.test(cat+' '+tit))return'Definir uma melhoria visual ou de experiência que possa ser aplicada ao projeto.';
+   if(/arquitet|estrutura|organiz/.test(cat+' '+tit))return'Deixar a estrutura do projeto mais clara e organizada antes de avançar.';
+   if(/mobile|responsiv/.test(cat+' '+tit))return'Adaptar esta parte do projeto para telas menores sem perder funcionalidades.';
+   if(/performance|rápid|veloc/.test(cat+' '+tit))return'Identificar o principal ponto de desempenho desta etapa e definir a melhoria adequada.';
+   if(/seguran|prote/.test(cat+' '+tit))return'Identificar riscos desta etapa e definir medidas de proteção adequadas.';
+   return'Concluir esta etapa com uma decisão, definição ou resultado prático que permita avançar na jornada.';
+ }
+ function obterInformacoesNecessarias(p){
+   const encontrados=[...new Set(String(p.prompt||'').match(/\\[[^\\]]+\\]/g)||[])];
+   return encontrados.length
+     ? encontrados.join(', ').replace(/\\[/g,'').replace(/\\]/g,'')
+     : 'O prompt não exige campos específicos; use o contexto e os dados que você já tiver sobre o projeto.';
+ }
+ function obterProximoPasso(){
+   const proximo=passos[atual+1];
+   if(!proximo)return'Você chegou à última etapa desta jornada.';
+   return proximo.titulo.replace(/^\\s+/,'');
+ }
+ function renderPasso(){
+   const p=passos[atual],total=passos.length;
+   const cor=modo==='basica'?'#16a34a':'#dc2626';
+   const nome=modo==='basica'?'🟢 JORNADA BÁSICA':'🔴 JORNADA AVANÇADA';
+   const resultado=obterResultadoEsperado(p);
+   const necessario=obterInformacoesNecessarias(p);
+   const proximo=obterProximoPasso();
+   const escapar=function(v){return String(v??'').replace(/[&<>"']/g,function(ch){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[ch]})};
+   box.innerHTML=
+     '<button type="button" id="fecharGuiado" aria-label="Fechar jornada" style="position:absolute;top:16px;right:16px;border:0;background:#f1f5f9;border-radius:999px;width:32px;height:32px;cursor:pointer">✕</button>'+
+     '<div style="font-size:12px;font-weight:800;color:'+cor+';margin-bottom:6px">'+nome+'</div>'+
+     '<div style="font-size:12px;font-weight:800;color:#5b5ce2;margin-bottom:6px">PASSO '+(atual+1)+' DE '+total+'</div>'+
+     '<div style="display:inline-flex;padding:5px 10px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800;margin-bottom:8px">📂 '+escapar(p.categoria)+'</div>'+
+     '<h3 style="margin:0 0 8px">'+escapar(p.titulo)+'</h3>'+
+     '<p style="color:#667085;margin:0 0 14px;font-size:14px">💡 '+escapar(p.quando)+'</p>'+
+     '<div style="display:grid;gap:9px;margin:0 0 14px">'+
+       '<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:11px;padding:10px 12px;font-size:12.5px;color:#166534"><strong>🎯 Resultado esperado</strong><div style="margin-top:3px">'+escapar(resultado)+'</div></div>'+
+       '<div style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:11px;padding:10px 12px;font-size:12.5px;color:#475467"><strong>📋 Antes de começar</strong><div style="margin-top:3px">'+escapar(necessario)+'</div></div>'+
+     '</div>'+
+     '<div style="white-space:pre-wrap;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px;font-size:13.5px;max-height:220px;overflow-y:auto">'+escapar(p.prompt)+'</div>'+
+     '<div style="display:flex;gap:10px;margin-top:18px"><button type="button" id="guiadoCopiar" style="flex:1;border:0;background:#5b5ce2;color:#fff;font-weight:800;padding:12px;border-radius:10px;cursor:pointer">📋 Copiar e usar este prompt</button></div>'+
+     '<div style="margin-top:12px;padding:10px 12px;border-radius:11px;background:#eff6ff;border:1px solid #dbeafe;color:#1e40af;font-size:12.5px"><strong>⏭️ Próximo passo</strong><div style="margin-top:3px">'+escapar(proximo)+'</div></div>'+
+     '<div style="display:flex;justify-content:space-between;margin-top:12px"><button type="button" id="guiadoAnterior" '+(atual===0?'disabled':'')+' style="border:0;background:none;color:#5b5ce2;font-weight:800;cursor:pointer">← Voltar</button><button type="button" id="guiadoProximo" style="border:0;background:none;color:#5b5ce2;font-weight:800;cursor:pointer">'+(atual===total-1?'Concluir ✓':'Próximo →')+'</button></div>';
+   document.getElementById('fecharGuiado').onclick=fechar;
+   document.getElementById('guiadoCopiar').onclick=()=>{registrarUso(p.id);copiarTexto(textoFinal(p.id))};
+   document.getElementById('guiadoAnterior').onclick=()=>{if(atual>0){atual--;renderPasso()}};
+   document.getElementById('guiadoProximo').onclick=()=>{if(atual<total-1){atual++;renderPasso()}else{fechar()}};
+ }
  function fechar(){modal.style.display='none';window.modoGuiadoAtivo=false}
  document.getElementById('btnJornadaBasica').onclick=()=>abrir('basica');document.getElementById('btnJornadaAvancada').onclick=()=>abrir('avancada');document.getElementById('btnJornadaExtra').onclick=()=>{fechar();fase='todos';tema='Todos';busca.value='Brainstorm';render();document.getElementById('lista-prompts').scrollIntoView({behavior:'smooth'})};modal.addEventListener('click',ev=>{if(ev.target===modal)fechar()});document.getElementById('jornadaBasicaCount').textContent=J.basica.length+' etapas';document.getElementById('jornadaAvancadaCount').textContent=J.avancada.length+' etapas';
 })();
