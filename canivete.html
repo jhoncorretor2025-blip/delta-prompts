@@ -1528,36 +1528,39 @@ html{overflow-x:hidden}
 (function(){
   'use strict';
   const RELEASE='8.20';
-  function limparEExibirVersao(){
+  function garantirVersao(){
     const title=document.querySelector('.top h1');
     if(!title||!title.parentElement)return;
     const parent=title.parentElement;
-    parent.querySelectorAll('.canivete-version-visible').forEach(function(el){
-      el.remove();
-    });
+    let current=parent.querySelector('.canivete-version-visible');
     Array.from(parent.children).forEach(function(el){
-      if(el===title)return;
+      if(el===title||el===current)return;
       const txt=(el.textContent||'').trim();
       if(/^v\\d+(?:\\.\\d+)+$/i.test(txt))el.remove();
     });
-    const badge=document.createElement('span');
-    badge.className='canivete-version-visible';
-    badge.setAttribute('data-canivete-version','8.20');
-    badge.textContent='v'+RELEASE;
-    title.insertAdjacentElement('afterend',badge);
+    if(current && current.textContent.trim()==='v'+RELEASE){
+      current.setAttribute('data-canivete-version',RELEASE);
+      return;
+    }
+    if(current)current.remove();
+    current=document.createElement('span');
+    current.className='canivete-version-visible';
+    current.setAttribute('data-canivete-version',RELEASE);
+    current.textContent='v'+RELEASE;
+    title.insertAdjacentElement('afterend',current);
   }
   function iniciar(){
-    limparEExibirVersao();
+    garantirVersao();
     const parent=document.querySelector('.top h1')?.parentElement;
     if(parent && !parent.dataset.caniveteVersionObserver){
-      const observer=new MutationObserver(function(){limparEExibirVersao()});
+      const observer=new MutationObserver(garantirVersao);
       observer.observe(parent,{childList:true,subtree:true});
       parent.dataset.caniveteVersionObserver='1';
     }
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar,{once:true});
   else iniciar();
-  [100,400,900,1600].forEach(function(ms){setTimeout(limparEExibirVersao,ms)});
+  [100,400,900,1600].forEach(function(ms){setTimeout(garantirVersao,ms)});
 })();
 </script>
 </body></html>`;
