@@ -864,22 +864,16 @@ function textoFinal(id){
   (p.placeholders||[]).forEach((ph,idx)=>{
     const el=document.getElementById('campo-'+id+'-'+idx);
     const val=el?el.value.trim():'';
-    if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\function textoFinal(id){
-  const p=getItem(id);if(!p)return'';
-  let t=p.prompt;
-  (p.placeholders||[]).forEach((ph,idx)=>{
-    const el=document.getElementById('campo-'+id+'-'+idx);
-    const val=el?el.value.trim():'';
-    if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}
+    if(val){
+      const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');
+      t=t.replace(re,val);
+    }
   });
-  return t;
-}')+'\\]','g');t=t.replace(re,val)}
-  });
-  let foco='';try{foco=localStorage.getItem('deltaSaudeExclusoesPadrao')||''}catch(e){}
-  if(foco.trim())t+='\\n\\nPreferência de foco do usuário: não aprofunde estes assuntos, salvo quando forem necessários para segurança, sinais de urgência, interpretação fiel de exames/laudos, interações relevantes, contraindicações ou orientação para procurar atendimento: '+foco.trim()+'.';
+  let foco='';
+  try{foco=localStorage.getItem('deltaSaudeExclusoesPadrao')||''}catch(e){}
+  if(foco.trim())t+='\n\nPreferência de foco do usuário: não aprofunde estes assuntos, salvo quando forem necessários para segurança, sinais de urgência, interpretação fiel de exames/laudos, interações relevantes, contraindicações ou orientação para procurar atendimento: '+foco.trim()+'.';
   return t;
 }
-
 // ===== AÇÕES =====
 async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
 async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
