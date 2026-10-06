@@ -33,7 +33,7 @@ jobs:
               assert s.count('<script') == s.count('</script>'), f'{p}: tags script desbalanceadas'
               assert s.count('<section') >= 27, f'{p}: poucas sections'
               assert s.count('data-page=') >= 27, f'{p}: poucos itens de menu'
-              assert "const APP_VERSION='8.18'" in s, f'{p}: APP_VERSION não está em 8.17'
+              assert "const APP_VERSION='8.19'" in s, f'{p}: APP_VERSION não está em 8.19'
               assert 'CANIVETE_V90_MENUS_CORRIGIDOS' in s, f'{p}: menu V90 não encontrado'
               assert 'CANIVETE-V93-MENU-POLIDO' in s, f'{p}: menu V93 ausente'
               assert 'CANIVETE-V92-MOBILE-FIRST' in s, f'{p}: mobile-first V92 não encontrado'
