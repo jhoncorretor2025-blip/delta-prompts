@@ -1,10 +1,10 @@
-/* Delta Prompts — núcleo compartilhado V1.18
+/* Delta Prompts — núcleo compartilhado V1.23
    Responsabilidade: armazenamento, projetos, atividades, resultados e XP.
    Compatível com dados antigos da V1.16.
 */
 (function(){
   'use strict';
-  const KEY={projects:'deltaProjects',xp:'deltaXP',usage:'deltaUsageDates',activities:'deltaActivities',results:'deltaResults'};
+  const KEY={projects:'deltaProjects',xp:'deltaXP',usage:'deltaUsageDates',activities:'deltaActivities',results:'deltaResults',checkpoints:'deltaProjectCheckpoints'};
   function read(k,fallback){try{const v=localStorage.getItem(k);return v===null?fallback:JSON.parse(v)}catch(e){return fallback}}
   function write(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
   function today(){return new Date().toISOString().slice(0,10)}
@@ -33,6 +33,9 @@
     p[i]=Object.assign({},p[i],patch,{lastActivity:today()});saveProjects(p);return p[i]
   }
   function removeProject(id){const p=projects().filter(x=>x.id!==id);saveProjects(p);return p}
+  function projectCheckpoints(projectId){const all=read(KEY.checkpoints,[]);return all.filter(x=>x.projectId===projectId).sort((a,b)=>(b.ts||0)-(a.ts||0))}
+  function saveCheckpoint(data){const item=Object.assign({id:uid('chk'),date:today(),ts:Date.now(),status:'registrado'},data);const all=read(KEY.checkpoints,[]);all.unshift(item);write(KEY.checkpoints,all.slice(0,300));if(item.projectId){updateProject(item.projectId,{nextStep:item.nextStep||'Revisar próxima etapa',lastCheckpointId:item.id})}recordActivity({type:'checkpoint',title:item.title||'Checkpoint do projeto',projectId:item.projectId||null});return item}
+  function projectContinuity(projectId){const proj=projects().find(x=>x.id===projectId);return {project:proj||null,checkpoints:projectCheckpoints(projectId),rule:'Preservar → Mapear → Alterar → Testar → Atualizar estado'}}
   function xp(amount,reason){
     const value=Math.max(0,Number(read(KEY.xp,0))||0)+Number(amount||0);write(KEY.xp,value);
     markUsage();recordActivity({type:'xp',title:reason||'Uso do Delta',xp:Number(amount||0)});
@@ -65,5 +68,5 @@
     const activities=read(KEY.activities,[]),results=read(KEY.results,[]);
     const completed=results.filter(x=>x.status==='funcionou').length,partial=results.filter(x=>x.status==='parcial').length,failed=results.filter(x=>x.status==='falhou').length;return {xp:Number(read(KEY.xp,0))||0,projects:projects().length,activities:activities.length,results:results.length,completed,partial,failed,resolutionRate:results.length?Math.round(completed/results.length*100):0}
   }
-  window.Delta={KEY,read,write,projects,saveProjects,addProject,updateProject,removeProject,xp,markUsage,recordActivity,recordResult,stats,today};
+  window.Delta={KEY,read,write,projects,saveProjects,addProject,updateProject,removeProject,xp,markUsage,recordActivity,recordResult,stats,projectCheckpoints,saveCheckpoint,projectContinuity,today};
 })();
