@@ -1734,135 +1734,7 @@ html{overflow-x:hidden}
     max-width:none;
   }
 }
-</style><style id="CANIVETE-V826-DASHBOARD-HIERARCHY">
-/* CANIVETE v8.26 — hierarquia do Dashboard
-   Reduz competição visual sem remover conteúdo ou funcionalidade. */
-#dashboard{
-  display:flex!important;
-  flex-direction:column;
-  align-items:stretch;
-  gap:0;
-}
-#dashboard > #bannerLoginWidget{order:10}
-#dashboard > .lembreteBackupWidget{order:20}
-#dashboard > #lembretesWidget{order:30}
-#dashboard > .card.hero{order:40}
-#dashboard > #sobraPorDia{order:45}
-#dashboard > .focus{order:50}
-#dashboard > .v98-quick-actions{order:60}
-#dashboard > #caniveteAcoesRapidasV810{display:none!important}
-#dashboard > .grid.cards{order:70}
-#dashboard > .grid.two{order:80;align-items:start}
-#dashboard > #resumoTudoWidget{order:90}
-#dashboard > #comparativoMensal{order:100}
-#dashboard > #comparativoCategorias{order:110}
-#dashboard > #previsaoOcasional{order:120}
-#dashboard > #resumoPessoas{order:130}
-#dashboard > .card:last-child{order:140}
-
-/* Menos "peso" nos blocos secundários. */
-#dashboard > .card.hero{
-  padding:18px 20px;
-  margin-bottom:12px;
-}
-#dashboard > .card.hero .notice{
-  padding:10px 12px;
-  font-size:12px;
-}
-#dashboard > .card.hero .row{
-  margin-top:10px!important;
-}
-#dashboard > .focus{
-  margin-bottom:12px;
-  padding:16px 20px;
-}
-#dashboard > .grid.cards{
-  margin-bottom:12px!important;
-}
-#dashboard > .grid.cards .card{
-  min-height:106px;
-  padding:16px 18px;
-}
-#dashboard > .grid.two{
-  gap:12px;
-}
-#dashboard > #resumoTudoWidget > .card{
-  margin-bottom:12px!important;
-  padding:14px 16px;
-  background:var(--ds-surface-soft,var(--bg));
-  box-shadow:none;
-}
-#dashboard > #resumoTudoWidget .btn.light{
-  min-height:38px;
-  padding:8px 10px;
-  font-size:11.5px!important;
-}
-
-/* O diagnóstico é a área de interpretação; o resumo fica propositalmente mais leve. */
-#dashboard > .grid.two > .card{
-  align-self:start;
-}
-#dashboard > .grid.two > .card:nth-child(2){
-  box-shadow:var(--ds-shadow-sm,0 1px 3px rgba(15,23,42,.06));
-}
-
-/* Alertas continuam prioritários, mas sem criar uma muralha de cartões. */
-#dashboard > #lembretesWidget .notice{
-  margin-bottom:8px!important;
-}
-#dashboard > .lembreteBackupWidget .notice{
-  margin-bottom:8px!important;
-}
-
-/* Tablet: mantém a mesma ordem e reduz densidade horizontal. */
-@media(min-width:761px) and (max-width:1199px){
-  #dashboard > .grid.cards{
-    gap:12px;
-  }
-  #dashboard > .grid.cards .card{
-    min-height:100px;
-  }
-}
-
-/* Celular: mesma hierarquia; apenas empilha e preserva área de toque. */
-@media(max-width:760px){
-  #dashboard{
-    gap:0;
-  }
-  #dashboard > .card.hero{
-    padding:16px;
-  }
-  #dashboard > .focus{
-    padding:15px 16px;
-  }
-  #dashboard > .grid.cards .card{
-    min-height:96px;
-    padding:14px;
-  }
-  #dashboard > #resumoTudoWidget > .card{
-    padding:12px;
-  }
-}
-</style>
-<script id="CANIVETE-V826-DASHBOARD-HIERARCHY-SCRIPT">
-(function(){
-  'use strict';
-  function consolidarAcoesDuplicadas(){
-    const dash=document.getElementById('dashboard');
-    if(!dash)return;
-    const legado=document.getElementById('caniveteAcoesRapidasV810');
-    const principal=dash.querySelector('.v98-quick-actions');
-    if(legado && principal){
-      legado.setAttribute('aria-hidden','true');
-      legado.style.display='none';
-    }
-  }
-  function init(){consolidarAcoesDuplicadas()}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
-  else init();
-  [300,800,1600].forEach(ms=>setTimeout(init,ms));
-})();
-</script></body></html>`;
+</style></body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const link=document.createElement('a');
   link.href=URL.createObjectURL(blob);
@@ -6340,6 +6212,135 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   [250,800,1600].forEach(function(ms){setTimeout(init,ms)});
+})();
+</script>
+<style id="CANIVETE-V826-DASHBOARD-HIERARCHY">
+/* CANIVETE v8.26 — hierarquia do Dashboard
+   Reduz competição visual sem remover conteúdo ou funcionalidade. */
+#dashboard{
+  display:flex!important;
+  flex-direction:column;
+  align-items:stretch;
+  gap:0;
+}
+#dashboard > #bannerLoginWidget{order:10}
+#dashboard > .lembreteBackupWidget{order:20}
+#dashboard > #lembretesWidget{order:30}
+#dashboard > .card.hero{order:40}
+#dashboard > #sobraPorDia{order:45}
+#dashboard > .focus{order:50}
+#dashboard > .v98-quick-actions{order:60}
+#dashboard > #caniveteAcoesRapidasV810{display:none!important}
+#dashboard > .grid.cards{order:70}
+#dashboard > .grid.two{order:80;align-items:start}
+#dashboard > #resumoTudoWidget{order:90}
+#dashboard > #comparativoMensal{order:100}
+#dashboard > #comparativoCategorias{order:110}
+#dashboard > #previsaoOcasional{order:120}
+#dashboard > #resumoPessoas{order:130}
+#dashboard > .card:last-child{order:140}
+
+/* Menos "peso" nos blocos secundários. */
+#dashboard > .card.hero{
+  padding:18px 20px;
+  margin-bottom:12px;
+}
+#dashboard > .card.hero .notice{
+  padding:10px 12px;
+  font-size:12px;
+}
+#dashboard > .card.hero .row{
+  margin-top:10px!important;
+}
+#dashboard > .focus{
+  margin-bottom:12px;
+  padding:16px 20px;
+}
+#dashboard > .grid.cards{
+  margin-bottom:12px!important;
+}
+#dashboard > .grid.cards .card{
+  min-height:106px;
+  padding:16px 18px;
+}
+#dashboard > .grid.two{
+  gap:12px;
+}
+#dashboard > #resumoTudoWidget > .card{
+  margin-bottom:12px!important;
+  padding:14px 16px;
+  background:var(--ds-surface-soft,var(--bg));
+  box-shadow:none;
+}
+#dashboard > #resumoTudoWidget .btn.light{
+  min-height:38px;
+  padding:8px 10px;
+  font-size:11.5px!important;
+}
+
+/* O diagnóstico é a área de interpretação; o resumo fica propositalmente mais leve. */
+#dashboard > .grid.two > .card{
+  align-self:start;
+}
+#dashboard > .grid.two > .card:nth-child(2){
+  box-shadow:var(--ds-shadow-sm,0 1px 3px rgba(15,23,42,.06));
+}
+
+/* Alertas continuam prioritários, mas sem criar uma muralha de cartões. */
+#dashboard > #lembretesWidget .notice{
+  margin-bottom:8px!important;
+}
+#dashboard > .lembreteBackupWidget .notice{
+  margin-bottom:8px!important;
+}
+
+/* Tablet: mantém a mesma ordem e reduz densidade horizontal. */
+@media(min-width:761px) and (max-width:1199px){
+  #dashboard > .grid.cards{
+    gap:12px;
+  }
+  #dashboard > .grid.cards .card{
+    min-height:100px;
+  }
+}
+
+/* Celular: mesma hierarquia; apenas empilha e preserva área de toque. */
+@media(max-width:760px){
+  #dashboard{
+    gap:0;
+  }
+  #dashboard > .card.hero{
+    padding:16px;
+  }
+  #dashboard > .focus{
+    padding:15px 16px;
+  }
+  #dashboard > .grid.cards .card{
+    min-height:96px;
+    padding:14px;
+  }
+  #dashboard > #resumoTudoWidget > .card{
+    padding:12px;
+  }
+}
+</style>
+<script id="CANIVETE-V826-DASHBOARD-HIERARCHY-SCRIPT">
+(function(){
+  'use strict';
+  function consolidarAcoesDuplicadas(){
+    const dash=document.getElementById('dashboard');
+    if(!dash)return;
+    const legado=document.getElementById('caniveteAcoesRapidasV810');
+    const principal=dash.querySelector('.v98-quick-actions');
+    if(legado && principal){
+      legado.setAttribute('aria-hidden','true');
+      legado.style.display='none';
+    }
+  }
+  function init(){consolidarAcoesDuplicadas()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+  [300,800,1600].forEach(ms=>setTimeout(init,ms));
 })();
 </script>
 </body>
