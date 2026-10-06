@@ -119,8 +119,7 @@ function atualizarSeletorProjeto(){
 function exigirProjeto(){
   if(projetoAtual())return true;
   atualizarSeletorProjeto();
-  const av=document.getElementById('avisoProjetoObrigatorio');if(av){av.style.display='block';av.scrollIntoView({behavior:'smooth',block:'center')}
-  }
+  const av=document.getElementById('avisoProjetoObrigatorio');if(av){av.style.display='block';av.scrollIntoView({behavior:'smooth',block:'center'})}
   return false;
 }function contextoPatrimonio(){const p=projetoAtual();if(!p)return '\\n\\n⚠️ PROJETO NÃO SELECIONADO: não invente patrimônio. Solicite o contexto do projeto antes de alterar código.';const cps=Delta.projectCheckpoints(p.id).slice(0,3);return '\\n\\n--- 🛡️ PATRIMÔNIO DO PROJETO ---\\nProjeto: '+p.n+'\\nLink: '+(p.link||'Não informado')+'\\nObjetivo: '+(p.objective||'Não informado')+'\\nFonte principal dos dados: '+(p.source||'Não informada')+'\\nFunções críticas que NÃO podem ser perdidas: '+(p.critical||'Não cadastradas — mapear antes de alterar')+'\\nRegras de proteção: '+(p.protectedRules||'Não cadastradas — preservar tudo que já funciona')+'\\nArquitetura: '+(p.architecture||'Não registrada')+'\\nÚltimos checkpoints: '+(cps.length?cps.map(x=>x.title||x.status).join(' | '):'Nenhum registrado')+'\\n\\nANTES DE ALTERAR: compare a proposta com este patrimônio. Se houver risco para uma função crítica, pare, explique o risco e peça validação.\\nDEPOIS DE ALTERAR: valide as funções críticas e registre um checkpoint.'}function promptFinal(p){return CONTINUIDADE_PROJETO+contextoPatrimonio()+'\\n\\n--- INSTRUÇÃO DESTA ETAPA ---\\n'+p.text}const xpEl=document.getElementById('xp');function xp(n,reason){const v=Delta.xp(n,reason||'Uso de melhoria');xpEl.textContent=v;}function render(){
 const list=filter==='all'?prompts:prompts.filter(p=>p.cat===filter);
