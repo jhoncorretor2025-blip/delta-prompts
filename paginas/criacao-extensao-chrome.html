@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Criação de Extensão para Google Chrome | Delta Prompts</title>
+<link rel="icon" href="/delta-prompts/favicon.ico">
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<style>
+:root{--primary:#5b5ce2;--text:#172033;--muted:#667085;--line:#e5e7eb}
+body{margin:0;font-family:Arial,sans-serif;background:#f7f8fc;color:var(--text)}
+main{max-width:1100px;margin:0 auto;padding:28px 20px 70px}
+.hero{background:linear-gradient(135deg,#fff,#f0f1ff);border:1px solid #e0e2ff;border-radius:22px;padding:28px;margin-bottom:18px}
+.hero h1{margin:0 0 8px;font-size:30px}.hero p{margin:0;color:var(--muted);line-height:1.6}
+.badge{display:inline-block;margin-bottom:12px;padding:6px 10px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:900}
+.notice{padding:14px 16px;border-left:4px solid var(--primary);background:#fff;border-radius:12px;margin:16px 0;color:#475467;line-height:1.55}
+.jornada{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+.jornada button{border:1px solid var(--line);background:#fff;border-radius:16px;padding:17px;text-align:left;cursor:pointer;font:inherit}
+.jornada button:hover,.jornada button.ativo{border-color:var(--primary);background:#f3f3ff}
+.jornada strong,.jornada small{display:block}.jornada small{margin-top:5px;color:var(--muted)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.toolbar input{flex:1;min-width:220px;padding:13px;border:1px solid var(--line);border-radius:11px;font:inherit}
+#lista{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;display:flex;flex-direction:column}
+.card h3{margin:8px 0}.tag{display:inline-block;padding:5px 8px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:11px;font-weight:800}
+.card p{color:var(--muted);font-size:13px;line-height:1.55}.prompt{background:#f8fafc;border:1px solid var(--line);border-radius:11px;padding:13px;white-space:pre-wrap;font-size:13px;line-height:1.5;max-height:150px;overflow:auto}
+.actions{display:flex;gap:8px;margin-top:12px}.actions button{flex:1;border:0;border-radius:10px;padding:10px;font-weight:800;cursor:pointer}.copy{background:var(--primary);color:#fff}.use{background:#eef2ff;color:#4f46e5}
+.modal{display:none;position:fixed;inset:0;background:rgba(10,15,35,.55);z-index:9999;align-items:center;justify-content:center;padding:18px}.modal-box{max-width:720px;width:100%;background:#fff;border-radius:18px;padding:22px;max-height:85vh;overflow:auto}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-actions button{flex:1;padding:11px;border:0;border-radius:10px;font-weight:800;cursor:pointer}
+@media(max-width:700px){main{padding:20px 14px 60px}.hero h1{font-size:25px}.jornada,#lista{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="menu"><div style="width:240px;min-height:100vh"></div></div>
+<script src="/delta-prompts/js/delta-core.js"></script>
+<script src="/delta-prompts/menu-loader.js?v=20261006-v22"></script>
+<main>
+<p style="font-size:13px;color:#667085"><a href="/delta-prompts/index.html">🏠 Início</a> / Criação de Extensão para Google Chrome</p>
+<section class="hero">
+<span class="badge">🧩 DESENVOLVIMENTO • V1.00</span>
+<h1>🧩 Criação de Extensão para Google Chrome</h1>
+<p>Uma jornada prática para planejar, criar, melhorar, testar e preparar uma extensão Chrome sem perder as funções que já funcionam.</p>
+</section>
+<div class="notice"><strong>🛡️ Regra principal:</strong> preserve o patrimônio do projeto. Antes de alterar, mapeie <code>manifest.json</code>, permissões, scripts, service worker, content scripts, storage, integrações e fluxos críticos. Faça mudanças incrementais e valide cada etapa.</div>
+<section class="jornada">
+<button class="ativo" data-j="basica"><strong>🟢 Jornada Básica</strong><small>Do zero até uma extensão funcional.</small></button>
+<button data-j="avancada"><strong>🔴 Jornada Avançada</strong><small>Arquitetura, APIs, segurança, IA e publicação.</small></button>
+</section>
+<div class="toolbar"><input id="busca" placeholder="🔍 Buscar prompt..."><button id="limpar" style="padding:12px 15px;border:1px solid #e5e7eb;border-radius:11px;background:#fff;font-weight:800;cursor:pointer">Limpar</button></div>
+<div id="lista"></div>
+</main>
+<div class="modal" id="modal"><div class="modal-box" id="modalBox"></div></div>
+<script>
+const prompts=[
+{t:'🚀 Planejar minha extensão Chrome',c:'Fundação',d:'Transforme a ideia em um plano técnico antes de escrever código.',p:`ATUE COMO ARQUITETO SÊNIOR DE EXTENSÕES GOOGLE CHROME. Quero criar esta extensão: [IDEIA/OBJETIVO].
+
+Defina: problema resolvido, público, funcionalidades essenciais, fluxo do usuário, arquitetura, arquivos necessários, permissões mínimas e riscos.
+
+Use Manifest V3 como base. Não invente APIs ou permissões. Separe o que é essencial do que é opcional.
+
+ENTREGA: arquitetura inicial, estrutura de pastas, manifest.json planejado, permissões justificadas, fluxo principal e plano de implementação por etapas.`},
+{t:'🧱 Criar estrutura Manifest V3',c:'Fundação',d:'Montar a base técnica da extensão.',p:`CRIE A ESTRUTURA INICIAL DE UMA EXTENSÃO GOOGLE CHROME COM MANIFEST V3.
+
+Objetivo: [OBJETIVO].
+Nome: [NOME].
+Funcionalidade principal: [FUNÇÃO].
+
+Entregue uma estrutura de arquivos clara e o conteúdo inicial necessário. Explique a responsabilidade de cada arquivo.
+
+PRIORIDADE: permissões mínimas, código simples, separação de responsabilidades e facilidade de manutenção. Não adicione permissões ou arquivos sem necessidade.`},
+{t:'🎨 Criar popup profissional',c:'Interface',d:'Criar uma interface de popup clara, rápida e responsiva.',p:`MELHORE/CRIE O POPUP DA MINHA EXTENSÃO CHROME.
+
+Contexto: [DESCRIÇÃO].
+Funções existentes que devem ser preservadas: [FUNÇÕES].
+
+Crie uma interface profissional, simples e rápida. Considere hierarquia visual, estados vazio/carregando/sucesso/erro, acessibilidade, teclado e telas pequenas.
+
+Não altere a lógica existente sem necessidade. Entregue HTML, CSS e JS separados quando fizer sentido e indique exatamente onde integrar.`},
+{t:'⚙️ Service Worker e eventos',c:'Arquitetura',d:'Organizar tarefas em segundo plano com segurança.',p:`ANALISE O SERVICE WORKER/BACKGROUND DA MINHA EXTENSÃO CHROME.
+
+Código atual: [CÓDIGO].
+Fluxo esperado: [FLUXO].
+
+Identifique eventos, listeners, mensagens, inicialização e possíveis problemas de ciclo de vida. Proponha a menor alteração segura.
+
+Não mantenha listeners duplicados, não crie loops desnecessários e não remova eventos existentes sem demonstrar impacto.`},
+{t:'🌐 Content Script',c:'Arquitetura',d:'Integrar a extensão com páginas web sem quebrar o site.',p:`PRECISO DE UM CONTENT SCRIPT PARA ESTA FUNÇÃO: [FUNÇÃO].
+
+Analise onde o script deve executar, quais páginas são necessárias, quais permissões são realmente necessárias e como evitar conflitos com o site.
+
+Preserve o DOM e os scripts da página. Evite alterações globais, seletores frágeis e execução duplicada. Entregue uma implementação segura e explique como validar.`},
+{t:'💾 Chrome Storage',c:'Dados',d:'Salvar configurações e dados da extensão de forma organizada.',p:`IMPLEMENTE/REVISE O ARMAZENAMENTO DA MINHA EXTENSÃO.
+
+Dados: [DADOS].
+Código atual: [CÓDIGO].
+
+Defina o modelo de dados, chaves, leitura, gravação, atualização, valores padrão e tratamento de erro. Preserve dados existentes e inclua compatibilidade com versões anteriores quando necessário.
+
+Não apague ou migre dados sem estratégia de segurança.`},
+{t:'🔄 Comunicação entre partes',c:'Arquitetura',d:'Organizar mensagens entre popup, content script e service worker.',p:`REVISE A COMUNICAÇÃO ENTRE POPUP, CONTENT SCRIPT E SERVICE WORKER.
+
+Fluxos atuais: [FLUXOS].
+Problema: [PROBLEMA].
+
+Mapeie quem envia, quem recebe, formato das mensagens, respostas, erros e estados assíncronos. Corrija apenas o necessário e preserve mensagens existentes.`},
+{t:'🔌 Integrar API externa',c:'Integrações',d:'Conectar a uma API sem expor segredos ou quebrar o fluxo.',p:`QUERO INTEGRAR ESTA API À MINHA EXTENSÃO CHROME: [API/OBJETIVO].
+
+Analise autenticação, CORS, armazenamento de tokens, tratamento de erros, limites, timeout e fluxo de dados.
+
+NÃO coloque chaves secretas no código cliente. Informe o que deve ficar no servidor quando necessário. Preserve as funções atuais e implemente de forma incremental.`},
+{t:'🧠 Adicionar IA à extensão',c:'IA',d:'Adicionar IA com utilidade real, não apenas como recurso decorativo.',p:`ADICIONE IA À MINHA EXTENSÃO CHROME.
+
+Objetivo da IA: [OBJETIVO].
+Dados que podem ser enviados: [DADOS].
+Provedor/API: [PROVEDOR].
+
+Defina o fluxo, entrada, saída, tratamento de erros, privacidade, custos e limites. Não envie dados sensíveis sem necessidade. Se houver código existente, preserve a arquitetura e faça a menor alteração segura.`},
+{t:'🔐 Auditoria de segurança',c:'Segurança',d:'Encontrar riscos antes de publicar.',p:`FAÇA UMA AUDITORIA DE SEGURANÇA DA MINHA EXTENSÃO CHROME.
+
+Analise manifest.json, permissões, content scripts, mensagens, armazenamento, URLs externas, tokens, APIs e tratamento de entrada.
+
+Classifique cada achado por severidade e explique evidência, impacto, correção e teste. Não invente vulnerabilidades: se não puder verificar, marque NÃO VERIFICADO.`},
+{t:'⚡ Otimizar desempenho',c:'Qualidade',d:'Reduzir lentidão sem alterar o comportamento.',p:`OTIMIZE O DESEMPENHO DA MINHA EXTENSÃO CHROME.
+
+Analise scripts, listeners, DOM, chamadas de rede, storage e processamento.
+
+Primeiro identifique gargalos com evidências. Depois proponha alterações de baixo risco. Não remova funcionalidades nem troque uma arquitetura estável por outra apenas por preferência.`},
+{t:'🐛 Caçador de bugs da extensão',c:'Qualidade',d:'Encontrar a causa real antes de corrigir.',p:`ATUE COMO ENGENHEIRO SÊNIOR DE DEBUGGING DE EXTENSÕES CHROME.
+
+Erro/comportamento: [ERRO].
+Console: [CONSOLE].
+Código/arquivos: [CÓDIGO].
+Passos para reproduzir: [PASSOS].
+
+Reproduza, rastreie, isole e identifique a causa-raiz. Proponha a menor correção possível e testes de regressão. Se faltar evidência, pare e diga exatamente o que precisa ser verificado. Nunca invente que testou algo.`},
+{t:'🧪 Testar antes de publicar',c:'Qualidade',d:'Criar checklist de validação da extensão.',p:`CRIE UM PLANO DE TESTES PARA ESTA EXTENSÃO CHROME.
+
+Funcionalidades: [LISTA].
+Integrações: [LISTA].
+
+Cubra instalação, atualização, popup, content scripts, service worker, storage, permissões, mensagens, erros, offline/online, múltiplas abas e regressões.
+
+Para cada teste informe: pré-condição, ação, resultado esperado e resultado observado. O que não foi executado deve ficar como NÃO VERIFICADO.`},
+{t:'📦 Preparar para Chrome Web Store',c:'Publicação',d:'Preparar a extensão para publicação.',p:`PREPARE MINHA EXTENSÃO GOOGLE CHROME PARA PUBLICAÇÃO.
+
+Projeto: [PROJETO].
+Funcionalidades: [FUNÇÕES].
+Permissões: [PERMISSÕES].
+
+Faça uma revisão final de código, manifest, permissões, privacidade, descrição, ícones, screenshots, versão e checklist de publicação.
+
+Não declare aprovação garantida. Separe o que está pronto, o que falta e o que precisa ser verificado antes do envio.`},
+{t:'🛡️ Memória e patrimônio da extensão',c:'Proteção',d:'Criar a ficha que impede a jornada de esquecer o que é primordial.',p:`CRIE A MEMÓRIA/PATRIMÔNIO DESTE PROJETO DE EXTENSÃO.
+
+Projeto: [NOME].
+Link: [LINK].
+Objetivo: [OBJETIVO].
+Fonte principal dos dados: [FONTE].
+Funções primordiais que NÃO podem ser perdidas: [FUNÇÕES].
+Permissões críticas: [PERMISSÕES].
+Integrações críticas: [INTEGRAÇÕES].
+Arquivos críticos: [ARQUIVOS].
+
+Organize uma ficha de proteção. Toda alteração futura deve PRESERVAR → MAPEAR → ALTERAR → TESTAR → ATUALIZAR ESTADO. Se uma mudança ameaçar uma função crítica, pare, explique o risco e peça validação antes de continuar.`}
+];
+let modo='basica',pos=0;
+const ordem={basica:[0,1,2,3,4,5,6,7,8,9,10,11,12],avancada:[0,14,1,3,4,5,6,7,8,9,10,11,12,13]};
+function esc(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function render(){
+ const q=document.getElementById('busca').value.toLowerCase();
+ const ids=ordem[modo];
+ document.getElementById('lista').innerHTML=ids.map(i=>prompts[i]).filter(p=>!q||((p.t+' '+p.c+' '+p.d).toLowerCase().includes(q))).map((p)=>`<article class="card"><span class="tag">${esc(p.c)}</span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p><div class="prompt">${esc(p.p)}</div><div class="actions"><button class="copy" onclick="copiar(${prompts.indexOf(p)})">📋 Copiar prompt</button><button class="use" onclick="abrir(${prompts.indexOf(p)})">👁️ Ver completo</button></div></article>`).join('')||'<p>Nenhum prompt encontrado.</p>';
+}
+async function copiar(i){
+ const p=prompts[i];try{await navigator.clipboard.writeText(p.p);mostrar('📋 Prompt copiado!')}catch(e){mostrar('⚠️ Não foi possível copiar automaticamente.')}
+ try{if(window.Delta)Delta.recordActivity({type:'copy',title:p.t,promptId:'chrome-'+i})}catch(e){}
+}
+function abrir(i){
+ const p=prompts[i];const box=document.getElementById('modalBox');
+ box.innerHTML=`<span class="tag">${esc(p.c)}</span><h2>${esc(p.t)}</h2><p>${esc(p.d)}</p><div class="prompt" style="max-height:none">${esc(p.p)}</div><div class="modal-actions"><button class="copy" onclick="copiar(${i})">📋 Copiar</button><button style="background:#f1f5f9" onclick="fechar()">Fechar</button></div>`;
+ document.getElementById('modal').style.display='flex';
+}
+function fechar(){document.getElementById('modal').style.display='none'}
+function mostrar(t){const x=document.createElement('div');x.textContent=t;x.style.cssText='position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:11px 16px;border-radius:10px;z-index:10000;font-weight:800';document.body.appendChild(x);setTimeout(()=>x.remove(),1800)}
+document.querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-j]').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');modo=b.dataset.j;render()});
+document.getElementById('busca').oninput=render;document.getElementById('limpar').onclick=()=>{document.getElementById('busca').value='';render()};document.getElementById('modal').onclick=e=>{if(e.target.id==='modal')fechar()};render();
+</script>
+</body>
+</html>
