@@ -42,15 +42,19 @@
 [data-theme="dark"] .visual-content p{color:#cbd5e1}
 [data-theme="dark"] .sugerir-box textarea{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .pin-btn,[data-theme="dark"] .share-btn{color:#cbd5e1}
-@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}</style></head><body><div id="deltaMenuBackdrop"></div><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="menu-loader.js?v=20260929a" defer></script><main>
+@media(max-width:760px){.hero{padding:70px 0 25px}.hero h1{font-size:37px}.paths,.grid,.visual-grid,.list-grid{grid-template-columns:1fr}.section{padding:31px 0}.path{padding:18px}.visual{min-height:225px}.theme-toggle{bottom:90px}}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px}.home-cta-priority{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:12px}.home-cta-primary,.home-cta-secondary,.home-cta-tertiary{display:inline-flex;align-items:center;gap:7px;border-radius:12px;text-decoration:none;font-weight:900;font-size:13px;padding:11px 14px;transition:transform .15s ease,box-shadow .15s ease}.home-cta-primary{background:var(--grad);color:#fff;box-shadow:0 7px 18px rgba(91,92,226,.18)}.home-cta-secondary{background:#fff;color:var(--p);border:1px solid var(--p)}.home-cta-tertiary{background:transparent;color:var(--p);border:1px solid var(--border)}.home-cta-primary small,.home-cta-secondary small,.home-cta-tertiary small{font-weight:600;opacity:.78}.home-secondary-link{display:inline-flex;margin-top:9px;color:var(--muted);font-size:12.5px;font-weight:800;text-decoration:none}.home-cta-primary:hover,.home-cta-secondary:hover,.home-cta-tertiary:hover{transform:translateY(-1px)}@media(max-width:600px){.home-cta-priority{display:grid;grid-template-columns:1fr}.home-cta-primary,.home-cta-secondary,.home-cta-tertiary{justify-content:space-between;width:100%;box-sizing:border-box}.home-cta-primary small,.home-cta-secondary small,.home-cta-tertiary small{display:block;margin-left:auto;text-align:right;max-width:46%}}</style></head><body><div id="deltaMenuBackdrop"></div><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="menu-loader.js?v=20260929a" defer></script><main>
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span>
 <h1>O que você quer <span>melhorar hoje?</span></h1>
 <p>Comece pelo problema. O Delta encontra um prompt, uma ferramenta ou um caminho para você melhorar seu projeto com IA.</p>
 
-<div class="hero-stats" id="heroStats"></div><a href="/delta-prompts/paginas/melhorar.html" style="display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:10px 14px;border-radius:11px;background:var(--grad);color:#fff;text-decoration:none;font-weight:900;font-size:13px;box-shadow:0 7px 18px rgba(91,92,226,.18)">⚡ Melhorar meu projeto →</a><a href="/delta-prompts/espaco-ia.html" style="display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:10px 14px;border-radius:11px;background:var(--grad);color:#fff;text-decoration:none;font-weight:900;font-size:13px;box-shadow:0 7px 18px rgba(91,92,226,.18)">🧠 Abrir Espaço IA →</a>
-<a href="#descreveProblemaSection" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:13px;font-weight:800;color:var(--p);text-decoration:none">🧩 Não sabe qual prompt usar? Encontre pelo problema →</a>
+<div class="hero-stats" id="heroStats"></div><div class="home-cta-priority" aria-label="Principais caminhos do Delta">
+<a class="home-cta-primary" href="/delta-prompts/paginas/melhorar.html">⚡ Começar uma melhoria <small>Site • Sistema • Jogo • Projeto</small> →</a>
+<a class="home-cta-secondary" href="#buscar">🔎 Já sei o que preciso <small>Encontrar um recurso pela busca</small> →</a>
+<a class="home-cta-tertiary" href="#descreveProblemaSection">🤔 Não sei por onde começar <small>Descrever o problema e receber uma direção</small> →</a>
+</div>
+<a href="/delta-prompts/espaco-ia.html" class="home-secondary-link">🧠 Abrir meu Espaço IA →</a>
 <div id="pessoasOnline" style="display:none;margin-top:8px;font-size:13px;color:#15803d;font-weight:700"></div>
 
 <div class="search" id="buscar"><span aria-hidden="true">🔎</span><input id="busca-global" type="search" autocomplete="off" aria-label="Buscar no Delta Prompts" placeholder="Ex.: criar um anúncio para um imóvel"><button type="button" id="btnMicBuscaHome" title="Falar o que você precisa" aria-label="Buscar por voz" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:20px;cursor:pointer;display:none">🎤</button><div class="suggestions" id="suggestions"></div></div>
@@ -92,14 +96,14 @@
 
 <div id="promptDoDiaBox" style="margin:24px 0;padding:22px;border-radius:18px;background:linear-gradient(135deg,#eef2ff,#fff);border:1px solid #c7d2fe"></div>
 
-<section class="section" id="centralMelhorar" style="background:linear-gradient(135deg,#eef2ff,#faf5ff);padding:34px 0"><div class="container"><div class="head"><span class="tag">⚡ NOVO NO DELTA • V1.16</span><h2>Seu centro de melhorias</h2><p>O jeito mais rápido de trabalhar com o Delta: escolha o que precisa melhorar e vá direto ao prompt certo.</p></div><div class="paths"><a class="path" href="paginas/melhorar.html"><span class="emoji">🌐</span><h3>Melhorar meu site</h3><p>UX, visual, mobile, desempenho e auditoria.</p><b>Abrir central →</b></a><a class="path" href="paginas/melhorar.html"><span class="emoji">🖥️</span><h3>Melhorar meu sistema</h3><p>Organização, funções, fluxos e evolução segura.</p><b>Abrir central →</b></a><a class="path" href="paginas/melhorar.html"><span class="emoji">🐛</span><h3>Corrigir um erro</h3><p>Encontre a causa antes de alterar o código.</p><b>Caçar bugs →</b></a><a class="path" href="paginas/meu-espaco.html"><span class="emoji">📁</span><h3>Meus projetos</h3><p>Guarde seus projetos principais e volte a eles rapidamente.</p><b>Organizar →</b></a><a class="path" href="paginas/progresso.html"><span class="emoji">🏆</span><h3>Meu progresso</h3><p>XP, níveis e conquistas para transformar uso em hábito.</p><b>Ver progresso →</b></a><a class="path" href="paginas/prompts-do-dev.html"><span class="emoji">💻</span><h3>Biblioteca Dev</h3><p>Prompts para construir e melhorar projetos.</p><b>Explorar →</b></a></div></div></section>
+<section class="section" id="centralMelhorar" style="background:linear-gradient(135deg,#eef2ff,#faf5ff);padding:34px 0"><div class="container"><div class="head"><span class="tag">⚡ NOVO NO DELTA • V1.16</span><h2>Seu centro de melhorias</h2><p>O jeito mais rápido de trabalhar com o Delta: escolha o que precisa melhorar e vá direto ao prompt certo.</p></div><div class="paths"><a class="path" href="paginas/melhorar.html"><span class="emoji">🌐</span><h3>Melhorar meu site</h3><p>UX, visual, mobile, desempenho e auditoria.</p><b>Escolher melhoria →</b></a><a class="path" href="paginas/melhorar.html"><span class="emoji">🖥️</span><h3>Melhorar meu sistema</h3><p>Organização, funções, fluxos e evolução segura.</p><b>Escolher melhoria →</b></a><a class="path" href="paginas/melhorar.html"><span class="emoji">🐛</span><h3>Corrigir um erro</h3><p>Encontre a causa antes de alterar o código.</p><b>Caçar bugs →</b></a><a class="path" href="paginas/meu-espaco.html"><span class="emoji">📁</span><h3>Meus projetos</h3><p>Guarde seus projetos principais e volte a eles rapidamente.</p><b>Organizar →</b></a><a class="path" href="paginas/progresso.html"><span class="emoji">🏆</span><h3>Meu progresso</h3><p>XP, níveis e conquistas para transformar uso em hábito.</p><b>Ver progresso →</b></a><a class="path" href="paginas/prompts-do-dev.html"><span class="emoji">💻</span><h3>Biblioteca Dev</h3><p>Prompts para construir e melhorar projetos.</p><b>Explorar →</b></a></div></div></section>
 <div id="descreveProblemaSection" class="problema-v13">
   <span class="tag">🧩 OUTRO JEITO DE ENCONTRAR</span>
   <h3>Não sabe o nome? Conte o problema.</h3>
   <p>Explique com suas palavras o que você precisa resolver e tente encontrar um prompt adequado.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap">
     <input type="text" id="encaixaInput" aria-label="Descreva o problema que você quer resolver" placeholder="Ex: preciso responder um cliente bravo no whatsapp" style="flex:1;min-width:220px;padding:14px;border-radius:12px;border:1px solid #ddd">
-    <button type="button" id="encaixaBtn" style="padding:14px 24px;background:var(--p);color:#fff;font-weight:700;border-radius:12px;border:0;cursor:pointer">🔎 Encontrar meu prompt</button>
+    <button type="button" id="encaixaBtn" style="padding:14px 24px;background:var(--p);color:#fff;font-weight:700;border-radius:12px;border:0;cursor:pointer">🔎 Encontrar o que preciso</button>
   </div>
   <div id="encaixaResultados" style="margin-top:16px;display:none"></div>
 </div>
@@ -114,12 +118,12 @@
     <div class="descoberta-grid">
       <button type="button" class="descoberta-card" data-descoberta="buscar">
         <span class="descoberta-icon">🔎</span>
-        <span><strong>Encontrar um prompt</strong><small>Pesquise pelo que você quer fazer, mesmo sem saber o nome.</small></span>
+        <span><strong>Encontrar um prompt</strong><small>Digite o que você quer fazer. Você não precisa saber o nome do recurso.</small></span>
         <b>Buscar →</b>
       </button>
       <button type="button" class="descoberta-card" data-descoberta="problema">
         <span class="descoberta-icon">🧩</span>
-        <span><strong>Descrever meu problema</strong><small>Explique com suas palavras e tente encontrar um prompt adequado.</small></span>
+        <span><strong>Descrever meu problema</strong><small>Explique com suas palavras e receba uma direção adequada.</small></span>
         <b>Descrever →</b>
       </button>
       <a class="descoberta-card" href="#caminhos">
@@ -130,7 +134,7 @@
       <a class="descoberta-card" href="/delta-prompts/quiz.html">
         <span class="descoberta-icon">🎯</span>
         <span><strong>Não sei por onde começar</strong><small>Responda 2 perguntas e receba uma direção.</small></span>
-        <b>Fazer quiz →</b>
+        <b>Encontrar meu caminho →</b>
       </a>
       <a class="descoberta-card" href="#mais-acessados-section">
         <span class="descoberta-icon">🔥</span>
@@ -172,7 +176,7 @@ Identifique:
 
 <section class="section white" id="recomendado-section" style="display:none"><div class="container"><div class="section-title"><div><span class="tag">🧠 PRA VOCÊ</span><h2>Baseado no que você mais usa</h2></div></div><div class="list-grid" id="recomendado-grid"></div></div></section>
 
-<section class="section white" id="caminhos"><div class="container"><div class="head"><h2>🧭 O que você procura?</h2><p>Escolha o caminho que mais combina com o que você precisa agora.</p></div><div class="paths"><a class="path" href="#pessoal"><span class="emoji" aria-hidden="true">🏠</span><h3>Pessoal & Dia a Dia</h3><p>Estudar, organizar a vida, cuidar de informações pessoais e criar imagens.</p><b>Ver o que posso fazer →</b></a><a class="path" href="#negocio"><span class="emoji" aria-hidden="true">🏢</span><h3>Minha Empresa & Negócio</h3><p>Marketing, criação de imagens, cartão de visita, folder, redes sociais e vendas.</p><b>Ver o que posso fazer →</b></a><a class="path" href="#trabalho"><span class="emoji" aria-hidden="true">💼</span><h3>Trabalho & Negócios</h3><p>Imóveis, produtividade, comunicação, planejamento e mais.</p><b>Ver o que posso fazer →</b></a><a class="path advanced" href="#avancado"><span class="emoji" aria-hidden="true">🚀</span><span class="type">AVANÇADO</span><h3>IA & Recursos Avançados</h3><p>Skills, agentes, packs, automações, programação e sistemas com IA.</p><b>Ver o que posso fazer →</b></a></div></div></section>
+<section class="section white" id="caminhos"><div class="container"><div class="head"><h2>🧭 O que você procura?</h2><p>Escolha o caminho que mais combina com o que você precisa agora.</p></div><div class="paths"><a class="path" href="#pessoal"><span class="emoji" aria-hidden="true">🏠</span><h3>Pessoal & Dia a Dia</h3><p>Estudar, organizar a vida, cuidar de informações pessoais e criar imagens.</p><b>Ver recursos →</b></a><a class="path" href="#negocio"><span class="emoji" aria-hidden="true">🏢</span><h3>Minha Empresa & Negócio</h3><p>Marketing, criação de imagens, cartão de visita, folder, redes sociais e vendas.</p><b>Ver recursos →</b></a><a class="path" href="#trabalho"><span class="emoji" aria-hidden="true">💼</span><h3>Trabalho & Negócios</h3><p>Imóveis, produtividade, comunicação, planejamento e mais.</p><b>Ver recursos →</b></a><a class="path advanced" href="#avancado"><span class="emoji" aria-hidden="true">🚀</span><span class="type">AVANÇADO</span><h3>IA & Recursos Avançados</h3><p>Skills, agentes, packs, automações, programação e sistemas com IA.</p><b>Ver recursos →</b></a></div></div></section>
 
 <section class="section search-results" id="search-results"><div class="container"><div class="toolbar"><h2 id="results-title">Resultados</h2><button class="clear" onclick="limparBusca()">✕ Limpar</button></div><div class="grid" id="results-grid"></div>
 <div id="prompt-results-box" style="display:none;margin-top:26px"><h3 style="font-size:16px;margin:0 0 12px;color:#344055">📝 Prompts relacionados</h3><div id="prompt-results-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px"></div></div>
