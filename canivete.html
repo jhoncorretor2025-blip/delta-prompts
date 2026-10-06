@@ -4225,15 +4225,6 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
       const brand=side.querySelector('.brand');
       if(brand)brand.insertAdjacentElement('afterend',badge);
     }
-    const top=document.querySelector('.top h1');
-    if(top&&!document.getElementById('caniveteTopVersion')){
-      const badge=document.createElement('span');
-      badge.id='caniveteTopVersion';
-      badge.className='pill';
-      badge.style.cssText='margin-left:8px;vertical-align:middle;font-size:10px';
-      badge.textContent='v'+VERSION;
-      top.appendChild(badge);
-    }
   }
 
   const MODULOS={
