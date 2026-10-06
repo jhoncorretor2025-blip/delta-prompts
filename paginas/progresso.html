@@ -37,7 +37,7 @@ function renderSaudeProjeto(){
   const s=h.audit.scores||{};const rows=[['Funções',s.functionality],['UX/UI',s.ux],['Mobile',s.mobile],['Performance',s.performance],['Acessibilidade',s.accessibility],['Segurança',s.security]];
   metrics.innerHTML=rows.map(x=>'<div class="metric"><span>'+x[0]+'</span><div class="track"><i style="width:'+Number(x[1]||0)+'%"></i></div><strong>'+Number(x[1]||0)+'%</strong></div>').join('');
 }
-document.getElementById('healthProject')?.addEventListener('change',function(){try{if(this.value)localStorage.setItem('deltaProjetoAtual',this.value);else localStorage.removeItem('deltaProjetoAtual')}catch(e){}renderSaudeProjeto()});
+document.getElementById('healthProject')?.addEventListener('change',function(){try{if(this.value)localStorage.setItem('deltaProjetoAtual',this.value);else localStorage.removeItem('deltaProjetoAtual')}catch(e){}renderSaudeProjeto();const p=Delta.projects().find(x=>x.id===this.value);document.getElementById('nextStep').textContent=p&&p.nextStep?p.nextStep:'Selecione um projeto para ver o próximo passo'});
 preencherProjetosSaude();
 // próximo passo
 const selectedProject=ps.find(p=>p.id===document.getElementById('healthProject')?.value);document.getElementById('nextStep').textContent=selectedProject&&selectedProject.nextStep?selectedProject.nextStep:'Selecione um projeto para ver o próximo passo';
