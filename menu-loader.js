@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.17
-window.DELTA_SITE_VERSION='V1.17';
+// DELTA SITE VERSION: V1.18
+window.DELTA_SITE_VERSION='V1.18';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -234,7 +234,7 @@ window.deltaRegistrarLog=function(texto){
       document.head.appendChild(appleIcon);
     }
     if('serviceWorker' in navigator){
-      navigator.serviceWorker.register('/delta-prompts/sw.js?v=20261005-v19',{updateViaCache:'none'}).catch(function(){});
+      navigator.serviceWorker.register('/delta-prompts/sw.js?v=20261005-v20',{updateViaCache:'none'}).catch(function(){});
     }
   }catch(e){}
 })();
