@@ -929,15 +929,15 @@ document.addEventListener('click',function(e){var b=e.target.closest('[data-acao
    return'Concluir esta etapa com uma decisão, definição ou resultado prático que permita avançar na jornada.';
  }
  function obterInformacoesNecessarias(p){
-   const encontrados=[...new Set(String(p.prompt||'').match(/\\[[^\\]]+\\]/g)||[])];
+   const encontrados=[...new Set(String(p.prompt||'').match(/\[[^\]]+\]/g)||[])];
    return encontrados.length
-     ? encontrados.join(', ').replace(/\\[/g,'').replace(/\\]/g,'')
+     ? encontrados.join(', ').replace(/\[/g,'').replace(/\]/g,'')
      : 'O prompt não exige campos específicos; use o contexto e os dados que você já tiver sobre o projeto.';
  }
  function obterProximoPasso(){
    const proximo=passos[atual+1];
    if(!proximo)return'Você chegou à última etapa desta jornada.';
-   return proximo.titulo.replace(/^\\s+/,'');
+   return proximo.titulo.replace(/^\s+/,'');
  }
  function renderPasso(){
    const p=passos[atual],total=passos.length;
