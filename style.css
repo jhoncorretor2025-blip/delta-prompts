@@ -1219,3 +1219,17 @@ body.category-page .contador{
 #btnLimparBuscaHome:focus-visible{outline:3px solid rgba(91,92,226,.45);outline-offset:1px;background:rgba(91,92,226,.08)!important}
 .home-cta-primary:focus-visible,.home-cta-secondary:focus-visible,.home-cta-tertiary:focus-visible,.home-quick-access a:focus-visible,.quick button:focus-visible,.modo-simples-hero-link:focus-visible{box-shadow:0 0 0 3px rgba(91,92,226,.16)}
 @media(max-width:600px){#btnLimparBuscaHome{width:40px;height:40px;font-size:19px}}
+
+/* ===== DELTA V1.27 — cards com ações acessíveis ===== */
+.card-interactive{position:relative}
+.card-main-link{display:block;color:inherit;text-decoration:none;padding-right:34px}
+.card-interactive>.share-btn{position:absolute;top:12px;right:12px}
+.item-interactive{position:relative}
+.item-main-link{display:flex;align-items:center;gap:13px;min-width:0;flex:1;color:inherit;text-decoration:none}
+.item-main-link>span:nth-child(2){min-width:0}
+.item-main-link strong,.item-main-link small{display:block;overflow-wrap:anywhere}
+.item-interactive>.item-actions{margin-left:auto}
+.card-main-link:focus-visible,.item-main-link:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px;border-radius:10px}
+
+/* ===== DELTA V1.27 — contraste de textos secundários ===== */
+.small,.muted,.hint,.helper,.sugerir-dica{color:#667085}
