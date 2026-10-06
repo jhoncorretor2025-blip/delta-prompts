@@ -147,7 +147,45 @@ document.querySelectorAll('.cat[data-filter]').forEach(b=>b.onclick=()=>{
     first.style.boxShadow='0 0 0 3px rgba(91,92,226,.18),0 10px 24px rgba(40,42,90,.10)';
     setTimeout(()=>{first.style.boxShadow='';},2200);
   }
-});document.querySelectorAll('[data-diag]').forEach(b=>b.onclick=()=>{const map={bug:['bug','🐛 Use o Caçador de Bugs PRO.'],mobile:['mobile','📱 Use a melhoria mobile.'],performance:['performance','⚡ Use a otimização.'],visual:['visual','🎨 Use a revisão visual e UX.'],ia:['ia','🧠 Use a análise para adicionar IA.'],audit:['audit','🔎 Use a auditoria antes de publicar.']};const r=map[b.dataset.diag],out=document.getElementById('diagnosticoResultado');filter=r[0];render();out.style.display='block';out.innerHTML='<strong>'+r[1]+'</strong>';});document.addEventListener('click',e=>{const c=e.target.closest('[data-copy]');if(c){const p=prompts.find(x=>x.id===c.dataset.copy);if(!exigirProjeto())return;navigator.clipboard?.writeText(promptFinal(p)).then(()=>{xp(5,'Prompt copiado: '+p.title);Delta.recordActivity({type:'copy',title:p.title,promptId:p.id,projectId:projetoAtual()?.id||null});c.textContent='✅ Copiado! +5 XP';setTimeout(()=>c.textContent='📋 Copiar +5 XP',1500)}).catch(()=>alert('Não foi possível copiar automaticamente.'))}const f=e.target.closest('[data-fav]');if(f){let a=JSON.parse(localStorage.deltaFavMelhorar||'[]');a=a.includes(f.dataset.fav)?a.filter(x=>x!==f.dataset.fav):[...a,f.dataset.fav];localStorage.deltaFavMelhorar=JSON.stringify(a);xp(3,'Favorito: '+f.dataset.fav);f.textContent=a.includes(f.dataset.fav)?'⭐ Favoritado':'☆ Favoritar'}}if(e.target.closest('[data-result]')){const b=e.target.closest('[data-result]');const box=document.getElementById('result-'+b.dataset.result);if(box)box.style.display='block'}const rb=e.target.closest('[data-status]');if(rb&&rb.dataset.prompt){const p=prompts.find(x=>x.id===rb.dataset.prompt);if(p){if(!exigirProjeto())return;Delta.recordResult({title:p.title,promptId:p.id,status:rb.dataset.status,projectId:projetoAtual()?.id||null,category:p.cat});rb.parentElement.innerHTML='<strong>✅ Resultado registrado.</strong><small>Isso entrou no seu histórico de melhorias.</small>';Delta.xp(rb.dataset.status==='funcionou'?10:2,'Resultado: '+p.title);xpEl.textContent=localStorage.deltaXP||0}}});xpEl.textContent=localStorage.deltaXP||0;
+});document.querySelectorAll('[data-diag]').forEach(b=>b.onclick=()=>{const map={bug:['bug','🐛 Use o Caçador de Bugs PRO.'],mobile:['mobile','📱 Use a melhoria mobile.'],performance:['performance','⚡ Use a otimização.'],visual:['visual','🎨 Use a revisão visual e UX.'],ia:['ia','🧠 Use a análise para adicionar IA.'],audit:['audit','🔎 Use a auditoria antes de publicar.']};const r=map[b.dataset.diag],out=document.getElementById('diagnosticoResultado');filter=r[0];render();out.style.display='block';out.innerHTML='<strong>'+r[1]+'</strong>';});document.addEventListener('click',e=>{
+  const copy=e.target.closest('[data-copy]');
+  if(copy){
+    const p=prompts.find(x=>x.id===copy.dataset.copy);
+    if(!p||!exigirProjeto())return;
+    navigator.clipboard?.writeText(promptFinal(p)).then(()=>{
+      xp(5,'Prompt copiado: '+p.title);
+      Delta.recordActivity({type:'copy',title:p.title,promptId:p.id,projectId:projetoAtual()?.id||null});
+      copy.textContent='✅ Copiado! +5 XP';
+      setTimeout(()=>copy.textContent='📋 Copiar +5 XP',1500);
+    }).catch(()=>alert('Não foi possível copiar automaticamente.'));
+    return;
+  }
+  const fav=e.target.closest('[data-fav]');
+  if(fav){
+    let a=JSON.parse(localStorage.deltaFavMelhorar||'[]');
+    a=a.includes(fav.dataset.fav)?a.filter(x=>x!==fav.dataset.fav):[...a,fav.dataset.fav];
+    localStorage.deltaFavMelhorar=JSON.stringify(a);
+    xp(3,'Favorito: '+fav.dataset.fav);
+    fav.textContent=a.includes(fav.dataset.fav)?'⭐ Favoritado':'☆ Favoritar';
+    return;
+  }
+  const result=e.target.closest('[data-result]');
+  if(result){
+    const box=document.getElementById('result-'+result.dataset.result);
+    if(box)box.style.display='block';
+    return;
+  }
+  const status=e.target.closest('[data-status]');
+  if(status&&status.dataset.prompt){
+    const p=prompts.find(x=>x.id===status.dataset.prompt);
+    if(!p||!exigirProjeto())return;
+    Delta.recordResult({title:p.title,promptId:p.id,status:status.dataset.status,projectId:projetoAtual()?.id||null,category:p.cat});
+    status.parentElement.innerHTML='<strong>✅ Resultado registrado.</strong><small>Isso entrou no seu histórico de melhorias.</small>';
+    Delta.xp(status.dataset.status==='funcionou'?10:2,'Resultado: '+p.title);
+    xpEl.textContent=localStorage.deltaXP||0;
+  }
+});
+xpEl.textContent=localStorage.deltaXP||0;
 const selProjeto=document.getElementById('seletorProjetoMelhorar');
 if(selProjeto)selProjeto.addEventListener('change',function(){const id=selProjeto.value;try{if(id)localStorage.setItem('deltaProjetoAtual',id);else localStorage.removeItem('deltaProjetoAtual')}catch(e){}atualizarSeletorProjeto();render()});
 atualizarSeletorProjeto();render();
