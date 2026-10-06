@@ -1,4 +1,4 @@
-/* Delta Prompts — núcleo compartilhado V1.17
+/* Delta Prompts — núcleo compartilhado V1.18
    Responsabilidade: armazenamento, projetos, atividades, resultados e XP.
    Compatível com dados antigos da V1.16.
 */
@@ -49,6 +49,13 @@
   }
   function recordResult(data){
     const list=read(KEY.results,[]);
+    if(data&&data.projectId){
+      const proj=projects().find(x=>x.id===data.projectId);
+      if(proj){
+        const next=data.status==='funcionou'?'Validar a melhoria em celular e desktop':data.status==='parcial'?'Investigar o que ainda não funcionou':'Reproduzir o problema e registrar evidências';
+        updateProject(proj.id,{nextStep:next});
+      }
+    }
     const item=Object.assign({id:uid('res'),date:today(),ts:Date.now(),status:'testar'},data);
     list.unshift(item);write(KEY.results,list.slice(0,200));
     markUsage();recordActivity({type:'result',title:data.title||'Resultado registrado',status:item.status,projectId:data.projectId||null});
@@ -56,7 +63,7 @@
   }
   function stats(){
     const activities=read(KEY.activities,[]),results=read(KEY.results,[]);
-    return {xp:Number(read(KEY.xp,0))||0,projects:projects().length,activities:activities.length,results:results.length,completed:results.filter(x=>x.status==='funcionou').length,partial:results.filter(x=>x.status==='parcial').length}
+    const completed=results.filter(x=>x.status==='funcionou').length,partial=results.filter(x=>x.status==='parcial').length,failed=results.filter(x=>x.status==='falhou').length;return {xp:Number(read(KEY.xp,0))||0,projects:projects().length,activities:activities.length,results:results.length,completed,partial,failed,resolutionRate:results.length?Math.round(completed/results.length*100):0}
   }
   window.Delta={KEY,read,write,projects,saveProjects,addProject,updateProject,removeProject,xp,markUsage,recordActivity,recordResult,stats,today};
 })();
