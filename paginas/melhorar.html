@@ -122,13 +122,18 @@ function exigirProjeto(){
   const av=document.getElementById('avisoProjetoObrigatorio');if(av){av.style.display='block';av.scrollIntoView({behavior:'smooth',block:'center'})}
   return false;
 }function contextoPatrimonio(){const p=projetoAtual();if(!p)return '\\n\\n⚠️ PROJETO NÃO SELECIONADO: não invente patrimônio. Solicite o contexto do projeto antes de alterar código.';const cps=Delta.projectCheckpoints(p.id).slice(0,3);return '\\n\\n--- 🛡️ PATRIMÔNIO DO PROJETO ---\\nProjeto: '+p.n+'\\nLink: '+(p.link||'Não informado')+'\\nObjetivo: '+(p.objective||'Não informado')+'\\nFonte principal dos dados: '+(p.source||'Não informada')+'\\nFunções críticas que NÃO podem ser perdidas: '+(p.critical||'Não cadastradas — mapear antes de alterar')+'\\nRegras de proteção: '+(p.protectedRules||'Não cadastradas — preservar tudo que já funciona')+'\\nArquitetura: '+(p.architecture||'Não registrada')+'\\nÚltimos checkpoints: '+(cps.length?cps.map(x=>x.title||x.status).join(' | '):'Nenhum registrado')+'\\n\\nANTES DE ALTERAR: compare a proposta com este patrimônio. Se houver risco para uma função crítica, pare, explique o risco e peça validação.\\nDEPOIS DE ALTERAR: valide as funções críticas e registre um checkpoint.'}function promptFinal(p){return CONTINUIDADE_PROJETO+contextoPatrimonio()+'\\n\\n--- INSTRUÇÃO DESTA ETAPA ---\\n'+p.text}const xpEl=document.getElementById('xp');function xp(n,reason){const v=Delta.xp(n,reason||'Uso de melhoria');xpEl.textContent=v;}function render(){
-const list=filter==='all'?prompts:prompts.filter(p=>p.cat===filter);
-document.getElementById('count').textContent=list.length+' prompt(s) para este objetivo.';
-const instr=filter==='all'
-?'<div style="grid-column:1/-1;padding:12px 14px;border-radius:12px;background:#f8f8ff;border:1px solid #e0e2ff;color:#475467;font-size:12.5px">👆 <strong>Comece escolhendo uma opção acima.</strong> Depois, o prompt recomendado será mostrado aqui.</div>'
-:'<div style="grid-column:1/-1;padding:12px 14px;border-radius:12px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:12.5px">✅ <strong>Agora faça isso:</strong> copie o prompt, abra sua IA e cole. Depois envie o <strong>link do site, código/arquivos ou prints</strong> que o prompt pedir.</div>';
-document.getElementById('cards').innerHTML=instr+list.map(p=>'<article class="card"><span class="badge" style="margin-bottom:10px">🎯 PROMPT RECOMENDADO</span><h3>'+p.icon+' '+p.title+'</h3><p>'+p.desc+'</p><div style="font-size:12px;color:#475467;margin:4px 0 8px"><strong>Depois de copiar:</strong> abra sua IA, cole o prompt e envie o material do seu projeto quando for solicitado.</div><div class="prompt">'+promptFinal(p).replace(/</g,'&lt;')+'</div><div class="actions"><button aria-label="Copiar instrução pronta" data-copy="'+p.id+'">📋 Copiar este prompt +5 XP</button><button class="secondary" data-fav="'+p.id+'">⭐ Favoritar</button></div></article>').join('');
-};document.querySelectorAll('.cat[data-filter]').forEach(b=>b.onclick=()=>{
+  const list=filter==='all'?prompts:prompts.filter(p=>p.cat===filter);
+  document.getElementById('count').textContent=list.length+' prompt(s) para este objetivo.';
+  const instr=filter==='all'
+    ? '<div style="grid-column:1/-1;padding:12px 14px;border-radius:12px;background:#f8f8ff;border:1px solid #e0e2ff;color:#475467;font-size:12.5px">👆 <strong>Comece escolhendo uma opção acima.</strong> Depois, o prompt recomendado será mostrado aqui.</div>'
+    : '<div style="grid-column:1/-1;padding:12px 14px;border-radius:12px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:12.5px">✅ <strong>Agora faça isso:</strong> copie o prompt, abra sua IA e cole. Depois envie o <strong>link do site, código/arquivos ou prints</strong> que o prompt pedir.</div>';
+  const esc=s=>String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  document.getElementById('cards').innerHTML=instr+list.map(p=>{
+    const texto=esc(promptFinal(p));
+    return '<article class="card"><span class="badge" style="margin-bottom:10px">🎯 PROMPT RECOMENDADO</span><h3>'+esc(p.icon)+' '+esc(p.title)+'</h3><p>'+esc(p.desc)+'</p><div style="font-size:12px;color:#475467;margin:4px 0 8px"><strong>Depois de copiar:</strong> abra sua IA, cole o prompt e envie o material do seu projeto quando for solicitado.</div><div class="prompt">'+texto+'</div><div class="actions"><button aria-label="Copiar instrução pronta" data-copy="'+esc(p.id)+'">📋 Copiar este prompt +5 XP</button><button class="secondary" data-fav="'+esc(p.id)+'">⭐ Favoritar</button></div></article>';
+  }).join('');
+}
+document.querySelectorAll('.cat[data-filter]').forEach(b=>b.onclick=()=>{
   filter=b.dataset.filter;
   render();
   document.querySelectorAll('.cats .cat[data-filter]').forEach(x=>{
