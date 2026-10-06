@@ -3451,7 +3451,7 @@ async function exportarPDF(){
 }
 
 // ===== #1 SINCRONIZAR COM A NUVEM =====
-let deltaFirebaseModulo=null,usuarioLogado=null,syncTimer=null,ultimoLastSavedConhecido=null;
+let deltaFirebaseModulo=null,usuarioLogado=null,syncTimer=null,ultimoLastSavedConhecido=null;window.__caniveteAuthPronto=false;window.__caniveteCloudReady=false;
 function agendarSyncNuvem(){
   if(!usuarioLogado||!deltaFirebaseModulo)return;
   clearTimeout(syncTimer);
@@ -3528,10 +3528,12 @@ function updateSyncBadge(state){
   dot.style.boxShadow=state==='loading'?'0 0 0 3px rgba(251,191,36,.25)':'none';
 }
 async function carregarFirebaseCanivete(){
+  window.__caniveteAuthPronto=false;
+  window.__caniveteCloudReady=false;
   updateSyncBadge('loading');
-  try{deltaFirebaseModulo=await import('/delta-prompts/firebase-auth.js')}catch(e){console.error('Erro ao carregar sincronizacao:',e);updateSyncBadge('error');const st=document.getElementById('syncStatusLabel');if(st)st.textContent='⚠️ Não foi possível conectar à sincronização';return}
+  try{deltaFirebaseModulo=await import('/delta-prompts/firebase-auth.js')}catch(e){console.error('Erro ao carregar sincronizacao:',e);updateSyncBadge('error');window.__caniveteAuthPronto=true;window.__caniveteCloudReady=true;const st=document.getElementById('syncStatusLabel');if(st)st.textContent='⚠️ Não foi possível conectar à sincronização';return}
   deltaFirebaseModulo.initAuthWatcher();
-  deltaFirebaseModulo.authPronto.then(()=>{const user=deltaFirebaseModulo.getUser();if(user)aoLogarCanivete(user);else updateSyncBadge('local')});
+  deltaFirebaseModulo.authPronto.then(()=>{window.__caniveteAuthPronto=true;const user=deltaFirebaseModulo.getUser();if(user)aoLogarCanivete(user);else{window.__caniveteCloudReady=true;updateSyncBadge('local')}});
   window.addEventListener('delta-auth-changed',e=>{const user=e.detail&&e.detail.user;if(user)aoLogarCanivete(user);else if(usuarioLogado)aoDeslogarCanivete()});
   const btnLogin=document.getElementById('btnLoginCanivete'),btnLogout=document.getElementById('btnLogoutCanivete');
   if(btnLogin)btnLogin.addEventListener('click',()=>deltaFirebaseModulo.login());
@@ -3539,6 +3541,7 @@ async function carregarFirebaseCanivete(){
 }
 function aoLogarCanivete(user){
   usuarioLogado=user;
+  window.__caniveteCloudReady=false;
   updateSyncBadge('loading');
   const bl=document.getElementById('btnLoginCanivete'),bo=document.getElementById('btnLogoutCanivete'),st=document.getElementById('syncStatusLabel');
   if(bl)bl.style.display='none';if(bo)bo.style.display='block';
@@ -3551,7 +3554,11 @@ function aoLogarCanivete(user){
       ultimoLastSavedConhecido=d.lastSaved;
     }else{ultimoLastSavedConhecido=(nuvem&&nuvem.lastSaved)||d.lastSaved||Date.now();agendarSyncNuvem()}
     updateSyncBadge('ok');
-  }).catch(()=>updateSyncBadge('error'));
+    window.__caniveteCloudReady=true;
+  }).catch(()=>{
+    updateSyncBadge('error');
+    window.__caniveteCloudReady=true;
+  });
 }
 function aoDeslogarCanivete(){
   usuarioLogado=null;
@@ -3661,6 +3668,11 @@ function sugerirCategoriaSeNecessario(i){
   }
 }
 function mostrarOnboardingSeNecessario(){
+  if(window.__caniveteAuthPronto===false || window.__caniveteCloudReady===false){
+    clearTimeout(window.__caniveteOnboardingRetry);
+    window.__caniveteOnboardingRetry=setTimeout(mostrarOnboardingSeNecessario,350);
+    return;
+  }
   const FLAG='canivete-onboarding-v824-visto';
   const semDadosAinda=typeof dadosParecemVazios==='function'
     ? dadosParecemVazios(d)
