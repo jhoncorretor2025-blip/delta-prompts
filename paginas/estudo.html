@@ -131,6 +131,10 @@
   </div>
 
   <div class="filtros-container" id="filtrosContainer" style="display:none">
+  <!-- 🔎 Filtro por Categoria -->
+  <div class="filtro-titulo">🗂️ Categoria</div>
+  <div class="filtro-nivel filtro-categoria-estudo" id="botoes-categoria-estudo"></div>
+
   <!-- 🔎 Filtro por Nível -->
   <div class="filtro-titulo">📊 Nível</div>
   <div class="filtro-nivel">
@@ -660,6 +664,7 @@ const busca = document.getElementById("busca");
 const ordenarSelect = document.getElementById("ordenar");
 
 let nivelAtivo = "todos";
+let categoriaAtiva = "todas";
 
 // ===== TOAST =====
 function mostrarToast(texto = '✓ Prompt copiado!') {
@@ -742,11 +747,21 @@ function atualizarPreferenciaIAUI(id){
 // ===== PAINEL MAIS FILTROS =====
 function toggleMaisFiltrosEstudo(){const box=document.getElementById('filtrosContainer');box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none'}
 function atualizarBadgeFiltrosEstudo(){
-  const ativo=document.querySelector('.filtro-nivel button.ativo');
-  const n=(ativo&&ativo.dataset.label&&ativo.dataset.label!=='Todos')?1:0;
+  let n=0;if(nivelAtivo!=='todos')n++;if(categoriaAtiva!=='todas')n++;
   const badge=document.getElementById('filtrosAtivosBadge'),btn=document.getElementById('btnMaisFiltros');
   if(n>0){badge.textContent=n;badge.style.display='inline-block';btn.classList.add('ativo')}
   else{badge.style.display='none';btn.classList.remove('ativo')}
+}
+function atualizarCategoriasEstudo(){
+  const box=document.getElementById('botoes-categoria-estudo');if(!box)return;
+  const categorias=[...new Set(promptsEstudo.map(p=>p.categoria))];
+  box.innerHTML='<button type="button" data-categoria="todas" data-label="Todas as Categorias">Todas as Categorias</button>'+categorias.map(cat=>'<button type="button" data-categoria="'+String(cat).replace(/"/g,'&quot;')+'" data-label="'+String(cat).replace(/"/g,'&quot;')+'">'+cat+'</button>').join('');
+  box.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{
+    categoriaAtiva=btn.dataset.categoria||'todas';
+    box.querySelectorAll('button').forEach(b=>b.classList.toggle('ativo',b.dataset.categoria===categoriaAtiva));
+    filtrarPrompts();
+  }));
+  box.querySelector('[data-categoria="todas"]').classList.toggle('ativo',categoriaAtiva==='todas');
 }
 function atualizarContadoresFiltrosEstudo(){
   const termo=norm(busca.value);
@@ -758,11 +773,16 @@ function atualizarContadoresFiltrosEstudo(){
     const n=niv?base.filter(p=>p.nivel===niv).length:base.length;
     btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
   });
+  document.querySelectorAll('#botoes-categoria-estudo button').forEach(btn=>{
+    const cat=btn.dataset.categoria;const n=cat==='todas'?base.length:base.filter(p=>p.categoria===cat).length;
+    btn.innerHTML=btn.dataset.label+' <span class="count-badge">'+n+'</span>';
+    btn.classList.toggle('ativo',cat===categoriaAtiva);
+  });
 }
 function limparFiltrosEstudo(){
-  nivelAtivo='todos';
-  busca.value='';
-  document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo',(b.dataset.label||b.textContent.trim())==='Todos'));
+  nivelAtivo='todos';categoriaAtiva='todas';busca.value='';
+  document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo',(b.dataset.label||b.textContent.replace(/\s+\d+$/,'').trim())==='Todos'));
+  document.querySelectorAll('#botoes-categoria-estudo button').forEach(b=>b.classList.toggle('ativo',b.dataset.categoria==='todas'));
   filtrarPrompts();
   mostrarToast('✕ Filtros limpos');
 }
@@ -803,10 +823,10 @@ function compartilhar(id){
 // ===== RELACIONADOS / NAVEGAÇÃO =====
 function destacarCard(id){const el=document.getElementById('card-'+id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('destacado');setTimeout(()=>el.classList.remove('destacado'),2000)}
 function irPara(id){
-  nivelAtivo='todos';
-  busca.value='';
-  ordenarSelect.value='padrao';
-  document.querySelectorAll('.filtro-nivel button').forEach(b=>b.classList.toggle('ativo', (b.dataset.label||b.textContent.trim())==='Todos'));
+  nivelAtivo='todos';categoriaAtiva='todas';
+  busca.value='';ordenarSelect.value='padrao';
+  document.querySelectorAll('.filtro-nivel:not(.filtro-categoria-estudo) button').forEach(b=>b.classList.toggle('ativo',(b.dataset.label||b.textContent.replace(/\s+\d+$/,'').trim())==='Todos'));
+  document.querySelectorAll('#botoes-categoria-estudo button').forEach(b=>b.classList.toggle('ativo',b.dataset.categoria==='todas'));
   filtrarPrompts();
   requestAnimationFrame(()=>destacarCard(id));
 }
@@ -987,6 +1007,7 @@ function filtrarPrompts() {
   const termo = norm(busca.value);
   let filtrados = promptsEstudo.filter(p =>
     (nivelAtivo === 'todos' || p.nivel === nivelAtivo) &&
+    (categoriaAtiva === 'todas' || p.categoria === categoriaAtiva) &&
     (norm(p.titulo).includes(termo) ||
     norm(p.prompt).includes(termo) ||
     norm(p.quando).includes(termo) ||
@@ -1000,7 +1021,7 @@ function filtrarPrompts() {
 
 function filtrarNivel(event, nivel) {
   nivelAtivo = nivel;
-  const botoes = document.querySelectorAll(".filtro-nivel button");
+  const botoes = document.querySelectorAll(".filtro-nivel:not(.filtro-categoria-estudo) button");
   botoes.forEach(btn => btn.classList.remove("ativo"));
   event.currentTarget.classList.add("ativo");
   filtrarPrompts();
@@ -1118,6 +1139,7 @@ document.getElementById('selectExportarProjetoEstudo').addEventListener('change'
 atualizarDatalistProjetosEstudo();
 atualizarSelectExportarProjetoEstudo();
 
+atualizarCategoriasEstudo();
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 atualizarStats();
 filtrarPrompts();
@@ -1238,7 +1260,8 @@ pre {
 .filtro-titulo{margin:10px 0 2px;font-size:12px;font-weight:800;color:#344055}
 .btn-limpar-filtros{margin-top:8px;border:0;background:none;color:#4f46e5;font-weight:800;font-size:13px;cursor:pointer;padding:6px 0;display:block}
 .count-badge{font-size:11px;font-weight:800;padding:1px 7px;border-radius:999px;background:rgba(79,70,229,.12);color:#4f46e5}
-.filtro-nivel button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.filtro-nivel button.ativo .count-badge,#botoes-categoria-estudo button.ativo .count-badge{background:rgba(255,255,255,.25);color:#fff}
+.filtro-categoria-estudo{max-height:180px;overflow:auto;padding-right:4px}
 .feedback-row{display:flex;align-items:center;gap:8px;margin-top:12px}
 .feedback-row button{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#475467}
 .feedback-row button.marcado{background:#eef2ff;border-color:#4f46e5;color:#4f46e5}
