@@ -45,6 +45,12 @@
 [data-theme="dark"] .select-projeto{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
 [data-theme="dark"] .btn-novo-projeto{background:#0f1424;border-color:rgba(255,255,255,.2);color:#a5a6f0}
 
+/* ===== Auditoria visual V1.20 ===== */
+.audit-note{margin:0 0 14px;padding:12px 14px;border-left:4px solid #5b5ce2;background:#f8fafc;border-radius:10px;color:#475467;font-size:13px;line-height:1.5}
+.audit-note strong{color:#172033}
+.audit-legend{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0}.audit-legend span{padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800}.audit-confirmada{background:#dcfce7;color:#166534}.audit-oportunidade{background:#fef3c7;color:#92400e}.audit-nao-verificavel{background:#f2f4f7;color:#475467}
+@media(max-width:600px){.evo-acoes{flex-direction:column}.evo-acoes button{width:100%}.audit-note{font-size:12.5px}}
+
 /* ===== Melhorias da auditoria ===== */
 /* #2 foco visivel */
 #sites-page button:focus-visible,#sites-page input:focus-visible,#sites-page select:focus-visible,#sites-page a:focus-visible{outline:3px solid #5b5ce2;outline-offset:2px;border-radius:6px}
@@ -88,7 +94,7 @@
   .prompt-card{padding:14px}
   .acoes button{flex:1 1 45%}
 }
-.evo-acoes button:not(.principal){opacity:.82}.evo-acoes button:not(.principal):hover{opacity:1}.toolbar-extra{gap:8px}.toolbar-extra button{white-space:nowrap}@media(max-width:700px){#jornadaNiveis>div{grid-template-columns:1fr!important}}\n</style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/js/delta-core.js"></script><script src="/delta-prompts/js/sites/storage.js"></script><script src="/delta-prompts/menu-loader.js?v=20261005-v19"></script><main>
+.evo-acoes button:not(.principal){opacity:.82}.evo-acoes button:not(.principal):hover{opacity:1}.toolbar-extra{gap:8px}.toolbar-extra button{white-space:nowrap}@media(max-width:700px){#jornadaNiveis>div{grid-template-columns:1fr!important}}\n</style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/js/delta-core.js"></script><script src="/delta-prompts/js/sites/storage.js"></script><script src="/delta-prompts/menu-loader.js?v=20261005-v20"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Sites & Landing Pages</p>
 <header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.19</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
@@ -113,7 +119,9 @@
     <div class="evo-item"><strong id="evoCategorias">0</strong><span>categorias trabalhadas</span></div>
     <div class="evo-item"><strong id="evoProximo">—</strong><span>próximo passo</span></div>
   </div>
-  <div class="evo-acoes">
+  <section class="card" id="auditoriaVisual"><h3>🎨 Auditoria Visual</h3><p class="audit-note"><strong>Auditoria baseada em evidências.</strong> Use este módulo para orientar uma análise visual sem inventar problemas: observe o site, diferencie problemas confirmados de oportunidades e preserve o que já funciona.</p><div class="audit-legend"><span class="audit-confirmada">✓ Problema confirmado</span><span class="audit-oportunidade">◆ Oportunidade</span><span class="audit-nao-verificavel">? Não foi possível verificar</span></div></section>
+
+<div class="evo-acoes">
     <button type="button" class="principal" id="btnEvoContinuar">▶️ Continuar minha jornada</button>
     <button type="button" id="btnEvoPendentes">📋 Ver próximas melhorias</button>
     <button type="button" id="btnEvoTodos">🔄 Ver todas as melhorias</button>
