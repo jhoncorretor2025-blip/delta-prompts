@@ -12,5 +12,4 @@ function render(){
 ensureDefaults();render();
 document.getElementById('add').onclick=()=>{const n=document.getElementById('nome').value.trim();if(!n){document.getElementById('nome').focus();return}Delta.addProject({n,d:document.getElementById('desc').value.trim()||'Projeto pessoal',objective:'',nextStep:'Escolher uma melhoria'});document.getElementById('nome').value='';document.getElementById('desc').value='';render()};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-remove]');if(!b)return;if(confirm('Excluir este projeto?')){Delta.removeProject(b.dataset.remove);render()}});
-</script>
 </script></body></html>
