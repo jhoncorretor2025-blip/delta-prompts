@@ -16,7 +16,7 @@
       id:x.id||('legacy-'+i+'-'+String(x.n||'projeto').toLowerCase().replace(/[^a-z0-9]+/g,'-')),
       n:x.n||x.name||'Projeto sem nome',
       d:x.d||x.description||'Projeto pessoal',
-      objective:x.objective||'',
+      objective:x.objective||'',link:x.link||x.url||'',source:x.source||'',critical:x.critical||'',protectedRules:x.protectedRules||'',architecture:x.architecture||'',
       status:x.status||'Em andamento',
       nextStep:x.nextStep||'Escolher uma melhoria',
       lastActivity:x.lastActivity||x.updatedAt||null,
@@ -25,7 +25,7 @@
   }
   function saveProjects(p){return write(KEY.projects,p)}
   function addProject(data){
-    const p=projects();const item={id:uid('proj'),n:String(data.n||'Projeto').trim(),d:String(data.d||'Projeto pessoal').trim(),objective:String(data.objective||'').trim(),status:data.status||'Em andamento',nextStep:String(data.nextStep||'Escolher uma melhoria').trim(),lastActivity:today(),createdAt:today()};
+    const p=projects();const item={id:uid('proj'),n:String(data.n||'Projeto').trim(),d:String(data.d||'Projeto pessoal').trim(),objective:String(data.objective||'').trim(),status:data.status||'Em andamento',nextStep:String(data.nextStep||'Escolher uma melhoria').trim(),lastActivity:today(),createdAt:today(),link:String(data.link||'').trim(),source:String(data.source||'').trim(),critical:String(data.critical||'').trim(),protectedRules:String(data.protectedRules||'').trim(),architecture:String(data.architecture||'').trim()};
     p.push(item);saveProjects(p);return item
   }
   function updateProject(id,patch){
