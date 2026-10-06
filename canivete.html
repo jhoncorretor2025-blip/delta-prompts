@@ -1521,218 +1521,7 @@ html{overflow-x:hidden}
 
 
 
-<!-- CANIVETE-V108-CONSOLIDACAO-GERAL -->
-<style id="CANIVETE_V108_CONSOLIDATION_STYLE">
-:root{
-  --cv-content-max:1440px;
-  --cv-space-1:4px;--cv-space-2:8px;--cv-space-3:12px;--cv-space-4:16px;--cv-space-5:20px;--cv-space-6:24px;--cv-space-7:32px;
-  --cv-radius-sm:8px;--cv-radius-md:12px;--cv-radius-lg:16px;
-  --cv-shadow-sm:0 2px 8px rgba(15,23,42,.04);--cv-shadow-md:0 8px 24px rgba(15,23,42,.06);--cv-shadow-lg:0 18px 40px rgba(15,23,42,.14);
-}
-html{overflow-x:hidden}
-body{min-width:320px;background:var(--bg);color:var(--ink)}
-.main{width:min(calc(100% - 0px),var(--cv-content-max));max-width:var(--cv-content-max);padding:24px clamp(16px,2.2vw,32px) 40px}
-.top{align-items:flex-start;gap:20px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--line)}
-.top>div:first-child{min-width:0;flex:1}
-.top h1{display:flex;align-items:center;flex-wrap:wrap;gap:7px;font-size:clamp(26px,2.2vw,32px);line-height:1.12;letter-spacing:-.025em}
-.top .sub{max-width:780px;font-size:13px}
-.canivete-version-visible{margin:0!important}
-.top .actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px;max-width:520px}
-.canivete-more-actions{position:relative}
-.canivete-more-actions>summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer;box-shadow:var(--cv-shadow-sm)}
-.canivete-more-actions>summary::-webkit-details-marker{display:none}
-.canivete-more-actions>summary::after{content:'⌄';margin-left:7px;color:var(--muted)}
-.canivete-more-actions[open]>summary::after{transform:rotate(180deg)}
-.canivete-more-actions__menu{position:absolute;right:0;top:calc(100% + 6px);z-index:80;display:grid;gap:6px;min-width:210px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--cv-shadow-lg)}
-.canivete-more-actions__menu .btn{width:100%;justify-content:flex-start;text-align:left}
-.btn{min-height:44px;border-radius:10px;padding:10px 13px;font-weight:800;line-height:1.2;transition:background .15s,border-color .15s,color .15s,transform .15s,box-shadow .15s}
-.btn:active{transform:translateY(1px)}
-.light{border:1px solid var(--line);background:var(--card);color:#344054}
-.light:hover{background:#f8fafc;border-color:#d7deea}
-.primary,.continue{box-shadow:0 2px 8px rgba(37,99,235,.16)}
-.danger{border:1px solid #fecaca}
-button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
-.card,.analysis-card,.health-item-card{border-radius:var(--cv-radius-lg);box-shadow:var(--cv-shadow-md)}
-.card h2,.analysis-card h3{color:var(--ink)}
-.notice{border-radius:var(--cv-radius-md);line-height:1.55}
-.field label,.metric-label,.mini,.small,.stat span,.view-label,.cat-meta,.list-cat{color:#596579}
-.field input,.field select,.expense-name,.expense-value,.benefit-name,.benefit-value,.benefit-type{border-color:#d3dae5;border-radius:var(--cv-radius-sm);background:var(--card)}
-.field input:hover,.field select:hover,.expense-name:hover,.expense-value:hover{border-color:#bcc7d6}
-.expense-summary .stat{border-radius:var(--cv-radius-md);background:color-mix(in srgb,var(--bg) 82%,var(--card));}
-.expense-summary .stat b{font-variant-numeric:tabular-nums}
-.side{width:246px;padding:18px 14px 16px}
-.main{margin-left:246px}
-.brand{padding:8px 10px 14px}
-.brand small{color:#667085}
-.nav{padding-bottom:12px}
-.nav button{min-height:42px;border-radius:10px;font-weight:750;color:#475467}
-.nav button:hover,.nav button.active{background:#eef2ff;color:var(--blue2);border-color:#dbe4ff}
-.v90-menu-group,.v80-nav-group{border-radius:12px}
-.canivete-quick-actions-final{display:grid;gap:8px}
-/* Card único dos três controles rápidos da lateral. */
-#side .canivete-tools-card{
-  flex:0 0 auto;margin:2px 0 12px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--cv-shadow-sm);overflow:hidden
-}
-#side .canivete-tools-card__head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-bottom:1px solid var(--line);background:var(--bg)}
-#side .canivete-tools-card__title{font-size:11px;font-weight:850;color:var(--ink);display:flex;align-items:center;gap:7px}
-#side .canivete-tools-card__toggle{min-width:30px;height:30px;padding:0 8px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted);font-size:12px;font-weight:900;cursor:pointer}
-#side .canivete-tools-card__body{display:grid;gap:8px;padding:9px}
-#side .canivete-tools-card.is-collapsed .canivete-tools-card__body{display:none}
-#side .canivete-tools-card .v80-mode,#side .canivete-tools-card .canivete-menu-search-wrap,#side .canivete-tools-card #btnMinhaSaudeIA{width:100%!important;margin:0!important}
-#side .canivete-tools-card .v80-mode{min-height:42px;text-align:left;border-radius:10px}
-#side .canivete-tools-card .canivete-menu-search-wrap{padding:0!important}
-#side .canivete-tools-card #buscaMenuInput{min-height:40px;box-sizing:border-box}
-#side #versaoTexto,.canivete-version-badge{display:none!important}
-.canivete-filters-card{margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
-.canivete-filters-card>summary{list-style:none;display:flex;align-items:center;gap:8px;min-height:42px;padding:10px 12px;color:var(--ink);font-size:12px;font-weight:850;cursor:pointer}
-.canivete-filters-card>summary::-webkit-details-marker{display:none}
-.canivete-filters-card>summary::after{content:'⌄';margin-left:auto;color:var(--muted);transition:transform .15s}
-.canivete-filters-card[open]>summary::after{transform:rotate(180deg)}
-.canivete-filters-card__body{display:grid;gap:8px;padding:0 10px 10px}
-.canivete-filters-card__body>.row{margin-bottom:0!important}
-@media(min-width:1200px){
-  .main{padding-left:32px;padding-right:32px}
-  .grid.cards{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .two{grid-template-columns:minmax(0,1.1fr) minmax(420px,.9fr)}
-}
-@media(min-width:761px) and (max-width:1199px){
-  .top .actions{max-width:420px}
-  .main{padding-top:22px}
-}
-@media(max-width:760px){
-  .side{width:min(88vw,320px);padding-top:14px}
-  .main{margin-left:0;width:100%;padding:14px 12px 96px}
-  .top{gap:10px;margin-bottom:14px;padding-bottom:14px}
-  .top h1{font-size:24px}
-  .top .sub{font-size:12px}
-  .top .actions{width:100%;max-width:none;display:grid;grid-template-columns:1fr 1fr}
-  .top .actions>.v89-advanced-link{width:100%}
-  .top .actions>.canivete-more-actions{width:100%}
-  .canivete-more-actions>summary{width:100%}
-  .canivete-more-actions__menu{left:0;right:0;min-width:0}
-  .canivete-tools-card{margin-left:0!important;margin-right:0!important}
-  .card,.analysis-card,.health-item-card{border-radius:12px}
-  .canivete-filters-card{margin-top:6px}
-  .canivete-filters-card__body{padding-left:8px;padding-right:8px}
-}
-@media(max-width:430px){
-  .top .actions{grid-template-columns:1fr}
-  .main{padding-left:10px;padding-right:10px}
-  .top h1{font-size:23px}
-  .btn{width:100%}
-  .view-switch{width:100%}
-  .view-switch button{flex:1;min-height:42px}
-}
-@media(prefers-reduced-motion:reduce){.btn,.canivete-more-actions>summary,.canivete-filters-card>summary{transition:none!important}}
-</style>
-<script id="CANIVETE_V108_CONSOLIDATION_SCRIPT">
-(function(){
-  'use strict';
-  const RELEASE='8.22';
-  function ensureVersion(){
-    const top=document.querySelector('.top h1');
-    if(top){
-      top.querySelectorAll('#caniveteTopVersion,.pill').forEach(function(el){
-        if((el.textContent||'').trim().match(/^v\\d+(?:\\.\\d+)+$/i))el.remove();
-      });
-      let badge=document.querySelector('[data-canivete-version]');
-      if(!badge){
-        badge=document.createElement('span');
-        badge.className='canivete-version-visible';
-        badge.setAttribute('data-canivete-version',RELEASE);
-        badge.textContent='v'+RELEASE;
-        top.appendChild(badge);
-      }else{
-        badge.textContent='v'+RELEASE;
-        badge.setAttribute('data-canivete-version',RELEASE);
-      }
-    }
-    document.querySelectorAll('.v79-health-badge,.v80-version,.canivete-version-badge,#versaoTexto').forEach(function(el){
-      if(el!==document.querySelector('[data-canivete-version]'))el.style.display='none';
-    });
-  }
-  function consolidateSidebar(){
-    const side=document.getElementById('side');
-    if(!side || side.dataset.v108SidebarReady==='1')return;
-    const mode=side.querySelector('.v80-mode');
-    const searchInput=side.querySelector('#buscaMenuInput');
-    const health=side.querySelector('#btnMinhaSaudeIA');
-    if(!mode||!searchInput||!health)return;
-    const searchWrap=searchInput.parentElement;
-    const oldCards=Array.from(side.querySelectorAll('.v102-quick-card,.canivete-tools-card'));
-    oldCards.forEach(function(card){card.remove()});
-    const card=document.createElement('section');
-    card.className='canivete-tools-card';
-    card.setAttribute('aria-label','Acessos rápidos');
-    const head=document.createElement('div');
-    head.className='canivete-tools-card__head';
-    const title=document.createElement('div');
-    title.className='canivete-tools-card__title';
-    title.innerHTML='<span>⚡</span><span>Acessos rápidos</span>';
-    const toggle=document.createElement('button');
-    toggle.type='button';toggle.className='canivete-tools-card__toggle';
-    toggle.setAttribute('aria-controls','caniveteToolsCardBodyFinal');
-    const body=document.createElement('div');body.className='canivete-tools-card__body';body.id='caniveteToolsCardBodyFinal';
-    searchWrap.classList.add('canivete-menu-search-wrap');
-    body.appendChild(mode);body.appendChild(searchWrap);body.appendChild(health);
-    head.appendChild(title);head.appendChild(toggle);card.appendChild(head);card.appendChild(body);
-    const brand=side.querySelector('.brand');
-    if(brand)brand.insertAdjacentElement('afterend',card);
-    else side.prepend(card);
-    const oldKey=localStorage.getItem('canivete-v102-quick-card-collapsed');
-    let collapsed=localStorage.getItem('canivete-v108-tools-card-collapsed')==='1' || oldKey==='1';
-    function setCollapsed(value){
-      collapsed=!!value;card.classList.toggle('is-collapsed',collapsed);toggle.textContent=collapsed?'＋':'−';toggle.setAttribute('aria-expanded',collapsed?'false':'true');toggle.setAttribute('aria-label',collapsed?'Expandir acessos rápidos':'Minimizar acessos rápidos');
-      try{localStorage.setItem('canivete-v108-tools-card-collapsed',collapsed?'1':'0')}catch(e){}
-    }
-    toggle.addEventListener('click',function(){setCollapsed(!collapsed)});
-    setCollapsed(collapsed);
-    side.dataset.v108SidebarReady='1';
-  }
-  function consolidateHeader(){
-    const actions=document.querySelector('.top .actions');
-    if(!actions||actions.dataset.v108Ready==='1')return;
-    const buttons=Array.from(actions.children).filter(function(el){return el.classList.contains('btn')});
-    if(buttons.length<=1){actions.dataset.v108Ready='1';return}
-    const first=buttons[0];
-    const detail=document.createElement('details');detail.className='canivete-more-actions';
-    const summary=document.createElement('summary');summary.textContent='Mais ações';detail.appendChild(summary);
-    const menu=document.createElement('div');menu.className='canivete-more-actions__menu';detail.appendChild(menu);
-    buttons.slice(1).forEach(function(btn){menu.appendChild(btn)});
-    actions.appendChild(detail);actions.dataset.v108Ready='1';
-  }
-  function consolidateExpenseFilters(){
-    const section=document.getElementById('despesas');
-    if(!section||section.dataset.v108Filters==='1')return;
-    const search=document.getElementById('buscaDespesaInput');
-    const categories=document.getElementById('expenseCategories');
-    if(!search||!categories)return;
-    const candidates=[];
-    let node=search.nextElementSibling;
-    while(node && node!==categories){candidates.push(node);node=node.nextElementSibling}
-    if(!candidates.length)return;
-    const details=document.createElement('details');details.className='canivete-filters-card';
-    const summary=document.createElement('summary');summary.textContent='⚙️ Filtros e ordenação';details.appendChild(summary);
-    const body=document.createElement('div');body.className='canivete-filters-card__body';
-    candidates.forEach(function(el){body.appendChild(el)});
-    details.appendChild(body);categories.parentNode.insertBefore(details,categories);section.dataset.v108Filters='1';
-    details.open=localStorage.getItem('canivete-v108-expense-filters-open')==='1';
-    details.addEventListener('toggle',function(){try{localStorage.setItem('canivete-v108-expense-filters-open',details.open?'1':'0')}catch(e){}});
-  }
-  function harmonizeHealthTitle(){
-    document.querySelectorAll('h2,h3').forEach(function(h){
-      if(/Minha Saúde/i.test(h.textContent||'')){
-        h.querySelectorAll('.v79-health-badge').forEach(function(el){el.remove()});
-      }
-    });
-  }
-  function init(){
-    ensureVersion();consolidateSidebar();consolidateHeader();consolidateExpenseFilters();harmonizeHealthTitle();
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-  [250,800,1600].forEach(function(ms){setTimeout(init,ms)});
-})();
-</script>
+
 
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
@@ -5959,6 +5748,218 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
   [150,500,1000,1800].forEach(function(ms){setTimeout(init,ms)});
+})();
+</script>
+<!-- CANIVETE-V108-CONSOLIDACAO-GERAL -->
+<style id="CANIVETE_V108_CONSOLIDATION_STYLE">
+:root{
+  --cv-content-max:1440px;
+  --cv-space-1:4px;--cv-space-2:8px;--cv-space-3:12px;--cv-space-4:16px;--cv-space-5:20px;--cv-space-6:24px;--cv-space-7:32px;
+  --cv-radius-sm:8px;--cv-radius-md:12px;--cv-radius-lg:16px;
+  --cv-shadow-sm:0 2px 8px rgba(15,23,42,.04);--cv-shadow-md:0 8px 24px rgba(15,23,42,.06);--cv-shadow-lg:0 18px 40px rgba(15,23,42,.14);
+}
+html{overflow-x:hidden}
+body{min-width:320px;background:var(--bg);color:var(--ink)}
+.main{width:min(calc(100% - 0px),var(--cv-content-max));max-width:var(--cv-content-max);padding:24px clamp(16px,2.2vw,32px) 40px}
+.top{align-items:flex-start;gap:20px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.top>div:first-child{min-width:0;flex:1}
+.top h1{display:flex;align-items:center;flex-wrap:wrap;gap:7px;font-size:clamp(26px,2.2vw,32px);line-height:1.12;letter-spacing:-.025em}
+.top .sub{max-width:780px;font-size:13px}
+.canivete-version-visible{margin:0!important}
+.top .actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px;max-width:520px}
+.canivete-more-actions{position:relative}
+.canivete-more-actions>summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer;box-shadow:var(--cv-shadow-sm)}
+.canivete-more-actions>summary::-webkit-details-marker{display:none}
+.canivete-more-actions>summary::after{content:'⌄';margin-left:7px;color:var(--muted)}
+.canivete-more-actions[open]>summary::after{transform:rotate(180deg)}
+.canivete-more-actions__menu{position:absolute;right:0;top:calc(100% + 6px);z-index:80;display:grid;gap:6px;min-width:210px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--cv-shadow-lg)}
+.canivete-more-actions__menu .btn{width:100%;justify-content:flex-start;text-align:left}
+.btn{min-height:44px;border-radius:10px;padding:10px 13px;font-weight:800;line-height:1.2;transition:background .15s,border-color .15s,color .15s,transform .15s,box-shadow .15s}
+.btn:active{transform:translateY(1px)}
+.light{border:1px solid var(--line);background:var(--card);color:#344054}
+.light:hover{background:#f8fafc;border-color:#d7deea}
+.primary,.continue{box-shadow:0 2px 8px rgba(37,99,235,.16)}
+.danger{border:1px solid #fecaca}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.card,.analysis-card,.health-item-card{border-radius:var(--cv-radius-lg);box-shadow:var(--cv-shadow-md)}
+.card h2,.analysis-card h3{color:var(--ink)}
+.notice{border-radius:var(--cv-radius-md);line-height:1.55}
+.field label,.metric-label,.mini,.small,.stat span,.view-label,.cat-meta,.list-cat{color:#596579}
+.field input,.field select,.expense-name,.expense-value,.benefit-name,.benefit-value,.benefit-type{border-color:#d3dae5;border-radius:var(--cv-radius-sm);background:var(--card)}
+.field input:hover,.field select:hover,.expense-name:hover,.expense-value:hover{border-color:#bcc7d6}
+.expense-summary .stat{border-radius:var(--cv-radius-md);background:color-mix(in srgb,var(--bg) 82%,var(--card));}
+.expense-summary .stat b{font-variant-numeric:tabular-nums}
+.side{width:246px;padding:18px 14px 16px}
+.main{margin-left:246px}
+.brand{padding:8px 10px 14px}
+.brand small{color:#667085}
+.nav{padding-bottom:12px}
+.nav button{min-height:42px;border-radius:10px;font-weight:750;color:#475467}
+.nav button:hover,.nav button.active{background:#eef2ff;color:var(--blue2);border-color:#dbe4ff}
+.v90-menu-group,.v80-nav-group{border-radius:12px}
+.canivete-quick-actions-final{display:grid;gap:8px}
+/* Card único dos três controles rápidos da lateral. */
+#side .canivete-tools-card{
+  flex:0 0 auto;margin:2px 0 12px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--cv-shadow-sm);overflow:hidden
+}
+#side .canivete-tools-card__head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-bottom:1px solid var(--line);background:var(--bg)}
+#side .canivete-tools-card__title{font-size:11px;font-weight:850;color:var(--ink);display:flex;align-items:center;gap:7px}
+#side .canivete-tools-card__toggle{min-width:30px;height:30px;padding:0 8px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted);font-size:12px;font-weight:900;cursor:pointer}
+#side .canivete-tools-card__body{display:grid;gap:8px;padding:9px}
+#side .canivete-tools-card.is-collapsed .canivete-tools-card__body{display:none}
+#side .canivete-tools-card .v80-mode,#side .canivete-tools-card .canivete-menu-search-wrap,#side .canivete-tools-card #btnMinhaSaudeIA{width:100%!important;margin:0!important}
+#side .canivete-tools-card .v80-mode{min-height:42px;text-align:left;border-radius:10px}
+#side .canivete-tools-card .canivete-menu-search-wrap{padding:0!important}
+#side .canivete-tools-card #buscaMenuInput{min-height:40px;box-sizing:border-box}
+#side #versaoTexto,.canivete-version-badge{display:none!important}
+.canivete-filters-card{margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.canivete-filters-card>summary{list-style:none;display:flex;align-items:center;gap:8px;min-height:42px;padding:10px 12px;color:var(--ink);font-size:12px;font-weight:850;cursor:pointer}
+.canivete-filters-card>summary::-webkit-details-marker{display:none}
+.canivete-filters-card>summary::after{content:'⌄';margin-left:auto;color:var(--muted);transition:transform .15s}
+.canivete-filters-card[open]>summary::after{transform:rotate(180deg)}
+.canivete-filters-card__body{display:grid;gap:8px;padding:0 10px 10px}
+.canivete-filters-card__body>.row{margin-bottom:0!important}
+@media(min-width:1200px){
+  .main{padding-left:32px;padding-right:32px}
+  .grid.cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .two{grid-template-columns:minmax(0,1.1fr) minmax(420px,.9fr)}
+}
+@media(min-width:761px) and (max-width:1199px){
+  .top .actions{max-width:420px}
+  .main{padding-top:22px}
+}
+@media(max-width:760px){
+  .side{width:min(88vw,320px);padding-top:14px}
+  .main{margin-left:0;width:100%;padding:14px 12px 96px}
+  .top{gap:10px;margin-bottom:14px;padding-bottom:14px}
+  .top h1{font-size:24px}
+  .top .sub{font-size:12px}
+  .top .actions{width:100%;max-width:none;display:grid;grid-template-columns:1fr 1fr}
+  .top .actions>.v89-advanced-link{width:100%}
+  .top .actions>.canivete-more-actions{width:100%}
+  .canivete-more-actions>summary{width:100%}
+  .canivete-more-actions__menu{left:0;right:0;min-width:0}
+  .canivete-tools-card{margin-left:0!important;margin-right:0!important}
+  .card,.analysis-card,.health-item-card{border-radius:12px}
+  .canivete-filters-card{margin-top:6px}
+  .canivete-filters-card__body{padding-left:8px;padding-right:8px}
+}
+@media(max-width:430px){
+  .top .actions{grid-template-columns:1fr}
+  .main{padding-left:10px;padding-right:10px}
+  .top h1{font-size:23px}
+  .btn{width:100%}
+  .view-switch{width:100%}
+  .view-switch button{flex:1;min-height:42px}
+}
+@media(prefers-reduced-motion:reduce){.btn,.canivete-more-actions>summary,.canivete-filters-card>summary{transition:none!important}}
+</style>
+<script id="CANIVETE_V108_CONSOLIDATION_SCRIPT">
+(function(){
+  'use strict';
+  const RELEASE='8.22';
+  function ensureVersion(){
+    const top=document.querySelector('.top h1');
+    if(top){
+      top.querySelectorAll('#caniveteTopVersion,.pill').forEach(function(el){
+        if((el.textContent||'').trim().match(/^v\\d+(?:\\.\\d+)+$/i))el.remove();
+      });
+      let badge=document.querySelector('[data-canivete-version]');
+      if(!badge){
+        badge=document.createElement('span');
+        badge.className='canivete-version-visible';
+        badge.setAttribute('data-canivete-version',RELEASE);
+        badge.textContent='v'+RELEASE;
+        top.appendChild(badge);
+      }else{
+        badge.textContent='v'+RELEASE;
+        badge.setAttribute('data-canivete-version',RELEASE);
+      }
+    }
+    document.querySelectorAll('.v79-health-badge,.v80-version,.canivete-version-badge,#versaoTexto').forEach(function(el){
+      if(el!==document.querySelector('[data-canivete-version]'))el.style.display='none';
+    });
+  }
+  function consolidateSidebar(){
+    const side=document.getElementById('side');
+    if(!side || side.dataset.v108SidebarReady==='1')return;
+    const mode=side.querySelector('.v80-mode');
+    const searchInput=side.querySelector('#buscaMenuInput');
+    const health=side.querySelector('#btnMinhaSaudeIA');
+    if(!mode||!searchInput||!health)return;
+    const searchWrap=searchInput.parentElement;
+    const oldCards=Array.from(side.querySelectorAll('.v102-quick-card,.canivete-tools-card'));
+    oldCards.forEach(function(card){card.remove()});
+    const card=document.createElement('section');
+    card.className='canivete-tools-card';
+    card.setAttribute('aria-label','Acessos rápidos');
+    const head=document.createElement('div');
+    head.className='canivete-tools-card__head';
+    const title=document.createElement('div');
+    title.className='canivete-tools-card__title';
+    title.innerHTML='<span>⚡</span><span>Acessos rápidos</span>';
+    const toggle=document.createElement('button');
+    toggle.type='button';toggle.className='canivete-tools-card__toggle';
+    toggle.setAttribute('aria-controls','caniveteToolsCardBodyFinal');
+    const body=document.createElement('div');body.className='canivete-tools-card__body';body.id='caniveteToolsCardBodyFinal';
+    searchWrap.classList.add('canivete-menu-search-wrap');
+    body.appendChild(mode);body.appendChild(searchWrap);body.appendChild(health);
+    head.appendChild(title);head.appendChild(toggle);card.appendChild(head);card.appendChild(body);
+    const brand=side.querySelector('.brand');
+    if(brand)brand.insertAdjacentElement('afterend',card);
+    else side.prepend(card);
+    const oldKey=localStorage.getItem('canivete-v102-quick-card-collapsed');
+    let collapsed=localStorage.getItem('canivete-v108-tools-card-collapsed')==='1' || oldKey==='1';
+    function setCollapsed(value){
+      collapsed=!!value;card.classList.toggle('is-collapsed',collapsed);toggle.textContent=collapsed?'＋':'−';toggle.setAttribute('aria-expanded',collapsed?'false':'true');toggle.setAttribute('aria-label',collapsed?'Expandir acessos rápidos':'Minimizar acessos rápidos');
+      try{localStorage.setItem('canivete-v108-tools-card-collapsed',collapsed?'1':'0')}catch(e){}
+    }
+    toggle.addEventListener('click',function(){setCollapsed(!collapsed)});
+    setCollapsed(collapsed);
+    side.dataset.v108SidebarReady='1';
+  }
+  function consolidateHeader(){
+    const actions=document.querySelector('.top .actions');
+    if(!actions||actions.dataset.v108Ready==='1')return;
+    const buttons=Array.from(actions.children).filter(function(el){return el.classList.contains('btn')});
+    if(buttons.length<=1){actions.dataset.v108Ready='1';return}
+    const first=buttons[0];
+    const detail=document.createElement('details');detail.className='canivete-more-actions';
+    const summary=document.createElement('summary');summary.textContent='Mais ações';detail.appendChild(summary);
+    const menu=document.createElement('div');menu.className='canivete-more-actions__menu';detail.appendChild(menu);
+    buttons.slice(1).forEach(function(btn){menu.appendChild(btn)});
+    actions.appendChild(detail);actions.dataset.v108Ready='1';
+  }
+  function consolidateExpenseFilters(){
+    const section=document.getElementById('despesas');
+    if(!section||section.dataset.v108Filters==='1')return;
+    const search=document.getElementById('buscaDespesaInput');
+    const categories=document.getElementById('expenseCategories');
+    if(!search||!categories)return;
+    const candidates=[];
+    let node=search.nextElementSibling;
+    while(node && node!==categories){candidates.push(node);node=node.nextElementSibling}
+    if(!candidates.length)return;
+    const details=document.createElement('details');details.className='canivete-filters-card';
+    const summary=document.createElement('summary');summary.textContent='⚙️ Filtros e ordenação';details.appendChild(summary);
+    const body=document.createElement('div');body.className='canivete-filters-card__body';
+    candidates.forEach(function(el){body.appendChild(el)});
+    details.appendChild(body);categories.parentNode.insertBefore(details,categories);section.dataset.v108Filters='1';
+    details.open=localStorage.getItem('canivete-v108-expense-filters-open')==='1';
+    details.addEventListener('toggle',function(){try{localStorage.setItem('canivete-v108-expense-filters-open',details.open?'1':'0')}catch(e){}});
+  }
+  function harmonizeHealthTitle(){
+    document.querySelectorAll('h2,h3').forEach(function(h){
+      if(/Minha Saúde/i.test(h.textContent||'')){
+        h.querySelectorAll('.v79-health-badge').forEach(function(el){el.remove()});
+      }
+    });
+  }
+  function init(){
+    ensureVersion();consolidateSidebar();consolidateHeader();consolidateExpenseFilters();harmonizeHealthTitle();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+  [250,800,1600].forEach(function(ms){setTimeout(init,ms)});
 })();
 </script>
 </body>
