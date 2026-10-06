@@ -610,7 +610,7 @@ function atualizarDatalistProjetos(){const dl=document.getElementById('listaProj
 function _loadAplicados(){return DeltaSitesStorage.applied()}
 function _saveAplicados(l){DeltaSitesStorage.saveApplied(l)}
 function estaAplicado(id){return _loadAplicados().includes(id)}
-function toggleAplicado(id,btn){let l=_loadAplicados();const idx=l.indexOf(id);if(idx===-1){l.push(id);mostrarToast('✅ Marcado como já aplicado!')}else{l.splice(idx,1);mostrarToast('Desmarcado')}_saveAplicados(l);atualizarBtnAplicado(id,btn)}
+function toggleAplicado(id,btn){let l=_loadAplicados();const idx=l.indexOf(id);if(idx===-1){l.push(id);mostrarToast('✅ Marcado como já aplicado!')}else{l.splice(idx,1);mostrarToast('Desmarcado')}_saveAplicados(l);atualizarBtnAplicado(id,btn);if(idx===-1){try{const p=getItem(id),nome=projetoDoPrompt(id),core=(window.Delta&&Delta.projects)?Delta.projects().find(x=>x.n===nome):null;if(window.Delta&&p)Delta.recordResult({title:p.titulo,promptId:id,status:'funcionou',projectId:core?core.id:null,category:p.categoria})}catch(e){}}}
 function atualizarBtnAplicado(id,btn){if(!btn)return;const ap=estaAplicado(id);btn.textContent=ap?'✅ Já Apliquei':'⬜ Marcar como Aplicado';btn.classList.toggle('aplicado',ap)}
 
 function proximoPromptSugerido(id){
@@ -641,7 +641,7 @@ function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();con
 // ===== POPULARIDADE =====
 function _loadUsos(){return DeltaSitesStorage.uses()}
 function _saveUsos(o){DeltaSitesStorage.saveUses(o)}
-function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);try{if(window.Delta){Delta.markUsage();const p=getItem(id);Delta.recordActivity({type:'use',title:p?p.titulo:'Prompt usado',promptId:id})}}catch(e){}try{localStorage.setItem('deltaLastUse',Date.now())}catch(e){}const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);try{if(window.Delta){Delta.markUsage();const p=getItem(id),nome=projetoDoPrompt(id),core=nome?Delta.projects().find(x=>x.n===nome):null;Delta.recordActivity({type:'use',title:p?p.titulo:'Prompt usado',promptId:id,projectId:core?core.id:null})}}catch(e){}try{localStorage.setItem('deltaLastUse',Date.now())}catch(e){}const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
 
 // ===== FEEDBACK =====
 function _loadFeedback(){return DeltaSitesStorage.feedback()}
