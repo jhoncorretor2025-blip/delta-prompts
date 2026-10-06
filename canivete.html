@@ -1338,6 +1338,139 @@ ${linhasMetas?`<h2>🎯 Metas</h2><table>${linhasMetas}</table>`:''}
 
 
 
+
+<!-- CANIVETE-V102-MENU-QUICK-CARD -->
+<style id="CANIVETE_V102_QUICK_CARD_STYLE">
+/* V102: agrupa os atalhos do topo em um único card minimizável. */
+#side .v102-quick-card{
+  flex:0 0 auto;
+  margin:4px 0 10px;
+  border:1px solid var(--line);
+  background:var(--card);
+  border-radius:14px;
+  box-shadow:0 4px 14px rgba(15,23,42,.04);
+  overflow:visible;
+}
+#side .v102-quick-header{
+  width:100%;
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:0;
+  background:transparent;
+  color:var(--ink);
+  padding:10px 12px;
+  font-size:11.5px;
+  font-weight:850;
+  text-align:left;
+  cursor:pointer;
+}
+#side .v102-quick-header:hover{background:#f8fafc}
+#side .v102-quick-title{flex:1}
+#side .v102-quick-chevron{font-size:17px;color:#94a3b8;transition:transform .16s ease}
+#side .v102-quick-card.is-collapsed .v102-quick-chevron{transform:rotate(-90deg)}
+#side .v102-quick-body{
+  display:grid;
+  gap:8px;
+  padding:0 10px 10px;
+}
+#side .v102-quick-card.is-collapsed .v102-quick-body{display:none}
+#side .v102-quick-body .v80-mode,
+#side .v102-quick-body #btnMinhaSaudeIA,
+#side .v102-quick-body .v102-search-wrap{
+  width:100%!important;
+  margin:0!important;
+}
+#side .v102-quick-body .v80-mode{
+  min-height:42px;
+  border-radius:10px;
+  text-align:left;
+}
+#side .v102-quick-body .v102-search-wrap{
+  padding:0!important;
+}
+#side .v102-quick-body #buscaMenuInput{
+  width:100%;
+  min-height:40px;
+  box-sizing:border-box;
+}
+#side .v102-quick-body #btnMinhaSaudeIA{
+  min-height:42px;
+  box-sizing:border-box;
+}
+@media(max-width:760px){
+  #side .v102-quick-card{margin:2px 0 10px;border-radius:14px}
+  #side .v102-quick-header{min-height:44px;padding:10px 12px}
+  #side .v102-quick-body{padding:0 9px 9px;gap:8px}
+}
+[data-theme="dark"] #side .v102-quick-header:hover{background:#1a2138}
+</style>
+<script id="CANIVETE_V102_QUICK_CARD_SCRIPT">
+(function(){
+  'use strict';
+
+  const KEY='canivete-v102-quick-card-collapsed';
+
+  function criarCard(){
+    const side=document.getElementById('side');
+    if(!side||side.querySelector('.v102-quick-card'))return;
+
+    const mode=side.querySelector('.v80-mode');
+    const search=side.querySelector('div[style*="padding:0 12px 10px"]');
+    const health=side.querySelector('#btnMinhaSaudeIA');
+    if(!mode||!search||!health)return;
+
+    const card=document.createElement('section');
+    card.className='v102-quick-card';
+    card.setAttribute('aria-label','Ferramentas rápidas do Canivete');
+
+    const header=document.createElement('button');
+    header.type='button';
+    header.className='v102-quick-header';
+    header.setAttribute('aria-expanded','true');
+    header.innerHTML='<span>⚡</span><span class="v102-quick-title">Acessos rápidos</span><span class="v102-quick-chevron">⌄</span>';
+
+    const body=document.createElement('div');
+    body.className='v102-quick-body';
+
+    search.classList.add('v102-search-wrap');
+    body.appendChild(mode);
+    body.appendChild(search);
+    body.appendChild(health);
+
+    card.appendChild(header);
+    card.appendChild(body);
+
+    const brand=side.querySelector('.brand');
+    if(brand)brand.insertAdjacentElement('afterend',card);
+    else side.prepend(card);
+
+    function aplicar(collapsed){
+      card.classList.toggle('is-collapsed',collapsed);
+      header.setAttribute('aria-expanded',collapsed?'false':'true');
+    }
+
+    const salvo=localStorage.getItem(KEY)==='1';
+    aplicar(salvo);
+
+    header.addEventListener('click',function(){
+      const collapsed=!card.classList.contains('is-collapsed');
+      aplicar(collapsed);
+      try{localStorage.setItem(KEY,collapsed?'1':'0')}catch(e){}
+    });
+  }
+
+  function init(){
+    criarCard();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+  setTimeout(init,250);
+  setTimeout(init,800);
+})();
+</script>
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const link=document.createElement('a');
