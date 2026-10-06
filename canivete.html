@@ -1485,6 +1485,10 @@ html{overflow-x:hidden}
 <script id="CANIVETE_V103_5_SCRIPT">
 (function(){'use strict';function sync(){const nav=document.getElementById('nav');const active=document.querySelector('.section.active')?.id||'dashboard';if(nav)nav.querySelectorAll('button[data-page]').forEach(function(btn){btn.classList.add('v103-focus-ring');btn.setAttribute('aria-current',btn.dataset.page===active?'page':'false')});['btnAtualizarSistema','btnGastoRapidoFlutuante'].forEach(function(id){const b=document.getElementById(id);if(b)b.classList.add('v103-focus-ring')})}function init(){sync()}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();setTimeout(init,300);setTimeout(init,1000);document.addEventListener('click',function(e){if(e.target.closest('button[data-page]'))setTimeout(sync,0)})})();
 </script>
+
+<script id="CANIVETE_V103_QUICK_EXPENSE_SHORTCUT">
+(function(){'use strict';function init(){document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.shiftKey&&String(e.key).toLowerCase()==='g'){e.preventDefault();const fn=window.abrirModalGastoRapido;if(typeof fn==='function'){fn();setTimeout(function(){const el=document.getElementById('gastoRapidoNome');if(el)el.focus()},80)}}})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
+</script>
 <!-- FIM CANIVETE-V103-5-MELHORIAS -->
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
