@@ -1,9 +1,7 @@
 name: Canivete v8.6 - Painel Saúde
 
+# LEGACY: execução manual preservada. O workflow atual de validação é canivete-ci.yml.
 on:
-  push:
-    paths:
-      - '.github/workflows/canivete-v86-painel-saude.yml'
   workflow_dispatch:
 
 permissions:
