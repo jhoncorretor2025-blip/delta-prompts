@@ -1653,7 +1653,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
   }
   function consolidateSidebar(){
     const side=document.getElementById('side');
-    if(!side)return;
+    if(!side || side.dataset.v108SidebarReady==='1')return;
     const mode=side.querySelector('.v80-mode');
     const searchInput=side.querySelector('#buscaMenuInput');
     const health=side.querySelector('#btnMinhaSaudeIA');
@@ -1687,6 +1687,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
     }
     toggle.addEventListener('click',function(){setCollapsed(!collapsed)});
     setCollapsed(collapsed);
+    side.dataset.v108SidebarReady='1';
   }
   function consolidateHeader(){
     const actions=document.querySelector('.top .actions');
