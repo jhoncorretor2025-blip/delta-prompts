@@ -99,17 +99,25 @@
 </style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/js/delta-core.js"></script><script src="/delta-prompts/js/sites/storage.js"></script><script src="/delta-prompts/menu-loader.js?v=20261005-v21"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Sites & Landing Pages</p>
-<header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.23</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
+<header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.24</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
 
 <section class="info-mini"><button onclick="this.parentElement.classList.toggle('open')">🎯 Qual caminho escolher? <span>⌄</span></button><div class="info-body"><b>🟢 Criando do zero:</b> para quem ainda vai começar. <b>🟡 Site em andamento:</b> para quem já tem a página inicial ou parte do projeto e travou. <b>🔴 Site pronto:</b> para quem quer melhorar UX, visual, navegação, conversão e estrutura.</div></section>
 
 <section class="card" id="linkPadraoCard">
-  <h3>🔗 Cole o link do seu site aqui uma vez</h3>
-  <p style="margin:0 0 12px;color:#667085;font-size:14px">A gente já preenche automaticamente todo campo <strong>[LINK]</strong> dos prompts abaixo com esse endereço, sem precisar digitar de novo toda vez.</p>
-  <div style="display:flex;gap:10px;flex-wrap:wrap">
-    <input type="text" id="linkPadraoInput" placeholder="https://meusite.com.br" style="flex:1;min-width:220px;padding:12px 14px;border-radius:10px;border:1px solid #e6e8f0;font:inherit">
-    <button type="button" id="linkPadraoSalvar" style="border:0;background:#5b5ce2;color:#fff;font-weight:800;border-radius:10px;padding:12px 20px;cursor:pointer">💾 Salvar</button>
+  <h3>🔗 Escolha o site que você quer analisar</h3>
+  <p style="margin:0 0 12px;color:#667085;font-size:14px">Você pode escolher um site que já salvou em <strong>⚙️ Configuração</strong> ou informar um link novo. O endereço escolhido será usado automaticamente nos prompts que pedirem <strong>[LINK]</strong>.</p>
+  <div id="sitesSalvosEscolha" style="display:none;margin:0 0 10px">
+    <label for="siteSalvoSelecionar" style="display:block;font-size:12.5px;font-weight:800;color:#344054;margin-bottom:6px">🌐 Meus sites salvos</label>
+    <select id="siteSalvoSelecionar" style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid #cfd5e3;background:#fff;font:inherit;color:#344054;cursor:pointer">
+      <option value="">Escolha um site salvo...</option>
+    </select>
   </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <input type="text" id="linkPadraoInput" placeholder="Ou cole um link novo: https://meusite.com.br" style="flex:1;min-width:220px;padding:12px 14px;border-radius:10px;border:1px solid #e6e8f0;font:inherit">
+    <button type="button" id="linkPadraoSalvar" style="border:0;background:#5b5ce2;color:#fff;font-weight:800;border-radius:10px;padding:12px 20px;cursor:pointer">💾 Usar este link</button>
+  </div>
+  <div id="siteSalvoEscolhidoStatus" style="display:none;margin-top:9px;padding:9px 11px;border-radius:10px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:12px"></div>
+  <div style="margin-top:9px;font-size:11.5px;color:#98a2b3">💡 Não encontrou seu site? Vá em <strong>⚙️ Configuração → 🌐 Meus sites salvos</strong> para cadastrar.</div>
 </section>
 
 <section class="evolucao-sites" id="evolucaoSites" aria-label="Painel de evolução do site">
@@ -904,16 +912,78 @@ document.addEventListener('click',function(e){var b=e.target.closest('[data-acao
 (function(){
   const input=document.getElementById('linkPadraoInput');
   const btn=document.getElementById('linkPadraoSalvar');
-  try{input.value=localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){}
-  if(input&&btn){
-    btn.addEventListener('click',()=>{
-      const valor=input.value.trim();
-      if(!valor){mostrarToast('⚠️ Cole um link antes de salvar.');input.focus();return}
-      try{localStorage.setItem('deltaSiteLinkPadrao',valor)}catch(e){}
-      mostrarToast('🔗 Link salvo! Agora ele será usado automaticamente nos prompts.');
-      render();
+  const select=document.getElementById('siteSalvoSelecionar');
+  const box=document.getElementById('sitesSalvosEscolha');
+  const status=document.getElementById('siteSalvoEscolhidoStatus');
+
+  function lerSites(){
+    try{
+      const x=JSON.parse(localStorage.getItem('deltaSitesSalvos')||'[]');
+      return Array.isArray(x)?x:[];
+    }catch(e){return[]}
+  }
+
+  function esc(v){
+    return String(v||'').replace(/[&<>"]/g,function(m){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m];
     });
   }
+
+  function renderSites(){
+    if(!select||!box)return;
+    const sites=lerSites();
+    select.innerHTML='<option value="">Escolha um site salvo...</option>'+
+      sites.map(function(s,i){
+        return '<option value="'+i+'">'+esc(s.name||s.url)+'</option>';
+      }).join('');
+
+    if(sites.length){
+      box.style.display='block';
+      const padrao=(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})();
+      const idx=sites.findIndex(s=>s.url===padrao);
+      select.value=idx>=0?String(idx):'';
+    }else{
+      box.style.display='none';
+      select.value='';
+    }
+
+    const padrao=(function(){try{return localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){return''}})();
+    if(input&&padrao)input.value=padrao;
+  }
+
+  function usarLink(url,nome){
+    url=String(url||'').trim();
+    if(!url){mostrarToast('⚠️ Escolha ou informe um link primeiro.');return}
+    try{localStorage.setItem('deltaSiteLinkPadrao',url)}catch(e){}
+    if(input)input.value=url;
+    if(status){
+      status.style.display='block';
+      status.innerHTML='✅ <strong>'+(nome?esc(nome):'Link informado')+'</strong> será usado automaticamente nos prompts [LINK].';
+    }
+    if(typeof render==='function')render();
+    mostrarToast('🔗 '+(nome||'Link')+' selecionado!');
+  }
+
+  try{if(input)input.value=localStorage.getItem('deltaSiteLinkPadrao')||''}catch(e){}
+
+  if(select){
+    select.addEventListener('change',function(){
+      const sites=lerSites();
+      const s=sites[Number(select.value)];
+      if(s)usarLink(s.url,s.name||s.url);
+    });
+  }
+
+  if(btn){
+    btn.addEventListener('click',function(){
+      usarLink(input&&input.value,'Link informado');
+    });
+  }
+
+  window.addEventListener('delta:sites-updated',renderSites);
+  renderSites();
+  setTimeout(renderSites,350);
+  setTimeout(renderSites,1200);
 })();
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
