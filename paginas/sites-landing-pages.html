@@ -88,7 +88,7 @@
   .prompt-card{padding:14px}
   .acoes button{flex:1 1 45%}
 }
-.evo-acoes button:not(.principal){opacity:.82}.evo-acoes button:not(.principal):hover{opacity:1}.toolbar-extra{gap:8px}.toolbar-extra button{white-space:nowrap}</style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/js/delta-core.js"></script><script src="/delta-prompts/menu-loader.js?v=20261005-v19"></script><main>
+.evo-acoes button:not(.principal){opacity:.82}.evo-acoes button:not(.principal):hover{opacity:1}.toolbar-extra{gap:8px}.toolbar-extra button{white-space:nowrap}</style></head><body class="category-page" id="sites-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/js/delta-core.js"></script><script src="/delta-prompts/js/sites/storage.js"></script><script src="/delta-prompts/menu-loader.js?v=20261005-v19"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Sites & Landing Pages</p>
 <header class="page-head"><h1>🌐 Sites & Landing Pages <span style="font-size:12px;vertical-align:middle;opacity:.7">V1.17</span></h1><p>Do primeiro site até uma auditoria profissional: escolha em que fase seu projeto está.</p></header>
@@ -563,19 +563,19 @@ function getItem(id){return prompts.find(p=>p.id===id)}
 function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
 
 // ===== FAVORITOS =====
-function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
-function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
+function _loadFav(){return DeltaSitesStorage.favorites()}
+function _saveFav(l){DeltaSitesStorage.saveFavorites(l)}
 function isFav(id){return _loadFav().some(f=>f.id===id)}
 
-function _loadProjetos(){try{return JSON.parse(localStorage.getItem('deltaSitesProjetos'))||{}}catch(e){return{}}}
-function _saveProjetos(o){try{localStorage.setItem('deltaSitesProjetos',JSON.stringify(o))}catch(e){}}
+function _loadProjetos(){return DeltaSitesStorage.projects()}
+function _saveProjetos(o){DeltaSitesStorage.saveProjects(o)}
 function projetoDoPrompt(id){return _loadProjetos()[id]||''}
 function todosProjetos(){return[...new Set(Object.values(_loadProjetos()).filter(Boolean))]}
 function moverParaProjeto(id,nomeProjeto){const p=_loadProjetos();if(nomeProjeto&&nomeProjeto.trim())p[id]=nomeProjeto.trim();else delete p[id];_saveProjetos(p);atualizarDatalistProjetos();render()}
 function atualizarDatalistProjetos(){const dl=document.getElementById('listaProjetosGlobal');if(!dl)return;dl.innerHTML=todosProjetos().map(pr=>`<option value="${pr}">`).join('')}
 
-function _loadAplicados(){try{return JSON.parse(localStorage.getItem('deltaSitesAplicados'))||[]}catch(e){return[]}}
-function _saveAplicados(l){try{localStorage.setItem('deltaSitesAplicados',JSON.stringify(l))}catch(e){}}
+function _loadAplicados(){return DeltaSitesStorage.applied()}
+function _saveAplicados(l){DeltaSitesStorage.saveApplied(l)}
 function estaAplicado(id){return _loadAplicados().includes(id)}
 function toggleAplicado(id,btn){let l=_loadAplicados();const idx=l.indexOf(id);if(idx===-1){l.push(id);mostrarToast('✅ Marcado como já aplicado!')}else{l.splice(idx,1);mostrarToast('Desmarcado')}_saveAplicados(l);atualizarBtnAplicado(id,btn)}
 function atualizarBtnAplicado(id,btn){if(!btn)return;const ap=estaAplicado(id);btn.textContent=ap?'✅ Já Apliquei':'⬜ Marcar como Aplicado';btn.classList.toggle('aplicado',ap)}
@@ -606,13 +606,13 @@ function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='�
 function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Sites & Landing Pages',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
 
 // ===== POPULARIDADE =====
-function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaSitesUsos'))||{}}catch(e){return{}}}
-function _saveUsos(o){try{localStorage.setItem('deltaSitesUsos',JSON.stringify(o))}catch(e){}}
+function _loadUsos(){return DeltaSitesStorage.uses()}
+function _saveUsos(o){DeltaSitesStorage.saveUses(o)}
 function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);try{if(window.Delta){Delta.markUsage();const p=getItem(id);Delta.recordActivity({type:'use',title:p?p.titulo:'Prompt usado',promptId:id})}}catch(e){}try{localStorage.setItem('deltaLastUse',Date.now())}catch(e){}const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
 
 // ===== FEEDBACK =====
-function _loadFeedback(){try{return JSON.parse(localStorage.getItem('deltaSitesFeedback'))||{}}catch(e){return{}}}
-function _saveFeedback(o){try{localStorage.setItem('deltaSitesFeedback',JSON.stringify(o))}catch(e){}}
+function _loadFeedback(){return DeltaSitesStorage.feedback()}
+function _saveFeedback(o){DeltaSitesStorage.saveFeedback(o)}
 function darFeedback(id,tipo){
   const fb=_loadFeedback();const atual=fb[id]&&fb[id].voto;
   if(!fb[id])fb[id]={voto:null};
