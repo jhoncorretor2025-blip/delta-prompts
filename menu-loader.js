@@ -615,11 +615,19 @@ window.deltaRegistrarLog=function(texto){
   if(document.body)criarBotao();else document.addEventListener('DOMContentLoaded',criarBotao,{once:true});
 })();
 (function(){
+  var st=document.createElement('style');st.textContent='.delta-bottom-nav a.active,.delta-bottom-nav button.active{background:#eef2ff;color:#5b5ce2;font-weight:900}.delta-bottom-nav [aria-current="page"]{box-shadow:inset 0 0 0 1px rgba(91,92,226,.12)}';document.head.appendChild(st);
   if(document.querySelector('.delta-bottom-nav'))return;
   var nav=document.createElement('nav');
   nav.className='delta-bottom-nav';
   nav.setAttribute('aria-label','Navegação rápida');
-  nav.innerHTML='<a href="/delta-prompts/index.html"><span aria-hidden="true">🏠</span>Início</a><a href="/delta-prompts/index.html#buscar"><span aria-hidden="true">🔎</span>Buscar</a><a href="/delta-prompts/favoritos.html"><span aria-hidden="true">❤️</span>Favoritos</a><button type="button"><span aria-hidden="true">☰</span>Menu</button>';
+  nav.innerHTML='<a data-nav-home href="/delta-prompts/index.html"><span aria-hidden="true">🏠</span>Início</a><a data-nav-search href="/delta-prompts/index.html#buscar"><span aria-hidden="true">🔎</span>Buscar</a><a data-nav-fav href="/delta-prompts/favoritos.html"><span aria-hidden="true">❤️</span>Favoritos</a><button type="button"><span aria-hidden="true">☰</span>Menu</button>';
+  var path=(window.location.pathname||'').replace(/\/+$/,'/')||'/';
+  var isHome=/\/delta-prompts\/?$/.test(path)||/\/delta-prompts\/index\.html$/.test(path);
+  var isFav=/\/delta-prompts\/favoritos\.html$/.test(path);
+  var homeLink=nav.querySelector('[data-nav-home]'),searchLink=nav.querySelector('[data-nav-search]'),favLink=nav.querySelector('[data-nav-fav]');
+  if(homeLink&&isHome&&location.hash!=='#buscar'){homeLink.classList.add('active');homeLink.setAttribute('aria-current','page')}
+  if(searchLink&&isHome&&location.hash==='#buscar'){searchLink.classList.add('active');searchLink.setAttribute('aria-current','page')}
+  if(favLink&&isFav){favLink.classList.add('active');favLink.setAttribute('aria-current','page')}
   function anexar(){
     document.body.appendChild(nav);
     var btnMenu=nav.querySelector('button');
