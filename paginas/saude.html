@@ -822,7 +822,7 @@ function _savePreferenciaSaude(o){try{localStorage.setItem('deltaSaudePreferenci
 function darPreferenciaIASaude(id,ia){const pref=_loadPreferenciaSaude();const atual=pref[id];const g=window.deltaAuth;if(atual===ia){delete pref[id];if(g&&g.registrarPreferenciaIA)g.registrarPreferenciaIA(id,ia,-1)}else{if(atual&&g&&g.registrarPreferenciaIA)g.registrarPreferenciaIA(id,atual,-1);pref[id]=ia;if(g&&g.registrarPreferenciaIA)g.registrarPreferenciaIA(id,ia,1)}_savePreferenciaSaude(pref);atualizarPreferenciaSaudeUI(id);mostrarToast(atual===ia?'Marcação removida':'✅ Valeu por avaliar!')}
 function atualizarPreferenciaSaudeUI(id){const p=_loadPreferenciaSaude()[id];['chatgpt','gemini','empate'].forEach(ia=>{const b=document.getElementById('pref'+ia+'-'+id);if(b)b.classList.toggle('marcado',p===ia)})}
 function toggleMaisAcoesSaude(id){const menu=document.getElementById('maisacoes-'+id);if(!menu)return;const aberto=menu.classList.contains('show');document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show'));if(!aberto)menu.classList.add('show')}
-document.addEventListener('click',e=>{if(e.target.closest('.mais-acoes-wrap'))return;document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show')});
+document.addEventListener('click',e=>{if(e.target.closest('.mais-acoes-wrap'))return;document.querySelectorAll('.mais-acoes-menu.show').forEach(m=>m.classList.remove('show'))});
 // ===== PAINEL MAIS FILTROS =====
 function contarFiltrosAtivosSaude(){let n=0;if(estadoFiltroNivel!=='todos')n++;if(estadoFiltroCategoria!=='todas')n++;return n}
 function atualizarBadgeFiltrosSaude(){
