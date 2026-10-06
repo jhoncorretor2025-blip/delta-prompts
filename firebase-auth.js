@@ -121,6 +121,12 @@ export async function pushFavoritosToCloud(uid){
   catch(e){console.error('Erro ao enviar favoritos para a nuvem:',e);_avisarErroSync()}
 }
 
+// ===== SITES SALVOS DO USUARIO =====
+function _lerSitesLocais(){try{const v=JSON.parse(localStorage.getItem('deltaSitesSalvos')||'[]');return Array.isArray(v)?v:[]}catch(e){return[]}}
+function _gravarSitesLocais(lista){try{localStorage.setItem('deltaSitesSalvos',JSON.stringify(lista));return true}catch(e){return false}}
+export async function syncSitesFromCloud(uid){if(!uid)return[];try{const snap=await getDoc(doc(db,'users',uid));const nuvem=(snap.exists()&&Array.isArray(snap.data().sitesSalvos))?snap.data().sitesSalvos:[];const local=_lerSitesLocais();const mapa=new Map();[...nuvem,...local].forEach(s=>{if(s&&s.url)mapa.set(s.url,s)});const lista=[...mapa.values()].slice(0,50);_gravarSitesLocais(lista);await setDoc(doc(db,'users',uid),{sitesSalvos:lista},{merge:true});window.dispatchEvent(new CustomEvent('delta:sites-updated'));return lista}catch(e){console.error('Erro ao sincronizar sites salvos:',e);return _lerSitesLocais()}}
+export async function pushSitesToCloud(uid){if(!uid)return;try{await setDoc(doc(db,'users',uid),{sitesSalvos:_lerSitesLocais().slice(0,50)},{merge:true})}catch(e){console.error('Erro ao enviar sites salvos:',e)}}
+
 // ===== PERFIL PUBLICO (compartilhar so os favoritos marcados como publicos) =====
 export async function obterPerfilPublico(uid){
   if(!uid)return null;
