@@ -30,10 +30,15 @@ jobs:
 
           for p in files:
               s = p.read_text(encoding='utf-8')
-              assert s.count('<script') == s.count('</script>'), f'{p}: tags script desbalanceadas'
+              # HTML exportado dentro do JavaScript pode usar <\/script> para escapar
+              # o fechamento interno sem encerrar o script principal da página.
+              script_open = len(re.findall(r'<script\\b[^>]*>', s, flags=re.I))
+              script_close = len(re.findall(r'</script>', s, flags=re.I))
+              script_escaped_close = len(re.findall(r'<\\/script>', s, flags=re.I))
+              assert script_open == script_close + script_escaped_close, f'{p}: tags script desbalanceadas'
               assert s.count('<section') >= 27, f'{p}: poucas sections'
               assert s.count('data-page=') >= 27, f'{p}: poucos itens de menu'
-              assert "const APP_VERSION='8.21'" in s, f'{p}: APP_VERSION não está em 8.20'
+              assert "const APP_VERSION='8.21'" in s, f'{p}: APP_VERSION não está em 8.21'
               assert 'CANIVETE_V90_MENUS_CORRIGIDOS' in s, f'{p}: menu V90 não encontrado'
               assert 'CANIVETE-V93-MENU-POLIDO' in s, f'{p}: menu V93 ausente'
               assert 'CANIVETE-V92-MOBILE-FIRST' in s, f'{p}: mobile-first V92 não encontrado'
@@ -59,7 +64,21 @@ jobs:
 
           for p in [Path('canivete.html'), Path('canivete/app/canivete.html')]:
               s = p.read_text(encoding='utf-8')
-              scripts = re.findall(r'<script(?:\\s[^>]*)?>([\\s\\S]*?)</script>', s, flags=re.I)
+              low = s.lower()
+              pos = 0
+              scripts = []
+              while True:
+                  start = low.find('<script', pos)
+                  if start < 0:
+                      break
+                  open_end = low.find('>', start)
+                  if open_end < 0:
+                      raise SystemExit(f'{p}: tag script de abertura incompleta')
+                  end = low.find('</script>', open_end + 1)
+                  if end < 0:
+                      raise SystemExit(f'{p}: tag script sem fechamento')
+                  scripts.append(s[open_end + 1:end])
+                  pos = end + len('</script>')
               for i, js in enumerate(scripts, 1):
                   if not js.strip():
                       continue
