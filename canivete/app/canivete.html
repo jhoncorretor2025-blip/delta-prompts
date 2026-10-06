@@ -1335,6 +1335,29 @@ html{overflow-x:hidden}
 (function(){'use strict';function init(){document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.shiftKey&&String(e.key).toLowerCase()==='g'){e.preventDefault();const fn=window.abrirModalGastoRapido;if(typeof fn==='function'){fn();setTimeout(function(){const el=document.getElementById('gastoRapidoNome');if(el)el.focus()},80)}}})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
 </script>
 <!-- FIM CANIVETE-V103-5-MELHORIAS -->
+
+<!-- CANIVETE-V105-VERSION-VISIBLE -->
+<style id="CANIVETE_V105_VERSION_VISIBLE_STYLE">
+.canivete-version-visible{display:inline-flex;align-items:center;width:max-content;margin-top:6px;padding:4px 9px;border:1px solid #bfdbfe;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:10px;font-weight:800;line-height:1}
+[data-theme="dark"] .canivete-version-visible{background:#1e293b;border-color:#334155;color:#93c5fd}
+</style>
+<script id="CANIVETE_V105_VERSION_VISIBLE_SCRIPT">
+(function(){
+  'use strict';
+  function mostrarVersaoVisivel(){
+    const title=document.querySelector('.top h1');
+    if(!title||title.parentElement.querySelector('.canivete-version-visible'))return;
+    const badge=document.createElement('span');
+    badge.className='canivete-version-visible';
+    const version=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.20').replace(/^v/i,'');
+    badge.textContent='v'+version;
+    title.insertAdjacentElement('afterend',badge);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mostrarVersaoVisivel,{once:true});
+  else mostrarVersaoVisivel();
+  setTimeout(mostrarVersaoVisivel,400);
+})();
+</script>
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const link=document.createElement('a');
