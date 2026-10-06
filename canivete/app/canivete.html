@@ -183,6 +183,26 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 body{font-size:var(--ds-text-md);line-height:1.45}.top h1{font-size:var(--ds-text-3xl);font-weight:var(--ds-weight-heavy);line-height:1.15}h2{font-size:var(--ds-text-xl);font-weight:var(--ds-weight-bold)}.field label,.metric-label{font-size:var(--ds-text-sm)}.sub{font-size:var(--ds-text-md)}.card{border-radius:var(--ds-radius-card);box-shadow:var(--ds-shadow-md)}.btn{border-radius:var(--ds-radius-md);font-weight:var(--ds-weight-bold);transition:background-color .14s ease,border-color .14s ease,box-shadow .14s ease,transform .14s ease}.btn:active{transform:translateY(1px)}.light{border:1px solid var(--line)}.danger{border:1px solid #fecaca}.field input,.field select,.expense-name,.expense-value,.benefit-name,.benefit-value,.benefit-type{border-radius:var(--ds-radius-md)}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}.grid{gap:var(--ds-space-4)}
 @media(max-width:760px){.top h1{font-size:var(--ds-text-2xl)}.card{border-radius:var(--ds-radius-lg)}.btn{min-height:44px}}
 </style>
+
+<!-- CANIVETE-V104-CARDS-DESIGN-SYSTEM -->
+<style id="CANIVETE_V104_CARDS_STYLE">
+/* v8.20: linguagem visual unificada para cards. Sem alteração de lógica. */
+.card,.analysis-card,.v80-quick-card,.v98-quick-action,.scenario-box,.health-item-card,.health-stat{
+  border-color:var(--line);
+  border-radius:var(--ds-radius-card,16px);
+}
+.card,.analysis-card,.health-item-card{box-shadow:var(--ds-shadow-md,0 8px 24px rgba(15,23,42,.05))}
+.analysis-card h3{font-size:var(--ds-text-lg,16px);line-height:1.25;font-weight:var(--ds-weight-bold,700)}
+.v80-quick-card,.v98-quick-action{box-shadow:var(--ds-shadow-sm,0 2px 8px rgba(15,23,42,.04))}
+.scenario-box{box-shadow:none}
+.card,.analysis-card,.health-item-card{overflow:hidden}
+.card h2,.analysis-card h3{letter-spacing:-.01em}
+.card>.row.between:first-child,.analysis-card>.row.between:first-child{min-height:28px}
+@media(max-width:760px){
+  .card,.analysis-card,.health-item-card{border-radius:var(--ds-radius-lg,12px)}
+  .v80-quick-card,.v98-quick-action,.scenario-box{border-radius:var(--ds-radius-lg,12px)}
+}
+</style>
 </head>
 <body>
 <a href="#conteudoPrincipal" style="position:absolute;left:-9999px;top:0;z-index:9999;background:var(--blue);color:#fff;padding:12px 18px;border-radius:0 0 10px 0;font-weight:700;text-decoration:none" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Pular para o conteúdo</a>
@@ -451,7 +471,7 @@ body{font-size:var(--ds-text-md);line-height:1.45}.top h1{font-size:var(--ds-tex
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.19';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.20';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();window.d=d;window.APP_VERSION=APP_VERSION;window.__caniveteSetData=function(novo){d=novo||{};window.d=d;};
