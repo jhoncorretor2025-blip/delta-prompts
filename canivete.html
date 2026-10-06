@@ -1520,24 +1520,44 @@ html{overflow-x:hidden}
 
 <!-- CANIVETE-V105-VERSION-VISIBLE -->
 <style id="CANIVETE_V105_VERSION_VISIBLE_STYLE">
-.canivete-version-visible{display:inline-flex;align-items:center;width:max-content;margin-top:6px;padding:4px 9px;border:1px solid #bfdbfe;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:10px;font-weight:800;line-height:1}
-[data-theme="dark"] .canivete-version-visible{background:#1e293b;border-color:#334155;color:#93c5fd}
+/* Fonte única da versão visível: APP_VERSION. Indicadores antigos ao lado do título são removidos. */
+.canivete-version-visible{display:inline-flex!important;align-items:center!important;width:max-content!important;margin:4px 0 0 8px!important;padding:4px 9px!important;border:1px solid #bfdbfe!important;border-radius:999px!important;background:#eff6ff!important;color:#1d4ed8!important;font-size:10px!important;font-weight:800!important;line-height:1!important;vertical-align:middle!important;box-sizing:border-box!important}
+[data-theme="dark"] .canivete-version-visible{background:#1e293b!important;border-color:#334155!important;color:#93c5fd!important}
 </style>
 <script id="CANIVETE_V105_VERSION_VISIBLE_SCRIPT">
 (function(){
   'use strict';
-  function mostrarVersaoVisivel(){
+  const RELEASE='8.20';
+  function limparEExibirVersao(){
     const title=document.querySelector('.top h1');
-    if(!title||title.parentElement.querySelector('.canivete-version-visible'))return;
+    if(!title||!title.parentElement)return;
+    const parent=title.parentElement;
+    parent.querySelectorAll('.canivete-version-visible').forEach(function(el){
+      el.remove();
+    });
+    Array.from(parent.children).forEach(function(el){
+      if(el===title)return;
+      const txt=(el.textContent||'').trim();
+      if(/^v\\d+(?:\\.\\d+)+$/i.test(txt))el.remove();
+    });
     const badge=document.createElement('span');
     badge.className='canivete-version-visible';
-    const version=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||'8.20').replace(/^v/i,'');
-    badge.textContent='v'+version;
+    badge.setAttribute('data-canivete-version','8.20');
+    badge.textContent='v'+RELEASE;
     title.insertAdjacentElement('afterend',badge);
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mostrarVersaoVisivel,{once:true});
-  else mostrarVersaoVisivel();
-  setTimeout(mostrarVersaoVisivel,400);
+  function iniciar(){
+    limparEExibirVersao();
+    const parent=document.querySelector('.top h1')?.parentElement;
+    if(parent && !parent.dataset.caniveteVersionObserver){
+      const observer=new MutationObserver(function(){limparEExibirVersao()});
+      observer.observe(parent,{childList:true,subtree:true});
+      parent.dataset.caniveteVersionObserver='1';
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar,{once:true});
+  else iniciar();
+  [100,400,900,1600].forEach(function(ms){setTimeout(limparEExibirVersao,ms)});
 })();
 </script>
 </body></html>`;
