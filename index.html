@@ -585,7 +585,13 @@ function renderPromptResultsGrid(resultados){
 }
 function buscar(v,scroll=true){
   atualizarBotaoLimparBuscaHome();
+  sugestaoAtiva=-1;
+  sug.classList.remove('active');
+  input.setAttribute('aria-expanded','false');
+  input.setAttribute('aria-activedescendant','');
   const r=matches(v),sec=document.getElementById('search-results');
+  const st=document.getElementById('searchStatus');
+  if(st)st.textContent=v.trim()?(r.length+' resultado'+(r.length===1?'':'s')+' de categorias encontrado'+(r.length===1?'':'s')+'.'): 'Digite o que você precisa para buscar.';
   if(!v.trim()){sec.classList.remove('active');return}
   registrarBuscaHistorico(v);
   sec.classList.add('active');
@@ -599,8 +605,30 @@ function buscar(v,scroll=true){
   sug.classList.remove('active');
   if(scroll)sec.scrollIntoView({behavior:'smooth',block:'start'});
 }
-function limparBusca(){input.value='';sug.innerHTML='';sug.classList.remove('active');document.getElementById('search-results').classList.remove('active');atualizarBotaoLimparBuscaHome();input.focus()}
-input.addEventListener('input',()=>{atualizarBotaoLimparBuscaHome();const r=matches(input.value).slice(0,6);sug.innerHTML=r.map(x=>`<a href="${x.l}" class="suggestion-item"><span class="suggestion-icon" aria-hidden="true">${x.i}</span><span class="suggestion-content"><strong>${x.n}</strong><small>${x.d}</small></span><span class="suggestion-arrow" aria-hidden="true">→</span></a>`).join('');sug.classList.toggle('active',!!input.value.trim()&&r.length>0)});
+function limparBusca(){input.value='';sug.innerHTML='';sug.classList.remove('active');input.setAttribute('aria-expanded','false');input.setAttribute('aria-activedescendant','');sugestaoAtiva=-1;document.getElementById('search-results').classList.remove('active');atualizarBotaoLimparBuscaHome();const st=document.getElementById('searchStatus');if(st)st.textContent='Busca limpa.';input.focus()}
+let sugestaoAtiva=-1;
+function atualizarSugestaoAtiva(){
+  const itensSug=[...sug.querySelectorAll('.suggestion-item')];
+  itensSug.forEach((el,i)=>el.classList.toggle('active-suggestion',i===sugestaoAtiva));
+  if(sugestaoAtiva>=0&&itensSug[sugestaoAtiva]){
+    input.setAttribute('aria-activedescendant',itensSug[sugestaoAtiva].id);
+    itensSug.forEach((el,i)=>el.setAttribute('aria-selected',String(i===sugestaoAtiva)));
+  }else{
+    input.setAttribute('aria-activedescendant','');
+    itensSug.forEach(el=>el.setAttribute('aria-selected','false'));
+  }
+}
+input.addEventListener('input',()=>{
+  atualizarBotaoLimparBuscaHome();
+  sugestaoAtiva=-1;
+  const r=matches(input.value).slice(0,6);
+  sug.innerHTML=r.map((x,i)=>`<a id="suggestion-item-${i}" href="${x.l}" class="suggestion-item" role="option" aria-selected="false"><span class="suggestion-icon" aria-hidden="true">${x.i}</span><span class="suggestion-content"><strong>${x.n}</strong><small>${x.d}</small></span><span class="suggestion-arrow" aria-hidden="true">→</span></a>`).join('');
+  const aberto=!!input.value.trim()&&r.length>0;
+  sug.classList.toggle('active',aberto);
+  input.setAttribute('aria-expanded',String(aberto));
+  atualizarSugestaoAtiva();
+});
+
 
 // ===== BUSCA POR VOZ (ditar a necessidade inteira) =====
 (function(){
@@ -624,7 +652,27 @@ input.addEventListener('input',()=>{atualizarBotaoLimparBuscaHome();const r=matc
     try{rec.start()}catch(e){btnMic.textContent='🎤';btnMic.disabled=false}
   });
 })();
-input.addEventListener('keydown',e=>{if(e.key==='Enter')buscar(input.value)});
+input.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    const itensSug=[...sug.querySelectorAll('.suggestion-item')];
+    if(!itensSug.length)return;
+    e.preventDefault();
+    sugestaoAtiva=e.key==='ArrowDown'
+      ? Math.min(sugestaoAtiva+1,itensSug.length-1)
+      : Math.max(sugestaoAtiva-1,0);
+    atualizarSugestaoAtiva();
+    return;
+  }
+  if(e.key==='Enter'){
+    const itensSug=[...sug.querySelectorAll('.suggestion-item')];
+    if(sug.classList.contains('active')&&sugestaoAtiva>=0&&itensSug[sugestaoAtiva]){
+      e.preventDefault();
+      itensSug[sugestaoAtiva].click();
+      return;
+    }
+    buscar(input.value);
+  }
+});
 // ===== ATALHOS DE TECLADO GLOBAIS =====
 document.addEventListener('keydown',e=>{
   const alvo=e.target;
