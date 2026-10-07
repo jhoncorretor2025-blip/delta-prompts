@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.33
-window.DELTA_SITE_VERSION='V1.33';
+// DELTA SITE VERSION: V1.34
+window.DELTA_SITE_VERSION='V1.34';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -18,6 +18,14 @@ window.DELTA_SITE_VERSION='V1.33';
 })();
 window.deltaModoPrivadoAtivo=function(){try{return localStorage.getItem('deltaModoPrivado')==='true'}catch(e){return false}};
 (function(){try{var p=location.pathname;var isIndex=/\/index\.html$/.test(p)||/\/delta-prompts\/?$/.test(p)||p==='/'||p==='/delta-prompts';if(!isIndex&&!window.deltaModoPrivadoAtivo()){localStorage.setItem('deltaUltimaPagina',JSON.stringify({path:p,ts:Date.now()}))}}catch(e){}})();
+
+
+// ===== AJUSTE V1.34: controles flutuantes sem sobreposição no celular =====
+(function(){
+  var s=document.createElement('style');
+  s.textContent='@media(max-width:700px){#deltaModoPrivadoBtn{right:12px!important;bottom:248px!important}#deltaCorWrap{right:12px!important;bottom:194px!important}#deltaVoltarTopoBtn{right:12px!important;bottom:140px!important}.delta-install-fab{right:12px!important;bottom:86px!important}}';
+  document.head.appendChild(s);
+})();
 
 // ===== LOG DE ALTERACOES NAS CONFIGURACOES =====
 window.deltaRegistrarLog=function(texto){
@@ -133,7 +141,7 @@ window.deltaRegistrarLog=function(texto){
     painel.style.cssText='display:none;position:absolute;bottom:52px;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:10px;box-shadow:0 12px 30px rgba(20,20,40,.18);gap:8px;flex-wrap:wrap;width:150px';
     Object.keys(CORES).forEach(function(nome){
       var sw=document.createElement('button');
-      sw.type='button';sw.title=nome;
+      sw.type='button';sw.title=nome;sw.setAttribute('aria-label','Cor de destaque: '+nome);
       sw.style.cssText='width:28px;height:28px;border-radius:50%;border:2px solid #fff;outline:2px solid #e5e7eb;background:'+CORES[nome]+';cursor:pointer;margin:3px';
       sw.onclick=function(){aplicarCor(nome);painel.style.display='none';if(window.deltaRegistrarLog)window.deltaRegistrarLog('🎨 Mudou a cor de destaque para '+nome)};
       painel.appendChild(sw);
@@ -166,7 +174,7 @@ window.deltaRegistrarLog=function(texto){
   function criarIndicador(){
     if(document.getElementById('deltaCronometro'))return;
     var estilo=document.createElement('style');
-    estilo.textContent='#deltaCronometro{position:fixed;right:14px;top:14px;z-index:900;background:rgba(255,255,255,.92);border:1px solid #e5e7eb;border-radius:999px;padding:6px 12px;font-size:11.5px;font-weight:800;color:#667085;box-shadow:0 4px 12px rgba(20,20,40,.08);pointer-events:none;display:none}@media(min-width:900px){#deltaCronometro{display:block}}';
+    estilo.textContent='#deltaCronometro{position:fixed;right:16px;top:52px;z-index:900;background:rgba(255,255,255,.92);border:1px solid #e5e7eb;border-radius:999px;padding:6px 12px;font-size:11.5px;font-weight:800;color:#667085;box-shadow:0 4px 12px rgba(20,20,40,.08);pointer-events:none;display:none}@media(min-width:900px){#deltaCronometro{display:block}}';
     document.head.appendChild(estilo);
     var el=document.createElement('div');
     el.id='deltaCronometro';
