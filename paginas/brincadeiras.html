@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brincadeiras com IA | Delta Prompts V1.0</title>
+<link rel="icon" href="/delta-prompts/favicon.ico"><link rel="apple-touch-icon" href="/delta-prompts/icon-192.png">
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<style>
+:root{--p:#5b5ce2;--soft:#eef2ff;--border:#e6e8f0}
+.breadcrumb{font-size:13px;color:#667085;margin:0 0 12px}.breadcrumb a{color:var(--p);font-weight:800;text-decoration:none}
+.hero{padding:25px;border:1px solid #e2e5ff;border-radius:22px;background:linear-gradient(135deg,#fafaff,#f3f0ff,#fff);margin-bottom:20px}.hero-grid{display:grid;grid-template-columns:1.6fr .7fr;gap:18px;align-items:center}.hero h1{margin:0 0 8px;font-size:clamp(27px,4vw,40px)}.hero p{margin:0;color:#667085;line-height:1.6}.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.badges span,.tag{padding:6px 9px;border-radius:999px;background:#fff;border:1px solid #e5e7eb;font-size:11px;font-weight:900}.hero-art{min-height:135px;display:grid;place-items:center;font-size:70px;background:#ffffffb8;border-radius:18px}
+.feature{padding:18px;border-radius:18px;background:#172033;color:#fff;margin-bottom:20px}.feature h2{color:#fff;margin:0 0 5px}.feature p{color:#d5d9e3;margin:0 0 12px;font-size:13px}.code{padding:13px;border-radius:12px;background:#0d1423;color:#e8eaff;white-space:pre-wrap;font-size:13px;line-height:1.5}.actions,.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn,.card-actions button{border:0;border-radius:10px;padding:10px 13px;font-weight:900;cursor:pointer}.btn-main{background:#fff;color:#4338ca}.btn-copy,.card-actions button:first-child{background:#5b5ce2;color:#fff}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 10px}.toolbar input{flex:1;min-width:220px;padding:13px;border:1px solid var(--border);border-radius:12px;font:inherit}.toolbar select{padding:13px;border:1px solid var(--border);border-radius:12px;background:#fff;font:inherit;font-weight:700}.cats{display:flex;gap:7px;overflow:auto;padding:3px 0 9px}.cats button{white-space:nowrap;padding:9px 12px;border:1px solid var(--border);border-radius:999px;background:#fff;font-weight:800;cursor:pointer}.cats button.active{background:var(--p);color:#fff;border-color:var(--p)}.stats{font-size:13px;color:#667085;font-weight:700;margin:6px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.card{display:flex;flex-direction:column;padding:17px;border:1px solid #e5e7eb;border-radius:18px;background:#fff}.card h3{margin:9px 0 6px;font-size:17px}.card p{margin:0 0 10px;color:#667085;font-size:12.5px;line-height:1.5}.prompt{margin-top:auto;padding:12px;border:1px solid #e8eaf0;border-radius:12px;background:#f8fafc;white-space:pre-wrap;font-size:13px;line-height:1.5}.card-actions button{flex:1;background:#eef2ff;color:#4338ca}
+.empty{display:none;padding:25px;text-align:center;border:1px dashed #d7dbea;border-radius:16px;color:#667085}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:#172033;color:#fff;padding:11px 16px;border-radius:11px;transition:.2s;z-index:9999;font-size:13px;font-weight:800}.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] .hero,[data-theme="dark"] .card{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}[data-theme="dark"] .hero p,[data-theme="dark"] .card p,[data-theme="dark"] .stats{color:#aeb6c8}[data-theme="dark"] .toolbar input,[data-theme="dark"] .toolbar select,[data-theme="dark"] .cats button{background:#0f1424;color:#eaeaea;border-color:rgba(255,255,255,.15)}[data-theme="dark"] .prompt{background:#0f1424;color:#dbe2f0}
+@media(max-width:700px){.hero-grid,.grid{grid-template-columns:1fr}.hero-art{min-height:95px;font-size:52px}.toolbar{align-items:stretch}.toolbar input,.toolbar select{width:100%;box-sizing:border-box}}
+</style>
+</head>
+<body class="category-page" id="brincadeiras-page">
+<div id="menu"><div style="width:240px;min-height:100vh;background:#f5f6f8"></div></div>
+<script src="/delta-prompts/js/delta-core.js?v=20261007-v3"></script>
+<script src="/delta-prompts/menu-loader.js?v=20261007-v32"></script>
+<main>
+<p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Criar & se Divertir / Brincadeiras com IA</p>
+<section class="hero"><div class="hero-grid"><div><h1>🎮 Brincadeiras com IA <span style="font-size:12px;opacity:.6">V1.0</span></h1><p>Prompts para brincar, descobrir personalidades e criar conversas divertidas com sua IA favorita.</p><div class="badges"><span>😂 Divertido</span><span>🧠 Personalidade</span><span>❤️ Amigos & Crush</span><span>📱 Compartilhe</span></div></div><div class="hero-art">🎲✨</div></div></section>
+<section class="feature"><h2>🔥 Que coisa eu seria?</h2><p>Faça as perguntas uma por vez. A IA responde somente com uma palavra e deixa a leitura completa para o final.</p><div class="code" id="principalPrompt">Quero brincar de “Que coisa eu seria?”.
+
+Faça as perguntas uma por vez.
+
+REGRAS:
+- Quando eu fizer uma pergunta, responda SOMENTE com UMA PALAVRA.
+- Não explique, não justifique e não acrescente frases.
+- Escolha a palavra que melhor combine com minha personalidade com base no que você já percebeu de mim nesta conversa.
+- Aguarde a próxima pergunta.
+- Quando eu disser “FINALIZAR”, faça uma leitura da minha personalidade usando todas as respostas anteriores.</div><div class="actions"><button class="btn btn-main" onclick="copiarPrincipal()">📋 Copiar brincadeira completa</button><button class="btn btn-copy" onclick="usarPrincipal()">🚀 Usar agora</button></div></section>
+<div class="toolbar"><input id="busca" type="search" placeholder="🔍 Buscar uma brincadeira..."><select id="ordem"><option value="az">A–Z</option><option value="categoria">Categoria</option></select></div>
+<div class="cats" id="cats"></div><div class="stats" id="stats"></div><div class="grid" id="grid"></div><div class="empty" id="empty">😅 Não encontrei essa brincadeira.</div>
+</main><div class="toast" id="toast"></div>
+<script>
+const brincadeiras=[
+["🧠 Personalidade","Que animal eu sou?","Que animal eu sou?","Descubra o animal que combina com sua personalidade."],
+["🧠 Personalidade","Que cor eu sou?","Que cor eu sou?","Uma leitura rápida e simbólica da sua personalidade."],
+["🧠 Personalidade","Que estação do ano eu sou?","Que estação do ano eu sou?","Descubra sua estação."],
+["🧠 Personalidade","Que flor eu sou?","Que flor eu sou?","Sua personalidade em forma de flor."],
+["🧠 Personalidade","Que fruta eu sou?","Que fruta eu sou?","Qual fruta traduz melhor seu jeito?"],
+["🧠 Personalidade","Que bebida eu sou?","Que bebida eu sou?","Uma comparação divertida com sua vibe."],
+["🧠 Personalidade","Que sobremesa eu sou?","Que sobremesa eu sou?","Sua personalidade em forma de sobremesa."],
+["🧠 Personalidade","Que cheiro eu sou?","Que cheiro eu sou?","Uma leitura criativa da sua presença."],
+["🧠 Personalidade","Que clima eu sou?","Que clima eu sou?","Sol, chuva, tempestade ou calmaria?"],
+["🧠 Personalidade","Que elemento da natureza eu sou?","Que elemento da natureza eu sou?","Fogo, água, terra, ar ou algo inesperado."],
+["🔮 Profundo","Que energia eu sou?","Que energia eu sou?","Uma palavra para representar sua energia."],
+["🔮 Profundo","Que sentimento eu sou?","Que sentimento eu sou?","Qual sentimento mais combina com você?"],
+["🔮 Profundo","Que qualidade eu sou?","Que qualidade eu sou?","A qualidade que mais se destaca em você."],
+["🔮 Profundo","Que defeito eu sou?","Que defeito eu sou?","Uma resposta direta sobre seu lado difícil."],
+["🔮 Profundo","Que palavra me define?","Que palavra me define?","Resuma você em uma palavra."],
+["🔮 Profundo","Que fase da lua eu sou?","Que fase da lua eu sou?","Uma comparação simbólica com seu jeito."],
+["🔮 Profundo","Que horário do dia eu sou?","Que horário do dia eu sou?","Manhã, tarde, noite ou madrugada?"],
+["🔮 Profundo","Que lugar eu sou?","Que lugar eu sou?","Descubra o lugar que representa você."],
+["🔮 Profundo","Que tipo de personalidade eu sou?","Que tipo de personalidade eu sou?","Uma leitura curta do seu estilo."],
+["😂 Divertido","Que personagem eu sou?","Que personagem eu sou?","Seu equivalente em um personagem."],
+["😂 Divertido","Que profissão eu seria?","Que profissão eu seria?","Qual profissão combina com você?"],
+["😂 Divertido","Que signo eu pareço ser?","Que signo eu pareço ser?","Sem olhar sua data: qual signo você parece ter?"],
+["😂 Divertido","Que comida eu sou?","Que comida eu sou?","Sua personalidade em forma de comida."],
+["😂 Divertido","Que meme eu sou?","Que meme eu sou?","Uma resposta para seu lado memezeiro."],
+["😂 Divertido","Que música eu sou?","Que música eu sou?","Qual música representa sua vibe?"],
+["😂 Divertido","Que perfume eu sou?","Que perfume eu sou?","Uma fragrância para representar sua presença."],
+["😂 Divertido","Que marca eu sou?","Que marca eu sou?","Qual marca teria sua personalidade?"],
+["😂 Divertido","Que carro eu seria?","Que carro eu seria?","Sua personalidade traduzida em um carro."],
+["😂 Divertido","Que bebida de festa eu sou?","Que bebida de festa eu sou?","A versão festa da sua personalidade. 😂"],
+["❤️ Relacionamentos","Que tipo de crush eu sou?","Que tipo de crush eu sou?","Descubra seu estilo quando vira crush."],
+["❤️ Relacionamentos","Que linguagem do amor eu sou?","Que linguagem do amor eu sou?","Uma brincadeira sobre seu estilo afetivo."],
+["❤️ Relacionamentos","Que encontro eu seria?","Que encontro eu seria?","Cinema, jantar, aventura ou algo diferente?"],
+["👥 Amigos","Que amigo eu sou no grupo?","Que amigo eu sou no grupo?","Conselheiro, engraçado, sumido ou caos?"],
+["👥 Amigos","Que rolê eu sou?","Que rolê eu sou?","Descubra que tipo de rolê combina com você."],
+["📱 Stories","Me defina em uma palavra","Me defina em uma palavra","Perfeito para mandar para amigos."],
+["📱 Stories","Que emoji me representa?","Que emoji me representa?","Uma escolha para resumir sua vibe."],
+["📱 Stories","Que vibe eu passo?","Que vibe eu passo?","Uma palavra para sua energia percebida."],
+["🎯 Jogo","Que coisa eu seria?","Que coisa eu seria?","Escolha qualquer coisa: animal, cor, comida, lugar ou personagem."],
+["🎯 Jogo","Me surpreenda em uma palavra","Me surpreenda em uma palavra","Escolha uma palavra inesperada que combine comigo."]
+];
+let categoria="Todas";
+const categorias=["Todas",...new Set(brincadeiras.map(x=>x[0]))];
+function promptTexto(q){return "Vamos brincar de “Que coisa eu seria?”.\n\nMinha pergunta é: "+q+"\n\nResponda SOMENTE com UMA PALAVRA, sem explicar e sem justificar. Escolha a palavra que melhor combine com minha personalidade com base no que você já percebeu de mim nesta conversa."}
+function copiarTexto(t){navigator.clipboard.writeText(t).then(()=>toast("✅ Prompt copiado!")).catch(()=>toast("⚠️ Não foi possível copiar."))}
+function copiarPrincipal(){copiarTexto(document.getElementById("principalPrompt").textContent)}
+function usarTexto(t){copiarTexto(t);setTimeout(()=>window.open("https://chatgpt.com/","_blank"),250)}
+function usarPrincipal(){copiarPrincipal();setTimeout(()=>window.open("https://chatgpt.com/","_blank"),250)}
+function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1800)}
+function renderCats(){document.getElementById("cats").innerHTML=categorias.map(c=>'<button class="'+(c===categoria?"active":"")+'" data-cat="'+c+'">'+c+'</button>').join("");document.querySelectorAll("#cats button").forEach(b=>b.onclick=()=>{categoria=b.dataset.cat;render()})}
+function render(){
+const q=document.getElementById("busca").value.trim().toLowerCase(),ord=document.getElementById("ordem").value;
+let lista=brincadeiras.filter(x=>(categoria==="Todas"||x[0]===categoria)&&(!q||x.join(" ").toLowerCase().includes(q)));
+lista.sort((a,b)=>ord==="az"?a[1].localeCompare(b[1],"pt-BR"):a[0].localeCompare(b[0],"pt-BR"));
+document.getElementById("stats").textContent=lista.length+" brincadeira"+(lista.length===1?"":"s")+" encontrada"+(lista.length===1?"":"s");
+document.getElementById("grid").innerHTML=lista.map(x=>'<article class="card"><div class="meta"><span class="tag">'+x[0]+'</span></div><h3>'+x[1]+'</h3><p>'+x[3]+'</p><div class="prompt">'+promptTexto(x[2]).replace(/</g,"&lt;")+'</div><div class="card-actions"><button data-p="'+encodeURIComponent(promptTexto(x[2]))">📋 Copiar</button><button data-u="'+encodeURIComponent(promptTexto(x[2]))">🚀 Usar</button></div></article>').join("");
+document.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>copiarTexto(decodeURIComponent(b.dataset.p)));document.querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>usarTexto(decodeURIComponent(b.dataset.u)));
+document.getElementById("empty").style.display=lista.length?"none":"block";renderCats()
+}
+document.getElementById("busca").oninput=render;document.getElementById("ordem").onchange=render;render();
+</script>
+</body></html>
