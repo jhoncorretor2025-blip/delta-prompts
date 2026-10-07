@@ -28,7 +28,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   if (url.pathname === '/delta-prompts/menu-loader.js') {
     event.respondWith(
-      fetch('/delta-prompts/menu-loader.js?v=20261007-v25', { cache: 'no-store' })
+      fetch('/delta-prompts/menu-loader.js?v=20261007-v26', { cache: 'no-store' })
         .catch(() => fetch(event.request))
     );
     return;
