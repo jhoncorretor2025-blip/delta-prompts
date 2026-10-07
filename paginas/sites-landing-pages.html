@@ -785,7 +785,7 @@ function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();con
 // ===== POPULARIDADE =====
 function _loadUsos(){const v=DeltaSitesStorage.uses();return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}
 function _saveUsos(o){DeltaSitesStorage.saveUses(o)}
-function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);try{if(window.Delta){Delta.markUsage();const p=getItem(id),nome=projetoDoPrompt(id),core=nome?Delta.projects().find(x=>x.n===nome):null;Delta.recordActivity({type:'use',title:p?p.titulo:'Prompt usado',promptId:id,projectId:core?core.id:null})}}catch(e){}try{localStorage.setItem('deltaLastUse',Date.now())}catch(e){}const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}}
+function registrarUso(id){const usos=_loadUsos();usos[id]=(usos[id]||0)+1;_saveUsos(usos);try{if(window.Delta){Delta.markUsage();const p=getItem(id),nome=projetoDoPrompt(id),core=nome?Delta.projects().find(x=>x.n===nome):null;Delta.recordActivity({type:'use',title:p?p.titulo:'Prompt usado',promptId:id,projectId:core?core.id:null})}}catch(e){}try{localStorage.setItem('deltaLastUse',Date.now())}catch(e){}const badge=document.getElementById('uso-'+id);if(badge){badge.textContent='🔥 Usado '+usos[id]+'x';badge.style.display='inline-block'}if(typeof usoFiltro!=='undefined'&&usoFiltro!=='todos'){render()}}
 
 // ===== FEEDBACK =====
 function _loadFeedback(){const v=DeltaSitesStorage.feedback();return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}
@@ -989,7 +989,7 @@ function render(){
   const ordenUso=(id)=>(Number(usos[id])||0);
   if(usoFiltro==='menos'||usoFiltro==='nunca'){
     f.sort((a,b)=>(ordenUso(a.id)-ordenUso(b.id))||a.titulo.localeCompare(b.titulo,'pt-BR'));
-  }else{
+  }else if(usoFiltro==='mais'||usoFiltro==='todos'){
     f.sort((a,b)=>(ordenUso(b.id)-ordenUso(a.id))||a.titulo.localeCompare(b.titulo,'pt-BR'));
   }
   contador.textContent=f.length+' de '+prompts.length+' prompts';
