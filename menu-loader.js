@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.34
-window.DELTA_SITE_VERSION='V1.35';
+// DELTA SITE VERSION: V1.37
+window.DELTA_SITE_VERSION='V1.37';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -648,7 +648,7 @@ window.deltaRegistrarLog=function(texto){
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-menu-v07';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
+(function(){function getMenuCandidates(){const version='delta-prompts-menu-v08';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
   try{
     const link=sidebar&&sidebar.querySelector('a[href*="/paginas/sites-landing-pages.html"]');
     const badge=link&&link.querySelector('.menu-count');
@@ -709,15 +709,18 @@ function destacarPaginaAtual(){
   if(!sidebar)return;
   const linksMenu=sidebar.querySelectorAll('a[href]');
   const caminhoAtual=location.pathname.replace(/\/+$/,'')||'/delta-prompts/index.html';
+  linksMenu.forEach(a=>a.removeAttribute('aria-current'));
   linksMenu.forEach(a=>{
     try{
       const caminhoLink=new URL(a.getAttribute('href'),location.origin).pathname.replace(/\/+$/,'');
       if(caminhoLink&&(caminhoLink===caminhoAtual||caminhoAtual.endsWith(caminhoLink))){
         a.classList.add('pagina-atual');
-        // Abre automaticamente o grupo que contém a página atual, em vez de deixar
-        // fechado exigindo um clique extra pra achar onde você está no menu.
+        a.setAttribute('aria-current','page');
+        // Abre automaticamente o grupo que contém a página atual.
         const secao=a.closest('.menu-section'),links=secao&&secao.querySelector('.menu-links');
         if(links)links.classList.add('active');
+      }else{
+        a.classList.remove('pagina-atual');
       }
     }catch(e){}
   });
