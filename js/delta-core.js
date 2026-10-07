@@ -1,4 +1,4 @@
-/* Delta Prompts — núcleo compartilhado V1.32
+/* Delta Prompts — núcleo compartilhado V1.38
    Responsabilidade: armazenamento, projetos, atividades, resultados e XP.
    Compatível com dados antigos da V1.16.
 */
