@@ -53,9 +53,14 @@ select {
 }
 
 #menu .sidebar {
+  height: 100vh;
   min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
   padding: 25px 20px;
   background: #ffffff;
+  scrollbar-gutter: stable;
 }
 
 #menu h2 {
