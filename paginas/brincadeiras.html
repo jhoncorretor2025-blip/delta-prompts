@@ -89,13 +89,21 @@ function usarPrincipal(){copiarPrincipal();setTimeout(()=>window.open("https://c
 function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1800)}
 function renderCats(){document.getElementById("cats").innerHTML=categorias.map(c=>'<button class="'+(c===categoria?"active":"")+'" data-cat="'+c+'">'+c+'</button>').join("");document.querySelectorAll("#cats button").forEach(b=>b.onclick=()=>{categoria=b.dataset.cat;render()})}
 function render(){
-const q=document.getElementById("busca").value.trim().toLowerCase(),ord=document.getElementById("ordem").value;
+const q=document.getElementById("busca").value.trim().toLowerCase();
+const ord=document.getElementById("ordem").value;
 let lista=brincadeiras.filter(x=>(categoria==="Todas"||x[0]===categoria)&&(!q||x.join(" ").toLowerCase().includes(q)));
 lista.sort((a,b)=>ord==="az"?a[1].localeCompare(b[1],"pt-BR"):a[0].localeCompare(b[0],"pt-BR"));
 document.getElementById("stats").textContent=lista.length+" brincadeira"+(lista.length===1?"":"s")+" encontrada"+(lista.length===1?"":"s");
-document.getElementById("grid").innerHTML=lista.map(x=>'<article class="card"><div class="meta"><span class="tag">'+x[0]+'</span></div><h3>'+x[1]+'</h3><p>'+x[3]+'</p><div class="prompt">'+promptTexto(x[2]).replace(/</g,"&lt;")+'</div><div class="card-actions"><button data-p="'+encodeURIComponent(promptTexto(x[2]))">📋 Copiar</button><button data-u="'+encodeURIComponent(promptTexto(x[2]))">🚀 Usar</button></div></article>').join("");
-document.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>copiarTexto(decodeURIComponent(b.dataset.p)));document.querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>usarTexto(decodeURIComponent(b.dataset.u)));
-document.getElementById("empty").style.display=lista.length?"none":"block";renderCats()
+const grid=document.getElementById("grid");grid.innerHTML="";
+lista.forEach(x=>{
+const card=document.createElement("article");card.className="card";
+card.innerHTML='<div class="meta"><span class="tag"></span></div><h3></h3><p></p><div class="prompt"></div><div class="card-actions"><button>📋 Copiar</button><button>🚀 Usar</button></div>';
+card.querySelector(".tag").textContent=x[0];card.querySelector("h3").textContent=x[1];card.querySelector("p").textContent=x[3];card.querySelector(".prompt").textContent=promptTexto(x[2]);
+const buttons=card.querySelectorAll("button");buttons[0].onclick=()=>copiarTexto(promptTexto(x[2]));buttons[1].onclick=()=>usarTexto(promptTexto(x[2]));
+grid.appendChild(card);
+});
+document.getElementById("empty").style.display=lista.length?"none":"block";
+renderCats();
 }
 document.getElementById("busca").oninput=render;document.getElementById("ordem").onchange=render;render();
 </script>
