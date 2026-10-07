@@ -1552,3 +1552,36 @@ body.category-page .prompt-card p{
     transition-duration:.01ms!important;
   }
 }
+
+
+/* ===== DELTA V1.38 — refinamentos finais da rodada ===== */
+
+/* Jornada guiada: modal aproveita melhor a tela sem quebrar desktop. */
+#modalGuiado>div{
+  width:min(560px,100%);
+  max-width:560px;
+  min-width:0;
+  box-sizing:border-box;
+}
+@media(max-width:600px){
+  #modalGuiado{
+    padding:10px!important;
+    align-items:flex-start!important;
+    padding-top:12px!important;
+    padding-bottom:12px!important;
+  }
+  #modalGuiado>div{
+    max-height:calc(100vh - 24px)!important;
+    padding:18px!important;
+    border-radius:16px!important;
+  }
+  #modalGuiado>div button{
+    min-height:42px;
+  }
+}
+
+/* Busca: teclado/seleção ficam claramente distinguíveis do hover. */
+.suggestion-item.active-suggestion,
+.suggestion-item.active-suggestion:hover{
+  background:#eef2ff!important;
+}
