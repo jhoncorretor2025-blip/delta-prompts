@@ -2,7 +2,7 @@
 // MENU LOADER + CONTROLES
 // ==============================
 // DELTA SITE VERSION: V1.18
-window.DELTA_SITE_VERSION='V1.30';
+window.DELTA_SITE_VERSION='V1.31';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -256,8 +256,10 @@ window.deltaRegistrarLog=function(texto){
     if(document.getElementById('deltaInstalarBtn'))return;
     var btn=document.createElement('button');
     btn.type='button';btn.id='deltaInstalarBtn';
-    btn.textContent='📲 Instalar App';
-    btn.style.cssText='position:fixed;left:16px;bottom:16px;z-index:1400;border:0;background:#5b5ce2;color:#fff;font-weight:800;font-size:13px;padding:12px 18px;border-radius:999px;cursor:pointer;box-shadow:0 8px 22px rgba(91,92,226,.35)';
+    btn.className='delta-install-fab';
+    btn.setAttribute('aria-label','Instalar Delta Prompts como aplicativo');
+    btn.title='Instalar Delta Prompts como aplicativo';
+    btn.textContent='📲';
     btn.addEventListener('click',function(){
       if(!eventoInstalacao)return;
       btn.disabled=true;
