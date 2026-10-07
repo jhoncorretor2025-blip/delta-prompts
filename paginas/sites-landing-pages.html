@@ -560,86 +560,256 @@ sitePrompt('pronto','Estratégia','🧠 Consultor Estratégico de Melhorias — 
 sitePrompt('pronto','UX/UI','Auditoria Profissional de UX/UI','Para encontrar atritos na experiência.','Revise este site: [LINK/PRINT/CÓDIGO]. Usuário: [PÚBLICO]. Tarefa principal: [TAREFA]. Analise clareza, atritos, hierarquia, navegação, feedback, acessibilidade e mobile. Finalize com 5 mudanças rápidas de alto impacto.',`Review this site: [LINK/SCREENSHOT/CODE]. User: [AUDIENCE]. Main task: [TASK]. Analyze clarity, friction, hierarchy, navigation, feedback, accessibility, and mobile. Finish with 5 quick, high-impact changes.`),
 sitePrompt('pronto','UX/UI','🏆 Auditoria com Notas de 0 a 10 + Top 20','Para uma avaliação completa e visual, com nota em cada critério e uma lista priorizada de melhorias.','Quero que você atue como um especialista em UX/UI, Front-end e Design de Produtos Digitais. Analise esta(s) página(s): [LINK OU LINKS]. Dê uma nota de 0 a 10 para cada um destes itens:\n\n🎨 Design\n📱 Responsividade\n🧭 Navegação\n⚡ Velocidade\n👀 Hierarquia visual\n🧠 Facilidade de uso\n♿ Acessibilidade\n💼 Aparência profissional\n\nDepois, liste os 20 principais pontos de melhoria, em ordem de prioridade.',`I want you to act as a UX/UI, Front-end, and Digital Product Design specialist. Analyze this page (or pages): [LINK OR LINKS]. Give a score from 0 to 10 for each of these items:\n\n🎨 Design\n📱 Responsiveness\n🧭 Navigation\n⚡ Speed\n👀 Visual hierarchy\n🧠 Ease of use\n♿ Accessibility\n💼 Professional appearance\n\nThen, list the 20 main improvement points, in order of priority.`),
 sitePrompt('pronto','Navegação','Navegação Avançada Mobile e Desktop','Para redesenhar a arquitetura de navegação.','Analise separadamente a navegação no CELULAR e COMPUTADOR deste site: [LINK]. Proponha uma estrutura completa para cada dispositivo, mantendo consistência e reduzindo passos desnecessários.',`Separately analyze the navigation on MOBILE and DESKTOP for this site: [LINK]. Propose a complete structure for each device, maintaining consistency and reducing unnecessary steps.`),
-sitePrompt('pronto','Conversão','20 Melhorias para uma Página','Para uma análise detalhada de uma página específica.','Atue como um especialista sênior em UX/UI, CRO (otimização de conversão), copywriting, acessibilidade e produto digital.
+sitePrompt('pronto','Conversão','20 Melhorias para uma Página','Para uma análise detalhada de uma página específica.','Analise profundamente esta página:
 
-Analise esta página ou site: [LINK / PRINT / CÓDIGO].
+[LINK / PRINT / CÓDIGO]
 
-CONTEXTO DO PROJETO
-- Objetivo principal da página: [OBJETIVO]
-- Público principal: [PÚBLICO]
-- Contexto de uso: [CELULAR / COMPUTADOR / AMBOS]
-- Ação principal que quero que o usuário realize: [AÇÃO / CTA]
+Atue como um especialista sênior em UX/UI, CRO, copywriting, acessibilidade, design de interfaces e otimização de produtos digitais.
 
-PRIMEIRO: entenda o que já existe.
-Faça um inventário rápido da página: estrutura, seções, menus, componentes, CTAs, formulários, textos, recursos e fluxos. Separe claramente:
-- confirmado pelo material fornecido;
-- aparentemente existente, mas não totalmente verificável;
-- não foi possível confirmar.
+OBJETIVO DA PÁGINA:
+[EX.: vender / gerar leads / apresentar um serviço / permitir uma tarefa / divulgar um produto]
 
-DEPOIS: entregue EXATAMENTE 20 melhorias priorizadas.
+PÚBLICO-ALVO:
+[DESCREVA OU INDIQUE "IDENTIFIQUE PELO CONTEXTO"]
 
-Para cada melhoria informe:
-1. # e nome da melhoria
-2. Problema ou oportunidade identificada
-3. Local da página/componente afetado
+CONTEXTO:
+[EX.: uso principalmente no celular / desktop / ambos]
+
+Sua missão é encontrar as oportunidades mais importantes para tornar esta página mais clara, bonita, fácil de usar, confiável e eficiente.
+
+ENTREGUE EXATAMENTE 20 MELHORIAS.
+
+Para cada melhoria, informe:
+
+1. # da melhoria
+2. Problema identificado
+3. Onde está o problema
 4. Mudança recomendada
-5. Benefício para o usuário
-6. Prioridade: 🔴 Alta / 🟡 Média / 🟢 Baixa
-7. Impacto: Alto / Médio / Baixo
-8. Esforço: Fácil / Médio / Difícil
-9. Dependências ou riscos, se houver
-10. Implementação prática e simples
-11. Exemplo de texto, layout, componente ou código quando isso ajudar
+5. Benefício esperado
+6. Prioridade: CRÍTICA / ALTA / MÉDIA / BAIXA
+7. Impacto: ALTO / MÉDIO / BAIXO
+8. Esforço: FÁCIL / MÉDIO / DIFÍCIL
+9. Implementação simples — explique exatamente como fazer
+10. Exemplo prático, quando fizer sentido
 
 AVALIE OBRIGATORIAMENTE:
-- 🎨 Visual e identidade
-- 👁️ Hierarquia visual e escaneabilidade
-- 🧭 UX, navegação e arquitetura da informação
-- 🎯 CTA, conversão e clareza da próxima ação
-- ✍️ Conteúdo, copywriting e clareza das mensagens
-- 🛡️ Confiança, credibilidade e prova social
-- 📱 Responsividade e experiência mobile-first
-- ♿ Acessibilidade e usabilidade
-- ⚡ Performance e velocidade percebida
-- 🔎 SEO básico e estrutura semântica
-- 🔄 Microinterações, feedbacks e estados de erro/sucesso
-- 📐 Consistência visual e funcional entre componentes
 
-REGRAS IMPORTANTES
-- Não invente problemas que não possam ser observados ou razoavelmente inferidos.
-- Não recomende algo apenas por ser uma tendência.
-- Não repita recursos que já existem.
-- Evite recomendações genéricas como “melhore o design” sem explicar exatamente como.
-- Priorize mudanças que tragam impacto real com baixo ou médio esforço.
-- Preserve o que já funciona.
-- Se algo não puder ser verificado pelo LINK, PRINT ou CÓDIGO fornecido, escreva “não foi possível confirmar”.
-- Diferencie claramente problema real, oportunidade de melhoria e sugestão opcional.
-- Quando possível, explique exatamente onde e como implementar a mudança.
-- Não proponha reconstruir o projeto inteiro se uma alteração pontual resolver.
-- Considere primeiro a experiência no celular e depois adapte para desktop.
+### 🎨 VISUAL
+- Hierarquia visual
+- Cores
+- Contraste
+- Tipografia
+- Espaçamento
+- Alinhamento
+- Consistência visual
+- Poluição visual
+- Qualidade dos componentes
 
-NO FINAL, entregue também:
-### 🏆 TOP 5
-As 5 melhorias mais importantes para fazer primeiro.
+### 🧭 UX E NAVEGAÇÃO
+- Facilidade para entender a página
+- Organização das informações
+- Fluxo de navegação
+- Menus
+- Busca
+- Descoberta de recursos
+- Estados vazios
+- Mensagens de erro
+- Feedback das ações
+- Facilidade para usuários iniciantes
 
-### 🛠️ ORDEM DE IMPLEMENTAÇÃO
-Organize as 20 melhorias em uma sequência prática de execução, começando pelas de maior impacto e menor risco.
+### 🎯 CONVERSÃO
+- Clareza da proposta de valor
+- CTA principal
+- CTAs secundários
+- Hierarquia dos CTAs
+- Redução de fricção
+- Caminho até a conversão
+- Pontos onde o usuário pode desistir
 
-### 📊 NOTAS ATUAIS
-Dê uma nota de 0 a 10 para:
-- Visual
-- UX
-- Conversão
-- Mobile
-- Acessibilidade
-- Confiança
-- Performance
-- Qualidade geral da página
+### 📝 CONTEÚDO E COPY
+- Títulos
+- Subtítulos
+- Textos
+- Clareza
+- Objetividade
+- Persuasão
+- Benefícios
+- Linguagem utilizada
+- Chamadas para ação
 
-### 🚀 RECOMENDAÇÃO FINAL
-Explique em poucas linhas qual seria a mudança mais importante para elevar o nível da página e por quê.
+### 📱 RESPONSIVIDADE
+Analise especificamente:
+- Celular
+- Tablet
+- Desktop
+- Elementos que podem quebrar
+- Botões
+- Campos
+- Menus
+- Textos
+- Cards
+- Imagens
+- Rolagem horizontal
 
-Se o objetivo for um site ou sistema que continuará evoluindo, pense também em escalabilidade, manutenção, consistência entre páginas e facilidade de implementação em HTML/CSS/JS sem quebrar funcionalidades existentes.',`Analyze this page: [LINK/SCREENSHOT/CODE]. Deliver exactly 20 prioritized improvements with problem, change, benefit, priority, and simple implementation. Evaluate visuals, CTA, trust, navigation, responsiveness, and accessibility.`),
+### ♿ ACESSIBILIDADE
+Verifique:
+- Contraste
+- Tamanho das fontes
+- Área de toque
+- Navegação por teclado
+- Foco visível
+- Labels
+- Textos alternativos
+- Estrutura semântica
+- Clareza para usuários com limitações visuais ou motoras
+
+### ⚡ PERFORMANCE
+Identifique possíveis problemas relacionados a:
+- Imagens
+- Scripts
+- Animações
+- Recursos externos
+- Carregamento
+- Elementos desnecessários
+
+### 🔎 SEO
+Avalie, quando for possível verificar:
+- Title
+- Meta description
+- H1/H2/H3
+- Estrutura semântica
+- Conteúdo
+- Links internos
+- URLs
+- Indexação
+
+### 🔐 CONFIANÇA
+Avalie:
+- Provas sociais
+- Depoimentos
+- Avaliações
+- Informações de contato
+- Segurança
+- Transparência
+- Credibilidade
+- Elementos que reduzem insegurança do usuário
+
+REGRAS IMPORTANTES:
+
+- Não entregue elogios genéricos.
+- Não repita problemas diferentes com a mesma solução.
+- Não invente problemas que não possam ser observados ou inferidos com segurança.
+- Se alguma informação não puder ser avaliada, informe claramente: "Não foi possível verificar".
+- Priorize melhorias que realmente possam gerar impacto.
+- Evite recomendações vagas como "melhore o design".
+- Explique exatamente O QUE mudar e COMO mudar.
+- Considere primeiro melhorias de alto impacto e baixo esforço.
+- Pense como um usuário real utilizando a página pela primeira vez.
+- Considere também o usuário que já conhece o sistema.
+- Diferencie problemas visuais de problemas funcionais.
+- Não recomende adicionar recursos apenas porque são modernos; recomende somente se resolverem um problema real.
+
+NO FINAL, ENTREGUE:
+
+### 🏆 TOP 5 — FAZER PRIMEIRO
+Liste as 5 melhorias que devem ser implementadas primeiro, explicando rapidamente por quê.
+
+### 🚦 ORDEM DE IMPLEMENTAÇÃO
+Organize as 20 melhorias em:
+1. Fazer imediatamente
+2. Fazer depois
+3. Melhorias futuras
+
+### 📊 RESUMO
+Informe:
+- Nota atual da página: 0–10
+- UX: 0–10
+- Visual: 0–10
+- Conversão: 0–10
+- Mobile: 0–10
+- Acessibilidade: 0–10
+- Confiança: 0–10
+- Performance: 0–10
+
+Se tiver acesso ao código, também identifique problemas técnicos diretamente relacionados à experiência do usuário.',`Analyze this page deeply:
+
+[LINK / SCREENSHOT / CODE]
+
+Act as a senior specialist in UX/UI, CRO, copywriting, accessibility, interface design, and digital product optimization.
+
+PAGE OBJECTIVE:
+[E.G.: sell / generate leads / present a service / enable a task / promote a product]
+
+TARGET AUDIENCE:
+[DESCRIBE OR INDICATE "IDENTIFY FROM CONTEXT"]
+
+CONTEXT:
+[E.G.: primarily mobile / desktop / both]
+
+Your mission is to find the most important opportunities to make this page clearer, more attractive, easier to use, trustworthy, and effective.
+
+DELIVER EXACTLY 20 IMPROVEMENTS.
+
+For each improvement, provide:
+1. Improvement #
+2. Identified problem
+3. Where the problem is
+4. Recommended change
+5. Expected benefit
+6. Priority: CRITICAL / HIGH / MEDIUM / LOW
+7. Impact: HIGH / MEDIUM / LOW
+8. Effort: EASY / MEDIUM / HARD
+9. Simple implementation — explain exactly how to do it
+10. Practical example, when appropriate
+
+MANDATORY EVALUATION:
+- Visual: hierarchy, colors, contrast, typography, spacing, alignment, consistency, clutter, component quality
+- UX and navigation: clarity, information organization, navigation flow, menus, search, discoverability, empty states, errors, action feedback, beginner usability
+- Conversion: value proposition, primary/secondary CTAs, CTA hierarchy, friction reduction, conversion path, abandonment points
+- Content and copy: titles, subtitles, text, clarity, objectivity, persuasion, benefits, language, calls to action
+- Responsiveness: mobile, tablet, desktop, elements that may break, buttons, fields, menus, text, cards, images, horizontal scrolling
+- Accessibility: contrast, font size, touch targets, keyboard navigation, visible focus, labels, alt text, semantic structure, clarity for users with visual or motor limitations
+- Performance: images, scripts, animations, external resources, loading, unnecessary elements
+- SEO when verifiable: title, meta description, H1/H2/H3, semantic structure, content, internal links, URLs, indexing
+- Trust: social proof, testimonials, ratings, contact information, security, transparency, credibility, elements that reduce user uncertainty
+
+IMPORTANT RULES:
+- Do not give generic praise.
+- Do not repeat different problems with the same solution.
+- Do not invent problems that cannot be observed or safely inferred.
+- If something cannot be evaluated, clearly state: "Could not verify".
+- Prioritize improvements that can generate real impact.
+- Avoid vague recommendations such as "improve the design".
+- Explain exactly WHAT to change and HOW to change it.
+- Consider high-impact, low-effort improvements first.
+- Think like a real user using the page for the first time.
+- Also consider the user who already knows the system.
+- Distinguish visual problems from functional problems.
+- Do not recommend adding features just because they are modern; recommend them only if they solve a real problem.
+
+AT THE END, DELIVER:
+
+### 🏆 TOP 5 — DO FIRST
+List the 5 improvements that should be implemented first, briefly explaining why.
+
+### 🚦 IMPLEMENTATION ORDER
+Organize the 20 improvements into:
+1. Do immediately
+2. Do later
+3. Future improvements
+
+### 📊 SUMMARY
+Provide:
+- Current page score: 0–10
+- UX: 0–10
+- Visual: 0–10
+- Conversion: 0–10
+- Mobile: 0–10
+- Accessibility: 0–10
+- Trust: 0–10
+- Performance: 0–10
+
+If you have access to the code, also identify technical issues directly related to user experience.`)
 sitePrompt('pronto','Conversão','Auditoria de Conversão','Para melhorar uma página orientada a resultados.','Analise esta página: [LINK]. Contexto: [PRODUTO]. Público: [PÚBLICO]. Objetivo: [OBJETIVO]. Avalie CTA, hierarquia, copy, confiança, fricções e responsividade. Entregue 10 melhorias priorizadas.',`Analyze this page: [LINK]. Context: [PRODUCT]. Audience: [AUDIENCE]. Goal: [GOAL]. Evaluate CTA, hierarchy, copy, trust, friction, and responsiveness. Deliver 10 prioritized improvements.`),
 sitePrompt('pronto','SEO','SEO Essencial','Para melhorar a estrutura de busca.','Crie um plano de SEO on-page para [PÁGINA/TEMA]. Sugira title, meta description, H1, H2, intenção de busca, conteúdo, links internos e FAQ sem inventar dados de volume.',`Create an on-page SEO plan for [PAGE/TOPIC]. Suggest title, meta description, H1, H2, search intent, content, internal links, and FAQ without inventing volume data.`),
 sitePrompt('pronto','Acessibilidade','Revisão de Acessibilidade','Para tornar o site utilizável por mais pessoas.','Revise a acessibilidade deste site: [LINK/CÓDIGO]. Analise contraste, títulos, teclado, foco, textos alternativos, formulários, botões e mensagens de erro. Priorize por impacto.',`Review the accessibility of this site: [LINK/CODE]. Analyze contrast, headings, keyboard, focus, alt text, forms, buttons, and error messages. Prioritize by impact.`),
