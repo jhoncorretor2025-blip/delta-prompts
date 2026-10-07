@@ -1,5 +1,5 @@
-// DELTA SITE VERSION: V1.31
-const CACHE_NAME = 'delta-prompts-shell-v37';
+// DELTA SITE VERSION: V1.32
+const CACHE_NAME = 'delta-prompts-shell-v38';
 const SHELL_URLS = [
   '/delta-prompts/index.html',
   '/delta-prompts/style.css',
@@ -28,7 +28,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   if (url.pathname === '/delta-prompts/menu-loader.js') {
     event.respondWith(
-      fetch('/delta-prompts/menu-loader.js?v=20261007-v26', { cache: 'no-store' })
+      fetch('/delta-prompts/menu-loader.js?v=20261007-v27', { cache: 'no-store' })
         .catch(() => fetch(event.request))
     );
     return;
