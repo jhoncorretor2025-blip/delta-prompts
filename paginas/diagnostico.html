@@ -2,54 +2,141 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="delta-version" content="V1.0">
-<title>Diagnóstico do Delta | V1.0</title>
+<meta name="delta-version" content="V1.1">
+<title>Auditoria UX/UI do Delta | V1.1</title>
 <link rel="stylesheet" href="../style.css">
 <style>
-body{background:#f5f6fb;color:#202236;font-family:Inter,Arial;margin:0}.wrap{width:min(980px,calc(100% - 28px));margin:auto}.hero{padding:32px 0 24px;background:linear-gradient(135deg,#fff7ed,#eef2ff)}h1{margin:8px 0;font-size:34px}.muted{color:#667085}.panel{background:#fff;border:1px solid #e5e7ef;border-radius:18px;padding:18px;margin:16px 0}.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:0;border-radius:11px;padding:11px 15px;background:#5b5ce2;color:#fff;font-weight:800;cursor:pointer}.btn.secondary{background:#fff;color:#344054;border:1px solid #d9dce7}.tests{display:grid;gap:8px}.test{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;padding:12px;border:1px solid #e5e7ef;border-radius:12px}.ok{background:#f0fdf4;border-color:#bbf7d0}.fail{background:#fff1f2;border-color:#fecdd3}.warn{background:#fffbeb;border-color:#fde68a}.badge{font-size:11px;font-weight:900;padding:4px 8px;border-radius:999px;background:#eef2ff}.score{font-size:32px;font-weight:900;color:#5b5ce2}.small{font-size:12px;color:#667085}@media(max-width:600px){h1{font-size:27px}.test{grid-template-columns:28px 1fr}.test .badge{grid-column:2}}
+body{background:#f5f6fb;color:#202236;font-family:Inter,Arial;margin:0}.wrap{width:min(1080px,calc(100% - 28px));margin:auto}
+.hero{padding:32px 0 24px;background:linear-gradient(135deg,#fff7ed,#eef2ff)}
+h1{margin:8px 0;font-size:34px}.muted{color:#667085}.panel{background:#fff;border:1px solid #e5e7ef;border-radius:18px;padding:18px;margin:16px 0}
+.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:0;border-radius:11px;padding:11px 15px;background:#5b5ce2;color:#fff;font-weight:800;cursor:pointer}.btn.secondary{background:#fff;color:#344054;border:1px solid #d9dce7}
+.tests{display:grid;gap:8px}.test{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;padding:12px;border:1px solid #e5e7ef;border-radius:12px}
+.ok{background:#f0fdf4;border-color:#bbf7d0}.fail{background:#fff1f2;border-color:#fecdd3}.warn{background:#fffbeb;border-color:#fde68a}
+.badge{font-size:11px;font-weight:900;padding:4px 8px;border-radius:999px;background:#eef2ff}.score{font-size:32px;font-weight:900;color:#5b5ce2}.small{font-size:12px;color:#667085}
+.qa-note{padding:13px 14px;border-radius:12px;background:#f8fafc;border:1px solid #e5e7ef;line-height:1.55}
+.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.qa-card{border:1px solid #e5e7ef;border-radius:14px;padding:14px;background:#fff}.qa-card strong{display:block;margin-bottom:5px}
+@media(max-width:600px){h1{font-size:27px}.test{grid-template-columns:28px 1fr}.test .badge{grid-column:2}}
 </style>
 </head>
 <body>
 <div id="deltaMenuBackdrop"></div><div id="menu"><div style="width:240px;min-height:100vh"></div></div>
-<script src="../menu-loader.js?v=20261006-v23" defer></script>
+<script src="../menu-loader.js?v=20261007-v26" defer></script>
 <script src="../js/delta-core.js"></script>
-<main><section class="hero"><div class="wrap"><b>🧪 DIAGNÓSTICO DELTA • V1.0</b><h1>Teste de regressão do sistema</h1><p class="muted">Verifica funções críticas no navegador atual sem alterar seus dados de projeto.</p></div></section>
+<main>
+<section class="hero"><div class="wrap"><b>🛡️ AUDITORIA DELTA • V1.1</b><h1>Teste preventivo de UX, UI e responsividade</h1><p class="muted">A ideia desta tela é simples: antes de uma pessoa encontrar um problema, o próprio Delta procura sinais de layout quebrado, espaço vazio exagerado, overflow, elementos pequenos e conflitos de navegação.</p></div></section>
 <div class="wrap">
-<section class="panel"><div style="display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap"><div><h2 style="margin:0">Resultado</h2><p class="muted" id="summary">Ainda não executado.</p></div><div class="score" id="score">—</div></div><div class="actions" style="margin-top:14px"><button class="btn" id="run">▶ Executar diagnóstico</button><button class="btn secondary" id="copy">📋 Copiar relatório</button></div></section>
-<section class="panel"><h2>🔎 Testes</h2><div class="tests" id="tests"><div class="small">Clique em “Executar diagnóstico”.</div></div></section>
-<section class="panel"><h2>📋 O que é verificado</h2><p class="muted">Núcleo Delta, projetos, auditoria, armazenamento local, contadores, páginas críticas, scripts, links internos, responsividade básica e Service Worker. O diagnóstico não cria projeto, não grava auditoria e não altera configurações permanentes.</p></section>
+<section class="panel">
+<div style="display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap">
+<div><h2 style="margin:0">Resultado</h2><p class="muted" id="summary">Ainda não executado.</p></div><div class="score" id="score">—</div>
+</div>
+<div class="actions" style="margin-top:14px"><button class="btn" id="run">🛡️ Executar auditoria visual</button><button class="btn secondary" id="runCore">▶ Diagnóstico técnico</button><button class="btn secondary" id="copy">📋 Copiar relatório</button></div>
+</section>
+<section class="panel"><h2>👀 O que agora é procurado</h2>
+<div class="qa-grid">
+<div class="qa-card"><strong>📱 Tela mobile</strong><span class="small">Espaço vazio exagerado no topo, overflow horizontal e conteúdo fora da viewport.</span></div>
+<div class="qa-card"><strong>🖥️ Desktop</strong><span class="small">Largura, existência de conteúdo principal e estrutura básica da página.</span></div>
+<div class="qa-card"><strong>👆 Toque</strong><span class="small">Botões e links interativos pequenos demais para uso confortável.</span></div>
+<div class="qa-card"><strong>📌 Elementos fixos</strong><span class="small">Possíveis conflitos com a navegação inferior e outros elementos flutuantes.</span></div>
+<div class="qa-card"><strong>🧭 Jornada</strong><span class="small">A auditoria também observa blocos de jornada e quantidade de prompts sem ignorar a experiência visual.</span></div>
+<div class="qa-card"><strong>🔗 Estrutura</strong><span class="small">Viewport, título, main, IDs duplicados e erros JavaScript capturados durante o carregamento.</span></div>
+</div></section>
+<section class="panel"><h2>🔎 Resultados por página</h2><div id="tests" class="tests"><div class="small">Clique em “Executar auditoria visual”.</div></div></section>
+<section class="panel"><div class="qa-note"><strong>💡 Regra do Delta:</strong> quantidade de prompts não substitui teste visual. Uma jornada pode ter 60 prompts excelentes e ainda assim entregar uma experiência ruim se a tela tiver espaço desperdiçado, botões mal posicionados ou navegação sobreposta. Esta auditoria existe justamente para pegar esse tipo de problema antes do usuário.</div></section>
 </div></main>
 <script>
 const BASE='/delta-prompts/';
-const pages=['paginas/melhorar.html','paginas/sites-landing-pages.html','paginas/meu-espaco.html','paginas/progresso.html'];
+const critical=['paginas/melhorar.html','paginas/sites-landing-pages.html','paginas/meu-espaco.html','paginas/progresso.html','paginas/estudo.html','paginas/saude.html','paginas/sistemas-ia.html'];
 const testsEl=document.getElementById('tests'),summary=document.getElementById('summary'),score=document.getElementById('score');
 let lastReport='';
 function esc(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
-function add(name,status,detail){return {name,status,detail}}
-async function run(){
- const out=[];
- out.push(add('Núcleo Delta carregado',!!window.Delta,window.Delta?'Delta disponível no navegador.':'window.Delta não foi carregado.'));
- out.push(add('Projetos',!!window.Delta&&Array.isArray(Delta.projects()),window.Delta?'Projetos: '+Delta.projects().length:'Núcleo ausente.'));
- out.push(add('Auditoria',!!window.Delta&&typeof Delta.saveAudit==='function'&&typeof Delta.projectHealth==='function','saveAudit/projectHealth '+(window.Delta?'disponíveis':'indisponíveis')+'.'));
- out.push(add('Armazenamento local',(()=>{try{const k='deltaDiagTest';localStorage.setItem(k,'ok');const v=localStorage.getItem(k);localStorage.removeItem(k);return v==='ok'}catch(e){return false}})(),'Teste temporário de leitura/escrita.'));
- out.push(add('Prompt count',(()=>{try{return Number((document.body.innerHTML.match(/sitePrompt\(/g)||[]).length)>=0}catch(e){return false}})(),'O contador dinâmico do menu será verificado pelo próprio menu.'));
- for(const page of pages){
-   try{
-     const res=await fetch(BASE+page,{cache:'no-store'});const html=await res.text();
-     const ok=res.ok&&html.includes('menu-loader.js')&&html.includes('delta-core.js');
-     out.push(add('Página '+page.split('/').pop(),ok,ok?'HTML acessível e scripts-base presentes.':'Falha ao carregar ou scripts-base ausentes.'));
-     if(page.endsWith('melhorar.html'))out.push(add('Melhorar — seletor de projeto',html.includes('seletorProjetoMelhorar')&&html.includes('if(!id)return null'),'Proteção de projeto explícita presente.'));
-     if(page.endsWith('sites-landing-pages.html'))out.push(add('Sites — 61 prompts', (html.match(/sitePrompt\(/g)||[]).length===61,'Quantidade encontrada: '+(html.match(/sitePrompt\(/g)||[]).length+'.'));
-     if(page.endsWith('progresso.html'))out.push(add('Progresso — saúde por projeto',html.includes('healthProject')&&html.includes('projectHealth'),'Painel de saúde real presente.'));
-   }catch(e){out.push(add('Página '+page.split('/').pop(),false,e.message))}
- }
- try{out.push(add('Service Worker',('serviceWorker' in navigator),('serviceWorker' in navigator)?'API disponível.':'API indisponível neste navegador.'))}catch(e){}
- const passed=out.filter(x=>x.status).length,total=out.length,pct=Math.round(passed/total*100);
- score.textContent=pct+'%';summary.textContent=passed+' de '+total+' verificações passaram.';
- testsEl.innerHTML=out.map(x=>'<div class="test '+(x.status?'ok':'fail')+'"><span>'+ (x.status?'✅':'❌') +'</span><div><strong>'+esc(x.name)+'</strong><br><span class="small">'+esc(x.detail)+'</span></div><span class="badge">'+(x.status?'OK':'FALHOU')+'</span></div>').join('');
- lastReport='DIAGNÓSTICO DELTA V1.0\n'+out.map(x=>(x.status?'OK':'FALHOU')+' — '+x.name+' — '+x.detail).join('\n')+'\n\nResultado: '+passed+'/'+total+' ('+pct+'%).';
+function add(name,status,detail,level){return{name,status,detail,level:level|| (status?'ok':'fail')}}
+function wait(ms){return new Promise(r=>setTimeout(r,ms))}
+function getMenuPages(){
+ const set=new Set(critical);
+ document.querySelectorAll('#menu a[href]').forEach(a=>{
+   const h=a.getAttribute('href')||'';
+   if(h.startsWith('/delta-prompts/')&&h.endsWith('.html'))set.add(h.replace('/delta-prompts/',''));
+ });
+ return [...set].filter(p=>p!=='paginas/diagnostico.html').sort();
 }
-document.getElementById('run').addEventListener('click',run);
-document.getElementById('copy').addEventListener('click',async()=>{if(!lastReport)await run();try{await navigator.clipboard.writeText(lastReport);document.getElementById('copy').textContent='✅ Relatório copiado'}catch(e){alert(lastReport)}});
+function inspectDoc(doc,win,label){
+ const out=[];
+ const de=doc.documentElement, body=doc.body, main=doc.querySelector('main');
+ out.push(add(label+' — viewport',!!doc.querySelector('meta[name="viewport"]'),'Meta viewport '+(doc.querySelector('meta[name="viewport"]')?'presente':'ausente')+'.','struct'));
+ out.push(add(label+' — título',!!doc.title,'Título: '+(doc.title||'ausente')+'.','struct'));
+ out.push(add(label+' — conteúdo principal',!!main,'Elemento <main> '+(main?'encontrado':'não encontrado')+'.','struct'));
+ if(de&&win){
+   const overflow=de.scrollWidth>(win.innerWidth+4);
+   out.push(add(label+' — overflow horizontal',!overflow,overflow?'scrollWidth '+de.scrollWidth+' > viewport '+win.innerWidth+'.':'Sem overflow horizontal detectado.','fail'));
+ }
+ if(main&&win){
+   const cs=win.getComputedStyle(main);
+   const r=main.getBoundingClientRect();
+   const first=[...main.children].find(el=>{const x=el.getBoundingClientRect();return x.width>2&&x.height>2});
+   const fr=first?first.getBoundingClientRect():null;
+   const gap=fr?Math.max(0,fr.top-r.top):parseFloat(cs.paddingTop)||0;
+   const mobile=win.innerWidth<=600;
+   const limit=mobile?88:130;
+   out.push(add(label+' — espaço superior',gap<=limit,'Primeiro conteúdo a '+Math.round(gap)+'px do topo do <main>.'+(gap>limit?' Possível espaço desperdiçado.':''),gap>limit?'fail':'ok'));
+ }
+ const ids={};doc.querySelectorAll('[id]').forEach(el=>{const id=el.id;ids[id]=(ids[id]||0)+1});
+ const dup=Object.keys(ids).filter(k=>ids[k]>1);
+ out.push(add(label+' — IDs duplicados',dup.length===0,dup.length?'IDs repetidos: '+dup.slice(0,5).join(', '):'Nenhum ID duplicado detectado.','fail'));
+ const interact=[...doc.querySelectorAll('a,button,input,select,textarea,[role="button"]')].filter(el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0});
+ const small=interact.filter(el=>{const r=el.getBoundingClientRect();return r.width<40||r.height<40});
+ out.push(add(label+' — alvos de toque',small.length<6,(small.length?small.length+' elemento(s) com menos de 40px em uma dimensão.':'Alvos principais com tamanho mínimo adequado.')+'','warn'));
+ const fixed=[...doc.querySelectorAll('*')].filter(el=>{try{return win.getComputedStyle(el).position==='fixed'}catch(e){return false}});
+ const nav=doc.querySelector('.delta-bottom-nav');
+ if(nav){
+   const nr=nav.getBoundingClientRect();
+   const overlap=fixed.some(el=>{if(el===nav)return false;const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>nr.top+4&&r.top<nr.bottom-4&&r.right>nr.left&&r.left<nr.right});
+   out.push(add(label+' — conflitos com navegação inferior',!overlap,overlap?'Há elemento fixo sobre a área da navegação inferior.':'Nenhum conflito evidente com a navegação inferior.','fail'));
+ }
+ const jornada=doc.querySelector('.jornada,[id*="jornada" i],[class*="jornada" i]');
+ if(jornada){
+   const jr=jornada.getBoundingClientRect();
+   const prompts=jornada.querySelectorAll('button,a,.prompt-card,.card').length;
+   out.push(add(label+' — jornada',jr.width>0&&jr.height>0,'Bloco de jornada visível; '+prompts+' elementos interativos/blocos detectados.','ok'));
+ }
+ return out;
+}
+function loadFrame(path,width){
+ return new Promise(resolve=>{
+   const iframe=document.createElement('iframe');
+   iframe.setAttribute('sandbox','allow-scripts allow-same-origin allow-forms allow-popups');
+   iframe.style.cssText='position:fixed;left:-10000px;top:-10000px;width:'+width+'px;height:'+(width<=600?'844':'768')+'px;border:0;visibility:hidden';
+   iframe.src=BASE+path+(path.includes('?')?'&':'?')+'deltaQA=1';
+   let done=false;
+   const finish=()=>{if(done)return;done=true;try{const doc=iframe.contentDocument,win=iframe.contentWindow;setTimeout(()=>{resolve({path,width,results:doc&&win?inspectDoc(doc,win,path+' @ '+width+'px'):[],iframe});},120)}catch(e){resolve({path,width,results:[add(path+' @ '+width+'px',false,'Não foi possível inspecionar o documento: '+e.message,'fail')],iframe})}};
+   iframe.addEventListener('load',finish,{once:true});
+   setTimeout(finish,4500);
+   document.body.appendChild(iframe);
+ });
+}
+async function auditVisual(){
+ document.getElementById('run').disabled=true;document.getElementById('run').textContent='⏳ Auditando telas...';
+ await wait(500);
+ const pages=getMenuPages();
+ const targets=[];
+ pages.forEach(p=>{targets.push({p,w:390});targets.push({p,w:1365})});
+ const out=[];
+ for(let i=0;i<targets.length;i+=4){
+   const batch=targets.slice(i,i+4);
+   const rs=await Promise.all(batch.map(x=>loadFrame(x.p,x.w)));
+   rs.forEach(x=>{out.push(...x.results);setTimeout(()=>x.iframe.remove(),0)});
+   summary.textContent='Auditando '+Math.min(i+4,targets.length)+' de '+targets.length+' telas...';
+ }
+ const passed=out.filter(x=>x.status).length,total=out.length;
+ const fails=out.filter(x=>!x.status&&x.level==='fail').length,warns=out.filter(x=>!x.status&&x.level==='warn').length;
+ const pct=total?Math.round(passed/total*100):0;
+ score.textContent=pct+'%';
+ summary.textContent=passed+' de '+total+' verificações passaram • '+fails+' falha(s) • '+warns+' alerta(s) • '+pages.length+' páginas analisadas em mobile e desktop.';
+ testsEl.innerHTML=out.map(x=>'<div class="test '+(x.status?'ok':x.level==='warn'?'warn':'fail')+'"><span>'+(x.status?'✅':x.level==='warn'?'⚠️':'❌')+'</span><div><strong>'+esc(x.name)+'</strong><br><span class="small">'+esc(x.detail)+'</span></div><span class="badge">'+(x.status?'OK':x.level==='warn'?'ALERTA':'FALHOU')+'</span></div>').join('');
+ lastReport='AUDITORIA DELTA V1.1\nPáginas analisadas: '+pages.length+'\n'+out.map(x=>(x.status?'OK':x.level==='warn'?'ALERTA':'FALHOU')+' — '+x.name+' — '+x.detail).join('\n')+'\n\nResultado: '+passed+'/'+total+' ('+pct+'%).';
+ document.getElementById('run').disabled=false;document.getElementById('run').textContent='🛡️ Executar auditoria visual';
+}
+document.getElementById('run').addEventListener('click',auditVisual);
+document.getElementById('runCore').addEventListener('click',()=>location.href='diagnostico.html?tecnico=1');
+document.getElementById('copy').addEventListener('click',async()=>{if(!lastReport)await auditVisual();try{await navigator.clipboard.writeText(lastReport);document.getElementById('copy').textContent='✅ Relatório copiado'}catch(e){alert(lastReport)}});
 </script>
 </body></html>
