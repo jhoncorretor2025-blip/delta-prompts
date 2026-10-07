@@ -1,4 +1,4 @@
-/* Delta Prompts — núcleo compartilhado V1.24
+/* Delta Prompts — núcleo compartilhado V1.32
    Responsabilidade: armazenamento, projetos, atividades, resultados e XP.
    Compatível com dados antigos da V1.16.
 */
@@ -18,6 +18,8 @@
       d:x.d||x.description||'Projeto pessoal',
       objective:x.objective||'',link:x.link||x.url||'',source:x.source||'',critical:x.critical||'',protectedRules:x.protectedRules||'',architecture:x.architecture||'',
       status:x.status||'Em andamento',
+      audience:x.audience||x.publicoAlvo||'',problem:x.problem||x.problema||'',solution:x.solution||x.solucao||'',utility:x.utility||x.utilidade||'',working:x.working||x.funciona||'',undefined:x.undefined||x.indefinido||'',
+      clarityStatus:x.clarityStatus||'nao-iniciado',clarityUpdatedAt:x.clarityUpdatedAt||null,
       nextStep:x.nextStep||'Escolher uma melhoria',
       lastActivity:x.lastActivity||x.updatedAt||null,
       createdAt:x.createdAt||null
@@ -25,13 +27,14 @@
   }
   function saveProjects(p){return write(KEY.projects,p)}
   function addProject(data){
-    const p=projects();const item={id:uid('proj'),n:String(data.n||'Projeto').trim(),d:String(data.d||'Projeto pessoal').trim(),objective:String(data.objective||'').trim(),status:data.status||'Em andamento',nextStep:String(data.nextStep||'Escolher uma melhoria').trim(),lastActivity:today(),createdAt:today(),link:String(data.link||'').trim(),source:String(data.source||'').trim(),critical:String(data.critical||'').trim(),protectedRules:String(data.protectedRules||'').trim(),architecture:String(data.architecture||'').trim()};
+    const p=projects();const item={id:uid('proj'),n:String(data.n||'Projeto').trim(),d:String(data.d||'Projeto pessoal').trim(),objective:String(data.objective||'').trim(),status:data.status||'Em andamento',audience:String(data.audience||data.publicoAlvo||'').trim(),problem:String(data.problem||data.problema||'').trim(),solution:String(data.solution||data.solucao||'').trim(),utility:String(data.utility||data.utilidade||'').trim(),working:String(data.working||data.funciona||'').trim(),undefined:String(data.undefined||data.indefinido||'').trim(),clarityStatus:data.clarityStatus||'nao-iniciado',clarityUpdatedAt:data.clarityUpdatedAt||null,nextStep:String(data.nextStep||'Escolher uma melhoria').trim(),lastActivity:today(),createdAt:today(),link:String(data.link||'').trim(),source:String(data.source||'').trim(),critical:String(data.critical||'').trim(),protectedRules:String(data.protectedRules||'').trim(),architecture:String(data.architecture||'').trim()};
     p.push(item);saveProjects(p);return item
   }
   function updateProject(id,patch){
     const p=projects(),i=p.findIndex(x=>x.id===id);if(i<0)return null;
     p[i]=Object.assign({},p[i],patch,{lastActivity:today()});saveProjects(p);return p[i]
   }
+  function saveProjectClarity(projectId,data){if(!projectId)return null;const patch={audience:String(data&&data.audience||'').trim(),problem:String(data&&data.problem||'').trim(),solution:String(data&&data.solution||'').trim(),utility:String(data&&data.utility||'').trim(),working:String(data&&data.working||'').trim(),undefined:String(data&&data.undefined||'').trim(),clarityStatus:data&&data.clarityStatus||'concluido',clarityUpdatedAt:new Date().toISOString(),nextStep:'Validar a proposta antes de avançar para desenvolvimento'};const item=updateProject(projectId,patch);if(item)recordActivity({type:'clarity',title:'Diagnóstico de clareza preenchido',projectId:projectId,status:'clareza'});return item}
   function removeProject(id){const p=projects().filter(x=>x.id!==id);saveProjects(p);return p}
   function projectCheckpoints(projectId){const all=read(KEY.checkpoints,[]);return all.filter(x=>x.projectId===projectId).sort((a,b)=>(b.ts||0)-(a.ts||0))}
   function saveCheckpoint(data){const item=Object.assign({id:uid('chk'),date:today(),ts:Date.now(),status:'registrado'},data);const all=read(KEY.checkpoints,[]);all.unshift(item);write(KEY.checkpoints,all.slice(0,300));if(item.projectId){updateProject(item.projectId,{nextStep:item.nextStep||'Revisar próxima etapa',lastCheckpointId:item.id})}recordActivity({type:'checkpoint',title:item.title||'Checkpoint do projeto',projectId:item.projectId||null});return item}
@@ -98,5 +101,5 @@
     const activities=read(KEY.activities,[]),results=read(KEY.results,[]);
     const completed=results.filter(x=>x.status==='funcionou').length,partial=results.filter(x=>x.status==='parcial').length,failed=results.filter(x=>x.status==='falhou').length;return {xp:Number(read(KEY.xp,0))||0,projects:projects().length,activities:activities.length,results:results.length,completed,partial,failed,resolutionRate:results.length?Math.round(completed/results.length*100):0}
   }
-  window.Delta={KEY,read,write,projects,saveProjects,addProject,updateProject,removeProject,xp,markUsage,recordActivity,recordResult,stats,projectCheckpoints,saveCheckpoint,projectContinuity,projectAudits,saveAudit,projectHealth,today};
+  window.Delta={KEY,read,write,projects,saveProjects,addProject,updateProject,saveProjectClarity,removeProject,xp,markUsage,recordActivity,recordResult,stats,projectCheckpoints,saveCheckpoint,projectContinuity,projectAudits,saveAudit,projectHealth,today};
 })();
