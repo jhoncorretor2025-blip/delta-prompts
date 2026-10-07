@@ -1372,3 +1372,75 @@ body.category-page .contador{
   #menu .sidebar.active{box-shadow:12px 0 38px rgba(15,23,42,.18)}
   #menu .menu-toggle{touch-action:manipulation}
 }
+
+
+/* ===== DELTA V1.31 — mobile: header sem espaço desperdiçado ===== */
+@media(max-width:760px){
+  /* A Home possui hero próprio; não precisa do padding superior do main. */
+  body:has(.hero) main{
+    padding-top:0!important;
+  }
+  body:has(.hero) .hero{
+    padding-top:24px!important;
+  }
+  /* Mantém páginas internas com espaço para o botão/menu fixo. */
+  body:not(:has(.hero)) main{
+    padding-top:68px;
+  }
+}
+
+/* ===== DELTA V1.31 — instalar como botão flutuante ===== */
+#deltaInstalarBtn.delta-install-fab{
+  position:fixed!important;
+  right:16px!important;
+  left:auto!important;
+  bottom:calc(180px + env(safe-area-inset-bottom))!important;
+  width:52px!important;
+  min-width:52px!important;
+  height:52px!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid rgba(255,255,255,.9)!important;
+  border-radius:50%!important;
+  background:#5b5ce2!important;
+  color:#fff!important;
+  font-size:23px!important;
+  line-height:1!important;
+  box-shadow:0 9px 24px rgba(91,92,226,.32)!important;
+  z-index:2400!important;
+  transition:transform .18s ease,box-shadow .18s ease!important;
+}
+#deltaInstalarBtn.delta-install-fab:active{
+  transform:scale(.94);
+}
+#deltaInstalarBtn.delta-install-fab::after{
+  content:'Instalar App';
+  position:absolute;
+  right:60px;
+  white-space:nowrap;
+  padding:7px 9px;
+  border-radius:9px;
+  background:#202236;
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  opacity:0;
+  pointer-events:none;
+  transform:translateX(4px);
+  transition:opacity .15s ease,transform .15s ease;
+}
+#deltaInstalarBtn.delta-install-fab:hover::after,
+#deltaInstalarBtn.delta-install-fab:focus-visible::after{
+  opacity:1;
+  transform:translateX(0);
+}
+@media(max-width:480px){
+  #deltaInstalarBtn.delta-install-fab{
+    right:12px!important;
+    bottom:calc(178px + env(safe-area-inset-bottom))!important;
+    width:50px!important;
+    min-width:50px!important;
+    height:50px!important;
+  }
+}
