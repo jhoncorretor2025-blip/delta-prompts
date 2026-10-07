@@ -72,7 +72,86 @@ const dadosBrutos=[
 {categoria:'🧑‍⚕️ Agentes de IA',nivel:'basico',titulo:'🏠 Corretor Imobiliário IA',quando:'Ajudar em anúncios, atendimento e análise de imóveis',prompt:'Atue como assistente de um corretor de imóveis brasileiro. Ajude a criar anúncios, melhorar descrições, responder clientes e organizar informações de imóveis. Preserve os dados fornecidos, não invente características e adapte o texto ao canal solicitado. Em anúncios, destaque diferenciais reais, localização, benefícios e chamada para ação sem exageros.',en:''},
 {categoria:'🧑‍⚕️ Agentes de IA',nivel:'intermediario',titulo:'🧴 Meu Agente de Dermatologia',quando:'Acompanhar uma condição de pele específica (ex: psoríase, acne, dermatite).',prompt:'Você atuará como um assistente de dermatologia especializado em pele, focado na minha condição.\n\nMinha condição: [EX: PSORÍASE, ACNE, DERMATITE — DESCREVA]\nTratamentos já utilizados: [TRATAMENTOS E REAÇÕES]\n\nA partir de agora, quando eu descrever uma mudança ou dúvida sobre a pele, você deve:\n• Perguntar sobre fatores que podem ter influenciado (estresse, alimentação, clima, produtos novos)\n• Organizar possíveis explicações sem afirmar diagnóstico\n• Indicar sinais de piora que merecem avaliação médica\n• Nunca recomendar remédios ou doses\n\nIsto não substitui acompanhamento com dermatologista. Confirme que entendeu minha condição antes de continuarmos.',en:'You will act as a dermatology assistant specialized in skin, focused on my condition.\n\nMy condition: [E.G., PSORIASIS, ACNE, DERMATITIS — DESCRIBE]\nTreatments already used: [TREATMENTS AND REACTIONS]\n\nFrom now on, when I describe a change or question about my skin, you should:\n• Ask about factors that might have contributed (stress, diet, weather, new products)\n• Organize possible explanations without stating a diagnosis\n• Point out signs of worsening that deserve medical evaluation\n• Never recommend medication or dosage\n\nThis does not replace follow-up with a dermatologist. Confirm you understood my condition before we continue.'},
 {categoria:'🎮 Criar Jogos',nivel:'intermediario',titulo:'🏓 Pong Simples',quando:'Para criar o jogo Pong clássico, contra o computador.',prompt:'Crie o jogo Pong completo em um único arquivo HTML usando canvas. Uma raquete controlada pelo jogador (mouse ou teclado) e outra controlada por uma IA simples. Bola que quica nas paredes e raquetes, contador de pontuação de cada lado, e o jogo deve reiniciar a rodada após cada ponto. Não use bibliotecas externas.',en:'Create the complete Pong game in a single HTML file using canvas. One paddle controlled by the player (mouse or keyboard) and another controlled by a simple AI. Ball that bounces off walls and paddles, score counter for each side, and the game should restart the round after each point. Do not use external libraries.'},
-{categoria:'🌐 Sites & Landing Pages',nivel:'basico',titulo:'20 Melhorias para uma Página',quando:'Para uma análise detalhada de uma página específica.',prompt:'Analise esta página: [LINK/PRINT/CÓDIGO]. Entregue exatamente 20 melhorias priorizadas com problema, mudança, benefício, prioridade e implementação simples. Avalie visual, CTA, confiança, navegação, responsividade e acessibilidade.',en:'Analyze this page: [LINK/SCREENSHOT/CODE]. Deliver exactly 20 prioritized improvements with problem, change, benefit, priority, and simple implementation. Evaluate visuals, CTA, trust, navigation, responsiveness, and accessibility.'},
+{categoria:'🌐 Sites & Landing Pages',nivel:'basico',titulo:'20 Melhorias para uma Página',quando:'Para uma análise detalhada de uma página específica.',prompt:'Atue como um especialista sênior em UX/UI, CRO (otimização de conversão), copywriting, acessibilidade e produto digital.
+
+Analise esta página ou site: [LINK / PRINT / CÓDIGO].
+
+CONTEXTO DO PROJETO
+- Objetivo principal da página: [OBJETIVO]
+- Público principal: [PÚBLICO]
+- Contexto de uso: [CELULAR / COMPUTADOR / AMBOS]
+- Ação principal que quero que o usuário realize: [AÇÃO / CTA]
+
+PRIMEIRO: entenda o que já existe.
+Faça um inventário rápido da página: estrutura, seções, menus, componentes, CTAs, formulários, textos, recursos e fluxos. Separe claramente:
+- confirmado pelo material fornecido;
+- aparentemente existente, mas não totalmente verificável;
+- não foi possível confirmar.
+
+DEPOIS: entregue EXATAMENTE 20 melhorias priorizadas.
+
+Para cada melhoria informe:
+1. # e nome da melhoria
+2. Problema ou oportunidade identificada
+3. Local da página/componente afetado
+4. Mudança recomendada
+5. Benefício para o usuário
+6. Prioridade: 🔴 Alta / 🟡 Média / 🟢 Baixa
+7. Impacto: Alto / Médio / Baixo
+8. Esforço: Fácil / Médio / Difícil
+9. Dependências ou riscos, se houver
+10. Implementação prática e simples
+11. Exemplo de texto, layout, componente ou código quando isso ajudar
+
+AVALIE OBRIGATORIAMENTE:
+- 🎨 Visual e identidade
+- 👁️ Hierarquia visual e escaneabilidade
+- 🧭 UX, navegação e arquitetura da informação
+- 🎯 CTA, conversão e clareza da próxima ação
+- ✍️ Conteúdo, copywriting e clareza das mensagens
+- 🛡️ Confiança, credibilidade e prova social
+- 📱 Responsividade e experiência mobile-first
+- ♿ Acessibilidade e usabilidade
+- ⚡ Performance e velocidade percebida
+- 🔎 SEO básico e estrutura semântica
+- 🔄 Microinterações, feedbacks e estados de erro/sucesso
+- 📐 Consistência visual e funcional entre componentes
+
+REGRAS IMPORTANTES
+- Não invente problemas que não possam ser observados ou razoavelmente inferidos.
+- Não recomende algo apenas por ser uma tendência.
+- Não repita recursos que já existem.
+- Evite recomendações genéricas como “melhore o design” sem explicar exatamente como.
+- Priorize mudanças que tragam impacto real com baixo ou médio esforço.
+- Preserve o que já funciona.
+- Se algo não puder ser verificado pelo LINK, PRINT ou CÓDIGO fornecido, escreva “não foi possível confirmar”.
+- Diferencie claramente problema real, oportunidade de melhoria e sugestão opcional.
+- Quando possível, explique exatamente onde e como implementar a mudança.
+- Não proponha reconstruir o projeto inteiro se uma alteração pontual resolver.
+- Considere primeiro a experiência no celular e depois adapte para desktop.
+
+NO FINAL, entregue também:
+### 🏆 TOP 5
+As 5 melhorias mais importantes para fazer primeiro.
+
+### 🛠️ ORDEM DE IMPLEMENTAÇÃO
+Organize as 20 melhorias em uma sequência prática de execução, começando pelas de maior impacto e menor risco.
+
+### 📊 NOTAS ATUAIS
+Dê uma nota de 0 a 10 para:
+- Visual
+- UX
+- Conversão
+- Mobile
+- Acessibilidade
+- Confiança
+- Performance
+- Qualidade geral da página
+
+### 🚀 RECOMENDAÇÃO FINAL
+Explique em poucas linhas qual seria a mudança mais importante para elevar o nível da página e por quê.
+
+Se o objetivo for um site ou sistema que continuará evoluindo, pense também em escalabilidade, manutenção, consistência entre páginas e facilidade de implementação em HTML/CSS/JS sem quebrar funcionalidades existentes.',en:'Analyze this page: [LINK/SCREENSHOT/CODE]. Deliver exactly 20 prioritized improvements with problem, change, benefit, priority, and simple implementation. Evaluate visuals, CTA, trust, navigation, responsiveness, and accessibility.'},
 {categoria:'🌐 Sites & Landing Pages',nivel:'basico',titulo:'💡 Brainstorm: 10 Ideias de Recursos e Design',quando:'Para gerar ideias novas e variadas quando você não sabe o que criar a seguir.',prompt:'Meu site/sistema é sobre: [DESCREVA O SITE OU SISTEMA E SEU OBJETIVO]\n\nO que já existe hoje: [O QUE JÁ TEM, SE QUISER INFORMAR]\n\nGere 10 ideias novas e criativas para melhorar esse projeto, misturando:\n• Novos recursos e funcionalidades\n• Melhorias de design e visual\n• Ideias de experiência do usuário\n\nPara cada ideia, dê um nome curto, explique em uma frase o que é, e diga se é mais fácil ou mais difícil de implementar. Não repita recursos que eu já tenha informado como existentes.',en:'My site/system is about: [DESCRIBE THE SITE OR SYSTEM AND ITS GOAL]\n\nWhat already exists today: [WHAT YOU ALREADY HAVE, IF YOU WANT TO SHARE]\n\nGenerate 10 new and creative ideas to improve this project, mixing:\n• New features and functionality\n• Design and visual improvements\n• User experience ideas\n\nFor each idea, give a short name, explain in one sentence what it is, and say whether it\'s easier or harder to implement. Don\'t repeat features I\'ve already mentioned as existing.'},
 {categoria:'🤖 Indicação do Claude',nivel:'intermediario',titulo:'📄🩺 Leitor Inteligente de Laudos e Exames',quando:'Escolhido pelo Claude entre +140 prompts de Vida Pessoal: pra entender um exame em linguagem simples, com 7 seções bem estruturadas e ótimas travas de segurança (não diagnostica, não inventa dado, alerta se algo exigir avaliação rápida). Original em Saúde.',prompt:'Analise o exame/laudo fornecido.\n\nExame: [ANEXAR ARQUIVO / COLAR TEXTO]\nMotivo pelo qual o exame foi solicitado: [MOTIVO, SE SOUBER]\nIdade: [IDADE]\nSintomas relacionados: [SINTOMAS, SE HOUVER]\n\nSUA MISSÃO\nNão faça apenas uma tradução do laudo. Faça uma leitura inteligente e organizada.\n\n1️⃣ 📋 RESUMO DO EXAME\nExplique em linguagem simples: qual exame foi realizado, para que ele serve, e quais são os principais achados.\n\n2️⃣ 🟢 NORMAL\nListe os principais resultados descritos como normais ou dentro dos parâmetros apresentados.\n\n3️⃣ 🟡 ALTERAÇÕES\nListe somente os resultados que realmente merecem atenção. Para cada um:\nResultado: (valor/achado)\nO que significa em linguagem simples: (explicação)\nImportância: Baixa / Moderada / Alta\n\n4️⃣ 🔴 PONTOS IMPORTANTES\nIdentifique achados que merecem ser discutidos com o profissional que solicitou o exame.\n\n5️⃣ 🧩 RELAÇÃO COM OS SINTOMAS\nSe sintomas tiverem sido fornecidos, explique se existe alguma relação possível. Não trate essa relação como diagnóstico.\n\n6️⃣ ❓ PERGUNTAS PARA A CONSULTA\nCrie 5 a 10 perguntas específicas baseadas nesse exame.\n\n7️⃣ 📌 RESUMO FINAL\nExplique em linguagem extremamente simples: "Se eu tivesse que explicar este exame para alguém em 30 segundos, eu diria:"\n\nREGRAS\n- Não invente informações que não estejam no exame.\n- Preserve valores, unidades e referências exatamente como aparecem.\n- Não ignore observações importantes do laudo.\n- Não transforme um achado em diagnóstico.\n- Diferencie claramente o que o exame mostra do que pode significar.\n- Se a imagem ou texto estiver ilegível, informe exatamente qual parte não foi possível interpretar.\n- Não recomende tratamento ou alteração de medicamentos.\n\nALERTA\nSe houver um achado que possa exigir avaliação rápida, destaque isso claramente e recomende procurar orientação profissional adequada, sem criar diagnóstico ou alarmismo.'},
 {categoria:'🤖 Indicação do Claude',nivel:'avancado',titulo:'🎯 Realocar Carteira e Dinheiro Parado',quando:'Escolhido pelo Claude entre +140 prompts de Vida Pessoal: vai além do básico, pede revisão completa da carteira com alocação percentual conectada a prazos e objetivos reais — não só uma dica solta. Original em Finanças Pessoais.',prompt:'Aja como um planejador financeiro. Vou te passar minha carteira atual completa:\n\n[LISTE TUDO QUE VOCÊ TEM HOJE: EX: CDI 100% - R$X, POUPANÇA - R$Y, AÇÕES - R$Z, ETC]\n\nTenho também um valor parado sem destino definido: [VALOR PARADO]\nMeus objetivos financeiros: [OBJETIVOS, EX: APOSENTADORIA, COMPRA DE IMÓVEL, RESERVA]\nMeu perfil de risco: [CONSERVADOR/MODERADO/ARROJADO]\nHorizonte de tempo de cada objetivo: [PRAZOS]\n\nFaça uma análise completa:\n1. Aponte concentrações de risco ou ineficiências na carteira atual (ex: dinheiro parado rendendo pouco, falta de diversificação)\n2. Sugira uma nova alocação percentual por classe de ativo, conectando cada objetivo ao prazo certo\n3. Indique onde o valor parado se encaixaria melhor\n4. Aponte o que eu deveria revisar primeiro e o que pode esperar\n\nSeja crítico e direto, sem inventar rentabilidades específicas de produtos que eu não mencionei.'}
