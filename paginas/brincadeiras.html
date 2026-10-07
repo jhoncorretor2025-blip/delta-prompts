@@ -81,7 +81,7 @@ const brincadeiras=[
 ];
 let categoria="Todas";
 const categorias=["Todas",...new Set(brincadeiras.map(x=>x[0]))];
-function promptTexto(q){return "Vamos brincar de “Que coisa eu seria?”.\n\nMinha pergunta é: "+q+"\n\nResponda SOMENTE com UMA PALAVRA, sem explicar e sem justificar. Escolha a palavra que melhor combine com minha personalidade com base no que você já percebeu de mim nesta conversa."}
+function promptTexto(q){return ["Vamos brincar de “Que coisa eu seria?”.","","Minha pergunta é: "+q,"","Responda SOMENTE com UMA PALAVRA, sem explicar e sem justificar. Escolha a palavra que melhor combine com minha personalidade com base no que você já percebeu de mim nesta conversa."].join("\\n")}
 function copiarTexto(t){navigator.clipboard.writeText(t).then(()=>toast("✅ Prompt copiado!")).catch(()=>toast("⚠️ Não foi possível copiar."))}
 function copiarPrincipal(){copiarTexto(document.getElementById("principalPrompt").textContent)}
 function usarTexto(t){copiarTexto(t);setTimeout(()=>window.open("https://chatgpt.com/","_blank"),250)}
