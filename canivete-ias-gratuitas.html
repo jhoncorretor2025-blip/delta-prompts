@@ -20,8 +20,8 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v3</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
-<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>23 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v4</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
+<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>36 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
 <input id="search" class="search" type="search" placeholder="🔎 Procurar por IA, função, categoria ou exemplo...">
@@ -44,7 +44,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 <button class="task-btn" data-task="codigo">💻 Código</button>
 <button class="task-btn" data-task="estudo">📚 Estudo</button>
 <button class="task-btn" data-task="automacao">⚙️ Automação</button>
-<button class="task-btn" data-task="apresentacao">🖥️ Apresentações</button>
+<button class="task-btn" data-task="apresentacao">🖥️ Apresentações</button><button class="task-btn" data-task="atualidade">📰 Atualidades</button><button class="task-btn" data-task="agentes">🤖 Agentes de código</button><button class="task-btn" data-task="clipes">✂️ Cortes / Shorts</button><button class="task-btn" data-task="avatar">🧑‍💻 Avatar</button><button class="task-btn" data-task="transcricao">🎧 Transcrição</button><button class="task-btn" data-task="recorte">🪄 Remover fundo</button>
 </div>
 <div class="recommend-result" id="recommendResult"></div>
 </section>
@@ -185,7 +185,20 @@ const caps={
 'Grammarly':['Texto','Revisão','Escrita'],
 'Microsoft Designer':['Imagem','Design','Social'],
 'Zapier':['Automação','Fluxos','Produtividade'],
-'ChatPDF':['PDF','Documentos','Estudo']
+'ChatPDF':['PDF','Documentos','Estudo'],
+'Grok':['Chat','Pesquisa','Atualidade'],
+'Kimi':['Pesquisa','Documentos','Agentes'],
+'Cursor':['Código','Agentes','Debug'],
+'Cline':['Código','Agentes','MCP'],
+'Runway':['Vídeo','Imagem','Edição'],
+'HeyGen':['Vídeo','Avatares','Voz'],
+'Descript':['Vídeo','Áudio','Texto'],
+'OpusClip':['Vídeo','Shorts','Clipes'],
+'Remove.bg':['Imagem','Recorte','Design'],
+'Whisper':['Áudio','Transcrição','Voz'],
+'Make':['Automação','Fluxos','Integrações'],
+'Beautiful.ai':['Slides','Design','Apresentação'],
+'Socratic':['Estudo','Explicação','Educação']
 };
 const recommend={
 pesquisa:['Perplexity','Gemini','Microsoft Copilot'],
@@ -197,7 +210,13 @@ audio:['ElevenLabs','Suno','Hugging Face Spaces'],
 codigo:['DeepSeek','Claude','Qwen'],
 estudo:['NotebookLM','ChatPDF','Gemini'],
 automacao:['Zapier'],
-apresentacao:['Gamma','Canva']
+apresentacao:['Gamma','Canva','Beautiful.ai'],
+ atualidade:['Grok','Perplexity','Kimi'],
+ agentes:['Kimi','Cursor','Cline'],
+ clipes:['OpusClip','CapCut','Descript'],
+ avatar:['HeyGen','Descript'],
+ transcricao:['Whisper','Descript'],
+ recorte:['Remove.bg','Canva']
 };
 const nameOf=c=>c.querySelector('h2')?.textContent.trim()||'';
 function getCount(c){return Number(clicks[nameOf(c)]||0)}
