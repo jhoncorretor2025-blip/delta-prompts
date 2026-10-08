@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.41
-window.DELTA_SITE_VERSION='V1.41';
+// DELTA SITE VERSION: V1.42
+window.DELTA_SITE_VERSION='V1.42';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -242,7 +242,7 @@ window.deltaRegistrarLog=function(texto){
       document.head.appendChild(appleIcon);
     }
     if('serviceWorker' in navigator){
-      navigator.serviceWorker.register('/delta-prompts/sw.js?v=20261007-v22',{updateViaCache:'none'}).catch(function(){});
+      navigator.serviceWorker.register('/delta-prompts/sw.js?v=20261008-v36',{updateViaCache:'none'}).catch(function(){});
     }
   }catch(e){}
 })();
@@ -625,7 +625,7 @@ window.deltaRegistrarLog=function(texto){
   if(document.body)criarBotao();else document.addEventListener('DOMContentLoaded',criarBotao,{once:true});
 })();
 (function(){
-  var st=document.createElement('style');st.textContent='.delta-bottom-nav a.active,.delta-bottom-nav button.active{background:#eef2ff;color:#5b5ce2;font-weight:900}.delta-bottom-nav [aria-current="page"]{box-shadow:inset 0 0 0 1px rgba(91,92,226,.12)}';document.head.appendChild(st);
+  var st=document.createElement('style');st.textContent='.delta-bottom-nav{display:none}@media(max-width:760px){.delta-bottom-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:1000;left:10px;right:10px;bottom:10px;background:#fff;border:1px solid #e5e7eb;border-radius:17px;box-shadow:0 12px 35px rgba(25,28,65,.18);overflow:hidden}.delta-bottom-nav a,.delta-bottom-nav button{border:0;background:#fff;padding:10px 4px;text-align:center;text-decoration:none;color:#202236;font-size:11px;font-weight:800;font-family:inherit;cursor:pointer}.delta-bottom-nav span{display:block;font-size:20px;margin-bottom:2px}body:has(.delta-bottom-nav){padding-bottom:78px}}[data-theme="dark"] .delta-bottom-nav,[data-theme="dark"] .delta-bottom-nav a,[data-theme="dark"] .delta-bottom-nav button{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.12);color:var(--text-primary,#eaeaea)}.delta-bottom-nav a.active,.delta-bottom-nav button.active{background:#eef2ff;color:#5b5ce2;font-weight:900}.delta-bottom-nav [aria-current="page"]{box-shadow:inset 0 0 0 1px rgba(91,92,226,.12)}';document.head.appendChild(st);
   if(document.querySelector('.delta-bottom-nav'))return;
   var nav=document.createElement('nav');
   nav.className='delta-bottom-nav';
@@ -648,7 +648,7 @@ window.deltaRegistrarLog=function(texto){
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-menu-v11';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
+(function(){function getMenuCandidates(){const version='delta-prompts-menu-v12';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'default'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
   try{
     const link=sidebar&&sidebar.querySelector('a[href*="/paginas/sites-landing-pages.html"]');
     const badge=link&&link.querySelector('.menu-count');
@@ -997,7 +997,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     brand.parentNode.insertBefore(btn,brand.nextSibling);
     aplicar(lerEstado());
   }
-
   var NOVIDADES=[
     {id:'menu-inteligente',tipo:'recurso',texto:'🧭 Menu inteligente: os grupos se reorganizam pelo seu uso'},{id:'espaco-ia',tipo:'recurso',texto:'🧠 Novo Espaço IA: buscar, criar, melhorar, personalizar e compartilhar prompts'},
     {id:'quiz',tipo:'recurso',texto:'🧭 Novo quiz "Qual prompt eu uso?"'},
