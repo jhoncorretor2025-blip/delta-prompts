@@ -10,145 +10,130 @@
 [data-theme="dark"]{--bg:#0f1424;--card:#161d33;--ink:#eef2ff;--muted:#aab4ca;--line:#29334e;--shadow:0 8px 24px rgba(0,0,0,.25)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
 a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}.brand{font-weight:900;font-size:20px}.back{color:var(--blue);text-decoration:none;font-size:13px;font-weight:800}
-.hero{background:linear-gradient(135deg,#eff6ff,#fff);border:1px solid #dbeafe;border-radius:22px;padding:28px;margin-bottom:18px}.hero h1{font-size:clamp(27px,4vw,42px);margin:0 0 9px;letter-spacing:-.03em}.hero p{max-width:820px;color:#475467;line-height:1.6;margin:0}.dark .hero{background:#18213a}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}.search{flex:1;min-width:230px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit}.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:9px 12px;font-size:12px;font-weight:800;cursor:pointer}.filter.active{background:var(--blue);border-color:var(--blue);color:#fff}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:19px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:310px}.head{display:flex;align-items:flex-start;gap:12px}.icon{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:#eff6ff;font-size:25px;flex:0 0 auto}.title{min-width:0;flex:1}.title h2{font-size:17px;margin:2px 0 4px}.title small{color:var(--muted);font-size:11px}.tag{display:inline-flex;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;background:#ecfdf3;color:#166534;white-space:nowrap}.tag.limit{background:#fffbeb;color:#92400e}.desc{color:var(--muted);font-size:13px;line-height:1.55;margin:14px 0}.use{background:color-mix(in srgb,var(--bg) 78%,var(--card));border:1px solid var(--line);border-radius:12px;padding:11px;font-size:12px;line-height:1.5;margin-bottom:14px}.use b{display:block;margin-bottom:3px;color:var(--ink)}.footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}.best{font-size:11px;color:var(--muted)}.open{display:inline-flex;text-decoration:none;background:var(--blue);color:#fff;padding:10px 13px;border-radius:10px;font-size:12px;font-weight:850}.open:hover{background:var(--blue2)}
-.note{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;color:var(--muted);font-size:12px;line-height:1.55}.empty{display:none;text-align:center;padding:35px;color:var(--muted)}
-@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:680px){.wrap{padding:14px}.top{align-items:flex-start}.hero{padding:20px;border-radius:18px}.grid{grid-template-columns:1fr}.card{min-height:0}.toolbar{display:block}.search{width:100%;margin-bottom:10px}.filters{overflow:auto;flex-wrap:nowrap;padding-bottom:3px}.filter{white-space:nowrap}.footer{margin-top:12px}}
+.hero{background:linear-gradient(135deg,#eff6ff,#fff);border:1px solid #dbeafe;border-radius:22px;padding:28px;margin-bottom:18px}.hero h1{font-size:clamp(27px,4vw,42px);margin:0 0 9px;letter-spacing:-.03em}.hero p{max-width:900px;color:#475467;line-height:1.6;margin:0}
+.toolbar{display:grid;gap:10px;margin-bottom:18px}.search{width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:13px 14px;font:inherit}.filter-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filter-label{font-size:11px;font-weight:900;color:var(--muted);text-transform:uppercase;margin-right:2px}.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:8px 11px;font-size:12px;font-weight:800;cursor:pointer}.filter.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.count{font-size:12px;color:var(--muted);font-weight:800;margin:4px 0 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:19px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:310px}.head{display:flex;align-items:flex-start;gap:12px}.icon{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:#eff6ff;font-size:25px;flex:0 0 auto}.title{min-width:0;flex:1}.title h2{font-size:17px;margin:2px 0 4px}.title small{color:var(--muted);font-size:11px}.tag{display:inline-flex;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;background:#ecfdf3;color:#166534;white-space:nowrap}.tag.limit{background:#fffbeb;color:#92400e}.desc{color:var(--muted);font-size:13px;line-height:1.55;margin:14px 0}.use{background:color-mix(in srgb,var(--bg) 78%,var(--card));border:1px solid var(--line);border-radius:12px;padding:11px;font-size:12px;line-height:1.5;margin-bottom:14px}.use b{display:block;margin-bottom:3px;color:var(--ink)}.footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}.best{font-size:11px;color:var(--muted)}.open{display:inline-flex;text-decoration:none;background:var(--blue);color:#fff;padding:10px 13px;border-radius:10px;font-size:12px;font-weight:850}.open:hover{background:var(--blue2)}.empty{display:none;text-align:center;padding:35px;color:var(--muted)}.note{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;color:var(--muted);font-size:12px;line-height:1.55}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:680px){.wrap{padding:14px}.top{align-items:flex-start}.hero{padding:20px;border-radius:18px}.grid{grid-template-columns:1fr}.card{min-height:0}.filters{overflow:auto;flex-wrap:nowrap;padding-bottom:3px}.filter{white-space:nowrap}}
 </style>
 </head>
 <body>
 <main class="wrap">
-<header class="top">
-  <div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas</span></div>
-  <a class="back" href="canivete.html">← Voltar ao Canivete</a>
-</header>
-
-<section class="hero">
-  <h1>🤖 IAs gratuitas que vale a pena conhecer</h1>
-  <p>Uma seleção prática de ferramentas de Inteligência Artificial que podem economizar tempo, criar conteúdo, pesquisar, estudar, montar apresentações, gerar áudio e muito mais — sem exigir assinatura para começar.</p>
-</section>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v2</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
+<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>22 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
-  <input id="search" class="search" type="search" placeholder="🔎 Procurar uma IA, função ou categoria...">
-  <div class="filters" id="filters">
-    <button class="filter active" data-cat="all">Todas</button>
-    <button class="filter" data-cat="pesquisa">🔎 Pesquisa</button>
-    <button class="filter" data-cat="trabalho">💼 Trabalho</button>
-    <button class="filter" data-cat="criacao">🎨 Criação</button>
-    <button class="filter" data-cat="audio">🎙️ Áudio</button>
-    <button class="filter" data-cat="desenvolvimento">💻 Desenvolvimento</button>
-  </div>
+<input id="search" class="search" type="search" placeholder="🔎 Procurar por IA, função, categoria ou exemplo...">
+<div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters">
+<button class="filter active" data-cat="all">Todas</button><button class="filter" data-cat="pesquisa">🔎 Pesquisa</button><button class="filter" data-cat="trabalho">💼 Trabalho</button><button class="filter" data-cat="criacao">🎨 Criação</button><button class="filter" data-cat="audio">🎙️ Áudio</button><button class="filter" data-cat="video">🎬 Vídeo</button><button class="filter" data-cat="imagem">🖼️ Imagem</button><button class="filter" data-cat="codigo">💻 Código</button><button class="filter" data-cat="estudo">📚 Estudo</button><button class="filter" data-cat="automacao">⚙️ Automação</button></div></div>
+<div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos</button><button class="filter" data-access="free">🟢 Plano grátis</button><button class="filter" data-access="limit">🟡 Grátis + limite</button></div></div>
+<div class="count" id="count"></div>
 </section>
 
 <section class="grid" id="grid">
 
-<article class="card" data-cat="pesquisa trabalho" data-search="Perplexity pesquisa web fontes respostas pesquisa mercado">
-<div class="head"><div class="icon">🔎</div><div class="title"><h2>Perplexity</h2><small>Pesquisa na web com fontes</small></div><span class="tag">GRÁTIS</span></div>
-<p class="desc">Excelente para pesquisar assuntos atuais e receber respostas acompanhadas de citações e fontes.</p>
-<div class="use"><b>💡 Exemplo para você</b>“Pesquise os principais indicadores do mercado imobiliário de Gravataí em 2026 e mostre as fontes.”</div>
-<div class="footer"><span class="best">Melhor para: pesquisa rápida</span><a class="open" href="https://www.perplexity.ai/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="pesquisa trabalho" data-access="free" data-search="Perplexity pesquisa web fontes respostas mercado imobiliario">
+<div class="head"><div class="icon">🔎</div><div class="title"><h2>Perplexity</h2><small>Pesquisa na web com fontes</small></div><span class="tag">GRÁTIS</span></div><p class="desc">Pesquisa assuntos atuais e entrega respostas acompanhadas de fontes.</p><div class="use"><b>💡 Exemplo</b> Pesquise indicadores do mercado imobiliário de Gravataí e mostre as fontes.</div><div class="footer"><span class="best">Pesquisa</span><a class="open" href="https://www.perplexity.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="pesquisa trabalho" data-search="NotebookLM Google estudo documentos PDF fontes podcast">
-<div class="head"><div class="icon">📚</div><div class="title"><h2>NotebookLM</h2><small>Converse com seus documentos</small></div><span class="tag">GRÁTIS</span></div>
-<p class="desc">Você coloca PDFs, documentos e outras fontes e usa a IA para resumir, comparar, explicar e estudar aquele material.</p>
-<div class="use"><b>💡 Exemplo para você</b> Suba um contrato de locação e peça: “Encontre riscos, obrigações do locador e obrigações do inquilino.”</div>
-<div class="footer"><span class="best">Melhor para: documentos e estudo</span><a class="open" href="https://notebooklm.google.com/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="pesquisa trabalho estudo" data-access="free" data-search="NotebookLM Google documentos PDF estudo resumo audio fontes">
+<div class="head"><div class="icon">📚</div><div class="title"><h2>NotebookLM</h2><small>Converse com seus documentos</small></div><span class="tag">GRÁTIS</span></div><p class="desc">Analisa PDFs e outras fontes, cria resumos, perguntas e explicações.</p><div class="use"><b>💡 Exemplo</b> Envie um contrato e peça para encontrar obrigações e riscos.</div><div class="footer"><span class="best">Documentos</span><a class="open" href="https://notebooklm.google.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="trabalho criacao" data-search="Gamma apresentação site documento slides IA">
-<div class="head"><div class="icon">🖥️</div><div class="title"><h2>Gamma</h2><small>Apresentações, documentos e sites</small></div><span class="tag limit">FREE + LIMITE</span></div>
-<p class="desc">Transforma uma ideia, prompt ou documento em apresentações, páginas e materiais visuais.</p>
-<div class="use"><b>💡 Exemplo para você</b> “Crie uma apresentação de 8 slides explicando como funciona o aluguel de um imóvel para novos clientes.”</div>
-<div class="footer"><span class="best">Melhor para: apresentações</span><a class="open" href="https://gamma.app/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="trabalho criacao" data-access="limit" data-search="Gamma apresentação slides documento site">
+<div class="head"><div class="icon">🖥️</div><div class="title"><h2>Gamma</h2><small>Apresentações, documentos e sites</small></div><span class="tag limit">FREE + LIMITE</span></div><p class="desc">Transforma ideias e documentos em apresentações e páginas visuais.</p><div class="use"><b>💡 Exemplo</b> Crie 8 slides explicando aluguel de imóveis para novos clientes.</div><div class="footer"><span class="best">Apresentações</span><a class="open" href="https://gamma.app/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="criacao trabalho" data-search="Napkin visual diagrama infográfico documento PDF PPT">
-<div class="head"><div class="icon">🧠</div><div class="title"><h2>Napkin AI</h2><small>Transforma ideias em visuais</small></div><span class="tag">GRÁTIS</span></div>
-<p class="desc">Ótima para transformar textos em diagramas, esquemas e visuais que ajudam a explicar uma ideia.</p>
-<div class="use"><b>💡 Exemplo para você</b> Cole um texto sobre financiamento imobiliário e peça um visual simples explicando as etapas.</div>
-<div class="footer"><span class="best">Melhor para: diagramas e explicações</span><a class="open" href="https://www.napkin.ai/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="criacao trabalho" data-access="free" data-search="Napkin visual diagrama infografico">
+<div class="head"><div class="icon">🧠</div><div class="title"><h2>Napkin AI</h2><small>Transforma ideias em visuais</small></div><span class="tag">GRÁTIS</span></div><p class="desc">Converte textos em diagramas, esquemas e visuais explicativos.</p><div class="use"><b>💡 Exemplo</b> Transforme um texto sobre financiamento em um passo a passo visual.</div><div class="footer"><span class="best">Diagramas</span><a class="open" href="https://www.napkin.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="audio criacao" data-search="ElevenLabs voz texto audio fala efeitos musica">
-<div class="head"><div class="icon">🎙️</div><div class="title"><h2>ElevenLabs</h2><small>Voz, áudio e efeitos com IA</small></div><span class="tag limit">GRÁTIS + CRÉDITOS</span></div>
-<p class="desc">Gera voz a partir de texto e também oferece recursos de áudio, efeitos e criação de voz.</p>
-<div class="use"><b>💡 Exemplo para você</b> Transforme um roteiro de vídeo imobiliário em narração natural para um Reels.</div>
-<div class="footer"><span class="best">Melhor para: narração</span><a class="open" href="https://elevenlabs.io/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="audio criacao" data-access="limit" data-search="ElevenLabs voz audio texto fala narracao">
+<div class="head"><div class="icon">🎙️</div><div class="title"><h2>ElevenLabs</h2><small>Voz e áudio com IA</small></div><span class="tag limit">GRÁTIS + CRÉDITOS</span></div><p class="desc">Gera narração e outros recursos de áudio a partir de texto.</p><div class="use"><b>💡 Exemplo</b> Transforme um roteiro de vídeo imobiliário em narração.</div><div class="footer"><span class="best">Narração</span><a class="open" href="https://elevenlabs.io/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="audio criacao" data-search="Suno música IA criar música letra instrumental">
-<div class="head"><div class="icon">🎵</div><div class="title"><h2>Suno</h2><small>Criação de músicas com IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div>
-<p class="desc">Cria músicas completas a partir de uma descrição. Excelente para diversão, testes e trilhas para projetos pessoais.</p>
-<div class="use"><b>💡 Exemplo para você</b> “Crie uma música gaúcha animada sobre um corretor de imóveis indo mostrar uma casa.” 😄</div>
-<div class="footer"><span class="best">Melhor para: música e diversão</span><a class="open" href="https://suno.com/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="audio criacao" data-access="limit" data-search="Suno musica letra instrumental">
+<div class="head"><div class="icon">🎵</div><div class="title"><h2>Suno</h2><small>Criação de músicas</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Cria músicas completas a partir de uma descrição ou letra.</p><div class="use"><b>💡 Exemplo</b> Crie uma música gaúcha divertida sobre um corretor de imóveis. 😄</div><div class="footer"><span class="best">Música</span><a class="open" href="https://suno.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="desenvolvimento" data-search="Hugging Face Spaces IA aplicativos modelos demos código imagem vídeo voz">
-<div class="head"><div class="icon">🤗</div><div class="title"><h2>Hugging Face Spaces</h2><small>Milhares de demos de IA</small></div><span class="tag limit">MUITAS GRÁTIS</span></div>
-<p class="desc">É quase uma “feira” de ferramentas de IA. Dá para encontrar demos de imagem, vídeo, voz, OCR, código e muito mais.</p>
-<div class="use"><b>💡 Exemplo para você</b> Procure ferramentas de remoção de fundo, geração de imagens, transcrição de áudio ou testes de modelos.</div>
-<div class="footer"><span class="best">Melhor para: descobrir IAs novas</span><a class="open" href="https://huggingface.co/spaces" target="_blank" rel="noopener">Explorar ↗</a></div>
+<article class="card" data-cat="codigo criacao imagem audio video" data-access="limit" data-search="Hugging Face Spaces demos modelos imagem video voz OCR codigo">
+<div class="head"><div class="icon">🤗</div><div class="title"><h2>Hugging Face Spaces</h2><small>Milhares de demos de IA</small></div><span class="tag limit">MUITAS GRÁTIS</span></div><p class="desc">Uma grande coleção de demos para imagem, vídeo, voz, OCR, código e muito mais.</p><div class="use"><b>💡 Exemplo</b> Descubra ferramentas novas de IA sem precisar instalar nada.</div><div class="footer"><span class="best">Descobrir IAs</span><a class="open" href="https://huggingface.co/spaces" target="_blank" rel="noopener">Explorar ↗</a></div>
 </article>
 
-<article class="card" data-cat="trabalho criacao" data-search="Canva IA design imagem apresentação vídeo texto">
-<div class="head"><div class="icon">🎨</div><div class="title"><h2>Canva</h2><small>Design com recursos de IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div>
-<p class="desc">Uma opção prática para quem quer juntar design tradicional e recursos de IA em um só lugar.</p>
-<div class="use"><b>💡 Exemplo para você</b> Criar rapidamente uma arte para anúncio de imóvel, Story, apresentação ou postagem para redes sociais.</div>
-<div class="footer"><span class="best">Melhor para: marketing visual</span><a class="open" href="https://www.canva.com/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="trabalho criacao imagem video" data-access="limit" data-search="Canva design imagem apresentação video marketing">
+<div class="head"><div class="icon">🎨</div><div class="title"><h2>Canva</h2><small>Design com IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Une design tradicional e recursos de IA para posts, apresentações e vídeos.</p><div class="use"><b>💡 Exemplo</b> Crie uma arte para anúncio de imóvel ou Story.</div><div class="footer"><span class="best">Marketing visual</span><a class="open" href="https://www.canva.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="pesquisa desenvolvimento" data-search="Qwen chat IA código pesquisa gratuito modelo">
-<div class="head"><div class="icon">⚡</div><div class="title"><h2>Qwen</h2><small>Modelos de IA para texto e código</small></div><span class="tag limit">GRÁTIS*</span></div>
-<p class="desc">Uma alternativa interessante para testar modelos diferentes, especialmente em tarefas de raciocínio, texto e programação.</p>
-<div class="use"><b>💡 Exemplo para você</b> Compare a resposta de um problema de programação ou peça uma segunda opinião sobre uma solução de código.</div>
-<div class="footer"><span class="best">Melhor para: experimentar modelos</span><a class="open" href="https://chat.qwen.ai/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="pesquisa codigo" data-access="free" data-search="Qwen chat codigo raciocinio">
+<div class="head"><div class="icon">⚡</div><div class="title"><h2>Qwen</h2><small>Texto, raciocínio e código</small></div><span class="tag">GRÁTIS*</span></div><p class="desc">Alternativa para testar modelos em tarefas de texto, raciocínio e programação.</p><div class="use"><b>💡 Exemplo</b> Peça uma segunda opinião sobre um problema de código.</div><div class="footer"><span class="best">Modelos alternativos</span><a class="open" href="https://chat.qwen.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="pesquisa desenvolvimento" data-search="DeepSeek IA código raciocínio gratuito">
-<div class="head"><div class="icon">🧩</div><div class="title"><h2>DeepSeek</h2><small>Raciocínio e programação</small></div><span class="tag limit">GRÁTIS*</span></div>
-<p class="desc">Uma alternativa popular para raciocínio, programação, análise e tarefas técnicas.</p>
-<div class="use"><b>💡 Exemplo para você</b> Cole um erro do seu site e peça uma análise passo a passo sem alterar funcionalidades que já funcionam.</div>
-<div class="footer"><span class="best">Melhor para: código e raciocínio</span><a class="open" href="https://chat.deepseek.com/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="pesquisa codigo" data-access="free" data-search="DeepSeek raciocinio codigo programacao">
+<div class="head"><div class="icon">🧩</div><div class="title"><h2>DeepSeek</h2><small>Raciocínio e programação</small></div><span class="tag">GRÁTIS*</span></div><p class="desc">Popular para raciocínio, programação, análise e tarefas técnicas.</p><div class="use"><b>💡 Exemplo</b> Analise um erro do seu site sem alterar funcionalidades existentes.</div><div class="footer"><span class="best">Código</span><a class="open" href="https://chat.deepseek.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="pesquisa trabalho" data-search="Claude IA escrita análise documentos programação gratuito">
-<div class="head"><div class="icon">✍️</div><div class="title"><h2>Claude</h2><small>Escrita, análise e raciocínio</small></div><span class="tag limit">FREE + LIMITE</span></div>
-<p class="desc">Muito bom para textos longos, organização de ideias, análise de documentos e programação.</p>
-<div class="use"><b>💡 Exemplo para você</b> Cole uma especificação grande de um sistema e peça para transformar em um plano de implementação por etapas.</div>
-<div class="footer"><span class="best">Melhor para: textos e análise</span><a class="open" href="https://claude.ai/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="pesquisa trabalho estudo codigo" data-access="limit" data-search="Claude escrita analise documentos programacao">
+<div class="head"><div class="icon">✍️</div><div class="title"><h2>Claude</h2><small>Escrita, análise e raciocínio</small></div><span class="tag limit">FREE + LIMITE</span></div><p class="desc">Muito bom para textos longos, documentos, organização e programação.</p><div class="use"><b>💡 Exemplo</b> Transforme uma especificação grande em um plano de implementação.</div><div class="footer"><span class="best">Análise e texto</span><a class="open" href="https://claude.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="trabalho desenvolvimento" data-search="Google AI Studio Gemini API código protótipos gratuito">
-<div class="head"><div class="icon">🧪</div><div class="title"><h2>Google AI Studio</h2><small>Testar modelos e protótipos</small></div><span class="tag limit">FREE TIER*</span></div>
-<p class="desc">Ambiente para experimentar modelos do Google e prototipar ideias de IA, especialmente útil para quem gosta de construir sistemas.</p>
-<div class="use"><b>💡 Exemplo para você</b> Teste um prompt complexo ou um protótipo antes de colocar a ideia dentro de um projeto.</div>
-<div class="footer"><span class="best">Melhor para: prototipagem</span><a class="open" href="https://aistudio.google.com/" target="_blank" rel="noopener">Abrir IA ↗</a></div>
+<article class="card" data-cat="trabalho codigo" data-access="free" data-search="Google AI Studio Gemini API prototipo codigo">
+<div class="head"><div class="icon">🧪</div><div class="title"><h2>Google AI Studio</h2><small>Modelos e protótipos</small></div><span class="tag">FREE TIER*</span></div><p class="desc">Ambiente para experimentar modelos do Google e prototipar aplicações de IA.</p><div class="use"><b>💡 Exemplo</b> Teste um prompt complexo antes de colocá-lo no seu projeto.</div><div class="footer"><span class="best">Prototipagem</span><a class="open" href="https://aistudio.google.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="pesquisa trabalho criacao imagem" data-access="limit" data-search="Gemini Google chat pesquisa imagem escrita documentos">
+<div class="head"><div class="icon">✨</div><div class="title"><h2>Gemini</h2><small>Assistente geral do Google</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Assistente para conversar, pesquisar, escrever, analisar e trabalhar com recursos multimodais.</p><div class="use"><b>💡 Exemplo</b> Peça ideias para um anúncio, revise um texto ou compare informações.</div><div class="footer"><span class="best">Uso geral</span><a class="open" href="https://gemini.google.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="pesquisa trabalho criacao imagem" data-access="limit" data-search="Microsoft Copilot chat pesquisa imagem escrita produtividade">
+<div class="head"><div class="icon">🪟</div><div class="title"><h2>Microsoft Copilot</h2><small>Pesquisa, texto e criação</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Assistente da Microsoft com pesquisa na web, escrita e recursos de criação.</p><div class="use"><b>💡 Exemplo</b> Resuma uma pesquisa e transforme os pontos principais em uma lista de tarefas.</div><div class="footer"><span class="best">Produtividade</span><a class="open" href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="pesquisa codigo" data-access="limit" data-search="Le Chat Mistral chat pesquisa codigo raciocinio">
+<div class="head"><div class="icon">💬</div><div class="title"><h2>Le Chat</h2><small>IA da Mistral</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Alternativa para conversa, pesquisa, raciocínio e tarefas técnicas.</p><div class="use"><b>💡 Exemplo</b> Compare uma solução de programação com a resposta de outra IA.</div><div class="footer"><span class="best">Alternativa de chat</span><a class="open" href="https://chat.mistral.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="codigo" data-access="limit" data-search="Groq modelos LLM codigo rapido desenvolvedor">
+<div class="head"><div class="icon">⚡</div><div class="title"><h2>Groq</h2><small>Modelos rápidos para IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Plataforma útil para experimentar modelos de linguagem com respostas rápidas.</p><div class="use"><b>💡 Exemplo</b> Teste prompts de programação e compare respostas rapidamente.</div><div class="footer"><span class="best">Testes de modelos</span><a class="open" href="https://console.groq.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="pesquisa codigo estudo" data-access="free" data-search="HuggingChat modelos open source chat pesquisa codigo">
+<div class="head"><div class="icon">🤗</div><div class="title"><h2>HuggingChat</h2><small>Chat com modelos abertos</small></div><span class="tag">GRÁTIS*</span></div><p class="desc">Interface para conversar e experimentar diferentes modelos de código aberto.</p><div class="use"><b>💡 Exemplo</b> Compare como modelos diferentes respondem ao mesmo prompt.</div><div class="footer"><span class="best">Comparar modelos</span><a class="open" href="https://huggingface.co/chat/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="imagem criacao" data-access="limit" data-search="Ideogram imagem texto logo design geracao imagem">
+<div class="head"><div class="icon">🖼️</div><div class="title"><h2>Ideogram</h2><small>Imagens com texto e design</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Especialmente interessante para imagens que precisam conter texto, cartazes e peças visuais.</p><div class="use"><b>💡 Exemplo</b> Crie uma arte para uma campanha imobiliária com título legível.</div><div class="footer"><span class="best">Imagem e design</span><a class="open" href="https://ideogram.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao" data-access="limit" data-search="CapCut video IA editar video legenda roteiro efeitos">
+<div class="head"><div class="icon">🎬</div><div class="title"><h2>CapCut</h2><small>Edição de vídeo com IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Editor de vídeo com recursos de IA para legendas, cortes, efeitos e conteúdo social.</p><div class="use"><b>💡 Exemplo</b> Monte um Reels de imóvel com cortes rápidos e legendas automáticas.</div><div class="footer"><span class="best">Vídeos e Reels</span><a class="open" href="https://www.capcut.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="trabalho criacao" data-access="limit" data-search="Grammarly escrita portugues revisao texto email gramática">
+<div class="head"><div class="icon">📝</div><div class="title"><h2>Grammarly</h2><small>Escrita e revisão com IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Ajuda a revisar, reescrever e melhorar textos para diferentes situações.</p><div class="use"><b>💡 Exemplo</b> Melhore um e-mail profissional antes de enviar para um cliente.</div><div class="footer"><span class="best">Escrita</span><a class="open" href="https://www.grammarly.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="trabalho criacao imagem video" data-access="limit" data-search="Microsoft Designer imagem design post social IA">
+<div class="head"><div class="icon">🪄</div><div class="title"><h2>Microsoft Designer</h2><small>Artes e imagens com IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Cria peças visuais e imagens para redes sociais a partir de descrições.</p><div class="use"><b>💡 Exemplo</b> Gere uma arte para divulgar um imóvel no Instagram.</div><div class="footer"><span class="best">Artes rápidas</span><a class="open" href="https://designer.microsoft.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="trabalho criacao automacao" data-access="limit" data-search="Zapier automacao IA tarefas aplicativos fluxo produtividade">
+<div class="head"><div class="icon">⚙️</div><div class="title"><h2>Zapier</h2><small>Automação com IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Conecta serviços e automatiza tarefas repetitivas entre aplicativos.</p><div class="use"><b>💡 Exemplo</b> Automatize um fluxo que registra um formulário e envia uma notificação.</div><div class="footer"><span class="best">Automação</span><a class="open" href="https://zapier.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="estudo trabalho pesquisa" data-access="limit" data-search="ChatPDF PDF estudo documentos perguntas resumo">
+<div class="head"><div class="icon">📄</div><div class="title"><h2>ChatPDF</h2><small>Converse com PDFs</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Faça perguntas diretamente a um PDF e encontre informações sem ler tudo manualmente.</p><div class="use"><b>💡 Exemplo</b> Envie um manual e pergunte quais são os procedimentos mais importantes.</div><div class="footer"><span class="best">PDF e estudo</span><a class="open" href="https://www.chatpdf.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
 </section>
-
 <div id="empty" class="empty">😕 Nenhuma IA encontrada. Tente outra palavra ou categoria.</div>
-
-<div class="note">
-<strong>ℹ️ Como interpretar “grátis”</strong><br>
-“GRÁTIS” significa que existe uma modalidade sem assinatura. “FREE + LIMITE” significa que você pode usar sem pagar, mas há limites de créditos, recursos ou quantidade de uso. “*” indica que limites e disponibilidade podem variar por região, conta ou mudança de plano. Antes de usar comercialmente, confira as regras de licença da ferramenta.
-</div>
+<div class="note"><strong>ℹ️ Importante sobre “grátis”</strong><br>“GRÁTIS” indica uma modalidade sem assinatura. “GRÁTIS + LIMITE” indica que existe uso gratuito, mas com limites de mensagens, créditos, recursos ou velocidade. “*” indica que disponibilidade e limites podem variar por região, conta e mudanças do serviço. Antes de usar dados sensíveis ou comercialmente, confira as regras da própria ferramenta. As ofertas podem mudar com o tempo. citeturn0search0turn0search1</div>
 </main>
-
 <script>
 (function(){
-const cards=[...document.querySelectorAll('.card')],search=document.getElementById('search'),filters=[...document.querySelectorAll('.filter')],empty=document.getElementById('empty');
-let cat='all';
-function render(){
- const q=(search.value||'').toLowerCase().trim();let n=0;
- cards.forEach(c=>{const okCat=cat==='all'||c.dataset.cat.split(' ').includes(cat);const okText=(c.dataset.search||'').toLowerCase().includes(q);const show=okCat&&okText;c.style.display=show?'flex':'none';if(show)n++});
- empty.style.display=n?'none':'block';
-}
-filters.forEach(b=>b.addEventListener('click',()=>{filters.forEach(x=>x.classList.remove('active'));b.classList.add('active');cat=b.dataset.cat;render()}));
-search.addEventListener('input',render);render();
+const cards=[...document.querySelectorAll('.card')],search=document.getElementById('search'),count=document.getElementById('count'),empty=document.getElementById('empty');
+let cat='all',access='all';
+function setup(id,type){document.querySelectorAll('#'+id+' .filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#'+id+' .filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(type==='cat')cat=b.dataset.cat;else access=b.dataset.access;render()}))}
+function render(){const q=(search.value||'').toLowerCase().trim();let n=0;cards.forEach(c=>{const okCat=cat==='all'||c.dataset.cat.split(' ').includes(cat);const okAccess=access==='all'||c.dataset.access===access;const okText=!q||(c.dataset.search||'').toLowerCase().includes(q);const show=okCat&&okAccess&&okText;c.style.display=show?'flex':'none';if(show)n++});count.textContent=n+' de '+cards.length+' IAs exibidas';empty.style.display=n?'none':'block'}
+setup('catFilters','cat');setup('accessFilters','access');search.addEventListener('input',render);render();
 })();
 </script>
 </body>
