@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="11 códigos de organização visual para usar com IA: mindmap, explodedview, blueprint, flowchart, flashcards, diagram, timeline, comparison, conceptmap, memorypalace e quizboard.">
+<meta name="delta-version" content="V1.0">
+<title>🧠 Códigos de Organização com IA | Delta Prompts V1.0</title>
+<link rel="icon" href="/delta-prompts/favicon.ico">
+<link rel="apple-touch-icon" href="/delta-prompts/icon-192.png">
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<style>
+:root{--p:#5b5ce2;--pd:#4243bb;--soft:#eef2ff;--border:#e5e7ef;--muted:#667085;--ink:#202236}
+body{background:#f5f6fb;color:var(--ink)}
+main{max-width:1180px;margin:auto;padding:0 16px 50px}
+.breadcrumb{font-size:13px;color:var(--muted);margin:0 0 14px}.breadcrumb a{color:var(--pd);font-weight:800;text-decoration:none}
+.hero{padding:28px;border:1px solid #dfe3ff;border-radius:24px;background:linear-gradient(135deg,#fafaff,#eef2ff,#fff);margin-bottom:18px}
+.hero-grid{display:grid;grid-template-columns:1.6fr .55fr;gap:20px;align-items:center}
+.hero h1{font-size:clamp(28px,4vw,44px);line-height:1.08;margin:0 0 10px}.hero p{color:var(--muted);line-height:1.65;margin:0}
+.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}.badges span,.tag{padding:6px 10px;border-radius:999px;background:#fff;border:1px solid #e1e4ee;font-size:11px;font-weight:900}
+.hero-art{min-height:150px;display:grid;place-items:center;border-radius:20px;background:#ffffffb8;font-size:74px}
+.notice{padding:16px 18px;border:1px solid #fed7aa;background:#fff7ed;border-radius:17px;margin:18px 0;color:#7c2d12;line-height:1.55}
+.notice strong{color:#9a3412}
+.intro{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:18px 0}.info{padding:18px;background:#fff;border:1px solid var(--border);border-radius:18px}.info h2{font-size:19px;margin:0 0 7px}.info p,.info li{color:var(--muted);font-size:13px;line-height:1.6}.info ul{margin:8px 0 0;padding-left:19px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 12px}.toolbar input{flex:1;min-width:240px;padding:13px 14px;border:1px solid var(--border);border-radius:12px;font:inherit;background:#fff}.toolbar select{padding:13px;border:1px solid var(--border);border-radius:12px;background:#fff;font:inherit;font-weight:800}
+.stats{font-size:13px;color:var(--muted);font-weight:800;margin:5px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--border);border-radius:19px;padding:18px;box-shadow:0 5px 18px rgba(35,40,90,.05)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.num{font-size:12px;font-weight:900;color:var(--p);background:var(--soft);padding:5px 8px;border-radius:9px}
+.card h2{font-size:20px;margin:10px 0 5px}.card h2 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#4338ca}
+.card h3{font-size:13px;margin:14px 0 5px}.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.code{margin-top:9px;padding:12px 13px;border-radius:12px;background:#111827;color:#eef2ff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.5;white-space:pre-wrap;overflow:auto}
+.example{margin-top:9px;padding:11px 12px;border-radius:12px;background:#f8fafc;border:1px solid #edf0f5;color:#475467;font-size:12.5px;line-height:1.5}
+.actions{display:flex;gap:8px;margin-top:12px}.actions button{flex:1;min-height:44px;border:0;border-radius:11px;font-weight:900;cursor:pointer}.copy{background:var(--p);color:#fff}.use{background:var(--soft);color:#4338ca}
+.tip{margin-top:12px;padding:12px;border-radius:12px;background:#f8f8ff;color:#4b5563;font-size:12px;line-height:1.5}
+.empty{display:none;text-align:center;padding:30px;border:1px dashed #cfd4e5;border-radius:17px;color:var(--muted)}
+.footer-note{margin-top:22px;padding:18px;border-radius:18px;background:#172033;color:#e7e9f1}.footer-note h2{margin:0 0 6px;color:#fff;font-size:20px}.footer-note p{margin:0;color:#cbd1df;font-size:13px;line-height:1.6}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:#172033;color:#fff;padding:11px 16px;border-radius:11px;transition:.2s;z-index:9999;font-size:13px;font-weight:900}.toast.show{opacity:1;transform:translate(-50%,0)}
+[data-theme="dark"] body{background:#0f1424;color:#f1f5f9}[data-theme="dark"] .hero,[data-theme="dark"] .info,[data-theme="dark"] .card,[data-theme="dark"] .toolbar input,[data-theme="dark"] .toolbar select{background:#16213e;border-color:rgba(255,255,255,.1)}[data-theme="dark"] .hero p,[data-theme="dark"] .info p,[data-theme="dark"] .info li,[data-theme="dark"] .card p,[data-theme="dark"] .stats{color:#aeb6c8}[data-theme="dark"] .example,[data-theme="dark"] .tip{background:#0f1424;border-color:rgba(255,255,255,.1);color:#cbd5e1}[data-theme="dark"] .notice{background:#2a1b0e;border-color:#5a3b1d;color:#fed7aa}
+@media(max-width:720px){main{padding:0 12px 40px}.hero{padding:21px}.hero-grid,.intro,.grid{grid-template-columns:1fr}.hero-art{min-height:95px;font-size:52px}.toolbar input,.toolbar select{width:100%;box-sizing:border-box}.card{padding:15px}}
+</style>
+</head>
+<body class="category-page" id="codigos-ia-page">
+<div id="menu"><div style="width:240px;min-height:100vh;background:#f5f6f8"></div></div>
+<script src="/delta-prompts/js/delta-core.js?v=20261008-v1"></script>
+<script src="/delta-prompts/menu-loader.js?v=20261008-v1"></script>
+
+<main>
+<p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Criar & se Divertir / Códigos de Organização com IA</p>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="badges"><span>🧠 Aprendizado</span><span>📊 Organização visual</span><span>⚡ Prompts rápidos</span><span>🤖 ChatGPT • Gemini • Claude</span></div>
+      <h1>🧠 Códigos de Organização com IA <span style="font-size:12px;opacity:.6">V1.0</span></h1>
+      <p>Pequenas palavras-chave podem orientar a IA a apresentar um assunto em um formato diferente. Aqui você encontra 11 códigos práticos para transformar um tema complicado em mapa, fluxo, linha do tempo, comparação, quiz e muito mais.</p>
+    </div>
+    <div class="hero-art">🧠✨</div>
+  </div>
+</section>
+
+<section class="notice">
+  <strong>💡 Como funciona?</strong><br>
+  Você pode colocar o código no começo do seu pedido e, em seguida, dizer o que quer entender. Exemplo: <b><code>/mindmap Explique o sistema solar</code></b>.
+  <br><br>
+  <strong>⚠️ Importante:</strong> esses termos funcionam como <b>instruções de formato</b>, não como comandos universais oficiais do ChatGPT. O resultado pode variar conforme a IA e o contexto. Se a IA não reconhecer o formato, peça explicitamente a estrutura desejada.
+</section>
+
+<section class="intro">
+  <div class="info">
+    <h2>🚀 Por que usar?</h2>
+    <ul>
+      <li>Quebra assuntos difíceis em estruturas visuais ou passo a passo.</li>
+      <li>Ajuda a estudar, revisar e memorizar.</li>
+      <li>Facilita comparar ideias e enxergar relações.</li>
+      <li>Permite adaptar a mesma informação para objetivos diferentes.</li>
+    </ul>
+  </div>
+  <div class="info">
+    <h2>📌 Como escrever</h2>
+    <p><b>1.</b> Coloque o código.</p>
+    <p><b>2.</b> Diga o assunto.</p>
+    <p><b>3.</b> Se quiser, informe o nível de detalhe, público ou objetivo.</p>
+    <p><b>Exemplo:</b> <code>/timeline Conte a história da internet para um iniciante.</code></p>
+  </div>
+</section>
+
+<div class="toolbar">
+  <input id="busca" type="search" placeholder="🔍 Buscar um código ou formato...">
+  <select id="ordem"><option value="numero">Ordem da lista</option><option value="az">A–Z</option></select>
+</div>
+<div class="stats" id="stats"></div>
+<div class="grid" id="grid"></div>
+<div class="empty" id="empty">😅 Nenhum código encontrado.</div>
+
+<section class="footer-note">
+  <h2>🎯 Dica Delta</h2>
+  <p>Você também pode combinar o formato com uma instrução de qualidade: “explique em linguagem simples”, “use exemplos reais”, “não pule etapas” ou “termine com 5 perguntas para eu testar se entendi”. O código organiza a resposta; o restante do prompt define <b>como</b> a IA deve trabalhar.</p>
+</section>
+</main>
+
+<div class="toast" id="toast"></div>
+<script>
+const codigos=[
+{n:1,c:'/mindmap',t:'Mapa mental',d:'Organiza um assunto em uma ideia central e ramificações, mostrando conceitos relacionados de forma hierárquica.',u:'Ótimo para estudar um tema grande, revisar uma matéria ou enxergar os principais pontos de um assunto.',e:'/mindmap Explique o sistema imunológico de forma simples.',tip:'Peça níveis de ramificação: “do geral para o específico, com no máximo 3 níveis”.'},
+{n:2,c:'/explodedview',t:'Vista explodida',d:'Apresenta um objeto, sistema ou conceito como partes separadas, mostrando os componentes e a relação entre eles.',u:'Útil para entender como algo é montado, quais peças o formam ou como um processo complexo se divide.',e:'/explodedview Mostre as partes de um computador e a função de cada uma.',tip:'Para conceitos abstratos, peça uma “vista explodida conceitual” em vez de uma representação física.'},
+{n:3,c:'/blueprint',t:'Blueprint / projeto',d:'Transforma uma ideia em uma estrutura planejada, com componentes, etapas, regras e especificações.',u:'Excelente para planejar sistemas, projetos, produtos, sites, estudos ou processos antes de executar.',e:'/blueprint Crie o projeto de uma biblioteca de prompts com busca, favoritos e categorias.',tip:'Quanto mais contexto você fornecer, mais útil será o projeto gerado.'},
+{n:4,c:'/flowchart',t:'Fluxograma',d:'Representa decisões e etapas em sequência, mostrando caminhos possíveis de um processo.',u:'Ideal para processos de trabalho, diagnósticos, automações, atendimento e tomada de decisão.',e:'/flowchart Mostre o processo de atendimento de um cliente interessado em alugar um imóvel.',tip:'Inclua decisões como “se sim / se não” para deixar os caminhos claros.'},
+{n:5,c:'/flashcards',t:'Flashcards',d:'Converte um assunto em perguntas e respostas curtas para revisão ativa e memorização.',u:'Perfeito para estudar idiomas, conceitos, leis, história, tecnologia ou qualquer conteúdo que precise ser lembrado.',e:'/flashcards Crie 20 cartões para eu estudar as 48 Leis do Poder.',tip:'Peça para ocultar as respostas primeiro e revelar depois, como um teste.'},
+{n:6,c:'/diagram',t:'Diagrama',d:'Cria uma representação estruturada das partes de um sistema e das relações entre elas.',u:'Ajuda a visualizar arquitetura, relações, componentes, causas e efeitos ou estruturas complexas.',e:'/diagram Mostre como as partes de um sistema de login se relacionam.',tip:'Especifique se quer diagrama de componentes, relações, causa e efeito ou outro tipo.'},
+{n:7,c:'/timeline',t:'Linha do tempo',d:'Organiza acontecimentos, etapas ou evolução de um tema em ordem cronológica.',u:'Excelente para história, evolução de tecnologias, projetos, acontecimentos e planos com datas.',e:'/timeline Mostre a evolução da inteligência artificial de 1950 até hoje.',tip:'Peça datas aproximadas e destaque os acontecimentos que mudaram o rumo da história.'},
+{n:8,c:'/comparison',t:'Comparação',d:'Coloca duas ou mais opções lado a lado para destacar diferenças, semelhanças, vantagens e limitações.',u:'Muito útil para escolher ferramentas, produtos, estratégias, tecnologias ou caminhos diferentes.',e:'/comparison Compare ChatGPT, Gemini e Claude para estudar.',tip:'Defina critérios de comparação antes da análise para obter uma resposta mais objetiva.'},
+{n:9,c:'/conceptmap',t:'Mapa conceitual',d:'Mostra conceitos e as conexões entre eles, destacando como uma ideia se relaciona com outra.',u:'Ótimo para compreender sistemas de ideias e perceber relações que uma lista simples não mostra.',e:'/conceptmap Explique a relação entre inflação, juros, consumo e emprego.',tip:'Peça conectores nas relações, como “causa”, “influencia”, “depende de” ou “resulta em”.'},
+{n:10,c:'/memorypalace',t:'Palácio da memória',d:'Transforma informações em associações com lugares, imagens e cenas mentais para facilitar a lembrança.',u:'Excelente para memorizar listas, sequências, conceitos, discursos e conteúdos que parecem difíceis de guardar.',e:'/memorypalace Ajude-me a memorizar os principais planetas do Sistema Solar.',tip:'Use lugares que você conhece bem e associe cada informação a uma imagem marcante.'},
+{n:11,c:'/quizboard',t:'Quadro de quiz',d:'Transforma um assunto em uma experiência de perguntas, respostas, pontuação ou desafios.',u:'Bom para revisar conteúdo, brincar com amigos, testar conhecimento ou criar uma dinâmica de estudo.',e:'/quizboard Crie um quiz de 10 perguntas sobre inteligência artificial, do fácil ao difícil.',tip:'Defina quantidade de perguntas, dificuldade, alternativas e se deve mostrar a resposta após cada rodada.'}
+];
+
+function esc(v){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function promptDo(c){return c.c+' '+c.e.replace(c.c+' ','')}
+function copiar(t){navigator.clipboard.writeText(t).then(()=>toast('✅ Código + exemplo copiados!')).catch(()=>toast('⚠️ Não foi possível copiar.'))}
+function usar(c){copiar(promptDo(c));setTimeout(()=>window.open('https://chatgpt.com/','_blank'),250)}
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1800)}
+function render(){
+ const q=document.getElementById('busca').value.trim().toLowerCase();
+ const ord=document.getElementById('ordem').value;
+ let lista=codigos.filter(x=>(x.c+' '+x.t+' '+x.d+' '+x.u+' '+x.e).toLowerCase().includes(q));
+ if(ord==='az')lista.sort((a,b)=>a.c.localeCompare(b.c));
+ else lista.sort((a,b)=>a.n-b.n);
+ document.getElementById('stats').textContent=lista.length+' de '+codigos.length+' códigos';
+ const grid=document.getElementById('grid');grid.innerHTML='';
+ lista.forEach(c=>{
+  const card=document.createElement('article');card.className='card';
+  card.innerHTML='<div class="card-top"><span class="tag">🧠 '+esc(c.t)+'</span><span class="num">#'+c.n+'</span></div>'+
+    '<h2><code>'+esc(c.c)+'</code></h2>'+
+    '<p>'+esc(c.d)+'</p>'+
+    '<h3>🎯 Quando usar</h3><p>'+esc(c.u)+'</p>'+
+    '<h3>💬 Exemplo pronto</h3><div class="code">'+esc(promptDo(c))+'</div>'+
+    '<div class="actions"><button class="copy">📋 Copiar</button><button class="use">🚀 Usar no ChatGPT</button></div>'+
+    '<div class="tip"><b>💡 Dica:</b> '+esc(c.tip)+'</div>';
+  card.querySelector('.copy').onclick=()=>copiar(promptDo(c));
+  card.querySelector('.use').onclick=()=>usar(c);
+  grid.appendChild(card);
+ });
+ document.getElementById('empty').style.display=lista.length?'none':'block';
+}
+document.getElementById('busca').oninput=render;
+document.getElementById('ordem').onchange=render;
+render();
+</script>
+</body>
+</html>
