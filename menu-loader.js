@@ -242,7 +242,7 @@ window.deltaRegistrarLog=function(texto){
       document.head.appendChild(appleIcon);
     }
     if('serviceWorker' in navigator){
-      navigator.serviceWorker.register('/delta-prompts/sw.js?v=20261008-v36',{updateViaCache:'none'}).catch(function(){});
+      navigator.serviceWorker.register('/delta-prompts/sw.js?v=20261008-v45',{updateViaCache:'none'}).catch(function(){});
     }
   }catch(e){}
 })();
