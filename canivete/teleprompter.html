@@ -120,7 +120,7 @@ function startRecording(){
    const type=mediaRecorder.mimeType||'video/webm',blob=new Blob(recordedChunks,{type});
    if(lastVideoUrl)URL.revokeObjectURL(lastVideoUrl);lastVideoUrl=URL.createObjectURL(blob);
    const ext=type.includes('mp4')?'mp4':'webm',a=document.createElement('a');a.href=lastVideoUrl;a.download='canivete-teleprompter-'+new Date().toISOString().replace(/[:.]/g,'-')+'.'+ext;document.body.appendChild(a);a.click();a.remove();
-   canvasStream.getTracks().forEach(t=>t.stop());$('recordStart').disabled=false;$('recordStop').disabled=true;
+   canvasStream.getVideoTracks().forEach(t=>t.stop());$('recordStart').disabled=false;$('recordStop').disabled=true;
    recorderStatus('Vídeo preparado para baixar ('+Math.max(1,Math.round(blob.size/1024/1024))+' MB). Se o download não começar, verifique os downloads do navegador.');
   };
   mediaRecorder.start(1000);isRecording=true;$('recordStart').disabled=true;$('recordStop').disabled=false;
