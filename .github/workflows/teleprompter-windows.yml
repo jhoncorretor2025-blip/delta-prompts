@@ -1,0 +1,39 @@
+name: Teleprompter IA - Windows
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'canivete/teleprompter.html'
+      - 'canivete/desktop/**'
+      - '.github/workflows/teleprompter-windows.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: canivete/desktop
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: canivete/desktop/package.json
+      - name: Instalar dependências
+        run: npm install
+      - name: Gerar instalador e versão portátil
+        run: npm run dist
+      - name: Publicar arquivos para download
+        uses: actions/upload-artifact@v4
+        with:
+          name: teleprompter-ia-windows-v1.0.0
+          path: canivete/desktop/dist/*
+          if-no-files-found: error
+          retention-days: 30

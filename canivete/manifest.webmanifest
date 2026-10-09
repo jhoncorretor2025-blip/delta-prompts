@@ -1,0 +1,19 @@
+{
+  "name": "Teleprompter IA — Canivete",
+  "short_name": "Teleprompter",
+  "description": "Teleprompter do Canivete para leitura de roteiros.",
+  "lang": "pt-BR",
+  "start_url": "./teleprompter.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101827",
+  "theme_color": "#101827",
+  "icons": [
+    {
+      "src": "../icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
