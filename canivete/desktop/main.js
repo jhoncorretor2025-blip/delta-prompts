@@ -54,6 +54,15 @@ function openOverlay() {
 }
 
 ipcMain.handle('teleprompter:open-overlay', () => openOverlay());
+ipcMain.handle('teleprompter:resize-overlay', (_event, direction) => {
+  if (!overlayWindow || overlayWindow.isDestroyed()) return;
+  const bounds = overlayWindow.getBounds();
+  const step = direction === 1 ? 100 : direction === -1 ? -100 : 0;
+  const heightStep = direction === 1 ? 50 : direction === -1 ? -50 : 0;
+  const width = Math.max(380, Math.min(1400, bounds.width + step));
+  const height = Math.max(130, Math.min(700, bounds.height + heightStep));
+  overlayWindow.setSize(width, height, true);
+});
 ipcMain.handle('teleprompter:close-overlay', () => {
   if (overlayWindow && !overlayWindow.isDestroyed()) overlayWindow.close();
 });
