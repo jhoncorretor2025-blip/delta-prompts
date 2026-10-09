@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="Teleprompter IA do Canivete: leia roteiros com texto flutuante e velocidade ajustável.">
+<title>Teleprompter IA — Canivete v1.0.0</title>
+<style>
+:root{color-scheme:dark;--bg:#101827;--panel:#182235;--line:#2d3b52;--text:#f8fafc;--muted:#aab7ca;--blue:#60a5fa;--green:#34d399}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#243249;color:var(--text);font-weight:650}button.primary{background:#2563eb;border-color:#2563eb}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.wrap{max-width:1050px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}.brand{font-weight:850;font-size:18px}.version{font-size:12px;color:var(--muted);margin-left:8px}.back{color:#93c5fd;text-decoration:none}.intro{margin-bottom:18px}.intro h1{font-size:clamp(25px,4vw,36px);line-height:1.1;margin:0 0 9px}.intro p{color:var(--muted);margin:0}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:16px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}.panel h2{font-size:16px;margin:0 0 12px}.field{display:grid;gap:7px;margin-bottom:14px}.field label,.control label{font-size:13px;font-weight:700;color:#d4deec}textarea{width:100%;min-height:280px;resize:vertical;background:#0d1421;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:14px;line-height:1.6}input[type=range]{width:100%;accent-color:#60a5fa}input[type=number]{width:90px;background:#0d1421;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:13px}.control{display:grid;gap:7px}.control strong{font-size:13px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.preview{min-height:280px;display:flex;flex-direction:column;gap:14px}.preview-screen{border:1px solid var(--line);border-radius:12px;background:rgba(4,9,18,.78);padding:18px;min-height:205px;overflow:hidden}.preview-text{font-size:30px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}.hint{font-size:12px;color:var(--muted);margin:12px 0 0}.status{font-size:13px;color:var(--green);min-height:20px}.overlay-mode{background:transparent!important;color:white}.overlay-mode .wrap{max-width:none;padding:12px}.overlay-mode .top,.overlay-mode .intro,.overlay-mode .editor-panel,.overlay-mode .hint,.overlay-mode .status,.overlay-mode .back{display:none!important}.overlay-mode .layout{display:block}.overlay-mode .panel{padding:10px;border:1px solid rgba(255,255,255,.2);background:rgba(8,13,22,.60);backdrop-filter:blur(5px);border-radius:12px}.overlay-mode .preview{min-height:0}.overlay-mode .preview-screen{border:0;background:transparent;min-height:0;padding:5px;max-height:calc(100vh - 68px);overflow:auto}.overlay-mode .preview-text{text-shadow:0 2px 8px #000;line-height:1.45}.overlay-mode .overlay-controls{display:flex!important;gap:6px;flex-wrap:wrap}.overlay-controls{display:none}.overlay-mode button{padding:6px 10px;background:rgba(20,30,45,.8);font-size:12px}
+@media(max-width:760px){.wrap{padding:14px}.layout{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}textarea{min-height:210px}.preview-text{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div><span class="brand">🎬 Teleprompter IA</span><span class="version">Canivete v1.0.0</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
+<section class="intro"><h1>Seu roteiro, na sua frente.</h1><p>Cole o texto, ajuste a leitura e abra uma janela flutuante para gravar com mais naturalidade.</p></section>
+<div class="layout">
+<section class="panel editor-panel">
+<h2>📝 Seu roteiro</h2>
+<div class="field"><label for="script">Texto para leitura</label><textarea id="script" placeholder="Cole aqui seu roteiro para o TikTok, Reels, apresentação ou vídeo..."></textarea></div>
+<div class="controls">
+<div class="control"><label for="fontSize">Tamanho da letra</label><input id="fontSize" type="range" min="20" max="64" value="34"><strong><span id="fontValue">34</span> px</strong></div>
+<div class="control"><label for="speed">Velocidade de rolagem</label><input id="speed" type="range" min="10" max="120" value="45"><strong><span id="speedValue">45</span> px/minuto</strong></div>
+<div class="control"><label for="opacity">Fundo da janela</label><input id="opacity" type="range" min="10" max="95" value="65"><strong><span id="opacityValue">65</span>%</strong></div>
+<div class="control"><label for="width">Largura do texto</label><input id="width" type="range" min="35" max="100" value="100"><strong><span id="widthValue">100</span>%</strong></div>
+</div>
+<div class="actions"><button class="primary" id="openFloat">↗ Abrir janela flutuante</button><button id="start">▶ Iniciar leitura</button><button id="pause">Ⅱ Pausar</button><button id="reset">↺ Voltar ao início</button></div>
+<p class="hint">Dica: no navegador, a janela flutuante depende do suporte do Chrome. Para ficar sempre por cima de outros programas com mais controle, use a versão Windows.</p>
+</section>
+<section class="panel preview">
+<h2>👀 Prévia da leitura</h2>
+<div class="preview-screen" id="screen"><div class="preview-text" id="previewText">Seu texto aparecerá aqui. Cole um roteiro no campo ao lado para começar.</div></div>
+<div class="overlay-controls"><button id="floatStart">▶ Ler</button><button id="floatPause">Ⅱ Pausar</button><button id="floatReset">↺ Reiniciar</button><button id="floatClose">Fechar</button></div>
+<div class="status" id="status" aria-live="polite"></div>
+<p class="hint">O roteiro fica salvo localmente neste navegador. Não é enviado para um servidor por esta ferramenta.</p>
+</section>
+</div>
+</div>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+const isOverlay=params.get('overlay')==='1';
+let running=false, frame=0, last=0, pipWindow=null, offset=0;
+const defaults={script:'',fontSize:34,speed:45,opacity:65,width:100};
+function load(){try{const s=JSON.parse(localStorage.getItem('canivete.teleprompter.v1')||'{}');Object.keys(defaults).forEach(k=>{if(s[k]!==undefined&&$(k))$(k).value=s[k]})}catch(e){} update();}
+function save(){try{localStorage.setItem('canivete.teleprompter.v1',JSON.stringify({script:$('script').value,fontSize:$('fontSize').value,speed:$('speed').value,opacity:$('opacity').value,width:$('width').value}))}catch(e){}}
+function update(){const text=$('script').value.trim();$('previewText').textContent=text||'Seu texto aparecerá aqui. Cole um roteiro no campo ao lado para começar.';$('fontValue').textContent=$('fontSize').value;$('speedValue').textContent=$('speed').value;$('opacityValue').textContent=$('opacity').value;$('widthValue').textContent=$('width').value;$('previewText').style.fontSize=$('fontSize').value+'px';$('previewText').style.maxWidth=$('width').value+'%';$('screen').style.background='rgba(4,9,18,'+(Number($('opacity').value)/100)+')';document.body.classList.toggle('overlay-mode',isOverlay);if(isOverlay){$('previewText').style.fontSize=$('fontSize').value+'px';$('screen').style.background='transparent'}save();}
+function setStatus(s){$('status').textContent=s}
+function stop(){running=false;if(frame)cancelAnimationFrame(frame);frame=0;last=0}
+function tick(ts){if(!running)return;if(!last)last=ts;const dt=Math.min(ts-last,80);last=ts;$('screen').scrollTop+=dt*Number($('speed').value)/60000;frame=requestAnimationFrame(tick)}
+function start(){if(!$('script').value.trim()){setStatus('Cole um texto antes de iniciar.');return}running=true;last=0;frame=requestAnimationFrame(tick);setStatus('Leitura em andamento.')}
+function reset(){stop();$('screen').scrollTop=0;setStatus('Texto no início.')}
+async function openFloat(){
+ if(window.electronAPI&&window.electronAPI.openOverlay){save();await window.electronAPI.openOverlay();setStatus('Janela flutuante aberta.');return}
+ if('documentPictureInPicture' in window){
+  try{
+   if(pipWindow&&!pipWindow.closed){pipWindow.focus();return}
+   pipWindow=await documentPictureInPicture.requestWindow({width:720,height:260});
+   const style=pipWindow.document.createElement('style');style.textContent='*{box-sizing:border-box}body{margin:0;background:rgba(8,13,22,.72);color:#fff;font:16px system-ui;overflow:hidden;border:1px solid #64748b;border-radius:12px;padding:12px}#txt{font-weight:650;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;max-height:190px;overflow:auto;text-shadow:0 2px 7px #000}#controls{display:flex;gap:7px;margin-top:7px}button{background:#243249;color:#fff;border:1px solid #64748b;border-radius:7px;padding:5px 9px}';pipWindow.document.head.append(style);
+   pipWindow.document.body.innerHTML='<div id="txt"></div><div id="controls"><button id="go">▶ Ler</button><button id="hold">Ⅱ Pausar</button><button id="top">↺ Início</button></div>';
+   const txt=pipWindow.document.getElementById('txt');txt.textContent=$('script').value;txt.style.fontSize=$('fontSize').value+'px';
+   let pipRun=false,pipFrame=0,pipLast=0;const loop=t=>{if(!pipRun)return;if(!pipLast)pipLast=t;txt.scrollTop+=(t-pipLast)*Number($('speed').value)/60000;pipLast=t;pipFrame=pipWindow.requestAnimationFrame(loop)};
+   pipWindow.document.getElementById('go').onclick=()=>{pipRun=true;pipLast=0;pipFrame=pipWindow.requestAnimationFrame(loop)};
+   pipWindow.document.getElementById('hold').onclick=()=>{pipRun=false;pipWindow.cancelAnimationFrame(pipFrame)};
+   pipWindow.document.getElementById('top').onclick=()=>{pipRun=false;pipWindow.cancelAnimationFrame(pipFrame);txt.scrollTop=0};
+   pipWindow.addEventListener('pagehide',()=>{pipWindow=null;pipRun=false});setStatus('Janela flutuante aberta. Arraste-a para perto da câmera.');return;
+  }catch(e){setStatus('O navegador não permitiu abrir a janela. Use o Chrome atualizado ou a versão Windows.');return}
+ }
+ setStatus('Janela flutuante indisponível neste navegador. Use Chrome atualizado ou a versão Windows.');
+}
+$('script').addEventListener('input',update);['fontSize','speed','opacity','width'].forEach(id=>$(id).addEventListener('input',()=>{update();if(pipWindow&&!pipWindow.closed){const t=pipWindow.document.getElementById('txt');if(t)t.style.fontSize=$('fontSize').value+'px'}}));
+$('openFloat').addEventListener('click',openFloat);$('start').addEventListener('click',start);$('pause').addEventListener('click',()=>{stop();setStatus('Leitura pausada.')});$('reset').addEventListener('click',reset);
+$('floatStart').addEventListener('click',start);$('floatPause').addEventListener('click',()=>{stop();setStatus('Leitura pausada.')});$('floatReset').addEventListener('click',reset);$('floatClose').addEventListener('click',()=>{if(window.electronAPI&&window.electronAPI.closeOverlay)window.electronAPI.closeOverlay();else window.close()});
+window.addEventListener('storage',e=>{if(e.key==='canivete.teleprompter.v1')load()});
+load();
+})();
+</script>
+</body></html>
