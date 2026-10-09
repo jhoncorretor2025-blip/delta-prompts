@@ -10,7 +10,7 @@ function createMainWindow() {
     height: 820,
     minWidth: 700,
     minHeight: 600,
-    title: 'Teleprompter IA — Canivete v1.0.2',
+    title: 'Teleprompter IA — Canivete v1.0.3',
     backgroundColor: '#101827',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -54,6 +54,7 @@ function openOverlay() {
 }
 
 ipcMain.handle('teleprompter:open-overlay', () => openOverlay());
+ipcMain.handle('teleprompter:open-updates', () => shell.openExternal('https://github.com/jhoncorretor2025-blip/delta-prompts/actions/workflows/teleprompter-windows.yml'));
 ipcMain.handle('teleprompter:resize-overlay', (_event, direction) => {
   if (!overlayWindow || overlayWindow.isDestroyed()) return;
   const bounds = overlayWindow.getBounds();
