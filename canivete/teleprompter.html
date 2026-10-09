@@ -95,6 +95,14 @@ function drawRecordingFrame(now){
  if(visible.length){const top=Math.max(0,startY-lineHeight*.6),bottom=Math.min(h,startY+lines.length*lineHeight);ctx.fillStyle='rgba(0,0,0,.34)';ctx.fillRect(w*.055,top,w*.89,Math.max(0,bottom-top))}
  ctx.fillStyle='#fff';ctx.shadowColor='rgba(0,0,0,.9)';ctx.shadowBlur=7;ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.75)';
  lines.forEach((line,i)=>{const y=startY+i*lineHeight;if(y>-lineHeight&&y<h+lineHeight){ctx.strokeText(line,w/2,y,maxWidth);ctx.fillText(line,w/2,y,maxWidth)}});ctx.shadowBlur=0;
+ // O indicador e o cronômetro também ficam gravados no arquivo final.
+ const elapsed=isRecording?formatRecordTime(Date.now()-recordStartedAt):'00:00';
+ ctx.save();ctx.textBaseline='middle';ctx.textAlign='left';ctx.font='800 23px system-ui,sans-serif';
+ const badgeText=isRecording?'GRAVANDO':'PRONTO';const badgeW=badgeText==='GRAVANDO'?176:132;
+ ctx.fillStyle='rgba(0,0,0,.76)';ctx.beginPath();ctx.roundRect(24,24,badgeW,48,24);ctx.fill();
+ ctx.fillStyle=isRecording?'#ef4444':'#94a3b8';ctx.beginPath();ctx.arc(48,48,7,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#fff';ctx.fillText(badgeText,65,48);
+ ctx.textAlign='right';ctx.font='800 28px system-ui,sans-serif';ctx.fillStyle='rgba(0,0,0,.76)';ctx.beginPath();ctx.roundRect(w-156,24,132,48,24);ctx.fill();ctx.fillStyle='#fff';ctx.fillText(elapsed,w-38,48);ctx.restore();
  cameraFrame=requestAnimationFrame(drawRecordingFrame);
 }
 async function startCamera(){
