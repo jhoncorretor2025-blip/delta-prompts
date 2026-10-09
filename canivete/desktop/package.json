@@ -6,7 +6,9 @@
   "private": true,
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --win nsis portable"
+    "dist": "electron-builder --win nsis portable",
+    "prestart": "node prepare.js",
+    "predist": "node prepare.js"
   },
   "devDependencies": {
     "electron": "^37.2.0",
@@ -22,7 +24,7 @@
     "files": [
       "main.js",
       "preload.js",
-      "../teleprompter.html",
+      "teleprompter.html",
       "package.json"
     ],
     "win": {
