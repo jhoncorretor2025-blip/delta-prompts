@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#101827">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="description" content="Teleprompter IA do Canivete: leia roteiros com texto flutuante e velocidade ajustável.">
-<title>Teleprompter IA — Canivete v1.4.0</title>
+<title>Teleprompter IA — Canivete v1.4.1</title>
 <style>
 :root{color-scheme:dark;--bg:#101827;--panel:#182235;--line:#2d3b52;--text:#f8fafc;--muted:#aab7ca;--blue:#60a5fa;--green:#34d399}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#243249;color:var(--text);font-weight:650}button.primary{background:#2563eb;border-color:#2563eb}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.wrap{max-width:1050px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}.brand{font-weight:850;font-size:18px}.version{font-size:12px;color:var(--muted);margin-left:8px}.back{color:#93c5fd;text-decoration:none}.intro{margin-bottom:18px}.intro h1{font-size:clamp(25px,4vw,36px);line-height:1.1;margin:0 0 9px}.intro p{color:var(--muted);margin:0}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:16px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}.panel h2{font-size:16px;margin:0 0 12px}.field{display:grid;gap:7px;margin-bottom:14px}.field label,.control label{font-size:13px;font-weight:700;color:#d4deec}textarea{width:100%;min-height:280px;resize:vertical;background:#0d1421;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:14px;line-height:1.6}input[type=range]{width:100%;accent-color:#60a5fa}input[type=number]{width:90px;background:#0d1421;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:13px}.control{display:grid;gap:7px}.control strong{font-size:13px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.preview{min-height:280px;display:flex;flex-direction:column;gap:14px}.preview-screen{border:1px solid var(--line);border-radius:12px;background:rgba(4,9,18,.78);padding:18px;min-height:205px;overflow:hidden}.preview-text{font-size:30px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}.hint{font-size:12px;color:var(--muted);margin:12px 0 0}.status{font-size:13px;color:var(--green);min-height:20px}.overlay-mode{background:transparent!important;color:white}.overlay-mode .wrap{max-width:none;padding:8px;-webkit-app-region:drag}.overlay-mode .preview-screen,.overlay-mode .preview-text{ -webkit-app-region:no-drag }.overlay-mode .overlay-controls,.overlay-mode .overlay-controls *{ -webkit-app-region:no-drag }.drag-handle{cursor:move;user-select:none;padding:5px 8px;border:1px solid rgba(255,255,255,.28);border-radius:7px;background:rgba(10,15,25,.65);font-size:12px}.overlay-mode .panel{background:rgba(8,13,22,var(--overlay-bg-alpha,.35))}.overlay-mode .preview-screen{width:100%}.overlay-mode .overlay-controls label{display:flex;align-items:center;gap:4px;font-size:11px;color:#fff}.overlay-mode .overlay-controls input{width:74px}.overlay-mode .top,.overlay-mode .intro,.overlay-mode .editor-panel,.overlay-mode .hint,.overlay-mode .status,.overlay-mode .back{display:none!important}.overlay-mode .layout{display:block}.overlay-mode .panel{padding:10px;border:1px solid rgba(255,255,255,.2);background:rgba(8,13,22,var(--overlay-bg-alpha,.35));backdrop-filter:blur(5px);border-radius:12px}.overlay-mode .preview{min-height:0}.overlay-mode .preview-screen{border:0;background:transparent;min-height:0;padding:5px;max-height:calc(100vh - 68px);overflow:auto}.overlay-mode .preview-text{text-shadow:0 2px 8px #000;line-height:1.45}.overlay-mode .overlay-controls{display:flex!important;gap:6px;flex-wrap:wrap}.overlay-controls{display:none}.mobile-quickbar{display:none}.page-view{display:none}.page-view.active{display:block}.recorder-layout{grid-template-columns:minmax(0,1fr)}.recorder-panel{max-width:760px;margin:0 auto;width:100%}.page-nav button.active{background:#2563eb;border-color:#2563eb}.overlay-mode button{padding:6px 10px;background:rgba(20,30,45,.8);font-size:12px}
@@ -31,7 +31,7 @@
 .mirrored{transform:scaleX(-1)}
 .overlay-mode .guide-line,.overlay-mode .progress{display:none}
 
-/* Canivete Teleprompter v1.4.0 — interface refinada */
+/* Canivete Teleprompter v1.4.1 — interface refinada */
 :root{--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--radius:16px;--space:16px}
 button,.panel,.preview-screen,.camera-stage,.more-options{border-radius:var(--radius)!important}
 .panel{padding:var(--space)!important}
@@ -99,7 +99,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 </head>
 <body>
 <div class="wrap">
-<header class="top"><div><span class="brand">🎬 Teleprompter IA</span><span class="version">Canivete v1.4.0</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
+<header class="top"><div><span class="brand">🎬 Teleprompter IA</span><span class="version">Canivete v1.4.1</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
 <section class="intro"><h1>Seu roteiro, na sua frente.</h1><p>Cole o texto, ajuste a leitura e abra uma janela flutuante para gravar com mais naturalidade.</p></section>
 
 <section id="pageRoteiro" class="page-view active" aria-label="Página do roteiro">
@@ -184,7 +184,7 @@ function drawRecordingFrame(now){
  if(visible.length){const top=Math.max(0,startY-lineHeight*.6),bottom=Math.min(h,startY+lines.length*lineHeight);ctx.fillStyle='rgba(0,0,0,.34)';ctx.fillRect(w*.055,top,w*.89,Math.max(0,bottom-top))}
  ctx.fillStyle='#fff';ctx.shadowColor='rgba(0,0,0,.9)';ctx.shadowBlur=7;ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.75)';
  lines.forEach((line,i)=>{const y=startY+i*lineHeight;if(y>-lineHeight&&y<h+lineHeight){ctx.strokeText(line,w/2,y,maxWidth);ctx.fillText(line,w/2,y,maxWidth)}});ctx.shadowBlur=0;
- // O indicador e o cronômetro também ficam gravados no arquivo final.
+ // O indicador e o cronômetro são apenas uma ajuda visual; a gravação usa o stream original da câmera.
  const elapsed=isRecording?formatRecordTime(Date.now()-recordStartedAt):'00:00';
  ctx.save();ctx.textBaseline='middle';ctx.textAlign='left';ctx.font='800 23px system-ui,sans-serif';
  const badgeText=isRecording?'GRAVANDO':'PRONTO';const badgeW=badgeText==='GRAVANDO'?176:132;
@@ -202,7 +202,7 @@ async function startCamera(){
   cameraVideo.srcObject=cameraStream;await cameraVideo.play();recordScroll=0;recordLast=0;
   $('cameraStart').disabled=true;$('recordStart').disabled=false;syncMobileRecorderButtons();
   cameraFrame=requestAnimationFrame(drawRecordingFrame);
-  updateRecordHud();recorderStatus('Câmera pronta. Toque em Gravar: o cronômetro aparecerá na imagem e ficará visível durante toda a gravação.');
+  updateRecordHud();recorderStatus('Câmera pronta. O roteiro e o cronômetro aparecem na tela para ajudar na leitura, mas não serão incluídos no vídeo salvo.');
  }catch(e){cameraStream=null;recorderStatus(e&&e.name==='NotAllowedError'?'Acesso à câmera/microfone negado. Libere as permissões do site nas configurações do navegador.':'Não foi possível abrir a câmera. Feche outros aplicativos que possam estar usando-a e tente novamente.')}
 }
 async function startRecording(){if(cameraStream&&$('script').value.trim()&&$('countdown').checked){$('recordStart').disabled=true;for(const n of [3,2,1]){recorderStatus('Preparar… '+n);await new Promise(r=>setTimeout(r,1000))}}
@@ -213,11 +213,10 @@ function startRecordingNow(){
  if(!$('script').value.trim()){recorderStatus('Cole seu roteiro antes de gravar.');return}
  try{
   recordedChunks=[];recordScroll=0;recordLast=0;
-  const canvasStream=recordCanvas.captureStream(30);
-  const audioTracks=cameraStream.getAudioTracks();audioTracks.forEach(track=>canvasStream.addTrack(track));
+  // Grava somente o stream original da câmera/microfone. O canvas com o texto é apenas uma sobreposição de leitura na tela.
   const types=['video/mp4;codecs=h264,aac','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
   const mimeType=types.find(type=>MediaRecorder.isTypeSupported(type));
-  mediaRecorder=new MediaRecorder(canvasStream,mimeType?{mimeType}:undefined);
+  mediaRecorder=new MediaRecorder(cameraStream,mimeType?{mimeType}:undefined);
   mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size)recordedChunks.push(e.data)};
   mediaRecorder.onerror=()=>recorderStatus('O navegador encontrou um erro durante a gravação. Tente novamente.');
   mediaRecorder.onstop=()=>{
@@ -227,11 +226,11 @@ function startRecordingNow(){
    if(lastVideoUrl)URL.revokeObjectURL(lastVideoUrl);lastVideoUrl=URL.createObjectURL(blob);
    const ext=type.includes('mp4')?'mp4':'webm',a=$('downloadVideo');
    a.href=lastVideoUrl;a.download='canivete-teleprompter-'+new Date().toISOString().replace(/[:.]/g,'-')+'.'+ext;a.hidden=false;a.style.display='block';
-   canvasStream.getVideoTracks().forEach(t=>t.stop());$('recordStart').disabled=false;$('recordStop').disabled=true;syncMobileRecorderButtons();
-   recorderStatus('✅ Vídeo pronto ('+Math.max(1,Math.round(blob.size/1024/1024))+' MB). Toque no botão verde “Baixar vídeo gravado” logo abaixo para salvar no celular.');
+   $('recordStart').disabled=false;$('recordStop').disabled=true;syncMobileRecorderButtons();
+   recorderStatus('✅ Vídeo pronto ('+Math.max(1,Math.round(blob.size/1024/1024))+' MB). O texto e o cronômetro não aparecem no vídeo salvo. Toque no botão verde “Baixar vídeo gravado” para salvar.');
   };
   mediaRecorder.start(1000);isRecording=true;keepAwake(true);beginRecordTimer();$('recordStart').disabled=true;$('recordStop').disabled=false;
-  recorderStatus('🔴 GRAVANDO • O tempo está correndo na tela e será incluído no vídeo. Toque em “Parar e preparar vídeo” quando terminar.');
+  recorderStatus('🔴 GRAVANDO • O roteiro fica visível somente na sua tela para você ler. Ele não será incluído no vídeo salvo. Toque em “Parar e preparar vídeo” quando terminar.');
  }catch(e){recorderStatus('Não foi possível iniciar a gravação neste navegador. Tente Safari no iPhone ou Chrome atualizado no Android.')}
 }
 function stopRecording(){if(mediaRecorder&&mediaRecorder.state!=='inactive'){isRecording=false;endRecordTimer();$('recordStart').disabled=true;$('recordStop').disabled=true;recorderStatus('Finalizando vídeo… aguarde o download começar.');mediaRecorder.stop()}else{recorderStatus('Nenhuma gravação está em andamento.')}}
@@ -285,7 +284,7 @@ $('cameraStart').addEventListener('click',startCamera);$('recordStart').addEvent
 
 $('script').addEventListener('input',update);['mirror','countdown'].forEach(id=>$(id).addEventListener('change',update));$('screen').addEventListener('click',toggle);$('screen').addEventListener('scroll',updateProgress);
 document.addEventListener('keydown',e=>{const tag=(e.target.tagName||'').toLowerCase();if(tag==='textarea'||tag==='input'&&e.target.type!=='range'&&e.target.type!=='checkbox')return;if(e.code==='Space'){e.preventDefault();toggle()}else if(e.key==='ArrowUp'){e.preventDefault();$('speed').value=Math.min(120,Number($('speed').value)+5);update()}else if(e.key==='ArrowDown'){e.preventDefault();$('speed').value=Math.max(5,Number($('speed').value)-5);update()}else if(e.key==='Home'){e.preventDefault();reset()}});['fontSize','speed','opacity','width'].forEach(id=>$(id).addEventListener('input',()=>{update();if(pipWindow&&!pipWindow.closed){const t=pipWindow.document.getElementById('txt');if(t)t.style.fontSize=$('fontSize').value+'px'}}));
-$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.4.0.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
+$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.4.1.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
 $('mobileInstall').addEventListener('click',()=>{const ua=navigator.userAgent||'';if(/iPhone|iPad|iPod/i.test(ua)){alert('Para instalar no iPhone/iPad:\n1. Abra esta página no Safari.\n2. Toque em Compartilhar.\n3. Escolha “Adicionar à Tela de Início”.\n4. Confirme em Adicionar.\n\nNão é necessário baixar APK.');}else{alert('Para instalar no Android:\n1. Abra esta página no Chrome.\n2. Toque nos três pontinhos (⋮).\n3. Escolha “Instalar app” ou “Adicionar à tela inicial”.\n4. Confirme a instalação.\n\nSe a opção não aparecer, atualize o Chrome e abra a página por HTTPS. Não existe APK nesta versão; é um aplicativo web instalável.');}});$('openFloat').addEventListener('click',openFloat);$('start').addEventListener('click',start);$('pause').addEventListener('click',()=>{stop();setStatus('Ⅱ Leitura pausada.')});$('reset').addEventListener('click',reset);
 $('floatStart').addEventListener('click',start);$('floatPause').addEventListener('click',()=>{stop();setStatus('Leitura pausada.')});$('floatReset').addEventListener('click',reset);$('floatClose').addEventListener('click',()=>{if(window.electronAPI&&window.electronAPI.closeOverlay)window.electronAPI.closeOverlay();else window.close()});
 $('floatSmaller').addEventListener('click',()=>{$('fontSize').value=Math.max(20,Number($('fontSize').value)-2);update()});
