@@ -69,7 +69,7 @@
 </section>
 </div>
 </section>
-<nav class="mobile-quickbar page-nav" aria-label="Navegação do teleprompter"><button id="navRoteiro" class="primary" type="button"><span>📝</span> Roteiro</button><button id="navGravar" type="button"><span>🎬</span> Gravar</button></nav>
+<nav class="mobile-quickbar page-nav" aria-label="Navegação do teleprompter"><button id="navRoteiro" class="primary active" type="button"><span>📝</span> Roteiro</button><button id="navGravar" type="button"><span>🎬</span> Gravar</button></nav>
 </div>
 <script>
 (function(){
@@ -83,7 +83,7 @@ let cameraStream=null, cameraFrame=0, mediaRecorder=null, recordedChunks=[], rec
 function recorderStatus(message){$('recorderStatus').textContent=message}
 function formatRecordTime(ms){const total=Math.floor(Math.max(0,ms)/1000);return String(Math.floor(total/60)).padStart(2,'0')+':'+String(total%60).padStart(2,'0')}
 function updateRecordHud(){const hud=$('recordHud');hud.classList.toggle('idle',!isRecording);$('recordLabel').textContent=isRecording?'GRAVANDO':(cameraStream?'CÂMERA PRONTA':'PRONTO PARA GRAVAR');$('recordTimer').textContent=formatRecordTime(isRecording?Date.now()-recordStartedAt:0)}
-function syncMobileRecorderButtons(){$('mobileCameraStart').disabled=$('cameraStart').disabled;$('mobileRecordStart').disabled=$('recordStart').disabled;$('mobileRecordStop').disabled=$('recordStop').disabled}
+function syncMobileRecorderButtons(){}
 function beginRecordTimer(){recordStartedAt=Date.now();updateRecordHud();syncMobileRecorderButtons();clearInterval(recordTimerInterval);recordTimerInterval=setInterval(updateRecordHud,200)}
 function endRecordTimer(){clearInterval(recordTimerInterval);recordTimerInterval=0;updateRecordHud();syncMobileRecorderButtons()}
 function wrapRecordingText(text,maxWidth,ctx){const lines=[];for(const paragraph of (text||'').split(/\n/)){if(!paragraph.trim()){lines.push('');continue}let line='';for(const word of paragraph.split(/\s+/)){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line)}return lines}
