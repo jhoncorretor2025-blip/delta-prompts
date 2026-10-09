@@ -27,19 +27,7 @@
 <div class="wrap">
 <header class="top"><div><span class="brand">🎬 Teleprompter IA</span><span class="version">Canivete v1.0.6</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
 <section class="intro"><h1>Seu roteiro, na sua frente.</h1><p>Cole o texto, ajuste a leitura e abra uma janela flutuante para gravar com mais naturalidade.</p></section>
-<section class="panel recorder-panel" id="recorderPanel">
-<h2>📹 Gravar vídeo com teleprompter</h2>
-<p class="hint" style="margin-top:0">Use a câmera frontal e leia o roteiro por cima da imagem. Ao parar, o vídeo será preparado para baixar com o texto já incluído.</p>
-<div class="camera-stage"><canvas id="recordCanvas" width="720" height="1280" aria-label="Prévia da câmera com texto do teleprompter"></canvas></div>
-<div class="recorder-controls">
-<button class="primary" id="cameraStart">📷 Abrir câmera</button>
-<button id="recordStart" disabled>🔴 Gravar</button>
-<button id="recordStop" disabled>⏹ Parar e baixar</button>
-</div>
-<div class="recorder-status" id="recorderStatus" aria-live="polite">Permita o acesso à câmera e ao microfone quando o navegador solicitar.</div>
-<video id="cameraVideo" playsinline muted autoplay hidden></video>
-<audio id="cameraAudio" hidden></audio>
-</section>
+
 <div class="layout">
 <section class="panel editor-panel">
 <h2>📝 Seu roteiro</h2>
@@ -60,6 +48,19 @@
 <div class="status" id="status" aria-live="polite"></div>
 <p class="hint">O roteiro fica salvo localmente neste navegador. Não é enviado para um servidor por esta ferramenta.</p>
 </section>
+<section class="panel recorder-panel" id="recorderPanel">
+<h2>📹 Gravar vídeo com teleprompter</h2>
+<p class="hint" style="margin-top:0">Use a câmera frontal e leia o roteiro por cima da imagem. Ao parar, o vídeo será preparado para baixar com o texto já incluído.</p>
+<div class="camera-stage"><canvas id="recordCanvas" width="720" height="1280" aria-label="Prévia da câmera com texto do teleprompter"></canvas></div>
+<div class="recorder-controls">
+<button class="primary" id="cameraStart">📷 Abrir câmera</button>
+<button id="recordStart" disabled>🔴 Gravar</button>
+<button id="recordStop" disabled>⏹ Parar e baixar</button>
+</div>
+<div class="recorder-status" id="recorderStatus" aria-live="polite">Permita o acesso à câmera e ao microfone quando o navegador solicitar.</div>
+<video id="cameraVideo" playsinline muted autoplay hidden></video>
+<audio id="cameraAudio" hidden></audio>
+</section>
 </div>
 <nav class="mobile-quickbar" aria-label="Controles rápidos do teleprompter"><button id="mobileEdit" type="button"><span>✎</span> Roteiro</button><button id="mobileStart" class="primary" type="button"><span>▶</span> Ler</button><button id="mobilePause" type="button"><span>Ⅱ</span> Pausar</button><button id="mobileReset" type="button"><span>↺</span> Início</button></nav>
 </div>
@@ -79,7 +80,7 @@ function drawRecordingFrame(now){
  const canvas=recordCanvas,ctx=recordCtx,w=canvas.width,h=canvas.height,vw=cameraVideo.videoWidth,vh=cameraVideo.videoHeight;
  const scale=Math.max(w/vw,h/vh),dw=vw*scale,dh=vh*scale,dx=(w-dw)/2,dy=(h-dh)/2;
  ctx.fillStyle='#05080d';ctx.fillRect(0,0,w,h);
- ctx.save();ctx.translate(w,0);ctx.scale(-1,1);ctx.drawImage(cameraVideo,-dx,dy,dw,dh);ctx.restore();
+ ctx.save();ctx.translate(w,0);ctx.scale(-1,1);ctx.drawImage(cameraVideo,dx,dy,dw,dh);ctx.restore();
  const shade=ctx.createLinearGradient(0,0,0,h);shade.addColorStop(0,'rgba(0,0,0,.15)');shade.addColorStop(.35,'rgba(0,0,0,.08)');shade.addColorStop(1,'rgba(0,0,0,.52)');ctx.fillStyle=shade;ctx.fillRect(0,0,w,h);
  const fontSize=Math.max(28,Math.min(48,Number($('fontSize').value)*1.15));ctx.font='700 '+fontSize+'px system-ui, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
  const maxWidth=w*.84,lines=wrapRecordingText($('script').value,maxWidth,ctx),lineHeight=fontSize*1.38;
