@@ -33,7 +33,7 @@ jobs:
       - name: Publicar arquivos para download
         uses: actions/upload-artifact@v4
         with:
-          name: teleprompter-ia-windows-v1.0.4
+          name: teleprompter-ia-windows-v1.0.5
           path: canivete/desktop/dist/*
           if-no-files-found: error
           retention-days: 30
