@@ -77,10 +77,9 @@ body.recording-focus #recordCanvas{width:100%;height:100%;object-fit:cover}
 body.recording-focus .record-hud{top:max(12px,env(safe-area-inset-top));left:12px;right:12px}
 body.recording-focus .recorder-controls{position:fixed;z-index:8;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;justify-content:center;margin:0;pointer-events:none}
 body.recording-focus .recorder-controls button{pointer-events:auto;width:72px;height:72px;min-height:72px;border-radius:50%!important;padding:8px;font-size:0;box-shadow:0 0 0 6px rgba(255,255,255,.2)}
-body.recording-focus #cameraStart,body.recording-focus #recordStop{display:flex!important;align-items:center;justify-content:center;font-size:0;background:var(--red)!important;border:5px solid #fff;width:76px;height:76px;min-height:76px;border-radius:50%!important;padding:8px}body.recording-focus #recordStop:after{content:"";width:24px;height:24px;border-radius:5px;background:#fff}body.recording-focus #recordStart{display:none!important}
-body.recording-focus #recordStart{display:flex;align-items:center;justify-content:center;font-size:0;background:var(--red)!important;border:5px solid #fff;width:76px;height:76px;min-height:76px}
-body.recording-focus #recordStart:after{content:"";width:24px;height:24px;border-radius:50%;background:#fff}
-body.recording-focus #recordStart:disabled{opacity:.65}
+body.recording-focus #cameraStart,body.recording-focus #recordStart{display:none!important}
+body.recording-focus #recordStop{display:flex!important;align-items:center;justify-content:center;font-size:0;background:var(--red)!important;border:5px solid #fff;width:76px;height:76px;min-height:76px;border-radius:50%!important;padding:8px}
+body.recording-focus #recordStop:after{content:"";width:24px;height:24px;border-radius:5px;background:#fff}
 body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));width:auto}
 @media(max-width:760px){
  body:not(.overlay-mode){padding-bottom:calc(94px + env(safe-area-inset-bottom))}
