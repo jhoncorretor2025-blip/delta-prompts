@@ -1,43 +1,10 @@
 {
   "name": "canivete-teleprompter",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Teleprompter IA independente do Canivete",
   "main": "main.js",
   "private": true,
-  "scripts": {
-    "start": "electron .",
-    "dist": "electron-builder --win nsis portable",
-    "prestart": "node prepare.js",
-    "predist": "node prepare.js"
-  },
-  "devDependencies": {
-    "electron": "^37.2.0",
-    "electron-builder": "^26.0.12"
-  },
-  "build": {
-    "appId": "br.com.canivete.teleprompter",
-    "productName": "Teleprompter IA - Canivete",
-    "directories": {
-      "output": "dist",
-      "app": "."
-    },
-    "files": [
-      "main.js",
-      "preload.js",
-      "teleprompter.html",
-      "package.json"
-    ],
-    "win": {
-      "target": [
-        "nsis",
-        "portable"
-      ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
-    }
-  }
+  "scripts": {"start": "electron .", "dist": "electron-builder --win nsis portable", "prestart": "node prepare.js", "predist": "node prepare.js"},
+  "devDependencies": {"electron": "^37.2.0", "electron-builder": "^26.0.12"},
+  "build": {"appId": "br.com.canivete.teleprompter", "productName": "Teleprompter IA - Canivete", "directories": {"output": "dist", "app": "."}, "files": ["main.js", "preload.js", "teleprompter.html", "package.json"], "win": {"target": ["nsis", "portable"]}, "nsis": {"oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "createStartMenuShortcut": true}}
 }
