@@ -1,6 +1,6 @@
 {
   "name": "canivete-teleprompter",
-  "version": "1.0.6",
+  "version": "1.3.0",
   "description": "Teleprompter IA independente do Canivete",
   "main": "main.js",
   "private": true,
