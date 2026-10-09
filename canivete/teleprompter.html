@@ -55,8 +55,9 @@
 <div class="recorder-controls">
 <button class="primary" id="cameraStart">📷 Abrir câmera</button>
 <button id="recordStart" disabled>🔴 Gravar</button>
-<button id="recordStop" disabled>⏹ Parar e baixar</button>
+<button id="recordStop" disabled>⏹ Parar e preparar vídeo</button>
 </div>
+<a id="downloadVideo" class="primary" href="#" hidden style="display:none;text-align:center;text-decoration:none;border-radius:12px;padding:14px 16px;margin-top:12px;font-weight:800;background:#059669;color:#fff;border:1px solid #059669">⬇️ Baixar vídeo gravado</a>
 <div class="recorder-status" id="recorderStatus" aria-live="polite">Permita o acesso à câmera e ao microfone quando o navegador solicitar.</div>
 <video id="cameraVideo" playsinline muted autoplay hidden></video>
 <audio id="cameraAudio" hidden></audio>
@@ -118,6 +119,7 @@ async function startCamera(){
  }catch(e){cameraStream=null;recorderStatus(e&&e.name==='NotAllowedError'?'Acesso à câmera/microfone negado. Libere as permissões do site nas configurações do navegador.':'Não foi possível abrir a câmera. Feche outros aplicativos que possam estar usando-a e tente novamente.')}
 }
 function startRecording(){
+ $('downloadVideo').hidden=true;$('downloadVideo').style.display='none';
  if(!cameraStream){recorderStatus('Primeiro toque em Abrir câmera.');return}
  if(!$('script').value.trim()){recorderStatus('Cole seu roteiro antes de gravar.');return}
  try{
@@ -132,10 +134,12 @@ function startRecording(){
   mediaRecorder.onstop=()=>{
    endRecordTimer();
    const type=mediaRecorder.mimeType||'video/webm',blob=new Blob(recordedChunks,{type});
+   if(!blob.size){recorderStatus('O vídeo ficou vazio. Tente gravar novamente e aguarde alguns segundos antes de parar.');return}
    if(lastVideoUrl)URL.revokeObjectURL(lastVideoUrl);lastVideoUrl=URL.createObjectURL(blob);
-   const ext=type.includes('mp4')?'mp4':'webm',a=document.createElement('a');a.href=lastVideoUrl;a.download='canivete-teleprompter-'+new Date().toISOString().replace(/[:.]/g,'-')+'.'+ext;document.body.appendChild(a);a.click();a.remove();
+   const ext=type.includes('mp4')?'mp4':'webm',a=$('downloadVideo');
+   a.href=lastVideoUrl;a.download='canivete-teleprompter-'+new Date().toISOString().replace(/[:.]/g,'-')+'.'+ext;a.hidden=false;a.style.display='block';
    canvasStream.getVideoTracks().forEach(t=>t.stop());$('recordStart').disabled=false;$('recordStop').disabled=true;syncMobileRecorderButtons();
-   recorderStatus('Vídeo preparado para baixar ('+Math.max(1,Math.round(blob.size/1024/1024))+' MB). Se o download não começar, verifique os downloads do navegador.');
+   recorderStatus('✅ Vídeo pronto ('+Math.max(1,Math.round(blob.size/1024/1024))+' MB). Toque no botão verde “Baixar vídeo gravado” logo abaixo para salvar no celular.');
   };
   mediaRecorder.start(1000);isRecording=true;beginRecordTimer();$('recordStart').disabled=true;$('recordStop').disabled=false;
   recorderStatus('🔴 GRAVANDO • O tempo está correndo na tela e será incluído no vídeo. Toque em “Parar e baixar” quando terminar.');
@@ -183,7 +187,7 @@ async function openFloat(){
   else {setStatus('O navegador bloqueou a janela. Permita pop-ups para este site ou use o Aplicativo Windows.');}
  } catch(e){setStatus('Este navegador não permite janela flutuante. Use o Aplicativo Windows no computador.');}
 }
-$('cameraStart').addEventListener('click',startCamera);$('recordStart').addEventListener('click',startRecording);$('recordStop').addEventListener('click',stopRecording);$('mobileCameraStart').addEventListener('click',()=> $('cameraStart').click());$('mobileRecordStart').addEventListener('click',()=> $('recordStart').click());$('mobileRecordStop').addEventListener('click',()=> $('recordStop').click());window.addEventListener('pagehide',()=>{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());if(lastVideoUrl)URL.revokeObjectURL(lastVideoUrl)});
+$('cameraStart').addEventListener('click',startCamera);$('recordStart').addEventListener('click',startRecording);$('recordStop').addEventListener('click',stopRecording);$('downloadVideo').addEventListener('click',async event=>{if(!lastVideoUrl){event.preventDefault();recorderStatus('Nenhum vídeo está pronto para baixar.');return}recorderStatus('Se o download não iniciar, pressione e segure o botão verde ou abra o menu do navegador e verifique Downloads.');});$('mobileCameraStart').addEventListener('click',()=> $('cameraStart').click());$('mobileRecordStart').addEventListener('click',()=> $('recordStart').click());$('mobileRecordStop').addEventListener('click',()=> $('recordStop').click());window.addEventListener('pagehide',()=>{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());if(lastVideoUrl)URL.revokeObjectURL(lastVideoUrl)});
 
 $('script').addEventListener('input',update);['fontSize','speed','opacity','width'].forEach(id=>$(id).addEventListener('input',()=>{update();if(pipWindow&&!pipWindow.closed){const t=pipWindow.document.getElementById('txt');if(t)t.style.fontSize=$('fontSize').value+'px'}}));
 $('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.0.6.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
