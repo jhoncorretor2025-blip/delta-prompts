@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#101827">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="description" content="Teleprompter IA do Canivete: leia roteiros com texto flutuante e velocidade ajustável.">
-<title>Teleprompter IA — Canivete v1.3.0</title>
+<title>Teleprompter IA — Canivete v1.4.0</title>
 <style>
 :root{color-scheme:dark;--bg:#101827;--panel:#182235;--line:#2d3b52;--text:#f8fafc;--muted:#aab7ca;--blue:#60a5fa;--green:#34d399}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#243249;color:var(--text);font-weight:650}button.primary{background:#2563eb;border-color:#2563eb}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.wrap{max-width:1050px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}.brand{font-weight:850;font-size:18px}.version{font-size:12px;color:var(--muted);margin-left:8px}.back{color:#93c5fd;text-decoration:none}.intro{margin-bottom:18px}.intro h1{font-size:clamp(25px,4vw,36px);line-height:1.1;margin:0 0 9px}.intro p{color:var(--muted);margin:0}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:16px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}.panel h2{font-size:16px;margin:0 0 12px}.field{display:grid;gap:7px;margin-bottom:14px}.field label,.control label{font-size:13px;font-weight:700;color:#d4deec}textarea{width:100%;min-height:280px;resize:vertical;background:#0d1421;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:14px;line-height:1.6}input[type=range]{width:100%;accent-color:#60a5fa}input[type=number]{width:90px;background:#0d1421;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:13px}.control{display:grid;gap:7px}.control strong{font-size:13px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.preview{min-height:280px;display:flex;flex-direction:column;gap:14px}.preview-screen{border:1px solid var(--line);border-radius:12px;background:rgba(4,9,18,.78);padding:18px;min-height:205px;overflow:hidden}.preview-text{font-size:30px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}.hint{font-size:12px;color:var(--muted);margin:12px 0 0}.status{font-size:13px;color:var(--green);min-height:20px}.overlay-mode{background:transparent!important;color:white}.overlay-mode .wrap{max-width:none;padding:8px;-webkit-app-region:drag}.overlay-mode .preview-screen,.overlay-mode .preview-text{ -webkit-app-region:no-drag }.overlay-mode .overlay-controls,.overlay-mode .overlay-controls *{ -webkit-app-region:no-drag }.drag-handle{cursor:move;user-select:none;padding:5px 8px;border:1px solid rgba(255,255,255,.28);border-radius:7px;background:rgba(10,15,25,.65);font-size:12px}.overlay-mode .panel{background:rgba(8,13,22,var(--overlay-bg-alpha,.35))}.overlay-mode .preview-screen{width:100%}.overlay-mode .overlay-controls label{display:flex;align-items:center;gap:4px;font-size:11px;color:#fff}.overlay-mode .overlay-controls input{width:74px}.overlay-mode .top,.overlay-mode .intro,.overlay-mode .editor-panel,.overlay-mode .hint,.overlay-mode .status,.overlay-mode .back{display:none!important}.overlay-mode .layout{display:block}.overlay-mode .panel{padding:10px;border:1px solid rgba(255,255,255,.2);background:rgba(8,13,22,var(--overlay-bg-alpha,.35));backdrop-filter:blur(5px);border-radius:12px}.overlay-mode .preview{min-height:0}.overlay-mode .preview-screen{border:0;background:transparent;min-height:0;padding:5px;max-height:calc(100vh - 68px);overflow:auto}.overlay-mode .preview-text{text-shadow:0 2px 8px #000;line-height:1.45}.overlay-mode .overlay-controls{display:flex!important;gap:6px;flex-wrap:wrap}.overlay-controls{display:none}.mobile-quickbar{display:none}.page-view{display:none}.page-view.active{display:block}.recorder-layout{grid-template-columns:minmax(0,1fr)}.recorder-panel{max-width:760px;margin:0 auto;width:100%}.page-nav button.active{background:#2563eb;border-color:#2563eb}.overlay-mode button{padding:6px 10px;background:rgba(20,30,45,.8);font-size:12px}
@@ -30,11 +30,77 @@
 .count-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:90px;font-weight:900;color:#fff;text-shadow:0 4px 20px #000;background:rgba(0,0,0,.35);border-radius:12px;z-index:4}
 .mirrored{transform:scaleX(-1)}
 .overlay-mode .guide-line,.overlay-mode .progress{display:none}
+
+/* Canivete Teleprompter v1.4.0 — interface refinada */
+:root{--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--radius:16px;--space:16px}
+button,.panel,.preview-screen,.camera-stage,.more-options{border-radius:var(--radius)!important}
+.panel{padding:var(--space)!important}
+button{transition:transform .16s ease,filter .16s ease,background-color .18s ease}
+button:active{transform:scale(.97)}
+button.primary{background:var(--blue)!important;border-color:var(--blue)!important}
+#downloadVideo{background:var(--green)!important;border-color:var(--green)!important}
+#recordStop{background:var(--red);border-color:var(--red)}
+#recordStart{background:var(--blue);border-color:var(--blue)}
+body{--line:#2d3b52}
+.intro h1,.panel h2{letter-spacing:-.025em}
+textarea,.preview-text{font-family:Nunito,Inter,ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:750}
+.preview-text{line-height:1.55}
+.preview-line{display:block;color:#8290a4;opacity:.64;transition:color .2s ease,opacity .2s ease,text-shadow .2s ease}
+.preview-line.current{color:#fff;opacity:1;text-shadow:0 0 1px #fff,0 2px 12px #000}
+.reader-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space);align-items:center}
+.reader-actions button{min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px}
+.reader-actions .action-icon{font-size:24px;line-height:1.1}
+.reader-actions small{font-size:12px;font-weight:750}
+.more-options{margin-top:var(--space);border:1px solid var(--line);padding:12px 14px;background:#111b2b}
+.more-options summary{cursor:pointer;font-weight:800;list-style:none}
+.more-options summary::-webkit-details-marker{display:none}
+.more-options summary:after{content:"＋";float:right;color:#93c5fd}
+.more-options[open] summary:after{content:"−"}
+.more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.text-help{padding:0;border:0;background:transparent;color:#93c5fd;text-decoration:underline;min-height:0;font-size:12px}
+.mobile-reader-dock{display:none}
+.camera-stage{border-radius:var(--radius)}
+.count-overlay{animation:countPop .72s cubic-bezier(.2,.8,.2,1) both}
+@keyframes countPop{0%{transform:scale(.35);opacity:0}35%{transform:scale(1.18);opacity:1}70%{transform:scale(.94)}100%{transform:scale(1)}}
+.page-view.active{animation:pageFade .2s ease both}
+@keyframes pageFade{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+#start.is-running{animation:playBreathe 1.5s ease-in-out infinite}
+@keyframes playBreathe{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0)}50%{box-shadow:0 0 0 5px rgba(59,130,246,.18)}}
+body.recording-focus{overflow:hidden;background:#05080d}
+body.recording-focus .top,body.recording-focus>.wrap>.intro,body.recording-focus #pageGravar .recorder-panel>h2,body.recording-focus #pageGravar .recorder-panel>.hint,body.recording-focus #pageGravar .recorder-status,body.recording-focus .page-nav{display:none!important}
+body.recording-focus .wrap{max-width:none;padding:0}
+body.recording-focus #pageGravar{display:block!important}
+body.recording-focus #pageGravar .layout{display:block}
+body.recording-focus #pageGravar .recorder-panel{position:fixed;inset:0;width:100%;max-width:none;margin:0;padding:0!important;border:0;border-radius:0!important;background:#05080d}
+body.recording-focus .camera-stage{position:absolute;inset:0;max-width:none;max-height:none;width:100%;height:100%;aspect-ratio:auto;border:0;border-radius:0!important}
+body.recording-focus #recordCanvas{width:100%;height:100%;object-fit:cover}
+body.recording-focus .record-hud{top:max(12px,env(safe-area-inset-top));left:12px;right:12px}
+body.recording-focus .recorder-controls{position:fixed;z-index:8;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;justify-content:center;margin:0;pointer-events:none}
+body.recording-focus .recorder-controls button{pointer-events:auto;width:72px;height:72px;min-height:72px;border-radius:50%!important;padding:8px;font-size:0;box-shadow:0 0 0 6px rgba(255,255,255,.2)}
+body.recording-focus #cameraStart,body.recording-focus #recordStop{display:none!important}
+body.recording-focus #recordStart{display:flex;align-items:center;justify-content:center;font-size:0;background:var(--red)!important;border:5px solid #fff;width:76px;height:76px;min-height:76px}
+body.recording-focus #recordStart:after{content:"";width:24px;height:24px;border-radius:50%;background:#fff}
+body.recording-focus #recordStart:disabled{opacity:.65}
+body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));width:auto}
+@media(max-width:760px){
+ body:not(.overlay-mode){padding-bottom:calc(94px + env(safe-area-inset-bottom))}
+ .reader-actions{position:fixed;z-index:19;left:50%;transform:translateX(-50%);bottom:calc(66px + env(safe-area-inset-bottom));width:min(280px,78vw);gap:10px;padding:8px;background:rgba(12,19,31,.97);border:1px solid #35445b;border-radius:22px!important;box-shadow:0 8px 28px #0006}
+ .reader-actions button{min-height:54px;border-radius:14px!important}
+ .reader-actions .action-icon{font-size:22px}
+ .reader-actions small{font-size:10px}
+ .mobile-quickbar{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .more-options{margin-bottom:10px}
+ .more-grid{grid-template-columns:1fr}
+ .preview-text{font-size:clamp(25px,7vw,36px)}
+ body.recording-focus .recorder-controls{bottom:calc(18px + env(safe-area-inset-bottom))}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="top"><div><span class="brand">🎬 Teleprompter IA</span><span class="version">Canivete v1.3.0</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
+<header class="top"><div><span class="brand">🎬 Teleprompter IA</span><span class="version">Canivete v1.4.0</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
 <section class="intro"><h1>Seu roteiro, na sua frente.</h1><p>Cole o texto, ajuste a leitura e abra uma janela flutuante para gravar com mais naturalidade.</p></section>
 
 <section id="pageRoteiro" class="page-view active" aria-label="Página do roteiro">
@@ -51,8 +117,8 @@
 <label class="toggle"><input type="checkbox" id="countdown" checked> ⏱️ Contagem 3-2-1</label>
 </div>
 <p class="stats" id="stats">0 palavras • ~0 s de fala</p>
-<div class="actions"><button class="primary" id="openFloat">↗ Abrir janela flutuante</button><button id="installApp" hidden>⬇ Instalar aplicativo</button><button id="mobileInstall">📱 Instalar no celular</button><button id="updateApp">🔄 Atualizar aplicativo</button><button id="downloadWindows" onclick="window.open('https://github.com/jhoncorretor2025-blip/delta-prompts/actions','_blank','noopener')">🪟 Aplicativo Windows</button><button id="start">▶ Iniciar leitura</button><button id="pause">Ⅱ Pausar</button><button id="reset">↺ Voltar ao início</button></div>
-<p class="hint">Instale esta página como aplicativo quando o navegador oferecer essa opção. Para uma janela transparente sempre no topo do Windows, abra Aplicativo Windows e baixe o artefato de uma compilação concluída. O navegador exige sua confirmação para instalar programas; esta página não instala executáveis silenciosamente.</p>
+<div class="actions reader-actions" aria-label="Controles de leitura"><button class="primary" id="start" aria-label="Iniciar leitura"><span class="action-icon">▶</span><small>Iniciar</small></button><button id="pause" aria-label="Pausar leitura"><span class="action-icon">⏸</span><small>Pausar</small></button><button id="reset" aria-label="Voltar ao início"><span class="action-icon">↺</span><small>Início</small></button></div>
+<details class="more-options"><summary>⚙️ Mais opções</summary><div class="more-grid"><button id="openFloat">↗ Janela flutuante</button><button id="installApp" hidden>⬇ Instalar aplicativo</button><button id="mobileInstall">📱 Instalar no celular</button><button id="updateApp">🔄 Atualizar aplicativo</button><button id="downloadWindows" onclick="window.open('https://github.com/jhoncorretor2025-blip/delta-prompts/actions','_blank','noopener')">🪟 Aplicativo Windows</button></div><p class="hint"><span aria-hidden="true">ℹ️</span> No celular, use “Instalar app” no menu do navegador. <button type="button" class="text-help" id="windowsHelpToggle">Entenda a versão Windows</button></p><p class="hint" id="windowsHelp" hidden>Para uma janela transparente sempre no topo, abra Aplicativo Windows e baixe o artefato de uma compilação concluída. O navegador pede confirmação antes de instalar programas.</p></details>
 </section>
 <section class="panel preview">
 <h2>👀 Prévia da leitura</h2>
@@ -88,6 +154,8 @@
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
+const renderPreviewLines=text=>{const el=$('previewText');el.replaceChildren();const lines=(text||'').split(/\n/);lines.forEach(line=>{const span=document.createElement('span');span.className='preview-line';span.textContent=line||' ';el.appendChild(span)});highlightCurrentLine()};
+function highlightCurrentLine(){const sc=$('screen'),el=$('previewText');if(!sc||!el)return;const guide=sc.scrollTop+sc.clientHeight*.38;let best=null,bestDistance=Infinity;el.querySelectorAll('.preview-line').forEach(line=>{const y=line.offsetTop+line.offsetHeight/2;const d=Math.abs(y-guide);if(d<bestDistance){bestDistance=d;best=line}});el.querySelectorAll('.preview-line.current').forEach(line=>line.classList.remove('current'));if(best)best.classList.add('current')};
 const params=new URLSearchParams(location.search);
 const isOverlay=params.get('overlay')==='1';
 const UPDATE_URL='https://github.com/jhoncorretor2025-blip/delta-prompts/actions/workflows/teleprompter-windows.yml';
@@ -98,8 +166,8 @@ function recorderStatus(message){$('recorderStatus').textContent=message}
 function formatRecordTime(ms){const total=Math.floor(Math.max(0,ms)/1000);return String(Math.floor(total/60)).padStart(2,'0')+':'+String(total%60).padStart(2,'0')}
 function updateRecordHud(){const hud=$('recordHud');hud.classList.toggle('idle',!isRecording);$('recordLabel').textContent=isRecording?'GRAVANDO':(cameraStream?'CÂMERA PRONTA':'PRONTO PARA GRAVAR');$('recordTimer').textContent=formatRecordTime(isRecording?Date.now()-recordStartedAt:0)}
 function syncMobileRecorderButtons(){}
-function beginRecordTimer(){recordStartedAt=Date.now();updateRecordHud();syncMobileRecorderButtons();clearInterval(recordTimerInterval);recordTimerInterval=setInterval(updateRecordHud,200)}
-function endRecordTimer(){if(!running)keepAwake(false);clearInterval(recordTimerInterval);recordTimerInterval=0;updateRecordHud();syncMobileRecorderButtons()}
+function beginRecordTimer(){recordStartedAt=Date.now();document.body.classList.add('recording-focus');updateRecordHud();syncMobileRecorderButtons();clearInterval(recordTimerInterval);recordTimerInterval=setInterval(updateRecordHud,200)}
+function endRecordTimer(){document.body.classList.remove('recording-focus');if(!running)keepAwake(false);clearInterval(recordTimerInterval);recordTimerInterval=0;updateRecordHud();syncMobileRecorderButtons()}
 function wrapRecordingText(text,maxWidth,ctx){const lines=[];for(const paragraph of (text||'').split(/\n/)){if(!paragraph.trim()){lines.push('');continue}let line='';for(const word of paragraph.split(/\s+/)){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line)}return lines}
 function drawRecordingFrame(now){
  if(!cameraStream||!cameraVideo.videoWidth){cameraFrame=requestAnimationFrame(drawRecordingFrame);return}
@@ -180,15 +248,15 @@ let running=false, frame=0, last=0, pipWindow=null, offset=0, pos=0, wakeLock=nu
 async function keepAwake(on){try{if(on&&'wakeLock' in navigator&&!wakeLock){wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null})}else if(!on&&wakeLock){await wakeLock.release();wakeLock=null}}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&(running||isRecording))keepAwake(true)});
 function speedLabel(v){v=Number(v);return v<20?'(devagar)':v<45?'(normal)':v<75?'(rápido)':'(muito rápido)'}
-function updateProgress(){const sc=$('screen'),max=sc.scrollHeight-sc.clientHeight;$('progressBar').style.width=(max>0?Math.min(100,sc.scrollTop/max*100):0)+'%'}
+function updateProgress(){const sc=$('screen'),max=sc.scrollHeight-sc.clientHeight;$('progressBar').style.width=(max>0?Math.min(100,sc.scrollTop/max*100):0)+'%';highlightCurrentLine()}
 const defaults={script:'',fontSize:34,speed:30,opacity:65,width:100,mirror:false,countdown:true};
 function load(){try{const s=JSON.parse(localStorage.getItem('canivete.teleprompter.v1')||'{}');Object.keys(defaults).forEach(k=>{if(s[k]!==undefined&&$(k)){if($(k).type==='checkbox')$(k).checked=!!s[k];else $(k).value=s[k]}})}catch(e){} update();}
 function save(){try{localStorage.setItem('canivete.teleprompter.v1',JSON.stringify({script:$('script').value,fontSize:$('fontSize').value,speed:$('speed').value,opacity:$('opacity').value,width:$('width').value,mirror:$('mirror').checked,countdown:$('countdown').checked}))}catch(e){}}
-function update(){const text=$('script').value.trim();$('previewText').textContent=text||'Cole um roteiro na janela principal para começar.';$('fontValue').textContent=$('fontSize').value;$('speedValue').textContent=$('speed').value;$('speedHint').textContent=speedLabel($('speed').value);$('previewText').classList.toggle('mirrored',$('mirror').checked);{const words=(text.match(/\S+/g)||[]).length,sec=Math.round(words/2.5);$('stats').textContent=words+' palavras • ~'+(sec>=60?Math.floor(sec/60)+' min '+(sec%60)+' s':sec+' s')+' de fala'}$('opacityValue').textContent=$('opacity').value;$('widthValue').textContent=$('width').value;$('previewText').style.fontSize=$('fontSize').value+'px';$('previewText').style.maxWidth=$('width').value+'%';$('screen').style.background='rgba(4,9,18,'+(Number($('opacity').value)/100)+')';document.body.classList.toggle('overlay-mode',isOverlay);if(isOverlay){$('previewText').style.fontSize=$('fontSize').value+'px';$('screen').style.background='transparent';if($('overlayOpacity'))$('overlayOpacity').value=$('opacity').value;if($('overlayWidth'))$('overlayWidth').value=$('width').value;document.documentElement.style.setProperty('--overlay-bg-alpha',String(Math.max(.05,Math.min(.85,Number($('overlayOpacity')?.value ?? $('opacity').value)/100))));$('previewText').style.maxWidth=($('overlayWidth')?.value||$('width').value)+'%'}save();}
+function update(){const text=$('script').value.trim();renderPreviewLines(text||'Cole um roteiro na janela principal para começar.');$('fontValue').textContent=$('fontSize').value;$('speedValue').textContent=$('speed').value;$('speedHint').textContent=speedLabel($('speed').value);$('previewText').classList.toggle('mirrored',$('mirror').checked);{const words=(text.match(/\S+/g)||[]).length,sec=Math.round(words/2.5);$('stats').textContent=words+' palavras • ~'+(sec>=60?Math.floor(sec/60)+' min '+(sec%60)+' s':sec+' s')+' de fala'}$('opacityValue').textContent=$('opacity').value;$('widthValue').textContent=$('width').value;$('previewText').style.fontSize=$('fontSize').value+'px';$('previewText').style.maxWidth=$('width').value+'%';$('screen').style.background='rgba(4,9,18,'+(Number($('opacity').value)/100)+')';document.body.classList.toggle('overlay-mode',isOverlay);if(isOverlay){$('previewText').style.fontSize=$('fontSize').value+'px';$('screen').style.background='transparent';if($('overlayOpacity'))$('overlayOpacity').value=$('opacity').value;if($('overlayWidth'))$('overlayWidth').value=$('width').value;document.documentElement.style.setProperty('--overlay-bg-alpha',String(Math.max(.05,Math.min(.85,Number($('overlayOpacity')?.value ?? $('opacity').value)/100))));$('previewText').style.maxWidth=($('overlayWidth')?.value||$('width').value)+'%'}save();}
 function setStatus(s){$('status').textContent=s}
-function stop(){running=false;if(frame)cancelAnimationFrame(frame);frame=0;last=0;if(!isRecording)keepAwake(false)}
+function stop(){running=false;$('start').classList.remove('is-running');if(frame)cancelAnimationFrame(frame);frame=0;last=0;if(!isRecording)keepAwake(false)}
 function tick(ts){if(!running)return;if(!last)last=ts;const dt=Math.min(ts-last,80);last=ts;const sc=$('screen');if(Math.abs(sc.scrollTop-pos)>2)pos=sc.scrollTop;pos+=dt/1000*Number($('speed').value);sc.scrollTop=pos;updateProgress();if(pos>=sc.scrollHeight-sc.clientHeight-1){stop();setStatus('✅ Fim do roteiro!');return}frame=requestAnimationFrame(tick)}
-async function start(){if(!$('script').value.trim()){setStatus('Cole um texto antes de iniciar.');return}if(running||counting)return;const sc=$('screen');if(sc.scrollTop>=sc.scrollHeight-sc.clientHeight-1){sc.scrollTop=0}pos=sc.scrollTop;if($('countdown').checked&&!isOverlay){counting=true;const ov=$('countOverlay');ov.hidden=false;for(const n of [3,2,1]){ov.textContent=n;await new Promise(r=>setTimeout(r,800))}ov.hidden=true;counting=false}running=true;last=0;keepAwake(true);frame=requestAnimationFrame(tick);setStatus('▶ Leitura em andamento.')}
+async function start(){if(!$('script').value.trim()){setStatus('Cole um texto antes de iniciar.');return}if(running||counting)return;const sc=$('screen');if(sc.scrollTop>=sc.scrollHeight-sc.clientHeight-1){sc.scrollTop=0}pos=sc.scrollTop;if($('countdown').checked&&!isOverlay){counting=true;const ov=$('countOverlay');ov.hidden=false;for(const n of [3,2,1]){ov.textContent=n;await new Promise(r=>setTimeout(r,800))}ov.hidden=true;counting=false}running=true;$('start').classList.add('is-running');last=0;keepAwake(true);frame=requestAnimationFrame(tick);setStatus('▶ Leitura em andamento.')}
 function toggle(){if(running){stop();setStatus('Ⅱ Leitura pausada.')}else start()}
 function reset(){stop();pos=0;$('screen').scrollTop=0;updateProgress();setStatus('↺ Texto no início.')}
 async function openFloat(){
@@ -214,11 +282,11 @@ async function openFloat(){
   else {setStatus('O navegador bloqueou a janela. Permita pop-ups para este site ou use o Aplicativo Windows.');}
  } catch(e){setStatus('Este navegador não permite janela flutuante. Use o Aplicativo Windows no computador.');}
 }
-$('cameraStart').addEventListener('click',startCamera);$('recordStart').addEventListener('click',startRecording);$('recordStop').addEventListener('click',stopRecording);$('downloadVideo').addEventListener('click',async event=>{if(!lastVideoUrl){event.preventDefault();recorderStatus('Nenhum vídeo está pronto para baixar.');return}recorderStatus('Se o download não iniciar, pressione e segure o botão verde ou abra o menu do navegador e verifique Downloads.');});function showPage(page){const isScript=page==='roteiro';$('pageRoteiro').classList.toggle('active',isScript);$('pageGravar').classList.toggle('active',!isScript);$('navRoteiro').classList.toggle('active',isScript);$('navGravar').classList.toggle('active',!isScript);if(!isScript){updateRecordHud();syncMobileRecorderButtons()}window.scrollTo({top:0,behavior:'smooth'})}$('navRoteiro').addEventListener('click',()=>showPage('roteiro'));$('navGravar').addEventListener('click',()=>showPage('gravar'));window.addEventListener('pagehide',()=>{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());if(lastVideoUrl)URL.revokeObjectURL(lastVideoUrl)});
+$('cameraStart').addEventListener('click',startCamera);$('recordStart').addEventListener('click',startRecording);$('recordStop').addEventListener('click',stopRecording);$('windowsHelpToggle').addEventListener('click',()=>{$('windowsHelp').hidden=!$('windowsHelp').hidden;$('windowsHelpToggle').textContent=$('windowsHelp').hidden?'Entenda a versão Windows':'Ocultar explicação'});$('downloadVideo').addEventListener('click',async event=>{if(!lastVideoUrl){event.preventDefault();recorderStatus('Nenhum vídeo está pronto para baixar.');return}recorderStatus('Se o download não iniciar, pressione e segure o botão verde ou abra o menu do navegador e verifique Downloads.');});function showPage(page){document.body.classList.remove('recording-focus');const isScript=page==='roteiro';$('pageRoteiro').classList.toggle('active',isScript);$('pageGravar').classList.toggle('active',!isScript);$('navRoteiro').classList.toggle('active',isScript);$('navGravar').classList.toggle('active',!isScript);if(!isScript){updateRecordHud();syncMobileRecorderButtons()}window.scrollTo({top:0,behavior:'smooth'})}$('navRoteiro').addEventListener('click',()=>showPage('roteiro'));$('navGravar').addEventListener('click',()=>showPage('gravar'));window.addEventListener('pagehide',()=>{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());if(lastVideoUrl)URL.revokeObjectURL(lastVideoUrl)});
 
 $('script').addEventListener('input',update);['mirror','countdown'].forEach(id=>$(id).addEventListener('change',update));$('screen').addEventListener('click',toggle);$('screen').addEventListener('scroll',updateProgress);
 document.addEventListener('keydown',e=>{const tag=(e.target.tagName||'').toLowerCase();if(tag==='textarea'||tag==='input'&&e.target.type!=='range'&&e.target.type!=='checkbox')return;if(e.code==='Space'){e.preventDefault();toggle()}else if(e.key==='ArrowUp'){e.preventDefault();$('speed').value=Math.min(120,Number($('speed').value)+5);update()}else if(e.key==='ArrowDown'){e.preventDefault();$('speed').value=Math.max(5,Number($('speed').value)-5);update()}else if(e.key==='Home'){e.preventDefault();reset()}});['fontSize','speed','opacity','width'].forEach(id=>$(id).addEventListener('input',()=>{update();if(pipWindow&&!pipWindow.closed){const t=pipWindow.document.getElementById('txt');if(t)t.style.fontSize=$('fontSize').value+'px'}}));
-$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.3.0.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
+$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.4.0.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
 $('mobileInstall').addEventListener('click',()=>{const ua=navigator.userAgent||'';if(/iPhone|iPad|iPod/i.test(ua)){alert('Para instalar no iPhone/iPad:\n1. Abra esta página no Safari.\n2. Toque em Compartilhar.\n3. Escolha “Adicionar à Tela de Início”.\n4. Confirme em Adicionar.\n\nNão é necessário baixar APK.');}else{alert('Para instalar no Android:\n1. Abra esta página no Chrome.\n2. Toque nos três pontinhos (⋮).\n3. Escolha “Instalar app” ou “Adicionar à tela inicial”.\n4. Confirme a instalação.\n\nSe a opção não aparecer, atualize o Chrome e abra a página por HTTPS. Não existe APK nesta versão; é um aplicativo web instalável.');}});$('openFloat').addEventListener('click',openFloat);$('start').addEventListener('click',start);$('pause').addEventListener('click',()=>{stop();setStatus('Ⅱ Leitura pausada.')});$('reset').addEventListener('click',reset);
 $('floatStart').addEventListener('click',start);$('floatPause').addEventListener('click',()=>{stop();setStatus('Leitura pausada.')});$('floatReset').addEventListener('click',reset);$('floatClose').addEventListener('click',()=>{if(window.electronAPI&&window.electronAPI.closeOverlay)window.electronAPI.closeOverlay();else window.close()});
 $('floatSmaller').addEventListener('click',()=>{$('fontSize').value=Math.max(20,Number($('fontSize').value)-2);update()});
