@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#101827">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="description" content="Teleprompter IA do Canivete: leia roteiros com texto flutuante e velocidade ajustável.">
-<title>Teleprompter IA — Canivete v1.5.5</title>
+<title>Teleprompter IA — Canivete v1.5.6</title>
 <style>
 :root{color-scheme:dark;--bg:#101827;--panel:#182235;--line:#2d3b52;--text:#f8fafc;--muted:#aab7ca;--blue:#60a5fa;--green:#34d399}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#243249;color:var(--text);font-weight:650}button.primary{background:#2563eb;border-color:#2563eb}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.wrap{max-width:1050px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}.brand{font-weight:850;font-size:18px}.version{font-size:12px;color:var(--muted);margin-left:8px}.back{color:#93c5fd;text-decoration:none}.intro{margin-bottom:18px}.intro h1{font-size:clamp(25px,4vw,36px);line-height:1.1;margin:0 0 9px}.intro p{color:var(--muted);margin:0}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:16px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}.panel h2{font-size:16px;margin:0 0 12px}.field{display:grid;gap:7px;margin-bottom:14px}.field label,.control label{font-size:13px;font-weight:700;color:#d4deec}textarea{width:100%;min-height:280px;resize:vertical;background:#0d1421;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:14px;line-height:1.6}input[type=range]{width:100%;accent-color:#60a5fa}input[type=number]{width:90px;background:#0d1421;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:13px}.control{display:grid;gap:7px}.control strong{font-size:13px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.preview{min-height:280px;display:flex;flex-direction:column;gap:14px}.preview-screen{border:1px solid var(--line);border-radius:12px;background:rgba(4,9,18,.78);padding:18px;min-height:205px;overflow:hidden}.preview-text{font-size:30px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}.hint{font-size:12px;color:var(--muted);margin:12px 0 0}.status{font-size:13px;color:var(--green);min-height:20px}.overlay-mode{background:transparent!important;color:white}.overlay-mode .wrap{max-width:none;padding:8px;-webkit-app-region:drag}.overlay-mode .preview-screen,.overlay-mode .preview-text{ -webkit-app-region:no-drag }.overlay-mode .overlay-controls,.overlay-mode .overlay-controls *{ -webkit-app-region:no-drag }.drag-handle{cursor:move;user-select:none;padding:5px 8px;border:1px solid rgba(255,255,255,.28);border-radius:7px;background:rgba(10,15,25,.65);font-size:12px}.overlay-mode .panel{background:rgba(8,13,22,var(--overlay-bg-alpha,.35))}.overlay-mode .preview-screen{width:100%}.overlay-mode .overlay-controls label{display:flex;align-items:center;gap:4px;font-size:11px;color:#fff}.overlay-mode .overlay-controls input{width:74px}.overlay-mode .top,.overlay-mode .intro,.overlay-mode .editor-panel,.overlay-mode .hint,.overlay-mode .status,.overlay-mode .back{display:none!important}.overlay-mode .layout{display:block}.overlay-mode .panel{padding:10px;border:1px solid rgba(255,255,255,.2);background:rgba(8,13,22,var(--overlay-bg-alpha,.35));backdrop-filter:blur(5px);border-radius:12px}.overlay-mode .preview{min-height:0}.overlay-mode .preview-screen{border:0;background:transparent;min-height:0;padding:5px;max-height:calc(100vh - 68px);overflow:auto}.overlay-mode .preview-text{text-shadow:0 2px 8px #000;line-height:1.45}.overlay-mode .overlay-controls{display:flex!important;gap:6px;flex-wrap:wrap}.overlay-controls{display:none}.mobile-quickbar{display:none}.page-view{display:none}.page-view.active{display:block}.recorder-layout{grid-template-columns:minmax(0,1fr)}.recorder-panel{max-width:760px;margin:0 auto;width:100%}.page-nav button.active{background:#2563eb;border-color:#2563eb}.overlay-mode button{padding:6px 10px;background:rgba(20,30,45,.8);font-size:12px}
@@ -31,7 +31,7 @@
 .mirrored{transform:scaleX(-1)}
 .overlay-mode .guide-line,.overlay-mode .progress{display:none}
 
-/* Canivete Teleprompter v1.5.5 — interface refinada */
+/* Canivete Teleprompter v1.5.6 — interface refinada */
 :root{--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--radius:16px;--space:16px}
 button,.panel,.preview-screen,.camera-stage,.more-options{border-radius:var(--radius)!important}
 .panel{padding:var(--space)!important}
@@ -96,7 +96,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
 
-/* v1.5.5: controles de leitura no fluxo normal, sem barra flutuante solta */
+/* v1.5.6: controles de leitura no fluxo normal, sem barra flutuante solta */
 @media(max-width:760px){
  .reader-actions{
   position:static!important;
@@ -122,7 +122,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 }
 
 
-/* v1.5.5: a tela de gravação nunca deve parecer vazia antes de abrir a câmera */
+/* v1.5.6: a tela de gravação nunca deve parecer vazia antes de abrir a câmera */
 .camera-stage{background:radial-gradient(ellipse at center,#17243a 0%,#05080d 75%)}
 #recordCanvas{position:relative;z-index:1}
 #cameraVideo{position:fixed!important;left:-1000px!important;top:0!important;width:2px!important;height:2px!important;display:block!important;opacity:.01!important;pointer-events:none!important}
@@ -130,7 +130,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 .camera-stage:has(#recordCanvas.camera-ready)::after{display:none}
 
 
-/* v1.5.5 — refinamento visual: hierarquia, leitura e gravação */
+/* v1.5.6 — refinamento visual: hierarquia, leitura e gravação */
 :root{
  --bg:#0b1220;--panel:#121d2e;--line:#293950;--text:#f8fafc;
  --muted:#a8b7cc;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;
@@ -196,7 +196,7 @@ button.primary{background:var(--blue)!important;border-color:var(--blue)!importa
 </head>
 <body>
 <div class="wrap">
-<header class="top"><div><span class="brand">🎬 Teleprompter IA</span><span class="version">Canivete v1.5.5</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
+<header class="top"><div><span class="brand">🎬 Teleprompter IA</span><span class="version">Canivete v1.5.6</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
 <section class="intro"><h1>Seu roteiro, na sua frente.</h1><p>Cole o texto, ajuste a leitura e abra uma janela flutuante para gravar com mais naturalidade.</p></section>
 
 <section id="pageRoteiro" class="page-view active" aria-label="Página do roteiro">
@@ -382,7 +382,7 @@ let lastHistorySnapshot='';
 function saveHistorySnapshot(){const script=$('script').value.trim();if(!script||script===lastHistorySnapshot)return;lastHistorySnapshot=script;try{const history=readJson(HISTORY_KEY,[]);history.unshift({script,at:new Date().toISOString()});localStorage.setItem(HISTORY_KEY,JSON.stringify(history.slice(0,10)))}catch(e){}}
 function showHistory(){const box=$('scriptHistory'),list=$('scriptHistoryList');box.hidden=!box.hidden;if(box.hidden)return;list.replaceChildren();const history=readJson(HISTORY_KEY,[]);if(!history.length){list.textContent='Ainda não há versões anteriores. O histórico começa a guardar versões quando o roteiro muda.';return}history.forEach(item=>{const row=document.createElement('div');row.className='history-item';const info=document.createElement('span');info.textContent=new Date(item.at).toLocaleString('pt-BR')+' • '+item.script.split(/\\s+/).filter(Boolean).length+' palavras';const restore=document.createElement('button');restore.type='button';restore.textContent='Restaurar';restore.addEventListener('click',()=>{if(confirm('Restaurar esta versão do roteiro?')){$('script').value=item.script;update();setStatus('Versão do histórico restaurada.')}});row.append(info,restore);list.appendChild(row)})}
 function applyPreset(){const preset=$('readingPreset').value,values={short:{fontSize:30,speed:38,width:90},calm:{fontSize:34,speed:22,width:100},presentation:{fontSize:38,speed:28,width:100},large:{fontSize:46,speed:20,width:100}}[preset];if(!values){setStatus('Escolha um perfil de leitura primeiro.');return}Object.entries(values).forEach(([key,value])=>$(key).value=value);update();setStatus('Perfil de leitura aplicado. Você pode ajustar os controles depois.')}
-$('saveNamedScript').addEventListener('click',saveNamedScript);$('loadNamedScript').addEventListener('click',loadNamedScript);$('deleteNamedScript').addEventListener('click',deleteNamedScript);$('showScriptHistory').addEventListener('click',showHistory);$('applyPreset').addEventListener('click',applyPreset);$('script').addEventListener('input',saveHistorySnapshot);refreshLibrary();
+$('saveNamedScript').addEventListener('click',saveNamedScript);$('loadNamedScript').addEventListener('click',loadNamedScript);$('deleteNamedScript').addEventListener('click',deleteNamedScript);$('showScriptHistory').addEventListener('click',showHistory);$('applyPreset').addEventListener('click',applyPreset);$('script').addEventListener('blur',saveHistorySnapshot);refreshLibrary();
 function update(){const text=$('script').value.trim();renderPreviewLines(text||'Cole um roteiro na janela principal para começar.');$('fontValue').textContent=$('fontSize').value;$('speedValue').textContent=$('speed').value;$('speedHint').textContent=speedLabel($('speed').value);$('previewText').classList.toggle('mirrored',$('mirror').checked);{const words=(text.match(/\S+/g)||[]).length,sec=Math.round(words/2.5);$('stats').textContent=words+' palavras • ~'+(sec>=60?Math.floor(sec/60)+' min '+(sec%60)+' s':sec+' s')+' de fala'}$('opacityValue').textContent=$('opacity').value;$('widthValue').textContent=$('width').value;$('previewText').style.fontSize=$('fontSize').value+'px';$('previewText').style.maxWidth=$('width').value+'%';$('screen').style.background='rgba(4,9,18,'+(Number($('opacity').value)/100)+')';document.body.classList.toggle('overlay-mode',isOverlay);if(isOverlay){$('previewText').style.fontSize=$('fontSize').value+'px';$('screen').style.background='transparent';if($('overlayOpacity'))$('overlayOpacity').value=$('opacity').value;if($('overlayWidth'))$('overlayWidth').value=$('width').value;document.documentElement.style.setProperty('--overlay-bg-alpha',String(Math.max(.05,Math.min(.85,Number($('overlayOpacity')?.value ?? $('opacity').value)/100))));$('previewText').style.maxWidth=($('overlayWidth')?.value||$('width').value)+'%'}save();}
 function setStatus(s){$('status').textContent=s}
 function stop(){running=false;$('start').classList.remove('is-running');if(frame)cancelAnimationFrame(frame);frame=0;last=0;if(!isRecording)keepAwake(false)}
@@ -417,7 +417,7 @@ $('runDiagnostics').addEventListener('click',runDiagnostics);$('cameraStart').ad
 
 $('script').addEventListener('input',update);$('exportScript').addEventListener('click',exportScript);$('copyScript').addEventListener('click',copyScript);['mirror','countdown'].forEach(id=>$(id).addEventListener('change',update));$('screen').addEventListener('click',toggle);$('screen').addEventListener('scroll',updateProgress);
 document.addEventListener('keydown',e=>{const tag=(e.target.tagName||'').toLowerCase();if(tag==='textarea'||tag==='input'&&e.target.type!=='range'&&e.target.type!=='checkbox')return;if(e.code==='Space'){e.preventDefault();toggle()}else if(e.key==='ArrowUp'){e.preventDefault();$('speed').value=Math.min(120,Number($('speed').value)+5);update()}else if(e.key==='ArrowDown'){e.preventDefault();$('speed').value=Math.max(5,Number($('speed').value)-5);update()}else if(e.key==='Home'){e.preventDefault();reset()}});['fontSize','speed','opacity','width'].forEach(id=>$(id).addEventListener('input',()=>{update();if(pipWindow&&!pipWindow.closed){const t=pipWindow.document.getElementById('txt');if(t)t.style.fontSize=$('fontSize').value+'px'}}));
-$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.5.5.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
+$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.5.6.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
 $('mobileInstall').addEventListener('click',()=>{const ua=navigator.userAgent||'';if(/iPhone|iPad|iPod/i.test(ua)){alert('Para instalar no iPhone/iPad:\n1. Abra esta página no Safari.\n2. Toque em Compartilhar.\n3. Escolha “Adicionar à Tela de Início”.\n4. Confirme em Adicionar.\n\nNão é necessário baixar APK.');}else{alert('Para instalar no Android:\n1. Abra esta página no Chrome.\n2. Toque nos três pontinhos (⋮).\n3. Escolha “Instalar app” ou “Adicionar à tela inicial”.\n4. Confirme a instalação.\n\nSe a opção não aparecer, atualize o Chrome e abra a página por HTTPS. Não existe APK nesta versão; é um aplicativo web instalável.');}});$('openFloat').addEventListener('click',openFloat);$('start').addEventListener('click',start);$('pause').addEventListener('click',()=>{stop();setStatus('Ⅱ Leitura pausada.')});$('reset').addEventListener('click',reset);
 $('floatStart').addEventListener('click',start);$('floatPause').addEventListener('click',()=>{stop();setStatus('Leitura pausada.')});$('floatReset').addEventListener('click',reset);$('floatClose').addEventListener('click',()=>{if(window.electronAPI&&window.electronAPI.closeOverlay)window.electronAPI.closeOverlay();else window.close()});
 $('floatSmaller').addEventListener('click',()=>{$('fontSize').value=Math.max(20,Number($('fontSize').value)-2);update()});
@@ -440,7 +440,7 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 </script>
 </body></html>
 <style>
-/* Canivete Teleprompter v1.5.5 — ajustes agrupados e controles simplificados */
+/* Canivete Teleprompter v1.5.6 — ajustes agrupados e controles simplificados */
 .reading-settings{margin:12px 0 4px;border:1px solid var(--line);border-radius:12px;background:rgba(8,15,28,.35);overflow:hidden}
 .reading-settings>summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:800;color:#dbeafe;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .reading-settings>summary::-webkit-details-marker{display:none}
@@ -465,6 +465,6 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 </style>
 
 <style>
-/* Canivete Teleprompter v1.5.5 — proteção e portabilidade dos roteiros */
+/* Canivete Teleprompter v1.5.6 — proteção e portabilidade dos roteiros */
 .autosave-status{margin:6px 0 0;font-size:12px;color:#86efac;min-height:18px}.autosave-status.save-error{color:#fca5a5}.script-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.script-tools button{min-height:42px;font-size:13px}@media(max-width:760px){.script-tools{display:grid;grid-template-columns:1fr 1fr}.script-tools button{padding:9px 7px;font-size:12px}}
 </style>
