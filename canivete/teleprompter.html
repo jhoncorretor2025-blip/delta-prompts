@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101827">
+<link rel="manifest" href="./manifest.webmanifest">
 <meta name="description" content="Teleprompter IA do Canivete: leia roteiros com texto flutuante e velocidade ajustável.">
 <title>Teleprompter IA — Canivete v1.0.0</title>
 <style>
@@ -26,8 +27,8 @@
 <div class="control"><label for="opacity">Fundo da janela</label><input id="opacity" type="range" min="10" max="95" value="65"><strong><span id="opacityValue">65</span>%</strong></div>
 <div class="control"><label for="width">Largura do texto</label><input id="width" type="range" min="35" max="100" value="100"><strong><span id="widthValue">100</span>%</strong></div>
 </div>
-<div class="actions"><button class="primary" id="openFloat">↗ Abrir janela flutuante</button><button id="start">▶ Iniciar leitura</button><button id="pause">Ⅱ Pausar</button><button id="reset">↺ Voltar ao início</button></div>
-<p class="hint">Dica: no navegador, a janela flutuante depende do suporte do Chrome. Para ficar sempre por cima de outros programas com mais controle, use a versão Windows.</p>
+<div class="actions"><button class="primary" id="openFloat">↗ Abrir janela flutuante</button><button id="installApp" hidden>⬇ Instalar no computador</button><button id="downloadWindows" onclick="window.open('https://github.com/jhoncorretor2025-blip/delta-prompts/actions','_blank','noopener')">🪟 Aplicativo Windows</button><button id="start">▶ Iniciar leitura</button><button id="pause">Ⅱ Pausar</button><button id="reset">↺ Voltar ao início</button></div>
+<p class="hint">Instale esta página como aplicativo quando o navegador oferecer essa opção. Para uma janela transparente sempre no topo do Windows, abra Aplicativo Windows e baixe o artefato de uma compilação concluída. O navegador exige sua confirmação para instalar programas; esta página não instala executáveis silenciosamente.</p>
 </section>
 <section class="panel preview">
 <h2>👀 Prévia da leitura</h2>
@@ -77,6 +78,12 @@ $('openFloat').addEventListener('click',openFloat);$('start').addEventListener('
 $('floatStart').addEventListener('click',start);$('floatPause').addEventListener('click',()=>{stop();setStatus('Leitura pausada.')});$('floatReset').addEventListener('click',reset);$('floatClose').addEventListener('click',()=>{if(window.electronAPI&&window.electronAPI.closeOverlay)window.electronAPI.closeOverlay();else window.close()});
 window.addEventListener('storage',e=>{if(e.key==='canivete.teleprompter.v1')load()});
 load();
+let installPrompt=null;
+const installButton=$('installApp');
+window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;installButton.hidden=false;});
+installButton.addEventListener('click',async()=>{if(!installPrompt){setStatus('Abra o menu do Chrome e escolha Instalar página como app, se disponível.');return;}installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installButton.hidden=true;});
+window.addEventListener('appinstalled',()=>{installButton.hidden=true;setStatus('Teleprompter instalado como aplicativo web.');});
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 })();
 </script>
 </body></html>
