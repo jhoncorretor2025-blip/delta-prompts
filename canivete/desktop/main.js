@@ -19,7 +19,7 @@ function createMainWindow() {
       sandbox: true
     }
   });
-  mainWindow.loadFile(path.join(__dirname, '..', 'teleprompter.html'));
+  mainWindow.loadFile(path.join(__dirname, 'teleprompter.html'));
   mainWindow.on('closed', () => { mainWindow = null; });
 }
 
@@ -49,7 +49,7 @@ function openOverlay() {
     }
   });
   overlayWindow.setAlwaysOnTop(true, 'screen-saver');
-  overlayWindow.loadFile(path.join(__dirname, '..', 'teleprompter.html'), { query: { overlay: '1' } });
+  overlayWindow.loadFile(path.join(__dirname, 'teleprompter.html'), { query: { overlay: '1' } });
   overlayWindow.on('closed', () => { overlayWindow = null; });
 }
 
