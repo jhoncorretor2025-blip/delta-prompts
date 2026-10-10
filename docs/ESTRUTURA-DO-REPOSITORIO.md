@@ -62,13 +62,13 @@ delta-prompts/
 - `menu.html`, `menu-loader.js`, `firebase-auth.js`, `style.css`, `css/` e `js/`.
 - `manifest.json`, ícones, `sitemap.xml` e `robots.txt`.
 - `.github/workflows/`, exigido para o GitHub reconhecer os workflows ativos.
-- Scripts e configurações que workflows referenciam com caminhos relativos à raiz.
+- Scripts e configurações que workflows ainda referenciam com caminhos relativos à raiz.
 
 ## Referências e cuidados
 
 - Links relativos dentro dos documentos movidos devem apontar para os caminhos a partir da nova localização.
 - Os comandos de manutenção em `docs/governanca/REGRAS-DO-SITE.md` devem ser executados a partir da raiz do repositório.
-- O script `tools/limpar-novas-despesas-v84.py` é chamado explicitamente por `.github/workflows/aplicar-limpeza-despesas.yml`; não movê-lo sem atualizar e testar o workflow.
+- O script de limpeza de despesas foi consolidado em `canivete/tools/limpar-novas-despesas-v84.py`; o workflow `.github/workflows/aplicar-limpeza-despesas.yml` aponta para esse caminho. A cópia redundante na raiz foi removida.
 - `.github/scripts/verificar-lembretes.js` procura os arquivos de configuração na raiz, portanto os arquivos atuais devem permanecer lá até que essa automação seja migrada conscientemente.
 - Existem cópias idênticas de configurações em `canivete/config/`. A consolidação fica fora desta etapa para não criar risco desnecessário.
 
@@ -108,3 +108,13 @@ O auditor verifica referências locais estáticas em atributos HTML (`href`, `sr
 - Referências sincronizadas: `index.html`, `menu-loader.js` e `sw.js`.
 - Cache do service worker: `delta-prompts-shell-v56`.
 - Cache-busting do carregador do menu: `20261010-v56`.
+
+
+## Registro de organização do Canivete — v8.31
+
+- Versão anterior do Canivete principal: v8.30.
+- Nova versão: v8.31.
+- Mantidas as URLs públicas da raiz (`canivete.html`, `canivete.htm` e demais páginas).
+- Consolidado o script de manutenção em `canivete/tools/limpar-novas-despesas-v84.py` e atualizado o workflow correspondente.
+- Corrigida a expectativa de versão do Canivete principal no workflow de validação.
+- Mantida a cópia de configuração de notificações na raiz, pois o script de lembretes ainda a consome.
