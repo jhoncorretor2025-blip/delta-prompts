@@ -103,7 +103,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:560px){.wrap{padding:13px 12px 35px}.topbar{flex-direction:column}.toplinks{width:100%}.toplinks a{flex:1}.hero{border-radius:22px;padding:25px 20px}.hero h1{font-size:37px}.hero-actions{display:grid;grid-template-columns:1fr}.hero-actions a{width:100%}.metric-row{grid-template-columns:1fr}.metric{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:start;gap:0 9px}.metric .m-icon{grid-row:1/3;margin:1px 0 0}.metric p{margin-top:3px}.panel{padding:16px;border-radius:16px}.resource-grid{grid-template-columns:1fr}.resource{min-height:0}.section-head{align-items:flex-start;flex-direction:column;gap:4px}.footer{flex-direction:column}.studio-actions{display:grid;grid-template-columns:1fr}.studio-actions a,.studio-actions button{width:100%}.command{padding-right:14px;padding-top:43px}.copy-command{left:8px;right:auto}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
-/* CLONAGEM DE VOZ MASTER v1.5.0 — gravador ao vivo e biblioteca local */
+/* CLONAGEM DE VOZ MASTER v1.5.1 — gravador ao vivo e biblioteca local */
 .recorder-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
 .recorder-header .panel-intro{margin-bottom:12px}
 .recorder-state{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#0d1525;border-radius:999px;padding:8px 11px;color:#c6d2e8;font-size:11px;font-weight:800;white-space:nowrap}
@@ -146,7 +146,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:650px){.voice-profile-fields{grid-template-columns:1fr}.pattern-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.record-actions{display:grid;grid-template-columns:1fr 1fr}.record-actions .button{width:100%;padding:9px 7px;font-size:11px}.recorder-state{white-space:normal}.saved-sample-head{flex-direction:column;gap:5px}}
 
 
-/* CLONAGEM DE VOZ MASTER v1.5.0 — geração integrada na página */
+/* CLONAGEM DE VOZ MASTER v1.5.1 — geração integrada na página */
 #preparar,.section-head#preparar + .layout{display:none!important}
 .generator-heading{margin-top:23px}
 .generator-panel{padding:16px;overflow:hidden}
@@ -167,7 +167,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:430px){#chatterboxStudio{height:1100px}.generator-heading{margin-top:18px}}
 
 
-/* CLONAGEM DE VOZ MASTER v1.5.0 — upload explícito e geração por API */
+/* CLONAGEM DE VOZ MASTER v1.5.1 — upload explícito e geração por API */
 .voice-api-workbench{display:grid;gap:16px}
 .api-upload-zone{border:1px dashed #6674b5;background:linear-gradient(135deg,rgba(38,49,89,.48),rgba(13,22,39,.55));border-radius:17px;padding:16px}
 .upload-new-audio{min-height:76px;width:100%;justify-content:flex-start;text-align:left;padding:13px 17px;gap:13px}
@@ -214,7 +214,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:600px){.api-advanced-grid{grid-template-columns:1fr;gap:13px}.api-generation-actions{grid-template-columns:1fr}.upload-new-audio{min-height:72px}.api-upload-zone{padding:12px}}
 
 
-/* CLONAGEM DE VOZ MASTER v1.5.0 — saída robusta e formulário oficial de contingência */
+/* CLONAGEM DE VOZ MASTER v1.5.1 — saída robusta e formulário oficial de contingência */
 .official-fallback-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .official-fallback-card{margin-top:13px;border:1px solid #3a456c;border-radius:15px;overflow:hidden;background:#0b1020}
 .official-fallback-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:15px;background:#141e34;border-bottom:1px solid var(--line)}
@@ -225,7 +225,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:650px){.official-fallback-actions{display:grid;grid-template-columns:1fr}.official-fallback-actions .button{width:100%}.official-fallback-heading{align-items:flex-start}.official-fallback-heading .button{width:auto;min-height:36px;padding:6px 9px;font-size:10px}#officialChatterboxForm{height:1250px}}
 
 
-/* CLONAGEM DE VOZ MASTER v1.5.0 — refinamento visual e navegação rápida */
+/* CLONAGEM DE VOZ MASTER v1.5.1 — refinamento visual e navegação rápida */
 .quick-nav{position:sticky;top:10px;z-index:20;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:8px;margin:-7px 0 18px;border:1px solid rgba(75,91,128,.72);border-radius:16px;background:rgba(12,18,33,.88);backdrop-filter:blur(16px);box-shadow:0 10px 30px rgba(0,0,0,.18)}
 .quick-nav a{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:8px 12px;border:1px solid transparent;border-radius:11px;color:#dce5fa;text-decoration:none;font-size:11px;font-weight:800;transition:background .18s,border-color .18s,transform .18s}
 .quick-nav a:hover{background:#202b46;border-color:#3b4b70;transform:translateY(-1px)}
@@ -252,6 +252,54 @@ textarea:focus,input[type=file]:focus-visible,.voice-profile-fields input:focus,
 }
 @media(prefers-reduced-motion:reduce){.quick-nav a,.panel,.generator-steps>div{transition:none!important}}
 
+
+/* CLONAGEM DE VOZ MASTER v1.5.1 — polimento visual de cartões e estados */
+:root{--accent-glow:rgba(139,156,255,.16)}
+.quick-nav a:focus-visible{outline:3px solid #a5b4fc;outline-offset:2px}
+.hero{isolation:isolate}
+.hero-content{z-index:1}
+.metric{transition:transform .18s,border-color .18s,background .18s}
+.metric:hover{transform:translateY(-2px);border-color:#465681;background:rgba(23,34,58,.98)}
+.section-head{position:relative}
+.section-head h2{display:flex;align-items:center;gap:8px}
+.section-head p{max-width:720px;line-height:1.65}
+.generator-panel{background:linear-gradient(155deg,rgba(22,32,55,.99),rgba(12,20,36,.99));border-color:#354362}
+.generator-steps>div:first-child{border-color:#5968a0;background:linear-gradient(145deg,rgba(42,51,92,.72),rgba(14,23,41,.96))}
+.generator-steps>div:first-child>span{background:linear-gradient(145deg,#7a86ff,#8d69e8);color:#fff;border-color:transparent}
+.api-upload-zone{position:relative}
+.api-upload-zone:focus-within{border-color:#7b89ef;box-shadow:0 0 0 3px rgba(123,137,239,.09)}
+.api-result{border:1px solid #34745f!important;border-radius:16px!important;padding:16px!important;background:linear-gradient(145deg,rgba(20,73,57,.34),rgba(12,24,35,.98))!important;box-shadow:0 12px 28px rgba(0,0,0,.14)}
+.api-result-title{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.api-result-title>span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:rgba(52,211,153,.12);font-size:18px}
+.api-result-title strong,.api-result-title small{display:block}
+.api-result-title strong{font-size:14px}
+.api-result-title small{font-size:11px;color:#a9d9c7;margin-top:3px}
+.api-result audio{width:100%;display:block;margin:8px 0 13px}
+.api-result .button{width:fit-content}
+.voice-studio .wave-frame{box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+.voice-studio .record-actions{margin-top:15px}
+.saved-sample{transition:transform .18s,border-color .18s,background .18s}
+.saved-sample:hover{transform:translateY(-2px);border-color:#53658d;background:#111d31}
+.saved-sample audio{border-radius:10px}
+.resource{transition:transform .18s,border-color .18s,box-shadow .18s}
+.resource:hover{transform:translateY(-3px);border-color:#4b5e8c;box-shadow:0 14px 28px rgba(0,0,0,.17)}
+.resource-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#29345a,#20283f);border:1px solid #39486d}
+.notice{line-height:1.7}
+.notice strong{margin-bottom:5px}
+.faq summary{padding:3px 0;line-height:1.6}
+.faq summary::marker{color:#a7b3ff}
+.faq details[open] summary{color:#c8d0ff}
+.button:focus-visible,.link-button:focus-visible,.quick-nav a:focus-visible{box-shadow:0 0 0 4px var(--accent-glow)}
+@media(max-width:650px){
+ .metric:hover,.saved-sample:hover,.resource:hover{transform:none}
+ .api-result .button{width:100%}
+ .resource-icon{margin-bottom:10px}
+}
+@media(prefers-reduced-motion:reduce){
+ .metric,.saved-sample,.resource{transition:none!important}
+ .metric:hover,.saved-sample:hover,.resource:hover{transform:none}
+}
+
 </style>
 </head>
 <body>
@@ -260,7 +308,7 @@ textarea:focus,input[type=file]:focus-visible,.voice-profile-fields input:focus,
     <div class="brand">
       <span class="brand-mark" aria-hidden="true">🎙️</span>
       <span>CANIVETE <small>LABORATÓRIO DE VOZ IA</small></span>
-      <span class="version" id="versionBadge">v1.5.0</span>
+      <span class="version" id="versionBadge">v1.5.1</span>
     </div>
     <nav class="toplinks" aria-label="Atalhos">
       <a class="link-button" href="../canivete.html">← Canivete</a>
@@ -292,7 +340,7 @@ textarea:focus,input[type=file]:focus-visible,.voice-profile-fields input:focus,
   
   <div class="section-head generator-heading" id="gerar-voz">
     <div><h2>🎙️ Suba seu áudio, escreva e gere a voz</h2><p>Use o estúdio de IA aqui mesmo na página — o arquivo de referência e o texto ficam no mesmo formulário.</p></div>
-    <span class="version">GERAÇÃO IA · v1.5.0</span>
+    <span class="version">GERAÇÃO IA · v1.5.1</span>
   </div>
   <section class="panel generator-panel" aria-label="Estúdio de clonagem de voz Chatterbox">
     <div class="generator-steps">
@@ -368,7 +416,7 @@ textarea:focus,input[type=file]:focus-visible,.voice-profile-fields input:focus,
   
   <div class="section-head" id="studio-gravacao">
     <div><h2>🎙️ Estúdio de gravação ao vivo</h2><p>Fale pelo microfone, salve amostras de referência e confira os padrões acústicos aproximados.</p></div>
-    <span class="version">ESTÚDIO LOCAL · v1.5.0</span>
+    <span class="version">ESTÚDIO LOCAL · v1.5.1</span>
   </div>
   <section class="panel voice-studio">
     <div class="recorder-header">
@@ -438,7 +486,7 @@ textarea:focus,input[type=file]:focus-visible,.voice-profile-fields input:focus,
 
   <div class="section-head" id="preparar">
     <div><h2>🎙️ Prepare sua amostra de voz</h2><p>Confira o áudio e escreva o texto antes de abrir a demonstração oficial.</p></div>
-    <span class="version">FERRAMENTA LOCAL · v1.5.0</span>
+    <span class="version">FERRAMENTA LOCAL · v1.5.1</span>
   </div>
 
   <div class="layout">
@@ -552,7 +600,7 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
   </section>
 
   <footer class="footer">
-    <div>Clonagem de Voz Master · <span id="footerVersion">v1.5.0</span><br>Uma central de recursos do Canivete. A geração de áudio é realizada por ferramentas externas ou por uma instalação própria.</div>
+    <div>Clonagem de Voz Master · <span id="footerVersion">v1.5.1</span><br>Uma central de recursos do Canivete. A geração de áudio é realizada por ferramentas externas ou por uma instalação própria.</div>
     <nav class="footer-links" aria-label="Navegação inferior">
       <a href="../canivete.html">Canivete</a>
       <a href="./teleprompter.html">Teleprompter</a>
@@ -563,7 +611,7 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
 <script>
 (function(){
   'use strict';
-  const RELEASE='1.5.0';
+  const RELEASE='1.5.1';
   const fileInput=document.getElementById('voiceFile');
   const fileName=document.getElementById('fileName');
   const fileStatus=document.getElementById('fileStatus');
