@@ -2,6 +2,8 @@
 
 > **Para que serve este arquivo:** antes de criar ou editar qualquer página, leia isto primeiro. Existem 2 formatos de dados diferentes no site e uma armadilha de categorias que já causou bugs reais. Ler isso primeiro evita redescobrir (e quebrar) as mesmas coisas de novo.
 
+> **Local do documento:** este arquivo agora está em `docs/governanca/REGRAS-DO-SITE.md`. Os comandos e caminhos relativos apresentados abaixo devem ser executados/resolvidos a partir da raiz do repositório (`delta-prompts/`), não da pasta `docs/`.
+
 ---
 
 ## 🗂️ 1. Formato de dados — existem 2 padrões diferentes
