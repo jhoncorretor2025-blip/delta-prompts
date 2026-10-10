@@ -103,7 +103,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:560px){.wrap{padding:13px 12px 35px}.topbar{flex-direction:column}.toplinks{width:100%}.toplinks a{flex:1}.hero{border-radius:22px;padding:25px 20px}.hero h1{font-size:37px}.hero-actions{display:grid;grid-template-columns:1fr}.hero-actions a{width:100%}.metric-row{grid-template-columns:1fr}.metric{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:start;gap:0 9px}.metric .m-icon{grid-row:1/3;margin:1px 0 0}.metric p{margin-top:3px}.panel{padding:16px;border-radius:16px}.resource-grid{grid-template-columns:1fr}.resource{min-height:0}.section-head{align-items:flex-start;flex-direction:column;gap:4px}.footer{flex-direction:column}.studio-actions{display:grid;grid-template-columns:1fr}.studio-actions a,.studio-actions button{width:100%}.command{padding-right:14px;padding-top:43px}.copy-command{left:8px;right:auto}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
-/* CLONAGEM DE VOZ MASTER v1.1.0 — gravador ao vivo e biblioteca local */
+/* CLONAGEM DE VOZ MASTER v1.2.0 — gravador ao vivo e biblioteca local */
 .recorder-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
 .recorder-header .panel-intro{margin-bottom:12px}
 .recorder-state{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#0d1525;border-radius:999px;padding:8px 11px;color:#c6d2e8;font-size:11px;font-weight:800;white-space:nowrap}
@@ -145,6 +145,27 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 .empty-samples{border:1px dashed #35425e;border-radius:12px;text-align:center;padding:22px;color:var(--muted);font-size:11px}
 @media(max-width:650px){.voice-profile-fields{grid-template-columns:1fr}.pattern-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.record-actions{display:grid;grid-template-columns:1fr 1fr}.record-actions .button{width:100%;padding:9px 7px;font-size:11px}.recorder-state{white-space:normal}.saved-sample-head{flex-direction:column;gap:5px}}
 
+
+/* CLONAGEM DE VOZ MASTER v1.2.0 — geração integrada na página */
+#preparar,.section-head#preparar + .layout{display:none!important}
+.generator-heading{margin-top:23px}
+.generator-panel{padding:16px;overflow:hidden}
+.generator-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.generator-steps>div{display:grid;grid-template-columns:27px minmax(0,1fr);gap:1px 9px;align-content:start;border:1px solid var(--line);background:#0e1729;border-radius:12px;padding:11px;min-width:0}
+.generator-steps>div>span{display:grid;place-items:center;grid-row:1/3;width:26px;height:26px;background:#2a3159;border:1px solid #474e86;border-radius:9px;color:#d9ddff;font-size:11px;font-weight:900}
+.generator-steps strong{font-size:11px;line-height:1.4}
+.generator-steps small{color:var(--muted);font-size:10px;line-height:1.45;margin-top:3px}
+.generator-embed-wrap{position:relative;border:1px solid #303c56;border-radius:14px;overflow:hidden;background:#0b1020;min-height:760px}
+#chatterboxStudio{display:block;width:100%;height:900px;border:0;background:#0b1020}
+.generator-loading{position:absolute;top:0;left:0;right:0;z-index:1;display:flex;gap:11px;align-items:center;padding:16px;background:#121a2d;color:var(--text);font-size:12px;pointer-events:none;animation:hideGeneratorLoading 1s 7s forwards}
+.generator-loading p{font-size:10px;color:var(--muted);margin:3px 0 0}
+.loading-dot{width:10px;height:10px;background:#8b9cff;border-radius:50%;box-shadow:0 0 0 5px rgba(139,156,255,.13);animation:voicePulse 1s infinite;flex:0 0 auto}
+@keyframes hideGeneratorLoading{to{opacity:0;visibility:hidden}}
+.generator-bottom{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;margin-top:12px}
+.generator-bottom .notice{margin:0}
+@media(max-width:760px){.generator-steps{grid-template-columns:1fr}.generator-steps>div{grid-template-columns:29px minmax(0,1fr);padding:10px}.generator-steps small{font-size:11px}.generator-panel{padding:10px}.generator-embed-wrap{min-height:880px;border-radius:11px}#chatterboxStudio{height:1030px}.generator-bottom{grid-template-columns:1fr}.generator-bottom .button{width:100%}}
+@media(max-width:430px){#chatterboxStudio{height:1100px}.generator-heading{margin-top:18px}}
+
 </style>
 </head>
 <body>
@@ -153,7 +174,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
     <div class="brand">
       <span class="brand-mark" aria-hidden="true">🎙️</span>
       <span>CANIVETE <small>LABORATÓRIO DE VOZ IA</small></span>
-      <span class="version" id="versionBadge">v1.1.0</span>
+      <span class="version" id="versionBadge">v1.2.0</span>
     </div>
     <nav class="toplinks" aria-label="Atalhos">
       <a class="link-button" href="../canivete.html">← Canivete</a>
@@ -167,10 +188,40 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
       <h1>Dê voz aos seus textos.<br><span>Com a sua identidade.</span></h1>
       <p>Uma central prática para preparar um áudio de referência, experimentar a clonagem de voz em português brasileiro e acessar o projeto aberto Chatterbox para instalar por conta própria.</p>
       <div class="hero-actions">
-        <a class="button primary" href="https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-pt-br" target="_blank" rel="noopener noreferrer">🎧 Testar clonagem online ↗</a>
-        <a class="button" href="#preparar">🎙️ Preparar meu áudio</a>
+        <a class="button primary" href="#gerar-voz">🎙️ Clonar minha voz agora</a>
+        <a class="button" href="#studio-gravacao">🎙️ Gravar minha voz</a>
       </div>
       <div class="hero-note">Projeto recomendado: Chatterbox · modelo dedicado pt-BR · interface hospedada por terceiros.</div>
+    </div>
+  </section>
+
+  
+  <div class="section-head generator-heading" id="gerar-voz">
+    <div><h2>🎙️ Suba seu áudio, escreva e gere a voz</h2><p>Use o estúdio de IA aqui mesmo na página — o arquivo de referência e o texto ficam no mesmo formulário.</p></div>
+    <span class="version">GERAÇÃO IA · v1.2.0</span>
+  </div>
+  <section class="panel generator-panel" aria-label="Estúdio de clonagem de voz Chatterbox">
+    <div class="generator-steps">
+      <div><span>1</span><strong>Envie sua amostra</strong><small>Use o controle de áudio dentro do estúdio abaixo para escolher um arquivo ou gravar pelo microfone.</small></div>
+      <div><span>2</span><strong>Digite seu texto</strong><small>Escreva o que quer que a voz fale no campo de texto do próprio estúdio.</small></div>
+      <div><span>3</span><strong>Gere e ouça</strong><small>Clique em Generate e use o player de saída para ouvir ou baixar o áudio gerado.</small></div>
+    </div>
+    <div class="generator-embed-wrap">
+      <div class="generator-loading" id="generatorLoading">
+        <span class="loading-dot"></span>
+        <div><strong>Carregando o estúdio de geração de voz…</strong><p>O modelo é hospedado pela demonstração oficial do Chatterbox.</p></div>
+      </div>
+      <iframe
+        id="chatterboxStudio"
+        src="https://resembleai-chatterbox-multilingual-tts-pt-br.hf.space?__theme=dark"
+        title="Estúdio Chatterbox para clonagem de voz e geração de fala em português brasileiro"
+        loading="eager"
+        allow="microphone; clipboard-read; clipboard-write"
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <div class="generator-bottom">
+      <div class="notice warning"><strong>Importante sobre o áudio</strong>O processamento é feito por um serviço externo. Quando você escolhe o arquivo dentro do estúdio incorporado e gera a fala, o arquivo e o texto são enviados ao serviço para processamento, conforme as regras dele. Um áudio selecionado na biblioteca local desta página precisa ser baixado e selecionado novamente dentro do estúdio.</div>
+      <a class="button primary" href="https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-pt-br" target="_blank" rel="noopener noreferrer">Abrir estúdio em uma nova aba ↗</a>
     </div>
   </section>
 
@@ -183,7 +234,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
   
   <div class="section-head" id="studio-gravacao">
     <div><h2>🎙️ Estúdio de gravação ao vivo</h2><p>Fale pelo microfone, salve amostras de referência e confira os padrões acústicos aproximados.</p></div>
-    <span class="version">ESTÚDIO LOCAL · v1.1.0</span>
+    <span class="version">ESTÚDIO LOCAL · v1.2.0</span>
   </div>
   <section class="panel voice-studio">
     <div class="recorder-header">
@@ -253,7 +304,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 
   <div class="section-head" id="preparar">
     <div><h2>🎙️ Prepare sua amostra de voz</h2><p>Confira o áudio e escreva o texto antes de abrir a demonstração oficial.</p></div>
-    <span class="version">FERRAMENTA LOCAL · v1.1.0</span>
+    <span class="version">FERRAMENTA LOCAL · v1.2.0</span>
   </div>
 
   <div class="layout">
@@ -359,15 +410,15 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
     <div><h2>❓ Dúvidas rápidas</h2><p>Informações importantes para usar a ferramenta com segurança.</p></div>
   </div>
   <section class="panel faq">
-    <details open><summary>Esta página já clona a voz diretamente?</summary><p>Não. Esta página organiza os recursos, verifica localmente os metadados do áudio selecionado e ajuda a preparar o texto. A geração acontece na demonstração externa ou em uma instalação própria do Chatterbox.</p></details>
-    <details><summary>Meu áudio é enviado quando eu seleciono o arquivo aqui?</summary><p>Não. Esta página não faz upload nem envia o arquivo selecionado. Para experimentar a clonagem, abra a demonstração e escolha o áudio diretamente nela; nesse momento, os dados ficam sujeitos às condições do serviço externo.</p></details>
+    <details open><summary>Como gero a fala com minha voz?</summary><p>Use o estúdio incorporado acima: carregue o áudio de referência no próprio estúdio, digite o texto e clique em Generate. O modelo é executado no serviço hospedado, não no GitHub Pages.</p></details>
+    <details><summary>O áudio é enviado para algum serviço?</summary><p>Selecionar áudio no gravador e na biblioteca local não envia o arquivo. Quando você o carrega dentro do estúdio Chatterbox incorporado e gera a fala, o áudio de referência e o texto vão para o serviço externo para processamento. Consulte as condições e a privacidade do Hugging Face e do provedor.</p></details>
     <details><summary>O projeto é gratuito?</summary><p>O código-fonte do Chatterbox usa a licença MIT. A demonstração hospedada pode ter limitações de capacidade ou disponibilidade e não é controlada por esta página. Confira os termos atuais nos links oficiais.</p></details>
     <details><summary>Posso clonar qualquer voz?</summary><p>Use sua própria voz ou obtenha autorização explícita da pessoa gravada. Não use clonagem para se passar por outra pessoa, enganar terceiros ou produzir conteúdo sem consentimento.</p></details>
     <details><summary>O que devo fazer se a demonstração estiver indisponível?</summary><p>Tente novamente mais tarde ou consulte o repositório e a documentação para configurar o modelo localmente. Não há garantia de disponibilidade contínua de serviços hospedados gratuitamente.</p></details>
   </section>
 
   <footer class="footer">
-    <div>Clonagem de Voz Master · <span id="footerVersion">v1.1.0</span><br>Uma central de recursos do Canivete. A geração de áudio é realizada por ferramentas externas ou por uma instalação própria.</div>
+    <div>Clonagem de Voz Master · <span id="footerVersion">v1.2.0</span><br>Uma central de recursos do Canivete. A geração de áudio é realizada por ferramentas externas ou por uma instalação própria.</div>
     <nav class="footer-links" aria-label="Navegação inferior">
       <a href="../canivete.html">Canivete</a>
       <a href="./teleprompter.html">Teleprompter</a>
@@ -378,7 +429,7 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
 <script>
 (function(){
   'use strict';
-  const RELEASE='1.1.0';
+  const RELEASE='1.2.0';
   const fileInput=document.getElementById('voiceFile');
   const fileName=document.getElementById('fileName');
   const fileStatus=document.getElementById('fileStatus');
@@ -924,7 +975,7 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
         pitchRangeHz:s.pitchMin&&s.pitchMax?[s.pitchMin,s.pitchMax]:null,rms:s.rms,
         note:'Arquivo de áudio guardado separadamente no IndexedDB do navegador.'
       }});
-      downloadBlob(new Blob([JSON.stringify({version:'1.1.0',exportedAt:new Date().toISOString(),profiles:data},null,2)],{type:'application/json'}),'clonagem-voz-master-perfis.json');
+      downloadBlob(new Blob([JSON.stringify({version:'1.2.0',exportedAt:new Date().toISOString(),profiles:data},null,2)],{type:'application/json'}),'clonagem-voz-master-perfis.json');
       $('libraryStatus').textContent='Lista de perfis exportada em JSON. Ela não inclui os próprios arquivos de áudio.';
     }).catch(function(e){$('libraryStatus').textContent='Não foi possível exportar a lista: '+e.message});
   }
