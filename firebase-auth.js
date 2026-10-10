@@ -292,6 +292,20 @@ export async function obterTopPageViews(qtd){
   }catch(e){console.error('Erro ao buscar ranking de páginas:',e);return[]}
 }
 
+/* Login explícito para a biblioteca de roteiros: propaga erros para a tela poder explicar o motivo. */
+export async function loginGoogleTeleprompter(){
+  try{
+    const result=await signInWithPopup(auth,provider);
+    saveProfile(result.user).catch(e=>console.error('Login concluído, mas não foi possível salvar perfil:',e));
+    return {user:result.user,redirecting:false};
+  }catch(e){
+    if(['auth/popup-blocked','auth/operation-not-supported-in-this-environment'].includes(e.code)){
+      await signInWithRedirect(auth,provider);
+      return {user:null,redirecting:true};
+    }
+    throw e;
+  }
+}
 export async function login(){try{const result=await signInWithPopup(auth,provider);await saveProfile(result.user)}catch(e){if(['auth/popup-blocked','auth/cancelled-popup-request','auth/operation-not-supported-in-this-environment'].includes(e.code)){await signInWithRedirect(auth,provider);return}console.error('Erro no login Google:',e);alert('Não foi possível entrar com o Google. Tente novamente.')}}
 export function logout(){return signOut(auth)}
 export function getUser(){return auth.currentUser}
