@@ -31,7 +31,7 @@
 .mirrored{transform:scaleX(-1)}
 .overlay-mode .guide-line,.overlay-mode .progress{display:none}
 
-/* Canivete Teleprompter v1.5.21 — interface refinada */
+/* Canivete Teleprompter v1.5.22 — interface refinada */
 :root{--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--radius:16px;--space:16px}
 button,.panel,.preview-screen,.camera-stage,.more-options{border-radius:var(--radius)!important}
 .panel{padding:var(--space)!important}
@@ -96,7 +96,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
 
-/* v1.5.21: controles de leitura no fluxo normal, sem barra flutuante solta */
+/* v1.5.22: controles de leitura no fluxo normal, sem barra flutuante solta */
 @media(max-width:760px){
  .reader-actions{
   position:static!important;
@@ -122,7 +122,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 }
 
 
-/* v1.5.21: a tela de gravação nunca deve parecer vazia antes de abrir a câmera */
+/* v1.5.22: a tela de gravação nunca deve parecer vazia antes de abrir a câmera */
 .camera-stage{background:radial-gradient(ellipse at center,#17243a 0%,#05080d 75%)}
 #recordCanvas{position:relative;z-index:1}
 #cameraVideo{position:fixed!important;left:-1000px!important;top:0!important;width:2px!important;height:2px!important;display:block!important;opacity:.01!important;pointer-events:none!important}
@@ -130,7 +130,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 .camera-stage:has(#recordCanvas.camera-ready)::after{display:none}
 
 
-/* v1.5.21 — refinamento visual: hierarquia, leitura e gravação */
+/* v1.5.22 — refinamento visual: hierarquia, leitura e gravação */
 :root{
  --bg:#0b1220;--panel:#121d2e;--line:#293950;--text:#f8fafc;
  --muted:#a8b7cc;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;
@@ -194,7 +194,7 @@ button.primary{background:var(--blue)!important;border-color:var(--blue)!importa
 .script-library,.reading-presets{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:rgba(8,15,28,.32);display:grid;gap:9px}.library-row{display:grid;gap:6px}.library-row label,.reading-presets label{font-size:13px;font-weight:750;color:#dbe7f6}.script-library input,.script-library select,.reading-presets select{width:100%;min-width:0;background:#0a1220;color:var(--text);border:1px solid #34465f;border-radius:9px;padding:10px}.library-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.library-actions button,.reading-presets button{font-size:13px;min-height:42px}.script-history{border-top:1px solid var(--line);padding-top:10px}.history-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #2d3b52;font-size:12px}.history-item button{font-size:12px;padding:6px 8px;min-height:34px}.diagnostics,.recording-steps{margin:0 0 12px;padding:13px;border:1px solid #344963;border-radius:13px;background:#0d192b}.diagnostics strong,.recording-steps strong{font-size:14px}.diagnostics p{font-size:13px;color:var(--muted);margin:5px 0}.diagnostics ul{font-size:13px;padding-left:20px;color:var(--muted)}.diagnostics li{margin:4px 0}.diagnostics button{margin-top:4px}.diagnostics.ok{border-color:#166534}.diagnostics.warn{border-color:#92400e}@media(max-width:760px){.library-actions{grid-template-columns:1fr 1fr}.recording-steps ol{padding-left:20px;font-size:13px}.recording-steps li{margin:5px 0}}
 </style>
 <style>
-/* v1.5.21 — menu principal sempre visível e estilos consolidados */
+/* v1.5.22 — menu principal sempre visível e estilos consolidados */
 #teleprompterNav{
   display:grid!important;
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
@@ -261,7 +261,7 @@ button.primary{background:var(--blue)!important;border-color:var(--blue)!importa
 body.recording-focus #teleprompterNav{display:none!important}
 </style>
 <style>
-/* v1.5.21 — interface simplificada e responsiva */
+/* v1.5.22 — interface simplificada e responsiva */
 .compact-intro{margin:0 0 10px!important}.compact-intro h1{font-size:clamp(22px,3vw,30px)!important;margin-bottom:5px!important}.compact-intro p{font-size:14px!important;color:var(--muted)}
 .workflow,.intro-actions{display:none!important}
 .advanced-tools{margin:12px 0;border:1px solid var(--line);border-radius:12px;background:#111b2b;padding:11px 13px}
@@ -302,11 +302,115 @@ textarea,.preview-text{font-family:Inter,ui-rounded,system-ui,-apple-system,"Seg
 .brand-wrap{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.visible-version{display:inline-flex;align-items:center;padding:2px 8px;border:1px solid #3b82f6;border-radius:999px;background:#10264a;color:#bfdbfe;font-size:11px;font-weight:800;letter-spacing:.02em}
 </style>
 <style>.library-link{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 12px;border:1px solid #34465f;border-radius:9px;background:#203049;color:var(--text);font-size:13px;font-weight:750;text-decoration:none;text-align:center}.library-link:focus-visible{outline:2px solid var(--blue);outline-offset:2px}</style>
+
+<style id="teleprompter-visual-polish-v1522">
+/* v1.5.22 — refinamento visual sem alterar a lógica das funções */
+:root{
+  --bg:#0a1020;
+  --panel:#121d30;
+  --line:#2a3a53;
+  --text:#f4f7fc;
+  --muted:#a8b7cc;
+  --blue:#3b82f6;
+  --green:#22c55e;
+  --red:#ef4444;
+}
+body:not(.overlay-mode){
+  background:
+    radial-gradient(ellipse at 12% 0%,rgba(59,130,246,.13),transparent 34rem),
+    radial-gradient(ellipse at 100% 28%,rgba(34,197,94,.045),transparent 28rem),
+    var(--bg);
+}
+.wrap{max-width:1160px;padding-top:24px}
+.top{padding:4px 0 16px;border-bottom:1px solid rgba(148,163,184,.14)}
+.brand{font-size:20px;letter-spacing:-.035em}
+.visible-version{background:rgba(59,130,246,.12);border-color:rgba(96,165,250,.42);color:#bfdbfe}
+.back{display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(18,29,48,.72);transition:background .18s,border-color .18s}
+.back:hover{background:#1b2b44;border-color:#456080}
+.intro{padding:5px 0 4px}
+.intro h1{letter-spacing:-.045em}
+.intro p{max-width:65ch;line-height:1.65}
+.panel{
+  background:linear-gradient(155deg,rgba(20,32,52,.98),rgba(15,25,42,.98));
+  border-color:rgba(100,125,158,.28);
+  box-shadow:0 12px 32px rgba(0,0,0,.13);
+  transition:border-color .18s,box-shadow .18s;
+}
+.panel:focus-within{border-color:rgba(96,165,250,.48);box-shadow:0 12px 34px rgba(0,0,0,.16),0 0 0 1px rgba(59,130,246,.08)}
+.panel h2{font-size:16px;display:flex;align-items:center;gap:8px}
+textarea{
+  background:#0a1322;border-color:#30415b;border-radius:14px;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.15);
+  transition:border-color .18s,box-shadow .18s;
+}
+textarea:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,246,.15);outline:none}
+button{border-color:#344761;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+button:hover{filter:brightness(1.09);border-color:#526b8b}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid rgba(96,165,250,.9);outline-offset:3px}
+button.primary,#start{background:linear-gradient(135deg,#3b82f6,#2563eb)!important}
+#start{box-shadow:0 7px 20px rgba(37,99,235,.2)!important}
+.workflow{
+  display:block!important;
+  margin:0 0 20px;
+  padding:14px;
+  border-color:rgba(96,165,250,.25);
+  background:linear-gradient(115deg,rgba(37,99,235,.12),rgba(18,29,48,.86));
+  box-shadow:0 8px 24px rgba(0,0,0,.1);
+}
+.workflow-heading{margin-bottom:10px}
+.workflow ol{gap:10px}
+.workflow li{
+  padding:11px;
+  border-color:rgba(100,125,158,.24);
+  background:rgba(7,15,28,.48);
+  transition:border-color .18s,background .18s;
+}
+.workflow li.current{border-color:#60a5fa;background:rgba(37,99,235,.17)}
+.workflow li.complete{border-color:rgba(34,197,94,.35);background:rgba(20,83,45,.13)}
+.workflow li b{letter-spacing:-.01em}
+.preview-screen{
+  background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.09),transparent 70%),#070d18;
+  border-color:#30415b;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+.guide-line{height:2px;background:linear-gradient(90deg,transparent,rgba(96,165,250,.68),transparent)}
+.reading-settings,.more-options,.advanced-tools{
+  border-color:rgba(100,125,158,.3);
+  background:rgba(8,16,29,.55);
+}
+.reading-settings>summary,.advanced-tools>summary,.more-options>summary{padding-top:13px;padding-bottom:13px}
+.feature-card,.recording-item{border-color:rgba(100,125,158,.3);background:rgba(7,15,28,.5)}
+.camera-stage{box-shadow:0 14px 34px rgba(0,0,0,.24);border-color:#354761}
+.recorder-controls button{min-height:48px}
+.video-result{box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.privacy-note{border-color:rgba(34,197,94,.28)}
+.mobile-quickbar{box-shadow:0 -8px 26px rgba(0,0,0,.2)}
+.mobile-quickbar button{transition:background .18s,border-color .18s,transform .15s}
+.mobile-quickbar button.active{box-shadow:0 3px 14px rgba(59,130,246,.2)}
+@media(min-width:761px){
+  .layout{gap:20px}
+  .panel{padding:20px!important}
+  .workflow li{min-height:66px}
+}
+@media(max-width:760px){
+  .wrap{padding-top:14px}
+  .top{padding-bottom:12px}
+  .workflow{padding:10px;margin-bottom:12px}
+  .workflow li{min-height:58px}
+  .workflow li>span{flex-basis:26px;width:26px;height:26px}
+  .panel{box-shadow:0 8px 22px rgba(0,0,0,.12)}
+  .back{padding:7px 9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .panel,button,.workflow li,textarea,.back{transition:none!important}
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
-<header class="top"><div class="brand-wrap"><span class="brand">🎬 Teleprompter</span><span class="visible-version">v1.5.21</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
-<section class="intro compact-intro"><h1>Seu roteiro, na sua frente.</h1><p>Escreva ou cole seu texto e toque em Iniciar.</p><div class="intro-actions"><button type="button" id="introStart">Preparar roteiro</button><button type="button" id="introRecord">Ir para gravação</button></div></section><section class="workflow" aria-hidden="true"><span id="workflowStatus">Etapa 1 de 4</span><ol><li id="flowScript"></li><li id="flowCamera"></li><li id="flowRecord"></li><li id="flowSave"></li></ol></section>
+<header class="top"><div class="brand-wrap"><span class="brand">🎬 Teleprompter</span><span class="visible-version">v1.5.22</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
+<section class="intro compact-intro"><h1>Seu roteiro, na sua frente.</h1><p>Escreva ou cole seu texto e toque em Iniciar.</p><div class="intro-actions"><button type="button" id="introStart">Preparar roteiro</button><button type="button" id="introRecord">Ir para gravação</button></div></section><section class="workflow" aria-label="Etapas para usar o teleprompter"><span id="workflowStatus">Etapa 1 de 4</span><ol><li id="flowScript"></li><li id="flowCamera"></li><li id="flowRecord"></li><li id="flowSave"></li></ol></section>
 
 <section id="pageRoteiro" class="page-view active" aria-label="Página do roteiro">
 <div class="layout">
@@ -333,7 +437,7 @@ textarea,.preview-text{font-family:Inter,ui-rounded,system-ui,-apple-system,"Seg
 <div class="script-tools"><button type="button" id="exportScript">⬇️ Exportar roteiro (.txt)</button><button type="button" id="copyScript">📋 Copiar roteiro</button></div>
 </details>
 <div class="actions reader-actions" aria-label="Controles de leitura"><button class="primary" id="start" aria-label="Iniciar leitura"><span class="action-icon">▶</span><small>Iniciar</small></button><button id="pause" aria-label="Pausar leitura"><span class="action-icon">⏸</span><small>Pausar</small></button><button id="reset" aria-label="Voltar ao início"><span class="action-icon">↺</span><small>Início</small></button></div>
-<details class="more-options" id="moreOptions"><summary>Configurações e sobre</summary><div class="about-version">Teleprompter IA · versão v1.5.21</div><div class="more-grid"><details class="feature-card"><summary>🎨 Identidade visual</summary><label for="visualTheme">Tema da interface</label><select id="visualTheme"><option value="blue">Tema padrão azul</option></select><button type="button" id="saveVisualTheme">Salvar tema</button><p id="themeStatus" class="hint"></p></details><button id="openFloat">↗ Janela flutuante</button><button id="installApp" hidden>⬇ Instalar aplicativo</button><button id="mobileInstall">📱 Instalar no celular</button><button id="updateApp" hidden>🔄 Atualizar aplicativo</button><button id="downloadWindows" hidden>🪟 Aplicativo Windows</button></div><p class="hint"><span aria-hidden="true">ℹ️</span> No celular, use “Instalar app” no menu do navegador. <button type="button" class="text-help" id="windowsHelpToggle">Entenda a versão Windows</button></p><p class="hint" id="windowsHelp" hidden>O aplicativo Windows está disponível em uma versão separada.</p></details>
+<details class="more-options" id="moreOptions"><summary>Configurações e sobre</summary><div class="about-version">Teleprompter IA · versão v1.5.22</div><div class="more-grid"><details class="feature-card"><summary>🎨 Identidade visual</summary><label for="visualTheme">Tema da interface</label><select id="visualTheme"><option value="blue">Tema padrão azul</option></select><button type="button" id="saveVisualTheme">Salvar tema</button><p id="themeStatus" class="hint"></p></details><button id="openFloat">↗ Janela flutuante</button><button id="installApp" hidden>⬇ Instalar aplicativo</button><button id="mobileInstall">📱 Instalar no celular</button><button id="updateApp" hidden>🔄 Atualizar aplicativo</button><button id="downloadWindows" hidden>🪟 Aplicativo Windows</button></div><p class="hint"><span aria-hidden="true">ℹ️</span> No celular, use “Instalar app” no menu do navegador. <button type="button" class="text-help" id="windowsHelpToggle">Entenda a versão Windows</button></p><p class="hint" id="windowsHelp" hidden>O aplicativo Windows está disponível em uma versão separada.</p></details>
 </section>
 <section class="panel preview">
 <h2>👀 Prévia da leitura</h2>
@@ -629,7 +733,7 @@ function checkLocalStorage(){try{const k='canivete.teleprompter.storage-check';l
 
 $('script').addEventListener('input',update);$('exportScript').addEventListener('click',exportScript);$('copyScript').addEventListener('click',copyScript);['mirror','countdown'].forEach(id=>$(id).addEventListener('change',update));$('screen').addEventListener('click',toggle);$('screen').addEventListener('scroll',updateProgress);
 document.addEventListener('keydown',e=>{const tag=(e.target.tagName||'').toLowerCase();if(tag==='textarea'||tag==='input'&&e.target.type!=='range'&&e.target.type!=='checkbox')return;if(e.code==='Space'){e.preventDefault();toggle()}else if(e.key==='ArrowUp'){e.preventDefault();$('speed').value=Math.min(120,Number($('speed').value)+5);update()}else if(e.key==='ArrowDown'){e.preventDefault();$('speed').value=Math.max(5,Number($('speed').value)-5);update()}else if(e.key==='Home'){e.preventDefault();reset()}});['fontSize','speed','opacity','width'].forEach(id=>$(id).addEventListener('input',()=>{update();if(pipWindow&&!pipWindow.closed){const t=pipWindow.document.getElementById('txt');if(t)t.style.fontSize=$('fontSize').value+'px'}}));
-$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.5.21.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
+$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.5.22.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
 $('mobileInstall').addEventListener('click',()=>{const ua=navigator.userAgent||'';if(/iPhone|iPad|iPod/i.test(ua)){alert('Para instalar no iPhone/iPad:\n1. Abra esta página no Safari.\n2. Toque em Compartilhar.\n3. Escolha “Adicionar à Tela de Início”.\n4. Confirme em Adicionar.\n\nNão é necessário baixar APK.');}else{alert('Para instalar no Android:\n1. Abra esta página no Chrome.\n2. Toque nos três pontinhos (⋮).\n3. Escolha “Instalar app” ou “Adicionar à tela inicial”.\n4. Confirme a instalação.\n\nSe a opção não aparecer, atualize o Chrome e abra a página por HTTPS. Não existe APK nesta versão; é um aplicativo web instalável.');}});$('openFloat').addEventListener('click',openFloat);$('start').addEventListener('click',start);$('pause').addEventListener('click',()=>{stop();setStatus('Ⅱ Leitura pausada.')});$('reset').addEventListener('click',reset);
 $('floatStart').addEventListener('click',start);$('floatPause').addEventListener('click',()=>{stop();setStatus('Leitura pausada.')});$('floatReset').addEventListener('click',reset);$('floatClose').addEventListener('click',()=>{if(window.electronAPI&&window.electronAPI.closeOverlay)window.electronAPI.closeOverlay();else window.close()});
 $('floatSmaller').addEventListener('click',()=>{$('fontSize').value=Math.max(20,Number($('fontSize').value)-2);update()});
@@ -652,7 +756,7 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 })();
 </script>
 <style>
-/* v1.5.21 — novos recursos do teleprompter */
+/* v1.5.22 — novos recursos do teleprompter */
 .framing-guide{position:absolute;z-index:2;inset:8%;pointer-events:none;opacity:.75;border:1px solid #ffffff99;border-radius:12px}
 .framing-guide:before{content:"";position:absolute;left:0;right:0;top:33%;height:1px;background:#ffffff80;box-shadow:0 42vh 0 #ffffff80}
 .framing-guide i{position:absolute;top:0;bottom:0;left:50%;border-left:1px solid #ffffff55}
@@ -660,7 +764,7 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 .feature-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.feature-card{min-width:0;border:1px solid var(--line);border-radius:14px;padding:12px;background:#0b1422}.feature-card summary{font-weight:800;cursor:pointer}.feature-card label{display:block;margin:10px 0 5px}.feature-card select,.feature-card input{width:100%;padding:9px;background:#0a1220;color:var(--text);border:1px solid var(--line);border-radius:9px}.feature-card button{width:100%;margin-top:8px}.audio-meter-track{height:12px;background:#293950;border-radius:99px;overflow:hidden;margin-top:12px}.audio-meter-track i{display:block;width:0;height:100%;background:linear-gradient(90deg,#22c55e,#eab308,#ef4444)}.shortcut-grid{display:grid;grid-template-columns:1fr 72px;gap:8px;align-items:center}.recording-library{display:grid;gap:8px;margin-top:10px}.recording-item{border:1px solid var(--line);border-radius:9px;padding:9px;display:grid;gap:6px}.recording-item small{color:var(--muted)}.recording-item button{margin-right:5px;font-size:12px}body.theme-violet{--blue:#a78bfa}body.theme-green{--blue:#22c55e}body.theme-rose{--blue:#f472b6}@media(max-width:760px){.feature-tools{grid-template-columns:1fr}}
 </style></body></html>
 <style>
-/* Canivete Teleprompter v1.5.21 — ajustes agrupados e controles simplificados */
+/* Canivete Teleprompter v1.5.22 — ajustes agrupados e controles simplificados */
 .reading-settings{margin:12px 0 4px;border:1px solid var(--line);border-radius:12px;background:rgba(8,15,28,.35);overflow:hidden}
 .reading-settings>summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:800;color:#dbeafe;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .reading-settings>summary::-webkit-details-marker{display:none}
@@ -685,12 +789,12 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 </style>
 
 <style>
-/* Canivete Teleprompter v1.5.21 — proteção e portabilidade dos roteiros */
+/* Canivete Teleprompter v1.5.22 — proteção e portabilidade dos roteiros */
 .autosave-status{margin:6px 0 0;font-size:12px;color:#86efac;min-height:18px}.autosave-status.save-error{color:#fca5a5}.script-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.script-tools button{min-height:42px;font-size:13px}@media(max-width:760px){.script-tools{display:grid;grid-template-columns:1fr 1fr}.script-tools button{padding:9px 7px;font-size:12px}}
 </style>
 
 <style>
-/* v1.5.21 — fluxo guiado, CTA, confiança e revisão do vídeo */
+/* v1.5.22 — fluxo guiado, CTA, confiança e revisão do vídeo */
 .intro-actions,.inline-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.intro-actions button,.inline-actions button{min-height:44px}
 .workflow{border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 18px;background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(8,15,28,.72))}
 .workflow-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.workflow-heading span{font-size:12px;color:#bfdbfe}
