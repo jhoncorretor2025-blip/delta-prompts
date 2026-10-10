@@ -103,7 +103,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:560px){.wrap{padding:13px 12px 35px}.topbar{flex-direction:column}.toplinks{width:100%}.toplinks a{flex:1}.hero{border-radius:22px;padding:25px 20px}.hero h1{font-size:37px}.hero-actions{display:grid;grid-template-columns:1fr}.hero-actions a{width:100%}.metric-row{grid-template-columns:1fr}.metric{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:start;gap:0 9px}.metric .m-icon{grid-row:1/3;margin:1px 0 0}.metric p{margin-top:3px}.panel{padding:16px;border-radius:16px}.resource-grid{grid-template-columns:1fr}.resource{min-height:0}.section-head{align-items:flex-start;flex-direction:column;gap:4px}.footer{flex-direction:column}.studio-actions{display:grid;grid-template-columns:1fr}.studio-actions a,.studio-actions button{width:100%}.command{padding-right:14px;padding-top:43px}.copy-command{left:8px;right:auto}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
-/* CLONAGEM DE VOZ MASTER v1.2.0 — gravador ao vivo e biblioteca local */
+/* CLONAGEM DE VOZ MASTER v1.3.0 — gravador ao vivo e biblioteca local */
 .recorder-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
 .recorder-header .panel-intro{margin-bottom:12px}
 .recorder-state{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#0d1525;border-radius:999px;padding:8px 11px;color:#c6d2e8;font-size:11px;font-weight:800;white-space:nowrap}
@@ -146,7 +146,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:650px){.voice-profile-fields{grid-template-columns:1fr}.pattern-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.record-actions{display:grid;grid-template-columns:1fr 1fr}.record-actions .button{width:100%;padding:9px 7px;font-size:11px}.recorder-state{white-space:normal}.saved-sample-head{flex-direction:column;gap:5px}}
 
 
-/* CLONAGEM DE VOZ MASTER v1.2.0 — geração integrada na página */
+/* CLONAGEM DE VOZ MASTER v1.3.0 — geração integrada na página */
 #preparar,.section-head#preparar + .layout{display:none!important}
 .generator-heading{margin-top:23px}
 .generator-panel{padding:16px;overflow:hidden}
@@ -166,6 +166,53 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:760px){.generator-steps{grid-template-columns:1fr}.generator-steps>div{grid-template-columns:29px minmax(0,1fr);padding:10px}.generator-steps small{font-size:11px}.generator-panel{padding:10px}.generator-embed-wrap{min-height:880px;border-radius:11px}#chatterboxStudio{height:1030px}.generator-bottom{grid-template-columns:1fr}.generator-bottom .button{width:100%}}
 @media(max-width:430px){#chatterboxStudio{height:1100px}.generator-heading{margin-top:18px}}
 
+
+/* CLONAGEM DE VOZ MASTER v1.3.0 — upload explícito e geração por API */
+.voice-api-workbench{display:grid;gap:16px}
+.api-upload-zone{border:1px dashed #6674b5;background:linear-gradient(135deg,rgba(38,49,89,.48),rgba(13,22,39,.55));border-radius:17px;padding:16px}
+.upload-new-audio{min-height:76px;width:100%;justify-content:flex-start;text-align:left;padding:13px 17px;gap:13px}
+.upload-new-audio .upload-icon{display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;background:rgba(255,255,255,.15);border-radius:13px;font-size:22px}
+.upload-new-audio strong,.upload-new-audio small{display:block}
+.upload-new-audio strong{font-size:14px}
+.upload-new-audio small{font-size:10px;font-weight:550;opacity:.84;margin-top:4px}
+.upload-hint{font-size:11px;color:var(--muted);margin:11px 0 0;line-height:1.55}
+.api-audio-selected{margin-top:13px;padding:12px;border:1px solid #3c4d71;border-radius:13px;background:#0c1425}
+.selected-audio-heading{display:flex;align-items:center;gap:9px;min-width:0}
+.selected-audio-heading>div{display:grid;min-width:0;flex:1;gap:3px}
+.selected-audio-heading strong{font-size:12px;overflow-wrap:anywhere}
+.selected-audio-heading small{font-size:10px;color:var(--muted)}
+.selected-audio-icon{display:grid;place-items:center;width:33px;height:33px;flex:0 0 33px;background:#202c49;border-radius:10px}
+.remove-audio{width:32px;height:32px;border:1px solid #4d3446;border-radius:9px;background:#2b1a2a;color:#fda4af;flex:0 0 auto}
+#apiReferencePreview,#apiGeneratedAudio{display:block;width:100%;margin-top:11px;min-height:40px}
+.api-text-section label{display:block;font-size:13px;font-weight:850;margin-bottom:7px}
+#apiSpeechText{width:100%;min-height:140px;resize:vertical;border:1px solid #35425e;border-radius:13px;background:#0a1120;color:var(--text);padding:14px;line-height:1.65;font:inherit}
+.api-text-meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:10px;margin-top:7px}
+.api-advanced{border:1px solid var(--line);border-radius:12px;background:#101a2d;padding:12px}
+.api-advanced summary{cursor:pointer;font-size:12px;font-weight:850}
+.api-advanced-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;padding-top:13px}
+.api-advanced-grid label{display:grid;gap:10px;font-size:11px;color:#dce4f7;font-weight:750}
+.api-advanced-grid output{color:var(--blue);font-variant-numeric:tabular-nums}
+.api-advanced-grid input{width:100%;accent-color:#929dff}
+.api-consent{margin:0;font-size:11px}
+.api-consent input{flex:0 0 auto}
+.api-generation-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}
+.api-generation-actions button{min-height:50px}
+.api-generation-actions button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.api-status{border:1px solid #354365;border-radius:12px;background:#151e34;padding:12px;color:#c7d2e8;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.api-status[data-kind="success"]{border-color:#27594c;background:rgba(24,80,61,.22);color:#b4f4d9}
+.api-status[data-kind="error"]{border-color:#70505e;background:rgba(80,32,49,.25);color:#fecdd3}
+.api-result{border:1px solid #28614f;background:rgba(24,80,61,.13);border-radius:14px;padding:14px}
+.api-result-title{display:flex;align-items:center;gap:9px}
+.api-result-title>span{font-size:22px}
+.api-result-title>div{display:grid;gap:3px}
+.api-result-title strong{font-size:13px}
+.api-result-title small{font-size:10px;color:var(--muted)}
+.api-result .button{margin-top:12px;width:100%}
+.external-fallback{margin-top:12px;border:1px solid var(--line);border-radius:13px;background:#10182a;padding:13px}
+.external-fallback summary{font-size:12px;font-weight:850;cursor:pointer}
+.external-fallback p{font-size:11px;color:var(--muted);margin:10px 0}
+@media(max-width:600px){.api-advanced-grid{grid-template-columns:1fr;gap:13px}.api-generation-actions{grid-template-columns:1fr}.upload-new-audio{min-height:72px}.api-upload-zone{padding:12px}}
+
 </style>
 </head>
 <body>
@@ -174,7 +221,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
     <div class="brand">
       <span class="brand-mark" aria-hidden="true">🎙️</span>
       <span>CANIVETE <small>LABORATÓRIO DE VOZ IA</small></span>
-      <span class="version" id="versionBadge">v1.2.0</span>
+      <span class="version" id="versionBadge">v1.3.0</span>
     </div>
     <nav class="toplinks" aria-label="Atalhos">
       <a class="link-button" href="../canivete.html">← Canivete</a>
@@ -198,7 +245,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
   
   <div class="section-head generator-heading" id="gerar-voz">
     <div><h2>🎙️ Suba seu áudio, escreva e gere a voz</h2><p>Use o estúdio de IA aqui mesmo na página — o arquivo de referência e o texto ficam no mesmo formulário.</p></div>
-    <span class="version">GERAÇÃO IA · v1.2.0</span>
+    <span class="version">GERAÇÃO IA · v1.3.0</span>
   </div>
   <section class="panel generator-panel" aria-label="Estúdio de clonagem de voz Chatterbox">
     <div class="generator-steps">
@@ -206,19 +253,49 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
       <div><span>2</span><strong>Digite seu texto</strong><small>Escreva o que quer que a voz fale no campo de texto do próprio estúdio.</small></div>
       <div><span>3</span><strong>Gere e ouça</strong><small>Clique em Generate e use o player de saída para ouvir ou baixar o áudio gerado.</small></div>
     </div>
-    <div class="generator-embed-wrap">
-      <div class="generator-loading" id="generatorLoading">
-        <span class="loading-dot"></span>
-        <div><strong>Carregando o estúdio de geração de voz…</strong><p>O modelo é hospedado pela demonstração oficial do Chatterbox.</p></div>
+    <div class="voice-api-workbench">
+      <div class="api-upload-zone">
+        <input id="voiceToSendFile" type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.webm,.flac,.aac" hidden>
+        <button class="button primary upload-new-audio" type="button" id="chooseNewVoiceAudio">
+          <span class="upload-icon">⬆️</span><span><strong>Enviar novo áudio</strong><small>Escolher arquivo WAV, MP3, OGG, M4A ou WebM</small></span>
+        </button>
+        <div class="api-audio-selected" id="apiAudioSelected" hidden>
+          <div class="selected-audio-heading"><span class="selected-audio-icon">🎧</span><div><strong id="apiAudioName">Áudio selecionado</strong><small id="apiAudioMeta">Preparando amostra…</small></div><button type="button" id="removeApiAudio" class="remove-audio" aria-label="Remover áudio">✕</button></div>
+          <audio id="apiReferencePreview" controls></audio>
+        </div>
+        <p class="upload-hint">Selecione sua gravação aqui. O botão de geração enviará o áudio ao serviço do Chatterbox para produzir a fala; você pode selecionar um áudio novo a qualquer momento.</p>
       </div>
-      <iframe
-        id="chatterboxStudio"
-        src="https://resembleai-chatterbox-multilingual-tts-pt-br.hf.space?__theme=dark"
-        title="Estúdio Chatterbox para clonagem de voz e geração de fala em português brasileiro"
-        loading="eager"
-        allow="microphone; clipboard-read; clipboard-write"
-        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="api-text-section">
+        <label for="apiSpeechText">Texto que a sua voz vai falar</label>
+        <textarea id="apiSpeechText" maxlength="300" rows="5" placeholder="Digite o texto que deseja ouvir na sua voz…">Olá! Tudo bem? Estou gravando esta amostra para testar como a minha voz soa ao narrar um texto em português brasileiro.</textarea>
+        <div class="api-text-meta"><span id="apiChars">0 / 300 caracteres</span><span>Português brasileiro · modelo Chatterbox</span></div>
+      </div>
+      <details class="api-advanced">
+        <summary>⚙️ Ajustar expressividade e ritmo</summary>
+        <div class="api-advanced-grid">
+          <label>Expressividade <output id="apiExaggerationOut">0,50</output><input id="apiExaggeration" type="range" min="0.25" max="2" step="0.05" value="0.5"></label>
+          <label>Ritmo / CFG <output id="apiCfgOut">0,50</output><input id="apiCfg" type="range" min="0.2" max="1" step="0.05" value="0.5"></label>
+          <label>Temperatura <output id="apiTemperatureOut">0,80</output><input id="apiTemperature" type="range" min="0.05" max="5" step="0.05" value="0.8"></label>
+        </div>
+      </details>
+      <label class="consent api-consent"><input type="checkbox" id="apiVoiceConsent"><span>Confirmo que tenho autorização para usar a voz desta gravação. Ao gerar, o áudio e o texto serão enviados para processamento ao serviço externo.</span></label>
+      <div class="api-generation-actions">
+        <button class="button primary" type="button" id="generateWithUploadedVoice" disabled>🎙️ Gerar fala com este áudio</button>
+        <button class="button" type="button" id="clearVoiceText">Limpar texto</button>
+      </div>
+      <div class="api-status" id="apiGenerationStatus" role="status" aria-live="polite">1. Envie um áudio. 2. Escreva o texto. 3. Marque a autorização e clique em “Gerar fala”.</div>
+      <div class="api-result" id="apiResultPanel" hidden>
+        <div class="api-result-title"><span>✅</span><div><strong>Áudio gerado</strong><small id="apiResultInfo">Pronto para ouvir e baixar.</small></div></div>
+        <audio id="apiGeneratedAudio" controls></audio>
+        <a class="button primary" id="downloadGeneratedAudio" href="#" download="voz-gerada.wav">⬇️ Baixar áudio gerado</a>
+      </div>
+      <div class="notice warning api-private-note"><strong>Como funciona o envio</strong>O áudio de referência e o texto são enviados à demonstração hospedada do Chatterbox para processamento. A biblioteca salva nesta página continua local ao seu navegador; o serviço de geração é externo e pode ficar indisponível ou limitar o uso.</div>
     </div>
+    <details class="external-fallback">
+      <summary>O gerador não respondeu? Abrir a interface oficial</summary>
+      <p>Você pode abrir o Chatterbox em outra aba e usar o campo “Reference Audio File” para carregar a gravação, escrever o texto e clicar em “Generate”.</p>
+      <a class="button" href="https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-pt-br" target="_blank" rel="noopener noreferrer">Abrir gerador oficial em nova aba ↗</a>
+    </details>
     <div class="generator-bottom">
       <div class="notice warning"><strong>Importante sobre o áudio</strong>O processamento é feito por um serviço externo. Quando você escolhe o arquivo dentro do estúdio incorporado e gera a fala, o arquivo e o texto são enviados ao serviço para processamento, conforme as regras dele. Um áudio selecionado na biblioteca local desta página precisa ser baixado e selecionado novamente dentro do estúdio.</div>
       <a class="button primary" href="https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-pt-br" target="_blank" rel="noopener noreferrer">Abrir estúdio em uma nova aba ↗</a>
@@ -234,7 +311,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
   
   <div class="section-head" id="studio-gravacao">
     <div><h2>🎙️ Estúdio de gravação ao vivo</h2><p>Fale pelo microfone, salve amostras de referência e confira os padrões acústicos aproximados.</p></div>
-    <span class="version">ESTÚDIO LOCAL · v1.2.0</span>
+    <span class="version">ESTÚDIO LOCAL · v1.3.0</span>
   </div>
   <section class="panel voice-studio">
     <div class="recorder-header">
@@ -304,7 +381,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 
   <div class="section-head" id="preparar">
     <div><h2>🎙️ Prepare sua amostra de voz</h2><p>Confira o áudio e escreva o texto antes de abrir a demonstração oficial.</p></div>
-    <span class="version">FERRAMENTA LOCAL · v1.2.0</span>
+    <span class="version">FERRAMENTA LOCAL · v1.3.0</span>
   </div>
 
   <div class="layout">
@@ -418,7 +495,7 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
   </section>
 
   <footer class="footer">
-    <div>Clonagem de Voz Master · <span id="footerVersion">v1.2.0</span><br>Uma central de recursos do Canivete. A geração de áudio é realizada por ferramentas externas ou por uma instalação própria.</div>
+    <div>Clonagem de Voz Master · <span id="footerVersion">v1.3.0</span><br>Uma central de recursos do Canivete. A geração de áudio é realizada por ferramentas externas ou por uma instalação própria.</div>
     <nav class="footer-links" aria-label="Navegação inferior">
       <a href="../canivete.html">Canivete</a>
       <a href="./teleprompter.html">Teleprompter</a>
@@ -429,7 +506,7 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
 <script>
 (function(){
   'use strict';
-  const RELEASE='1.2.0';
+  const RELEASE='1.3.0';
   const fileInput=document.getElementById('voiceFile');
   const fileName=document.getElementById('fileName');
   const fileStatus=document.getElementById('fileStatus');
@@ -1011,6 +1088,216 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
   });
   clearCanvas();
   renderSamples();
+})();
+</script>
+
+
+<script id="VOICE_MASTER_API_GENERATOR_V130">
+(function(){
+  'use strict';
+  const SPACE='https://resembleai-chatterbox-multilingual-tts-pt-br.hf.space';
+  const $=function(id){return document.getElementById(id)};
+  const fileInput=$('voiceToSendFile');
+  const chooseBtn=$('chooseNewVoiceAudio');
+  const sendBtn=$('generateWithUploadedVoice');
+  const consent=$('apiVoiceConsent');
+  const status=$('apiGenerationStatus');
+  const selected=$('apiAudioSelected');
+  const fileName=$('apiAudioName');
+  const fileMeta=$('apiAudioMeta');
+  const preview=$('apiReferencePreview');
+  const textBox=$('apiSpeechText');
+  const resultPanel=$('apiResultPanel');
+  const resultAudio=$('apiGeneratedAudio');
+  const downloadLink=$('downloadGeneratedAudio');
+  let chosenFile=null;
+  let uploadedFileData=null;
+  let previewUrl='';
+  let generating=false;
+  let resultUrl='';
+  function setStatus(message,kind){
+    status.textContent=message;
+    status.dataset.kind=kind||'info';
+  }
+  function updateChars(){
+    $('apiChars').textContent=textBox.value.length+' / 300 caracteres';
+  }
+  function refreshButton(){
+    sendBtn.disabled=generating||!chosenFile||!consent.checked||!textBox.value.trim();
+    chooseBtn.disabled=generating;
+  }
+  function prettySize(bytes){
+    return bytes<1024*1024?Math.round(bytes/1024)+' KB':(bytes/1024/1024).toLocaleString('pt-BR',{maximumFractionDigits:2})+' MB';
+  }
+  chooseBtn.addEventListener('click',function(){fileInput.click()});
+  fileInput.addEventListener('change',function(){
+    const file=fileInput.files&&fileInput.files[0];
+    if(!file)return;
+    if(!file.type.startsWith('audio/')&&!/\.(wav|mp3|m4a|ogg|webm|flac|aac)$/i.test(file.name)){
+      chosenFile=null;uploadedFileData=null;selected.hidden=true;refreshButton();
+      setStatus('Escolha um arquivo de áudio válido (WAV, MP3, OGG, M4A ou WebM).','error');return;
+    }
+    if(file.size>100*1024*1024){
+      chosenFile=null;uploadedFileData=null;selected.hidden=true;refreshButton();
+      setStatus('O arquivo ultrapassa 100 MB. Selecione uma amostra menor para enviar.','error');return;
+    }
+    chosenFile=file;uploadedFileData=null;
+    if(previewUrl)URL.revokeObjectURL(previewUrl);
+    previewUrl=URL.createObjectURL(file);
+    preview.src=previewUrl;
+    fileName.textContent=file.name;
+    fileMeta.textContent=prettySize(file.size)+' · '+(file.type||'áudio')+' · selecionado, aguardando envio';
+    selected.hidden=false;
+    resultPanel.hidden=true;
+    if(resultUrl){URL.revokeObjectURL(resultUrl);resultUrl=''}
+    refreshButton();
+    if(!consent.checked){
+      setStatus('Áudio selecionado. Marque a autorização abaixo para permitir o envio à IA.','info');
+    }else{
+      setStatus('Áudio pronto. Clique em “Gerar fala com este áudio” para enviar a amostra e o texto ao modelo.','success');
+    }
+  });
+  consent.addEventListener('change',function(){refreshButton()});
+  textBox.addEventListener('input',function(){updateChars();refreshButton()});
+  $('clearVoiceText').addEventListener('click',function(){textBox.value='';updateChars();refreshButton();textBox.focus()});
+  $('apiExaggeration').addEventListener('input',function(){$('apiExaggerationOut').textContent=Number(this.value).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})});
+  $('apiCfg').addEventListener('input',function(){$('apiCfgOut').textContent=Number(this.value).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})});
+  $('apiTemperature').addEventListener('input',function(){$('apiTemperatureOut').textContent=Number(this.value).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})});
+  $('removeApiAudio').addEventListener('click',function(){
+    chosenFile=null;uploadedFileData=null;fileInput.value='';selected.hidden=true;preview.removeAttribute('src');preview.load();refreshButton();
+    setStatus('Áudio removido. Clique em “Enviar novo áudio” para selecionar outra amostra.','info');
+  });
+  async function uploadFile(file){
+    const form=new FormData();form.append('files',file,file.name);
+    let response;
+    try{
+      response=await fetch(SPACE+'/gradio_api/upload',{method:'POST',body:form,credentials:'omit'});
+      if(response.status===404||response.status===405)response=await fetch(SPACE+'/upload',{method:'POST',body:form,credentials:'omit'});
+    }catch(error){
+      throw new Error('O navegador não conseguiu conectar ao serviço de geração (CORS ou conexão). Abra o estúdio oficial em outra aba e selecione o áudio lá.');
+    }
+    if(!response.ok){
+      const detail=(await response.text().catch(function(){return ''})).slice(0,180);
+      throw new Error('O serviço recusou o envio do áudio ('+response.status+'). '+detail);
+    }
+    const payload=await response.json();
+    const filePath=Array.isArray(payload)?payload[0]:(payload.files&&payload.files[0])||payload.path||payload;
+    if(typeof filePath!=='string'||!filePath)throw new Error('O serviço recebeu uma resposta de arquivo inesperada.');
+    return {path:filePath,meta:{_type:'gradio.FileData'},orig_name:file.name,mime_type:file.type||'audio/*',size:file.size};
+  }
+  function absoluteFileUrl(item){
+    if(typeof item==='string'){
+      if(/^https?:\/\//i.test(item))return item;
+      if(item.startsWith('/'))return SPACE+item;
+      return SPACE+'/gradio_api/file='+item;
+    }
+    if(item&&item.url){
+      if(/^https?:\/\//i.test(item.url))return item.url;
+      return SPACE+item.url;
+    }
+    if(item&&item.path)return absoluteFileUrl(item.path);
+    return '';
+  }
+  async function startGeneration(payload){
+    const response=await fetch(SPACE+'/gradio_api/call/generate_tts_audio',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      credentials:'omit',
+      body:JSON.stringify({data:payload})
+    });
+    if(!response.ok){
+      const details=(await response.text().catch(function(){return ''})).slice(0,300);
+      throw new Error('Não foi possível iniciar a geração ('+response.status+'). '+details);
+    }
+    const data=await response.json();
+    if(!data.event_id)throw new Error('O serviço não retornou um identificador de geração.');
+    return data.event_id;
+  }
+  async function waitForGeneration(eventId){
+    const response=await fetch(SPACE+'/gradio_api/call/generate_tts_audio/'+encodeURIComponent(eventId),{credentials:'omit'});
+    if(!response.ok)throw new Error('Não foi possível receber o resultado ('+response.status+').');
+    const text=await response.text();
+    const blocks=text.split(/\r?\n\r?\n/);
+    let lastData='';
+    for(const block of blocks){
+      let event='';
+      const dataLines=[];
+      block.split(/\r?\n/).forEach(function(line){
+        if(line.startsWith('event:'))event=line.slice(6).trim();
+        else if(line.startsWith('data:'))dataLines.push(line.slice(5).trim());
+      });
+      if(!dataLines.length)continue;
+      lastData=dataLines.join('\n');
+      if(event==='error')throw new Error(lastData||'O modelo reportou um erro.');
+      if(event==='complete'){
+        let parsed;
+        try{parsed=JSON.parse(lastData)}catch(error){throw new Error('O serviço terminou, mas retornou um resultado que não consegui interpretar.')}
+        if(parsed&&parsed.error)throw new Error(parsed.error);
+        return parsed;
+      }
+    }
+    if(lastData){
+      try{
+        const parsed=JSON.parse(lastData);
+        if(Array.isArray(parsed))return parsed;
+      }catch(e){}
+    }
+    throw new Error('A conexão terminou sem um evento de conclusão. Tente novamente ou abra o gerador oficial.');
+  }
+  function normaliseOutput(data){
+    const first=Array.isArray(data)?data[0]:data;
+    if(first&&typeof first==='object'){
+      if(first.url||first.path)return first;
+      if(first.audio&&typeof first.audio==='object')return first.audio;
+    }
+    if(typeof first==='string')return {url:first};
+    return null;
+  }
+  async function generate(){
+    if(!chosenFile){setStatus('Primeiro clique em “Enviar novo áudio” e escolha sua gravação.','error');return}
+    if(!consent.checked){setStatus('Marque a autorização antes de enviar a voz ao serviço.','error');consent.focus();return}
+    const text=textBox.value.trim();
+    if(!text){setStatus('Digite o texto que deseja transformar em fala.','error');textBox.focus();return}
+    if(text.length>300){setStatus('O estúdio oficial limita o texto a 300 caracteres por geração.','error');return}
+    generating=true;refreshButton();chooseBtn.textContent='Enviando áudio…';
+    resultPanel.hidden=true;
+    try{
+      setStatus('Enviando seu novo áudio ao Chatterbox…');
+      uploadedFileData=await uploadFile(chosenFile);
+      fileMeta.textContent=prettySize(chosenFile.size)+' · enviado ao serviço para esta geração';
+      setStatus('Áudio enviado. Gerando a fala com sua amostra…');
+      const inputs=[
+        text,
+        uploadedFileData,
+        Number($('apiExaggeration').value),
+        Number($('apiTemperature').value),
+        0,
+        Number($('apiCfg').value)
+      ];
+      const eventId=await startGeneration(inputs);
+      setStatus('O modelo está processando. Isso pode levar algum tempo se a demonstração estiver iniciando ou ocupada.');
+      const data=await waitForGeneration(eventId);
+      const output=normaliseOutput(data);
+      const outputUrl=output&&absoluteFileUrl(output);
+      if(!outputUrl)throw new Error('A geração pode ter terminado, mas o arquivo de áudio final não veio num formato reconhecido.');
+      resultAudio.src=outputUrl;
+      resultAudio.load();
+      downloadLink.href=outputUrl;
+      downloadLink.download='clonagem-voz-master-'+Date.now()+'.wav';
+      resultPanel.hidden=false;
+      $('apiResultInfo').textContent='Geração concluída · '+text.length+' caracteres.';
+      resultPanel.scrollIntoView({behavior:'smooth',block:'nearest'});
+      setStatus('Pronto! Ouça o resultado e clique em “Baixar áudio gerado” para salvar.','success');
+    }catch(error){
+      const message=error&&error.message?error.message:'Erro desconhecido';
+      setStatus('Não consegui gerar por esta integração: '+message+' Você ainda pode abrir o estúdio oficial abaixo e enviar o arquivo no campo “Reference Audio File”.','error');
+    }finally{
+      generating=false;chooseBtn.innerHTML='<span class="upload-icon">⬆️</span><span><strong>Enviar novo áudio</strong><small>Escolher outro arquivo de referência</small></span>';
+      refreshButton();
+    }
+  }
+  sendBtn.addEventListener('click',generate);
+  updateChars();refreshButton();
 })();
 </script>
 
