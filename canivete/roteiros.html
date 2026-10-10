@@ -13,7 +13,7 @@
 <body>
 <div id="menu" hidden><div class="sidebar"></div></div>
 <div class="wrap">
-<header class="top"><div><div class="brand">🗂️ Meus roteiros</div><div class="sub">Organize os textos por canal e continue de onde parou.</div><details style="margin-top:6px;font-size:12px;color:var(--muted)"><summary>Sobre</summary><p>Teleprompter IA · v1.5.16</p></details></div><div class="top-actions"><a href="./teleprompter.html" style="align-self:center">← Voltar ao Teleprompter</a></div></header>
+<header class="top"><div><div class="brand">🗂️ Meus roteiros</div><div class="sub">Organize os textos por canal e continue de onde parou.</div><details style="margin-top:6px;font-size:12px;color:var(--muted)"><summary>Sobre</summary><p>Teleprompter IA · v1.5.17</p></details></div><div class="top-actions"><a href="./teleprompter.html" style="align-self:center">← Voltar ao Teleprompter</a></div></header>
 <section class="panel" style="margin-bottom:16px"><div class="account"><strong id="accountLabel">Conta Google não conectada</strong><button class="primary" id="login">🔑 Conectar conta Google</button><button id="logout" class="hidden">Sair</button><button id="sync" class="hidden">☁️ Sincronizar agora</button></div><div class="notice">Os roteiros ficam salvos neste navegador. Ao conectar a mesma conta Google usada no Canivete, você pode sincronizar sua biblioteca entre dispositivos.</div><div id="status" class="status" role="status" aria-live="polite">Pronto para organizar seus roteiros.</div></section>
 <div class="layout">
 <aside class="panel"><h2>📁 Pastas dos canais</h2><div id="channels" class="channels"></div><div class="channel-add"><input id="newChannel" placeholder="Novo canal" aria-label="Nome do novo canal" maxlength="60"><button id="addChannel">＋</button></div><p class="sub">Exemplos: Jhon Motivação e Política.</p></aside>
@@ -21,7 +21,7 @@
 </div>
 </div>
 <script type="module">
-import {login as googleLogin,logout as googleLogout,getUser,initAuthWatcher,authPronto,obterRoteirosTeleprompter,salvarRoteirosTeleprompter} from '../firebase-auth.js';
+import {loginGoogleTeleprompter,logout as googleLogout,getUser,initAuthWatcher,authPronto,obterRoteirosTeleprompter,salvarRoteirosTeleprompter} from '../firebase-auth.js';
 const $=id=>document.getElementById(id);
 const KEY='canivete.teleprompter.scripts.v1';
 let channels=['Jhon Motivação','Política'],scripts=[],activeChannel='Jhon Motivação',selectedId=null,user=null,cloudLoaded=false;
@@ -35,8 +35,52 @@ function render(){renderChannels();renderList();$('accountLabel').textContent=us
 function resetForm(){selectedId=null;$('editorHeading').textContent='Novo roteiro';$('scriptTitle').value='';$('scriptBody').value='';$('scriptChannel').value=activeChannel;$('deleteScript').disabled=true;renderList()}
 function loadScript(id){const sc=scripts.find(x=>x.id===id);if(!sc)return;selectedId=id;activeChannel=sc.channel;$('editorHeading').textContent='Editar roteiro';$('scriptTitle').value=sc.title;$('scriptBody').value=sc.body;$('scriptChannel').value=sc.channel;$('deleteScript').disabled=false;render()}
 function mergeScripts(local,cloud){const m=new Map();[...(cloud||[]),...(local||[])].forEach(x=>{const old=m.get(x.id);if(!old||(x.updatedAt||0)>(old.updatedAt||0))m.set(x.id,x)});return [...m.values()]}
-async function syncCloud(){if(!user){setStatus('Conecte a conta Google para sincronizar.',true);return}try{await salvarRoteirosTeleprompter(user.uid,{channels,scripts});setStatus('☁️ Biblioteca sincronizada com a conta Google.')}catch(e){console.error(e);setStatus('Não foi possível sincronizar. Verifique a conexão e as permissões do Firebase.',true)}}
-async function login(){try{await googleLogin();user=getUser();if(user){try{const cloud=await obterRoteirosTeleprompter(user.uid);if(cloud&&Array.isArray(cloud.scripts)){channels=Array.isArray(cloud.channels)&&cloud.channels.length?cloud.channels:channels;scripts=mergeScripts(scripts,cloud.scripts);saveLocal()}else { await syncCloud(); } render();setStatus('Conta Google conectada.')}catch(e){setStatus('Conta conectada, mas não consegui ler a biblioteca na nuvem.',true)}}}catch(e){setStatus('Não foi possível conectar a conta Google.',true)}}
+async function syncCloud(){if(!user){setStatus('Conecte a conta Google para sincronizar.',true);return false}try{await salvarRoteirosTeleprompter(user.uid,{channels,scripts});setStatus('☁️ Biblioteca sincronizada com a conta Google.');return true}catch(e){console.error(e);setStatus('Não foi possível sincronizar. '+authErrorMessage(e),true);return false}}
+function authErrorMessage(e){
+ const code=e?.code||'sem código';
+ const messages={
+  'auth/unauthorized-domain':'Este endereço do GitHub Pages não está autorizado no Firebase. É necessário autorizar jhoncorretor2025-blip.github.io em Authentication > Settings > Authorized domains.',
+  'auth/operation-not-allowed':'O login com Google está desativado no Firebase Authentication.',
+  'auth/popup-blocked':'O navegador bloqueou a janela de login. Permita pop-ups para este site e tente novamente.',
+  'auth/popup-closed-by-user':'A janela do Google foi fechada antes de terminar o login.',
+  'auth/network-request-failed':'Falha de rede ao falar com o Google. Confira sua conexão e tente novamente.',
+  'auth/too-many-requests':'O Google/Firebase bloqueou temporariamente muitas tentativas. Aguarde e tente novamente.',
+  'auth/cancelled-popup-request':'Já existe uma tentativa de login em andamento. Aguarde alguns segundos e tente novamente.'
+ };
+ return (messages[code]||('O Google/Firebase retornou um erro: '+(e?.message||'sem detalhes')+'.'))+' Código: '+code;
+}
+async function login(){
+ $('login').disabled=true;
+ setStatus('Abrindo a autenticação do Google…');
+ try{
+  const resultado=await loginGoogleTeleprompter();
+  if(resultado?.redirecting){setStatus('O navegador está redirecionando para o Google. Conclua o login e aguarde o retorno.');return}
+  user=resultado?.user||getUser();
+  if(!user)throw new Error('O Google não retornou uma conta conectada.');
+  render();
+  try{
+   const cloud=await obterRoteirosTeleprompter(user.uid);
+   if(cloud&&Array.isArray(cloud.scripts)){
+    channels=Array.isArray(cloud.channels)&&cloud.channels.length?cloud.channels:channels;
+    scripts=mergeScripts(scripts,cloud.scripts);
+    saveLocal();
+    setStatus('Conta Google conectada. Biblioteca carregada.');
+   }else{
+    const ok=await syncCloud();
+    if(ok)setStatus('Conta Google conectada. Biblioteca inicializada na nuvem.');
+    else setStatus('Conta Google conectada, mas a sincronização foi recusada pelo Firebase. Os roteiros continuam neste navegador.',true);
+   }
+  }catch(e){
+   console.error('Erro de acesso à biblioteca na nuvem:',e);
+   setStatus('Login Google concluído, mas não consegui acessar a biblioteca na nuvem. Seus roteiros continuam salvos neste navegador. '+authErrorMessage(e),true);
+  }
+ }catch(e){
+  console.error('Falha no login Google da biblioteca:',e);
+  setStatus(authErrorMessage(e),true);
+ }finally{
+  $('login').disabled=!!user;
+ }
+}
 $('login').addEventListener('click',login);$('logout').addEventListener('click',async()=>{await googleLogout();user=null;render();setStatus('Conta Google desconectada. Os roteiros locais continuam salvos.')});$('sync').addEventListener('click',syncCloud);
 $('addChannel').addEventListener('click',()=>{const ch=$('newChannel').value.trim();if(!ch)return;if(channels.some(x=>x.toLowerCase()===ch.toLowerCase())){setStatus('Essa pasta já existe.',true);return}channels.push(ch);activeChannel=ch;$('newChannel').value='';saveLocal();resetForm();setStatus('Pasta criada.')});
 $('editor').addEventListener('submit',async e=>{e.preventDefault();const title=$('scriptTitle').value.trim(),body=$('scriptBody').value.trim(),channel=$('scriptChannel').value;if(!title||!body)return;const old=scripts.find(x=>x.id===selectedId);const item={id:selectedId||uid(),title,body,channel,updatedAt:Date.now(),createdAt:old?.createdAt||Date.now()};scripts=scripts.filter(x=>x.id!==item.id);scripts.push(item);activeChannel=channel;selectedId=item.id;saveLocal();loadScript(item.id);setStatus('Roteiro salvo neste dispositivo.');if(user)await syncCloud()});
