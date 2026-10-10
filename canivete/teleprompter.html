@@ -592,7 +592,8 @@ $('overlayOpacity').addEventListener('input',()=>{document.documentElement.style
 $('overlayWidth').addEventListener('input',()=>{$('width').value=$('overlayWidth').value;$('previewText').style.maxWidth=$('overlayWidth').value+'%';save()});
 if(isOverlay){document.body.classList.add('overlay-mode');$('previewText').textContent='Carregando roteiro salvo…';try{const saved=JSON.parse(localStorage.getItem('canivete.teleprompter.v1')||'{}');if(saved.script)$('script').value=saved.script;if(saved.fontSize)$('fontSize').value=saved.fontSize;if(saved.speed)$('speed').value=saved.speed;if(saved.opacity)$('opacity').value=saved.opacity;if(saved.width)$('width').value=saved.width;}catch(e){}update();window.addEventListener('storage',e=>{if(e.key==='canivete.teleprompter.v1'){try{const s=JSON.parse(e.newValue||'{}');if(s.script!==undefined)$('script').value=s.script;if(s.fontSize)$('fontSize').value=s.fontSize;if(s.speed)$('speed').value=s.speed;if(s.opacity)$('opacity').value=s.opacity;if(s.width)$('width').value=s.width;update()}catch(err){}}});}
 window.addEventListener('storage',e=>{if(e.key==='canivete.teleprompter.v1')load()});
-load();updateWorkflow();
+load();
+if(params.get('load')==='saved'){try{const saved=JSON.parse(localStorage.getItem('canivete.teleprompter.v1')||'{}');if(typeof saved.script==='string'){$('script').value=saved.script;update();save()}}catch(e){}}updateWorkflow();
 if(!isOverlay){const initialPage=params.get('page')==='gravar'?'gravar':'roteiro';showPage(initialPage,false);if(initialPage==='gravar'&&!cameraStream)startCamera();}
 let installPrompt=null;
 const installButton=$('installApp');
