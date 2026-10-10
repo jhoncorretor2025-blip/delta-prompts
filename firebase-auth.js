@@ -328,13 +328,13 @@ export function initAuthWatcher(){
 
 /* ===== TELEPROMPTER: roteiros pessoais por canal ===== */
 export async function obterRoteirosTeleprompter(uid){
-  if(!uid)return [];
-  try{const snap=await getDoc(doc(db,'users',uid));const dados=snap.exists()?snap.data().roteirosTeleprompter:null;return Array.isArray(dados)?dados:[]}
+  if(!uid)return null;
+  try{const snap=await getDoc(doc(db,'users',uid));const dados=snap.exists()?snap.data().roteirosTeleprompter:null;return dados&&Array.isArray(dados.scripts)&&Array.isArray(dados.channels)?dados:null}
   catch(e){console.error('Erro ao buscar roteiros do teleprompter:',e);throw e}
 }
-export async function salvarRoteirosTeleprompter(uid,roteiros){
+export async function salvarRoteirosTeleprompter(uid,biblioteca){
   if(!uid)throw new Error('Entre com sua conta Google para sincronizar os roteiros.');
-  if(!Array.isArray(roteiros))throw new Error('Formato de roteiros inválido.');
-  await setDoc(doc(db,'users',uid),{roteirosTeleprompter:roteiros,roteirosTeleprompterAtualizadoEm:serverTimestamp()},{merge:true});
+  if(!biblioteca||!Array.isArray(biblioteca.scripts)||!Array.isArray(biblioteca.channels))throw new Error('Formato de biblioteca inválido.');
+  await setDoc(doc(db,'users',uid),{roteirosTeleprompter:{channels:biblioteca.channels,scripts:biblioteca.scripts},roteirosTeleprompterAtualizadoEm:serverTimestamp()},{merge:true});
   return true;
 }
