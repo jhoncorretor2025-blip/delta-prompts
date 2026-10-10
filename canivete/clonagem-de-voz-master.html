@@ -102,6 +102,49 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
 @media(max-width:850px){.layout{grid-template-columns:1fr}.resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.topbar{align-items:flex-start}.metric-row{gap:8px}.metric{padding:13px}}
 @media(max-width:560px){.wrap{padding:13px 12px 35px}.topbar{flex-direction:column}.toplinks{width:100%}.toplinks a{flex:1}.hero{border-radius:22px;padding:25px 20px}.hero h1{font-size:37px}.hero-actions{display:grid;grid-template-columns:1fr}.hero-actions a{width:100%}.metric-row{grid-template-columns:1fr}.metric{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:start;gap:0 9px}.metric .m-icon{grid-row:1/3;margin:1px 0 0}.metric p{margin-top:3px}.panel{padding:16px;border-radius:16px}.resource-grid{grid-template-columns:1fr}.resource{min-height:0}.section-head{align-items:flex-start;flex-direction:column;gap:4px}.footer{flex-direction:column}.studio-actions{display:grid;grid-template-columns:1fr}.studio-actions a,.studio-actions button{width:100%}.command{padding-right:14px;padding-top:43px}.copy-command{left:8px;right:auto}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* CLONAGEM DE VOZ MASTER v1.1.0 — gravador ao vivo e biblioteca local */
+.recorder-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.recorder-header .panel-intro{margin-bottom:12px}
+.recorder-state{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#0d1525;border-radius:999px;padding:8px 11px;color:#c6d2e8;font-size:11px;font-weight:800;white-space:nowrap}
+.live-dot{width:9px;height:9px;border-radius:50%;background:#64748b;display:inline-block}
+.live-dot.is-live{background:#fb7185;box-shadow:0 0 0 5px rgba(251,113,133,.12);animation:voicePulse 1s infinite}
+@keyframes voicePulse{50%{opacity:.45}}
+.wave-frame{border:1px solid #2e3b58;border-radius:15px;background:radial-gradient(ellipse at center,#131e34,#080e1b 75%);overflow:hidden}
+#voiceWaveform{display:block;width:100%;height:105px}
+.wave-footer{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-top:1px solid #26334b;color:#7f8ca8;font-size:10px;font-weight:850;letter-spacing:.08em}
+#recordTime{color:#fda4af;font-size:16px;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.meter-wrap{display:grid;grid-template-columns:auto minmax(60px,1fr) auto;gap:10px;align-items:center;margin:13px 0 17px;color:var(--muted);font-size:10px}
+.meter-track{height:8px;border-radius:999px;background:#25314a;overflow:hidden}
+.meter-fill{height:100%;width:0;background:linear-gradient(90deg,#34d399,#a3e635,#fb7185);border-radius:999px;transition:width .06s linear}
+#audioLevelText{min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+.record-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.record-actions .button:disabled,.studio-actions .button:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.voice-profile-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.voice-profile-fields input,.voice-profile-fields select{width:100%;min-height:43px;padding:10px 12px;background:#0a1120;color:var(--text);border:1px solid #35425e;border-radius:11px}
+.voice-notes{min-height:84px}
+.latest-audio{margin-top:15px;border:1px solid #2c4260;background:#0f1e2c;border-radius:13px;padding:13px}
+.latest-audio strong{display:block;font-size:12px;margin-bottom:8px}
+.latest-audio audio{display:block;width:100%}
+.pattern-card{margin-top:18px;border:1px solid #393e68;background:linear-gradient(140deg,rgba(46,45,89,.32),rgba(13,21,38,.75));border-radius:15px;padding:15px}
+.pattern-title{font-size:12px;font-weight:900;margin-bottom:7px}
+.pattern-summary{font-size:11px;color:var(--muted);line-height:1.5}
+.pattern-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
+.pattern-grid>div{border:1px solid rgba(72,82,126,.55);background:rgba(10,16,32,.55);border-radius:11px;padding:10px;min-width:0}
+.pattern-grid span{display:block;color:var(--muted);font-size:9px;line-height:1.4}
+.pattern-grid strong{display:block;font-size:13px;margin-top:5px;overflow-wrap:anywhere}
+.saved-samples{display:grid;gap:10px;margin-top:14px}
+.saved-sample{border:1px solid var(--line);background:#0e1729;border-radius:13px;padding:13px;min-width:0}
+.saved-sample-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.saved-sample-head strong{font-size:12px;overflow-wrap:anywhere}
+.saved-sample-meta{color:var(--muted);font-size:10px;margin-top:4px;line-height:1.5}
+.saved-sample audio{display:block;width:100%;margin-top:10px;height:38px}
+.saved-sample-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.saved-sample-actions button{min-height:35px;padding:7px 10px;font-size:10px}
+.saved-sample-actions .delete-sample{color:#fda4af}
+.empty-samples{border:1px dashed #35425e;border-radius:12px;text-align:center;padding:22px;color:var(--muted);font-size:11px}
+@media(max-width:650px){.voice-profile-fields{grid-template-columns:1fr}.pattern-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.record-actions{display:grid;grid-template-columns:1fr 1fr}.record-actions .button{width:100%;padding:9px 7px;font-size:11px}.recorder-state{white-space:normal}.saved-sample-head{flex-direction:column;gap:5px}}
+
 </style>
 </head>
 <body>
@@ -110,7 +153,7 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
     <div class="brand">
       <span class="brand-mark" aria-hidden="true">🎙️</span>
       <span>CANIVETE <small>LABORATÓRIO DE VOZ IA</small></span>
-      <span class="version" id="versionBadge">v1.0.0</span>
+      <span class="version" id="versionBadge">v1.1.0</span>
     </div>
     <nav class="toplinks" aria-label="Atalhos">
       <a class="link-button" href="../canivete.html">← Canivete</a>
@@ -137,9 +180,80 @@ input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;backg
     <article class="metric"><div class="m-icon">🔒</div><div><strong>Controle do áudio</strong><p>Esta página só verifica o arquivo no navegador; não envia nem clona áudio.</p></div></article>
   </div>
 
+  
+  <div class="section-head" id="studio-gravacao">
+    <div><h2>🎙️ Estúdio de gravação ao vivo</h2><p>Fale pelo microfone, salve amostras de referência e confira os padrões acústicos aproximados.</p></div>
+    <span class="version">ESTÚDIO LOCAL · v1.1.0</span>
+  </div>
+  <section class="panel voice-studio">
+    <div class="recorder-header">
+      <div>
+        <h3>Gravar minha voz</h3>
+        <p class="panel-intro">A gravação acontece neste navegador. Nada é enviado automaticamente para um servidor.</p>
+      </div>
+      <div class="recorder-state"><span class="live-dot" id="micDot"></span><span id="micState">Microfone desligado</span></div>
+    </div>
+    <div class="wave-frame">
+      <canvas id="voiceWaveform" width="960" height="120" aria-label="Visualização em tempo real do som do microfone"></canvas>
+      <div class="wave-footer"><span>ÁUDIO AO VIVO</span><span id="recordTime">00:00</span></div>
+    </div>
+    <div class="meter-wrap"><span>Nível de áudio</span><div class="meter-track"><div id="audioLevel" class="meter-fill"></div></div><span id="audioLevelText">0%</span></div>
+    <div class="record-actions">
+      <button class="button primary" type="button" id="startRecording">🔴 Começar a gravar</button>
+      <button class="button" type="button" id="stopRecording" disabled>⏹️ Parar</button>
+      <button class="button" type="button" id="downloadLatest" disabled>⬇️ Baixar áudio</button>
+      <button class="button" type="button" id="downloadLatestWav" disabled>🎵 Baixar WAV</button>
+    </div>
+    <div class="field voice-profile-fields">
+      <div><label for="profileName">Nome deste perfil de voz</label><input id="profileName" type="text" maxlength="70" value="Minha voz" placeholder="Ex.: Minha voz para vídeos"></div>
+      <div><label for="voiceAccent">Idioma / sotaque</label><select id="voiceAccent"><option value="Português brasileiro">Português brasileiro</option><option value="Português brasileiro — gaúcho">Português brasileiro — gaúcho</option><option value="Português europeu">Português europeu</option><option value="Outro / não especificado">Outro / não especificado</option></select></div>
+    </div>
+    <div class="field">
+      <label for="voiceStyleNotes">Notas sobre o jeito de falar (opcional)</label>
+      <textarea id="voiceStyleNotes" class="voice-notes" maxlength="500" placeholder="Ex.: voz natural, ritmo tranquilo, tom confiante, pronúncia clara."></textarea>
+      <small>Use as notas para descrever o estilo que deseja manter. Elas não treinam o modelo por si só.</small>
+    </div>
+    <label class="consent"><input type="checkbox" id="recordConsent"><span>Confirmo que esta é minha voz ou que tenho autorização para gravar e usar esta voz.</span></label>
+    <div class="studio-actions">
+      <button class="button primary" type="button" id="saveVoiceSample" disabled>💾 Salvar amostra e perfil</button>
+      <button class="button subtle" type="button" id="clearTake" disabled>Limpar gravação atual</button>
+    </div>
+    <div class="status" id="recorderStatus" role="status" aria-live="polite">Marque a autorização e comece a gravar. Para funcionar, permita o acesso ao microfone no navegador.</div>
+    <div id="latestAudioWrap" class="latest-audio" hidden>
+      <strong>Prévia da gravação</strong>
+      <audio id="latestAudio" controls></audio>
+      <p class="muted">Ouça antes de salvar. Depois, você pode baixar o áudio e carregar o arquivo na demonstração de clonagem.</p>
+    </div>
+    <div class="pattern-card" id="patternCard">
+      <div class="pattern-title">🧬 Padrões acústicos da amostra</div>
+      <div id="patternSummary" class="pattern-summary">Depois de gravar, a página tentará estimar duração, frequência fundamental (tom/pitch) e nível médio de áudio.</div>
+      <div class="pattern-grid">
+        <div><span>Duração</span><strong id="patternDuration">—</strong></div>
+        <div><span>Pitch mediano estimado</span><strong id="patternPitch">—</strong></div>
+        <div><span>Faixa de pitch estimada</span><strong id="patternRange">—</strong></div>
+        <div><span>Nível médio estimado</span><strong id="patternLoudness">—</strong></div>
+      </div>
+      <p class="muted">São medições acústicas aproximadas. Não são uma impressão digital biométrica nem o treinamento de uma voz clonada. A semelhança vocal é obtida pelo modelo de clonagem usando a amostra de áudio.</p>
+    </div>
+  </section>
+
+  <div class="section-head" id="biblioteca-voz">
+    <div><h2>🗃️ Minha biblioteca de amostras</h2><p>Perfis e áudios guardados neste navegador e neste dispositivo.</p></div>
+    <span class="version" id="sampleCount">0 AMOSTRAS</span>
+  </div>
+  <section class="panel">
+    <div class="notice good"><strong>Salvamento local</strong>As gravações salvas ficam no armazenamento deste navegador via IndexedDB. Não são sincronizadas entre aparelhos. Baixe uma cópia do áudio para manter um backup independente.</div>
+    <div id="savedSamples" class="saved-samples" aria-live="polite"><div class="empty-samples">Carregando biblioteca de voz…</div></div>
+    <div class="studio-actions" style="margin-top:14px">
+      <button class="button" type="button" id="refreshSamples">↻ Atualizar biblioteca</button>
+      <button class="button subtle" type="button" id="exportVoiceIndex">📄 Exportar lista de perfis (JSON)</button>
+    </div>
+    <div class="status" id="libraryStatus" role="status" aria-live="polite"></div>
+  </section>
+
   <div class="section-head" id="preparar">
     <div><h2>🎙️ Prepare sua amostra de voz</h2><p>Confira o áudio e escreva o texto antes de abrir a demonstração oficial.</p></div>
-    <span class="version">FERRAMENTA LOCAL · v1.0.0</span>
+    <span class="version">FERRAMENTA LOCAL · v1.1.0</span>
   </div>
 
   <div class="layout">
@@ -253,7 +367,7 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
   </section>
 
   <footer class="footer">
-    <div>Clonagem de Voz Master · <span id="footerVersion">v1.0.0</span><br>Uma central de recursos do Canivete. A geração de áudio é realizada por ferramentas externas ou por uma instalação própria.</div>
+    <div>Clonagem de Voz Master · <span id="footerVersion">v1.1.0</span><br>Uma central de recursos do Canivete. A geração de áudio é realizada por ferramentas externas ou por uma instalação própria.</div>
     <nav class="footer-links" aria-label="Navegação inferior">
       <a href="../canivete.html">Canivete</a>
       <a href="./teleprompter.html">Teleprompter</a>
@@ -264,7 +378,7 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
 <script>
 (function(){
   'use strict';
-  const RELEASE='1.0.0';
+  const RELEASE='1.1.0';
   const fileInput=document.getElementById('voiceFile');
   const fileName=document.getElementById('fileName');
   const fileStatus=document.getElementById('fileStatus');
@@ -381,5 +495,473 @@ pip install -e .<button class="copy-command" type="button" data-copy="installCom
   });
 })();
 </script>
+
+<script id="VOICE_MASTER_LIVE_STUDIO">
+(function(){
+  'use strict';
+  const DB_NAME='canivete-voice-master';
+  const DB_VERSION=1;
+  const STORE='samples';
+  const $=function(id){return document.getElementById(id)};
+  const startBtn=$('startRecording');
+  const stopBtn=$('stopRecording');
+  const saveBtn=$('saveVoiceSample');
+  const clearBtn=$('clearTake');
+  const downloadBtn=$('downloadLatest');
+  const wavBtn=$('downloadLatestWav');
+  const status=$('recorderStatus');
+  const canvas=$('voiceWaveform');
+  const canvasCtx=canvas.getContext('2d');
+  const meter=$('audioLevel');
+  const meterText=$('audioLevelText');
+  const micDot=$('micDot');
+  const micState=$('micState');
+  const timeLabel=$('recordTime');
+  const consent=$('recordConsent');
+  const latestAudio=$('latestAudio');
+  const latestAudioWrap=$('latestAudioWrap');
+  const sampleList=$('savedSamples');
+  let mediaStream=null;
+  let recorder=null;
+  let audioContext=null;
+  let analyser=null;
+  let sourceNode=null;
+  let animationId=0;
+  let recordingStartedAt=0;
+  let elapsedAtStop=0;
+  let timerId=0;
+  let latestBlob=null;
+  let latestMime='';
+  let latestUrl='';
+  let dbPromise=null;
+  let renderUrls=[];
+  let recordingChunks=[];
+  let lastAnalysis=null;
+
+  function setStatus(message,isError){
+    status.textContent=message;
+    status.style.color=isError?'#fda4af':'#6ee7b7';
+  }
+  function formatTime(seconds){
+    seconds=Math.max(0,Math.floor(seconds||0));
+    return String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');
+  }
+  function dbOpen(){
+    if(!('indexedDB' in window))return Promise.reject(new Error('Este navegador não disponibiliza armazenamento IndexedDB.'));
+    if(dbPromise)return dbPromise;
+    dbPromise=new Promise(function(resolve,reject){
+      const request=indexedDB.open(DB_NAME,DB_VERSION);
+      request.onupgradeneeded=function(){
+        const database=request.result;
+        if(!database.objectStoreNames.contains(STORE)){
+          const store=database.createObjectStore(STORE,{keyPath:'id'});
+          store.createIndex('createdAt','createdAt',{unique:false});
+        }
+      };
+      request.onsuccess=function(){resolve(request.result)};
+      request.onerror=function(){reject(request.error||new Error('Não foi possível abrir a biblioteca local.'))};
+      request.onblocked=function(){reject(new Error('Feche outras abas antigas desta página e tente novamente.'))};
+    });
+    return dbPromise;
+  }
+  async function dbPut(sample){
+    const database=await dbOpen();
+    return new Promise(function(resolve,reject){
+      const transaction=database.transaction(STORE,'readwrite');
+      transaction.objectStore(STORE).put(sample);
+      transaction.oncomplete=function(){resolve(true)};
+      transaction.onerror=function(){reject(transaction.error||new Error('Falha ao salvar a amostra.'))};
+      transaction.onabort=function(){reject(transaction.error||new Error('Salvamento cancelado.'))};
+    });
+  }
+  async function dbGetAll(){
+    const database=await dbOpen();
+    return new Promise(function(resolve,reject){
+      const request=database.transaction(STORE,'readonly').objectStore(STORE).getAll();
+      request.onsuccess=function(){resolve((request.result||[]).sort(function(a,b){return b.createdAt-a.createdAt}))};
+      request.onerror=function(){reject(request.error||new Error('Não foi possível ler as amostras.'))};
+    });
+  }
+  async function dbDelete(id){
+    const database=await dbOpen();
+    return new Promise(function(resolve,reject){
+      const transaction=database.transaction(STORE,'readwrite');
+      transaction.objectStore(STORE).delete(id);
+      transaction.oncomplete=function(){resolve(true)};
+      transaction.onerror=function(){reject(transaction.error||new Error('Falha ao apagar a amostra.'))};
+    });
+  }
+  function setRecordingUi(active){
+    startBtn.disabled=active;
+    stopBtn.disabled=!active;
+    $('micDot').classList.toggle('is-live',active);
+    micState.textContent=active?'Gravando agora':'Microfone '+(mediaStream?'pronto':'desligado');
+    if(!active)micDot.classList.remove('is-live');
+  }
+  function clearCanvas(){
+    canvasCtx.clearRect(0,0,canvas.width,canvas.height);
+    canvasCtx.strokeStyle='rgba(139,156,255,.22)';
+    canvasCtx.lineWidth=1;
+    canvasCtx.beginPath();
+    canvasCtx.moveTo(0,canvas.height/2);
+    canvasCtx.lineTo(canvas.width,canvas.height/2);
+    canvasCtx.stroke();
+  }
+  function drawWave(){
+    if(!analyser){clearCanvas();animationId=0;return}
+    const data=new Uint8Array(analyser.fftSize);
+    analyser.getByteTimeDomainData(data);
+    canvasCtx.clearRect(0,0,canvas.width,canvas.height);
+    canvasCtx.strokeStyle='rgba(95,111,155,.2)';
+    canvasCtx.lineWidth=1;
+    canvasCtx.beginPath();
+    canvasCtx.moveTo(0,canvas.height/2);
+    canvasCtx.lineTo(canvas.width,canvas.height/2);
+    canvasCtx.stroke();
+    canvasCtx.beginPath();
+    const step=canvas.width/data.length;
+    for(let i=0;i<data.length;i++){
+      const y=(data[i]/255)*canvas.height;
+      if(i===0)canvasCtx.moveTo(0,y);else canvasCtx.lineTo(i*step,y);
+    }
+    canvasCtx.strokeStyle='#9daaff';
+    canvasCtx.lineWidth=2;
+    canvasCtx.stroke();
+    let sum=0;
+    for(let j=0;j<data.length;j++){const value=(data[j]-128)/128;sum+=value*value}
+    const rms=Math.sqrt(sum/data.length);
+    const percent=Math.min(100,Math.round(rms*230));
+    meter.style.width=percent+'%';
+    meterText.textContent=percent+'%';
+    animationId=requestAnimationFrame(drawWave);
+  }
+  function cleanupMic(){
+    if(animationId){cancelAnimationFrame(animationId);animationId=0}
+    if(timerId){clearInterval(timerId);timerId=0}
+    if(mediaStream){mediaStream.getTracks().forEach(function(track){track.stop()});mediaStream=null}
+    if(sourceNode){try{sourceNode.disconnect()}catch(e){}sourceNode=null}
+    analyser=null;
+    if(audioContext){const ctx=audioContext;audioContext=null;ctx.close().catch(function(){})}
+    meter.style.width='0%';meterText.textContent='0%';
+    clearCanvas();
+  }
+  async function startRecording(){
+    if(!consent.checked){setStatus('Marque a confirmação de autorização para gravar esta voz.',true);consent.focus();return}
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){setStatus('Este navegador não permite acesso ao microfone aqui. Abra a página num navegador atualizado com HTTPS.',true);return}
+    if(!window.MediaRecorder){setStatus('Este navegador não oferece suporte à gravação de áudio. Tente Chrome ou Edge atualizado.',true);return}
+    try{
+      latestBlob=null;lastAnalysis=null;elapsedAtStop=0;
+      if(latestUrl){URL.revokeObjectURL(latestUrl);latestUrl=''}
+      latestAudio.removeAttribute('src');
+      latestAudioWrap.hidden=true;
+      saveBtn.disabled=true;clearBtn.disabled=true;downloadBtn.disabled=true;wavBtn.disabled=true;
+      startBtn.disabled=true;
+      setStatus('Solicitando acesso ao microfone…');
+      mediaStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+      const AudioCtx=window.AudioContext||window.webkitAudioContext;
+      if(AudioCtx){
+        audioContext=new AudioCtx();
+        if(audioContext.state==='suspended')await audioContext.resume();
+        analyser=audioContext.createAnalyser();
+        analyser.fftSize=2048;
+        sourceNode=audioContext.createMediaStreamSource(mediaStream);
+        sourceNode.connect(analyser);
+      }
+      const mimeOptions=['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'];
+      latestMime='';
+      for(let i=0;i<mimeOptions.length;i++){
+        if(MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(mimeOptions[i])){latestMime=mimeOptions[i];break}
+      }
+      recorder=latestMime?new MediaRecorder(mediaStream,{mimeType:latestMime}):new MediaRecorder(mediaStream);
+      latestMime=recorder.mimeType||latestMime||'audio/webm';
+      recordingChunks=[];
+      recorder.ondataavailable=function(event){if(event.data&&event.data.size)recordingChunks.push(event.data)};
+      recorder.onerror=function(){setStatus('O navegador encontrou um erro durante a gravação.',true)};
+      recorder.onstop=function(){
+        latestBlob=new Blob(recordingChunks,{type:latestMime});
+        elapsedAtStop=Math.max(0,(Date.now()-recordingStartedAt)/1000);
+        cleanupMic();
+        setRecordingUi(false);
+        if(!latestBlob.size){setStatus('A gravação ficou vazia. Confira o microfone e tente novamente.',true);return}
+        latestUrl=URL.createObjectURL(latestBlob);
+        latestAudio.src=latestUrl;
+        latestAudioWrap.hidden=false;
+        saveBtn.disabled=false;clearBtn.disabled=false;downloadBtn.disabled=false;wavBtn.disabled=false;
+        $('patternDuration').textContent=formatTime(elapsedAtStop);
+        $('patternSummary').textContent='Calculando características acústicas aproximadas…';
+        setStatus('Gravação pronta. Ouça a amostra, confira o perfil e salve-a no navegador.');
+        analyzeBlob(latestBlob).then(function(stats){
+          lastAnalysis=stats;
+          displayAnalysis(stats,elapsedAtStop);
+        }).catch(function(){
+          displayAnalysis({pitchMedian:null,pitchMin:null,pitchMax:null,rms:null,duration:elapsedAtStop},elapsedAtStop);
+        });
+      };
+      recorder.start(250);
+      recordingStartedAt=Date.now();
+      timeLabel.textContent='00:00';
+      timerId=setInterval(function(){timeLabel.textContent=formatTime((Date.now()-recordingStartedAt)/1000)},250);
+      setRecordingUi(true);
+      if(analyser)drawWave();else clearCanvas();
+      setStatus('Gravando. Fale naturalmente, com o microfone perto e sem estourar o áudio.');
+    }catch(error){
+      cleanupMic();
+      setRecordingUi(false);
+      startBtn.disabled=false;
+      if(error&&error.name==='NotAllowedError')setStatus('Acesso ao microfone negado. Clique no ícone ao lado do endereço do site e permita o microfone.',true);
+      else if(error&&error.name==='NotFoundError')setStatus('Nenhum microfone foi encontrado. Conecte um microfone e tente novamente.',true);
+      else setStatus('Não foi possível iniciar a gravação: '+(error&&error.message?error.message:'erro desconhecido'),true);
+    }
+  }
+  function stopRecording(){
+    if(recorder&&recorder.state!=='inactive'){stopBtn.disabled=true;setStatus('Finalizando o áudio…');recorder.stop()}
+  }
+  function analyzeFrame(frame,sampleRate){
+    let mean=0;
+    for(let i=0;i<frame.length;i++)mean+=frame[i];
+    mean/=frame.length;
+    let energy=0;
+    for(let i=0;i<frame.length;i++){frame[i]-=mean;energy+=frame[i]*frame[i]}
+    const rms=Math.sqrt(energy/frame.length);
+    if(rms<0.008)return {pitch:null,rms:rms};
+    const minLag=Math.max(2,Math.floor(sampleRate/350));
+    const maxLag=Math.min(frame.length-2,Math.floor(sampleRate/65));
+    let bestLag=-1,best=-1;
+    for(let lag=minLag;lag<=maxLag;lag++){
+      let cross=0,left=0,right=0;
+      for(let i=0;i<frame.length-lag;i++){const a=frame[i],b=frame[i+lag];cross+=a*b;left+=a*a;right+=b*b}
+      const score=cross/Math.sqrt((left*right)||1);
+      if(score>best){best=score;bestLag=lag}
+    }
+    return {pitch:bestLag>0&&best>.38?sampleRate/bestLag:null,rms:rms};
+  }
+  async function analyzeBlob(blob){
+    const AudioCtx=window.AudioContext||window.webkitAudioContext;
+    if(!AudioCtx)throw new Error('Web Audio indisponível');
+    const context=new AudioCtx();
+    try{
+      const buffer=await blob.arrayBuffer();
+      const decoded=await context.decodeAudioData(buffer.slice(0));
+      const channel=decoded.getChannelData(0);
+      const factor=Math.max(1,Math.round(decoded.sampleRate/11025));
+      const sampleRate=decoded.sampleRate/factor;
+      const reduced=new Float32Array(Math.floor(channel.length/factor));
+      for(let i=0;i<reduced.length;i++)reduced[i]=channel[i*factor];
+      const frameLen=2048;
+      const hop=Math.max(frameLen,Math.floor(sampleRate*.22));
+      const pitches=[],levels=[];
+      for(let offset=0;offset+frameLen<reduced.length;offset+=hop){
+        const frame=reduced.slice(offset,offset+frameLen);
+        const info=analyzeFrame(frame,sampleRate);
+        levels.push(info.rms);
+        if(info.pitch&&info.pitch>=65&&info.pitch<=360)pitches.push(info.pitch);
+      }
+      pitches.sort(function(a,b){return a-b});
+      const median=pitches.length?pitches[Math.floor(pitches.length/2)]:null;
+      const sorted=pitches;
+      return {
+        duration:decoded.duration,
+        pitchMedian:median,
+        pitchMin:sorted.length?sorted[Math.max(0,Math.floor(sorted.length*.1))]:null,
+        pitchMax:sorted.length?sorted[Math.min(sorted.length-1,Math.floor(sorted.length*.9))]:null,
+        rms:levels.length?levels.reduce(function(a,b){return a+b},0)/levels.length:null,
+        sampleRate:decoded.sampleRate,
+        channels:decoded.numberOfChannels
+      };
+    }finally{context.close().catch(function(){})}
+  }
+  function displayAnalysis(stats,fallbackDuration){
+    const duration=Number.isFinite(stats.duration)?stats.duration:fallbackDuration;
+    $('patternDuration').textContent=Number.isFinite(duration)?formatTime(duration):'—';
+    $('patternPitch').textContent=stats.pitchMedian?Math.round(stats.pitchMedian)+' Hz':'Não estimado';
+    $('patternRange').textContent=stats.pitchMin&&stats.pitchMax?Math.round(stats.pitchMin)+'–'+Math.round(stats.pitchMax)+' Hz':'Não estimada';
+    $('patternLoudness').textContent=Number.isFinite(stats.rms)?Math.round(stats.rms*1000)/10+'%':'Não medido';
+    $('patternSummary').textContent=stats.pitchMedian
+      ?'Análise concluída. O pitch mediano estimado é uma referência de tom, não uma identificação biométrica da pessoa.'
+      :'A gravação foi capturada, mas este navegador não conseguiu analisar o pitch do formato. Você ainda pode salvar e baixar o áudio.';
+  }
+  function mimeExtension(mime){
+    mime=String(mime||'').toLowerCase();
+    if(mime.indexOf('ogg')>=0)return 'ogg';
+    if(mime.indexOf('mp4')>=0)return 'm4a';
+    if(mime.indexOf('wav')>=0)return 'wav';
+    return 'webm';
+  }
+  function safeFilename(value){
+    return String(value||'minha-voz').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60)||'minha-voz';
+  }
+  function downloadBlob(blob,filename){
+    const url=URL.createObjectURL(blob);
+    const anchor=document.createElement('a');
+    anchor.href=url;anchor.download=filename;anchor.style.display='none';
+    document.body.appendChild(anchor);anchor.click();anchor.remove();
+    setTimeout(function(){URL.revokeObjectURL(url)},2000);
+  }
+  async function blobAsWav(blob){
+    const AudioCtx=window.AudioContext||window.webkitAudioContext;
+    if(!AudioCtx)throw new Error('Seu navegador não oferece Web Audio.');
+    const context=new AudioCtx();
+    try{
+      const input=await blob.arrayBuffer();
+      const audio=await context.decodeAudioData(input.slice(0));
+      const samples=audio.getChannelData(0);
+      const dataBytes=samples.length*2;
+      const output=new ArrayBuffer(44+dataBytes);
+      const view=new DataView(output);
+      function writeString(offset,text){for(let i=0;i<text.length;i++)view.setUint8(offset+i,text.charCodeAt(i))}
+      writeString(0,'RIFF');view.setUint32(4,36+dataBytes,true);writeString(8,'WAVE');
+      writeString(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);
+      view.setUint16(22,1,true);view.setUint32(24,audio.sampleRate,true);
+      view.setUint32(28,audio.sampleRate*2,true);view.setUint16(32,2,true);view.setUint16(34,16,true);
+      writeString(36,'data');view.setUint32(40,dataBytes,true);
+      let offset=44;
+      for(let i=0;i<samples.length;i++){
+        const s=Math.max(-1,Math.min(1,samples[i]));
+        view.setInt16(offset,s<0?s*32768:s*32767,true);offset+=2;
+      }
+      return new Blob([output],{type:'audio/wav'});
+    }finally{context.close().catch(function(){})}
+  }
+  async function downloadWav(blob,baseName){
+    setStatus('Convertendo áudio para WAV…');
+    try{
+      const wav=await blobAsWav(blob);
+      downloadBlob(wav,baseName+'.wav');
+      setStatus('Arquivo WAV preparado e baixado. Você pode selecioná-lo na ferramenta de clonagem.');
+    }catch(e){setStatus('Não foi possível converter para WAV neste navegador. Baixe o áudio original e tente outro formato.',true)}
+  }
+  async function saveCurrentSample(){
+    if(!latestBlob){setStatus('Grave uma amostra antes de salvar.',true);return}
+    if(!consent.checked){setStatus('Confirme que pode usar esta voz antes de salvar.',true);consent.focus();return}
+    const name=$('profileName').value.trim();
+    if(!name){setStatus('Dê um nome ao perfil de voz antes de salvar.',true);$('profileName').focus();return}
+    saveBtn.disabled=true;
+    setStatus('Salvando amostra no armazenamento local e registrando seus padrões…');
+    let stats=lastAnalysis||{};
+    if(!stats.duration){try{stats=await analyzeBlob(latestBlob);lastAnalysis=stats}catch(e){stats={duration:elapsedAtStop,pitchMedian:null,pitchMin:null,pitchMax:null,rms:null}}}
+    const sample={
+      id:'voice-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
+      name:name,
+      accent:$('voiceAccent').value,
+      notes:$('voiceStyleNotes').value.trim(),
+      createdAt:Date.now(),
+      blob:latestBlob,
+      mimeType:latestMime||latestBlob.type||'audio/webm',
+      duration:Number.isFinite(stats.duration)?stats.duration:elapsedAtStop,
+      size:latestBlob.size,
+      pitchMedian:stats.pitchMedian||null,
+      pitchMin:stats.pitchMin||null,
+      pitchMax:stats.pitchMax||null,
+      rms:Number.isFinite(stats.rms)?stats.rms:null,
+      sampleRate:stats.sampleRate||null
+    };
+    try{
+      await dbPut(sample);
+      await renderSamples();
+      $('libraryStatus').textContent='Perfil “'+name+'” salvo neste navegador. Baixe uma cópia para manter um backup.';
+      setStatus('Amostra e perfil salvos. A voz está pronta para ser enviada manualmente à ferramenta de clonagem.');
+    }catch(error){
+      setStatus('O navegador não conseguiu guardar a amostra: '+error.message+'. Use “Baixar áudio” para salvar uma cópia no computador.',true);
+    }finally{saveBtn.disabled=false}
+  }
+  function releaseRenderUrls(){
+    renderUrls.forEach(function(url){URL.revokeObjectURL(url)});
+    renderUrls=[];
+  }
+  async function renderSamples(){
+    releaseRenderUrls();
+    let samples=[];
+    try{samples=await dbGetAll()}catch(e){
+      sampleList.innerHTML='';
+      const empty=document.createElement('div');empty.className='empty-samples';
+      empty.textContent='O armazenamento local não está disponível neste navegador. Você ainda pode gravar e baixar as amostras.';
+      sampleList.appendChild(empty);$('sampleCount').textContent='0 AMOSTRAS';return;
+    }
+    sampleList.innerHTML='';
+    $('sampleCount').textContent=samples.length+' '+(samples.length===1?'AMOSTRA':'AMOSTRAS');
+    if(!samples.length){
+      const empty=document.createElement('div');empty.className='empty-samples';
+      empty.textContent='Sua biblioteca está vazia. Grave uma amostra e clique em “Salvar amostra e perfil”.';
+      sampleList.appendChild(empty);return;
+    }
+    samples.forEach(function(sample){
+      const card=document.createElement('article');card.className='saved-sample';
+      const head=document.createElement('div');head.className='saved-sample-head';
+      const textWrap=document.createElement('div');
+      const title=document.createElement('strong');title.textContent=sample.name||'Perfil de voz';
+      const meta=document.createElement('div');meta.className='saved-sample-meta';
+      const date=new Date(sample.createdAt).toLocaleString('pt-BR');
+      meta.textContent=(sample.accent||'Idioma não informado')+' · '+formatTime(sample.duration)+' · '+(sample.size/1024/1024).toLocaleString('pt-BR',{maximumFractionDigits:2})+' MB · '+date;
+      textWrap.appendChild(title);textWrap.appendChild(meta);
+      const badge=document.createElement('span');badge.className='version';badge.textContent=sample.pitchMedian?'Pitch ~'+Math.round(sample.pitchMedian)+' Hz':'Áudio salvo';
+      head.appendChild(textWrap);head.appendChild(badge);card.appendChild(head);
+      if(sample.notes){
+        const note=document.createElement('div');note.className='saved-sample-meta';note.textContent='Notas: '+sample.notes;card.appendChild(note);
+      }
+      const url=URL.createObjectURL(sample.blob);renderUrls.push(url);
+      const audio=document.createElement('audio');audio.controls=true;audio.preload='none';audio.src=url;
+      audio.setAttribute('aria-label','Ouvir amostra '+(sample.name||'de voz'));card.appendChild(audio);
+      const actions=document.createElement('div');actions.className='saved-sample-actions';
+      const download=document.createElement('button');download.type='button';download.className='button';download.textContent='⬇️ Baixar áudio';
+      download.addEventListener('click',function(){downloadBlob(sample.blob,safeFilename(sample.name)+'-'+sample.id+'.'+mimeExtension(sample.mimeType))});
+      const wav=document.createElement('button');wav.type='button';wav.className='button';wav.textContent='🎵 Baixar WAV';
+      wav.addEventListener('click',function(){downloadWav(sample.blob,safeFilename(sample.name)+'-'+sample.id)});
+      const del=document.createElement('button');del.type='button';del.className='button delete-sample';del.textContent='🗑️ Excluir';
+      del.addEventListener('click',async function(){
+        if(!confirm('Excluir a amostra “'+(sample.name||'Perfil de voz')+'” deste navegador?'))return;
+        try{await dbDelete(sample.id);await renderSamples();$('libraryStatus').textContent='Amostra excluída do armazenamento local.'}
+        catch(e){$('libraryStatus').textContent='Não foi possível excluir a amostra.'}
+      });
+      actions.appendChild(download);actions.appendChild(wav);actions.appendChild(del);card.appendChild(actions);
+      sampleList.appendChild(card);
+    });
+  }
+  function exportIndex(){
+    dbGetAll().then(function(samples){
+      const data=samples.map(function(s){return {
+        name:s.name,accent:s.accent,notes:s.notes,createdAt:new Date(s.createdAt).toISOString(),
+        durationSeconds:s.duration,sizeBytes:s.size,pitchMedianHz:s.pitchMedian,
+        pitchRangeHz:s.pitchMin&&s.pitchMax?[s.pitchMin,s.pitchMax]:null,rms:s.rms,
+        note:'Arquivo de áudio guardado separadamente no IndexedDB do navegador.'
+      }});
+      downloadBlob(new Blob([JSON.stringify({version:'1.1.0',exportedAt:new Date().toISOString(),profiles:data},null,2)],{type:'application/json'}),'clonagem-voz-master-perfis.json');
+      $('libraryStatus').textContent='Lista de perfis exportada em JSON. Ela não inclui os próprios arquivos de áudio.';
+    }).catch(function(e){$('libraryStatus').textContent='Não foi possível exportar a lista: '+e.message});
+  }
+  startBtn.addEventListener('click',startRecording);
+  stopBtn.addEventListener('click',stopRecording);
+  saveBtn.addEventListener('click',saveCurrentSample);
+  $('downloadLatest').addEventListener('click',function(){
+    if(!latestBlob)return;
+    downloadBlob(latestBlob,safeFilename($('profileName').value)+'-referencia.'+mimeExtension(latestMime));
+  });
+  $('downloadLatestWav').addEventListener('click',function(){
+    if(latestBlob)downloadWav(latestBlob,safeFilename($('profileName').value)+'-referencia');
+  });
+  clearBtn.addEventListener('click',function(){
+    if(!confirm('Limpar a gravação atual? As amostras já salvas na biblioteca serão mantidas.'))return;
+    latestBlob=null;lastAnalysis=null;elapsedAtStop=0;
+    if(latestUrl){URL.revokeObjectURL(latestUrl);latestUrl=''}
+    latestAudio.removeAttribute('src');latestAudio.load();latestAudioWrap.hidden=true;
+    saveBtn.disabled=true;clearBtn.disabled=true;downloadBtn.disabled=true;wavBtn.disabled=true;
+    $('patternSummary').textContent='Depois de gravar, a página tentará estimar duração, frequência fundamental (tom/pitch) e nível médio de áudio.';
+    $('patternDuration').textContent='—';$('patternPitch').textContent='—';$('patternRange').textContent='—';$('patternLoudness').textContent='—';
+    timeLabel.textContent='00:00';setStatus('Gravação atual limpa. As amostras guardadas continuam na biblioteca.');
+  });
+  $('refreshSamples').addEventListener('click',function(){renderSamples();$('libraryStatus').textContent='Biblioteca atualizada.'});
+  $('exportVoiceIndex').addEventListener('click',exportIndex);
+  consent.addEventListener('change',function(){
+    saveBtn.disabled=!latestBlob||!consent.checked;
+  });
+  window.addEventListener('beforeunload',function(){
+    cleanupMic();
+    if(latestUrl)URL.revokeObjectURL(latestUrl);
+    releaseRenderUrls();
+  });
+  clearCanvas();
+  renderSamples();
+})();
+</script>
+
 </body>
 </html>
