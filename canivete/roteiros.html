@@ -13,7 +13,7 @@
 <body>
 <div id="menu" hidden><div class="sidebar"></div></div>
 <div class="wrap">
-<header class="top"><div><div class="brand">🗂️ Meus roteiros <span class="version-tag">v1.5.25</span></div><div class="sub">Organize os textos por canal e continue de onde parou.</div><details style="margin-top:6px;font-size:12px;color:var(--muted)"><summary>Sobre</summary><p>Teleprompter IA · v1.5.25</p></details></div><div class="top-actions"><a href="./teleprompter.html" style="align-self:center">← Voltar ao Teleprompter</a></div></header>
+<header class="top"><div><div class="brand">🗂️ Meus roteiros <span class="version-tag">v1.5.26</span></div><div class="sub">Organize os textos por canal e continue de onde parou.</div><details style="margin-top:6px;font-size:12px;color:var(--muted)"><summary>Sobre</summary><p>Teleprompter IA · v1.5.26</p></details></div><div class="top-actions"><a href="./teleprompter.html" style="align-self:center">← Voltar ao Teleprompter</a></div></header>
 <section class="panel" style="margin-bottom:16px"><div class="account"><strong id="accountLabel">Conta Google não conectada</strong><button class="primary" id="login">🔑 Conectar conta Google</button><button id="logout" class="hidden">Sair</button><button id="sync" class="hidden">☁️ Sincronizar agora</button></div><div class="notice">Os roteiros ficam salvos neste navegador. Ao conectar a mesma conta Google usada no Canivete, você pode sincronizar sua biblioteca entre dispositivos.</div><div id="status" class="status" role="status" aria-live="polite">Pronto para organizar seus roteiros.</div></section>
 <div class="layout">
 <aside class="panel"><h2>📁 Pastas dos canais</h2><div id="channels" class="channels"></div><div class="channel-add"><input id="newChannel" placeholder="Novo canal" aria-label="Nome do novo canal" maxlength="60"><button id="addChannel">＋</button></div><p class="sub">Exemplos: Jhon Motivação e Política.</p></aside>
@@ -21,7 +21,7 @@
 </div>
 </div>
 <script type="module">
-import {loginGoogleTeleprompter,logout as googleLogout,getUser,initAuthWatcher,authPronto,obterRoteirosTeleprompter,salvarRoteirosTeleprompter} from '../firebase-auth.js?v=1.5.25';
+import {loginGoogleTeleprompter,logout as googleLogout,getUser,initAuthWatcher,authPronto,obterRoteirosTeleprompter,salvarRoteirosTeleprompter} from '../firebase-auth.js?v=1.5.26';
 const $=id=>document.getElementById(id);
 const KEY='canivete.teleprompter.scripts.v1';
 let channels=['Jhon Motivação','Política'],scripts=[],activeChannel='Jhon Motivação',selectedId=null,user=null,cloudLoaded=false;
