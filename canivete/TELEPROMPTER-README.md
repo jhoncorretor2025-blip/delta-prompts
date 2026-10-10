@@ -1,4 +1,4 @@
-# Teleprompter IA — Canivete v1.5.12
+# Teleprompter IA — Canivete v1.5.13
 
 Módulo independente para leitura de roteiros, sem alterar os dados ou arquivos financeiros do Canivete.
 
@@ -12,10 +12,10 @@ O workflow **Teleprompter IA - Windows** gera:
 - Instalador Windows (.exe)
 - Versão portátil Windows (.exe)
 
-Para gerar os arquivos, abra o repositório no GitHub, vá em **Actions → Teleprompter IA - Windows → Run workflow**. Depois abra a execução concluída e baixe o artefato `teleprompter-ia-windows-v1.5.12`.
+Para gerar os arquivos, abra o repositório no GitHub, vá em **Actions → Teleprompter IA - Windows → Run workflow**. Depois abra a execução concluída e baixe o artefato `teleprompter-ia-windows-v1.5.13`.
 
 ## Segurança e escopo
 - Não modificar `canivete.html` nem os dados existentes.
 - Electron usa `contextIsolation`, `nodeIntegration: false` e um preload restrito.
 - O executável gerado pelo workflow é um artefato de CI, não um aplicativo assinado digitalmente.
-- Versão atual do módulo: **v1.5.12**.
+- Versão atual do módulo: **v1.5.13**.
