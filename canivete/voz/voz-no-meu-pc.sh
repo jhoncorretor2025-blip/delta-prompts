@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Clonagem de Voz Master — servidor no seu computador (Mac/Linux) v1.5.12
+# Clonagem de Voz Master — servidor no seu computador (Mac/Linux) v1.5.13
 set -e
 cd "$(dirname "$0")"
-echo "=== CLONAGEM DE VOZ MASTER — servidor no seu computador (v1.5.12) ==="
+echo "=== CLONAGEM DE VOZ MASTER — servidor no seu computador (v1.5.13) ==="
 PY=$(command -v python3.11 || command -v python3 || true)
 [ -z "$PY" ] && { echo "❌ Instale o Python 3.11 (python.org)"; exit 1; }
 command -v git >/dev/null || { echo "❌ Instale o Git"; exit 1; }
