@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101426">
+<meta name="description" content="Clonagem de Voz Master do Canivete: teste o Chatterbox em português brasileiro, prepare uma amostra de voz e veja como instalar o projeto aberto.">
+<title>Clonagem de Voz Master | Canivete</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2d;--panel2:#172138;--line:#293650;--text:#f5f7ff;--muted:#a9b4ca;--blue:#8b9cff;--violet:#b2a1ff;--green:#6ee7b7;--amber:#f8d477;--red:#fda4af;--radius:20px;--shadow:0 18px 50px rgba(0,0,0,.24)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:radial-gradient(ellipse at top left,rgba(83,76,190,.20),transparent 34%),radial-gradient(ellipse at top right,rgba(39,145,177,.13),transparent 30%),var(--bg);color:var(--text);font:15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,textarea{font:inherit}
+a{color:var(--blue);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #a5b4fc;outline-offset:3px}
+button{cursor:pointer}
+.wrap{width:min(1160px,100%);margin:auto;padding:22px 24px 54px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:850;letter-spacing:.01em}
+.brand-mark{display:grid;place-items:center;width:40px;height:40px;border:1px solid #424b72;border-radius:13px;background:linear-gradient(135deg,#29315c,#242948);font-size:20px}
+.brand small{display:block;color:var(--muted);font-weight:550;font-size:11px;letter-spacing:0;margin-top:2px}
+.toplinks{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.link-button,.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--text);font-size:12px;font-weight:800;background:#182238;transition:transform .15s,border-color .15s,background .15s}
+.link-button:hover,.button:hover{transform:translateY(-1px);border-color:#6671a3;background:#202b46}
+.button.primary{background:linear-gradient(115deg,#6978f6,#8c66df);border-color:transparent;color:#fff;box-shadow:0 8px 24px rgba(103,120,246,.2)}
+.button.primary:hover{background:linear-gradient(115deg,#7b88ff,#a07be8)}
+.button.subtle{background:transparent}
+.version{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:#1b2641;border:1px solid #3d4b76;color:#cbd3ff;font-size:10px;font-weight:850;white-space:nowrap}
+.hero{position:relative;overflow:hidden;border:1px solid #39416f;border-radius:28px;padding:clamp(24px,5vw,52px);background:linear-gradient(118deg,rgba(38,48,90,.96),rgba(29,37,67,.95) 54%,rgba(16,72,91,.88));box-shadow:var(--shadow);margin-bottom:18px}
+.hero:before{content:"";position:absolute;width:320px;height:320px;border:1px solid rgba(206,214,255,.12);border-radius:50%;right:-75px;top:-130px;box-shadow:0 0 0 35px rgba(206,214,255,.025),0 0 0 75px rgba(206,214,255,.025);pointer-events:none}
+.hero-content{position:relative;max-width:760px}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;color:#c3ccff;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:13px}
+.hero h1{font-size:clamp(33px,6vw,58px);line-height:1.02;letter-spacing:-.045em;margin:0;max-width:740px}
+.hero h1 span{color:#a7b3ff}
+.hero p{font-size:clamp(14px,2vw,17px);max-width:670px;color:#d6def5;margin:17px 0 22px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.hero-note{font-size:11px;color:#c1cbe4;margin-top:15px}
+.metric-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:22px}
+.metric{background:rgba(18,26,45,.9);border:1px solid var(--line);border-radius:16px;padding:16px;min-width:0}
+.metric .m-icon{font-size:18px;margin-bottom:9px}
+.metric strong{display:block;font-size:13px}
+.metric p{font-size:11px;color:var(--muted);margin:5px 0 0;line-height:1.45}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:27px 0 12px}
+.section-head h2{font-size:21px;line-height:1.2;letter-spacing:-.025em;margin:0}
+.section-head p{font-size:12px;color:var(--muted);margin:5px 0 0}
+.layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(310px,.92fr);gap:14px;align-items:start}
+.stack{display:grid;gap:14px;min-width:0}
+.panel{background:linear-gradient(160deg,rgba(22,32,54,.98),rgba(16,24,42,.98));border:1px solid var(--line);border-radius:var(--radius);padding:21px;min-width:0;box-shadow:0 8px 25px rgba(0,0,0,.12)}
+.panel h3{font-size:15px;margin:0 0 6px;letter-spacing:-.01em}
+.panel-intro{font-size:12px;color:var(--muted);margin:0 0 16px}
+.field{display:grid;gap:7px;margin-bottom:14px}
+.field label{font-size:12px;font-weight:800;color:#dce4f7}
+.field small,.muted{color:var(--muted);font-size:11px}
+textarea,input[type=file]{width:100%}
+textarea{min-height:142px;resize:vertical;padding:13px 14px;border:1px solid #35425e;border-radius:12px;background:#0a1120;color:var(--text);line-height:1.65}
+textarea::placeholder{color:#75829e}
+input[type=file]{padding:12px;border:1px dashed #46557a;border-radius:12px;background:#0c1425;color:var(--muted);font-size:12px}
+.sample-card{border:1px solid #2d4262;background:rgba(24,51,72,.32);border-radius:13px;padding:13px;margin-bottom:14px}
+.sample-top{display:flex;align-items:flex-start;justify-content:space-between;gap:9px}
+.sample-top strong{font-size:12px}
+.sample-top span{font-size:10px;color:var(--green);font-weight:850}
+.sample-info{font-size:11px;color:var(--muted);margin-top:8px;overflow-wrap:anywhere}
+.checks{display:grid;gap:9px;margin:12px 0 16px}
+.check{display:flex;gap:9px;align-items:flex-start;color:#c9d3e8;font-size:11px}
+.check .tick{flex:0 0 18px;height:18px;display:grid;place-items:center;border-radius:6px;background:#1d3a3c;color:var(--green);font-size:11px;font-weight:900}
+.consent{display:flex;align-items:flex-start;gap:9px;margin:14px 0;color:#d1d9ea;font-size:11px}
+.consent input{margin-top:3px;accent-color:#8b9cff}
+.studio-actions{display:flex;gap:8px;flex-wrap:wrap}
+.status{min-height:18px;font-size:11px;color:var(--green);margin-top:10px}
+.notice{border-radius:13px;padding:13px 14px;font-size:11px;line-height:1.55;border:1px solid #354365;background:#171f37;color:#cdd8f1}
+.notice strong{display:block;color:#f5f7ff;margin-bottom:3px;font-size:12px}
+.notice.warning{border-color:#67552d;background:rgba(78,59,22,.25);color:#ead8a5}
+.notice.good{border-color:#27594c;background:rgba(24,80,61,.22);color:#b4f4d9}
+.feature-list{display:grid;gap:10px;margin-top:14px}
+.feature{display:grid;grid-template-columns:37px minmax(0,1fr);gap:11px;padding:12px 0;border-bottom:1px solid rgba(65,79,107,.58)}
+.feature:last-child{border:0;padding-bottom:0}
+.feature-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:#202b49;font-size:17px}
+.feature strong{display:block;font-size:12px}
+.feature p{font-size:11px;color:var(--muted);margin:3px 0 0}
+.resource-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.resource{display:flex;flex-direction:column;align-items:flex-start;background:linear-gradient(145deg,#18223a,#121a2c);border:1px solid var(--line);border-radius:17px;padding:18px;min-height:177px}
+.resource-icon{font-size:23px;margin-bottom:13px}
+.resource h3{font-size:13px;margin:0 0 6px}
+.resource p{flex:1;color:var(--muted);font-size:11px;margin:0 0 15px}
+.resource a{font-size:11px;font-weight:850;text-decoration:none}
+.command{position:relative;background:#090f1c;border:1px solid #303b55;border-radius:13px;padding:14px 92px 14px 14px;color:#d9e2f4;font:12px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;white-space:pre-wrap}
+.copy-command{position:absolute;right:8px;top:8px;border:1px solid #3a4764;background:#18243b;color:#dce5f7;border-radius:9px;padding:7px 9px;font-size:10px;font-weight:850}
+.steps{display:grid;gap:0;counter-reset:step}
+.step{display:grid;grid-template-columns:32px minmax(0,1fr);gap:11px;padding:13px 0;border-bottom:1px solid rgba(65,79,107,.5)}
+.step:last-child{border:0;padding-bottom:0}
+.step-number{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:#282e54;border:1px solid #484d82;color:#d3d7ff;font-size:12px;font-weight:900}
+.step strong{font-size:12px;display:block}
+.step p{font-size:11px;color:var(--muted);margin:3px 0 0}
+.faq details{border-top:1px solid var(--line);padding:13px 0}
+.faq details:first-of-type{border-top:0}
+.faq summary{font-size:12px;font-weight:850;cursor:pointer}
+.faq details p{color:var(--muted);font-size:11px;margin:9px 0 0}
+.footer{border-top:1px solid var(--line);margin-top:30px;padding-top:18px;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;color:var(--muted);font-size:10px}
+.footer-links{display:flex;gap:13px;flex-wrap:wrap}
+.footer a{font-weight:750;text-decoration:none}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.topbar{align-items:flex-start}.metric-row{gap:8px}.metric{padding:13px}}
+@media(max-width:560px){.wrap{padding:13px 12px 35px}.topbar{flex-direction:column}.toplinks{width:100%}.toplinks a{flex:1}.hero{border-radius:22px;padding:25px 20px}.hero h1{font-size:37px}.hero-actions{display:grid;grid-template-columns:1fr}.hero-actions a{width:100%}.metric-row{grid-template-columns:1fr}.metric{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:start;gap:0 9px}.metric .m-icon{grid-row:1/3;margin:1px 0 0}.metric p{margin-top:3px}.panel{padding:16px;border-radius:16px}.resource-grid{grid-template-columns:1fr}.resource{min-height:0}.section-head{align-items:flex-start;flex-direction:column;gap:4px}.footer{flex-direction:column}.studio-actions{display:grid;grid-template-columns:1fr}.studio-actions a,.studio-actions button{width:100%}.command{padding-right:14px;padding-top:43px}.copy-command{left:8px;right:auto}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">🎙️</span>
+      <span>CANIVETE <small>LABORATÓRIO DE VOZ IA</small></span>
+      <span class="version" id="versionBadge">v1.0.0</span>
+    </div>
+    <nav class="toplinks" aria-label="Atalhos">
+      <a class="link-button" href="../canivete.html">← Canivete</a>
+      <a class="link-button" href="./teleprompter.html">🎬 Teleprompter</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow"><span>✦</span> CLONAGEM DE VOZ MASTER</div>
+      <h1>Dê voz aos seus textos.<br><span>Com a sua identidade.</span></h1>
+      <p>Uma central prática para preparar um áudio de referência, experimentar a clonagem de voz em português brasileiro e acessar o projeto aberto Chatterbox para instalar por conta própria.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-pt-br" target="_blank" rel="noopener noreferrer">🎧 Testar clonagem online ↗</a>
+        <a class="button" href="#preparar">🎙️ Preparar meu áudio</a>
+      </div>
+      <div class="hero-note">Projeto recomendado: Chatterbox · modelo dedicado pt-BR · interface hospedada por terceiros.</div>
+    </div>
+  </section>
+
+  <div class="metric-row" aria-label="Resumo">
+    <article class="metric"><div class="m-icon">🇧🇷</div><div><strong>Português brasileiro</strong><p>Modelo dedicado à fala em português do Brasil.</p></div></article>
+    <article class="metric"><div class="m-icon">🧩</div><div><strong>Código aberto</strong><p>Consulte o código, baixe os arquivos e configure sua instalação.</p></div></article>
+    <article class="metric"><div class="m-icon">🔒</div><div><strong>Controle do áudio</strong><p>Esta página só verifica o arquivo no navegador; não envia nem clona áudio.</p></div></article>
+  </div>
+
+  <div class="section-head" id="preparar">
+    <div><h2>🎙️ Prepare sua amostra de voz</h2><p>Confira o áudio e escreva o texto antes de abrir a demonstração oficial.</p></div>
+    <span class="version">FERRAMENTA LOCAL · v1.0.0</span>
+  </div>
+
+  <div class="layout">
+    <main class="stack">
+      <section class="panel">
+        <h3>1. Selecione um áudio de referência</h3>
+        <p class="panel-intro">Use uma gravação limpa, com uma única pessoa falando. O arquivo é lido apenas pelo seu navegador nesta página.</p>
+        <div class="field">
+          <label for="voiceFile">Arquivo de áudio</label>
+          <input id="voiceFile" type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.webm">
+          <small>Uma amostra de cerca de 10 segundos é um bom ponto de partida. A compatibilidade final depende do formato aceito pela demonstração.</small>
+        </div>
+        <div class="sample-card" aria-live="polite">
+          <div class="sample-top"><strong id="fileName">Nenhum arquivo selecionado</strong><span id="fileStatus">AGUARDANDO ÁUDIO</span></div>
+          <div class="sample-info" id="fileInfo">Selecione um arquivo para visualizar o tamanho e, quando compatível, a duração. Nada é enviado por esta página.</div>
+        </div>
+        <div class="checks">
+          <div class="check"><span class="tick">✓</span><span>Grave em ambiente silencioso, sem música de fundo ou eco forte.</span></div>
+          <div class="check"><span class="tick">✓</span><span>Fale naturalmente, sem sussurrar nem mudar de voz durante a gravação.</span></div>
+          <div class="check"><span class="tick">✓</span><span>Use sua própria voz ou uma gravação que você tenha autorização para utilizar.</span></div>
+        </div>
+        <label class="consent"><input type="checkbox" id="consent"><span>Confirmo que tenho direito ou autorização para usar a voz desta gravação.</span></label>
+        <div class="studio-actions">
+          <a id="openDemo" class="button primary" href="https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-pt-br" target="_blank" rel="noopener noreferrer">Abrir demonstração pt-BR ↗</a>
+          <button type="button" class="button subtle" id="clearAudio">Limpar seleção</button>
+        </div>
+        <div class="status" id="audioStatus" role="status" aria-live="polite">Pronto para verificar sua amostra.</div>
+        <p class="muted">Importante: ao abrir a demonstração, selecione o áudio novamente dentro dela. Esta página não transfere o arquivo automaticamente.</p>
+      </section>
+
+      <section class="panel">
+        <h3>2. Prepare o texto para a voz</h3>
+        <p class="panel-intro">Escreva o que deseja narrar. Você pode copiar o texto daqui e colar na demonstração.</p>
+        <div class="field">
+          <label for="voiceText">Texto da narração</label>
+          <textarea id="voiceText" maxlength="6000" placeholder="Digite aqui o texto que deseja transformar em fala...">Olá! Hoje quero apresentar uma oportunidade especial. Vou explicar os principais detalhes com calma para que você possa avaliar se ela faz sentido para você.</textarea>
+          <small><span id="charCount">151</span> caracteres · o texto é guardado apenas nesta página enquanto ela estiver aberta.</small>
+        </div>
+        <div class="studio-actions">
+          <button class="button primary" type="button" id="copyText">📋 Copiar texto</button>
+          <button class="button" type="button" id="sampleText">✨ Usar exemplo imobiliário</button>
+        </div>
+        <div class="status" id="textStatus" role="status" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <aside class="stack">
+      <section class="panel">
+        <h3>⚡ Caminho recomendado</h3>
+        <p class="panel-intro">Para experimentar agora sem configurar Python ou baixar vários gigabytes.</p>
+        <div class="steps">
+          <div class="step"><span class="step-number">1</span><div><strong>Prepare uma gravação</strong><p>Escolha uma amostra limpa da voz que você tem permissão para usar.</p></div></div>
+          <div class="step"><span class="step-number">2</span><div><strong>Abra a demonstração pt-BR</strong><p>Carregue o áudio de referência diretamente na ferramenta hospedada.</p></div></div>
+          <div class="step"><span class="step-number">3</span><div><strong>Insira o texto e gere</strong><p>Envie o texto no formulário da demonstração e ouça o resultado.</p></div></div>
+          <div class="step"><span class="step-number">4</span><div><strong>Salve o resultado</strong><p>Use as opções disponibilizadas pela demonstração para ouvir ou baixar o áudio.</p></div></div>
+        </div>
+        <a class="button primary" style="width:100%;margin-top:17px" href="https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-pt-br" target="_blank" rel="noopener noreferrer">Começar teste online ↗</a>
+      </section>
+
+      <section class="panel">
+        <h3>🖥️ Rodar no computador</h3>
+        <p class="panel-intro">Para quem quer configurar o código aberto e ter mais controle sobre o processo.</p>
+        <div class="notice warning"><strong>Antes de instalar</strong>Este download é o código-fonte, não um instalador de Windows com tudo pronto. São necessários Python, dependências e arquivos de modelo. O projeto exige recursos de memória e processamento; teste online primeiro se seu computador tiver hardware limitado.</div>
+        <div class="feature-list">
+          <div class="feature"><div class="feature-icon">🐍</div><div><strong>Python e dependências</strong><p>Confira as versões e instruções oficiais antes de instalar.</p></div></div>
+          <div class="feature"><div class="feature-icon">📦</div><div><strong>Baixe os modelos separadamente</strong><p>Os pesos do modelo podem ocupar vários gigabytes.</p></div></div>
+          <div class="feature"><div class="feature-icon">🛠️</div><div><strong>Interface própria exige configuração</strong><p>O repositório é uma biblioteca de modelos e exemplos, não necessariamente uma aplicação pronta com botões.</p></div></div>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <div class="section-head" id="downloads">
+    <div><h2>📥 Downloads e recursos oficiais</h2><p>Abra os links abaixo para testar, consultar documentação ou baixar os arquivos do projeto.</p></div>
+  </div>
+  <div class="resource-grid">
+    <article class="resource"><div class="resource-icon">🎧</div><h3>Demonstração em português</h3><p>Teste a geração de fala e clonagem de voz no navegador. O serviço é hospedado externamente e pode ter limites de uso ou fila.</p><a href="https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-pt-br" target="_blank" rel="noopener noreferrer">Abrir demo pt-BR ↗</a></article>
+    <article class="resource"><div class="resource-icon">💻</div><h3>Código-fonte no GitHub</h3><p>Consulte o projeto Chatterbox, os exemplos de utilização e as instruções oficiais de instalação.</p><a href="https://github.com/resemble-ai/chatterbox" target="_blank" rel="noopener noreferrer">Abrir repositório ↗</a></article>
+    <article class="resource"><div class="resource-icon">🇧🇷</div><h3>Modelo dedicado pt-BR</h3><p>Consulte os arquivos do modelo para português brasileiro e os requisitos para utilizá-lo.</p><a href="https://huggingface.co/ResembleAI/Chatterbox-Multilingual-pt-br" target="_blank" rel="noopener noreferrer">Ver modelo e arquivos ↗</a></article>
+  </div>
+
+  <div class="section-head" id="instalacao">
+    <div><h2>⌨️ Comandos para instalação local</h2><p>Exemplo inicial de instalação a partir do repositório oficial. Leia o README antes de executar.</p></div>
+  </div>
+  <section class="panel">
+    <div class="notice warning" style="margin-bottom:14px"><strong>Atenção</strong>Os comandos abaixo são uma referência de configuração, não garantia de instalação automática no Windows. Dependências de áudio, PyTorch, GPU e memória variam conforme o computador e o sistema operacional.</div>
+    <div class="command" id="installCommands">git clone https://github.com/resemble-ai/chatterbox.git
+cd chatterbox
+py -3.11 -m venv .venv
+.\.venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -e .<button class="copy-command" type="button" data-copy="installCommands">Copiar comandos</button></div>
+    <p class="muted">O projeto oficial documenta instalação a partir do código e uso por Python. Esses comandos não criam sozinhos uma interface gráfica pronta; consulte o README para os exemplos e para escolher o dispositivo de processamento.</p>
+    <div class="studio-actions" style="margin-top:12px">
+      <a class="button" href="https://github.com/resemble-ai/chatterbox/archive/refs/heads/master.zip" target="_blank" rel="noopener noreferrer">⬇️ Baixar código ZIP</a>
+      <a class="button" href="https://github.com/resemble-ai/chatterbox#installation" target="_blank" rel="noopener noreferrer">📖 Ler instalação oficial ↗</a>
+      <a class="button" href="https://huggingface.co/ResembleAI/Chatterbox-Multilingual-pt-br/tree/main" target="_blank" rel="noopener noreferrer">📦 Arquivos do modelo ↗</a>
+    </div>
+    <div class="status" id="copyStatus" role="status" aria-live="polite"></div>
+  </section>
+
+  <div class="section-head" id="duvidas">
+    <div><h2>❓ Dúvidas rápidas</h2><p>Informações importantes para usar a ferramenta com segurança.</p></div>
+  </div>
+  <section class="panel faq">
+    <details open><summary>Esta página já clona a voz diretamente?</summary><p>Não. Esta página organiza os recursos, verifica localmente os metadados do áudio selecionado e ajuda a preparar o texto. A geração acontece na demonstração externa ou em uma instalação própria do Chatterbox.</p></details>
+    <details><summary>Meu áudio é enviado quando eu seleciono o arquivo aqui?</summary><p>Não. Esta página não faz upload nem envia o arquivo selecionado. Para experimentar a clonagem, abra a demonstração e escolha o áudio diretamente nela; nesse momento, os dados ficam sujeitos às condições do serviço externo.</p></details>
+    <details><summary>O projeto é gratuito?</summary><p>O código-fonte do Chatterbox usa a licença MIT. A demonstração hospedada pode ter limitações de capacidade ou disponibilidade e não é controlada por esta página. Confira os termos atuais nos links oficiais.</p></details>
+    <details><summary>Posso clonar qualquer voz?</summary><p>Use sua própria voz ou obtenha autorização explícita da pessoa gravada. Não use clonagem para se passar por outra pessoa, enganar terceiros ou produzir conteúdo sem consentimento.</p></details>
+    <details><summary>O que devo fazer se a demonstração estiver indisponível?</summary><p>Tente novamente mais tarde ou consulte o repositório e a documentação para configurar o modelo localmente. Não há garantia de disponibilidade contínua de serviços hospedados gratuitamente.</p></details>
+  </section>
+
+  <footer class="footer">
+    <div>Clonagem de Voz Master · <span id="footerVersion">v1.0.0</span><br>Uma central de recursos do Canivete. A geração de áudio é realizada por ferramentas externas ou por uma instalação própria.</div>
+    <nav class="footer-links" aria-label="Navegação inferior">
+      <a href="../canivete.html">Canivete</a>
+      <a href="./teleprompter.html">Teleprompter</a>
+      <a href="https://github.com/resemble-ai/chatterbox" target="_blank" rel="noopener noreferrer">GitHub do Chatterbox ↗</a>
+    </nav>
+  </footer>
+</div>
+<script>
+(function(){
+  'use strict';
+  const RELEASE='1.0.0';
+  const fileInput=document.getElementById('voiceFile');
+  const fileName=document.getElementById('fileName');
+  const fileStatus=document.getElementById('fileStatus');
+  const fileInfo=document.getElementById('fileInfo');
+  const audioStatus=document.getElementById('audioStatus');
+  const consent=document.getElementById('consent');
+  const openDemo=document.getElementById('openDemo');
+  const voiceText=document.getElementById('voiceText');
+  const charCount=document.getElementById('charCount');
+  let objectUrl='';
+  document.getElementById('versionBadge').textContent='v'+RELEASE;
+  document.getElementById('footerVersion').textContent='v'+RELEASE;
+
+  function readableSize(bytes){
+    if(!Number.isFinite(bytes)||bytes<0)return 'Tamanho indisponível';
+    if(bytes<1024*1024)return (bytes/1024).toLocaleString('pt-BR',{maximumFractionDigits:0})+' KB';
+    return (bytes/(1024*1024)).toLocaleString('pt-BR',{maximumFractionDigits:2})+' MB';
+  }
+  function readableDuration(seconds){
+    if(!Number.isFinite(seconds)||seconds<0)return 'duração não reconhecida';
+    const minutes=Math.floor(seconds/60);
+    const rest=Math.round(seconds%60);
+    return minutes ? minutes+' min '+String(rest).padStart(2,'0')+' s' : rest+' s';
+  }
+  fileInput.addEventListener('change',function(){
+    const file=fileInput.files&&fileInput.files[0];
+    if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl='';}
+    if(!file){
+      fileName.textContent='Nenhum arquivo selecionado';
+      fileStatus.textContent='AGUARDANDO ÁUDIO';
+      fileInfo.textContent='Selecione um arquivo para visualizar o tamanho e, quando compatível, a duração. Nada é enviado por esta página.';
+      audioStatus.textContent='Seleção limpa.';
+      return;
+    }
+    fileName.textContent=file.name;
+    fileStatus.textContent='ARQUIVO SELECIONADO';
+    fileInfo.textContent='Tamanho: '+readableSize(file.size)+' · Tipo: '+(file.type||'formato não identificado')+' · Verificando duração…';
+    audioStatus.textContent='Arquivo selecionado localmente. Ele ainda não foi enviado para nenhum serviço.';
+    if(!file.type.startsWith('audio/')&&!/\.(wav|mp3|m4a|ogg|webm|aac|flac)$/i.test(file.name)){
+      fileStatus.textContent='VERIFIQUE O FORMATO';
+      fileInfo.textContent='O arquivo não parece ser um formato de áudio comum. Confira se a demonstração externa aceita esse formato.';
+      return;
+    }
+    objectUrl=URL.createObjectURL(file);
+    const audio=document.createElement('audio');
+    audio.preload='metadata';
+    audio.onloadedmetadata=function(){
+      fileInfo.textContent='Tamanho: '+readableSize(file.size)+' · Duração: '+readableDuration(audio.duration)+' · Tipo: '+(file.type||'áudio');
+      if(Number.isFinite(audio.duration)&&audio.duration>30){
+        audioStatus.textContent='Amostra longa. Se a demonstração aceitar, prefira um trecho curto e limpo para começar.';
+      }else{
+        audioStatus.textContent='Metadados lidos no navegador. Para gerar a voz, abra a demonstração e selecione o arquivo lá também.';
+      }
+      URL.revokeObjectURL(objectUrl);
+      objectUrl='';
+    };
+    audio.onerror=function(){
+      fileInfo.textContent='Tamanho: '+readableSize(file.size)+' · Duração não reconhecida pelo navegador. Você ainda pode tentar usar o arquivo na demonstração externa.';
+      audioStatus.textContent='Não foi possível ler a duração localmente.';
+      if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl='';}
+    };
+    audio.src=objectUrl;
+  });
+  consent.addEventListener('change',function(){
+    openDemo.setAttribute('aria-label',consent.checked?'Abrir demonstração externa em nova aba':'Marque a confirmação de autorização antes de continuar');
+  });
+  openDemo.addEventListener('click',function(event){
+    if(!consent.checked){
+      event.preventDefault();
+      audioStatus.textContent='Marque a confirmação de que tem autorização para usar esta voz antes de continuar.';
+      consent.focus();
+      return;
+    }
+    audioStatus.textContent='A demonstração será aberta em outra aba. Selecione o áudio novamente dentro dela.';
+  });
+  function refreshCount(){
+    charCount.textContent=voiceText.value.length.toLocaleString('pt-BR');
+  }
+  voiceText.addEventListener('input',refreshCount);
+  refreshCount();
+  document.getElementById('copyText').addEventListener('click',async function(){
+    const status=document.getElementById('textStatus');
+    if(!voiceText.value.trim()){status.textContent='Escreva um texto antes de copiar.';return;}
+    try{
+      await navigator.clipboard.writeText(voiceText.value);
+      status.textContent='Texto copiado. Cole-o na demonstração de voz.';
+    }catch(e){
+      voiceText.focus();voiceText.select();
+      status.textContent='Selecione o texto e copie com Ctrl+C.';
+    }
+  });
+  document.getElementById('sampleText').addEventListener('click',function(){
+    voiceText.value='Olá! Tudo bem? Estou passando para apresentar uma oportunidade imobiliária e explicar os detalhes com clareza. Se você procura um lugar para morar ou investir, me conte o que é mais importante para você. Assim posso ajudar a encontrar uma opção que combine com suas necessidades.';
+    refreshCount();
+    document.getElementById('textStatus').textContent='Exemplo imobiliário carregado. Você pode editar o texto antes de copiar.';
+  });
+  document.getElementById('clearAudio').addEventListener('click',function(){
+    fileInput.value='';
+    fileInput.dispatchEvent(new Event('change'));
+    consent.checked=false;
+  });
+  document.querySelectorAll('[data-copy]').forEach(function(button){
+    button.addEventListener('click',async function(){
+      const target=document.getElementById(button.dataset.copy);
+      const status=document.getElementById('copyStatus');
+      const text=target?target.innerText.replace(/\s*Copiar comandos\s*$/,'').trim():'';
+      try{
+        await navigator.clipboard.writeText(text);
+        status.textContent='Comandos copiados. Revise os requisitos oficiais antes de executar.';
+      }catch(e){
+        status.textContent='A cópia automática não funcionou neste navegador. Selecione os comandos e copie manualmente.';
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
