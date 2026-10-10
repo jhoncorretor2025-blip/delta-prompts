@@ -43,7 +43,7 @@ function resolveLocal(sourceFile, raw) {
   if (value === '/delta-prompts' || value === base) value = 'index.html';
   else if (value.startsWith(base)) value = value.slice(base.length);
   else if (value.startsWith('/')) value = value.slice(1);
-  else value = path.relative(ROOT, path.dirname(sourceFile)) + '/' + value;
+  else value = path.join(path.relative(ROOT, path.dirname(sourceFile)), value);
 
   const candidate = path.resolve(ROOT, value);
   if (candidate !== ROOT && !candidate.startsWith(ROOT + path.sep)) return null;
