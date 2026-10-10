@@ -13,7 +13,7 @@
 <body>
 <div id="menu" hidden><div class="sidebar"></div></div>
 <div class="wrap">
-<header class="top"><div><div class="brand">🗂️ Meus roteiros <span class="version-tag">v1.5.20</span></div><div class="sub">Organize os textos por canal e continue de onde parou.</div><details style="margin-top:6px;font-size:12px;color:var(--muted)"><summary>Sobre</summary><p>Teleprompter IA · v1.5.20</p></details></div><div class="top-actions"><a href="./teleprompter.html" style="align-self:center">← Voltar ao Teleprompter</a></div></header>
+<header class="top"><div><div class="brand">🗂️ Meus roteiros <span class="version-tag">v1.5.21</span></div><div class="sub">Organize os textos por canal e continue de onde parou.</div><details style="margin-top:6px;font-size:12px;color:var(--muted)"><summary>Sobre</summary><p>Teleprompter IA · v1.5.21</p></details></div><div class="top-actions"><a href="./teleprompter.html" style="align-self:center">← Voltar ao Teleprompter</a></div></header>
 <section class="panel" style="margin-bottom:16px"><div class="account"><strong id="accountLabel">Conta Google não conectada</strong><button class="primary" id="login">🔑 Conectar conta Google</button><button id="logout" class="hidden">Sair</button><button id="sync" class="hidden">☁️ Sincronizar agora</button></div><div class="notice">Os roteiros ficam salvos neste navegador. Ao conectar a mesma conta Google usada no Canivete, você pode sincronizar sua biblioteca entre dispositivos.</div><div id="status" class="status" role="status" aria-live="polite">Pronto para organizar seus roteiros.</div></section>
 <div class="layout">
 <aside class="panel"><h2>📁 Pastas dos canais</h2><div id="channels" class="channels"></div><div class="channel-add"><input id="newChannel" placeholder="Novo canal" aria-label="Nome do novo canal" maxlength="60"><button id="addChannel">＋</button></div><p class="sub">Exemplos: Jhon Motivação e Política.</p></aside>
@@ -21,13 +21,36 @@
 </div>
 </div>
 <script type="module">
-import {loginGoogleTeleprompter,logout as googleLogout,getUser,initAuthWatcher,authPronto,obterRoteirosTeleprompter,salvarRoteirosTeleprompter} from '../firebase-auth.js?v=1.5.20';
+import {loginGoogleTeleprompter,logout as googleLogout,getUser,initAuthWatcher,authPronto,obterRoteirosTeleprompter,salvarRoteirosTeleprompter} from '../firebase-auth.js?v=1.5.21';
 const $=id=>document.getElementById(id);
 const KEY='canivete.teleprompter.scripts.v1';
 let channels=['Jhon Motivação','Política'],scripts=[],activeChannel='Jhon Motivação',selectedId=null,user=null,cloudLoaded=false;
 const uid=()=> 'r-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
 const setStatus=(s,bad=false)=>{$('status').textContent=s;$('status').style.color=bad?'#fca5a5':'#86efac'};
 function readLocal(){try{const x=JSON.parse(localStorage.getItem(KEY)||'{}');if(Array.isArray(x.channels)&&x.channels.length)channels=x.channels;if(Array.isArray(x.scripts))scripts=x.scripts}catch(e){}}
+function migrateLegacyLibrary(){
+ let legacy=[];
+ try{const value=JSON.parse(localStorage.getItem('canivete.teleprompter.library.v1')||'[]');if(Array.isArray(value))legacy=value}catch(e){}
+ if(!legacy.length)return 0;
+ const existingIds=new Set(scripts.map(item=>item.id));
+ const defaultChannel=channels[0]||'Jhon Motivação';
+ if(!channels.includes(defaultChannel))channels.unshift(defaultChannel);
+ let imported=0;
+ legacy.forEach((old,index)=>{
+  const title=String(old?.name||old?.title||'').trim();
+  const body=String(old?.script||old?.body||'').trim();
+  if(!title||!body)return;
+  const legacyId=String(old?.id||'item-'+(index+1)).replace(/[^a-zA-Z0-9_-]/g,'-');
+  const id='migrado-'+legacyId;
+  const duplicate=existingIds.has(id)||scripts.some(item=>String(item.title||'').trim().toLocaleLowerCase('pt-BR')===title.toLocaleLowerCase('pt-BR')&&String(item.body||'').trim()===body);
+  if(duplicate)return;
+  const timestamp=Date.parse(old.updatedAt)||Date.now();
+  scripts.push({id,title,body,channel:defaultChannel,createdAt:timestamp,updatedAt:timestamp});
+  existingIds.add(id);imported++;
+ });
+ if(imported)saveLocal();
+ return imported;
+}
 function saveLocal(){
  try{localStorage.setItem(KEY,JSON.stringify({channels,scripts}));render();return true}
  catch(e){console.error('Não foi possível salvar a biblioteca neste navegador:',e);render();setStatus('O navegador bloqueou o armazenamento local. Os dados podem não permanecer salvos após fechar a página.',true);return false}
@@ -156,6 +179,6 @@ authPronto.then(async u=>{
   }
  }
 });
-readLocal();render();resetForm();
+readLocal();const legacyImported=migrateLegacyLibrary();render();resetForm();if(legacyImported)setStatus(legacyImported+' roteiro(s) antigo(s) importado(s) para a biblioteca unificada. Os originais foram preservados.');
 </script>
 </body></html>
