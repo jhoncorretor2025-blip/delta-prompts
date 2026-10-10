@@ -20,7 +20,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v26</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v27</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>57 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
@@ -340,6 +340,8 @@ function render(){
  const q=(search.value||'').toLowerCase().trim();
  const visible=cards.filter(c=>(cat==='all'||c.dataset.cat.split(' ').includes(cat))&&(access==='all'||c.dataset.access===access)&&(!q||(c.dataset.search||'').toLowerCase().includes(q)));
  visible.sort((a,b)=>getCount(b)-getCount(a)||getRating(b)-getRating(a));
+ // Esconde explicitamente os cartões que não correspondem aos filtros ativos.
+ cards.forEach(c=>{c.style.display=visible.includes(c)?'':'none';});
  visible.forEach(c=>grid.appendChild(c));
  cards.forEach(c=>{const badge=c.querySelector('.click-count');if(badge)badge.textContent=getCount(c);c.querySelectorAll('.star').forEach((s,i)=>s.classList.toggle('on',i<getRating(c)))});
  count.textContent=visible.length+' de '+cards.length+' IAs exibidas • mais acessadas primeiro';
