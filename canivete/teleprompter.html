@@ -31,7 +31,7 @@
 .mirrored{transform:scaleX(-1)}
 .overlay-mode .guide-line,.overlay-mode .progress{display:none}
 
-/* Canivete Teleprompter v1.5.26 — interface refinada */
+/* Canivete Teleprompter v1.5.27 — interface refinada */
 :root{--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--radius:16px;--space:16px}
 button,.panel,.preview-screen,.camera-stage,.more-options{border-radius:var(--radius)!important}
 .panel{padding:var(--space)!important}
@@ -96,7 +96,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
 
-/* v1.5.26: controles de leitura no fluxo normal, sem barra flutuante solta */
+/* v1.5.27: controles de leitura no fluxo normal, sem barra flutuante solta */
 @media(max-width:760px){
  .reader-actions{
   position:static!important;
@@ -122,7 +122,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 }
 
 
-/* v1.5.26: a tela de gravação nunca deve parecer vazia antes de abrir a câmera */
+/* v1.5.27: a tela de gravação nunca deve parecer vazia antes de abrir a câmera */
 .camera-stage{background:radial-gradient(ellipse at center,#17243a 0%,#05080d 75%)}
 #recordCanvas{position:relative;z-index:1}
 #cameraVideo{position:fixed!important;left:-1000px!important;top:0!important;width:2px!important;height:2px!important;display:block!important;opacity:.01!important;pointer-events:none!important}
@@ -130,7 +130,7 @@ body.recording-focus #downloadVideo{position:fixed;z-index:10;left:16px;right:16
 .camera-stage:has(#recordCanvas.camera-ready)::after{display:none}
 
 
-/* v1.5.26 — refinamento visual: hierarquia, leitura e gravação */
+/* v1.5.27 — refinamento visual: hierarquia, leitura e gravação */
 :root{
  --bg:#0b1220;--panel:#121d2e;--line:#293950;--text:#f8fafc;
  --muted:#a8b7cc;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;
@@ -194,7 +194,7 @@ button.primary{background:var(--blue)!important;border-color:var(--blue)!importa
 .script-library,.reading-presets{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:rgba(8,15,28,.32);display:grid;gap:9px}.library-row{display:grid;gap:6px}.library-row label,.reading-presets label{font-size:13px;font-weight:750;color:#dbe7f6}.script-library input,.script-library select,.reading-presets select{width:100%;min-width:0;background:#0a1220;color:var(--text);border:1px solid #34465f;border-radius:9px;padding:10px}.library-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.library-actions button,.reading-presets button{font-size:13px;min-height:42px}.script-history{border-top:1px solid var(--line);padding-top:10px}.history-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #2d3b52;font-size:12px}.history-item button{font-size:12px;padding:6px 8px;min-height:34px}.diagnostics,.recording-steps{margin:0 0 12px;padding:13px;border:1px solid #344963;border-radius:13px;background:#0d192b}.diagnostics strong,.recording-steps strong{font-size:14px}.diagnostics p{font-size:13px;color:var(--muted);margin:5px 0}.diagnostics ul{font-size:13px;padding-left:20px;color:var(--muted)}.diagnostics li{margin:4px 0}.diagnostics button{margin-top:4px}.diagnostics.ok{border-color:#166534}.diagnostics.warn{border-color:#92400e}@media(max-width:760px){.library-actions{grid-template-columns:1fr 1fr}.recording-steps ol{padding-left:20px;font-size:13px}.recording-steps li{margin:5px 0}}
 </style>
 <style>
-/* v1.5.26 — menu principal sempre visível e estilos consolidados */
+/* v1.5.27 — menu principal sempre visível e estilos consolidados */
 #teleprompterNav{
   display:grid!important;
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
@@ -261,7 +261,7 @@ button.primary{background:var(--blue)!important;border-color:var(--blue)!importa
 body.recording-focus #teleprompterNav{display:none!important}
 </style>
 <style>
-/* v1.5.26 — interface simplificada e responsiva */
+/* v1.5.27 — interface simplificada e responsiva */
 .compact-intro{margin:0 0 10px!important}.compact-intro h1{font-size:clamp(22px,3vw,30px)!important;margin-bottom:5px!important}.compact-intro p{font-size:14px!important;color:var(--muted)}
 .workflow,.intro-actions{display:none!important}
 .advanced-tools{margin:12px 0;border:1px solid var(--line);border-radius:12px;background:#111b2b;padding:11px 13px}
@@ -303,8 +303,8 @@ textarea,.preview-text{font-family:Inter,ui-rounded,system-ui,-apple-system,"Seg
 </style>
 <style>.library-link{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 12px;border:1px solid #34465f;border-radius:9px;background:#203049;color:var(--text);font-size:13px;font-weight:750;text-decoration:none;text-align:center}.library-link:focus-visible{outline:2px solid var(--blue);outline-offset:2px}</style>
 
-<style id="teleprompter-visual-polish-v1526">
-/* v1.5.26 — refinamento visual sem alterar a lógica das funções */
+<style id="teleprompter-visual-polish-v1527">
+/* v1.5.27 — refinamento visual sem alterar a lógica das funções */
 :root{
   --bg:#0a1020;
   --panel:#121d30;
@@ -406,10 +406,22 @@ button.primary,#start{background:linear-gradient(135deg,#3b82f6,#2563eb)!importa
 }
 </style>
 
+
+<style id="teleprompter-workflow-polish-v1527">
+/* v1.5.27 — etapas guiadas com estado legível */
+.workflow{scroll-margin-top:12px}
+.workflow li{min-height:82px}
+.workflow li>div{min-width:0;display:block}
+.workflow li b{font-size:13px;line-height:1.35}
+.workflow li small{font-size:11px;line-height:1.4;overflow-wrap:anywhere}
+.workflow li[aria-current="step"]{box-shadow:0 0 0 1px rgba(96,165,250,.12)}
+.workflow li.complete>span{background:#15803d;color:#fff}
+@media(max-width:600px){.workflow li{min-height:90px;padding:9px}.workflow li small{font-size:10px}}
+</style>
 </head>
 <body>
 <div class="wrap">
-<header class="top"><div class="brand-wrap"><span class="brand">🎬 Teleprompter</span><span class="visible-version">v1.5.26</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
+<header class="top"><div class="brand-wrap"><span class="brand">🎬 Teleprompter</span><span class="visible-version">v1.5.27</span></div><a class="back" href="../canivete.html">← Voltar ao Canivete</a></header>
 <section class="intro compact-intro"><h1>Seu roteiro, na sua frente.</h1><p>Escreva ou cole seu texto e toque em Iniciar.</p><div class="intro-actions"><button type="button" id="introStart">Preparar roteiro</button><button type="button" id="introRecord">Ir para gravação</button></div></section><section class="workflow" aria-label="Etapas para usar o teleprompter"><span id="workflowStatus">Etapa 1 de 4</span><ol><li id="flowScript"></li><li id="flowCamera"></li><li id="flowRecord"></li><li id="flowSave"></li></ol></section>
 
 <section id="pageRoteiro" class="page-view active" aria-label="Página do roteiro">
@@ -437,7 +449,7 @@ button.primary,#start{background:linear-gradient(135deg,#3b82f6,#2563eb)!importa
 <div class="script-tools"><button type="button" id="exportScript">⬇️ Exportar roteiro (.txt)</button><button type="button" id="copyScript">📋 Copiar roteiro</button><button type="button" id="exportBackup">🛡️ Backup completo (.json)</button><button type="button" id="importBackupButton">↩️ Restaurar backup</button><input type="file" id="importBackupFile" accept=".json,application/json" hidden></div><p class="hint" id="backupStatus" role="status" aria-live="polite">Backup inclui roteiro atual, biblioteca, histórico e configurações. Os vídeos gravados não são incluídos.</p>
 </details>
 <div class="actions reader-actions" aria-label="Controles de leitura"><button class="primary" id="start" aria-label="Iniciar leitura"><span class="action-icon">▶</span><small>Iniciar</small></button><button id="pause" aria-label="Pausar leitura"><span class="action-icon">⏸</span><small>Pausar</small></button><button id="reset" aria-label="Voltar ao início"><span class="action-icon">↺</span><small>Início</small></button></div>
-<details class="more-options" id="moreOptions"><summary>Configurações e sobre</summary><div class="about-version">Teleprompter IA · versão v1.5.26</div><div class="more-grid"><details class="feature-card"><summary>🎨 Identidade visual</summary><label for="visualTheme">Tema da interface</label><select id="visualTheme"><option value="blue">Tema padrão azul</option></select><button type="button" id="saveVisualTheme">Salvar tema</button><p id="themeStatus" class="hint"></p></details><button id="openFloat">↗ Janela flutuante</button><button id="installApp" hidden>⬇ Instalar aplicativo</button><button id="mobileInstall">📱 Instalar no celular</button><button id="updateApp" hidden>🔄 Atualizar aplicativo</button><button id="downloadWindows" hidden>🪟 Aplicativo Windows</button></div><p class="hint"><span aria-hidden="true">ℹ️</span> No celular, use “Instalar app” no menu do navegador. <button type="button" class="text-help" id="windowsHelpToggle">Entenda a versão Windows</button></p><p class="hint" id="windowsHelp" hidden>O aplicativo Windows está disponível em uma versão separada.</p></details>
+<details class="more-options" id="moreOptions"><summary>Configurações e sobre</summary><div class="about-version">Teleprompter IA · versão v1.5.27</div><div class="more-grid"><details class="feature-card"><summary>🎨 Identidade visual</summary><label for="visualTheme">Tema da interface</label><select id="visualTheme"><option value="blue">Tema padrão azul</option></select><button type="button" id="saveVisualTheme">Salvar tema</button><p id="themeStatus" class="hint"></p></details><button id="openFloat">↗ Janela flutuante</button><button id="installApp" hidden>⬇ Instalar aplicativo</button><button id="mobileInstall">📱 Instalar no celular</button><button id="updateApp" hidden>🔄 Atualizar aplicativo</button><button id="downloadWindows" hidden>🪟 Aplicativo Windows</button></div><p class="hint"><span aria-hidden="true">ℹ️</span> No celular, use “Instalar app” no menu do navegador. <button type="button" class="text-help" id="windowsHelpToggle">Entenda a versão Windows</button></p><p class="hint" id="windowsHelp" hidden>O aplicativo Windows está disponível em uma versão separada.</p></details>
 </section>
 <section class="panel preview">
 <h2>👀 Prévia da leitura</h2>
@@ -504,7 +516,35 @@ const cameraVideo=$('cameraVideo'), recordCanvas=$('recordCanvas'), recordCtx=re
 let cameraStream=null, recordingStream=null, cameraFrame=0, mediaRecorder=null, recordedChunks=[], recordScroll=0, recordLast=0, isRecording=false, lastVideoUrl=null, recordStartedAt=0, recordTimerInterval=0;
 if(!CanvasRenderingContext2D.prototype.roundRect){CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath();return this}}
 function recorderStatus(message){$('recorderStatus').textContent=message;updateWorkflow()}
-function updateWorkflow(){let n=0;if($('videoResult')&&!$('videoResult').hidden)n=3;else if(isRecording)n=2;else if(cameraStream&&cameraVideo.videoWidth>0)n=1;[['flowScript',0],['flowCamera',1],['flowRecord',2],['flowSave',3]].forEach(([id,i])=>{const el=$(id);if(el){el.classList.toggle('current',i===n);el.classList.toggle('complete',i<n)}});$('workflowStatus').textContent=['Etapa 1 de 4 · Prepare o roteiro','Etapa 2 de 4 · Confira câmera e microfone','Etapa 3 de 4 · Grave seu vídeo','Etapa 4 de 4 · Confira e baixe o vídeo'][n]}
+function updateWorkflow(){
+ const hasScript=!!($('script')&&$('script').value.trim());
+ const cameraReady=!!(cameraStream&&cameraVideo.videoWidth>0&&cameraVideo.videoHeight>0);
+ const videoReady=!!($('videoResult')&&!$('videoResult').hidden&&lastVideoUrl);
+ let n=0;
+ if(videoReady)n=3;
+ else if(isRecording||cameraReady)n=2;
+ else if(hasScript)n=1;
+ const steps=[
+  ['flowScript','1','Prepare o roteiro',hasScript?'Texto pronto para leitura.':'Escreva ou cole o texto que deseja ler.'],
+  ['flowCamera','2','Confira câmera e microfone',cameraReady?'Câmera pronta. Você já pode gravar.':'Abra a câmera e permita câmera e microfone.'],
+  ['flowRecord','3','Grave seu vídeo',isRecording?'Gravação em andamento.':'Inicie a gravação quando estiver preparado.'],
+  ['flowSave','4','Confira e baixe',videoReady?'Vídeo pronto para baixar.':'Ao terminar, confira e baixe seu vídeo.']
+ ];
+ steps.forEach(([id,num,title,detail],i)=>{
+  const el=$(id);if(!el)return;
+  el.classList.toggle('current',i===n);
+  el.classList.toggle('complete',i<n);
+  let marker=el.querySelector('[data-step-marker]'),heading=el.querySelector('[data-step-heading]'),hint=el.querySelector('[data-step-hint]');
+  if(!marker||!heading||!hint){
+   marker=document.createElement('span');marker.dataset.stepMarker='1';marker.setAttribute('aria-hidden','true');
+   const content=document.createElement('div');heading=document.createElement('b');heading.dataset.stepHeading='1';hint=document.createElement('small');hint.dataset.stepHint='1';
+   content.append(heading,hint);el.replaceChildren(marker,content);
+  }
+  marker.textContent=i<n?'✓':num;heading.textContent=title;hint.textContent=detail;
+  el.setAttribute('aria-current',i===n?'step':'false');
+ });
+ $('workflowStatus').textContent=videoReady?'Etapas concluídas · Seu vídeo está pronto':isRecording?'Etapa 3 de 4 · Gravando seu vídeo':cameraReady?'Etapa 3 de 4 · Câmera pronta para gravar':hasScript?'Etapa 2 de 4 · Prepare a câmera':'Etapa 1 de 4 · Prepare o roteiro';
+}
 function runDiagnostics(){const checks=[['Contexto seguro',!!(window.isSecureContext||location.hostname==='localhost'||location.protocol==='file:'),'A câmera normalmente exige HTTPS ou localhost.'],['Acesso à câmera',!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia),'Este navegador precisa oferecer getUserMedia.'],['Gravador de vídeo',!!window.MediaRecorder,'MediaRecorder não está disponível neste navegador.'],['Captura do canvas',!!(recordCanvas&&recordCanvas.captureStream),'A captura da imagem da câmera não é suportada.'],['Formato de vídeo',!!(window.MediaRecorder&&['video/mp4','video/webm;codecs=vp8,opus','video/webm'].some(t=>MediaRecorder.isTypeSupported(t))),'O navegador pode não oferecer um formato compatível.']];const list=$('diagnosticList');list.replaceChildren();let all=true;checks.forEach(([label,ok,help])=>{const li=document.createElement('li');li.textContent=(ok?'✅ ':'⚠️ ')+label+(ok?' — OK':' — '+help);list.appendChild(li);if(!ok)all=false});$('diagnosticSummary').textContent=all?'Tudo certo para tentar abrir a câmera. Ainda será necessário autorizar câmera e microfone.':'Há itens que podem impedir a gravação. Confira as mensagens acima e tente novamente.';$('recordDiagnostics').classList.toggle('ok',all);$('recordDiagnostics').classList.toggle('warn',!all);recorderStatus(all?'Verificação concluída. Agora toque em “Abrir câmera” e autorize câmera e microfone.':'Verificação concluída com avisos. Corrija os itens indicados antes de gravar.')}
 function formatRecordTime(ms){const total=Math.floor(Math.max(0,ms)/1000);return String(Math.floor(total/60)).padStart(2,'0')+':'+String(total%60).padStart(2,'0')}
 function updateRecordHud(){const hud=$('recordHud');hud.classList.toggle('idle',!isRecording);$('recordLabel').textContent=isRecording?'GRAVANDO':(cameraStream?'CÂMERA PRONTA':'PRONTO PARA GRAVAR');$('recordTimer').textContent=formatRecordTime(isRecording?Date.now()-recordStartedAt:0)}
@@ -705,7 +745,7 @@ function setBackupStatus(message,isError=false){const el=$('backupStatus');if(el
 function createBackup(){
  try{
   save();
-  const backup={format:'canivete-teleprompter-backup',schemaVersion:1,createdAt:new Date().toISOString(),appVersion:'v1.5.26',
+  const backup={format:'canivete-teleprompter-backup',schemaVersion:1,createdAt:new Date().toISOString(),appVersion:'v1.5.27',
    current:readJson('canivete.teleprompter.v1',{}),
    library:readLibraryStore(),
    history:readJson(HISTORY_KEY,[]),
@@ -795,9 +835,9 @@ $('demoScript').addEventListener('click',()=>{if($('script').value.trim()&&!conf
 $('clearScript').addEventListener('click',()=>{if(!$('script').value.trim())return;if(!confirm('Limpar o roteiro atual? O texto será removido do editor.'))return;$('script').value='';save();update();$('script').focus();setStatus('Editor limpo. Se precisar, confira o histórico do roteiro.')});
 function checkLocalStorage(){try{const k='canivete.teleprompter.storage-check';localStorage.setItem(k,'ok');localStorage.removeItem(k);$('storageHealth').textContent='✓ Armazenamento local disponível neste navegador.'}catch(e){$('storageHealth').textContent='⚠️ O navegador bloqueou o armazenamento local. Exporte o roteiro em TXT e baixe os vídeos para não depender desta sessão.';$('storageHealth').classList.add('save-error')}}checkLocalStorage();window.addEventListener('popstate',event=>{const page=event.state&&event.state.teleprompterPage||new URLSearchParams(location.search).get('page')||'roteiro';showPage(page==='gravar'?'gravar':'roteiro',false);if(page==='gravar'&&!cameraStream)startCamera()});window.addEventListener('pagehide',()=>{if(autosaveTimer){clearTimeout(autosaveTimer);save()}if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());if(recordingStream)recordingStream.getTracks().forEach(t=>t.stop());if(lastVideoUrl)URL.revokeObjectURL(lastVideoUrl)});
 
-$('script').addEventListener('input',()=>{update();scheduleAutoSave();syncMobileRecorderButtons()});$('exportScript').addEventListener('click',exportScript);$('copyScript').addEventListener('click',copyScript);['mirror','countdown'].forEach(id=>$(id).addEventListener('change',()=>{update();scheduleAutoSave()}));$('screen').addEventListener('click',toggle);$('screen').addEventListener('scroll',updateProgress);
+$('script').addEventListener('input',()=>{update();updateWorkflow();scheduleAutoSave();syncMobileRecorderButtons()});$('exportScript').addEventListener('click',exportScript);$('copyScript').addEventListener('click',copyScript);['mirror','countdown'].forEach(id=>$(id).addEventListener('change',()=>{update();scheduleAutoSave()}));$('screen').addEventListener('click',toggle);$('screen').addEventListener('scroll',updateProgress);
 document.addEventListener('keydown',e=>{const tag=(e.target.tagName||'').toLowerCase();if(tag==='textarea'||tag==='input'&&e.target.type!=='range'&&e.target.type!=='checkbox')return;if(e.code==='Space'){e.preventDefault();toggle()}else if(e.key==='ArrowUp'){e.preventDefault();$('speed').value=Math.min(120,Number($('speed').value)+5);update()}else if(e.key==='ArrowDown'){e.preventDefault();$('speed').value=Math.max(5,Number($('speed').value)-5);update()}else if(e.key==='Home'){e.preventDefault();reset()}});['fontSize','speed','opacity','width'].forEach(id=>$(id).addEventListener('input',()=>{update();scheduleAutoSave();if(pipWindow&&!pipWindow.closed){const t=pipWindow.document.getElementById('txt');if(t)t.style.fontSize=$('fontSize').value+'px'}}));
-$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.5.26.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
+$('updateApp').addEventListener('click',()=>{alert('Para atualizar o Teleprompter Windows:\n1. Na página que abrir, selecione a execução mais recente com status verde “Success”.\n2. Na seção Artifacts, baixe teleprompter-ia-windows-v1.5.27.\n3. Extraia o ZIP e execute o instalador.\n\nO aplicativo não atualiza silenciosamente; esta ação abre o local oficial da compilação.');if(window.electronAPI&&window.electronAPI.openUpdates){window.electronAPI.openUpdates()}else{window.open(UPDATE_URL,'_blank','noopener')}setStatus('Abrindo a página oficial para verificar a versão mais recente.')});
 $('mobileInstall').addEventListener('click',()=>{const ua=navigator.userAgent||'';if(/iPhone|iPad|iPod/i.test(ua)){alert('Para instalar no iPhone/iPad:\n1. Abra esta página no Safari.\n2. Toque em Compartilhar.\n3. Escolha “Adicionar à Tela de Início”.\n4. Confirme em Adicionar.\n\nNão é necessário baixar APK.');}else{alert('Para instalar no Android:\n1. Abra esta página no Chrome.\n2. Toque nos três pontinhos (⋮).\n3. Escolha “Instalar app” ou “Adicionar à tela inicial”.\n4. Confirme a instalação.\n\nSe a opção não aparecer, atualize o Chrome e abra a página por HTTPS. Não existe APK nesta versão; é um aplicativo web instalável.');}});$('openFloat').addEventListener('click',openFloat);$('start').addEventListener('click',start);$('pause').addEventListener('click',()=>{stop();setStatus('Ⅱ Leitura pausada.')});$('reset').addEventListener('click',reset);
 $('floatStart').addEventListener('click',start);$('floatPause').addEventListener('click',()=>{stop();setStatus('Leitura pausada.')});$('floatReset').addEventListener('click',reset);$('floatClose').addEventListener('click',()=>{if(window.electronAPI&&window.electronAPI.closeOverlay)window.electronAPI.closeOverlay();else window.close()});
 $('floatSmaller').addEventListener('click',()=>{$('fontSize').value=Math.max(20,Number($('fontSize').value)-2);update()});
@@ -820,7 +860,7 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 })();
 </script>
 <style>
-/* v1.5.26 — novos recursos do teleprompter */
+/* v1.5.27 — novos recursos do teleprompter */
 .framing-guide{position:absolute;z-index:2;inset:8%;pointer-events:none;opacity:.75;border:1px solid #ffffff99;border-radius:12px}
 .framing-guide:before{content:"";position:absolute;left:0;right:0;top:33%;height:1px;background:#ffffff80;box-shadow:0 42vh 0 #ffffff80}
 .framing-guide i{position:absolute;top:0;bottom:0;left:50%;border-left:1px solid #ffffff55}
@@ -828,7 +868,7 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 .feature-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.feature-card{min-width:0;border:1px solid var(--line);border-radius:14px;padding:12px;background:#0b1422}.feature-card summary{font-weight:800;cursor:pointer}.feature-card label{display:block;margin:10px 0 5px}.feature-card select,.feature-card input{width:100%;padding:9px;background:#0a1220;color:var(--text);border:1px solid var(--line);border-radius:9px}.feature-card button{width:100%;margin-top:8px}.audio-meter-track{height:12px;background:#293950;border-radius:99px;overflow:hidden;margin-top:12px}.audio-meter-track i{display:block;width:0;height:100%;background:linear-gradient(90deg,#22c55e,#eab308,#ef4444)}.shortcut-grid{display:grid;grid-template-columns:1fr 72px;gap:8px;align-items:center}.recording-library{display:grid;gap:8px;margin-top:10px}.recording-item{border:1px solid var(--line);border-radius:9px;padding:9px;display:grid;gap:6px}.recording-item small{color:var(--muted)}.recording-item button{margin-right:5px;font-size:12px}body.theme-violet{--blue:#a78bfa}body.theme-green{--blue:#22c55e}body.theme-rose{--blue:#f472b6}@media(max-width:760px){.feature-tools{grid-template-columns:1fr}}
 </style></body></html>
 <style>
-/* Canivete Teleprompter v1.5.26 — ajustes agrupados e controles simplificados */
+/* Canivete Teleprompter v1.5.27 — ajustes agrupados e controles simplificados */
 .reading-settings{margin:12px 0 4px;border:1px solid var(--line);border-radius:12px;background:rgba(8,15,28,.35);overflow:hidden}
 .reading-settings>summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:800;color:#dbeafe;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .reading-settings>summary::-webkit-details-marker{display:none}
@@ -853,12 +893,12 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 </style>
 
 <style>
-/* Canivete Teleprompter v1.5.26 — proteção e portabilidade dos roteiros */
+/* Canivete Teleprompter v1.5.27 — proteção e portabilidade dos roteiros */
 .autosave-status{margin:6px 0 0;font-size:12px;color:#86efac;min-height:18px}.autosave-status.save-error{color:#fca5a5}.script-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.script-tools button{min-height:42px;font-size:13px}@media(max-width:760px){.script-tools{display:grid;grid-template-columns:1fr 1fr}.script-tools button{padding:9px 7px;font-size:12px}}
 </style>
 
 <style>
-/* v1.5.26 — fluxo guiado, CTA, confiança e revisão do vídeo */
+/* v1.5.27 — fluxo guiado, CTA, confiança e revisão do vídeo */
 .intro-actions,.inline-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.intro-actions button,.inline-actions button{min-height:44px}
 .workflow{border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 18px;background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(8,15,28,.72))}
 .workflow-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.workflow-heading span{font-size:12px;color:#bfdbfe}
@@ -872,7 +912,7 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigat
 @media(max-width:760px){.workflow{padding:12px;margin-bottom:12px}.workflow-heading{align-items:flex-start;flex-direction:column;gap:4px}.workflow ol{grid-template-columns:repeat(2,minmax(0,1fr))}.workflow li{padding:8px;gap:7px}.workflow li small{font-size:10px}.intro-actions{display:grid;grid-template-columns:1fr}.intro-actions button{width:100%}.inline-actions{display:grid;grid-template-columns:1fr 1fr}.inline-actions button{font-size:12px;padding:8px 6px}.video-result dl{grid-template-columns:1fr}.recorder-controls{position:sticky;bottom:calc(66px + env(safe-area-inset-bottom));z-index:5;background:rgba(8,15,28,.96);padding:8px;border:1px solid var(--line);border-radius:12px;box-shadow:0 -4px 18px #0004}.recorder-controls button{min-height:48px}.video-result video{max-height:55vh}}
 @media(max-width:360px){.workflow li{align-items:flex-start;flex-direction:column}.inline-actions{grid-template-columns:1fr}.recorder-controls{gap:6px}.recorder-controls button{padding:9px 6px;font-size:12px}}
 
-/* v1.5.26 — refinamento visual da experiência de roteiro e gravação */
+/* v1.5.27 — refinamento visual da experiência de roteiro e gravação */
 :root{--focus-ring:rgba(96,165,250,.22)}
 .top{padding:12px 14px;border:1px solid rgba(71,91,122,.68);border-radius:15px;background:linear-gradient(110deg,rgba(24,34,53,.94),rgba(16,28,45,.8));box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .brand-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -920,7 +960,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 
 
-/* v1.5.26 — backup/restauração e controles sincronizados */
+/* v1.5.27 — backup/restauração e controles sincronizados */
 #backupStatus{margin:9px 0 0;font-size:12px;line-height:1.5}
 #exportBackup,#importBackupButton{border-color:#3a5274;background:rgba(37,99,235,.12)}
 #exportBackup:hover,#importBackupButton:hover{border-color:#60a5fa;background:rgba(37,99,235,.22)}
