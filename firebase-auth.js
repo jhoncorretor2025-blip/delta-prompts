@@ -325,3 +325,16 @@ export function initAuthWatcher(){
   let primeiraVez=true;
   onAuthStateChanged(auth,user=>{window.deltaUser=user||null;window.dispatchEvent(new CustomEvent('delta-auth-changed',{detail:{user}}));render(user);if(user){saveProfile(user).catch(console.error);syncFavoritosFromCloud(user.uid);syncUsosFromCloud(user.uid)}if(primeiraVez){primeiraVez=false;_resolverAuthPronto(user)}});
 }
+
+/* ===== TELEPROMPTER: roteiros pessoais por canal ===== */
+export async function obterRoteirosTeleprompter(uid){
+  if(!uid)return [];
+  try{const snap=await getDoc(doc(db,'users',uid));const dados=snap.exists()?snap.data().roteirosTeleprompter:null;return Array.isArray(dados)?dados:[]}
+  catch(e){console.error('Erro ao buscar roteiros do teleprompter:',e);throw e}
+}
+export async function salvarRoteirosTeleprompter(uid,roteiros){
+  if(!uid)throw new Error('Entre com sua conta Google para sincronizar os roteiros.');
+  if(!Array.isArray(roteiros))throw new Error('Formato de roteiros inválido.');
+  await setDoc(doc(db,'users',uid),{roteirosTeleprompter:roteiros,roteirosTeleprompterAtualizadoEm:serverTimestamp()},{merge:true});
+  return true;
+}
