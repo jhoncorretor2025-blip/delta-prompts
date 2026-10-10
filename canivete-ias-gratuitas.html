@@ -20,14 +20,14 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v9</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
-<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>42 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v10</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
+<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>43 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
 <input id="search" class="search" type="search" placeholder="🔎 Procurar por IA, função, categoria ou exemplo...">
 <div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters">
 <button class="filter active" data-cat="all">Todas</button><button class="filter" data-cat="pesquisa">🔎 Pesquisa</button><button class="filter" data-cat="trabalho">💼 Trabalho</button><button class="filter" data-cat="criacao">🎨 Criação</button><button class="filter" data-cat="audio">🎙️ Áudio</button><button class="filter" data-cat="video">🎬 Vídeo</button><button class="filter" data-cat="imagem">🖼️ Imagem</button><button class="filter" data-cat="codigo">💻 Código</button><button class="filter" data-cat="estudo">📚 Estudo</button><button class="filter" data-cat="automacao">⚙️ Automação</button></div></div>
-<div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos</button><button class="filter" data-access="free">🟢 Plano grátis</button><button class="filter" data-access="limit">🟡 Grátis + limite</button></div></div>
+<div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos</button><button class="filter" data-access="free">🟢 Plano grátis</button><button class="filter" data-access="limit">🟡 Grátis + limite</button><button class="filter" data-access="paid">🔴 Plano pago</button></div></div>
 <div class="count" id="count"></div><button id="resetClicks" class="filter" type="button">↺ Zerar contadores</button>
 </section>
 
@@ -115,6 +115,11 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 
 <article class="card" data-cat="pesquisa trabalho estudo codigo" data-access="free" data-search="ChatGPTFree.ai Unlimited AI chat texto escrita programacao estudo imagem voz produtividade">
 <div class="head"><div class="icon">💬</div><div class="title"><h2>ChatGPTFree.ai</h2><small>Chat de IA gratuito — Unlimited AI</small></div><span class="tag">ACESSO GRÁTIS*</span></div><p class="desc">Assistente independente para conversar, escrever, estudar, programar e analisar imagens. O domínio chatgptfree.ai atualmente redireciona para Unlimited AI; não é o site oficial do ChatGPT da OpenAI.</p><div class="use"><b>💡 Exemplo</b> Peça ajuda para revisar um texto, compreender um assunto ou obter uma primeira versão de código.</div><div class="footer"><span class="best">Chat e produtividade</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://chatgptfree.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
+
+<article class="card" data-cat="trabalho criacao imagem video codigo automacao estudo" data-access="paid" data-search="Abacus AI Abacus.AI ChatLLM agentes IA modelos linguagem criar aplicativos sites apresentações documentos vídeos imagens programação análise dados pesquisa automação">
+<div class="head"><div class="icon">🧠</div><div class="title"><h2>Abacus AI</h2><small>Assistente multimodelo e agentes de IA</small></div><span class="tag limit">PLANO PAGO*</span></div><p class="desc">Plataforma que reúne diversos modelos de IA e agentes capazes de pesquisar, analisar dados, escrever código e criar aplicativos, sites, apresentações, documentos, imagens e vídeos. Os recursos e limites dependem do plano contratado.</p><div class="use"><b>💡 Exemplo</b> Descreva um sistema que deseja criar ou envie uma tarefa de pesquisa para o agente planejar e produzir uma primeira versão.</div><div class="footer"><span class="best">Agentes, criação e produtividade</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://abacus.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
 </article>
 
 <article class="card" data-cat="trabalho criacao imagem video" data-access="free" data-search="Pomelli Google Labs marketing Business DNA identidade visual campanhas redes sociais anuncios fotos produtos websites brand book">
@@ -215,6 +220,7 @@ const caps={
 'Arena AI':['Sites','Aplicativos','Protótipos'],
 'ChatGPTFree.ai':['Chat','Escrita','Programação','Produtividade'],
 'Pomelli':['Marketing','Identidade visual','Campanhas','Imagens'],
+'Abacus AI':['Agentes','Modelos de IA','Aplicativos','Pesquisa','Automação','Imagem e vídeo'],
 'Verdent':['Agentes de programação','Planejamento','Testes de código'],
 'Claude':['Texto','Documentos','Código','Raciocínio'],
 'Google AI Studio':['Modelos','Código','Protótipos'],
