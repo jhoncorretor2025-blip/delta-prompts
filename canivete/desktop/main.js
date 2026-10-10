@@ -10,7 +10,7 @@ function createMainWindow() {
     height: 820,
     minWidth: 700,
     minHeight: 600,
-    title: 'Teleprompter IA — Canivete v1.5.7',
+    title: 'Teleprompter IA — Canivete v1.5.8',
     backgroundColor: '#101827',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
