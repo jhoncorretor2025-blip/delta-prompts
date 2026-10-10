@@ -2,7 +2,7 @@ name: Aplicar limpeza de despesas vazias
 on:
   push:
     paths:
-      - 'tools/limpar-novas-despesas-v84.py'
+      - 'canivete/tools/limpar-novas-despesas-v84.py'
 permissions:
   contents: write
 jobs:
@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: '3.x'
       - name: Aplicar correção
-        run: python tools/limpar-novas-despesas-v84.py
+        run: python canivete/tools/limpar-novas-despesas-v84.py
       - name: Commit da correção
         run: |
           git config user.name 'github-actions[bot]'
