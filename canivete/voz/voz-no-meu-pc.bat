@@ -1,10 +1,10 @@
 @echo off
 chcp 65001 >nul
-title Clonagem de Voz Master - Servidor no meu PC (v1.5.9)
+title Clonagem de Voz Master - Servidor no meu PC (v1.5.10)
 cd /d "%~dp0"
 echo.
 echo ===============================================================
-echo   CLONAGEM DE VOZ MASTER - servidor no seu computador (v1.5.9)
+echo   CLONAGEM DE VOZ MASTER - servidor no seu computador (v1.5.10)
 echo ===============================================================
 echo.
 
