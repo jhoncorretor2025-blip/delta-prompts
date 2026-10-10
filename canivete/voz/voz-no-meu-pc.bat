@@ -1,20 +1,29 @@
 @echo off
 chcp 65001 >nul
-title Clonagem de Voz Master - Servidor no meu PC (v1.5.16)
+title Clonagem de Voz Master - Servidor no meu PC (v1.5.17)
 cd /d "%~dp0"
 echo.
 echo ===============================================================
-echo   CLONAGEM DE VOZ MASTER - servidor no seu computador (v1.5.16)
+echo   CLONAGEM DE VOZ MASTER - servidor no seu computador (v1.5.17)
 echo ===============================================================
 echo.
 
 set "PY=python"
+py -3.12 --version >nul 2>nul && set "PY=py -3.12"
+py -3.10 --version >nul 2>nul && set "PY=py -3.10"
 py -3.11 --version >nul 2>nul && set "PY=py -3.11"
 %PY% --version >nul 2>nul
 if errorlevel 1 (
   echo [ERRO] Python nao encontrado.
   echo Instale o Python 3.11 em https://www.python.org/downloads/
   echo e marque a opcao "Add python.exe to PATH" na instalacao.
+  pause & exit /b 1
+)
+%PY% -c "import sys;sys.exit(0 if (3,10)<=sys.version_info[:2]<(3,13) else 1)"
+if errorlevel 1 (
+  echo [ERRO] Seu Python e muito novo ou muito antigo para o modelo de voz.
+  echo Instale o Python 3.11 em https://www.python.org/downloads/release/python-3119/
+  echo e marque "Add python.exe to PATH". Depois rode este arquivo de novo.
   pause & exit /b 1
 )
 where git >nul 2>nul
