@@ -465,12 +465,12 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
    const categories=card.dataset.cat.split(' ').join(', ');
    const accessText=accessLabel(card);
    const description=card.querySelector('.desc')?.textContent.trim()||'';
-   const example=card.querySelector('.use')?.textContent.replace(/^💡 Exemplo\\s*/,'').trim()||'';
+   const example=card.querySelector('.use')?.textContent.replace(/^💡 Exemplo\s*/,'').trim()||'';
    const best=card.querySelector('.best')?.textContent.trim()||'';
    const link=card.querySelector('.open')?.href||'';
    lines.push((index+1)+'. '+name,'   Categoria: '+categories,'   Acesso: '+accessText,'   Descrição: '+description,'   Exemplo: '+example,'   Indicação: '+best,'   Site oficial: '+link,'');
  });
- const blob=new Blob(['\\ufeff'+lines.join('\\r\\n')],{type:'text/plain;charset=utf-8'});
+ const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
  a.href=url;a.download='canivete-lista-completa-ias-v36.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
