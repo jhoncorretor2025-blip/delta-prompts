@@ -59,7 +59,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
  .filter-group:has(#exportAllTools) #imageFreeToggle,.filter-group:has(#exportAllTools) #favoritesToggle{width:100%;max-width:100%;text-align:left}
 }
 
-/* v48 — refinamento visual, acessibilidade e responsividade */
+/* v49 — refinamento visual, acessibilidade e responsividade */
 :root{--accent-soft:#eff6ff;--focus:#93c5fd}
 .top{padding:4px 0 14px;border-bottom:1px solid var(--line)}
 .top-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
@@ -127,13 +127,13 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 
-/* v48 — bolhas com quantidade de IAs nos filtros */
+/* v49 — bolhas com quantidade de IAs nos filtros */
 .filter-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;margin-left:3px;border-radius:999px;background:#e8eef8;color:#334155;font-size:10px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;vertical-align:middle}
 .filter.active .filter-count{background:rgba(255,255,255,.24);color:inherit}
 [data-theme="dark"] .filter-count{background:#29334e;color:#e2e8f0}
 @media(max-width:680px){.filter-count{min-width:22px;height:22px;font-size:11px}}
 
-/* v48 — separar ferramentas de criação e edição de vídeo */
+/* v49 — separar ferramentas de criação e edição de vídeo */
 .video-subfilters-wrap[hidden]{display:none!important}
 .video-subfilters{padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
 .video-subfilters[hidden]{display:none!important}
@@ -141,7 +141,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 @media(max-width:680px){.video-subfilters{align-items:flex-start;flex-direction:column}.video-subfilters .filters{width:100%}.video-subfilters .filter{flex:1}}
 </style>
 <style>
-/* v48 — painéis compactos no fim da página */
+/* v49 — painéis compactos no fim da página */
 .bottom-mini-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0 10px;align-items:start}
 .bottom-mini-panels .feature-panel{min-width:0;margin:0;padding:16px;border-radius:16px;box-shadow:var(--shadow)}
 .bottom-mini-panels .feature-panel h3{font-size:16px;margin:0 0 7px}
@@ -156,15 +156,15 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v48</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
-<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>83 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v49</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>97 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
 <input id="search" class="search" type="search" placeholder="🔎 Procurar por IA, função, categoria ou exemplo...">
 <div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters">
-<button class="filter active" data-cat="all">Todas <span class="filter-count" data-count-all>83</span></button><button class="filter" data-cat="pesquisa">🔎 Pesquisa <span class="filter-count" data-count-cat="pesquisa">21</span></button><button class="filter" data-cat="trabalho">💼 Trabalho <span class="filter-count" data-count-cat="trabalho">37</span></button><button class="filter" data-cat="criacao">🎨 Conteúdo <span class="filter-count" data-count-cat="criacao">55</span></button><button class="filter" data-cat="audio">🎙️ Áudio <span class="filter-count" data-count-cat="audio">18</span></button><button class="filter" data-cat="video">🎬 Vídeo <span class="filter-count" data-count-cat="video">28</span></button><button class="filter" data-cat="imagem">🖼️ Imagem <span class="filter-count" data-count-cat="imagem">27</span></button><button class="filter" data-cat="codigo">💻 Programação <span class="filter-count" data-count-cat="codigo">27</span></button><button class="filter" data-cat="estudo">📚 Estudo <span class="filter-count" data-count-cat="estudo">14</span></button><button class="filter" data-cat="automacao">⚙️ Automação <span class="filter-count" data-count-cat="automacao">6</span></button></div></div>
-<div class="video-subfilters-wrap" id="videoSubfilters" aria-label="Tipo de ferramenta de vídeo" hidden><div class="filter-group video-subfilters"><span class="filter-label">Tipo de vídeo</span><div class="filters" id="videoTypeFilters"><button class="filter active" type="button" data-video-type="all">Todos <span class="filter-count" data-count-video="all">28</span></button><button class="filter" type="button" data-video-type="create">🎬 Criam vídeos <span class="filter-count" data-count-video="create">20</span></button><button class="filter" type="button" data-video-type="edit">✂️ Só edição <span class="filter-count" data-count-video="edit">3</span></button><button class="filter" type="button" data-video-type="both">🔄 Criam e editam <span class="filter-count" data-count-video="both">7</span></button><button class="filter" type="button" data-video-type="other">🧰 Plataformas/apoio <span class="filter-count" data-count-video="other">5</span></button></div></div><p class="category-help video-type-help">🎬 <strong>Criam vídeos:</strong> geram clipes, cenas ou vídeos com IA. ✂️ <strong>Só edição:</strong> editam, cortam ou reaproveitam vídeos existentes. 🔄 <strong>Ambas:</strong> criam e também editam. 🧰 <strong>Plataformas/apoio:</strong> reúnem ou apoiam fluxos de trabalho com vídeo.</p></div>
-<div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos <span class="filter-count" data-count-access="all">83</span></button><button class="filter" data-access="free">🟢 Plano grátis <span class="filter-count" data-count-access="free">24</span></button><button class="filter" data-access="limit">🟡 Grátis + limite <span class="filter-count" data-count-access="limit">58</span></button><button class="filter" data-access="paid">🔴 Plano pago <span class="filter-count" data-count-access="paid">1</span></button></div></div>
+<button class="filter active" data-cat="all">Todas <span class="filter-count" data-count-all>97</span></button><button class="filter" data-cat="pesquisa">🔎 Pesquisa <span class="filter-count" data-count-cat="pesquisa">21</span></button><button class="filter" data-cat="trabalho">💼 Trabalho <span class="filter-count" data-count-cat="trabalho">51</span></button><button class="filter" data-cat="criacao">🎨 Conteúdo <span class="filter-count" data-count-cat="criacao">69</span></button><button class="filter" data-cat="audio">🎙️ Áudio <span class="filter-count" data-count-cat="audio">18</span></button><button class="filter" data-cat="video">🎬 Vídeo <span class="filter-count" data-count-cat="video">42</span></button><button class="filter" data-cat="imagem">🖼️ Imagem <span class="filter-count" data-count-cat="imagem">26</span></button><button class="filter" data-cat="codigo">💻 Programação <span class="filter-count" data-count-cat="codigo">26</span></button><button class="filter" data-cat="estudo">📚 Estudo <span class="filter-count" data-count-cat="estudo">13</span></button><button class="filter" data-cat="automacao">⚙️ Automação <span class="filter-count" data-count-cat="automacao">5</span></button></div></div>
+<div class="video-subfilters-wrap" id="videoSubfilters" aria-label="Tipo de ferramenta de vídeo" hidden><div class="filter-group video-subfilters"><span class="filter-label">Tipo de vídeo</span><div class="filters" id="videoTypeFilters"><button class="filter active" type="button" data-video-type="all">Todos <span class="filter-count" data-count-video="all">42</span></button><button class="filter" type="button" data-video-type="create">🎬 Criam vídeos <span class="filter-count" data-count-video="create">24</span></button><button class="filter" type="button" data-video-type="edit">✂️ Só edição <span class="filter-count" data-count-video="edit">14</span></button><button class="filter" type="button" data-video-type="both">🔄 Criam e editam <span class="filter-count" data-count-video="both">11</span></button><button class="filter" type="button" data-video-type="other">🧰 Plataformas/apoio <span class="filter-count" data-count-video="other">4</span></button></div></div><p class="category-help video-type-help">🎬 <strong>Criam vídeos:</strong> geram clipes, cenas ou vídeos com IA. ✂️ <strong>Só edição:</strong> editam, cortam ou reaproveitam vídeos existentes. 🔄 <strong>Ambas:</strong> criam e também editam. 🧰 <strong>Plataformas/apoio:</strong> reúnem ou apoiam fluxos de trabalho com vídeo.</p></div>
+<div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos <span class="filter-count" data-count-access="all">97</span></button><button class="filter" data-access="free">🟢 Plano grátis <span class="filter-count" data-count-access="free">25</span></button><button class="filter" data-access="limit">🟡 Grátis + limite <span class="filter-count" data-count-access="limit">69</span></button><button class="filter" data-access="paid">🔴 Plano pago <span class="filter-count" data-count-access="paid">3</span></button></div></div>
 <p class="category-help"><strong>🎨 Conteúdo:</strong> textos, músicas, vídeos e materiais. <strong>🖼️ Imagem:</strong> gerar, editar ou melhorar fotos, ilustrações e artes.</p>
 <div class="filter-group"><span class="filter-label">Atalhos</span><button class="filter" id="imageFreeToggle" type="button" aria-pressed="false">🖼️ Encontrar IAs para criar imagens grátis</button><button class="filter" id="favoritesToggle" type="button" aria-pressed="false">⭐ Favoritas</button><button class="filter" id="hiddenToggle" type="button" aria-pressed="false">🙈 Gerenciar ocultas</button><button class="filter" id="exportTextTools" type="button">📄 Baixar lista de IAs em TEXTO (.txt)</button><button class="filter" id="exportAllTools" type="button">📊 Baixar lista completa em planilha (CSV)</button></div>
 <div class="count" id="count"></div><button id="resetClicks" class="filter" type="button">↺ Zerar contadores</button>
@@ -361,6 +361,66 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 
 <article class="card" data-cat="audio criacao codigo" data-access="limit" data-search="Coqui XTTS-v2 clonagem de voz português modelo texto para fala licença não comercial instalação">
 <div class="head"><div class="icon">🎤</div><div class="title"><h2>Coqui XTTS-v2</h2><small>Texto para fala com voz de referência</small></div><span class="tag limit">GRÁTIS · RESTRIÇÕES</span></div><p class="desc">Modelo multilíngue que pode clonar uma voz a partir de uma amostra curta. Exige configuração técnica em muitos cenários. A licença do modelo tem restrições comerciais; confira os termos antes de publicar ou monetizar conteúdo.</p><div class="use"><b>💡 Exemplo</b> Gere uma narração de teste em português com uma amostra da sua própria voz.</div><div class="footer"><span class="best">Verificar licença</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://huggingface.co/coqui/XTTS-v2" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="Vizard AI editor vídeo longo clipes curtos legendas redes sociais" data-video-type="edit">
+<div class="head"><div class="icon">✂️</div><div class="title"><h2>Vizard.ai</h2><small>Transforma vídeos longos em clipes curtos</small></div><span class="tag limit">GRÁTIS + LIMITES</span></div><p class="desc">Analisa vídeos longos e ajuda a selecionar momentos interessantes, gerar cortes verticais e preparar clipes com legendas para redes sociais. O plano gratuito pode incluir limites e marca d’água.</p><div class="use"><b>💡 Exemplo</b> Transforme uma entrevista ou vídeo longo em vários cortes para TikTok, Reels e Shorts.</div><div class="footer"><span class="best">Recortes automáticos e vídeos curtos</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://vizard.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="Wisecut edição automática remover silêncios legendas trilha sonora" data-video-type="edit">
+<div class="head"><div class="icon">✂️</div><div class="title"><h2>Wisecut</h2><small>Edição automática com IA</small></div><span class="tag limit">GRÁTIS + LIMITES</span></div><p class="desc">Ajuda a remover silêncios, criar cortes mais rápidos, gerar legendas e ajustar a trilha sonora de vídeos falados. Confira os limites atuais do plano gratuito.</p><div class="use"><b>💡 Exemplo</b> Edite um vídeo de apresentação de imóvel removendo pausas e adicionando legendas.</div><div class="footer"><span class="best">Cortes automáticos e fala</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.wisecut.ai/pt-br" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="VEED editor vídeo IA legendas tradução áudio criação geração" data-video-type="both">
+<div class="head"><div class="icon">🎬</div><div class="title"><h2>VEED.io</h2><small>Editor online com ferramentas de IA</small></div><span class="tag limit">GRÁTIS + LIMITES</span></div><p class="desc">Editor no navegador com legendas, tradução, limpeza de áudio, redimensionamento e ferramentas de geração de conteúdo. Recursos, exportações e marca d’água variam conforme o plano.</p><div class="use"><b>💡 Exemplo</b> Adicione legendas em português e redimensione um vídeo para publicar em diferentes redes sociais.</div><div class="footer"><span class="best">Legendas, tradução e edição online</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.veed.io/pt-BR" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="InVideo AI editor criar vídeos prompt cenas roteiro edição" data-video-type="both">
+<div class="head"><div class="icon">🎞️</div><div class="title"><h2>InVideo AI Editor</h2><small>Criação e edição de vídeos por comando</small></div><span class="tag limit">GRÁTIS + LIMITES</span></div><p class="desc">Cria rascunhos de vídeo a partir de instruções e permite ajustar cenas, roteiro, mídia e narração. A disponibilidade de exportação, créditos e recursos gratuitos pode variar.</p><div class="use"><b>💡 Exemplo</b> Monte um primeiro rascunho de vídeo promocional e revise as cenas antes de publicar.</div><div class="footer"><span class="best">Roteiros, cenas e edição assistida</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://invideo.io/pt-br/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="paid" data-search="Adobe Premiere Pro edição profissional vídeo IA texto áudio máscaras" data-video-type="edit">
+<div class="head"><div class="icon">🎬</div><div class="title"><h2>Adobe Premiere Pro</h2><small>Edição profissional de vídeo</small></div><span class="tag limit">PAGO · TESTE CONFORME OFERTA</span></div><p class="desc">Editor profissional com recursos de IA para edição baseada em texto, máscaras, melhoria de áudio e aceleração de tarefas. É um produto pago; confira as condições de teste e assinatura no site oficial.</p><div class="use"><b>💡 Exemplo</b> Faça uma edição profissional de vídeo de imóvel, ajustando ritmo, áudio, cor e legendas.</div><div class="footer"><span class="best">Edição profissional avançada</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.adobe.com/br/products/premiere.html" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="free" data-search="DaVinci Resolve editor vídeo gratuito correção cor áudio IA Studio" data-video-type="edit">
+<div class="head"><div class="icon">🎞️</div><div class="title"><h2>DaVinci Resolve</h2><small>Edição, cor e áudio profissional</small></div><span class="tag">VERSÃO GRATUITA</span></div><p class="desc">Editor com versão gratuita robusta para montagem, correção de cor, efeitos e áudio. Algumas funções avançadas de IA ficam restritas à versão Studio paga.</p><div class="use"><b>💡 Exemplo</b> Edite um vídeo completo e ajuste as cores e o áudio sem começar por uma assinatura.</div><div class="footer"><span class="best">Editor completo com versão gratuita</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.blackmagicdesign.com/br/products/davinciresolve" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="Wondershare Filmora editor vídeo IA legendas áudio remoção objetos" data-video-type="edit">
+<div class="head"><div class="icon">🎥</div><div class="title"><h2>Wondershare Filmora</h2><small>Editor de vídeo com recursos de IA</small></div><span class="tag limit">TESTE + LIMITES</span></div><p class="desc">Editor para desktop com legendas, ferramentas de áudio e recursos de IA para acelerar tarefas de pós-produção. A exportação e algumas funções podem exigir licença paga.</p><div class="use"><b>💡 Exemplo</b> Corte um vídeo de divulgação, inclua títulos e ajuste a narração antes de exportar.</div><div class="footer"><span class="best">Edição simples com recursos assistidos</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://filmora.wondershare.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="Riverside editor vídeo gravação entrevista clipes legendas IA" data-video-type="edit">
+<div class="head"><div class="icon">🎙️</div><div class="title"><h2>Riverside</h2><small>Gravação, edição e clipes</small></div><span class="tag limit">GRÁTIS + LIMITES</span></div><p class="desc">Plataforma para gravar entrevistas e conversas com recursos de edição, transcrição, legendas e seleção de trechos para clipes. O plano gratuito tem limites que devem ser conferidos no site.</p><div class="use"><b>💡 Exemplo</b> Grave uma entrevista e separe trechos curtos com legendas para redes sociais.</div><div class="footer"><span class="best">Entrevistas e reaproveitamento de conteúdo</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://riverside.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="Pictory texto para vídeo editar reaproveitar conteúdo legendas IA" data-video-type="both">
+<div class="head"><div class="icon">🧩</div><div class="title"><h2>Pictory</h2><small>Vídeos a partir de texto e conteúdo existente</small></div><span class="tag limit">TESTE + LIMITES</span></div><p class="desc">Ajuda a transformar roteiros ou conteúdo textual em vídeos e a reaproveitar material para formatos curtos. O acesso costuma depender de teste ou plano; confirme os limites atuais.</p><div class="use"><b>💡 Exemplo</b> Converta um roteiro de dicas imobiliárias em um vídeo com cenas e narração para revisar.</div><div class="footer"><span class="best">Roteiro para vídeo e reaproveitamento</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://pictory.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="Gling AI editor cortar pausas trechos indesejados vídeos falados" data-video-type="edit">
+<div class="head"><div class="icon">✂️</div><div class="title"><h2>Gling AI</h2><small>Cortes de pausas em vídeos falados</small></div><span class="tag limit">ACESSO A CONFERIR</span></div><p class="desc">Ferramenta voltada a acelerar a edição de vídeos falados, detectando pausas e trechos indesejados para facilitar a montagem. Confira no site os planos e limites vigentes.</p><div class="use"><b>💡 Exemplo</b> Limpe pausas longas de uma gravação de apresentação antes de fazer os cortes finais.</div><div class="footer"><span class="best">Edição rápida de vídeos falados</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.gling.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="paid" data-search="Submagic edição vídeo legendas animadas shorts B-roll" data-video-type="edit">
+<div class="head"><div class="icon">💬</div><div class="title"><h2>Submagic</h2><small>Legendas dinâmicas para vídeos curtos</small></div><span class="tag limit">PAGO · PLANOS DISPONÍVEIS</span></div><p class="desc">Focada em vídeos curtos, com legendas animadas, recursos de edição e apoio visual. Confira as condições atuais de teste e assinatura antes de usar.</p><div class="use"><b>💡 Exemplo</b> Prepare um Short com legendas dinâmicas e destaque visual das frases mais importantes.</div><div class="footer"><span class="best">Legendas animadas para Shorts</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.submagic.co/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="Munch editor IA reaproveitar vídeos longos clipes redes sociais" data-video-type="edit">
+<div class="head"><div class="icon">📱</div><div class="title"><h2>Munch</h2><small>Reaproveita vídeos longos em clipes</small></div><span class="tag limit">PLANO A CONFERIR</span></div><p class="desc">Ajuda a identificar trechos de vídeos longos para criar peças curtas e adaptar conteúdo para redes sociais. Verifique disponibilidade, créditos e planos atuais.</p><div class="use"><b>💡 Exemplo</b> Encontre trechos aproveitáveis de uma palestra e prepare cortes para redes sociais.</div><div class="footer"><span class="best">Reaproveitamento de vídeos longos</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.getmunch.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="Kapwing AI editor vídeo online cortar legendas traduzir redimensionar geração" data-video-type="both">
+<div class="head"><div class="icon">🪄</div><div class="title"><h2>Kapwing AI</h2><small>Editor online e ferramentas generativas</small></div><span class="tag limit">GRÁTIS + LIMITES</span></div><p class="desc">Editor no navegador para cortar, legendar, traduzir e redimensionar vídeos, com ferramentas de IA para apoiar a criação. O plano gratuito pode ter limites de exportação ou marca d’água.</p><div class="use"><b>💡 Exemplo</b> Edite um vídeo vertical, gere legendas e prepare uma versão adequada para cada rede.</div><div class="footer"><span class="best">Edição no navegador e legendas</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.kapwing.com/pt-br/ai" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="Flixier editor vídeo navegador legendas áudio IA" data-video-type="edit">
+<div class="head"><div class="icon">🌐</div><div class="title"><h2>Flixier</h2><small>Editor de vídeo no navegador</small></div><span class="tag limit">GRÁTIS + LIMITES</span></div><p class="desc">Editor online com cortes, legendas, ferramentas de áudio e recursos assistidos por IA. Os limites de exportação e recursos do plano gratuito podem mudar.</p><div class="use"><b>💡 Exemplo</b> Faça cortes rápidos e gere legendas sem instalar um editor no computador.</div><div class="footer"><span class="best">Edição rápida no navegador</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://flixier.com/pt" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-cat="video criacao trabalho" data-access="paid" data-search="Topaz Video melhorar resolução upscale redução ruído estabilização IA" data-video-type="edit">
+<div class="head"><div class="icon">✨</div><div class="title"><h2>Topaz Video</h2><small>Melhoria e ampliação da qualidade de vídeo</small></div><span class="tag limit">PAGO</span></div><p class="desc">Ferramenta de pós-produção com IA para melhorar resolução, reduzir ruído e estabilizar imagens em materiais compatíveis. É uma solução paga; confira requisitos e licenciamento.</p><div class="use"><b>💡 Exemplo</b> Teste a melhoria de nitidez e redução de ruído em um vídeo antigo antes da publicação.</div><div class="footer"><span class="best">Upscaling, redução de ruído e estabilização</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.topazlabs.com/topaz-video" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
 </section>
@@ -706,7 +766,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v48','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v49','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -719,7 +779,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v48.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v49.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -738,7 +798,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v48.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v49.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
