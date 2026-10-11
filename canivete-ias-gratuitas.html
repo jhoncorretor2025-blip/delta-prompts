@@ -361,10 +361,34 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v70</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
-<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>193 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v71</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>194 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
-<section class="toolbar">
+
+<section class="feature-panel" id="freeRealityPanel" aria-labelledby="freeRealityTitle">
+ <h3 id="freeRealityTitle">🆓 Índice de gratuidade real</h3>
+ <p>Uma triagem prática com base no acesso cadastrado em cada ferramenta. Plano grátis não significa necessariamente uso ilimitado: confira créditos, limites, marca-d’água, exportação e recursos pagos no site oficial antes de depender dela.</p>
+ <div class="dashboard-stats">
+  <span class="stat-pill">🟢 Gratuidade declarada: <b id="realFreeCount">0</b></span>
+  <span class="stat-pill">🟡 Grátis com limites: <b id="realLimitCount">0</b></span>
+  <span class="stat-pill">🔴 Plano pago: <b id="realPaidCount">0</b></span>
+  <span class="stat-pill">⚪ Acesso a conferir: <b id="realUnknownCount">0</b></span>
+ </div>
+ <p class="rank-info">Índice indicativo: 100 = classificada como plano grátis; 60 = grátis com limites; 0 = plano pago. Não é uma avaliação independente nem garante que todos os recursos sejam gratuitos.</p>
+</section>
+<section class="feature-panel" id="linkAuditPanel" aria-labelledby="linkAuditTitle">
+ <h3 id="linkAuditTitle">🩺 Verificador de links e informações</h3>
+ <p>Faz uma auditoria local do catálogo: identifica links ausentes ou malformados e informações de acesso não cadastradas. Por limitações do navegador, não consegue confirmar sozinho se um site externo está online nem detectar mudanças de preço dentro dele.</p>
+ <div class="dashboard-stats">
+  <span class="stat-pill">🔗 Links válidos no formato: <b id="auditValidLinks">0</b></span>
+  <span class="stat-pill">⚠️ Links para revisar: <b id="auditBadLinks">0</b></span>
+  <span class="stat-pill">💳 Acesso não informado: <b id="auditUnknownAccess">0</b></span>
+  <span class="stat-pill">🕒 Última auditoria local: <b id="auditTime">—</b></span>
+ </div>
+ <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="mini-btn primary" id="runCatalogAudit" type="button">🔎 Verificar catálogo agora</button><button class="mini-btn" id="showAuditIssues" type="button">Ver itens para revisar</button></div>
+ <div id="auditResults" class="recommend-result" role="status" aria-live="polite"></div>
+</section>
+\n<section class="toolbar">
 <div class="search-shell"><svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="search" class="search" type="search" placeholder="Buscar IA, função, categoria ou exemplo..." aria-label="Buscar ferramentas de inteligência artificial"><kbd class="search-shortcut">Ctrl + K</kbd></div>
 <div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters"><button class="filter active" data-cat="all">🗂️ Todas <span class="filter-count" data-count-all>97</span></button><button class="filter" data-cat="criacao">✍️ Texto e conteúdo <span class="filter-count" data-count-cat="criacao">69</span></button><button class="filter" data-cat="imagem">🖼️ Imagem <span class="filter-count" data-count-cat="imagem">26</span></button><button class="filter" data-cat="video">🎥 Todos os vídeos <span class="filter-count" data-count-cat="video">42</span></button><button class="filter" data-cat="codigo">💻 Código <span class="filter-count" data-count-cat="codigo">26</span></button><button class="filter" data-cat="pesquisa">🔎 Pesquisa <span class="filter-count" data-count-cat="pesquisa">21</span></button><button class="filter" data-cat="trabalho">💼 Trabalho <span class="filter-count" data-count-cat="trabalho">51</span></button><button class="filter" data-cat="audio">🎧 Áudio <span class="filter-count" data-count-cat="audio">18</span></button><button class="filter" data-cat="musica">🎵 Criação de música <span class="filter-count" data-count-cat="musica">0</span></button><button class="filter video-create-category" data-cat="video-criacao">🎬 Criação de vídeo <span class="filter-count" data-count-cat="video-criacao">24</span></button><button class="filter video-edit-category" data-cat="video-edicao">✂️ Edição de vídeo <span class="filter-count" data-count-cat="video-edicao">25</span></button><button class="filter" data-cat="estudo">📚 Estudo <span class="filter-count" data-count-cat="estudo">13</span></button><button class="filter" data-cat="automacao">⚙️ Automação <span class="filter-count" data-count-cat="automacao">5</span></button><button class="filter" data-cat="avatar">🧑‍🎤 Avatar <span class="filter-count" data-count-cat="avatar">0</span></button><button class="filter specialist-category" data-cat="especialistas">🎯 Especialistas <span class="filter-count" data-count-cat="especialistas">32</span></button></div></div>
 <div class="video-subfilters-wrap" id="videoSubfilters" aria-label="Tipo de ferramenta de vídeo" hidden><div class="filter-group video-subfilters"><span class="filter-label">Tipo de vídeo</span><div class="filters" id="videoTypeFilters"><button class="filter active" type="button" data-video-type="all">Todos <span class="filter-count" data-count-video="all">42</span></button><button class="filter" type="button" data-video-type="create">🎬 Criam vídeos <span class="filter-count" data-count-video="create">24</span></button><button class="filter" type="button" data-video-type="edit">✂️ Só edição <span class="filter-count" data-count-video="edit">14</span></button><button class="filter" type="button" data-video-type="both">🔄 Criam e editam <span class="filter-count" data-count-video="both">11</span></button><button class="filter" type="button" data-video-type="other">🧰 Plataformas/apoio <span class="filter-count" data-count-video="other">4</span></button></div></div><p class="category-help video-type-help">🎬 <strong>Criam vídeos:</strong> geram clipes, cenas ou vídeos com IA. ✂️ <strong>Só edição:</strong> editam, cortam ou reaproveitam vídeos existentes. 🔄 <strong>Ambas:</strong> criam e também editam. 🧰 <strong>Plataformas/apoio:</strong> reúnem ou apoiam fluxos de trabalho com vídeo.</p></div>
@@ -1150,7 +1174,72 @@ document.addEventListener('keydown',event=>{
  }
 });
 
-function cardCategories(card){return String(card?.dataset?.cat||'').trim().split(/\s+/).filter(Boolean)}
+
+function getFreeIndex(card){
+ const access=String(card?.dataset?.access||'').toLowerCase();
+ if(access==='free')return 100;
+ if(access==='limit')return 60;
+ if(access==='paid')return 0;
+ return null;
+}
+function renderFreeReality(){
+ const counts={free:0,limit:0,paid:0,unknown:0};
+ cards.forEach(card=>{
+  const a=String(card.dataset.access||'').toLowerCase();
+  if(a==='free')counts.free++;else if(a==='limit')counts.limit++;else if(a==='paid')counts.paid++;else counts.unknown++;
+  const footer=card.querySelector('.footer');
+  if(!footer)return;
+  let chip=card.querySelector('.free-index-chip');
+  if(!chip){chip=document.createElement('span');chip.className='stat-pill free-index-chip';footer.insertAdjacentElement('beforebegin',chip);}
+  const score=getFreeIndex(card);
+  chip.textContent=score===null?'🆓 Gratuidade: conferir':score===100?'🟢 Índice grátis: 100/100':score===60?'🟡 Índice grátis: 60/100':'🔴 Índice grátis: 0/100';
+  chip.title=score===null?'O catálogo ainda não informa a modalidade de acesso.':score===100?'Classificada como plano grátis; limites e recursos premium devem ser conferidos.':score===60?'Plano grátis com limites cadastrados.':'Classificada como plano pago.';
+ });
+ const ids={free:'realFreeCount',limit:'realLimitCount',paid:'realPaidCount',unknown:'realUnknownCount'};
+ Object.entries(ids).forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.textContent=String(counts[k])});
+}
+function auditCatalog(){
+ const issues=[],valid=[];
+ cards.forEach(card=>{
+  const name=nameOf(card)||'Ferramenta sem nome';
+  const link=card.querySelector('.open[href]');
+  const href=link?.getAttribute('href')||'';
+  let url=null;
+  try{url=new URL(href,location.href)}catch(e){}
+  if(!link||!url||!['http:','https:'].includes(url.protocol)){
+   issues.push({name,reason:'Link ausente ou formato inválido',card});
+  }else{
+   valid.push(name);
+   if(url.hostname==='example.com'||url.hostname==='localhost'||url.hostname==='127.0.0.1'){
+    issues.push({name,reason:'Endereço parece ser de exemplo/local',card});
+   }
+  }
+  if(!['free','limit','paid'].includes(String(card.dataset.access||'').toLowerCase())){
+   issues.push({name,reason:'Modalidade de acesso não informada',card});
+  }
+ });
+ document.getElementById('auditValidLinks').textContent=String(valid.length);
+ document.getElementById('auditBadLinks').textContent=String(issues.filter(x=>x.reason.includes('Link')||x.reason.includes('Endereço')).length);
+ document.getElementById('auditUnknownAccess').textContent=String(cards.filter(card=>!['free','limit','paid'].includes(String(card.dataset.access||'').toLowerCase())).length);
+ document.getElementById('auditTime').textContent=new Date().toLocaleString('pt-BR');
+ const box=document.getElementById('auditResults');
+ box.style.display='block';
+ box.replaceChildren();
+ const heading=document.createElement('strong');
+ heading.textContent=issues.length?'Itens que precisam de revisão:':'Nenhum problema estrutural encontrado nesta auditoria local.';
+ box.appendChild(heading);
+ if(issues.length){
+  const list=document.createElement('ul');list.style.paddingLeft='20px';
+  issues.slice(0,60).forEach(item=>{const li=document.createElement('li');li.textContent=item.name+' — '+item.reason;list.appendChild(li)});
+  box.appendChild(list);
+  if(issues.length>60){const p=document.createElement('p');p.textContent='Exibindo 60 de '+issues.length+' ocorrências.';box.appendChild(p)}
+ }else{
+  const p=document.createElement('p');p.textContent='Isso verifica apenas a estrutura dos links e os dados locais; não confirma disponibilidade externa nem preços atuais.';box.appendChild(p);
+ }
+ window.__catalogAuditIssues=issues;
+ return issues;
+}
+\nfunction cardCategories(card){return String(card?.dataset?.cat||'').trim().split(/\s+/).filter(Boolean)}
 function updateFilterCounts(){
  const total=cards.length;
  document.querySelectorAll('[data-count-all],[data-count-access="all"]').forEach(el=>el.textContent=String(total));
@@ -1177,7 +1266,13 @@ function updateFilterCounts(){
    el.textContent=String(n);
  });
 }
-updateFilterCounts();
+updateFilterCounts();\nrenderFreeReality();
+document.getElementById('runCatalogAudit')?.addEventListener('click',auditCatalog);
+document.getElementById('showAuditIssues')?.addEventListener('click',()=>{
+ const issues=auditCatalog();
+ const first=issues[0]?.card;
+ if(first){first.scrollIntoView({behavior:'smooth',block:'center'});first.style.outline='3px solid #f59e0b';setTimeout(()=>first.style.outline='',2500)}
+});
 const search=document.getElementById('search'),count=document.getElementById('count'),empty=document.getElementById('empty'),grid=document.getElementById('grid'),reset=document.getElementById('resetClicks');
 const STORAGE='canivete_ias_cliques_v1', RATING='canivete_ias_avaliacoes_v1', CAPMAP='canivete_ias_caps_v1', FAVORITES_STORAGE='canivete_ias_favoritas_v1', HISTORY_STORAGE='canivete_ias_historico_v1', HIDDEN_STORAGE='canivete_ias_ocultas_v1', BOTTOM_STORAGE='canivete_ias_por_ultimo_v1';
 let cat='all',access='all',clicks={},ratings={},selected=[],favorites=[],hidden=[],bottom=[],favoritesOnly=false,imageFreeOnly=false,showHidden=false,recent=[];
