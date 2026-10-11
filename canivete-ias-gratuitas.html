@@ -59,7 +59,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
  .filter-group:has(#exportAllTools) #imageFreeToggle,.filter-group:has(#exportAllTools) #favoritesToggle{width:100%;max-width:100%;text-align:left}
 }
 
-/* v42 — refinamento visual, acessibilidade e responsividade */
+/* v43 — refinamento visual, acessibilidade e responsividade */
 :root{--accent-soft:#eff6ff;--focus:#93c5fd}
 .top{padding:4px 0 14px;border-bottom:1px solid var(--line)}
 .top-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
@@ -130,7 +130,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v42</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v43</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>83 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
@@ -143,22 +143,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <div class="count" id="count"></div><button id="resetClicks" class="filter" type="button">↺ Zerar contadores</button>
 </section>
 
-<section class="feature-panel" id="usageDashboard">
-<h3>📊 Meu painel de uso</h3>
-<p>Acompanhe suas ferramentas mais usadas, favoritas e os últimos acessos. Os dados ficam salvos neste navegador.</p>
-<div class="dashboard-stats"><span class="stat-pill">👆 Acessos registrados: <strong id="statClicks">0</strong></span><span class="stat-pill">🧰 IAs utilizadas: <strong id="statUsed">0</strong></span><span class="stat-pill">⭐ Favoritas: <strong id="statFavorites">0</strong></span></div>
-<div class="stats-line"><strong>🕘 Acessadas recentemente</strong><button class="mini-btn" id="clearHistory" type="button">Limpar histórico</button></div>
-<div id="recentUsage" class="recent-usage"><span class="stat-pill">Ainda não há acessos registrados.</span></div>
-</section>
-<section class="feature-panel" id="freeRadar">
-<h3>💸 Radar de acesso às ferramentas</h3>
-<p>Veja quantas ferramentas estão marcadas como gratuitas, gratuitas com limites ou pagas. Os planos podem mudar; confira sempre o site oficial.</p>
-<div class="stats-line">
-<button class="stat-pill radar-btn" type="button" data-radar-access="free">🟢 Plano grátis: <strong id="radarFreeCount">0</strong></button>
-<button class="stat-pill radar-btn" type="button" data-radar-access="limit">🟡 Grátis + limites: <strong id="radarLimitCount">0</strong></button>
-<button class="stat-pill radar-btn" type="button" data-radar-access="paid">🔴 Plano pago: <strong id="radarPaidCount">0</strong></button>
-</div>
-</section>
+
 
 <section class="feature-panel" id="recommender">
 <h3>🎯 9. Qual IA devo usar?</h3>
@@ -456,6 +441,24 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </section>
 <div id="empty" class="empty">😕 Nenhuma IA encontrada. Tente outra palavra ou categoria.</div>
 <div class="note"><strong>ℹ️ Importante sobre “grátis”</strong><br>“GRÁTIS” indica uma modalidade sem assinatura. “GRÁTIS + LIMITE” indica que existe uso gratuito, mas com limites de mensagens, créditos, recursos ou velocidade. “*” indica que disponibilidade e limites podem variar por região, conta e mudanças do serviço. Antes de usar dados sensíveis ou comercialmente, confira as regras da própria ferramenta. As ofertas podem mudar com o tempo.</div>
+<section class="bottom-mini-panels" aria-label="Resumo e painel de uso">
+<section class="feature-panel" id="usageDashboard">
+<h3>📊 Meu painel de uso</h3>
+<p>Acompanhe suas ferramentas mais usadas, favoritas e os últimos acessos. Os dados ficam salvos neste navegador.</p>
+<div class="dashboard-stats"><span class="stat-pill">👆 Acessos registrados: <strong id="statClicks">0</strong></span><span class="stat-pill">🧰 IAs utilizadas: <strong id="statUsed">0</strong></span><span class="stat-pill">⭐ Favoritas: <strong id="statFavorites">0</strong></span></div>
+<div class="stats-line"><strong>🕘 Acessadas recentemente</strong><button class="mini-btn" id="clearHistory" type="button">Limpar histórico</button></div>
+<div id="recentUsage" class="recent-usage"><span class="stat-pill">Ainda não há acessos registrados.</span></div>
+</section>
+<section class="feature-panel" id="freeRadar">
+<h3>💸 Radar de acesso às ferramentas</h3>
+<p>Veja quantas ferramentas estão marcadas como gratuitas, gratuitas com limites ou pagas. Os planos podem mudar; confira sempre o site oficial.</p>
+<div class="stats-line">
+<button class="stat-pill radar-btn" type="button" data-radar-access="free">🟢 Plano grátis: <strong id="radarFreeCount">0</strong></button>
+<button class="stat-pill radar-btn" type="button" data-radar-access="limit">🟡 Grátis + limites: <strong id="radarLimitCount">0</strong></button>
+<button class="stat-pill radar-btn" type="button" data-radar-access="paid">🔴 Plano pago: <strong id="radarPaidCount">0</strong></button>
+</div>
+</section>
+</section>
 </main>
 <script>
 (function(){
@@ -644,7 +647,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v42','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v43','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -657,7 +660,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v42.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v43.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -676,7 +679,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v42.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v43.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
@@ -718,3 +721,15 @@ render();
 </script>
 </body>
 </html>
+<style>
+/* v43 — painéis compactos no fim da página */
+.bottom-mini-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0 10px;align-items:start}
+.bottom-mini-panels .feature-panel{min-width:0;margin:0;padding:16px;border-radius:16px;box-shadow:var(--shadow)}
+.bottom-mini-panels .feature-panel h3{font-size:16px;margin:0 0 7px}
+.bottom-mini-panels .feature-panel>p{font-size:12px;line-height:1.45;margin:0 0 12px}
+.bottom-mini-panels .dashboard-stats{gap:6px}
+.bottom-mini-panels .stat-pill{font-size:11px;padding:6px 8px}
+.bottom-mini-panels .stats-line{gap:8px;flex-wrap:wrap}
+.bottom-mini-panels .recent-usage{gap:6px}
+@media(max-width:680px){.bottom-mini-panels{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:16px}.bottom-mini-panels .feature-panel{padding:14px}}
+</style>
