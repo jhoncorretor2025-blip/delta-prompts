@@ -156,7 +156,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v58</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v59</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>191 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
@@ -803,6 +803,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 
 <article class="card" data-cat="pesquisa trabalho estudo codigo" data-access="free" data-search="ChatGPTFree.ai Unlimited AI chat texto escrita programacao estudo imagem voz produtividade">
 <div class="head"><div class="icon">💬</div><div class="title"><h2>ChatGPTFree.ai</h2><small>Chat de IA gratuito — Unlimited AI</small></div><span class="tag">ACESSO GRÁTIS*</span></div><p class="desc">Assistente independente para conversar, escrever, estudar, programar e analisar imagens. O domínio chatgptfree.ai atualmente redireciona para Unlimited AI; não é o site oficial do ChatGPT da OpenAI.</p><div class="use"><b>💡 Exemplo</b> Peça ajuda para revisar um texto, compreender um assunto ou obter uma primeira versão de código.</div><div class="footer"><span class="best">Chat e produtividade</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://chatgptfree.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
 
 <article class="card" data-cat="trabalho criacao imagem video codigo automacao estudo" data-access="paid" data-search="Abacus AI Abacus.AI ChatLLM agentes IA modelos linguagem criar aplicativos sites apresentações documentos vídeos imagens programação análise dados pesquisa automação" data-video-type="other">
 <div class="head"><div class="icon">🧠</div><div class="title"><h2>Abacus AI</h2><small>Assistente multimodelo e agentes de IA</small></div><span class="tag limit">PLANO PAGO*</span></div><p class="desc">Plataforma que reúne diversos modelos de IA e agentes capazes de pesquisar, analisar dados, escrever código e criar aplicativos, sites, apresentações, documentos, imagens e vídeos. Os recursos e limites dependem do plano contratado.</p><div class="use"><b>💡 Exemplo</b> Descreva um sistema que deseja criar ou envie uma tarefa de pesquisa para o agente planejar e produzir uma primeira versão.</div><div class="footer"><span class="best">Agentes, criação e produtividade</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://abacus.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
@@ -1147,7 +1148,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v58','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v59','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1160,7 +1161,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v58.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v59.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1179,7 +1180,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v58.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v59.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
