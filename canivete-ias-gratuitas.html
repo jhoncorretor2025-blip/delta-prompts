@@ -350,7 +350,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v68</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v69</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>193 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
@@ -455,6 +455,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <div class="head"><div class="icon">✨</div><div class="title"><h2>Topaz Video</h2><small>Melhoria e ampliação da qualidade de vídeo</small></div><span class="specialist-badge">🎯 Especialista</span><span class="tag limit">PAGO</span></div><p class="desc">Ferramenta de pós-produção com IA para melhorar resolução, reduzir ruído e estabilizar imagens em materiais compatíveis. É uma solução paga; confira requisitos e licenciamento.</p><div class="use"><b>💡 Exemplo</b> Teste a melhoria de nitidez e redução de ruído em um vídeo antigo antes da publicação.</div><div class="footer"><span class="best">Upscaling, redução de ruído e estabilização</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.topazlabs.com/topaz-video" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
+<article class="card" data-cat="trabalho video audio criacao estudo" data-access="limit" data-search="123apps conjunto ferramentas online editor vídeo áudio PDF conversores arquivos texto para fala gravador de tela">
+<div class="head"><div class="icon">🧰</div><div class="title"><h2>123apps</h2><small>Conjunto de ferramentas online</small></div><span class="tag limit">GRÁTIS + LIMITES</span></div>
+<p class="desc">Plataforma que reúne ferramentas para vídeo, áudio, PDF e conversão de arquivos. No vídeo: cortar, unir, recortar, girar, redimensionar, ajustar velocidade e adicionar áudio, imagem ou texto. No áudio: cortar, ajustar volume e tom, equalizar, gravar e juntar faixas. Em PDF: dividir, combinar, compactar, proteger, girar e converter para Word, Excel e imagens. Também oferece conversores de vídeo, áudio, imagem, documentos e eBooks, além de síntese de voz e gravação de tela.</p>
+<div class="use"><b>💡 Exemplo</b> Edite um vídeo para redes sociais, una PDFs de documentos ou converta um arquivo sem instalar programas.</div>
+<div class="footer"><span class="best">Vídeo • áudio • PDF • conversores</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://123apps.com/pt/" target="_blank" rel="noopener">Abrir ↗</a></div></article>
 </section>
 <div id="compareBar" class="compare-bar"><strong id="compareText">0 IAs selecionadas</strong><div class="compare-actions"><button class="mini-btn" id="clearCompare" type="button">Limpar</button><button class="mini-btn primary" id="openCompare" type="button">⚖️ Comparar agora</button></div></div>
 <article class="card" data-cat="pesquisa trabalho" data-access="limit" data-search="Grok chat pesquisa web atualidade raciocinio X"><div class="head"><div class="icon">𝕏</div><div class="title"><h2>Grok</h2><small>Chat e pesquisa em tempo real</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Assistente da xAI para conversa, pesquisa e tarefas de raciocínio, com foco em informações atuais.</p><div class="use"><b>💡 Exemplo</b> Pesquise uma tendência atual e peça um resumo dos principais pontos.</div><div class="footer"><span class="best">Pesquisa atual</span><span class="clicks">👆 <b class="click-count">0</b></span><a class="open" href="https://grok.com/" target="_blank" rel="noopener">Abrir ↗</a></div></article>
@@ -1332,7 +1337,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v68','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v69','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1345,7 +1350,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v68.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v69.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1364,7 +1369,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v68.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v69.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
