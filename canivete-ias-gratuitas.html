@@ -1239,7 +1239,7 @@ function auditCatalog(){
  window.__catalogAuditIssues=issues;
  return issues;
 }
-\nfunction cardCategories(card){return String(card?.dataset?.cat||'').trim().split(/\s+/).filter(Boolean)}
+function cardCategories(card){return String(card?.dataset?.cat||'').trim().split(/\s+/).filter(Boolean)}
 function updateFilterCounts(){
  const total=cards.length;
  document.querySelectorAll('[data-count-all],[data-count-access="all"]').forEach(el=>el.textContent=String(total));
@@ -1266,7 +1266,8 @@ function updateFilterCounts(){
    el.textContent=String(n);
  });
 }
-updateFilterCounts();\nrenderFreeReality();
+updateFilterCounts();
+renderFreeReality();
 document.getElementById('runCatalogAudit')?.addEventListener('click',auditCatalog);
 document.getElementById('showAuditIssues')?.addEventListener('click',()=>{
  const issues=auditCatalog();
