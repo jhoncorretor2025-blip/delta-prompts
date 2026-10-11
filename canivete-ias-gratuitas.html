@@ -59,7 +59,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
  .filter-group:has(#exportAllTools) #imageFreeToggle,.filter-group:has(#exportAllTools) #favoritesToggle{width:100%;max-width:100%;text-align:left}
 }
 
-/* v45 — refinamento visual, acessibilidade e responsividade */
+/* v46 — refinamento visual, acessibilidade e responsividade */
 :root{--accent-soft:#eff6ff;--focus:#93c5fd}
 .top{padding:4px 0 14px;border-bottom:1px solid var(--line)}
 .top-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
@@ -127,20 +127,20 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 
-/* v45 — bolhas com quantidade de IAs nos filtros */
+/* v46 — bolhas com quantidade de IAs nos filtros */
 .filter-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;margin-left:3px;border-radius:999px;background:#e8eef8;color:#334155;font-size:10px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;vertical-align:middle}
 .filter.active .filter-count{background:rgba(255,255,255,.24);color:inherit}
 [data-theme="dark"] .filter-count{background:#29334e;color:#e2e8f0}
 @media(max-width:680px){.filter-count{min-width:22px;height:22px;font-size:11px}}
 
-/* v45 — separar ferramentas de criação e edição de vídeo */
+/* v46 — separar ferramentas de criação e edição de vídeo */
 .video-subfilters{padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
 .video-subfilters[hidden]{display:none!important}
 .video-subfilters .filter-label{white-space:nowrap}
 @media(max-width:680px){.video-subfilters{align-items:flex-start;flex-direction:column}.video-subfilters .filters{width:100%}.video-subfilters .filter{flex:1}}
 </style>
 <style>
-/* v45 — painéis compactos no fim da página */
+/* v46 — painéis compactos no fim da página */
 .bottom-mini-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0 10px;align-items:start}
 .bottom-mini-panels .feature-panel{min-width:0;margin:0;padding:16px;border-radius:16px;box-shadow:var(--shadow)}
 .bottom-mini-panels .feature-panel h3{font-size:16px;margin:0 0 7px}
@@ -155,7 +155,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v45</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v46</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>83 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
@@ -492,7 +492,7 @@ const cards=[...document.querySelectorAll('.card')];
 function updateFilterCounts(){
  const total=cards.length;
  document.querySelectorAll('[data-count-all],[data-count-access="all"]').forEach(el=>el.textContent=total);
- document.querySelectorAll('[data-count-cat]').forEach(el=>{const key=el.dataset.countCat;el.textContent=cards.filter(card=>card.dataset.cat.split(/\\s+/).includes(key)).length});
+ document.querySelectorAll('[data-count-cat]').forEach(el=>{const key=el.dataset.countCat;el.textContent=cards.filter(card=>card.dataset.cat.trim().split(/\s+/).includes(key)).length});
  document.querySelectorAll('[data-count-access]:not([data-count-access="all"])').forEach(el=>{const key=el.dataset.countAccess;el.textContent=cards.filter(card=>card.dataset.access===key).length});
 }
 updateFilterCounts();
@@ -689,7 +689,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v45','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v46','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -702,7 +702,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v45.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v46.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -721,7 +721,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v45.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v46.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
