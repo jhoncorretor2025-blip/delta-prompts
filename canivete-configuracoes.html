@@ -12,7 +12,7 @@
 </style>
 </head>
 <body><main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="font-size:11px;color:var(--muted)">• Configurações • v2</span></div><a class="link" href="canivete-ias-gratuitas.html">← Voltar para as IAs</a></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="font-size:11px;color:var(--muted)">• Configurações • v3</span></div><a class="link" href="canivete-ias-gratuitas.html">← Voltar para as IAs</a></header>
 <section class="hero"><h1>⚙️ Configurações e ações rápidas</h1><p>Encontre aqui os comandos do catálogo em um só lugar. Escolha uma ação para abrir a lista de IAs e executá-la.</p></section>
 <div class="section">🧭 Organização e visualização</div><section class="grid">
 <button class="action" data-action="images"><span class="emoji">🖼️</span><span class="copy"><strong>Imagens grátis</strong><span>Mostrar ferramentas de imagem com acesso grátis ou gratuito com limites.</span></span><span class="arrow">›</span></button>
@@ -23,7 +23,12 @@
 <button class="action" data-action="txt"><span class="emoji">📄</span><span class="copy"><strong>Baixar lista em TXT</strong><span>Exportar as ferramentas em um arquivo de texto legível.</span></span><span class="arrow">↓</span></button>
 <button class="action" data-action="csv"><span class="emoji">📊</span><span class="copy"><strong>Baixar lista em CSV</strong><span>Exportar os dados para abrir em planilhas.</span></span><span class="arrow">↓</span></button>
 </section>
-<div class="section">🧹 Manutenção</div><section class="grid">
+<div class="section">🧰 Ferramentas de manutenção do catálogo</div>
+<section class="grid">
+<button class="action" type="button" id="openFreeIndex"><span class="emoji">🆓</span><span class="copy"><strong>Índice de gratuidade real</strong><span>Consultar quantas IAs são grátis, têm limites ou são pagas e entender a classificação.</span></span><span class="arrow">↗</span></button>
+<button class="action" type="button" id="openLinkAudit"><span class="emoji">🔎</span><span class="copy"><strong>Verificador de links e informações</strong><span>Auditar links cadastrados e encontrar ferramentas que precisam de revisão.</span></span><span class="arrow">↗</span></button>
+</section>
+<div class="warning">ℹ️ Essas ferramentas ficam nas configurações para deixar a navegação principal mais limpa. A auditoria verifica a estrutura dos links e os dados cadastrados; não confirma sozinha se sites externos estão online nem se os preços mudaram.</div><div class="section">🧹 Manutenção</div><section class="grid">
 <button class="action danger" data-action="reset"><span class="emoji">🔄</span><span class="copy"><strong>Zerar contadores</strong><span>Apagar a contagem de acessos registrada para as ferramentas.</span></span><span class="arrow">›</span></button>
 </section>
 
@@ -61,6 +66,8 @@ document.querySelectorAll('[data-recommend]').forEach(button=>button.addEventLis
  box.hidden=false;
  box.innerHTML='<strong>🏆 Sugestões:</strong> '+names.map(name=>'<a class="link" style="margin-right:10px" href="canivete-ias-gratuitas.html?search='+encodeURIComponent(name)+'">'+name+'</a>').join('')+'<p style="margin:8px 0 0;color:var(--muted);font-size:12px">Abra uma sugestão para localizar a ferramenta no catálogo.</p>';
 }));
+document.getElementById('openFreeIndex')?.addEventListener('click',()=>{window.location.href='canivete-ias-gratuitas.html?configPanel=free'});
+document.getElementById('openLinkAudit')?.addEventListener('click',()=>{window.location.href='canivete-ias-gratuitas.html?configPanel=audit'});
 document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>{
  const action=button.dataset.action;
  window.location.href='canivete-ias-gratuitas.html?configAction='+encodeURIComponent(action);
