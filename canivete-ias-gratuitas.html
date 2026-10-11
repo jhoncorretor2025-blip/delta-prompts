@@ -365,7 +365,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v74</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v75</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>194 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
@@ -1487,7 +1487,14 @@ cards.forEach(c=>{const btn=c.querySelector('.open');if(!btn)return;btn.addEvent
 })});
 function setup(id,type){document.querySelectorAll('#'+id+' .filter').forEach(b=>b.addEventListener('click',()=>{
  document.querySelectorAll('#'+id+' .filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');
- if(type==='cat'){cat=b.dataset.cat;if(cat!=='video')videoType='all';}else access=b.dataset.access;render();
+ if(type==='cat'){
+  cat=b.dataset.cat;
+  rankingCategory='current';
+  const rankCategorySelect=document.getElementById('rankingCategory');if(rankCategorySelect)rankCategorySelect.value='current';
+  if(cat!=='video')videoType='all';
+  document.querySelectorAll('#videoTypeFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.videoType===videoType));
+ }else access=b.dataset.access;
+ render();
 }))}
 setup('catFilters','cat');setup('accessFilters','access');
 document.getElementById('rankingSort')?.addEventListener('change',e=>{rankingSort=e.target.value;render()});
@@ -1501,6 +1508,7 @@ document.getElementById('rankingCategory')?.addEventListener('change',e=>{
  else if(rankingCategory==='research'){cat='pesquisa';videoType='all'}
  else {cat='all';videoType='all'}
  document.querySelectorAll('#catFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.cat===cat));
+ document.querySelectorAll('#videoTypeFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.videoType===videoType));
  render();
 });
 const videoSubfilters=document.getElementById('videoSubfilters');
