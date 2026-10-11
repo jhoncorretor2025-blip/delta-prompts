@@ -127,6 +127,19 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 </style>
+<style>
+/* v43 — painéis compactos no fim da página */
+.bottom-mini-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0 10px;align-items:start}
+.bottom-mini-panels .feature-panel{min-width:0;margin:0;padding:16px;border-radius:16px;box-shadow:var(--shadow)}
+.bottom-mini-panels .feature-panel h3{font-size:16px;margin:0 0 7px}
+.bottom-mini-panels .feature-panel>p{font-size:12px;line-height:1.45;margin:0 0 12px}
+.bottom-mini-panels .dashboard-stats{gap:6px}
+.bottom-mini-panels .stat-pill{font-size:11px;padding:6px 8px}
+.bottom-mini-panels .stats-line{gap:8px;flex-wrap:wrap}
+.bottom-mini-panels .recent-usage{gap:6px}
+@media(max-width:680px){.bottom-mini-panels{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:16px}.bottom-mini-panels .feature-panel{padding:14px}}
+</style>
+
 </head>
 <body>
 <main class="wrap">
@@ -721,15 +734,3 @@ render();
 </script>
 </body>
 </html>
-<style>
-/* v43 — painéis compactos no fim da página */
-.bottom-mini-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0 10px;align-items:start}
-.bottom-mini-panels .feature-panel{min-width:0;margin:0;padding:16px;border-radius:16px;box-shadow:var(--shadow)}
-.bottom-mini-panels .feature-panel h3{font-size:16px;margin:0 0 7px}
-.bottom-mini-panels .feature-panel>p{font-size:12px;line-height:1.45;margin:0 0 12px}
-.bottom-mini-panels .dashboard-stats{gap:6px}
-.bottom-mini-panels .stat-pill{font-size:11px;padding:6px 8px}
-.bottom-mini-panels .stats-line{gap:8px;flex-wrap:wrap}
-.bottom-mini-panels .recent-usage{gap:6px}
-@media(max-width:680px){.bottom-mini-panels{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:16px}.bottom-mini-panels .feature-panel{padding:14px}}
-</style>
