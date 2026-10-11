@@ -156,8 +156,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v59</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
-<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>191 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v60</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>193 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
 <input id="search" class="search" type="search" placeholder="🔎 Procurar por IA, função, categoria ou exemplo...">
@@ -903,6 +903,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </article>
 
 <article class="card" data-cat="codigo automacao" data-access="limit" data-search="Claude Code Anthropic terminal coding agent programação código agente CLI"><div class="head"><div class="icon">⌨️</div><div class="title"><h2>Claude Code</h2><small>Agente de programação no terminal</small></div><span class="tag limit">GRÁTIS + LIMITES*</span></div><p class="desc">Agente de desenvolvimento da Anthropic que ajuda a explorar repositórios, editar arquivos, executar tarefas de programação e corrigir problemas. A disponibilidade depende do plano e da configuração.</p><div class="use"><b>💡 Exemplo</b>Peça para analisar um erro no projeto e propor uma correção revisável.</div><div class="footer"><span class="best">Agente de código</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener">Abrir ↗</a></div></article>
+
+<article class="card" data-cat="video imagem criacao audio" data-access="limit" data-video-type="both" data-search="Creen AI geração de vídeo imagem arte áudio Sora Veo Nano Banana Seedance Kling criador visual"><div class="head"><div class="icon">🎨</div><div class="title"><h2>Creen AI</h2><small>Estúdio multimodal de criação</small></div><span class="tag limit">GRÁTIS + LIMITES*</span></div><p class="desc">Plataforma online que reúne modelos para criação de imagens, vídeos e áudio em um mesmo fluxo. Modelos, cotas gratuitas e limites podem mudar; confira as condições atuais antes de usar em projetos importantes.</p><div class="use"><b>💡 Exemplo</b>Experimente transformar uma ideia em imagem ou clipe curto sem alternar entre várias ferramentas.</div><div class="footer"><span class="best">Imagem, vídeo e áudio</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.creen.ai/" target="_blank" rel="noopener">Abrir ↗</a></div></article>
+
+<article class="card" data-cat="trabalho automacao" data-access="limit" data-search="Rework AI agentes automação operações workflows processos empresariais"><div class="head"><div class="icon">⚙️</div><div class="title"><h2>Rework AI</h2><small>Agentes e fluxos para operações</small></div><span class="tag limit">GRÁTIS PARA COMEÇAR*</span></div><p class="desc">Plataforma de operações empresariais que combina serviços, fluxos de trabalho e agentes de IA para apoiar processos entre equipes.</p><div class="use"><b>💡 Exemplo</b>Desenhe um fluxo de atendimento ou uma rotina operacional com etapas e responsáveis definidos.</div><div class="footer"><span class="best">Agentes e processos</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://rework.com/ai/agentflows" target="_blank" rel="noopener">Abrir ↗</a></div></article>
 </section>
 <div id="empty" class="empty">😕 Nenhuma IA encontrada. Tente outra palavra ou categoria.</div>
 <div class="note"><strong>ℹ️ Importante sobre “grátis”</strong><br>“GRÁTIS” indica uma modalidade sem assinatura. “GRÁTIS + LIMITE” indica que existe uso gratuito, mas com limites de mensagens, créditos, recursos ou velocidade. “*” indica que disponibilidade e limites podem variar por região, conta e mudanças do serviço. Antes de usar dados sensíveis ou comercialmente, confira as regras da própria ferramenta. As ofertas podem mudar com o tempo.</div>
@@ -1148,7 +1152,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v59','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v60','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1161,7 +1165,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v59.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v60.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1180,7 +1184,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v59.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v60.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
