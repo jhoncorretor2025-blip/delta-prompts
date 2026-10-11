@@ -20,7 +20,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v31</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v32</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>58 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
@@ -409,11 +409,10 @@ setup('catFilters','cat');setup('accessFilters','access');search.addEventListene
 document.getElementById('favoritesToggle').addEventListener('click',()=>{favoritesOnly=!favoritesOnly;render()});
 document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  imageFreeOnly=!imageFreeOnly;
- if(imageFreeOnly){
-   cat='imagem';access='all';favoritesOnly=false;search.value='';
-   document.querySelectorAll('#catFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.cat==='imagem'));
-   document.querySelectorAll('#accessFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.access==='all'));
- }
+ cat=imageFreeOnly?'imagem':'all';access='all';search.value='';
+ if(imageFreeOnly)favoritesOnly=false;
+ document.querySelectorAll('#catFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.cat===cat));
+ document.querySelectorAll('#accessFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.access==='all'));
  render();
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
