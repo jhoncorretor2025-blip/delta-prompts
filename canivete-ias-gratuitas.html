@@ -344,6 +344,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 .rank-pending{border:1px solid var(--line);border-radius:999px;padding:3px 7px;background:var(--bg)}
 @media(max-width:680px){.ranking-controls{grid-template-columns:1fr}.rank-info{grid-column:auto}}
 
+
+.card-number{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:39px;height:28px;padding:0 7px;border-radius:9px;background:var(--blue);color:#fff;font-size:11px;font-weight:950;letter-spacing:.02em;box-shadow:0 2px 5px rgba(37,99,235,.2)}
+.card .head{gap:9px}.card-number+.icon{width:42px;height:42px;border-radius:12px;font-size:22px}
+@media(max-width:680px){.card-number{min-width:35px;height:26px;font-size:10px}.card-number+.icon{width:39px;height:39px}}
 </style>
 <style>
 /* v51 — painéis compactos no fim da página */
@@ -361,7 +365,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v73</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v74</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>194 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
@@ -375,7 +379,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <label for="rankingSort">⭐ Ordenar catálogo
 <select id="rankingSort">
 <option value="recommended">Recomendadas primeiro</option>
-<option value="free-quality">Melhores gratuitas primeiro</option>
+<option value="free-quality" selected>🆓 Melhores gratuitas primeiro</option>
 <option value="popular">Mais conhecidas primeiro</option>
 <option value="quality">Maior qualidade avaliada</option>
 <option value="access">Gratuitas, freemium e pagas</option>
@@ -1263,7 +1267,7 @@ const search=document.getElementById('search'),count=document.getElementById('co
 const STORAGE='canivete_ias_cliques_v1', RATING='canivete_ias_avaliacoes_v1', CAPMAP='canivete_ias_caps_v1', FAVORITES_STORAGE='canivete_ias_favoritas_v1', HISTORY_STORAGE='canivete_ias_historico_v1', HIDDEN_STORAGE='canivete_ias_ocultas_v1', BOTTOM_STORAGE='canivete_ias_por_ultimo_v1';
 let cat='all',access='all',clicks={},ratings={},selected=[],favorites=[],hidden=[],bottom=[],favoritesOnly=false,imageFreeOnly=false,showHidden=false,recent=[];
 let videoType='all';
-let rankingSort='recommended';
+let rankingSort='free-quality';
 let rankingCategory='current';
 
 try{clicks=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch(e){clicks={}}
@@ -1416,6 +1420,7 @@ function rankingScore(card){
  return known.includes(n)?2:0;
 }
 function rankingAccess(card){return ({free:0,limit:1,paid:2})[card.dataset.access]??3}
+function freeIndexSort(card){const a=String(card.dataset.access||'').toLowerCase();return a==='free'?0:a==='limit'?1:a==='paid'?2:3}
 function rankingCategoryMatch(card){
  if(rankingCategory==='current')return true;
  const cats=cardCategories(card),vt=card.dataset.videoType||'other';
@@ -1459,11 +1464,12 @@ function render(){
   if(rankingSort==='access')return rankingAccess(a)-rankingAccess(b)||rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a);
   if(rankingSort==='popular')return rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a)||rankingAccess(a)-rankingAccess(b);
   if(rankingSort==='quality')return getRating(b)-getRating(a)||rankingScore(b)-rankingScore(a)||rankingAccess(a)-rankingAccess(b);
-  if(rankingSort==='free-quality')return rankingAccess(a)-rankingAccess(b)||rankingScore(b)-rankingScore(a)||getRating(b)-getRating(a)||getCount(b)-getCount(a);
-  return rankingScore(b)-rankingScore(a)||rankingAccess(a)-rankingAccess(b)||getCount(b)-getCount(a)||getRating(b)-getRating(a);
+  if(rankingSort==='free-quality')return freeIndexSort(a)-freeIndexSort(b)||getRating(b)-getRating(a)||rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a);
+  return rankingAccess(a)-rankingAccess(b)||rankingScore(b)-rankingScore(a)||getRating(b)-getRating(a)||getCount(b)-getCount(a);
  });
  // Renderiza somente os cartões correspondentes; os demais ficam fora do grid, sem depender de estilos de ocultação.
  grid.replaceChildren(...visible);
+ visible.forEach((card,index)=>{let number=card.querySelector('.card-number');if(!number){number=document.createElement('span');number.className='card-number';number.setAttribute('aria-label','Número do cartão');const head=card.querySelector('.head');if(head)head.insertAdjacentElement('afterbegin',number)}number.textContent='#'+String(index+1).padStart(3,'0');number.title='Posição '+(index+1)+' entre os resultados exibidos';});
  cards.forEach(c=>{
    const badge=c.querySelector('.click-count');if(badge)badge.textContent=getCount(c);
    c.querySelectorAll('.star').forEach((s,i)=>s.classList.toggle('on',i<getRating(c)));
@@ -1471,7 +1477,7 @@ function render(){
    const hide=c.querySelector('.card-tools .card-action-btn');if(hide){const on=hidden.includes(n);hide.classList.toggle('active',on);hide.textContent=on?'↩️ Restaurar':'🙈 Ocultar';hide.title=on?'Mostrar esta IA novamente':'Ocultar esta IA da lista principal'}
    const actions=c.querySelectorAll('.card-tools .card-action-btn');const last=actions[1];if(last){const on=bottom.includes(n);last.classList.toggle('active',on);last.textContent=on?'↩️ Ordem normal':'⬇️ Por último';last.title=on?'Remover prioridade de fim da lista':'Mover esta IA para o fim da lista'}
  });
- count.textContent=visible.length+' de '+cards.length+' IAs exibidas • mais acessadas primeiro';
+ count.textContent=visible.length+' de '+cards.length+' IAs exibidas • '+(rankingSort==='free-quality'?'melhores gratuitas primeiro':rankingSort==='popular'?'mais conhecidas primeiro':rankingSort==='quality'?'maior qualidade avaliada':rankingSort==='access'?'por modalidade de acesso':rankingSort==='az'?'ordem alfabética':'recomendadas primeiro');
  empty.style.display=visible.length?'none':'block';
  renderDashboard();syncCompareChecks();syncCompareBar();
 }
