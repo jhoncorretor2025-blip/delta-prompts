@@ -365,7 +365,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v83</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v84</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>203 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
@@ -1521,6 +1521,9 @@ function render(){
  const rankFiltered=visible.filter(rankingCategoryMatch);
  visible.splice(0,visible.length,...rankFiltered);
  visible.sort((a,b)=>{
+  // Runway fica sempre no fim: o plano gratuito usa créditos únicos e vários modelos exigem upgrade.
+  const runwayA=nameOf(a).toLowerCase()==='runway',runwayB=nameOf(b).toLowerCase()==='runway';
+  if(runwayA!==runwayB)return runwayA?1:-1;
   if(bottom.includes(nameOf(a))!==bottom.includes(nameOf(b)))return Number(bottom.includes(nameOf(a)))-Number(bottom.includes(nameOf(b)));
   if(rankingSort==='az')return nameOf(a).localeCompare(nameOf(b),'pt-BR');
   if(rankingSort==='access')return rankingAccess(a)-rankingAccess(b)||rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a);
