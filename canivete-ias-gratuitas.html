@@ -20,7 +20,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v30</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v31</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>58 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
@@ -28,7 +28,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 <div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters">
 <button class="filter active" data-cat="all">Todas</button><button class="filter" data-cat="pesquisa">🔎 Pesquisa</button><button class="filter" data-cat="trabalho">💼 Trabalho</button><button class="filter" data-cat="criacao">🎨 Criação</button><button class="filter" data-cat="audio">🎙️ Áudio</button><button class="filter" data-cat="video">🎬 Vídeo</button><button class="filter" data-cat="imagem">🖼️ Imagem</button><button class="filter" data-cat="codigo">💻 Código</button><button class="filter" data-cat="estudo">📚 Estudo</button><button class="filter" data-cat="automacao">⚙️ Automação</button></div></div>
 <div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos</button><button class="filter" data-access="free">🟢 Plano grátis</button><button class="filter" data-access="limit">🟡 Grátis + limite</button><button class="filter" data-access="paid">🔴 Plano pago</button></div></div>
-<div class="filter-group"><span class="filter-label">Minha lista</span><button class="filter" id="favoritesToggle" type="button" aria-pressed="false">⭐ Favoritas</button></div>
+<div class="filter-group"><span class="filter-label">Atalhos</span><button class="filter" id="imageFreeToggle" type="button" aria-pressed="false">🖼️ Encontrar IAs para criar imagens grátis</button><button class="filter" id="favoritesToggle" type="button" aria-pressed="false">⭐ Favoritas</button><button class="filter" id="exportAllTools" type="button">⬇️ Exportar lista completa (CSV)</button></div>
 <div class="count" id="count"></div><button id="resetClicks" class="filter" type="button">↺ Zerar contadores</button>
 </section>
 
@@ -105,7 +105,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 <div class="head"><div class="icon">🤗</div><div class="title"><h2>Hugging Face Spaces</h2><small>Milhares de demos de IA</small></div><span class="tag limit">MUITAS GRÁTIS</span></div><p class="desc">Uma grande coleção de demos para imagem, vídeo, voz, OCR, código e muito mais.</p><div class="use"><b>💡 Exemplo</b> Descubra ferramentas novas de IA sem precisar instalar nada.</div><div class="footer"><span class="best">Descobrir IAs</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://huggingface.co/spaces" target="_blank" rel="noopener">Explorar ↗</a></div>
 </article>
 
-<article class="card" data-cat="trabalho criacao imagem video" data-access="limit" data-search="Canva design imagem apresentação video marketing">
+<article class="card" data-cat="trabalho criacao imagem video" data-access="limit" data-search="Canva design imagem apresentação video marketing gerar imagens criar imagens IA">
 <div class="head"><div class="icon">🎨</div><div class="title"><h2>Canva</h2><small>Design com IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Une design tradicional e recursos de IA para posts, apresentações e vídeos.</p><div class="use"><b>💡 Exemplo</b> Crie uma arte para anúncio de imóvel ou Story.</div><div class="footer"><span class="best">Marketing visual</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.canva.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
@@ -145,7 +145,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 
 <article class="card" data-cat="video imagem codigo" data-access="free" data-search="LongVie 2 LongVie2 Vchitect vídeo longo geração de vídeo imagem para vídeo world model controle multimodal consistência temporal código aberto GPU instalação local">
 <div class="head"><div class="icon">🌌</div><div class="title"><h2>LongVie 2</h2><small>Modelo de IA para geração de vídeos longos</small></div><span class="tag">MODELO ABERTO*</span></div><p class="desc">Modelo multimodal de pesquisa que gera sequências de vídeo longas a partir de uma imagem inicial, com sinais de controle e foco em manter a continuidade visual entre cenas. O projeto informa geração contínua de até cerca de 3–5 minutos. Não é um gerador online simples: exige instalação, download de modelos grandes e GPU compatível; o uso prático pode demandar hardware de alto desempenho.</p><div class="use"><b>💡 Exemplo</b> Parta de uma imagem e gere uma sequência visual contínua, controlando movimento e elementos da cena ao longo do vídeo.</div><div class="footer"><span class="best">Vídeos longos e consistência temporal</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://vchitect.github.io/LongVie2-project/" target="_blank" rel="noopener">Abrir ↗</a></div></article>
-<article class="card" data-cat="pesquisa trabalho imagem video criacao" data-access="free" data-search="Meta AI Meta inteligência artificial assistente Meta Llama texto conversa pesquisa imagem geração de imagens edição criativa Facebook Instagram WhatsApp">
+<article class="card" data-cat="pesquisa trabalho imagem video criacao" data-access="free" data-search="Meta AI Meta inteligência artificial assistente Meta Llama texto conversa pesquisa imagem geração de imagens criar imagens grátis edição criativa Facebook Instagram WhatsApp">
 <div class="head"><div class="icon">∞</div><div class="title"><h2>Meta AI</h2><small>Assistente de inteligência artificial da Meta</small></div><span class="tag">GRÁTIS*</span></div><p class="desc">Assistente de IA da Meta para conversar, fazer perguntas, ajudar com textos e ideias e criar ou editar imagens. Também pode estar integrado a serviços como WhatsApp, Instagram e Facebook, conforme a região e a conta. A disponibilidade de recursos varia; confirme as opções atuais no site oficial.</p><div class="use"><b>💡 Exemplo</b> Crie uma imagem para uma publicação, peça ideias para uma campanha ou use o assistente para resumir e revisar um texto.</div><div class="footer"><span class="best">Chat, imagens e redes sociais</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.meta.ai/" target="_blank" rel="noopener">Abrir ↗</a></div></article>
 <article class="card" data-cat="video criacao codigo" data-access="free" data-search="Stable Video Infinity SVI geração de vídeo longo vídeo contínuo coerência temporal cenas animação texto imagem áudio open source código aberto ComfyUI Wan">
 <div class="head"><div class="icon">🎞️</div><div class="title"><h2>Stable Video Infinity</h2><small>Modelo aberto para geração de vídeos longos</small></div><span class="tag">CÓDIGO ABERTO*</span></div><p class="desc">Projeto de pesquisa que gera vídeos muito longos, com cenas e movimentos mais consistentes, permitindo controlar diferentes trechos por prompts. É um modelo de código aberto, normalmente usado por meio de workflows como ComfyUI; não é necessariamente um site simples de gerar vídeo com um clique e pode exigir GPU e configuração técnica.</p><div class="use"><b>💡 Exemplo</b> Crie uma sequência de cenas com prompts diferentes, mantendo maior continuidade visual entre os trechos do vídeo.</div><div class="footer"><span class="best">Geração de vídeo longo</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://stable-video-infinity.github.io/homepage/" target="_blank" rel="noopener">Abrir ↗</a></div></article>
@@ -162,11 +162,11 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 <div class="head"><div class="icon">🧪</div><div class="title"><h2>Google AI Studio</h2><small>Modelos e protótipos</small></div><span class="tag">FREE TIER*</span></div><p class="desc">Ambiente para experimentar modelos do Google e prototipar aplicações de IA.</p><div class="use"><b>💡 Exemplo</b> Teste um prompt complexo antes de colocá-lo no seu projeto.</div><div class="footer"><span class="best">Prototipagem</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://aistudio.google.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="pesquisa trabalho criacao imagem" data-access="limit" data-search="Gemini Google chat pesquisa imagem escrita documentos">
+<article class="card" data-cat="pesquisa trabalho criacao imagem" data-access="limit" data-search="Gemini Google chat pesquisa imagem escrita documentos gerar imagens criar imagens IA grátis">
 <div class="head"><div class="icon">✨</div><div class="title"><h2>Gemini</h2><small>Assistente geral do Google</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Assistente para conversar, pesquisar, escrever, analisar e trabalhar com recursos multimodais.</p><div class="use"><b>💡 Exemplo</b> Peça ideias para um anúncio, revise um texto ou compare informações.</div><div class="footer"><span class="best">Uso geral</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://gemini.google.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="pesquisa trabalho criacao imagem" data-access="limit" data-search="Microsoft Copilot chat pesquisa imagem escrita produtividade">
+<article class="card" data-cat="pesquisa trabalho criacao imagem" data-access="limit" data-search="Microsoft Copilot chat pesquisa imagem escrita produtividade gerar imagens criar imagens IA">
 <div class="head"><div class="icon">🪟</div><div class="title"><h2>Microsoft Copilot</h2><small>Pesquisa, texto e criação</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Assistente da Microsoft com pesquisa na web, escrita e recursos de criação.</p><div class="use"><b>💡 Exemplo</b> Resuma uma pesquisa e transforme os pontos principais em uma lista de tarefas.</div><div class="footer"><span class="best">Produtividade</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
@@ -182,7 +182,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 <div class="head"><div class="icon">🤗</div><div class="title"><h2>HuggingChat</h2><small>Chat com modelos abertos</small></div><span class="tag">GRÁTIS*</span></div><p class="desc">Interface para conversar e experimentar diferentes modelos de código aberto.</p><div class="use"><b>💡 Exemplo</b> Compare como modelos diferentes respondem ao mesmo prompt.</div><div class="footer"><span class="best">Comparar modelos</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://huggingface.co/chat/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="imagem criacao" data-access="limit" data-search="Ideogram imagem texto logo design geracao imagem">
+<article class="card" data-cat="imagem criacao" data-access="limit" data-search="Ideogram imagem texto logo design geracao imagem criar imagens gerador de imagens gratuito grátis">
 <div class="head"><div class="icon">🖼️</div><div class="title"><h2>Ideogram</h2><small>Imagens com texto e design</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Especialmente interessante para imagens que precisam conter texto, cartazes e peças visuais.</p><div class="use"><b>💡 Exemplo</b> Crie uma arte para uma campanha imobiliária com título legível.</div><div class="footer"><span class="best">Imagem e design</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://ideogram.ai/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
@@ -207,7 +207,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 <div class="head"><div class="icon">📝</div><div class="title"><h2>Grammarly</h2><small>Escrita e revisão com IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Ajuda a revisar, reescrever e melhorar textos para diferentes situações.</p><div class="use"><b>💡 Exemplo</b> Melhore um e-mail profissional antes de enviar para um cliente.</div><div class="footer"><span class="best">Escrita</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.grammarly.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
-<article class="card" data-cat="trabalho criacao imagem video" data-access="limit" data-search="Microsoft Designer imagem design post social IA">
+<article class="card" data-cat="trabalho criacao imagem video" data-access="limit" data-search="Microsoft Designer imagem design post social IA gerar imagens criar imagens grátis">
 <div class="head"><div class="icon">🪄</div><div class="title"><h2>Microsoft Designer</h2><small>Artes e imagens com IA</small></div><span class="tag limit">GRÁTIS + LIMITE</span></div><p class="desc">Cria peças visuais e imagens para redes sociais a partir de descrições.</p><div class="use"><b>💡 Exemplo</b> Gere uma arte para divulgar um imóvel no Instagram.</div><div class="footer"><span class="best">Artes rápidas</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://designer.microsoft.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
@@ -249,7 +249,7 @@ a{color:inherit}.wrap{max-width:1450px;margin:auto;padding:22px}.top{display:fle
 (function(){
 const cards=[...document.querySelectorAll('.card')],search=document.getElementById('search'),count=document.getElementById('count'),empty=document.getElementById('empty'),grid=document.getElementById('grid'),reset=document.getElementById('resetClicks');
 const STORAGE='canivete_ias_cliques_v1', RATING='canivete_ias_avaliacoes_v1', CAPMAP='canivete_ias_caps_v1', FAVORITES_STORAGE='canivete_ias_favoritas_v1', HISTORY_STORAGE='canivete_ias_historico_v1';
-let cat='all',access='all',clicks={},ratings={},selected=[],favorites=[],favoritesOnly=false,recent=[];
+let cat='all',access='all',clicks={},ratings={},selected=[],favorites=[],favoritesOnly=false,imageFreeOnly=false,recent=[];
 try{clicks=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch(e){clicks={}}
 try{ratings=JSON.parse(localStorage.getItem(RATING)||'{}')||{}}catch(e){ratings={}}
 try{favorites=JSON.parse(localStorage.getItem(FAVORITES_STORAGE)||'[]')||[]}catch(e){favorites=[]}
@@ -379,11 +379,12 @@ function renderDashboard(){
  if(!known.length){const pill=document.createElement('span');pill.className='stat-pill';pill.textContent='Ainda não há acessos registrados.';recentBox.appendChild(pill)}
  known.forEach(item=>{const pill=document.createElement('span');pill.className='stat-pill';const date=new Date(Number(item.time));pill.textContent='🕘 '+item.name+' · '+(Number.isNaN(date.getTime())?'acesso recente':date.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}));recentBox.appendChild(pill)});
  const favBtn=document.getElementById('favoritesToggle');favBtn.classList.toggle('active',favoritesOnly);favBtn.setAttribute('aria-pressed',String(favoritesOnly));
+ const imgBtn=document.getElementById('imageFreeToggle');imgBtn.classList.toggle('active',imageFreeOnly);imgBtn.setAttribute('aria-pressed',String(imageFreeOnly));
 }
 function render(){
  applyCardFeatures();
  const q=(search.value||'').toLowerCase().trim();
- const visible=cards.filter(c=>(cat==='all'||c.dataset.cat.split(' ').includes(cat))&&(access==='all'||c.dataset.access===access)&&(!favoritesOnly||favorites.includes(nameOf(c)))&&(!q||(c.dataset.search||'').toLowerCase().includes(q)));
+ const visible=cards.filter(c=>(cat==='all'||c.dataset.cat.split(' ').includes(cat))&&(access==='all'||c.dataset.access===access)&&(!imageFreeOnly||(c.dataset.cat.split(' ').includes('imagem')&&['free','limit'].includes(c.dataset.access)))&&(!favoritesOnly||favorites.includes(nameOf(c)))&&(!q||(c.dataset.search||'').toLowerCase().includes(q)));
  visible.sort((a,b)=>getCount(b)-getCount(a)||getRating(b)-getRating(a));
  // Renderiza somente os cartões correspondentes; os demais ficam fora do grid, sem depender de estilos de ocultação.
  grid.replaceChildren(...visible);
@@ -406,6 +407,34 @@ function setup(id,type){document.querySelectorAll('#'+id+' .filter').forEach(b=>
 }))}
 setup('catFilters','cat');setup('accessFilters','access');search.addEventListener('input',render);
 document.getElementById('favoritesToggle').addEventListener('click',()=>{favoritesOnly=!favoritesOnly;render()});
+document.getElementById('imageFreeToggle').addEventListener('click',()=>{
+ imageFreeOnly=!imageFreeOnly;
+ if(imageFreeOnly){
+   cat='imagem';access='all';favoritesOnly=false;search.value='';
+   document.querySelectorAll('#catFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.cat==='imagem'));
+   document.querySelectorAll('#accessFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.access==='all'));
+ }
+ render();
+});
+document.getElementById('exportAllTools').addEventListener('click',()=>{
+ const quote=value=>'"'+String(value??'').replace(/"/g,'""')+'"';
+ const rows=[['Nome','Categorias','Tipo de acesso','Descrição','Exemplo de uso','Indicação','Link oficial']];
+ cards.forEach(card=>{
+   const name=nameOf(card);
+   const categories=card.dataset.cat.split(' ').join(', ');
+   const accessText=accessLabel(card);
+   const description=card.querySelector('.desc')?.textContent.trim()||'';
+   const example=card.querySelector('.use')?.textContent.replace(/^💡 Exemplo\s*/,'').trim()||'';
+   const best=card.querySelector('.best')?.textContent.trim()||'';
+   const link=card.querySelector('.open')?.href||'';
+   rows.push([name,categories,accessText,description,example,best,link]);
+ });
+ const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
+ const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+ const url=URL.createObjectURL(blob);const a=document.createElement('a');
+ a.href=url;a.download='canivete-catalogo-ias-v31.csv';document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
  access=b.dataset.radarAccess;document.querySelectorAll('#accessFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.access===access));render();
 }));
