@@ -1404,6 +1404,8 @@ themeToggle.addEventListener('click',()=>{const next=document.documentElement.ge
 render();
 try{
  const params=new URLSearchParams(window.location.search);
+ const initialSearch=params.get('search');
+ if(initialSearch){search.value=initialSearch;render();}
  const action=params.get('configAction');
  const actionIds={images:'imageFreeToggle',favorites:'favoritesToggle',hidden:'hiddenToggle',txt:'exportTextTools',csv:'exportAllTools',reset:'resetClicks'};
  if(action&&actionIds[action]){
