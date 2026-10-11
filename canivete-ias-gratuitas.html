@@ -51,10 +51,10 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
 
 
 /* Download da lista — botão evidente e acessível no celular */
-#exportAllTools{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--blue);border-color:var(--blue);color:#fff;font-weight:900}
-#exportAllTools:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+#exportAllTools,#exportTextTools{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--blue);border-color:var(--blue);color:#fff;font-weight:900}
+#exportAllTools:focus-visible,#exportTextTools:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
 @media(max-width:680px){
- #exportAllTools{display:flex;width:100%;max-width:100%;min-height:46px;padding:12px;font-size:14px;text-align:center;white-space:normal;overflow-wrap:anywhere}
+ #exportAllTools,#exportTextTools{display:flex;width:100%;max-width:100%;min-height:46px;padding:12px;font-size:14px;text-align:center;white-space:normal;overflow-wrap:anywhere}
  .filter-group:has(#exportAllTools){display:flex;flex-direction:column;align-items:stretch;width:100%;min-width:0}
  .filter-group:has(#exportAllTools) #imageFreeToggle,.filter-group:has(#exportAllTools) #favoritesToggle{width:100%;max-width:100%;text-align:left}
 }
@@ -62,7 +62,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v35</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v36</span></div><a class="back" href="canivete.html">← Voltar ao Canivete</a></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>58 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
@@ -71,7 +71,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
 <button class="filter active" data-cat="all">Todas</button><button class="filter" data-cat="pesquisa">🔎 Pesquisa</button><button class="filter" data-cat="trabalho">💼 Trabalho</button><button class="filter" data-cat="criacao">🎨 Conteúdo</button><button class="filter" data-cat="audio">🎙️ Áudio</button><button class="filter" data-cat="video">🎬 Vídeo</button><button class="filter" data-cat="imagem">🖼️ Imagem</button><button class="filter" data-cat="codigo">💻 Código</button><button class="filter" data-cat="estudo">📚 Estudo</button><button class="filter" data-cat="automacao">⚙️ Automação</button></div></div>
 <div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos</button><button class="filter" data-access="free">🟢 Plano grátis</button><button class="filter" data-access="limit">🟡 Grátis + limite</button><button class="filter" data-access="paid">🔴 Plano pago</button></div></div>
 <p class="category-help"><strong>🎨 Conteúdo:</strong> textos, músicas, vídeos e materiais. <strong>🖼️ Imagem:</strong> gerar, editar ou melhorar fotos, ilustrações e artes.</p>
-<div class="filter-group"><span class="filter-label">Atalhos</span><button class="filter" id="imageFreeToggle" type="button" aria-pressed="false">🖼️ Encontrar IAs para criar imagens grátis</button><button class="filter" id="favoritesToggle" type="button" aria-pressed="false">⭐ Favoritas</button><button class="filter" id="exportAllTools" type="button">⬇️ Baixar lista completa de IAs (CSV)</button></div>
+<div class="filter-group"><span class="filter-label">Atalhos</span><button class="filter" id="imageFreeToggle" type="button" aria-pressed="false">🖼️ Encontrar IAs para criar imagens grátis</button><button class="filter" id="favoritesToggle" type="button" aria-pressed="false">⭐ Favoritas</button><button class="filter" id="exportTextTools" type="button">📄 Baixar lista de IAs em TEXTO (.txt)</button><button class="filter" id="exportAllTools" type="button">📊 Baixar lista completa em planilha (CSV)</button></div>
 <div class="count" id="count"></div><button id="resetClicks" class="filter" type="button">↺ Zerar contadores</button>
 </section>
 
@@ -458,6 +458,23 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  document.querySelectorAll('#accessFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.access==='all'));
  render();
 });
+document.getElementById('exportTextTools').addEventListener('click',()=>{
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v36','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ cards.forEach((card,index)=>{
+   const name=nameOf(card);
+   const categories=card.dataset.cat.split(' ').join(', ');
+   const accessText=accessLabel(card);
+   const description=card.querySelector('.desc')?.textContent.trim()||'';
+   const example=card.querySelector('.use')?.textContent.replace(/^💡 Exemplo\\s*/,'').trim()||'';
+   const best=card.querySelector('.best')?.textContent.trim()||'';
+   const link=card.querySelector('.open')?.href||'';
+   lines.push((index+1)+'. '+name,'   Categoria: '+categories,'   Acesso: '+accessText,'   Descrição: '+description,'   Exemplo: '+example,'   Indicação: '+best,'   Site oficial: '+link,'');
+ });
+ const blob=new Blob(['\\ufeff'+lines.join('\\r\\n')],{type:'text/plain;charset=utf-8'});
+ const url=URL.createObjectURL(blob);const a=document.createElement('a');
+ a.href=url;a.download='canivete-lista-completa-ias-v36.txt';document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
 document.getElementById('exportAllTools').addEventListener('click',()=>{
  const quote=value=>'"'+String(value??'').replace(/"/g,'""')+'"';
  const rows=[['Nome','Categorias','Tipo de acesso','Descrição','Exemplo de uso','Indicação','Link oficial']];
@@ -474,7 +491,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v35.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v36.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
