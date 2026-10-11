@@ -139,6 +139,70 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 .video-subfilters[hidden]{display:none!important}
 .video-subfilters .filter-label{white-space:nowrap}
 @media(max-width:680px){.video-subfilters{align-items:flex-start;flex-direction:column}.video-subfilters .filters{width:100%}.video-subfilters .filter{flex:1}}
+
+/* v61 — refinamento visual: paleta neutra, pesquisa prioritária e filtros compactos */
+:root{--blue:#5267a8;--blue2:#40558f;--accent:#5267a8;--filter-bg:#f1f5f9;--filter-ink:#334155;--filter-active:#e5eaf7;--filter-active-ink:#354779;--green:#dff3e7;--amber:#fff0cc;--red-soft:#fde7e7}
+[data-theme="dark"]{--filter-bg:#202a3b;--filter-ink:#d4dceb;--filter-active:#303e60;--filter-active-ink:#e2e8ff;--green:#173c2c;--amber:#493718;--red-soft:#482626}
+.hero{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 8%,var(--card)),var(--card));border-color:var(--line)}
+.back{color:var(--accent)}
+.toolbar{gap:13px}
+.search-shell{position:relative;display:flex;align-items:center;width:100%;min-height:52px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 12px rgba(15,23,42,.06);transition:border-color .18s,box-shadow .18s}
+.search-shell:focus-within{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent),0 5px 15px rgba(15,23,42,.07)}
+.search-icon{width:19px;height:19px;flex:0 0 auto;margin-left:16px;color:var(--muted)}
+.search{height:50px;min-width:0;flex:1;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;border-radius:14px;padding:12px 12px;font-size:15px;font-style:normal;font-weight:500}
+.search::placeholder{color:var(--muted);opacity:.9;font-style:normal;font-weight:400}
+.search-shortcut{margin:0 12px 0 6px;padding:4px 7px;border:1px solid var(--line);border-radius:7px;background:var(--filter-bg);color:var(--muted);font:600 11px/1.2 inherit;white-space:nowrap}
+.filter-group{align-items:flex-start;gap:10px}
+.filter-label{padding-top:10px;min-width:max-content;letter-spacing:.045em}
+.filters{gap:7px}
+#catFilters{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;max-width:100%;padding:3px 3px 9px;scrollbar-width:thin;scrollbar-color:var(--line) transparent;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+#catFilters .filter{flex:0 0 auto}
+.filter{background:var(--filter-bg);color:var(--filter-ink);border:1px solid transparent;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:650;transition:background .16s,border-color .16s,color .16s;white-space:nowrap}
+.filter:hover{background:color-mix(in srgb,var(--accent) 9%,var(--card));border-color:color-mix(in srgb,var(--accent) 18%,var(--line));color:var(--ink)}
+.filter.active,.filter[aria-pressed="true"]{background:var(--filter-active);color:var(--filter-active-ink);border-color:color-mix(in srgb,var(--accent) 23%,var(--line));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 5%,transparent)}
+.filter-count{display:inline-flex;align-items:center;justify-content:center;min-width:23px;height:20px;margin-left:5px;padding:0 6px;border-radius:999px;background:color-mix(in srgb,var(--line) 52%,var(--card));color:var(--muted);font-size:11px;font-weight:650;line-height:1;font-variant-numeric:tabular-nums}
+.filter.active .filter-count,.filter[aria-pressed="true"] .filter-count{background:color-mix(in srgb,var(--accent) 13%,var(--card));color:var(--filter-active-ink)}
+#accessFilters .filter{background:var(--filter-bg)}
+#accessFilters .filter.active{background:var(--filter-active)}
+#accessFilters [data-access="free"]{color:#276749}
+#accessFilters [data-access="limit"]{color:#8a641d}
+#accessFilters [data-access="paid"]{color:#9b4141}
+[data-theme="dark"] #accessFilters [data-access="free"]{color:#a7e2bd}
+[data-theme="dark"] #accessFilters [data-access="limit"]{color:#f2d28a}
+[data-theme="dark"] #accessFilters [data-access="paid"]{color:#f3aaaa}
+.global-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 0 12px;border-bottom:1px solid var(--line)}
+.global-actions-label{font-size:11px;font-weight:750;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.global-actions-list{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.global-actions .filter{background:transparent;border:1px solid var(--line);color:var(--filter-ink);font-weight:600;padding:8px 10px}
+.global-actions .filter:hover,.global-actions .filter.active,.global-actions .filter[aria-pressed="true"]{background:var(--filter-bg);border-color:color-mix(in srgb,var(--accent) 25%,var(--line));color:var(--ink)}
+.global-actions .export-action{border-style:solid}
+#resetClicks{background:transparent;border:1px solid var(--line);color:var(--muted);font-size:11px;padding:7px 9px}
+.category-help{background:color-mix(in srgb,var(--filter-bg) 75%,var(--card));border-color:var(--line)}
+.tag{background:#e0f2e8;color:#276749}
+.tag.limit{background:#fff1cf;color:#805b16}
+[data-access="paid"] .tag,[data-access="paid"] .tag.limit{background:#fde8e8;color:#963d3d}
+[data-theme="dark"] .tag{background:#183d2c;color:#b8ebca}
+[data-theme="dark"] .tag.limit{background:#483817;color:#f5d68e}
+[data-theme="dark"] [data-access="paid"] .tag,[data-theme="dark"] [data-access="paid"] .tag.limit{background:#4b2828;color:#f3b7b7}
+.task-btn{border-color:var(--line)}
+@media(max-width:680px){
+ .toolbar{gap:12px}
+ .search-shell{min-height:52px}
+ .search{height:50px;font-size:14px;padding-left:10px}
+ .search-icon{margin-left:13px}
+ .search-shortcut{font-size:10px;margin-right:9px}
+ .filter-group{display:block;width:100%;min-width:0}
+ .filter-label{display:block;padding:0;margin:0 0 7px}
+ #catFilters{width:100%;gap:7px;padding:2px 2px 9px;scroll-snap-type:x proximity}
+ #catFilters .filter{scroll-snap-align:start}
+ .filters:not(#catFilters){display:flex;flex-wrap:wrap;gap:7px;overflow:visible}
+ .filter{min-height:37px;padding:8px 10px}
+ .global-actions{align-items:flex-start;flex-direction:column}
+ .global-actions-list{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .global-actions-list .filter{white-space:normal;text-align:center;justify-content:center;min-width:0;width:100%;line-height:1.3}
+ #resetClicks{width:auto}
+}
+
 </style>
 <style>
 /* v51 — painéis compactos no fim da página */
@@ -156,17 +220,16 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v60</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v61</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>193 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
-<input id="search" class="search" type="search" placeholder="🔎 Procurar por IA, função, categoria ou exemplo...">
-<div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters">
-<button class="filter active" data-cat="all">Todas <span class="filter-count" data-count-all>97</span></button><button class="filter" data-cat="pesquisa">🔎 Pesquisa <span class="filter-count" data-count-cat="pesquisa">21</span></button><button class="filter" data-cat="trabalho">💼 Trabalho <span class="filter-count" data-count-cat="trabalho">51</span></button><button class="filter" data-cat="criacao">🎨 Conteúdo <span class="filter-count" data-count-cat="criacao">69</span></button><button class="filter" data-cat="audio">🎙️ Áudio <span class="filter-count" data-count-cat="audio">18</span></button><button class="filter" data-cat="musica">🎵 Criação de música <span class="filter-count" data-count-cat="musica">0</span></button><button class="filter" data-cat="video">🎥 Todos os vídeos <span class="filter-count" data-count-cat="video">42</span></button><button class="filter video-create-category" data-cat="video-criacao">✨ Criação de vídeo <span class="filter-count" data-count-cat="video-criacao">24</span></button><button class="filter video-edit-category" data-cat="video-edicao">✂️ Edição de vídeo <span class="filter-count" data-count-cat="video-edicao">25</span></button><button class="filter" data-cat="imagem">🖼️ Imagem <span class="filter-count" data-count-cat="imagem">26</span></button><button class="filter" data-cat="codigo">💻 Programação <span class="filter-count" data-count-cat="codigo">26</span></button><button class="filter" data-cat="estudo">📚 Estudo <span class="filter-count" data-count-cat="estudo">13</span></button><button class="filter" data-cat="automacao">⚙️ Automação <span class="filter-count" data-count-cat="automacao">5</span></button><button class="filter" data-cat="avatar">🧑‍💻 Avatar <span class="filter-count" data-count-cat="avatar">0</span></button><button class="filter specialist-category" data-cat="especialistas">🎯 Especialistas <span class="filter-count" data-count-cat="especialistas">32</span></button></div></div>
+<div class="search-shell"><svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="search" class="search" type="search" placeholder="Buscar IA, função, categoria ou exemplo..." aria-label="Buscar ferramentas de inteligência artificial"><kbd class="search-shortcut">Ctrl K</kbd></div>
+<div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters"><button class="filter active" data-cat="all">Todas <span class="filter-count" data-count-all>97</span></button><button class="filter" data-cat="criacao">Texto e conteúdo <span class="filter-count" data-count-cat="criacao">69</span></button><button class="filter" data-cat="imagem">Imagem <span class="filter-count" data-count-cat="imagem">26</span></button><button class="filter" data-cat="video">Todos os vídeos <span class="filter-count" data-count-cat="video">42</span></button><button class="filter" data-cat="codigo">Código <span class="filter-count" data-count-cat="codigo">26</span></button><button class="filter" data-cat="pesquisa">Pesquisa <span class="filter-count" data-count-cat="pesquisa">21</span></button><button class="filter" data-cat="trabalho">Trabalho <span class="filter-count" data-count-cat="trabalho">51</span></button><button class="filter" data-cat="audio">Áudio <span class="filter-count" data-count-cat="audio">18</span></button><button class="filter" data-cat="musica">Criação de música <span class="filter-count" data-count-cat="musica">0</span></button><button class="filter video-create-category" data-cat="video-criacao">Criação de vídeo <span class="filter-count" data-count-cat="video-criacao">24</span></button><button class="filter video-edit-category" data-cat="video-edicao">Edição de vídeo <span class="filter-count" data-count-cat="video-edicao">25</span></button><button class="filter" data-cat="estudo">Estudo <span class="filter-count" data-count-cat="estudo">13</span></button><button class="filter" data-cat="automacao">Automação <span class="filter-count" data-count-cat="automacao">5</span></button><button class="filter" data-cat="avatar">Avatar <span class="filter-count" data-count-cat="avatar">0</span></button><button class="filter specialist-category" data-cat="especialistas">Especialistas <span class="filter-count" data-count-cat="especialistas">32</span></button></div></div>
 <div class="video-subfilters-wrap" id="videoSubfilters" aria-label="Tipo de ferramenta de vídeo" hidden><div class="filter-group video-subfilters"><span class="filter-label">Tipo de vídeo</span><div class="filters" id="videoTypeFilters"><button class="filter active" type="button" data-video-type="all">Todos <span class="filter-count" data-count-video="all">42</span></button><button class="filter" type="button" data-video-type="create">🎬 Criam vídeos <span class="filter-count" data-count-video="create">24</span></button><button class="filter" type="button" data-video-type="edit">✂️ Só edição <span class="filter-count" data-count-video="edit">14</span></button><button class="filter" type="button" data-video-type="both">🔄 Criam e editam <span class="filter-count" data-count-video="both">11</span></button><button class="filter" type="button" data-video-type="other">🧰 Plataformas/apoio <span class="filter-count" data-count-video="other">4</span></button></div></div><p class="category-help video-type-help">🎬 <strong>Criam vídeos:</strong> geram clipes, cenas ou vídeos com IA. ✂️ <strong>Só edição:</strong> editam, cortam ou reaproveitam vídeos existentes. 🔄 <strong>Ambas:</strong> criam e também editam. 🧰 <strong>Plataformas/apoio:</strong> reúnem ou apoiam fluxos de trabalho com vídeo.</p></div>
-<div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos <span class="filter-count" data-count-access="all">97</span></button><button class="filter" data-access="free">🟢 Plano grátis <span class="filter-count" data-count-access="free">25</span></button><button class="filter" data-access="limit">🟡 Grátis + limite <span class="filter-count" data-count-access="limit">69</span></button><button class="filter" data-access="paid">🔴 Plano pago <span class="filter-count" data-count-access="paid">3</span></button></div></div>
-<p class="category-help"><strong>🎨 Conteúdo:</strong> textos, músicas, vídeos e materiais. <strong>🖼️ Imagem:</strong> gerar, editar ou melhorar fotos, ilustrações e artes.</p>
-<div class="filter-group"><span class="filter-label">Atalhos</span><button class="filter" id="imageFreeToggle" type="button" aria-pressed="false">🖼️ Encontrar IAs para criar imagens grátis</button><button class="filter" id="favoritesToggle" type="button" aria-pressed="false">⭐ Favoritas</button><button class="filter" id="hiddenToggle" type="button" aria-pressed="false">🙈 Gerenciar ocultas</button><button class="filter" id="exportTextTools" type="button">📄 Baixar lista de IAs em TEXTO (.txt)</button><button class="filter" id="exportAllTools" type="button">📊 Baixar lista completa em planilha (CSV)</button></div>
+<div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos <span class="filter-count" data-count-access="all">97</span></button><button class="filter" data-access="free">Plano grátis <span class="filter-count" data-count-access="free">25</span></button><button class="filter" data-access="limit">Grátis + limite <span class="filter-count" data-count-access="limit">69</span></button><button class="filter" data-access="paid">Plano pago <span class="filter-count" data-count-access="paid">3</span></button></div></div>
+<p class="category-help"><strong>Texto e conteúdo:</strong> textos, músicas, vídeos e materiais. <strong>Imagem:</strong> gerar, editar ou melhorar fotos, ilustrações e artes.</p>
+<div class="global-actions"><span class="global-actions-label">Ações rápidas</span><div class="global-actions-list"><button class="filter" id="imageFreeToggle" type="button" aria-pressed="false">Imagens grátis</button><button class="filter" id="favoritesToggle" type="button" aria-pressed="false">Favoritas</button><button class="filter" id="hiddenToggle" type="button" aria-pressed="false">Gerenciar ocultas</button><button class="filter export-action" id="exportTextTools" type="button" title="Baixar catálogo em texto">Baixar TXT</button><button class="filter export-action" id="exportAllTools" type="button" title="Baixar catálogo em planilha CSV">Baixar CSV</button></div></div>
 <div class="count" id="count"></div><button id="resetClicks" class="filter" type="button">↺ Zerar contadores</button>
 </section>
 
@@ -176,16 +239,16 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <h3>🎯 9. Qual IA devo usar?</h3>
 <p>Escolha a tarefa e o Canivete indica as melhores opções <strong>desta página</strong>. A recomendação é local, rápida e não precisa de API.</p>
 <div class="task-buttons">
-<button class="task-btn" data-task="pesquisa">🔎 Pesquisa com fontes</button>
+<button class="task-btn" data-task="pesquisa">Pesquisa com fontes</button>
 <button class="task-btn" data-task="documentos">📄 PDF / documentos</button>
 <button class="task-btn" data-task="texto">✍️ Texto / escrita</button>
 <button class="task-btn" data-task="imagem">🖼️ Imagens / design</button>
 <button class="task-btn" data-task="video">🎬 Vídeos / Reels</button>
 <button class="task-btn" data-task="audio">🎙️ Voz / áudio</button>
 <button class="task-btn" data-task="codigo">💻 Código</button>
-<button class="task-btn" data-task="estudo">📚 Estudo</button>
-<button class="task-btn" data-task="automacao">⚙️ Automação</button>
-<button class="task-btn" data-task="apresentacao">🖥️ Apresentações</button><button class="task-btn" data-task="atualidade">📰 Atualidades</button><button class="task-btn" data-task="agentes">🤖 Agentes de código</button><button class="task-btn" data-task="clipes">✂️ Cortes / Shorts</button><button class="task-btn" data-task="avatar">🧑‍💻 Avatar</button><button class="task-btn" data-task="transcricao">🎧 Transcrição</button><button class="task-btn" data-task="recorte">🪄 Remover fundo</button>
+<button class="task-btn" data-task="estudo">Estudo</button>
+<button class="task-btn" data-task="automacao">Automação</button>
+<button class="task-btn" data-task="apresentacao">🖥️ Apresentações</button><button class="task-btn" data-task="atualidade">📰 Atualidades</button><button class="task-btn" data-task="agentes">🤖 Agentes de código</button><button class="task-btn" data-task="clipes">✂️ Cortes / Shorts</button><button class="task-btn" data-task="avatar">Avatar</button><button class="task-btn" data-task="transcricao">🎧 Transcrição</button><button class="task-btn" data-task="recorte">🪄 Remover fundo</button>
 </div>
 <div class="recommend-result" id="recommendResult"></div>
 </section>
@@ -932,6 +995,17 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <script>
 (function(){
 const cards=[...document.querySelectorAll('.card')];
+const searchInput=document.getElementById('search');
+document.addEventListener('keydown',event=>{
+ if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){
+  event.preventDefault();searchInput?.focus();searchInput?.select();
+ }else if(event.key==='/'&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)){
+  event.preventDefault();searchInput?.focus();
+ }else if(event.key==='Escape'&&document.activeElement===searchInput){
+  searchInput.value='';searchInput.dispatchEvent(new Event('input',{bubbles:true}));searchInput.blur();
+ }
+});
+
 function cardCategories(card){return String(card?.dataset?.cat||'').trim().split(/\s+/).filter(Boolean)}
 function updateFilterCounts(){
  const total=cards.length;
@@ -1152,7 +1226,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v60','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v61','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1165,7 +1239,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v60.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v61.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1184,7 +1258,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v60.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v61.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
