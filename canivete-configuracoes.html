@@ -12,7 +12,7 @@
 </style>
 </head>
 <body><main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="font-size:11px;color:var(--muted)">• Configurações • v1</span></div><a class="link" href="canivete-ias-gratuitas.html">← Voltar para as IAs</a></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="font-size:11px;color:var(--muted)">• Configurações • v2</span></div><a class="link" href="canivete-ias-gratuitas.html">← Voltar para as IAs</a></header>
 <section class="hero"><h1>⚙️ Configurações e ações rápidas</h1><p>Encontre aqui os comandos do catálogo em um só lugar. Escolha uma ação para abrir a lista de IAs e executá-la.</p></section>
 <div class="section">🧭 Organização e visualização</div><section class="grid">
 <button class="action" data-action="images"><span class="emoji">🖼️</span><span class="copy"><strong>Imagens grátis</strong><span>Mostrar ferramentas de imagem com acesso grátis ou gratuito com limites.</span></span><span class="arrow">›</span></button>
@@ -26,13 +26,41 @@
 <div class="section">🧹 Manutenção</div><section class="grid">
 <button class="action danger" data-action="reset"><span class="emoji">🔄</span><span class="copy"><strong>Zerar contadores</strong><span>Apagar a contagem de acessos registrada para as ferramentas.</span></span><span class="arrow">›</span></button>
 </section>
-<div class="warning">ℹ️ As ações são executadas no catálogo principal. “Zerar contadores” pede confirmação antes de apagar os números de acesso.</div>
-<footer class="bottom"><span>🧰 Canivete Assistente • Página de configurações v1</span><a class="link" href="canivete-ias-gratuitas.html">Abrir catálogo completo →</a></footer>
+
+<div class="section">🎯 Recomendações por tarefa</div>
+<section class="grid">
+<button class="action" data-recommend="pesquisa"><span class="emoji">🔎</span><span class="copy"><strong>Pesquisa com fontes</strong><span>Perplexity, Gemini e Microsoft Copilot.</span></span><span class="arrow">›</span></button>
+<button class="action" data-recommend="documentos"><span class="emoji">📄</span><span class="copy"><strong>PDF e documentos</strong><span>NotebookLM, ChatPDF e Claude.</span></span><span class="arrow">›</span></button>
+<button class="action" data-recommend="texto"><span class="emoji">✍️</span><span class="copy"><strong>Texto e escrita</strong><span>Claude, Grammarly e Gemini.</span></span><span class="arrow">›</span></button>
+<button class="action" data-recommend="imagem"><span class="emoji">🖼️</span><span class="copy"><strong>Imagens e design</strong><span>Ideogram, Canva e Microsoft Designer.</span></span><span class="arrow">›</span></button>
+<button class="action" data-recommend="video"><span class="emoji">🎬</span><span class="copy"><strong>Vídeos e Reels</strong><span>CapCut, LTX-2 e Canva.</span></span><span class="arrow">›</span></button>
+<button class="action" data-recommend="audio"><span class="emoji">🎙️</span><span class="copy"><strong>Voz e áudio</strong><span>ElevenLabs, Suno e Hugging Face Spaces.</span></span><span class="arrow">›</span></button>
+<button class="action" data-recommend="codigo"><span class="emoji">💻</span><span class="copy"><strong>Código</strong><span>DeepSeek, Claude e Qwen.</span></span><span class="arrow">›</span></button>
+<button class="action" data-recommend="estudo"><span class="emoji">📚</span><span class="copy"><strong>Estudo</strong><span>NotebookLM, ChatPDF e Gemini.</span></span><span class="arrow">›</span></button>
+<button class="action" data-recommend="automacao"><span class="emoji">⚙️</span><span class="copy"><strong>Automação</strong><span>Zapier e fluxos de trabalho.</span></span><span class="arrow">›</span></button>
+<button class="action" data-recommend="apresentacao"><span class="emoji">🖥️</span><span class="copy"><strong>Apresentações</strong><span>Gamma, Canva e Beautiful.ai.</span></span><span class="arrow">›</span></button>
+</section>
+<div id="recommendResult" class="warning" hidden></div>
+<div class="section">⚖️ Comparar IAs</div>
+<section class="action" style="cursor:default">
+<span class="emoji">⚖️</span><span class="copy"><strong>Comparação de ferramentas</strong><span>No catálogo, marque até 3 IAs nos cartões para comparar categoria, acesso, cliques e sua avaliação pessoal.</span></span><a class="link" href="canivete-ias-gratuitas.html">Abrir catálogo →</a>
+</section>
+\n<div class="warning">ℹ️ As ações são executadas no catálogo principal. “Zerar contadores” pede confirmação antes de apagar os números de acesso.</div>
+<footer class="bottom"><span>🧰 Canivete Assistente • Página de configurações v2</span><a class="link" href="canivete-ias-gratuitas.html">Abrir catálogo completo →</a></footer>
 </main>
 <script>
 (function(){
 let theme='light';try{theme=localStorage.getItem('canivete_ias_theme_v1')||'light'}catch(e){}
 document.documentElement.setAttribute('data-theme',theme);
+const recommendations={
+pesquisa:['Perplexity','Gemini','Microsoft Copilot'],documentos:['NotebookLM','ChatPDF','Claude'],texto:['Claude','Grammarly','Gemini'],imagem:['Ideogram','Canva','Microsoft Designer'],video:['CapCut','LTX-2','Canva'],audio:['ElevenLabs','Suno','Hugging Face Spaces'],codigo:['DeepSeek','Claude','Qwen'],estudo:['NotebookLM','ChatPDF','Gemini'],automacao:['Zapier'],apresentacao:['Gamma','Canva','Beautiful.ai']
+};
+document.querySelectorAll('[data-recommend]').forEach(button=>button.addEventListener('click',()=>{
+ const names=recommendations[button.dataset.recommend]||[];
+ const box=document.getElementById('recommendResult');
+ box.hidden=false;
+ box.innerHTML='<strong>🏆 Sugestões:</strong> '+names.map(name=>'<a class="link" style="margin-right:10px" href="canivete-ias-gratuitas.html?search='+encodeURIComponent(name)+'">'+name+'</a>').join('')+'<p style="margin:8px 0 0;color:var(--muted);font-size:12px">Abra uma sugestão para localizar a ferramenta no catálogo.</p>';
+}));
 document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>{
  const action=button.dataset.action;
  window.location.href='canivete-ias-gratuitas.html?configAction='+encodeURIComponent(action);
