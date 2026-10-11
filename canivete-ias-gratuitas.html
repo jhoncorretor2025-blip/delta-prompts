@@ -350,7 +350,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v67</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v68</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>193 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
@@ -364,30 +364,6 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </section>
 
 
-
-<section class="feature-panel" id="recommender">
-<h3>🎯 9. Qual IA devo usar?</h3>
-<p>Escolha a tarefa e o Canivete indica as melhores opções <strong>desta página</strong>. A recomendação é local, rápida e não precisa de API.</p>
-<div class="task-buttons">
-<button class="task-btn" data-task="pesquisa">Pesquisa com fontes</button>
-<button class="task-btn" data-task="documentos">📄 PDF / documentos</button>
-<button class="task-btn" data-task="texto">✍️ Texto / escrita</button>
-<button class="task-btn" data-task="imagem">🖼️ Imagens / design</button>
-<button class="task-btn" data-task="video">🎬 Vídeos / Reels</button>
-<button class="task-btn" data-task="audio">🎙️ Voz / áudio</button>
-<button class="task-btn" data-task="codigo">💻 Código</button>
-<button class="task-btn" data-task="estudo">Estudo</button>
-<button class="task-btn" data-task="automacao">Automação</button>
-<button class="task-btn" data-task="apresentacao">🖥️ Apresentações</button><button class="task-btn" data-task="atualidade">📰 Atualidades</button><button class="task-btn" data-task="agentes">🤖 Agentes de código</button><button class="task-btn" data-task="clipes">✂️ Cortes / Shorts</button><button class="task-btn" data-task="avatar">Avatar</button><button class="task-btn" data-task="transcricao">🎧 Transcrição</button><button class="task-btn" data-task="recorte">🪄 Remover fundo</button>
-</div>
-<div class="recommend-result" id="recommendResult"></div>
-</section>
-
-<section class="feature-panel">
-<h3>⚖️ 8. Comparar IAs</h3>
-<p>Marque até <strong>3 IAs</strong> nos cards para comparar função, categoria, acesso, cliques e sua avaliação pessoal.</p>
-<div class="stats-line"><span class="stat-pill">💡 Dica: compare ferramentas para a mesma tarefa</span><span class="stat-pill">⭐ Sua avaliação fica salva neste navegador</span></div>
-</section>
 
 <section class="grid" id="grid">
 
@@ -1356,7 +1332,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v67','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v68','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1369,7 +1345,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v67.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v68.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1388,7 +1364,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v67.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v68.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
