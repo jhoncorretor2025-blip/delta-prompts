@@ -59,7 +59,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
  .filter-group:has(#exportAllTools) #imageFreeToggle,.filter-group:has(#exportAllTools) #favoritesToggle{width:100%;max-width:100%;text-align:left}
 }
 
-/* v44 — refinamento visual, acessibilidade e responsividade */
+/* v45 — refinamento visual, acessibilidade e responsividade */
 :root{--accent-soft:#eff6ff;--focus:#93c5fd}
 .top{padding:4px 0 14px;border-bottom:1px solid var(--line)}
 .top-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
@@ -127,14 +127,20 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 
-/* v44 — bolhas com quantidade de IAs nos filtros */
+/* v45 — bolhas com quantidade de IAs nos filtros */
 .filter-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;margin-left:3px;border-radius:999px;background:#e8eef8;color:#334155;font-size:10px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;vertical-align:middle}
 .filter.active .filter-count{background:rgba(255,255,255,.24);color:inherit}
 [data-theme="dark"] .filter-count{background:#29334e;color:#e2e8f0}
 @media(max-width:680px){.filter-count{min-width:22px;height:22px;font-size:11px}}
+
+/* v45 — separar ferramentas de criação e edição de vídeo */
+.video-subfilters{padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.video-subfilters[hidden]{display:none!important}
+.video-subfilters .filter-label{white-space:nowrap}
+@media(max-width:680px){.video-subfilters{align-items:flex-start;flex-direction:column}.video-subfilters .filters{width:100%}.video-subfilters .filter{flex:1}}
 </style>
 <style>
-/* v44 — painéis compactos no fim da página */
+/* v45 — painéis compactos no fim da página */
 .bottom-mini-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0 10px;align-items:start}
 .bottom-mini-panels .feature-panel{min-width:0;margin:0;padding:16px;border-radius:16px;box-shadow:var(--shadow)}
 .bottom-mini-panels .feature-panel h3{font-size:16px;margin:0 0 7px}
@@ -149,13 +155,14 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v44</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v45</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>83 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 <section class="toolbar">
 <input id="search" class="search" type="search" placeholder="🔎 Procurar por IA, função, categoria ou exemplo...">
 <div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters">
 <button class="filter active" data-cat="all">Todas <span class="filter-count" data-count-all>83</span></button><button class="filter" data-cat="pesquisa">🔎 Pesquisa <span class="filter-count" data-count-cat="pesquisa">0</span></button><button class="filter" data-cat="trabalho">💼 Trabalho <span class="filter-count" data-count-cat="trabalho">0</span></button><button class="filter" data-cat="criacao">🎨 Conteúdo <span class="filter-count" data-count-cat="criacao">0</span></button><button class="filter" data-cat="audio">🎙️ Áudio <span class="filter-count" data-count-cat="audio">0</span></button><button class="filter" data-cat="video">🎬 Vídeo <span class="filter-count" data-count-cat="video">0</span></button><button class="filter" data-cat="imagem">🖼️ Imagem <span class="filter-count" data-count-cat="imagem">0</span></button><button class="filter" data-cat="codigo">💻 Programação <span class="filter-count" data-count-cat="codigo">0</span></button><button class="filter" data-cat="estudo">📚 Estudo <span class="filter-count" data-count-cat="estudo">0</span></button><button class="filter" data-cat="automacao">⚙️ Automação <span class="filter-count" data-count-cat="automacao">0</span></button></div></div>
+<div class="filter-group video-subfilters" id="videoSubfilters" aria-label="Tipo de ferramenta de vídeo" hidden><span class="filter-label">Vídeo</span><div class="filters" id="videoTypeFilters"><button class="filter active" type="button" data-video-type="all">Todos os vídeos</button><button class="filter" type="button" data-video-type="create">🎬 Criação de vídeos</button><button class="filter" type="button" data-video-type="edit">✂️ Edição de vídeos</button></div></div>
 <div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">Todos <span class="filter-count" data-count-access="all">83</span></button><button class="filter" data-access="free">🟢 Plano grátis <span class="filter-count" data-count-access="free">0</span></button><button class="filter" data-access="limit">🟡 Grátis + limite <span class="filter-count" data-count-access="limit">0</span></button><button class="filter" data-access="paid">🔴 Plano pago <span class="filter-count" data-count-access="paid">0</span></button></div></div>
 <p class="category-help"><strong>🎨 Conteúdo:</strong> textos, músicas, vídeos e materiais. <strong>🖼️ Imagem:</strong> gerar, editar ou melhorar fotos, ilustrações e artes.</p>
 <div class="filter-group"><span class="filter-label">Atalhos</span><button class="filter" id="imageFreeToggle" type="button" aria-pressed="false">🖼️ Encontrar IAs para criar imagens grátis</button><button class="filter" id="favoritesToggle" type="button" aria-pressed="false">⭐ Favoritas</button><button class="filter" id="hiddenToggle" type="button" aria-pressed="false">🙈 Gerenciar ocultas</button><button class="filter" id="exportTextTools" type="button">📄 Baixar lista de IAs em TEXTO (.txt)</button><button class="filter" id="exportAllTools" type="button">📊 Baixar lista completa em planilha (CSV)</button></div>
@@ -492,6 +499,9 @@ updateFilterCounts();
 const search=document.getElementById('search'),count=document.getElementById('count'),empty=document.getElementById('empty'),grid=document.getElementById('grid'),reset=document.getElementById('resetClicks');
 const STORAGE='canivete_ias_cliques_v1', RATING='canivete_ias_avaliacoes_v1', CAPMAP='canivete_ias_caps_v1', FAVORITES_STORAGE='canivete_ias_favoritas_v1', HISTORY_STORAGE='canivete_ias_historico_v1', HIDDEN_STORAGE='canivete_ias_ocultas_v1', BOTTOM_STORAGE='canivete_ias_por_ultimo_v1';
 let cat='all',access='all',clicks={},ratings={},selected=[],favorites=[],hidden=[],bottom=[],favoritesOnly=false,imageFreeOnly=false,showHidden=false,recent=[];
+let videoType='all';
+const videoCreateNames=new Set(['Runway','Luma Dream Machine','Pika','PixVerse','Veo 3 (Google)','Kling AI','Hedra','MiniMax','LongVie 2','Stable Video Infinity','LTX-2','Humo AI','Holocine','AI Video Maker','Viggle AI','Canva','Meta AI','Hugging Face Spaces','Creati','Supawork.ai']);
+const videoEditNames=new Set(['CapCut','Descript','OpusClip','Runway','Pika','PixVerse','Canva','Hedra','HeyGen','Luma Dream Machine','Adobe Firefly','Creati','Supawork.ai']);
 try{clicks=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch(e){clicks={}}
 try{ratings=JSON.parse(localStorage.getItem(RATING)||'{}')||{}}catch(e){ratings={}}
 try{favorites=JSON.parse(localStorage.getItem(FAVORITES_STORAGE)||'[]')||[]}catch(e){favorites=[]}
@@ -639,7 +649,7 @@ function renderDashboard(){
 function render(){
  applyCardFeatures();
  const q=(search.value||'').toLowerCase().trim();
- const visible=cards.filter(c=>(showHidden?hidden.includes(nameOf(c)):!hidden.includes(nameOf(c)))&&(cat==='all'||c.dataset.cat.split(' ').includes(cat))&&(access==='all'||c.dataset.access===access)&&(!imageFreeOnly||(c.dataset.cat.split(' ').includes('imagem')&&['free','limit'].includes(c.dataset.access)))&&(!favoritesOnly||favorites.includes(nameOf(c)))&&(!q||(c.dataset.search||'').toLowerCase().includes(q)));
+ const visible=cards.filter(c=>(showHidden?hidden.includes(nameOf(c)):!hidden.includes(nameOf(c)))&&(cat==='all'||c.dataset.cat.split(' ').includes(cat))&&(cat!=='video'||videoType==='all'||(videoType==='create'?videoCreateNames.has(nameOf(c)):videoEditNames.has(nameOf(c))))&&(access==='all'||c.dataset.access===access)&&(!imageFreeOnly||(c.dataset.cat.split(' ').includes('imagem')&&['free','limit'].includes(c.dataset.access)))&&(!favoritesOnly||favorites.includes(nameOf(c)))&&(!q||(c.dataset.search||'').toLowerCase().includes(q)));
  visible.sort((a,b)=>Number(bottom.includes(nameOf(a)))-Number(bottom.includes(nameOf(b)))||getCount(b)-getCount(a)||getRating(b)-getRating(a));
  // Renderiza somente os cartões correspondentes; os demais ficam fora do grid, sem depender de estilos de ocultação.
  grid.replaceChildren(...visible);
@@ -662,7 +672,12 @@ function setup(id,type){document.querySelectorAll('#'+id+' .filter').forEach(b=>
  document.querySelectorAll('#'+id+' .filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');
  if(type==='cat')cat=b.dataset.cat;else access=b.dataset.access;render();
 }))}
-setup('catFilters','cat');setup('accessFilters','access');search.addEventListener('input',render);
+setup('catFilters','cat');setup('accessFilters','access');
+const videoSubfilters=document.getElementById('videoSubfilters');
+document.querySelectorAll('#videoTypeFilters .filter').forEach(b=>b.addEventListener('click',()=>{videoType=b.dataset.videoType;document.querySelectorAll('#videoTypeFilters .filter').forEach(x=>x.classList.toggle('active',x===b));render()}));
+const originalRender=render;
+render=function(){videoSubfilters.hidden=cat!=='video';originalRender()};
+search.addEventListener('input',render);
 document.getElementById('favoritesToggle').addEventListener('click',()=>{favoritesOnly=!favoritesOnly;render()});
 document.getElementById('hiddenToggle').addEventListener('click',()=>{showHidden=!showHidden;favoritesOnly=false;render()});
 document.getElementById('imageFreeToggle').addEventListener('click',()=>{
@@ -674,7 +689,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v44','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v45','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -687,7 +702,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v44.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v45.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -706,7 +721,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v44.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v45.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
