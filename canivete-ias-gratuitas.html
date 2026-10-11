@@ -333,6 +333,17 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
  #catFilters{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-flow:row!important}
 }
 
+
+/* v70 — ranking transparente por qualidade, popularidade e acesso */
+.ranking-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.7fr);gap:10px;align-items:end;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.ranking-controls label{display:flex;flex-direction:column;gap:6px;font-size:11px;font-weight:900;color:var(--muted)}
+.ranking-controls select{width:100%;min-width:0;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit;font-size:13px}
+.rank-info{grid-column:1/-1;font-size:11px;color:var(--muted);line-height:1.45;margin:0}
+.rank-chip{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:8px 0 0;font-size:10px;font-weight:800;color:var(--muted)}
+.rank-stars{color:#b77900;letter-spacing:1px;font-size:13px}
+.rank-pending{border:1px solid var(--line);border-radius:999px;padding:3px 7px;background:var(--bg)}
+@media(max-width:680px){.ranking-controls{grid-template-columns:1fr}.rank-info{grid-column:auto}}
+
 </style>
 <style>
 /* v51 — painéis compactos no fim da página */
@@ -357,6 +368,28 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <div class="search-shell"><svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="search" class="search" type="search" placeholder="Buscar IA, função, categoria ou exemplo..." aria-label="Buscar ferramentas de inteligência artificial"><kbd class="search-shortcut">Ctrl + K</kbd></div>
 <div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters"><button class="filter active" data-cat="all">🗂️ Todas <span class="filter-count" data-count-all>97</span></button><button class="filter" data-cat="criacao">✍️ Texto e conteúdo <span class="filter-count" data-count-cat="criacao">69</span></button><button class="filter" data-cat="imagem">🖼️ Imagem <span class="filter-count" data-count-cat="imagem">26</span></button><button class="filter" data-cat="video">🎥 Todos os vídeos <span class="filter-count" data-count-cat="video">42</span></button><button class="filter" data-cat="codigo">💻 Código <span class="filter-count" data-count-cat="codigo">26</span></button><button class="filter" data-cat="pesquisa">🔎 Pesquisa <span class="filter-count" data-count-cat="pesquisa">21</span></button><button class="filter" data-cat="trabalho">💼 Trabalho <span class="filter-count" data-count-cat="trabalho">51</span></button><button class="filter" data-cat="audio">🎧 Áudio <span class="filter-count" data-count-cat="audio">18</span></button><button class="filter" data-cat="musica">🎵 Criação de música <span class="filter-count" data-count-cat="musica">0</span></button><button class="filter video-create-category" data-cat="video-criacao">🎬 Criação de vídeo <span class="filter-count" data-count-cat="video-criacao">24</span></button><button class="filter video-edit-category" data-cat="video-edicao">✂️ Edição de vídeo <span class="filter-count" data-count-cat="video-edicao">25</span></button><button class="filter" data-cat="estudo">📚 Estudo <span class="filter-count" data-count-cat="estudo">13</span></button><button class="filter" data-cat="automacao">⚙️ Automação <span class="filter-count" data-count-cat="automacao">5</span></button><button class="filter" data-cat="avatar">🧑‍🎤 Avatar <span class="filter-count" data-count-cat="avatar">0</span></button><button class="filter specialist-category" data-cat="especialistas">🎯 Especialistas <span class="filter-count" data-count-cat="especialistas">32</span></button></div></div>
 <div class="video-subfilters-wrap" id="videoSubfilters" aria-label="Tipo de ferramenta de vídeo" hidden><div class="filter-group video-subfilters"><span class="filter-label">Tipo de vídeo</span><div class="filters" id="videoTypeFilters"><button class="filter active" type="button" data-video-type="all">Todos <span class="filter-count" data-count-video="all">42</span></button><button class="filter" type="button" data-video-type="create">🎬 Criam vídeos <span class="filter-count" data-count-video="create">24</span></button><button class="filter" type="button" data-video-type="edit">✂️ Só edição <span class="filter-count" data-count-video="edit">14</span></button><button class="filter" type="button" data-video-type="both">🔄 Criam e editam <span class="filter-count" data-count-video="both">11</span></button><button class="filter" type="button" data-video-type="other">🧰 Plataformas/apoio <span class="filter-count" data-count-video="other">4</span></button></div></div><p class="category-help video-type-help">🎬 <strong>Criam vídeos:</strong> geram clipes, cenas ou vídeos com IA. ✂️ <strong>Só edição:</strong> editam, cortam ou reaproveitam vídeos existentes. 🔄 <strong>Ambas:</strong> criam e também editam. 🧰 <strong>Plataformas/apoio:</strong> reúnem ou apoiam fluxos de trabalho com vídeo.</p></div>
+<div class="ranking-controls" aria-label="Ordenação e classificação das IAs">
+<label for="rankingSort">⭐ Ordenar catálogo
+<select id="rankingSort">
+<option value="recommended">Recomendadas primeiro</option>
+<option value="free-quality">Melhores gratuitas primeiro</option>
+<option value="popular">Mais conhecidas primeiro</option>
+<option value="quality">Maior qualidade avaliada</option>
+<option value="access">Gratuitas, freemium e pagas</option>
+<option value="az">Nome A–Z</option>
+</select></label>
+<label for="rankingCategory">Categoria do ranking
+<select id="rankingCategory">
+<option value="current">Categoria/filtros atuais</option>
+<option value="video-create">Criação de vídeo</option>
+<option value="video-edit">Edição de vídeo</option>
+<option value="image">Imagem</option>
+<option value="audio">Áudio e música</option>
+<option value="code">Programação</option>
+<option value="research">Pesquisa e chat</option>
+</select></label>
+<p class="rank-info">⭐ As notas individuais só serão exibidas quando houver avaliação verificável. Até lá, as ferramentas aparecem como “avaliação pendente”; popularidade e acesso não são apresentados como nota de qualidade.</p>
+</div>
 <div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">🌐 Todos <span class="filter-count" data-count-access="all">97</span></button><button class="filter" data-access="free">🆓 Plano grátis <span class="filter-count" data-count-access="free">25</span></button><button class="filter" data-access="limit">⚠️ Grátis + limite <span class="filter-count" data-count-access="limit">69</span></button><button class="filter" data-access="paid">💳 Plano pago <span class="filter-count" data-count-access="paid">3</span></button></div></div>
 <p class="category-help"><strong>Texto e conteúdo:</strong> textos, músicas, vídeos e materiais. <strong>Imagem:</strong> gerar, editar ou melhorar fotos, ilustrações e artes.</p>
 <div class="global-actions"><span class="global-actions-label">⚡ Ações rápidas</span><div class="global-actions-list"><button class="filter" id="imageFreeToggle" type="button" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>🖼️ Imagens grátis</button><button class="filter" id="favoritesToggle" type="button" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg>⭐ Favoritas</button><button class="filter" id="hiddenToggle" type="button" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px"><path d="M3 3 21 21"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5.2 0 8.5 5 8.5 7a8.5 8.5 0 0 1-2.1 3.3"/><path d="M6.2 6.2C3.9 7.7 1.5 10.6 1.5 12c0 2 3.3 7 10.5 7 1.1 0 2.1-.2 3-.5"/></svg>🙈 Gerenciar ocultas</button><button class="filter export-action" id="exportTextTools" type="button" title="Baixar catálogo em texto"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>📄 Baixar TXT</button><button class="filter export-action" id="exportAllTools" type="button" title="Baixar catálogo em planilha CSV"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px"><path d="M4 4h16v16H4z"/><path d="M4 9h16M4 14h16M9 4v16M15 4v16"/></svg>📊 Baixar CSV</button><button class="filter" id="resetClicks" type="button" title="Zerar os contadores de cliques"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/></svg>🔄 Zerar contadores</button></div></div>
@@ -1149,6 +1182,8 @@ const search=document.getElementById('search'),count=document.getElementById('co
 const STORAGE='canivete_ias_cliques_v1', RATING='canivete_ias_avaliacoes_v1', CAPMAP='canivete_ias_caps_v1', FAVORITES_STORAGE='canivete_ias_favoritas_v1', HISTORY_STORAGE='canivete_ias_historico_v1', HIDDEN_STORAGE='canivete_ias_ocultas_v1', BOTTOM_STORAGE='canivete_ias_por_ultimo_v1';
 let cat='all',access='all',clicks={},ratings={},selected=[],favorites=[],hidden=[],bottom=[],favoritesOnly=false,imageFreeOnly=false,showHidden=false,recent=[];
 let videoType='all';
+let rankingSort='recommended';
+let rankingCategory='current';
 
 try{clicks=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch(e){clicks={}}
 try{ratings=JSON.parse(localStorage.getItem(RATING)||'{}')||{}}catch(e){ratings={}}
@@ -1294,11 +1329,48 @@ function renderDashboard(){
  const hiddenBtn=document.getElementById('hiddenToggle');hiddenBtn.classList.toggle('active',showHidden);hiddenBtn.setAttribute('aria-pressed',String(showHidden));hiddenBtn.textContent=showHidden?'↩️ Voltar às IAs visíveis':'🙈 Gerenciar ocultas';
  const imgBtn=document.getElementById('imageFreeToggle');imgBtn.classList.toggle('active',imageFreeOnly);imgBtn.setAttribute('aria-pressed',String(imageFreeOnly));
 }
+function rankingScore(card){
+ const n=nameOf(card);
+ const known=['ChatGPT','Claude','Gemini','Microsoft Copilot','Perplexity','Canva','Runway','Kling AI','CapCut','Sora','Veo 3 (Google)','Midjourney','Adobe Firefly','ElevenLabs','Suno','GitHub Copilot','DeepSeek','Meta AI','NotebookLM','Cursor','Gamma','HeyGen','Pika','Luma Dream Machine','Replit'];
+ return known.includes(n)?2:0;
+}
+function rankingAccess(card){return ({free:0,limit:1,paid:2})[card.dataset.access]??3}
+function rankingCategoryMatch(card){
+ if(rankingCategory==='current')return true;
+ const cats=cardCategories(card),vt=card.dataset.videoType||'other';
+ if(rankingCategory==='video-create')return cats.includes('video')&&['create','both'].includes(vt);
+ if(rankingCategory==='video-edit')return cats.includes('video')&&['edit','both'].includes(vt);
+ if(rankingCategory==='image')return cats.includes('imagem');
+ if(rankingCategory==='audio')return cats.includes('audio')||cats.includes('musica');
+ if(rankingCategory==='code')return cats.includes('codigo');
+ if(rankingCategory==='research')return cats.includes('pesquisa');
+ return true;
+}
+function applyRankingBadges(){
+ cards.forEach(card=>{
+  const footer=card.querySelector('.footer');
+  if(!footer||card.querySelector('.rank-chip'))return;
+  const chip=document.createElement('div');chip.className='rank-chip';
+  chip.innerHTML='<span class="rank-stars" aria-label="Nota ainda não verificada">☆☆☆☆☆</span><span class="rank-pending">Avaliação pendente</span>';
+  footer.insertAdjacentElement('beforebegin',chip);
+ });
+}
 function render(){
  applyCardFeatures();
+ applyRankingBadges();
  const q=(search.value||'').toLowerCase().trim();
  const visible=cards.filter(c=>{const cats=c.dataset.cat.split(' '),isVideo=cats.includes('video'),vt=c.dataset.videoType||'other';const categoryMatch=cat==='all'||cats.includes(cat)||(cat==='video-criacao'&&isVideo&&['create','both'].includes(vt))||(cat==='video-edicao'&&isVideo&&['edit','both'].includes(vt))||(cat==='especialistas'&&c.dataset.specialist==='true');const subtypeMatch=cat!=='video'||videoType==='all'||(videoType==='create'&&['create','both'].includes(vt))||(videoType==='edit'&&vt==='edit')||(videoType==='both'&&vt==='both')||(videoType==='other'&&!['create','edit','both'].includes(vt));return (showHidden?hidden.includes(nameOf(c)):!hidden.includes(nameOf(c)))&&categoryMatch&&subtypeMatch&&(access==='all'||c.dataset.access===access)&&(!imageFreeOnly||(cats.includes('imagem')&&['free','limit'].includes(c.dataset.access)))&&(!favoritesOnly||favorites.includes(nameOf(c)))&&(!q||(c.dataset.search||'').toLowerCase().includes(q));});
- visible.sort((a,b)=>Number(bottom.includes(nameOf(a)))-Number(bottom.includes(nameOf(b)))||getCount(b)-getCount(a)||getRating(b)-getRating(a));
+ const rankFiltered=visible.filter(rankingCategoryMatch);
+ visible.splice(0,visible.length,...rankFiltered);
+ visible.sort((a,b)=>{
+  if(bottom.includes(nameOf(a))!==bottom.includes(nameOf(b)))return Number(bottom.includes(nameOf(a)))-Number(bottom.includes(nameOf(b)));
+  if(rankingSort==='az')return nameOf(a).localeCompare(nameOf(b),'pt-BR');
+  if(rankingSort==='access')return rankingAccess(a)-rankingAccess(b)||rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a);
+  if(rankingSort==='popular')return rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a)||rankingAccess(a)-rankingAccess(b);
+  if(rankingSort==='quality')return getRating(b)-getRating(a)||rankingScore(b)-rankingScore(a)||rankingAccess(a)-rankingAccess(b);
+  if(rankingSort==='free-quality')return rankingAccess(a)-rankingAccess(b)||rankingScore(b)-rankingScore(a)||getRating(b)-getRating(a)||getCount(b)-getCount(a);
+  return rankingScore(b)-rankingScore(a)||rankingAccess(a)-rankingAccess(b)||getCount(b)-getCount(a)||getRating(b)-getRating(a);
+ });
  // Renderiza somente os cartões correspondentes; os demais ficam fora do grid, sem depender de estilos de ocultação.
  grid.replaceChildren(...visible);
  cards.forEach(c=>{
@@ -1321,6 +1393,19 @@ function setup(id,type){document.querySelectorAll('#'+id+' .filter').forEach(b=>
  if(type==='cat'){cat=b.dataset.cat;if(cat!=='video')videoType='all';}else access=b.dataset.access;render();
 }))}
 setup('catFilters','cat');setup('accessFilters','access');
+document.getElementById('rankingSort')?.addEventListener('change',e=>{rankingSort=e.target.value;render()});
+document.getElementById('rankingCategory')?.addEventListener('change',e=>{
+ rankingCategory=e.target.value;
+ if(rankingCategory==='video-create'){cat='video-criacao';videoType='create'}
+ else if(rankingCategory==='video-edit'){cat='video-edicao';videoType='edit'}
+ else if(rankingCategory==='image'){cat='imagem';videoType='all'}
+ else if(rankingCategory==='audio'){cat='audio';videoType='all'}
+ else if(rankingCategory==='code'){cat='codigo';videoType='all'}
+ else if(rankingCategory==='research'){cat='pesquisa';videoType='all'}
+ else {cat='all';videoType='all'}
+ document.querySelectorAll('#catFilters .filter').forEach(x=>x.classList.toggle('active',x.dataset.cat===cat));
+ render();
+});
 const videoSubfilters=document.getElementById('videoSubfilters');
 document.querySelectorAll('#videoTypeFilters .filter').forEach(b=>b.addEventListener('click',()=>{videoType=b.dataset.videoType;document.querySelectorAll('#videoTypeFilters .filter').forEach(x=>x.classList.toggle('active',x===b));render()}));
 const originalRender=render;
@@ -1337,7 +1422,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v69','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v70','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
