@@ -361,7 +361,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v71</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v72</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>194 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
@@ -412,7 +412,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <option value="code">Programação</option>
 <option value="research">Pesquisa e chat</option>
 </select></label>
-<p class="rank-info">⭐ As notas individuais só serão exibidas quando houver avaliação verificável. Até lá, as ferramentas aparecem como “avaliação pendente”; popularidade e acesso não são apresentados como nota de qualidade.</p>
+<p class="rank-info">⭐ Qualidade e popularidade são indicadores separados. As estrelas pessoais permitem registrar sua própria opinião neste navegador; a nota pública fica pendente até haver fonte verificável. “Ferramenta conhecida” é um destaque editorial, não uma estatística de usuários.</p>
 </div>
 <div class="filter-group"><span class="filter-label">Acesso</span><div class="filters" id="accessFilters"><button class="filter active" data-access="all">🌐 Todos <span class="filter-count" data-count-access="all">97</span></button><button class="filter" data-access="free">🆓 Plano grátis <span class="filter-count" data-count-access="free">25</span></button><button class="filter" data-access="limit">⚠️ Grátis + limite <span class="filter-count" data-count-access="limit">69</span></button><button class="filter" data-access="paid">💳 Plano pago <span class="filter-count" data-count-access="paid">3</span></button></div></div>
 <p class="category-help"><strong>Texto e conteúdo:</strong> textos, músicas, vídeos e materiais. <strong>Imagem:</strong> gerar, editar ou melhorar fotos, ilustrações e artes.</p>
@@ -1446,8 +1446,18 @@ function applyRankingBadges(){
  cards.forEach(card=>{
   const footer=card.querySelector('.footer');
   if(!footer||card.querySelector('.rank-chip'))return;
+  const n=nameOf(card);
   const chip=document.createElement('div');chip.className='rank-chip';
-  chip.innerHTML='<span class="rank-stars" aria-label="Nota ainda não verificada">☆☆☆☆☆</span><span class="rank-pending">Avaliação pendente</span>';
+  chip.style.cssText='display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 8px;font-size:11px';
+  const quality=document.createElement('span');quality.style.cssText='display:inline-flex;align-items:center;gap:4px;color:var(--muted);font-weight:800';
+  const stars=document.createElement('span');stars.textContent='☆☆☆☆☆';stars.style.cssText='letter-spacing:1px;color:#cbd5e1;font-size:15px';
+  const pending=document.createElement('span');pending.textContent='Qualidade: sem nota verificada';
+  quality.append(stars,pending);
+  const recognized=['ChatGPT','Claude','Gemini','Microsoft Copilot','Perplexity','Canva','Runway','Kling AI','CapCut','Sora','Veo 3 (Google)','Midjourney','Adobe Firefly','ElevenLabs','Suno','GitHub Copilot','DeepSeek','Meta AI','NotebookLM','Cursor','Gamma','HeyGen','Pika','Luma Dream Machine','Replit'];
+  const pop=document.createElement('span');pop.style.cssText='display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 7px;background:var(--bg);color:var(--muted);font-size:10px;font-weight:850';
+  pop.textContent=recognized.includes(n)?'🔥 Ferramenta conhecida':'📌 Popularidade não verificada';
+  pop.title=recognized.includes(n)?'Destaque editorial por reconhecimento geral; não é estatística de usuários.':'Não há dados externos de popularidade confirmados.';
+  chip.append(quality,pop);
   footer.insertAdjacentElement('beforebegin',chip);
  });
 }
