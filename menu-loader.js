@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.70
-window.DELTA_SITE_VERSION='V1.69';
+// DELTA SITE VERSION: V1.71
+window.DELTA_SITE_VERSION='V1.71';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -665,7 +665,7 @@ window.deltaRegistrarLog=function(texto){
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-menu-v47';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
+(function(){function getMenuCandidates(){const version='delta-prompts-menu-v48';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
   try{
     const link=sidebar&&sidebar.querySelector('a[href*="/paginas/sites-landing-pages.html"]');
     const badge=link&&link.querySelector('.menu-count');
@@ -1557,6 +1557,20 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
  }
  function tituloBiblioteca(){
   var side=document.querySelector('#menu .sidebar');if(!side)return;
+  // Corrige e fixa o destino do atalho rápido "Biblioteca", mesmo se um menu antigo tiver sido armazenado em cache.
+  side.querySelectorAll('.delta-menu-shortcuts a').forEach(function(a){
+   var b=a.querySelector('b');
+   var nome=(b?b.textContent:a.textContent||'').replace(/\\s+/g,' ').replace(/^📦\\s*/,'').trim().toLowerCase();
+   if(nome==='biblioteca'){
+    a.setAttribute('href','/delta-prompts/biblioteca.html');
+    a.setAttribute('aria-label','Abrir Biblioteca de prompts');
+   }
+  });
+  // O link final fica na área "Minha Biblioteca" e também sempre usa a página dedicada.
+  side.querySelectorAll('.menu-item-final').forEach(function(a){
+   var nome=(a.textContent||'').replace(/\\s+/g,' ').replace(/^📦\\s*/,'').trim().toLowerCase();
+   if(nome==='biblioteca')a.setAttribute('href','/delta-prompts/biblioteca.html');
+  });
   side.querySelectorAll('.menu-item-final-titulo').forEach(function(t){
    if((t.textContent||'').toLowerCase().indexOf('minha biblioteca')>=0&&!t.dataset.deltaBibliotecaClick){
     t.dataset.deltaBibliotecaClick='1';t.setAttribute('role','link');t.setAttribute('tabindex','0');t.title='Abrir Minha Biblioteca';t.style.cursor='pointer';
