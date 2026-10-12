@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Clonagem de Voz Master — servidor no seu computador (Mac/Linux) v1.5.17
+# Clonagem de Voz Master — servidor no seu computador (Mac/Linux) v1.5.18
 set -e
 cd "$(dirname "$0")"
-echo "=== CLONAGEM DE VOZ MASTER — servidor no seu computador (v1.5.17) ==="
+echo "=== CLONAGEM DE VOZ MASTER — servidor no seu computador (v1.5.18) ==="
 PY=$(command -v python3.11 || command -v python3.10 || command -v python3.12 || command -v python3 || true)
 [ -z "$PY" ] && { echo "❌ Instale o Python 3.11 (python.org)"; exit 1; }
 "$PY" -c "import sys;sys.exit(0 if (3,10)<=sys.version_info[:2]<(3,13) else 1)" || { echo "❌ Seu Python é novo/antigo demais para o modelo. Instale o Python 3.11."; exit 1; }
