@@ -97,6 +97,7 @@ pre {
 
 <main>
 
+<small data-delta-version="V1.71" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.71</small>
 <h1>💼 Trabalho Estratégico com IA</h1>
 
 <p>
@@ -353,16 +354,16 @@ function copiarPrompt(texto){
 }
 
 function favoritarPrompt(titulo, conteudo){
-    const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-    prompts.push({
-        id: Date.now(),
-        titulo,
-        categoria: "Trabalho",
-        conteudo,
-        favorito: true
-    });
-    localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-    alert("⭐ Adicionado aos favoritos!");
+    let prompts=[];
+    try{const bruto=localStorage.getItem("deltaPrompts");const dados=bruto?JSON.parse(bruto):[];prompts=Array.isArray(dados)?dados:[];}catch(e){alert("⚠️ Não foi possível ler os prompts salvos. Seus dados foram preservados.");return;}
+    const normalizar=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/\s+/g," ").trim();
+    const tituloNormalizado=normalizar(titulo);
+    if(prompts.some(p=>normalizar(p&&p.titulo)===tituloNormalizado)){alert("ℹ️ Este prompt já está salvo na Minha Biblioteca. Não foi criado um duplicado.");return;}
+    const id="trabalho-"+Date.now()+"-"+Math.random().toString(36).slice(2,7);
+    prompts.push({id,titulo,categoria:"Trabalho",conteudo,favorito:true});
+    try{localStorage.setItem("deltaPrompts",JSON.stringify(prompts));alert("⭐ Adicionado aos favoritos!");}
+    catch(e){alert("⚠️ Não foi possível salvar o prompt neste navegador.");}
+
 }
 
 function abrirChatGPT(texto){
