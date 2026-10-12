@@ -258,6 +258,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
         if(!perfil)return;
         try{localStorage.setItem('deltaPerfilAtivo',perfil.chave);localStorage.setItem('deltaModoSimples',perfil.chave==='idoso'?'true':'false')}catch(e){}
         salvarOrdemManual(perfil.ordem.slice());
+        if(window.deltaAplicarPerfilMenu)window.deltaAplicarPerfilMenu();
         renderPerfis();
         renderLista();
         atualizarStatus();
