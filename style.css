@@ -1762,3 +1762,28 @@ html[data-modo-leitura="true"] main [data-prompt-text] {
     padding: 68px 16px 32px !important;
   }
 }
+
+
+/* ===== V1.73 — contraste em filtros e controles agrupados ===== */
+[data-theme="dark"] .delta-filter,
+[data-theme="dark"] .delta-example-filters button,
+[data-theme="dark"] .filtro-nivel button,
+[data-theme="dark"] .filtros button,
+[data-theme="dark"] button[data-filter]{
+  background:#1f2937!important;color:#e5e7eb!important;border-color:#475569!important;
+}
+[data-theme="dark"] .delta-filter.active,
+[data-theme="dark"] .delta-example-filters button[aria-pressed="true"]{
+  background:#3730a3!important;color:#fff!important;border-color:#6366f1!important;
+}
+[data-theme="dark"] #deltaAjustesFlutuantesPanel{
+  background:#111827!important;color:#f3f4f6!important;border-color:#374151!important;
+}
+#deltaAjustesFlutuantesPanel #deltaCorWrap>div{
+  background:#111827;color:#f3f4f6;border-color:#374151;
+}
+#deltaAjustesFlutuantesPanel button{cursor:pointer}
+@media(max-width:600px){
+  #deltaAjustesFlutuantesBtn{right:14px!important;bottom:14px!important}
+  #deltaAjustesFlutuantesPanel{right:14px!important;bottom:70px!important}
+}
