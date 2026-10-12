@@ -233,7 +233,8 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
 
   // ===== SELETOR DE PERFIL =====
   var PERFIS=[
-    {chave:'pessoal',emoji:'🏠',nome:'Uso Pessoal',desc:'Vida pessoal, saúde e estudo primeiro',ordem:['pessoal','biblioteca','avancado','carreira','empresa']},
+    {chave:'pessoal',emoji:'🏠',nome:'Uso Pessoal',desc:'Vida pessoal, saúde e estudo primeiro',ordem:['pessoal','avancado','carreira','empresa','biblioteca']},
+    {chave:'idoso',emoji:'🧓',nome:'Idoso / Modo Simplificado',desc:'Menu mais simples, letras maiores e temas cotidianos',ordem:['pessoal','avancado','carreira','empresa','biblioteca']},
     {chave:'empreendedor',emoji:'💼',nome:'Empreendedor(a)',desc:'Gestão de empresa e marketing primeiro',ordem:['empresa','carreira','avancado','pessoal','biblioteca']},
     {chave:'carreira',emoji:'👔',nome:'Foco em Carreira',desc:'Emprego, currículo e crescimento primeiro',ordem:['carreira','empresa','avancado','pessoal','biblioteca']},
     {chave:'avancado',emoji:'🚀',nome:'Avançado / Tech',desc:'IA, sistemas e automações primeiro',ordem:['avancado','empresa','carreira','pessoal','biblioteca']}
@@ -255,7 +256,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
       btn.addEventListener('click',function(){
         var perfil=PERFIS.find(function(p){return p.chave===btn.dataset.perfil});
         if(!perfil)return;
-        try{localStorage.setItem('deltaPerfilAtivo',perfil.chave)}catch(e){}
+        try{localStorage.setItem('deltaPerfilAtivo',perfil.chave);localStorage.setItem('deltaModoSimples',perfil.chave==='idoso'?'true':'false')}catch(e){}
         salvarOrdemManual(perfil.ordem.slice());
         renderPerfis();
         renderLista();
