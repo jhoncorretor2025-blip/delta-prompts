@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.63
-window.DELTA_SITE_VERSION='V1.63';
+// DELTA SITE VERSION: V1.64
+window.DELTA_SITE_VERSION='V1.64';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -57,6 +57,23 @@ window.deltaRegistrarLog=function(texto){
       try{localStorage.setItem('deltaHistoricoPaginas',JSON.stringify(hist))}catch(e){}
     }
     if(document.title)registrar();else document.addEventListener('DOMContentLoaded',registrar,{once:true});
+  }catch(e){}
+})();
+
+
+// ===== CENTRAL DE PÁGINAS: CONTAGEM DE ACESSOS =====
+(function(){
+  try{
+    if(window.deltaModoPrivadoAtivo())return;
+    var path=location.pathname;
+    if(!path||path==='/delta-prompts/'||path==='/delta-prompts/index.html'||path==='/delta-prompts/central-paginas.html')return;
+    if(!/\.html$/i.test(path))return;
+    var titulo=(document.title||'').split('|')[0].trim()||path.split('/').pop().replace(/\.html$/i,'').replace(/[-_]/g,' ');
+    var chave='deltaPageUsage',dados={};
+    try{dados=JSON.parse(localStorage.getItem(chave)||'{}')||{}}catch(e){}
+    var anterior=dados[path]||{};
+    dados[path]={path:path,titulo:titulo,count:(Number(anterior.count)||0)+1,firstSeen:anterior.firstSeen||Date.now(),lastSeen:Date.now()};
+    localStorage.setItem(chave,JSON.stringify(dados));
   }catch(e){}
 })();
 
