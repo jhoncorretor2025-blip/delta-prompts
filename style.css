@@ -1806,3 +1806,106 @@ html[data-modo-leitura="true"] main [data-prompt-text] {
 .prompt-leigo-card small{font-size:11.5px}
 .prompt-leigo-card .usar{margin-top:auto;padding:8px 11px}
 @media(prefers-reduced-motion:reduce){.home-search-result-cta,.prompt-leigo-card .usar{transition:none}}
+
+
+/* ===== V1.76 — espaço de rolagem e contraste consistente no tema escuro ===== */
+/* Reserva espaço para os controles fixos de Modo Simples e Modo Leitura. */
+#menu .sidebar,
+#menu nav.sidebar,
+.menu-lateral-lista,
+nav.menu-lateral-lista{
+  padding-bottom:calc(130px + env(safe-area-inset-bottom))!important;
+  scroll-padding-bottom:130px;
+}
+
+/* A barra lateral e seus controles acompanham os dois mecanismos de tema usados no site. */
+.dark-mode #menu,
+.dark-mode #menu .sidebar,
+.dark-mode #menu nav.sidebar,
+html.dark-mode #menu,
+html.dark-mode #menu .sidebar,
+[data-theme="dark"] #menu,
+[data-theme="dark"] #menu .sidebar,
+[data-theme="dark"] #menu nav.sidebar{
+  background-color:#1e293b!important;
+  color:#f8fafc!important;
+  border-color:#334155!important;
+}
+.dark-mode #menu .sidebar a,
+.dark-mode #menu .sidebar .menu-title,
+.dark-mode #menu .sidebar .menu-item-final,
+html.dark-mode #menu .sidebar a,
+html.dark-mode #menu .sidebar .menu-title,
+html.dark-mode #menu .sidebar .menu-item-final,
+[data-theme="dark"] #menu .sidebar a,
+[data-theme="dark"] #menu .sidebar .menu-title,
+[data-theme="dark"] #menu .sidebar .menu-item-final{
+  color:#f8fafc!important;
+  background-color:transparent!important;
+}
+.dark-mode #menu .sidebar .menu-group-title,
+.dark-mode #menu .sidebar .menu-item-final-titulo,
+html.dark-mode #menu .sidebar .menu-group-title,
+html.dark-mode #menu .sidebar .menu-item-final-titulo,
+[data-theme="dark"] #menu .sidebar .menu-group-title,
+[data-theme="dark"] #menu .sidebar .menu-item-final-titulo{
+  background-color:#0f172a!important;
+  color:#c4b5fd!important;
+  border-color:#334155!important;
+}
+
+/* Filtros, tags e botões claros ficam legíveis sem blocos brancos no Dark Mode. */
+.dark-mode .delta-filter,
+.dark-mode .delta-example-filters button,
+.dark-mode .filtro-nivel button,
+.dark-mode .filtros button,
+.dark-mode button[data-filter],
+.dark-mode .filter-btn,
+.dark-mode .filtro-btn,
+.dark-mode .quick button,
+.dark-mode .tag,
+html.dark-mode .delta-filter,
+html.dark-mode .delta-example-filters button,
+html.dark-mode .filtro-nivel button,
+html.dark-mode .filtros button,
+html.dark-mode button[data-filter],
+html.dark-mode .filter-btn,
+html.dark-mode .filtro-btn,
+html.dark-mode .quick button,
+html.dark-mode .tag,
+[data-theme="dark"] .delta-filter,
+[data-theme="dark"] .delta-example-filters button,
+[data-theme="dark"] .filtro-nivel button,
+[data-theme="dark"] .filtros button,
+[data-theme="dark"] button[data-filter],
+[data-theme="dark"] .filter-btn,
+[data-theme="dark"] .filtro-btn,
+[data-theme="dark"] .quick button,
+[data-theme="dark"] .tag{
+  background-color:#1e293b!important;
+  color:#f8fafc!important;
+  border-color:#475569!important;
+}
+.dark-mode .delta-filter.active,
+.dark-mode button[data-filter][aria-pressed="true"],
+html.dark-mode .delta-filter.active,
+html.dark-mode button[data-filter][aria-pressed="true"],
+[data-theme="dark"] .delta-filter.active,
+[data-theme="dark"] button[data-filter][aria-pressed="true"]{
+  background-color:#3730a3!important;
+  color:#fff!important;
+  border-color:#818cf8!important;
+}
+.dark-mode .home-search-result,
+.dark-mode .card,
+html.dark-mode .home-search-result,
+html.dark-mode .card,
+[data-theme="dark"] .home-search-result,
+[data-theme="dark"] .card{
+  background-color:#1e293b;
+  color:#f8fafc;
+  border-color:#334155;
+}
+@media(max-width:760px){
+  #menu .sidebar{padding-bottom:calc(150px + env(safe-area-inset-bottom))!important}
+}
