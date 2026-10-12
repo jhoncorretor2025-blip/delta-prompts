@@ -1004,8 +1004,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     var ordemManual=lerOrdemManual();
     var comIndice;
     if(ordemManual&&ordemManual.length){
-      comIndice=blocos.map(function(b,i){var pos=ordemManual.indexOf(b.chave);return{b:b,i:i,score:pos===-1?999:-pos}});
-      comIndice.sort(function(a,b){if(b.score!==a.score)return b.score-a.score;return a.i-b.i});
+      comIndice=blocos.map(function(b,i){var pos=ordemManual.indexOf(b.chave);return{b:b,i:i,prioridade:b.chave==='pessoal'?0:(b.chave==='avancado'?1:2),pos:pos===-1?999:pos};});
+      comIndice.sort(function(a,b){if(a.prioridade!==b.prioridade)return a.prioridade-b.prioridade;if(a.prioridade<2)return a.i-b.i;if(a.pos!==b.pos)return a.pos-b.pos;return a.i-b.i;});
     }else{
       var scores=lerScores();
       var prioridade={pessoal:0,avancado:1,carreira:2,empresa:3,biblioteca:4};
