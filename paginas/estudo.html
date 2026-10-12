@@ -19,7 +19,7 @@
 <main>
 
   <!-- 1️⃣ TÍTULO FORTE -->
-  <small data-delta-version="V1.72" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.72</small>
+  <small data-delta-version="V1.73" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.73</small>
 <h1>📚 Estudo Estratégico com IA</h1>
 
   <!-- 2️⃣ INTRODUÇÃO -->
@@ -190,7 +190,8 @@ const ordemCategorias = [
 "📊 Avaliação",
 "🧠 Aprimoramento",
 "🚀 Aplicação",
-"🤖 IA Avançada"
+"🤖 IA Avançada",
+"🎮 Jogos Educacionais"
 ];
 
 const promptsEstudo = [
@@ -708,7 +709,97 @@ Comece perguntando meu nível atual e meu objetivo final antes de iniciar a expl
     nivel: "intermediario",
     titulo: "🚀 NotebookLM — Aplicação Prática do Conhecimento",
     quando: "Para transformar teoria estudada em exemplos, exercícios e situações do mundo real.",
-    prompt: "Ajude-me a aplicar o conhecimento das fontes deste notebook a uma situação real: [DESCREVA A SITUAÇÃO OU OBJETIVO].\n\nApresente:\n1. Conceitos das fontes relevantes para o caso.\n2. Como cada conceito se aplica, com referências disponíveis.\n3. Um exemplo resolvido passo a passo.\n4. Um exercício semelhante para eu tentar sozinho.\n5. Critérios para avaliar se minha solução está correta.\n6. Limitações, riscos e informações que ainda preciso obter.\n\nSepare fatos extraídos das fontes de hipóteses e recomendações. Se o material não for suficiente para responder, identifique claramente o que está faltando."
+    prompt: "Ajude-me a aplicar o conhecimento das fontes deste notebook a uma situação real: [DESCREVA A SITUAÇÃO OU OBJETIVO].\n\nApresente:\n1. Conceitos das fontes relevantes para o caso.\n2. Como cada conceito se aplica, com referências disponíveis.\n3. Um exemplo resolvido passo a passo.\n4. Um exercício semelhante para eu tentar sozinho.\n5. Critérios para avaliar se minha solução está correta.\n6. Limitações, riscos e informações que ainda preciso obter.\n\nSepare fatos extraídos das fontes de hipóteses e recomendações. Se o material não for suficiente para responder, identifique claramente ,
+
+  {
+    id: "jogos-educacionais-criar-um-jogo-educativo-personalizado",
+    categoria: "🎮 Jogos Educacionais",
+    nivel: "intermediario",
+    titulo: "🎲 Criar um Jogo Educativo Personalizado",
+    quando: "Para pais e professores criarem uma brincadeira educativa adequada à idade e ao conteúdo que a criança está aprendendo.",
+    placeholders: [],
+    prompt: "Crie um jogo educativo divertido sobre [TEMA] para crianças de [IDADE/FAIXA ETÁRIA]. Será aplicado por [PAI/MÃE OU PROFESSOR] em [CASA OU SALA DE AULA], com duração de [TEMPO DISPONÍVEL].\n\nInclua objetivo pedagógico, materiais simples, preparação, regras passo a passo, como vencer ou concluir, adaptações para diferentes níveis e 3 perguntas de reflexão ao final. Priorize participação, cooperação e diversão; não use eliminação humilhante, competição excessiva nem materiais perigosos. Explique como o adulto acompanha a aprendizagem."
+  },
+
+  {
+    id: "jogos-educacionais-caca-ao-tesouro-de-aprendizagem",
+    categoria: "🎮 Jogos Educacionais",
+    nivel: "intermediario",
+    titulo: "🔤 Caça ao Tesouro de Aprendizagem",
+    quando: "Para ensinar letras, números, ciências ou outros conteúdos por meio de pistas e descobertas.",
+    placeholders: [],
+    prompt: "Monte uma caça ao tesouro educativa sobre [TEMA] para crianças de [IDADE]. Local: [CASA/ESCOLA/ESPAÇO SEGURO]. Duração: [MINUTOS].\n\nCrie de 5 a 8 pistas progressivas, cada uma com desafio adequado à idade, resposta esperada e dica para o adulto. Inclua lista de materiais comuns, preparação, solução final e uma forma de revisar o conteúdo depois da brincadeira. Evite esconder objetos em locais altos, trancados, próximos a tomadas, produtos químicos ou áreas inseguras. Para crianças que ainda não leem, use pistas orais, imagens ou símbolos."
+  },
+
+  {
+    id: "jogos-educacionais-desafios-de-matematica-em-forma-de-jogo",
+    categoria: "🎮 Jogos Educacionais",
+    nivel: "intermediario",
+    titulo: "➕ Desafios de Matemática em Forma de Jogo",
+    quando: "Para praticar contagem, operações e raciocínio lógico sem transformar o estudo em uma prova.",
+    placeholders: [],
+    prompt: "Crie uma dinâmica lúdica de matemática para crianças de [IDADE/SÉRIE], trabalhando [CONTEÚDO: CONTAGEM, ADIÇÃO, SUBTRAÇÃO, MULTIPLICAÇÃO, FRAÇÕES OU LÓGICA].\n\nPrepare 3 níveis de dificuldade, 5 desafios por nível, respostas explicadas e materiais acessíveis. Sugira como jogar individualmente ou em equipe, como dar pistas sem entregar a solução e como adaptar os desafios para quem precisa de mais apoio ou já domina o conteúdo. Use situações do cotidiano e linguagem positiva. Não associe erros a punições; proponha novas tentativas e feedback encorajador."
+  },
+
+  {
+    id: "jogos-educacionais-aventura-de-leitura-interativa",
+    categoria: "🎮 Jogos Educacionais",
+    nivel: "intermediario",
+    titulo: "📖 Aventura de Leitura Interativa",
+    quando: "Para pais e educadores desenvolverem leitura, interpretação e vocabulário com uma história participativa.",
+    placeholders: [],
+    prompt: "Crie uma aventura interativa para crianças de [IDADE], focada em [LEITURA, INTERPRETAÇÃO OU VOCABULÁRIO]. Tema de interesse: [TEMA].\n\nEscreva uma história curta dividida em 4 cenas. Ao final de cada cena, ofereça duas escolhas para a criança decidir o que acontece. Inclua perguntas de compreensão, palavras novas explicadas de modo simples e uma atividade final de desenho, reconto ou dramatização. Se a criança ainda não lê com autonomia, inclua orientações para leitura em voz alta pelo adulto. Use linguagem acolhedora e conteúdo adequado à idade."
+  },
+
+  {
+    id: "jogos-educacionais-missao-de-ciencias-e-descobertas",
+    categoria: "🎮 Jogos Educacionais",
+    nivel: "intermediario",
+    titulo: "🌱 Missão de Ciências e Descobertas",
+    quando: "Para explorar natureza, corpo humano, espaço e experiências simples com acompanhamento adulto.",
+    placeholders: [],
+    prompt: "Crie uma missão de descoberta científica sobre [TEMA] para crianças de [IDADE]. Duração aproximada: [TEMPO].\n\nOrganize em pergunta inicial, hipótese da criança, observação ou atividade segura, materiais comuns, etapas, o que observar e explicação científica adequada à idade. Acrescente 3 perguntas para estimular curiosidade e uma atividade para registrar a descoberta. Não proponha fogo, ingestão de substâncias, misturas químicas perigosas, objetos cortantes ou experiências sem supervisão. Se uma atividade prática não for segura ou viável, ofereça uma alternativa de observação ou simulação."
+  },
+
+  {
+    id: "jogos-educacionais-jogo-cooperativo-para-a-turma",
+    categoria: "🎮 Jogos Educacionais",
+    nivel: "intermediario",
+    titulo: "🤝 Jogo Cooperativo para a Turma",
+    quando: "Para fortalecer comunicação, empatia, turnos de fala e resolução conjunta de problemas.",
+    placeholders: [],
+    prompt: "Planeje um jogo cooperativo para [QUANTIDADE] crianças de [IDADE/SÉRIE], com foco em [HABILIDADE: COOPERAÇÃO, ESCUTA, EMPATIA OU RESOLUÇÃO DE PROBLEMAS]. Duração: [MINUTOS].\n\nExplique objetivo comum, materiais simples, regras, papéis rotativos e como o grupo alcança a meta colaborativamente. Inclua perguntas para conversar depois e adaptações para crianças com diferentes habilidades e necessidades. Ninguém deve ser eliminado ou exposto como “pior participante”. Dê ao educador frases de mediação para lidar com frustração, conflitos e dificuldade de participação."
+  },
+
+  {
+    id: "jogos-educacionais-memoria-e-atencao-brincando",
+    categoria: "🎮 Jogos Educacionais",
+    nivel: "intermediario",
+    titulo: "🧠 Memória e Atenção Brincando",
+    quando: "Para praticar memória, observação e atenção com atividades curtas, sem pressão por desempenho.",
+    placeholders: [],
+    prompt: "Crie 4 minijogos para treinar memória e atenção em crianças de [IDADE]. Contexto: [CASA/SALA DE AULA]. Cada atividade deve durar de 3 a 7 minutos e usar materiais simples ou nenhum material.\n\nPara cada minijogo, informe objetivo, preparação, instruções, variação mais fácil, variação mais desafiadora e como tornar a brincadeira inclusiva. Sugira pausas e encerre se a criança estiver cansada ou frustrada. Trate as atividades como brincadeiras educativas, não como diagnóstico ou teste clínico."
+  },
+
+  {
+    id: "jogos-educacionais-quiz-com-personagens-e-missoes",
+    categoria: "🎮 Jogos Educacionais",
+    nivel: "intermediario",
+    titulo: "🎭 Quiz com Personagens e Missões",
+    quando: "Para revisar conteúdos escolares usando perguntas, personagens e pequenas missões narrativas.",
+    placeholders: [],
+    prompt: "Transforme o conteúdo [TEMA/CONTEÚDO ESCOLAR] em um quiz de aventura para crianças de [IDADE/SÉRIE].\n\nCrie um cenário divertido, 12 perguntas variadas, 3 opções de resposta quando adequado, gabarito explicado e pequenas missões entre rodadas. Separe perguntas fáceis, médias e desafiadoras. Inclua uma versão oral para crianças que ainda não leem bem e uma forma de jogar em dupla. A pontuação deve incentivar esforço, colaboração e progresso, sem constranger quem errar."
+  },
+
+  {
+    id: "jogos-educacionais-adaptar-um-jogo-para-diferentes-idades",
+    categoria: "🎮 Jogos Educacionais",
+    nivel: "intermediario",
+    titulo: "🧩 Adaptar um Jogo para Diferentes Idades",
+    quando: "Para reaproveitar uma brincadeira e ajustá-la ao desenvolvimento, aos interesses e às necessidades das crianças.",
+    placeholders: [],
+    prompt: "Adapte o jogo ou atividade [DESCREVA O JOGO] para crianças de [IDADES/FAIXAS], com objetivo de aprendizagem [OBJETIVO].\n\nApresente uma versão para cada faixa etária, regras simplificadas ou ampliadas, duração recomendada, materiais, exemplos de desafios e formas de participação para crianças com diferentes ritmos e habilidades. Explique quais elementos permanecem iguais e quais mudam. Sugira como o adulto observa o envolvimento e a aprendizagem sem comparar crianças entre si. Priorize segurança, inclusão, autonomia e diversão."
+  }o que está faltando."
   }
 ];
 
