@@ -89,11 +89,11 @@
 /* #7 responsividade adicional - testado em 375/414/768px */
 @media(max-width:400px){.numero-card{padding:16px}.numero-valor{font-size:30px}.grafico-barras{gap:4px}}
 @media(max-width:480px){.periodo-seletor{gap:6px}.periodo-seletor button{padding:8px 12px;font-size:12.5px}.conquistas-box{gap:6px}.conquista-badge{padding:6px 10px;font-size:12px}}
-</style></head><body id="numeros-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d" defer></script><main>
+</style></head><body id="numeros-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261012-v67" defer></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Meus Números</p>
 <h1>📊 Meus Números</h1>
-<p>Um resumo de como você tem usado o Delta Prompts. Tudo calculado só com informações salvas no seu próprio navegador.</p>
+<p>Aqui você vê, de um jeito simples, o quanto tem usado o Delta Prompts: dias seguidos, favoritos, prompts usados e sua meta da semana.</p>
 <p class="nota-privacidade"><span aria-hidden="true">🔒</span> Esses dados ficam só no seu navegador (ou na sua conta, se você estiver logado) — a gente não vê nem compartilha isso.</p>
 
 <a href="/delta-prompts/index.html" class="cta-topo">🚀 Explorar prompts</a>
@@ -569,4 +569,127 @@ async function iniciar(){
 iniciar();
 
 </script>
+<!-- ===== DELTA V1.67 — Meus Números mais fáceis: resumo, primeiros passos, meta da semana, comparação e download ===== -->
+<style>
+.mn-resumo{margin:14px 0;padding:16px 18px;border-radius:16px;background:linear-gradient(135deg,#eef2ff,#ecfdf5);border:1px solid #c7d2fe;font-size:16px;line-height:1.5;color:#1f2937}
+.mn-resumo b{color:#3730a3}
+.mn-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:18px;margin:14px 0}
+.mn-card h3{margin:0 0 4px}
+.mn-card>p{margin:0 0 12px;color:#667085;font-size:14px}
+.mn-passos{display:grid;gap:8px}
+.mn-passo{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #e5e7eb;border-radius:12px;text-decoration:none;color:#111827}
+.mn-passo .bola{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#e0e7ff;color:#3730a3;font-weight:900}
+.mn-passo.ok{background:#f0fdf4;border-color:#bbf7d0}
+.mn-passo.ok .bola{background:#16a34a;color:#fff}
+.mn-passo small{display:block;color:#667085}
+.mn-passo .ir{margin-left:auto;font-weight:800;color:#5b5ce2;font-size:13px;white-space:nowrap}
+.mn-metas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.mn-metas button{border:1px solid #d0d5dd;background:#fff;border-radius:999px;padding:7px 12px;font-weight:700;cursor:pointer;font-size:13px}
+.mn-metas button.ativo{background:#5b5ce2;border-color:#5b5ce2;color:#fff}
+.mn-barra{height:14px;border-radius:999px;background:#eef2f7;overflow:hidden}
+.mn-barra i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#5b5ce2,#16a34a);transition:width .5s}
+.mn-dias{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:10px;text-align:center;font-size:11px;color:#667085}
+.mn-dias span{display:grid;place-items:center;height:34px;border-radius:10px;background:#f2f4f7;font-size:15px}
+.mn-dias span.feito{background:#dcfce7}
+.mn-dias span.hoje{outline:2px solid #5b5ce2}
+.mn-comp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.mn-comp div{padding:12px;border-radius:12px;background:#f8fafc;border:1px solid #e5e7eb}
+.mn-comp b{display:block;font-size:24px;color:#111827}
+.mn-comp small{color:#667085}
+.numero-ajuda{display:block;margin-top:6px;font-size:12px;color:#667085;line-height:1.4}
+.mn-acoes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.mn-acoes>section{margin:0!important}
+.mn-baixar{border:1px solid #d0d5dd;background:#fff;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;margin-top:10px}
+[data-theme="dark"] .mn-card,[data-theme="dark"] .mn-passo,[data-theme="dark"] .mn-metas button,[data-theme="dark"] .mn-baixar{background:#111827;border-color:#374151;color:#e5e7eb}
+[data-theme="dark"] .mn-resumo{background:#1e1b4b;border-color:#3730a3;color:#e5e7eb}
+[data-theme="dark"] .mn-resumo b{color:#c7d2fe}
+[data-theme="dark"] .mn-comp div,[data-theme="dark"] .mn-dias span{background:#1f2937;border-color:#374151}
+[data-theme="dark"] .mn-comp b{color:#f9fafb}
+[data-theme="dark"] .mn-passo.ok{background:#052e16;border-color:#166534}
+</style>
+<script>
+(function(){
+  'use strict';
+  function $(s){return document.querySelector(s)}
+  function ler(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}}
+  function iso(d){return d.toISOString().slice(0,10)}
+  function diasAtras(n){var d=new Date();d.setDate(d.getDate()-n);return iso(d)}
+  var ancora=document.getElementById('dados');if(!ancora)return;
+
+  /* explicação simples embaixo de cada número */
+  var expl={numStreak:'Quantos dias seguidos você abriu o site até hoje. Pular um dia zera a contagem.',numRecorde:'A maior sequência de dias seguidos que você já fez.',numFavoritos:'Prompts que você marcou com ⭐ para achar fácil depois.',numCopiados:'Quantas vezes você copiou ou usou um prompt.'};
+  Object.keys(expl).forEach(function(id){var el=document.getElementById(id);if(!el)return;var card=el.closest('.numero-card');if(!card||card.querySelector('.numero-ajuda'))return;var s=document.createElement('small');s.className='numero-ajuda';s.textContent=expl[id];card.appendChild(s)});
+
+  var box=document.createElement('div');
+  box.innerHTML=
+    '<div class="mn-resumo" id="mnResumo" role="status"></div>'+
+    '<section class="mn-card" id="mnComeco"><h3>🚀 Comece em 3 passos</h3><p>Faça estes 3 passos e seus números começam a aparecer aqui.</p><div class="mn-passos" id="mnPassos"></div></section>'+
+    '<section class="mn-card" id="mnMeta"><h3>🎯 Sua meta da semana</h3><p>Escolha em quantos dias desta semana você quer usar o Delta. Um pouquinho todo dia já ajuda muito!</p><div class="mn-metas" id="mnMetas"></div><div class="mn-barra"><i id="mnMetaBarra" style="width:0"></i></div><p id="mnMetaTexto" style="margin:8px 0 0;font-weight:700"></p><div class="mn-dias" id="mnDias"></div></section>'+
+    '<section class="mn-card" id="mnComparacao"><h3>📈 Esta semana x semana passada</h3><p>Compare os últimos 7 dias com os 7 dias anteriores.</p><div class="mn-comp" id="mnComp"></div><p id="mnCompTexto" style="margin:10px 0 0;font-weight:700"></p></section>';
+  ancora.insertAdjacentElement('afterend',box);
+  var grade=document.querySelector('.numeros-grid');
+  if(grade){var depois=grade;['mnMeta','mnComparacao'].forEach(function(id){var el=box.querySelector('#'+id);if(el){depois.insertAdjacentElement('afterend',el);depois=el}})}
+
+  var META_KEY='deltaMetaSemanal';
+  function meta(){var m=Number(ler(META_KEY,3));return [1,2,3,4,5,6,7].indexOf(m)>=0?m:3}
+  function dadosAtuais(){
+    var visitas=ler('deltaVisitDates',[]);if(!Array.isArray(visitas))visitas=[];
+    var ativ=ler('deltaAtividadeDiaria',{})||{};
+    var fav=ler('deltaFavoritos',[]);if(!Array.isArray(fav))fav=[];
+    var usos=0;try{Object.keys(localStorage).forEach(function(k){if(/^delta.*Usos$/.test(k)){try{var v=JSON.parse(localStorage.getItem(k));if(typeof v==='number')usos+=v;else if(v&&typeof v==='object')Object.keys(v).forEach(function(x){usos+=Number(v[x])||0})}catch(e){}}})}catch(e){}
+    var soma=function(ini,fim){var t=0;for(var i=ini;i<fim;i++)t+=Number(ativ[diasAtras(i)])||0;return t};
+    var setV=new Set(visitas);var dias=function(ini,fim){var t=0;for(var i=ini;i<fim;i++)if(setV.has(diasAtras(i)))t++;return t};
+    return {visitas:setV,fav:fav.length,usos:usos,ativ7:soma(0,7),ativ7ant:soma(7,14),dias7:dias(0,7),dias7ant:dias(7,14)};
+  }
+  function feitosSemana(visitas){var agora=new Date(),dow=(agora.getDay()+6)%7,seg=new Date(agora),n=0;seg.setDate(agora.getDate()-dow);for(var i=0;i<=dow;i++){var dd=new Date(seg);dd.setDate(seg.getDate()+i);if(visitas.has(iso(dd)))n++}return n}
+  function seta(a,b){if(a>b)return '⬆️';if(a<b)return '⬇️';return '➡️'}
+  function render(){
+    var d=dadosAtuais(),hoje=iso(new Date()),foiHoje=d.visitas.has(hoje);
+    /* resumo em uma frase */
+    var frase;
+    if(!d.dias7&&!d.fav&&!d.usos)frase='👋 Você está começando agora! Siga os <b>3 passos</b> abaixo e em poucos dias esta página mostra sua evolução.';
+    else frase='Nos últimos 7 dias você usou o Delta em <b>'+d.dias7+' dia'+(d.dias7===1?'':'s')+'</b>'+(d.ativ7?' e fez <b>'+d.ativ7+' atividade'+(d.ativ7===1?'':'s')+'</b>':'')+'. Você tem <b>'+d.fav+' favorito'+(d.fav===1?'':'s')+'</b>. '+(feitosSemana(d.visitas)>=meta()?'Meta da semana batida! 🏆':'Continue assim! 💪');
+    $('#mnResumo').innerHTML=frase;
+    /* primeiros passos */
+    var passos=[
+      {ok:foiHoje,t:'Abrir o site hoje',s:'Pronto! Só de abrir, o dia já conta.',link:'/delta-prompts/index.html',ir:'Abrir'},
+      {ok:d.fav>0,t:'Favoritar 1 prompt ⭐',s:'Clique na estrela de um prompt que você gostou.',link:'/delta-prompts/index.html',ir:'Escolher'},
+      {ok:d.usos>0||d.ativ7>0,t:'Copiar 1 prompt 📋',s:'Copie um prompt e cole na sua IA favorita.',link:'/delta-prompts/index.html',ir:'Copiar'}
+    ];
+    $('#mnPassos').innerHTML=passos.map(function(p,i){return '<a class="mn-passo'+(p.ok?' ok':'')+'" href="'+p.link+'"><span class="bola">'+(p.ok?'✓':(i+1))+'</span><span><b>'+p.t+'</b><small>'+p.s+'</small></span><span class="ir">'+(p.ok?'Feito ✅':p.ir+' →')+'</span></a>'}).join('');
+    $('#mnComeco').hidden=passos.every(function(p){return p.ok});
+    /* meta semanal (segunda a domingo) */
+    var m=meta();$('#mnMetas').innerHTML=[1,2,3,4,5,6,7].map(function(n){return '<button type="button" data-meta="'+n+'" class="'+(n===m?'ativo':'')+'">'+n+' dia'+(n>1?'s':'')+'</button>'}).join('');
+    var agora=new Date(),dow=(agora.getDay()+6)%7,seg=new Date(agora);seg.setDate(agora.getDate()-dow);
+    var nomes=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],feitos=0,html='';
+    for(var i=0;i<7;i++){var dd=new Date(seg);dd.setDate(seg.getDate()+i);var k=iso(dd),f=d.visitas.has(k);if(f)feitos++;html+='<div><span class="'+(f?'feito':'')+(k===hoje?' hoje':'')+'">'+(f?'✅':(i>dow?'·':'○'))+'</span>'+nomes[i]+'</div>'}
+    $('#mnDias').innerHTML=html;
+    $('#mnMetaBarra').style.width=Math.min(100,Math.round(feitos/m*100))+'%';
+    $('#mnMetaTexto').textContent=feitos>=m?'🏆 Meta batida! '+feitos+' de '+m+' dias nesta semana.':'📅 '+feitos+' de '+m+' dias nesta semana. Faltam '+(m-feitos)+'.';
+    /* comparação */
+    $('#mnComp').innerHTML='<div><small>Dias usando o site</small><b>'+d.dias7+' '+seta(d.dias7,d.dias7ant)+'</b><small>semana passada: '+d.dias7ant+'</small></div><div><small>Atividades (prompts usados)</small><b>'+d.ativ7+' '+seta(d.ativ7,d.ativ7ant)+'</b><small>semana passada: '+d.ativ7ant+'</small></div>';
+    $('#mnCompTexto').textContent=(d.dias7+d.ativ7)>(d.dias7ant+d.ativ7ant)?'🚀 Você está usando mais que na semana passada!':(d.dias7+d.ativ7)<(d.dias7ant+d.ativ7ant)?'🌱 Um pouco menos que na semana passada. Que tal abrir um prompt hoje?':'➡️ Mesmo ritmo da semana passada.';
+  }
+  $('#mnMetas').addEventListener('click',function(e){var b=e.target.closest('[data-meta]');if(!b)return;try{localStorage.setItem(META_KEY,b.dataset.meta)}catch(x){}render()});
+  render();
+  var at=document.getElementById('btnAtualizarNumeros');if(at)at.addEventListener('click',function(){setTimeout(render,100)});
+
+  /* final da página: ações lado a lado + baixar meus números */
+  var cards=[document.getElementById('cardIndicacao')];
+  document.querySelectorAll('main section.card').forEach(function(s){var h=s.querySelector('h3');if(h&&/(personalizar o menu|Continue explorando)/.test(h.textContent))cards.push(s)});
+  cards=cards.filter(Boolean);
+  if(cards.length){var g=document.createElement('div');g.className='mn-acoes';cards[0].parentNode.insertBefore(g,cards[0]);var tit=document.createElement('h2');tit.textContent='👉 O que fazer agora';tit.style.margin='26px 0 10px';g.parentNode.insertBefore(tit,g);cards.forEach(function(c){g.appendChild(c)})}
+  var ultimo=cards[cards.length-1];
+  if(ultimo){var b=document.createElement('button');b.type='button';b.className='mn-baixar';b.textContent='⬇️ Baixar meus números (planilha)';ultimo.appendChild(b);
+    b.addEventListener('click',function(){
+      var ativ=ler('deltaAtividadeDiaria',{})||{},vis=new Set(ler('deltaVisitDates',[])||[]);
+      var datas=Array.from(new Set(Object.keys(ativ).concat(Array.from(vis)))).sort();
+      var csv='data;usou_o_site;atividades\n'+datas.map(function(k){return k+';'+(vis.has(k)?'sim':'não')+';'+(Number(ativ[k])||0)}).join('\n');
+      var url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
+      var a=document.createElement('a');a.href=url;a.download='meus-numeros-delta-'+iso(new Date())+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},3000);
+    });
+  }
+})();
+</script>
+
 </body></html>

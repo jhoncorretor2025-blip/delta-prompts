@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="delta-version" content="V1.20"><title>Central de Evolução | Delta Prompts V1.20</title><link rel="stylesheet" href="../style.css"><style>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="delta-version" content="V1.21"><title>Central de Evolução | Delta Prompts V1.21</title><link rel="stylesheet" href="../style.css"><style>
 body{margin:0;background:#f5f6fb;color:#202236;font-family:Inter,Arial}.wrap{width:min(1080px,calc(100% - 28px));margin:auto}.hero{padding:38px 0 24px;background:linear-gradient(135deg,#fff7ed,#eef2ff)}h1{font-size:38px;margin:10px 0 5px}.muted{color:#667085}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{padding:10px 13px;border-radius:11px;background:#fff;border:1px solid #e5e7ef;text-decoration:none;color:inherit;font-weight:800}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}.stat,.panel{background:#fff;border:1px solid #e5e7ef;border-radius:17px;padding:18px}.stat b{display:block;font-size:28px;color:#5b5ce2;margin-top:6px}.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:14px}.panel h2{margin:0 0 8px}.chart{height:220px;display:flex;align-items:end;gap:8px;padding:22px 8px 4px;border-bottom:1px solid #e5e7ef}.barcol{flex:1;height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:6px}.barfill{width:min(42px,80%);min-height:3px;background:linear-gradient(180deg,#7c3aed,#5b5ce2);border-radius:8px 8px 0 0}.barlabel{font-size:10px;color:#667085;text-align:center}.barvalue{font-size:10px;font-weight:900}.recommend{background:linear-gradient(135deg,#eef2ff,#faf5ff);border:1px solid #dcdcff}.recommend .cta{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:10px;background:#5b5ce2;color:#fff;text-decoration:none;font-weight:900}.score{display:flex;align-items:center;gap:18px}.ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#5b5ce2 calc(var(--p)*1%),#eceef5 0)}.ring span{width:68px;height:68px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:21px;font-weight:900}.metrics{display:grid;gap:9px;margin-top:14px}.metric{display:grid;grid-template-columns:105px 1fr 42px;gap:8px;align-items:center;font-size:12px}.track{height:8px;background:#eceef5;border-radius:99px;overflow:hidden}.track i{display:block;height:100%;background:#5b5ce2;border-radius:99px}.timeline{display:grid;gap:9px}.event{padding:13px;border:1px solid #e5e7ef;border-radius:13px;background:#fff}.event small{color:#667085}.next{font-size:16px;font-weight:900}.level{margin-top:14px}.progressbar{height:11px;background:#eceef5;border-radius:99px;overflow:hidden}.progressbar i{display:block;height:100%;background:#5b5ce2;width:0}.empty{color:#667085;padding:20px 0}@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:500px){h1{font-size:29px}.stats{grid-template-columns:1fr 1fr}.stat{padding:14px}.stat b{font-size:24px}.metric{grid-template-columns:90px 1fr 35px}}
-</style></head><body><div id="deltaMenuBackdrop"></div><div id="menu"><div style="width:240px;min-height:100vh"></div></div><script src="../menu-loader.js?v=20261006-v23" defer></script><script src="../js/delta-core.js"></script><main><section class="hero"><div class="wrap"><b>📊 CENTRAL DE EVOLUÇÃO • V1.20</b><h1>Seu progresso no Delta</h1><p class="muted">Veja o que já foi feito, a evolução dos seus projetos e qual pode ser o próximo passo.</p><div class="nav"><a href="../index.html">🏠 Início</a><a href="melhorar.html">⚡ Começar uma melhoria</a><a href="meu-espaco.html">📁 Meus projetos</a></div></div></section><div class="wrap">
+</style></head><body><div id="deltaMenuBackdrop"></div><div id="menu"><div style="width:240px;min-height:100vh"></div></div><script src="../menu-loader.js?v=20261012-v67" defer></script><script src="../js/delta-core.js"></script><main><section class="hero"><div class="wrap"><b>📊 CENTRAL DE EVOLUÇÃO • V1.21</b><h1>Seu progresso no Delta</h1><p class="muted">Aqui você acompanha seus pontos (XP), seu nível, seus projetos e o que fazer em seguida. Tudo explicado de um jeito simples. 😉</p><div class="nav"><a href="../index.html">🏠 Início</a><a href="melhorar.html">⚡ Começar uma melhoria</a><a href="meu-espaco.html">📁 Meus projetos</a></div></div></section><div class="wrap">
 <div class="stats"><div class="stat">⚡ XP<b id="xp">0</b></div><div class="stat">🎯 Nível<b id="level">Novato</b></div><div class="stat">📁 Projetos<b id="projects">0</b></div><div class="stat">🔥 Sequência<b id="streak">0 dias</b></div></div>
 <div class="panel">
 <div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap;justify-content:space-between"><div><h2>🩺 Saúde real do projeto</h2><p class="muted">A nota vem de uma auditoria registrada e, quando houver, da taxa de resolução dos resultados.</p></div><select id="healthProject" aria-label="Selecionar projeto para saúde" style="min-width:250px;padding:10px;border:1px solid #e5e7ef;border-radius:10px;background:#fff;font:inherit"></select></div>
@@ -46,4 +46,77 @@ const dayNames=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],today=new Date();tod
 // histórico
 const safe=s=>String(s||'').replace(/[<>&"]/g,'');document.getElementById('history').innerHTML=acts.slice(0,10).map(a=>'<div class="event"><strong>'+safe(a.title||'Atividade Delta')+'</strong><br><small>'+safe(a.date)+' • '+safe(a.type||'atividade')+(a.status?' • '+safe(a.status):'')+'</small></div>').join('')||'<div class="empty">Ainda não há atividades. Use uma melhoria e registre o resultado para começar.</div>';
 const ach=[['🔎','Primeira busca',xp>=2],['📋','Primeiro prompt copiado',xp>=5],['⭐','Primeiro favorito',xp>=8],['🧪','Primeiro resultado registrado',st.results>=1],['✅','Primeira melhoria concluída',st.completed>=1],['🏆','100 XP acumulados',xp>=100],['💎','300 XP acumulados',xp>=300],['👑','Mestre Delta',xp>=600]];document.getElementById('ach').innerHTML=ach.map(a=>'<div class="event '+(a[2]?'':'lock')+'">'+a[0]+' <strong>'+a[1]+'</strong><br><small>'+(a[2]?'Conquistada':'Bloqueada')+'</small></div>').join('');
-</script></body></html>
+</script><!-- ===== CENTRAL DE EVOLUÇÃO V1.21 — explicações simples, como ganhar XP, níveis e primeiros passos ===== -->
+<style>
+.pg-guia{margin:14px 0;padding:18px;border-radius:16px;background:#fff;border:1px solid #e5e7ef}
+.pg-guia h2{margin:0 0 4px;font-size:19px}
+.pg-guia>p{margin:0 0 12px;color:#667085}
+.pg-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.pg-xp{width:100%;border-collapse:collapse;font-size:14px}
+.pg-xp td{padding:9px 6px;border-bottom:1px solid #eef0f4}
+.pg-xp td:last-child{text-align:right;font-weight:900;color:#4f46e5;white-space:nowrap}
+.pg-niveis{display:grid;gap:6px}
+.pg-nivel{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:#f8fafc;font-size:14px}
+.pg-nivel b{flex:1}
+.pg-nivel small{color:#667085}
+.pg-nivel.atual{background:#eef2ff;outline:2px solid #6366f1}
+.pg-nivel.feito{opacity:.7}
+.pg-passos{display:grid;gap:8px}
+.pg-passo{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;border:1px solid #e5e7ef;text-decoration:none;color:#111827;background:#fff}
+.pg-passo .n{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#e0e7ff;color:#3730a3;font-weight:900}
+.pg-passo.ok{background:#f0fdf4;border-color:#bbf7d0}.pg-passo.ok .n{background:#16a34a;color:#fff}
+.pg-passo small{display:block;color:#667085}
+.pg-passo .ir{margin-left:auto;font-weight:800;color:#4f46e5;font-size:13px;white-space:nowrap}
+.stat small.pg-ajuda{display:block;font-weight:500;font-size:11.5px;color:#667085;margin-top:4px;line-height:1.35}
+</style>
+<script>
+(function(){
+  'use strict';
+  if(!window.Delta)return;
+  var st=Delta.stats(),xp=Number(st.xp)||0,projetos=Delta.projects();
+  var levels=[['🌱','Novato',0],['🧭','Explorador',25],['🛠️','Praticante',75],['⭐','Pro',150],['🎓','Especialista',300],['👑','Mestre Delta',600]];
+  var idx=0;levels.forEach(function(l,i){if(xp>=l[2])idx=i});
+  var wrap=document.querySelector('main .wrap:not(.hero .wrap)')||document.querySelector('.stats');
+  var stats=document.querySelector('.stats');if(!stats)return;
+
+  /* explicação embaixo de cada número */
+  var ajudas={xp:'Pontos que você ganha usando as melhorias.',level:'Sobe conforme você junta XP.',projects:'Projetos que você criou em “Meus projetos”.',streak:'Dias seguidos usando o Delta.'};
+  Object.keys(ajudas).forEach(function(id){var b=document.getElementById(id);if(b&&b.parentElement&&!b.parentElement.querySelector('.pg-ajuda')){var s=document.createElement('small');s.className='pg-ajuda';s.textContent=ajudas[id];b.parentElement.appendChild(s)}});
+
+  /* primeiros passos */
+  var temCopia=(Delta.read(Delta.KEY.activities,[])||[]).some(function(a){return a.type==='copy'});
+  var passos=[
+    {ok:projetos.length>0,t:'Crie seu primeiro projeto',s:'Dê um nome ao que você quer melhorar (ex.: “Meu site”).',href:'meu-espaco.html',ir:'Criar'},
+    {ok:temCopia,t:'Copie uma melhoria',s:'Escolha uma melhoria, copie e cole na sua IA. Ganha +5 XP.',href:'melhorar.html',ir:'Escolher'},
+    {ok:Number(st.results)>0,t:'Conte se funcionou',s:'Depois de usar, marque o resultado. Ganha até +10 XP.',href:'melhorar.html',ir:'Registrar'}
+  ];
+  var guia=document.createElement('section');guia.className='pg-guia';guia.id='pgComeco';
+  guia.innerHTML='<h2>🚀 Por onde começar</h2><p>Siga estes 3 passos e esta página começa a mostrar sua evolução.</p><div class="pg-passos">'+passos.map(function(p,i){return '<a class="pg-passo'+(p.ok?' ok':'')+'" href="'+p.href+'"><span class="n">'+(p.ok?'✓':i+1)+'</span><span><b>'+p.t+'</b><small>'+p.s+'</small></span><span class="ir">'+(p.ok?'Feito ✅':p.ir+' →')+'</span></a>'}).join('')+'</div>';
+  if(!passos.every(function(p){return p.ok}))stats.insertAdjacentElement('afterend',guia);
+
+  /* como funciona: XP e níveis */
+  var como=document.createElement('section');como.className='pg-guia';como.id='pgComoFunciona';
+  como.innerHTML='<h2>❓ Como funciona</h2><p>Você ganha <b>XP (pontos)</b> quando usa as melhorias do Delta. Juntando XP, você sobe de <b>nível</b> e desbloqueia <b>conquistas</b>.</p>'+
+    '<div class="pg-cols"><div><h3 style="margin:0 0 6px;font-size:15px">⚡ Como ganhar XP</h3><table class="pg-xp">'+
+    '<tr><td>📋 Copiar uma melhoria</td><td>+5 XP</td></tr><tr><td>⭐ Favoritar uma melhoria</td><td>+3 XP</td></tr><tr><td>✅ Contar que a melhoria funcionou</td><td>+10 XP</td></tr><tr><td>⚠️ Contar que funcionou em parte (ou não)</td><td>+2 XP</td></tr></table>'+
+    '<p style="margin:8px 0 0;font-size:12.5px;color:#667085">💡 Tudo isso acontece na página <a href="melhorar.html">⚡ Começar uma melhoria</a>.</p></div>'+
+    '<div><h3 style="margin:0 0 6px;font-size:15px">🏆 Os níveis</h3><div class="pg-niveis">'+levels.map(function(l,i){return '<div class="pg-nivel'+(i===idx?' atual':i<idx?' feito':'')+'"><span>'+l[0]+'</span><b>'+l[1]+(i===idx?' ← você está aqui':'')+'</b><small>'+(l[2]?'a partir de '+l[2]+' XP':'começo')+'</small></div>'}).join('')+'</div></div></div>';
+  (document.getElementById('pgComeco')||stats).insertAdjacentElement('afterend',como);
+
+  /* textos mais simples */
+  var ht=document.querySelector('.panel h2');
+  document.querySelectorAll('.panel h2').forEach(function(h){
+    var p=h.parentElement.querySelector('p.muted');
+    if(/Saúde real/.test(h.textContent)){h.textContent='🩺 Nota de saúde do projeto';if(p)p.textContent='Uma nota de 0 a 100 que mostra se o seu projeto está bem. Ela aparece depois que você faz uma “Auditoria Crítica” do projeto na página de melhorias.'}
+    if(/Evolução recente/.test(h.textContent)&&p)p.textContent='Quantas coisas você fez em cada dia da última semana.';
+    if(/Próximo passo/.test(h.textContent)&&p)p.textContent='A próxima coisa que vale a pena fazer no seu projeto mais recente.';
+  });
+  var st2=document.getElementById('scoreText');if(st2&&/Auditoria Crítica/.test(st2.textContent))st2.textContent='Escolha um projeto acima. Se ainda não tiver nota, faça uma Auditoria Crítica em “Começar uma melhoria”.';
+
+  /* conquistas: dizer como desbloquear */
+  var dicas={'Primeira busca':'Ganhe seus primeiros 2 XP','Primeiro prompt copiado':'Junte 5 XP (copie uma melhoria)','Primeiro favorito':'Junte 8 XP (copie e favorite)','Primeiro resultado registrado':'Conte o resultado de uma melhoria','Primeira melhoria concluída':'Marque uma melhoria como “funcionou”','100 XP acumulados':'Junte 100 XP','300 XP acumulados':'Junte 300 XP','Mestre Delta':'Junte 600 XP'};
+  document.querySelectorAll('#ach .event').forEach(function(ev){var t=ev.querySelector('strong'),s=ev.querySelector('small');if(!t||!s)return;var d=dicas[t.textContent.trim()];if(s.textContent.trim()==='Bloqueada'&&d)s.textContent='🔒 Como desbloquear: '+d;else if(s.textContent.trim()==='Conquistada')s.textContent='✅ Conquistada!'});
+})();
+</script>
+
+</body></html>

@@ -16,11 +16,11 @@
 .pasta-config a[aria-current="page"]{color:#5b5ce2}
 [data-theme="dark"] .pasta-config{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .pasta-config a{color:#e2e8f0}
-.sites-salvos{display:grid;gap:10px}.site-salvo{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}.site-salvo-main{min-width:0;flex:1}.site-salvo-main strong,.site-salvo-main small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-salvo-main small{color:#667085;font-size:12px;margin-top:2px}.site-salvo button{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:800}.site-salvo-form{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;margin-top:12px}.site-salvo-form input{padding:11px 12px;border:1px solid #e5e7eb;border-radius:10px;font:inherit}@media(max-width:650px){.site-salvo-form{grid-template-columns:1fr}}</style></head><body id="configuracao-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261012-v64"></script><main>
+.sites-salvos{display:grid;gap:10px}.site-salvo{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}.site-salvo-main{min-width:0;flex:1}.site-salvo-main strong,.site-salvo-main small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-salvo-main small{color:#667085;font-size:12px;margin-top:2px}.site-salvo button{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:800}.site-salvo-form{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;margin-top:12px}.site-salvo-form input{padding:11px 12px;border:1px solid #e5e7eb;border-radius:10px;font:inherit}@media(max-width:650px){.site-salvo-form{grid-template-columns:1fr}}</style></head><body id="configuracao-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261012-v67"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Configuração</p>
 <h1>⚙️ Configuração</h1>
-<p>Personalize como o Delta Prompts funciona pra você — seu perfil, a ordem do menu, e veja por onde você andou por aqui.</p>
+<p>Aqui você deixa o Delta Prompts do seu jeito: diz quem você é, arruma o menu, escolhe os avisos e guarda uma cópia de segurança. Tudo fica salvo só no seu navegador. 🔒</p>
 
 <section class="card">
   <h3>📂 Navegação Rápida</h3>
@@ -427,4 +427,164 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   })();
 })();
 </script>
+<!-- ===== DELTA V1.67 — Configuração mais fácil: resumo, índice, grupos, aparência e backup ===== -->
+<style>
+.cfg-resumo{background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #c7d2fe;border-radius:16px;padding:18px;margin:16px 0}
+.cfg-resumo h2{margin:0 0 4px;font-size:18px}
+.cfg-resumo>p{margin:0 0 12px;color:#475467;font-size:14px}
+.cfg-pills{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.cfg-pill{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;text-decoration:none;color:#111827;font-size:13px;cursor:pointer}
+.cfg-pill:hover{border-color:#5b5ce2}
+.cfg-pill b{display:block;font-size:13.5px}
+.cfg-pill small{color:#667085}
+.cfg-pill .st{margin-left:auto;font-size:16px}
+.cfg-indice{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin:0 0 6px;background:var(--bg,#f6f7fb)}
+.cfg-indice a{flex:0 0 auto;padding:8px 12px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;color:#344054;font-weight:700;font-size:13px;text-decoration:none}
+.cfg-indice a:hover{border-color:#5b5ce2;color:#5b5ce2}
+.cfg-grupo{margin:26px 0 8px;padding:0 2px;scroll-margin-top:60px}
+.cfg-grupo h2{margin:0;font-size:20px}
+.cfg-grupo p{margin:4px 0 0;color:#667085;font-size:14px}
+.cfg-secao-ajuda{margin:-4px 0 12px;padding:8px 12px;border-radius:10px;background:#f8fafc;border-left:3px solid #5b5ce2;color:#475467;font-size:13px}
+.cfg-botoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.cfg-botoes button,.cfg-botoes label{border:1px solid #d0d5dd;background:#fff;border-radius:10px;padding:10px 14px;font-weight:700;font-size:14px;cursor:pointer;color:#111827}
+.cfg-botoes .primario{background:#5b5ce2;border-color:#5b5ce2;color:#fff}
+.cfg-botoes .perigo{border-color:#fecaca;color:#b91c1c;background:#fff5f5}
+.cfg-botoes .ativo{border-color:#5b5ce2;background:#eef2ff;color:#3730a3}
+.cfg-msg{margin-top:8px;font-size:13px;color:#047857;font-weight:700;min-height:18px}
+[data-theme="dark"] .cfg-resumo{background:#1e1b4b;border-color:#3730a3}
+[data-theme="dark"] .cfg-pill,[data-theme="dark"] .cfg-indice a,[data-theme="dark"] .cfg-botoes button,[data-theme="dark"] .cfg-botoes label{background:#111827;color:#e5e7eb;border-color:#374151}
+[data-theme="dark"] .cfg-indice{background:#0b1020}
+[data-theme="dark"] .cfg-secao-ajuda{background:#111827;color:#cbd5e1}
+[data-theme="dark"] .cfg-resumo>p,[data-theme="dark"] .cfg-pill small{color:#cbd5e1}
+</style>
+<script>
+(function(){
+  'use strict';
+  function $(s,r){return (r||document).querySelector(s)}
+  function ler(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}}
+  function lerTexto(k){try{return localStorage.getItem(k)||''}catch(e){return ''}}
+  var main=$('main');if(!main)return;
+  var secoes={};
+  main.querySelectorAll('section.card').forEach(function(s){
+    var h=s.querySelector('h3');if(!h)return;var t=h.textContent;
+    if(/Navegação Rápida/.test(t))secoes.nav=s;
+    else if(/sites salvos/.test(t))secoes.sites=s;
+    else if(/Preenchimento/.test(t))secoes.auto=s;
+    else if(/Modo Privado/.test(t))secoes.privado=s;
+    else if(/seu perfil/.test(t))secoes.perfil=s;
+    else if(/Ordem do Menu/.test(t))secoes.ordem=s;
+    else if(/Central de páginas/.test(t))secoes.central=s;
+    else if(/Últimas páginas/.test(t))secoes.ultimas=s;
+    else if(/Novidades/.test(t))secoes.novidades=s;
+    else if(/Esconder categorias/.test(t))secoes.esconder=s;
+    else if(/Histórico de Alterações/.test(t))secoes.historico=s;
+    else if(/seus números/.test(t))secoes.numeros=s;
+  });
+  /* frases simples explicando cada parte */
+  var ajuda={
+    perfil:'👉 Escolha o que você mais usa. O menu passa a mostrar primeiro o que importa pra você.',
+    auto:'👉 Preencha uma vez. Quando um prompt pedir “nome da empresa” ou “público”, isso já vem pronto.',
+    sites:'👉 Guarde os endereços que você mais usa. Prompts que pedem [LINK] deixam você escolher um deles.',
+    ordem:'👉 Mude a ordem do menu com as setinhas. Se não mexer, o site organiza sozinho pelo seu uso.',
+    esconder:'👉 Desmarque o que você nunca usa e o menu fica mais limpo. Dá pra marcar de volta quando quiser.',
+    novidades:'👉 Escolha quais avisos aparecem no sininho 🔔 lá em cima.',
+    privado:'👉 Usando o computador de outra pessoa? Ligue e nada do que você fizer fica salvo.',
+    historico:'👉 Lista do que você mudou aqui, pra você saber o que foi alterado.'
+  };
+  Object.keys(ajuda).forEach(function(k){var s=secoes[k];if(!s)return;var h=s.querySelector('h3');var orig=h.nextElementSibling;if(orig&&orig.tagName==='P'&&!orig.id&&!orig.querySelector('input,button,select,a,span[id]'))orig.hidden=true;var p=document.createElement('p');p.className='cfg-secao-ajuda';p.textContent=ajuda[k];h.insertAdjacentElement('afterend',p)});
+
+  /* novas seções */
+  function card(id,titulo,html){var s=document.createElement('section');s.className='card';s.id=id;s.innerHTML='<h3>'+titulo+'</h3>'+html;return s}
+  var aparencia=card('cfgAparencia','🎨 Aparência','<p class="cfg-secao-ajuda">👉 Deixe o site claro ou escuro (o escuro cansa menos a vista à noite).</p><div class="cfg-botoes"><button type="button" data-tema="light">☀️ Claro</button><button type="button" data-tema="dark">🌙 Escuro</button></div>');
+  var backup=card('cfgBackup','💾 Backup das suas configurações','<p class="cfg-secao-ajuda">👉 Suas configurações ficam salvas neste navegador. Baixe uma cópia para não perder nada ao trocar de computador ou limpar o navegador.</p><div class="cfg-botoes"><button type="button" class="primario" id="cfgExportar">⬇️ Baixar meu backup</button><label>⬆️ Restaurar backup<input type="file" id="cfgImportar" accept=".json,application/json" hidden></label><button type="button" class="perigo" id="cfgApagar">🧹 Apagar minhas configurações</button></div><div class="cfg-msg" id="cfgBackupMsg" role="status" aria-live="polite"></div>');
+
+  /* grupos */
+  var grupos=[
+    {id:'grupo-voce',titulo:'👤 Sobre você',texto:'Conte ao site quem você é e ele se adapta: menu, sugestões e prompts já preenchidos.',itens:['perfil','auto','sites']},
+    {id:'grupo-menu',titulo:'🧭 Menu e navegação',texto:'Arrume o menu do seu jeito e encontre rápido as páginas que você usa.',itens:['ordem','esconder','nav','central','ultimas']},
+    {id:'grupo-avisos',titulo:'🔔 Avisos, aparência e privacidade',texto:'Escolha o que aparece no sininho, o visual do site e quando nada deve ficar salvo.',itens:['novidades','APARENCIA','privado']},
+    {id:'grupo-seguranca',titulo:'🛟 Segurança dos seus dados',texto:'Faça uma cópia das suas configurações e veja o que foi alterado.',itens:['BACKUP','historico']}
+  ];
+  var primeira=main.querySelector('section.card');if(!primeira)return;
+  var marcador=document.createElement('div');marcador.id='cfgInicio';primeira.parentNode.insertBefore(marcador,primeira);
+  var frag=document.createDocumentFragment();
+  grupos.forEach(function(g){
+    var cab=document.createElement('div');cab.className='cfg-grupo';cab.id=g.id;cab.innerHTML='<h2>'+g.titulo+'</h2><p>'+g.texto+'</p>';frag.appendChild(cab);
+    g.itens.forEach(function(k){var el=k==='APARENCIA'?aparencia:k==='BACKUP'?backup:secoes[k];if(el)frag.appendChild(el)});
+  });
+  marcador.parentNode.insertBefore(frag,marcador.nextSibling);
+
+  /* resumo + índice no topo */
+  var resumo=document.createElement('section');resumo.className='cfg-resumo';resumo.id='cfgResumo';
+  resumo.innerHTML='<h2>📋 Resumo das suas configurações</h2><p>Veja de relance o que já está configurado. Clique num item para ir direto até ele.</p><div class="cfg-pills" id="cfgPills"></div>';
+  var indice=document.createElement('nav');indice.className='cfg-indice';indice.setAttribute('aria-label','Ir para uma parte da configuração');
+  indice.innerHTML=grupos.map(function(g){return '<a href="#'+g.id+'">'+g.titulo+'</a>'}).join('');
+  marcador.parentNode.insertBefore(resumo,marcador.nextSibling);
+  resumo.insertAdjacentElement('afterend',indice);
+
+  var PERFIL_NOMES={pessoal:'🏠 Uso Pessoal',empreendedor:'💼 Empreendedor(a)',carreira:'👔 Foco em Carreira',avancado:'🚀 Avançado / Tech'};
+  function pill(alvo,emoji,titulo,valor,ok){return '<a class="cfg-pill" href="#'+alvo+'"><span style="font-size:20px">'+emoji+'</span><span><b>'+titulo+'</b><small>'+valor+'</small></span><span class="st">'+(ok?'✅':'⚪')+'</span></a>'}
+  function idDe(k){var s=secoes[k];if(!s)return 'cfgResumo';if(!s.id)s.id='cfg-'+k;return s.id}
+  function atualizarResumo(){
+    var perfil=lerTexto('deltaPerfilAtivo');
+    var dados=ler('deltaDadosPadrao',{})||{};var preenchidos=Object.keys(dados).filter(function(k){return String(dados[k]||'').trim()}).length;
+    var sites=ler('deltaSitesSalvos',[]);sites=Array.isArray(sites)?sites.length:0;
+    var escondidas=ler('deltaCategoriasEscondidas',[]);escondidas=Array.isArray(escondidas)?escondidas.length:0;
+    var ordemManual=!!lerTexto('deltaGrupoOrdemManual');
+    var tema=lerTexto('deltaTheme')||'light';
+    var privado=!!(window.deltaModoPrivadoAtivo&&window.deltaModoPrivadoAtivo());
+    $('#cfgPills').innerHTML=
+      pill(idDe('perfil'),'🧑','Seu perfil',PERFIL_NOMES[perfil]||'Ainda não escolhido',!!perfil)+
+      pill(idDe('auto'),'🏠','Preenchimento automático',preenchidos+' de 4 campos preenchidos',preenchidos>0)+
+      pill(idDe('sites'),'🌐','Sites salvos',sites?sites+' site(s) salvo(s)':'Nenhum ainda',sites>0)+
+      pill(idDe('ordem'),'📐','Ordem do menu',ordemManual?'Do seu jeito':'Automática (pelo seu uso)',true)+
+      pill(idDe('esconder'),'🙈','Páginas escondidas',escondidas?escondidas+' escondida(s)':'Nenhuma',true)+
+      pill('cfgAparencia','🎨','Aparência',tema==='dark'?'Tema escuro 🌙':'Tema claro ☀️',true)+
+      pill(idDe('privado'),'🕶️','Modo privado',privado?'LIGADO agora':'Desligado',true)+
+      pill('cfgBackup','💾','Backup','Baixe uma cópia de segurança',!!lerTexto('deltaUltimoBackupConfig'));
+    aparencia.querySelectorAll('[data-tema]').forEach(function(b){b.classList.toggle('ativo',b.dataset.tema===tema)});
+  }
+  atualizarResumo();
+  document.addEventListener('click',function(){setTimeout(atualizarResumo,250)});
+  document.addEventListener('input',function(){clearTimeout(window.__cfgT);window.__cfgT=setTimeout(atualizarResumo,900)});
+
+  /* aparência: usa o mesmo botão de tema da página */
+  aparencia.querySelectorAll('[data-tema]').forEach(function(b){b.addEventListener('click',function(){
+    var atual=document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
+    if(atual!==b.dataset.tema){var t=document.getElementById('themeToggle');if(t)t.click();else{document.documentElement.setAttribute('data-theme',b.dataset.tema);try{localStorage.setItem('deltaTheme',b.dataset.tema)}catch(e){}}}
+    setTimeout(atualizarResumo,50);
+  })});
+
+  /* backup */
+  var msg=$('#cfgBackupMsg');
+  var CHAVES=['deltaPerfilAtivo','deltaDadosPadrao','deltaSitesSalvos','deltaGrupoOrdemManual','deltaCategoriasEscondidas','deltaSecoesEscondidas','deltaFiltroNovidades','deltaTheme','deltaLogConfig','deltaHistoricoPaginas'];
+  $('#cfgExportar').addEventListener('click',function(){
+    var dados={};CHAVES.forEach(function(k){try{var v=localStorage.getItem(k);if(v!==null)dados[k]=v}catch(e){}});
+    var pacote={tipo:'delta-prompts-configuracao',versao:window.DELTA_SITE_VERSION||'V1.67',criadoEm:new Date().toISOString(),dados:dados};
+    var url=URL.createObjectURL(new Blob([JSON.stringify(pacote,null,2)],{type:'application/json'}));
+    var a=document.createElement('a');a.href=url;a.download='delta-configuracoes-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},3000);
+    try{localStorage.setItem('deltaUltimoBackupConfig',new Date().toISOString())}catch(e){}
+    msg.textContent='✅ Backup baixado! Guarde esse arquivo num lugar seguro (Google Drive, e-mail…).';atualizarResumo();
+  });
+  $('#cfgImportar').addEventListener('change',function(){
+    var f=this.files&&this.files[0];if(!f)return;var leitor=new FileReader();
+    leitor.onload=function(){
+      try{
+        var p=JSON.parse(leitor.result);
+        if(!p||p.tipo!=='delta-prompts-configuracao'||!p.dados)throw new Error('formato');
+        if(!confirm('Restaurar este backup de '+String(p.criadoEm||'').slice(0,10)+'? Suas configurações atuais serão trocadas pelas do arquivo.'))return;
+        Object.keys(p.dados).forEach(function(k){if(CHAVES.indexOf(k)>=0)try{localStorage.setItem(k,String(p.dados[k]))}catch(e){}});
+        msg.textContent='✅ Backup restaurado! Recarregando a página…';setTimeout(function(){location.reload()},1200);
+      }catch(e){msg.style.color='#b91c1c';msg.textContent='❌ Esse arquivo não é um backup de configurações do Delta Prompts.'}
+    };
+    leitor.readAsText(f);this.value='';
+  });
+  $('#cfgApagar').addEventListener('click',function(){
+    if(!confirm('Apagar TODAS as suas configurações deste navegador? (Perfil, preenchimento automático, sites, ordem do menu, avisos e tema.) Seus favoritos e números NÃO serão apagados.\n\nDica: baixe um backup antes.'))return;
+    CHAVES.forEach(function(k){try{localStorage.removeItem(k)}catch(e){}});
+    msg.textContent='🧹 Configurações apagadas. Recarregando…';setTimeout(function(){location.reload()},1200);
+  });
+})();
+</script>
+
 </body></html>
