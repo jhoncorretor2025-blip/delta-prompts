@@ -752,7 +752,7 @@ function ativarBuscaMenu(){
 
     sidebar.querySelectorAll('.menu-links a').forEach(a=>{
       const sec=a.closest('.menu-section');
-      const texto=normalizarTexto((a.textContent||'')+' '+(a.getAttribute('href')||''));
+      const texto=normalizarTexto((a.textContent||'')+' '+(a.getAttribute('href')||'')+' '+(a.getAttribute('data-menu-keywords')||''));
       const mostrar=!termo||texto.includes(termo)||(sec&&contextoSecao.get(sec));
       a.style.display=mostrar?'':'none';
     });
