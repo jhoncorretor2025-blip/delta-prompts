@@ -1523,3 +1523,53 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',prepararFeedbackBuscaV13,{once:true});else prepararFeedbackBuscaV13();
   setTimeout(prepararFeedbackBuscaV13,1200);
 })();
+/* PERFIL IDOSO: oculta recursos técnicos sem remover dados salvos */
+(function(){
+ function ativo(){try{return localStorage.getItem('deltaPerfilAtivo')==='idoso'}catch(e){return false}}
+ function aplicar(){
+  var side=document.querySelector('#menu .sidebar');if(!side)return;
+  var on=ativo();side.classList.toggle('delta-perfil-idoso',on);
+  if(!document.getElementById('deltaPerfilIdosoStyle')){
+   var st=document.createElement('style');st.id='deltaPerfilIdosoStyle';
+   st.textContent='.delta-idoso-oculto{display:none!important}.delta-perfil-idoso .menu-title{font-size:14px!important}.delta-perfil-idoso .menu-links a{font-size:14px!important;min-height:42px}';
+   document.head.appendChild(st);
+  }
+  side.querySelectorAll('.delta-idoso-oculto').forEach(function(el){el.classList.remove('delta-idoso-oculto')});
+  if(!on)return;
+  var groups=side.querySelectorAll('.menu-group-title');
+  groups.forEach(function(t){
+   if((t.textContent||'').toLowerCase().indexOf('ia & recursos avançados')>=0){
+    t.classList.add('delta-idoso-oculto');
+    var n=t.nextElementSibling;
+    while(n&&!n.classList.contains('menu-group-title')&&!n.classList.contains('menu-item-final-titulo')){n.classList.add('delta-idoso-oculto');n=n.nextElementSibling}
+   }
+  });
+  side.querySelectorAll('.menu-section').forEach(function(sec){
+   var title=sec.querySelector('.menu-title');var name=(title?title.textContent:'').toLowerCase();
+   if(name.indexOf('criadores de conteúdo')>=0||name.indexOf('testando ia')>=0||name.indexOf('recursos de ia')>=0||name.indexOf('outros recursos')>=0)sec.classList.add('delta-idoso-oculto');
+  });
+  side.querySelectorAll('a[href]').forEach(function(a){
+   var txt=(a.textContent||'').toLowerCase(),href=(a.getAttribute('href')||'').toLowerCase();
+   var termos=['novo prompt','gerador pro','espaço ia','skills','agentes de ia','codex do chatgpt','conectores','prompts do dev','chatgpt work','manus ai','gemini','claude','grok','comet','testador de ia','sites & landing pages','auditoria ux/ui','extensão chrome','programação & no-code','sistemas com ia','canivete assistente','central inteligente','pesquisa profunda','notebook'];
+   var paths=['prompt_pro.html','espaco-ia.html','skills.html','agentes-ia.html','codex-chatgpt.html','conectores-ia.html','prompts-do-dev.html','sites-landing-pages.html','programacao-nocode.html','sistemas-ia.html','canivete.html','central-inteligente.html','pesquisa-profunda.html','notbooklm.html'];
+   if(termos.some(function(x){return txt.indexOf(x)>=0})||paths.some(function(x){return href.indexOf(x)>=0}))a.classList.add('delta-idoso-oculto');
+  });
+ }
+ function tituloBiblioteca(){
+  var side=document.querySelector('#menu .sidebar');if(!side)return;
+  side.querySelectorAll('.menu-item-final-titulo').forEach(function(t){
+   if((t.textContent||'').toLowerCase().indexOf('minha biblioteca')>=0&&!t.dataset.deltaBibliotecaClick){
+    t.dataset.deltaBibliotecaClick='1';t.setAttribute('role','link');t.setAttribute('tabindex','0');t.title='Abrir Minha Biblioteca';t.style.cursor='pointer';
+    function abrir(){location.href='/delta-prompts/biblioteca.html'}
+    t.addEventListener('click',abrir);
+    t.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();abrir()}});
+   }
+  });
+ }
+ function run(){aplicar();tituloBiblioteca()}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
+ var root=document.getElementById('menu');
+ if(root&&window.MutationObserver)new MutationObserver(run).observe(root,{childList:true,subtree:true});
+ setTimeout(run,800);setTimeout(run,1800);
+ window.deltaAplicarPerfilMenu=run;
+})();
