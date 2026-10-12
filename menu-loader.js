@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.72
-window.DELTA_SITE_VERSION='V1.72';
+// DELTA SITE VERSION: V1.73
+window.DELTA_SITE_VERSION='V1.73';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -665,7 +665,7 @@ window.deltaRegistrarLog=function(texto){
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-menu-v49';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
+(function(){function getMenuCandidates(){const version='delta-prompts-menu-v50';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
   try{
     const link=sidebar&&sidebar.querySelector('a[href*="/paginas/sites-landing-pages.html"]');
     const badge=link&&link.querySelector('.menu-count');
@@ -1586,4 +1586,76 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
  if(root&&window.MutationObserver)new MutationObserver(run).observe(root,{childList:true,subtree:true});
  setTimeout(run,800);setTimeout(run,1800);
  window.deltaAplicarPerfilMenu=run;
+})();
+
+// ===== V1.73 — AGRUPAMENTO DOS CONTROLES FLUTUANTES =====
+(function(){
+  var IDS=['deltaModoPrivadoBtn','deltaCorWrap','deltaVoltarTopoBtn','deltaCronometro','deltaInstalarBtn'];
+  var observer=null;
+  function instalar(){
+    if(!document.body)return;
+    var gear=document.getElementById('deltaAjustesFlutuantesBtn');
+    var panel=document.getElementById('deltaAjustesFlutuantesPanel');
+    if(!gear){
+      gear=document.createElement('button');
+      gear.type='button';gear.id='deltaAjustesFlutuantesBtn';
+      gear.textContent='⚙️';gear.title='Abrir ajustes rápidos';
+      gear.setAttribute('aria-label','Abrir ajustes rápidos');
+      gear.setAttribute('aria-expanded','false');
+      gear.style.cssText='position:fixed;right:18px;bottom:18px;z-index:16000;width:48px;height:48px;border-radius:50%;border:1px solid rgba(148,163,184,.45);background:#172033;color:#fff;font-size:21px;cursor:pointer;box-shadow:0 8px 24px rgba(15,23,42,.25)';
+      gear.addEventListener('click',function(){
+        var aberto=panel.style.display!=='none';
+        panel.style.display=aberto?'none':'flex';
+        gear.setAttribute('aria-expanded',aberto?'false':'true');
+        gear.title=aberto?'Abrir ajustes rápidos':'Fechar ajustes rápidos';
+      });
+      document.body.appendChild(gear);
+    }
+    if(!panel){
+      panel=document.createElement('div');panel.id='deltaAjustesFlutuantesPanel';
+      panel.setAttribute('role','group');panel.setAttribute('aria-label','Ajustes rápidos');
+      panel.style.cssText='display:none;position:fixed;right:18px;bottom:76px;z-index:15999;flex-direction:column;align-items:stretch;gap:8px;min-width:190px;max-width:calc(100vw - 36px);padding:12px;border:1px solid rgba(148,163,184,.35);border-radius:16px;background:var(--bg-card,#fff);color:var(--text-primary,#172033);box-shadow:0 14px 38px rgba(15,23,42,.22)';
+      var titulo=document.createElement('strong');titulo.textContent='Ajustes rápidos';titulo.style.cssText='font-size:13px;padding:2px 4px 6px';
+      panel.appendChild(titulo);document.body.appendChild(panel);
+    }
+    IDS.forEach(function(id){
+      var el=document.getElementById(id);
+      if(!el||el===gear||el===panel||panel.contains(el))return;
+      panel.appendChild(el);
+      el.style.setProperty('position','relative','important');
+      el.style.setProperty('left','auto','important');
+      el.style.setProperty('right','auto','important');
+      el.style.setProperty('top','auto','important');
+      el.style.setProperty('bottom','auto','important');
+      el.style.setProperty('z-index','auto','important');
+      el.style.setProperty('margin','0','important');
+      el.style.setProperty('box-shadow','none','important');
+      el.style.setProperty('max-width','100%','important');
+      if(id==='deltaCorWrap'){
+        el.style.setProperty('display','flex','important');
+        el.style.setProperty('align-items','center','important');
+        el.style.setProperty('gap','8px','important');
+        var colorBtn=el.querySelector('#deltaCorBtn');
+        if(colorBtn){colorBtn.style.setProperty('width','100%','important');colorBtn.style.setProperty('height','40px','important');colorBtn.textContent='🎨 Cor de destaque';}
+        var palette=el.querySelector('div');
+        if(palette){palette.style.setProperty('position','static','important');palette.style.setProperty('width','100%','important');palette.style.setProperty('margin-top','8px','important');}
+      } else {
+        el.style.setProperty('width','100%','important');
+        el.style.setProperty('min-height','40px','important');
+        el.style.setProperty('border-radius','10px','important');
+        el.style.setProperty('font-size','13px','important');
+        el.style.setProperty('text-align','left','important');
+        el.style.setProperty('padding','9px 12px','important');
+        el.style.setProperty('background','var(--bg-card,#fff)','important');
+        el.style.setProperty('color','var(--text-primary,#172033)','important');
+        el.style.setProperty('border','1px solid rgba(148,163,184,.35)','important');
+      }
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',instalar,{once:true});else instalar();
+  if(document.body&&window.MutationObserver){
+    observer=new MutationObserver(function(){instalar()});
+    observer.observe(document.body,{childList:true,subtree:true});
+  }
+  window.addEventListener('keydown',function(e){if(e.key==='Escape'){var p=document.getElementById('deltaAjustesFlutuantesPanel'),b=document.getElementById('deltaAjustesFlutuantesBtn');if(p&&p.style.display!=='none'){p.style.display='none';if(b)b.setAttribute('aria-expanded','false')}}});
 })();
