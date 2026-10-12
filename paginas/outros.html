@@ -48,6 +48,7 @@ pre{white-space:pre-wrap;font-size:14px;background:#f8fafc;padding:15px;border-r
 @media(max-width:700px){.theme-toggle{bottom:90px}}
 </style></head><body><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
+<small data-delta-version="V1.71" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.71</small>
 <h1>🧩 Outros Prompts Estratégicos</h1>
 <p>Modelos versáteis para organização pessoal, criatividade, decisões, produtividade e rotina do dia a dia.</p>
 
@@ -129,11 +130,26 @@ function getItem(id){return prompts.find(p=>p.id===id)}
 
 function mostrarToast(texto){const t=document.getElementById('toast');if(!t)return;t.textContent=texto;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
 
-function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _loadFav(){
+  try{
+    const bruto=localStorage.getItem('deltaFavoritos');
+    const dados=bruto?JSON.parse(bruto):[];
+    if(!Array.isArray(dados))return[];
+    const ids=new Set(),titulos=new Set(),resultado=[];
+    dados.forEach(function(item){
+      if(!item||typeof item!=='object')return;
+      const id=item.id===undefined||item.id===null?'':String(item.id);
+      const titulo=String(item.titulo||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+      if((id&&ids.has(id))||(titulo&&titulos.has(titulo)))return;
+      if(id)ids.add(id);if(titulo)titulos.add(titulo);resultado.push(item);
+    });
+    return resultado;
+  }catch(e){console.warn('Favoritos: dados locais inválidos; nenhuma informação foi apagada.',e);return[]}
+}
 function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
 function isFav(id){return _loadFav().some(f=>f.id===id)}
 function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
-function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Outros',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
+function favoritar(id,btn){const p=getItem(id);if(!p)return;let l=_loadFav();const tituloNormalizado=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();const idx=l.findIndex(f=>String(f.id)===String(id)||tituloNormalizado(f.titulo)===tituloNormalizado(p.titulo));if(idx===-1){l.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Outros',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(id,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
 
 function _loadUsos(){try{return JSON.parse(localStorage.getItem('deltaOutrosUsos'))||{}}catch(e){return{}}}
 function _saveUsos(o){try{localStorage.setItem('deltaOutrosUsos',JSON.stringify(o))}catch(e){}}
