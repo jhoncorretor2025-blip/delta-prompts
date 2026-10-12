@@ -2,10 +2,13 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Ideias para YouTube | Delta Prompts</title><meta name="description" content="Prompts para gerar ideias de vídeos com alto potencial de crescimento, engajamento e monetização.">
+<meta name="delta-version" content="V1.61"><title>Ideias para YouTube | Delta Prompts V1.61</title><meta name="description" content="Prompts para gerar ideias de vídeos com alto potencial de crescimento, engajamento e monetização.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/delta-prompts/style.css">
+<style>
+.ideas-main{max-width:1120px;margin:0 auto;padding:22px 16px 56px}.ideas-hero{padding:clamp(22px,4vw,36px);border:1px solid #deddfb;border-radius:22px;background:linear-gradient(135deg,#f6f5ff,#fff 72%);margin-bottom:18px}.ideas-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#5754be}.ideas-hero h1{font-size:clamp(28px,5vw,42px);line-height:1.12;margin:10px 0}.ideas-hero p{color:#5f6475;max-width:720px;margin:0;line-height:1.6}.ideas-controls{padding:15px;border:1px solid #e4e6ef;border-radius:16px;background:#fff;margin:18px 0}.ideas-searchrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}.ideas-searchrow input,.ideas-select{box-sizing:border-box;width:100%;min-width:0;padding:12px 13px;border:1px solid #d8dbe7;border-radius:11px;background:#fff;font:inherit;font-size:14px}.ideas-button,.ideas-chip{border:1px solid #dedff0;border-radius:999px;background:#fff;padding:8px 11px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.ideas-button{border-radius:11px}.ideas-filter-label{font-size:12px;font-weight:850;color:#4b4d63;margin:14px 0 8px}.ideas-chips{display:flex;flex-wrap:wrap;gap:7px}.ideas-chip[aria-pressed=true]{background:#514fc9;border-color:#514fc9;color:#fff}.ideas-extra-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ideas-count{font-size:12px;color:#667085;margin:12px 0 0}#lista-prompts.ideas-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.ideas-card{min-width:0;padding:18px;border:1px solid #e4e6ef;border-radius:16px;background:#fff;box-shadow:0 5px 16px rgba(16,24,40,.035);display:flex;flex-direction:column;gap:10px}.ideas-card .meta{align-self:flex-start;padding:5px 8px;border-radius:999px;background:#f1f0ff;color:#4d4ab1;font-size:11px;font-weight:850}.ideas-card h3{font-size:17px;line-height:1.3;margin:0;color:#202238}.ideas-when{font-size:12px;color:#667085;line-height:1.5;margin:0}.ideas-card pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:210px;overflow:auto;background:#f8f8fc;border:1px solid #eaebf3;border-radius:11px;padding:12px;font:12px/1.6 ui-monospace,Consolas,monospace;margin:0}.ideas-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}.ideas-actions button{border:1px solid #dedff0;border-radius:9px;background:#fff;padding:9px 10px;font:inherit;font-size:11px;font-weight:800;cursor:pointer}.ideas-empty{padding:26px;border:1px dashed #ccd1df;border-radius:15px;text-align:center;color:#667085}.ideas-hidden{display:none!important}@media(max-width:700px){.ideas-main{padding:14px 10px 40px}.ideas-hero{border-radius:17px}.ideas-searchrow,.ideas-extra-filters{grid-template-columns:1fr}#lista-prompts.ideas-grid{grid-template-columns:1fr}.ideas-card{padding:15px}}
+</style>
 </head>
 
 <body>
@@ -13,18 +16,13 @@
 <div id="menu"></div>
 <script src="/delta-prompts/menu-loader.js?v=20260908d"></script>
 
-<main>
+<main class="ideas-main">
+<section class="ideas-hero"><div class="ideas-kicker">Delta Prompts · Biblioteca estratégica · V1.61</div><h1>💡 Ideias para seus próximos vídeos</h1><p>Encontre temas, responda dúvidas, planeje séries e adapte conteúdo para diferentes plataformas. Use os filtros para chegar mais rápido ao prompt certo.</p></section>
 
-  <!-- 1. TÍTULO FORTE -->
-  <h1>💡 Ideias Estratégicas para YouTube</h1>
-
-  <!-- 2. INTRODUÇÃO CURTA -->
-  <p>
-    Prompts para gerar ideias de vídeos com alto potencial de crescimento, engajamento e monetização.
-  </p>
+  <h2>Encontre o próximo tema do seu conteúdo</h2>
 
   <!-- 3. OBJETIVO -->
-  <section class="card">
+  <section class="card" hidden>
     <h3>🎯 Objetivo</h3>
     <p>
       Ajudar criadores a gerar ideias inteligentes, estratégicas e com potencial real de alcance no YouTube.
@@ -32,203 +30,61 @@
   </section>
 
   <!-- 4. BUSCA + CONTADOR -->
-  <div class="top-bar">
+  <div class="ideas-controls">
+  <div class="ideas-searchrow">
     <input
       type="text"
       id="busca"
       placeholder="🔎 Buscar ideias..."
-      oninput="filtrarPrompts()"
+      aria-label="Buscar prompts por título, categoria ou conteúdo"
     >
-    <div class="contador" id="contador"></div>
-  </div>
-
-  <!-- 5. CARDS -->
-  <div id="lista-prompts"></div>
+    <button class="ideas-button" id="limparFiltros" type="button">Limpar filtros</button>
+  </div><div class="ideas-filter-label">Filtrar por categoria</div><div class="ideas-chips" id="filtrosCategoria"></div><div class="ideas-extra-filters"><div><div class="ideas-filter-label">Formato</div><select class="ideas-select" id="filtroFormato"><option value="todos">Todos os formatos</option><option value="shorts">Vídeos curtos / Shorts</option><option value="longo">Vídeos longos</option><option value="serie">Séries e calendário</option><option value="tutorial">Tutoriais e educativo</option><option value="tendencia">Tendências e atualidades</option></select></div><div><div class="ideas-filter-label">Objetivo</div><select class="ideas-select" id="filtroObjetivo"><option value="todos">Todos os objetivos</option><option value="crescimento">Crescimento e alcance</option><option value="engajamento">Engajamento e comunidade</option><option value="autoridade">Autoridade e educação</option><option value="monetizacao">Vendas e monetização</option><option value="planejamento">Planejamento e consistência</option></select></div></div><p class="ideas-count" id="contador" aria-live="polite"></p></div><div id="lista-prompts" class="ideas-grid"></div><div id="ideiasVazio" class="ideas-empty ideas-hidden">Nenhum prompt corresponde aos filtros. Tente outra busca ou limpe os filtros.</div>
 
 </main>
 
 <script>
-
 const promptsIdeias = [
-
-{
-categoria: "🔥 Viral",
-titulo: "Gerador de Ideias Virais",
-quando: "Quando quiser criar vídeos com alto potencial de alcance.",
-prompt: `Você é especialista em vídeos virais no YouTube.
-
-Gere 20 ideias de vídeos com alto potencial de viralização para o nicho: [INSIRA SEU NICHO].
-
-Inclua:
-- Título chamativo
-- Tipo de vídeo (tutorial, opinião, desafio, análise)
-- Por que tem potencial viral
-- Público ideal
-
-Seja estratégico e baseado em padrões reais de viralização.`
-},
-
-{
-categoria: "📈 Crescimento",
-titulo: "Ideias para Crescer Inscritos",
-quando: "Quando quiser aumentar base de inscritos.",
-prompt: `Atue como estrategista de crescimento no YouTube.
-
-Crie 15 ideias de vídeos focadas em:
-
-- Aumentar inscritos
-- Melhorar retenção
-- Gerar compartilhamento
-
-Para o nicho: [INSIRA SEU NICHO]
-
-Inclua:
-- Título
-- Gancho inicial
-- CTA sugerido
-
-Seja focado em crescimento.`
-},
-
-{
-categoria: "💰 Monetização",
-titulo: "Ideias de Vídeos que Vendem",
-quando: "Quando quiser gerar receita com o canal.",
-prompt: `Você é especialista em monetização no YouTube.
-
-Crie 15 ideias de vídeos que:
-
-- Preparem audiência para compra
-- Eduquem sobre um problema
-- Introduzam solução naturalmente
-
-Para o nicho: [INSIRA SEU NICHO]
-
-Explique o objetivo estratégico de cada vídeo.`
-},
-
-{
-categoria: "🎯 Autoridade",
-titulo: "Ideias para Construir Autoridade",
-quando: "Quando quiser se posicionar como referência.",
-prompt: `Atue como estrategista de posicionamento no YouTube.
-
-Gere 15 ideias de vídeos para:
-
-- Demonstrar conhecimento
-- Quebrar objeções
-- Mostrar bastidores
-- Diferenciar da concorrência
-
-Organize com título e objetivo estratégico.`
-},
-
-{
-categoria: "📊 Tendências",
-titulo: "Ideias Baseadas em Tendências",
-quando: "Quando quiser aproveitar assuntos do momento.",
-prompt: `Você é analista de tendências digitais.
-
-Explique como identificar tendências no YouTube.
-
-Depois gere 10 ideias de vídeos baseadas em tendências para o nicho: [INSIRA SEU NICHO].
-
-Inclua:
-- Por que é tendência
-- Como adaptar ao canal`
-},
-
-{
-categoria: "⚡ Shorts",
-titulo: "Ideias Estratégicas para Shorts",
-quando: "Quando quiser crescer usando vídeos curtos.",
-prompt: `Atue como especialista em YouTube Shorts.
-
-Crie 20 ideias de Shorts para o nicho: [INSIRA SEU NICHO].
-
-Inclua:
-- Gancho forte nos 3 primeiros segundos
-- Tema
-- Objetivo estratégico (atração, retenção ou venda)
-
-Foque em crescimento rápido.`
-}
-
+{"categoria":"🔥 Viral","titulo":"Gerador de Ideias Virais","quando":"Quando quiser explorar formatos de alcance.","prompt":"Gere 20 ideias para [NICHO], incluindo título, formato, justificativa e público ideal. Não prometa viralização."},
+{"categoria":"📈 Crescimento","titulo":"Ideias para Crescer Inscritos","quando":"Quando quiser ampliar audiência recorrente.","prompt":"Crie 15 ideias para [NICHO] focadas em atrair audiência recorrente. Inclua título, gancho, valor e CTA."},
+{"categoria":"💰 Monetização","titulo":"Ideias de Vídeos que Vendem","quando":"Quando quiser apresentar soluções.","prompt":"Crie 15 ideias para [NICHO] que eduquem e apresentem soluções com transparência. Inclua problema e objetivo comercial sem promessas enganosas."},
+{"categoria":"🎯 Autoridade","titulo":"Ideias para Construir Autoridade","quando":"Quando quiser demonstrar conhecimento.","prompt":"Gere 15 ideias para [NICHO] que expliquem conceitos, respondam objeções e mostrem processos. Inclua título e evidências a reunir."},
+{"categoria":"📊 Tendências","titulo":"Ideias Baseadas em Tendências","quando":"Quando quiser aproveitar assuntos atuais.","prompt":"Pesquise tendências atuais relacionadas a [NICHO], cite fontes e datas e gere 10 ideias. Separe fatos de hipóteses."},
+{"categoria":"⚡ Shorts","titulo":"Ideias Estratégicas para Shorts","quando":"Quando quiser produzir vídeos curtos.","prompt":"Crie 20 ideias de Shorts para [NICHO]. Inclua gancho, desenvolvimento visual, recompensa final e CTA."},
+{"categoria":"🧠 Educativo","titulo":"Ideias que explicam assuntos difíceis","quando":"Quando quiser ensinar algo de forma simples.","prompt":"Para o nicho [NICHO] e público [PÚBLICO], gere 15 ideias que expliquem assuntos difíceis de forma simples. Inclua título, conceito, analogia, gancho e formato. Evite promessas exageradas."},
+{"categoria":"❓ Curiosidade","titulo":"Perguntas que todo mundo faz","quando":"Quando quiser responder dúvidas reais do público.","prompt":"Liste 20 perguntas que iniciantes em [NICHO] fariam. Transforme cada pergunta em uma ideia com título, resposta central, gancho e sugestão visual. Separe por nível."},
+{"categoria":"🧪 Experimentos","titulo":"Ideias de testes e experimentos","quando":"Quando puder demonstrar algo na prática.","prompt":"Crie 12 ideias de testes sobre [TEMA]. Inclua hipótese, preparação, etapas, o que observar e título. Não invente resultados: apresente-os como algo a testar."},
+{"categoria":"⚖️ Comparativos","titulo":"Ideias de comparação A versus B","quando":"Quando o público precisa escolher entre opções.","prompt":"Gere 15 comparativos para [NICHO]. Inclua pergunta central, critérios justos, título e público que se beneficiaria."},
+{"categoria":"🛠️ Tutoriais","titulo":"Tutoriais passo a passo","quando":"Quando quiser resolver um problema específico.","prompt":"Crie 15 tutoriais para [PÚBLICO] resolver problemas de [NICHO]. Inclua problema, resultado esperado, dificuldade, título e 3 a 6 etapas."},
+{"categoria":"🚫 Erros","titulo":"Erros comuns e como evitar","quando":"Quando quiser criar conteúdo útil.","prompt":"Liste 15 erros comuns em [NICHO]. Explique consequência, correção prática, gancho respeitoso, título e demonstração visual."},
+{"categoria":"🆚 Mitos","titulo":"Mitos e verdades","quando":"Quando existirem crenças equivocadas no nicho.","prompt":"Sugira 12 vídeos de mitos e verdades sobre [TEMA]. Indique a afirmação a verificar, como buscar evidências e como apresentar a conclusão sem tratar opiniões como fatos."},
+{"categoria":"📚 Histórias","titulo":"Ideias em formato storytelling","quando":"Quando quiser ensinar por meio de histórias.","prompt":"Crie 12 ideias de histórias sobre [TEMA] usando situação inicial, desafio, virada, aprendizado e aplicação. Sinalize fatos reais que precisam ser verificados."},
+{"categoria":"🎬 Bastidores","titulo":"Bastidores e processo criativo","quando":"Quando quiser aproximar o público.","prompt":"Gere 12 ideias de bastidores para [NICHO]. Inclua o que mostrar, interesse para o público, cuidados com privacidade e título."},
+{"categoria":"💬 Comunidade","titulo":"Ideias a partir de comentários","quando":"Quando já recebe perguntas ou comentários.","prompt":"Com base nestes comentários [COLE AQUI], agrupe dúvidas recorrentes e proponha 10 vídeos com título, gancho e CTA. Não invente comentários."},
+{"categoria":"🔁 Séries","titulo":"Série de vídeos em episódios","quando":"Quando quiser criar consistência.","prompt":"Planeje uma série de 7 episódios sobre [TEMA], do básico ao avançado. Inclua título, objetivo e gancho que conecte ao próximo episódio."},
+{"categoria":"🗓️ Calendário","titulo":"30 ideias para um mês","quando":"Quando quiser organizar publicações.","prompt":"Monte calendário de 30 ideias para [NICHO], equilibrando ensinar, entreter, inspirar, conversar e divulgar. Inclua formato, título e objetivo; sinalize assuntos atuais a verificar."},
+{"categoria":"📱 Multiplataforma","titulo":"Uma ideia para várias redes","quando":"Quando quiser adaptar um tema.","prompt":"Adapte [TEMA] para YouTube longo, Shorts, TikTok, Reels e carrossel. Ajuste gancho, ritmo, profundidade e CTA a cada formato."},
+{"categoria":"🎯 Nicho","titulo":"Encontrar subnichos de conteúdo","quando":"Quando o canal está amplo demais.","prompt":"Analise [NICHO] e proponha 10 subnichos com público, problemas recorrentes, 5 ideias e hipóteses de saturação a validar."},
+{"categoria":"📉 Baixo orçamento","titulo":"Conteúdos sem equipamentos caros","quando":"Quando quiser gravar com recursos simples.","prompt":"Crie 15 ideias sobre [TEMA] graváveis com celular. Inclua cenário, enquadramento, demonstração e opção sem mostrar o rosto."},
+{"categoria":"🧲 Retenção","titulo":"Ideias com demonstração visual","quando":"Quando quiser conteúdo visualmente interessante.","prompt":"Sugira 12 ideias sobre [NICHO] com demonstração visual. Indique o que mostrar nos primeiros segundos, progressão e recompensa informativa."},
+{"categoria":"🧩 Problema e solução","titulo":"Resolver dores específicas","quando":"Quando quiser entregar valor prático.","prompt":"Liste 20 problemas de [PÚBLICO] em [NICHO]. Para cada um, crie ideia, solução prática, limite da solução e título; evite promessas milagrosas."},
+{"categoria":"📰 Atualidades","titulo":"Ideias a partir de notícias verificadas","quando":"Quando quiser comentar assunto recente.","prompt":"Pesquise fontes atuais sobre [ASSUNTO]. Proponha 10 ângulos distinguindo fatos, contexto e opinião. Inclua datas e links disponíveis; não invente notícias."},
+{"categoria":"🎤 Opinião","titulo":"Opiniões com argumentos","quando":"Quando quiser apresentar ponto de vista.","prompt":"Sugira 12 temas de opinião sobre [NICHO], com tese, argumentos, contrapontos e pergunta aberta para conversa respeitosa."},
+{"categoria":"🛍️ Produto","titulo":"Ideias de demonstração de produto","quando":"Quando quiser divulgar produtos.","prompt":"Crie 12 ideias sobre [PRODUTO] priorizando uso real, público indicado, limitações e perguntas frequentes. Não invente resultados e sinalize publicidade quando aplicável."},
+{"categoria":"🌱 Iniciantes","titulo":"Primeiros passos no nicho","quando":"Quando o público está começando.","prompt":"Crie trilha de 10 vídeos para iniciantes em [NICHO]. Cada vídeo responde uma dúvida e prepara para o próximo nível. Inclua título, objetivo e exercício."},
+{"categoria":"🏆 Desafio","titulo":"Desafios seguros e mensuráveis","quando":"Quando quiser convidar a audiência a participar.","prompt":"Proponha 10 desafios de 3 a 7 dias sobre [TEMA], com regras, materiais e acompanhamento. Evite desafios perigosos ou que incentivem gastos desnecessários."}
 ];
-
-const lista = document.getElementById("lista-prompts");
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
-
-function renderizar(arr) {
-  lista.innerHTML = "";
-  contador.innerText = `Total: ${arr.length} prompt${arr.length !== 1 ? "s" : ""}`;
-
-  arr.forEach(p => {
-
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <div class="meta">${p.categoria}</div>
-      <h3>${p.titulo}</h3>
-      <p><strong>📌 Quando usar:</strong> ${p.quando}</p>
-      <pre>${p.prompt}</pre>
-
-      <div class="acoes">
-        <button onclick="copiarPrompt(\`${p.prompt}\`)">📋 Copiar & Colar</button>
-        <button onclick="favoritarPrompt('${p.titulo}', \`${p.prompt}\`)">⭐ Favoritar</button>
-        <button onclick="abrirChatGPT(\`${p.prompt}\`)">💬 ChatGPT</button>
-        <button onclick="abrirGemini(\`${p.prompt}\`)">🔷 Gemini</button>
-      </div>
-    `;
-
-    lista.appendChild(card);
-  });
-}
-
-function filtrarPrompts() {
-  const termo = busca.value.toLowerCase();
-  const filtrados = promptsIdeias.filter(p =>
-    p.titulo.toLowerCase().includes(termo) ||
-    p.prompt.toLowerCase().includes(termo) ||
-    p.categoria.toLowerCase().includes(termo)
-  );
-  renderizar(filtrados);
-}
-
-function copiarPrompt(texto) {
-  navigator.clipboard.writeText(texto);
-  alert("📋 Prompt copiado!");
-}
-
-function favoritarPrompt(titulo, conteudo) {
-  const prompts = JSON.parse(localStorage.getItem("deltaPrompts")) || [];
-
-  prompts.push({
-    id: Date.now(),
-    titulo,
-    categoria: "YouTube",
-    conteudo,
-    favorito: true
-  });
-
-  localStorage.setItem("deltaPrompts", JSON.stringify(prompts));
-  alert("⭐ Adicionado aos favoritos!");
-}
-
-function abrirChatGPT(texto) {
-  navigator.clipboard.writeText(texto);
-  window.open("https://chat.openai.com/", "_blank");
-}
-
-function abrirGemini(texto) {
-  navigator.clipboard.writeText(texto);
-  window.open("https://gemini.google.com/app", "_blank");
-}
-
-renderizar(promptsIdeias);
-
+const lista=document.getElementById("lista-prompts"),contador=document.getElementById("contador"),busca=document.getElementById("busca"),categoriaBox=document.getElementById("filtrosCategoria"),formato=document.getElementById("filtroFormato"),objetivo=document.getElementById("filtroObjetivo"),vazio=document.getElementById("ideiasVazio");let categoriaAtiva="todas";
+function node(tag,cls,txt){const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n}
+function renderFiltros(){categoriaBox.replaceChildren();[["todas","Todas"],...Array.from(new Set(promptsIdeias.map(p=>p.categoria))).map(c=>[c,c])].forEach(([key,label])=>{const b=node("button","ideas-chip",label);b.type="button";b.setAttribute("aria-pressed",String(key===categoriaAtiva));b.addEventListener("click",()=>{categoriaAtiva=key;renderFiltros();filtrarPrompts()});categoriaBox.appendChild(b)})}
+function copiarPrompt(texto){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(texto).then(()=>alert("Prompt copiado!")).catch(()=>copiaFallback(texto))}else copiaFallback(texto)}
+function copiaFallback(texto){const ta=node("textarea");ta.value=texto;document.body.appendChild(ta);ta.select();const ok=document.execCommand("copy");ta.remove();alert(ok?"Prompt copiado!":"Não foi possível copiar automaticamente. Selecione o texto e copie.")}
+function favoritarPrompt(titulo,conteudo,categoria){try{const old=JSON.parse(localStorage.getItem("deltaPrompts")||"[]");const items=Array.isArray(old)?old:[];if(items.some(p=>p.titulo===titulo&&p.conteudo===conteudo)){alert("Este prompt já está nos favoritos.");return}items.push({id:Date.now(),titulo,categoria:"Ideias para criadores · "+categoria,conteudo,favorito:true});localStorage.setItem("deltaPrompts",JSON.stringify(items));alert("Adicionado aos favoritos!")}catch(e){alert("Não foi possível salvar o favorito neste navegador.")}}
+function abrirIA(url,texto){copiarPrompt(texto);window.open(url,"_blank","noopener")}
+function tags(p){const t=(p.titulo+" "+p.categoria+" "+p.prompt).toLowerCase();return{formato:/shorts|curtos|reels|desafio/.test(t)?"shorts":/série|calendário|mês|episódios/.test(t)?"serie":/tutorial|passo a passo|iniciante|educativo|experimento/.test(t)?"tutorial":/tendência|atualidade|notícia/.test(t)?"tendencia":/vídeo longo|longos/.test(t)?"longo":"todos",objetivo:/monetização|vendem|produto|vendas/.test(t)?"monetizacao":/crescimento|viral|inscritos|alcance/.test(t)?"crescimento":/comunidade|comentários|opinião|perguntas/.test(t)?"engajamento":/autoridade|educativo|mitos|tutorial|iniciante/.test(t)?"autoridade":/calendário|série|planejamento/.test(t)?"planejamento":"todos"}}
+function criarCard(p){const card=node("article","ideas-card");card.append(node("span","meta",p.categoria),node("h3","",p.titulo));const when=node("p","ideas-when");when.append(node("strong","","📌 Quando usar: "),document.createTextNode(p.quando));card.append(when,node("pre","",p.prompt));const actions=node("div","ideas-actions");[["📋 Copiar prompt",()=>copiarPrompt(p.prompt)],["⭐ Favoritar",()=>favoritarPrompt(p.titulo,p.prompt,p.categoria)],["💬 ChatGPT",()=>abrirIA("https://chatgpt.com/",p.prompt)],["🔷 Gemini",()=>abrirIA("https://gemini.google.com/app",p.prompt)]].forEach(([label,fn])=>{const b=node("button","",label);b.type="button";b.addEventListener("click",fn);actions.appendChild(b)});card.appendChild(actions);return card}
+function filtrarPrompts(){const term=busca.value.trim().toLocaleLowerCase("pt-BR");const result=promptsIdeias.filter(p=>{const t=(p.titulo+" "+p.prompt+" "+p.categoria+" "+p.quando).toLocaleLowerCase("pt-BR"),g=tags(p);return(!term||t.includes(term))&&(categoriaAtiva==="todas"||p.categoria===categoriaAtiva)&&(formato.value==="todos"||g.formato===formato.value||g.formato==="todos")&&(objetivo.value==="todos"||g.objetivo===objetivo.value||g.objetivo==="todos")});lista.replaceChildren(...result.map(criarCard));contador.textContent="Mostrando "+result.length+" de "+promptsIdeias.length+" prompts";vazio.classList.toggle("ideas-hidden",result.length>0)}
+busca.removeAttribute("oninput");busca.addEventListener("input",filtrarPrompts);formato.addEventListener("change",filtrarPrompts);objetivo.addEventListener("change",filtrarPrompts);document.getElementById("limparFiltros").addEventListener("click",()=>{busca.value="";categoriaAtiva="todas";formato.value="todos";objetivo.value="todos";renderFiltros();filtrarPrompts();busca.focus()});renderFiltros();filtrarPrompts();
 </script>
 
 <style>
