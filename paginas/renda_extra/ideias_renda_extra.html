@@ -36,51 +36,11 @@ Prompts organizados por etapas para sair da ideia até a primeira venda.
   </div>
 </section>
 
-<section class="card ferramenta-renda">
-  <h2>🧭 Descubra sua melhor oportunidade</h2>
-  <p>Responda algumas perguntas para receber sugestões iniciais personalizadas.</p>
-  <div class="form-grid">
-    <label>Tempo disponível por dia
-      <select id="tempoPerfil"><option value="pouco">Até 1 hora</option><option value="medio">2 a 3 horas</option><option value="muito">4 horas ou mais</option></select>
-    </label>
-    <label>Investimento inicial
-      <select id="investimentoPerfil"><option value="zero">R$ 0 — sem investimento</option><option value="baixo">Até R$ 200</option><option value="medio">Mais de R$ 200</option></select>
-    </label>
-    <label>Onde prefere trabalhar?
-      <select id="formatoPerfil"><option value="online">Pela internet</option><option value="presencial">Presencialmente</option><option value="ambos">Tanto faz</option></select>
-    </label>
-    <label>Principal habilidade
-      <select id="habilidadePerfil"><option value="criacao">Criatividade e conteúdo</option><option value="vendas">Vendas e comunicação</option><option value="tecnica">Tecnologia e ferramentas digitais</option><option value="manual">Trabalhos manuais ou serviços</option><option value="iniciante">Ainda estou descobrindo</option></select>
-    </label>
-  </div>
-  <button type="button" onclick="diagnosticarRenda()">✨ Encontrar ideias para meu perfil</button>
-  <div id="resultadoDiagnostico" class="resultado-renda" aria-live="polite"></div>
-</section>
 
-<section class="card ferramenta-renda">
-  <h2>🧮 Simulador de ganhos</h2>
-  <p>Faça uma estimativa simples. Os valores são cenários hipotéticos, não promessa de rendimento.</p>
-  <div class="form-grid">
-    <label>Preço cobrado por venda (R$)<input id="precoVenda" type="number" min="0" step="0.01" value="50"></label>
-    <label>Vendas por mês<input id="qtdVendas" type="number" min="0" step="1" value="10"></label>
-    <label>Custo total por venda (R$)<input id="custoVenda" type="number" min="0" step="0.01" value="10"></label>
-    <label>Outros custos mensais (R$)<input id="custosFixos" type="number" min="0" step="0.01" value="0"></label>
-  </div>
-  <button type="button" onclick="calcularGanhos()">📊 Calcular cenário</button>
-  <div id="resultadoGanhos" class="resultado-renda" aria-live="polite"></div>
-</section>
 
-<section class="card ferramenta-renda">
-  <h2>📅 Meu plano de ação</h2>
-  <p>Marque as tarefas conforme avança. O progresso fica salvo neste navegador.</p>
-  <div id="checklistRenda" class="checklist-renda"></div>
-  <div class="progresso-fundo"><div id="barraProgressoRenda"></div></div>
-  <p id="textoProgressoRenda" class="texto-progresso"></p>
-  <div class="acoes">
-    <button type="button" onclick="exportarPlanoRenda()">📤 Exportar meu plano</button>
-    <button type="button" onclick="limparPlanoRenda()">↺ Reiniciar checklist</button>
-  </div>
-</section>
+
+
+
 
 <div class="ferramentas-lista">
   <div class="top-bar">
@@ -358,119 +318,6 @@ Organize em etapas claras e progressivas.`
 ];
 
 const lista = document.getElementById("lista-prompts");
-let nivelSelecionado = "todos";
-const tarefasRenda = [
-  "Escolher uma ideia que combine com meu perfil",
-  "Pesquisar pelo menos 3 concorrentes ou alternativas",
-  "Conversar com 3 potenciais clientes e validar a demanda",
-  "Definir uma oferta simples, preço e prazo de entrega",
-  "Criar uma amostra ou demonstração do serviço/produto",
-  "Publicar a primeira divulgação",
-  "Fazer contato com potenciais clientes",
-  "Anotar resultados, custos e aprendizados"
-];
-const chaveChecklistRenda = "deltaRendaChecklistV2";
-const favoritosRenda = () => {
-  try { return (JSON.parse(localStorage.getItem("deltaPrompts")) || []).filter(x => x.favorito).map(x => x.titulo); }
-  catch (_) { return []; }
-};
-function escaparHTML(valor) {
-  return String(valor).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function tipoInvestimento(p) {
-  const t = (p.titulo + " " + p.prompt).toLowerCase();
-  return /shopee|produto|estoque|tiktok shop/.test(t) ? "baixo" : "zero";
-}
-function tipoFormato(p) {
-  const t = (p.titulo + " " + p.prompt).toLowerCase();
-  return /presencial|trabalhos manuais|serviços locais/.test(t) ? "presencial" : "online";
-}
-function aplicarFiltros() {
-  const termo = (busca.value || "").trim().toLowerCase();
-  const inv = document.getElementById("filtroInvestimento").value;
-  const formato = document.getElementById("filtroFormato").value;
-  const categoria = document.getElementById("filtroCategoria").value;
-  const apenasFavoritos = document.getElementById("filtroFavoritos").value === "favoritos";
-  const favoritos = favoritosRenda();
-  const filtrados = promptsRenda.filter(p => {
-    const texto = (p.titulo + " " + p.prompt + " " + p.categoria + " " + p.quando).toLowerCase();
-    return (!termo || texto.includes(termo)) &&
-      (nivelSelecionado === "todos" || p.nivel === nivelSelecionado) &&
-      (inv === "todos" || tipoInvestimento(p) === inv) &&
-      (formato === "todos" || tipoFormato(p) === formato) &&
-      (categoria === "todos" || p.categoria === categoria) &&
-      (!apenasFavoritos || favoritos.includes(p.titulo));
-  });
-  renderizar(filtrados);
-}
-function definirNivel(nivel) {
-  nivelSelecionado = nivel;
-  document.querySelectorAll("[data-nivel-filtro]").forEach(btn => btn.classList.toggle("ativo", btn.dataset.nivelFiltro === nivel));
-  aplicarFiltros();
-}
-function diagnosticarRenda() {
-  const tempo = document.getElementById("tempoPerfil").value;
-  const investimento = document.getElementById("investimentoPerfil").value;
-  const formato = document.getElementById("formatoPerfil").value;
-  const habilidade = document.getElementById("habilidadePerfil").value;
-  let ideias = [];
-  if (habilidade === "criacao") ideias = ["Criar conteúdo para pequenos negócios", "Produzir roteiros e textos com IA", "Montar kits de posts para redes sociais"];
-  if (habilidade === "vendas") ideias = ["Revenda sob encomenda", "Afiliados com conteúdo útil", "Prospecção comercial para negócios locais"];
-  if (habilidade === "tecnica") ideias = ["Criar páginas simples para pequenos negócios", "Automatizar tarefas repetitivas", "Prestar suporte digital básico"];
-  if (habilidade === "manual") ideias = ["Serviços locais sob agendamento", "Produtos artesanais por encomenda", "Pequenos serviços de manutenção ou organização"];
-  if (habilidade === "iniciante") ideias = ["Oferecer um serviço simples que você já sabe fazer", "Criar conteúdo sobre um assunto que conhece", "Validar uma pequena oferta com conhecidos"];
-  if (formato === "online") ideias = ideias.filter(x => !/serviços locais|manutenção|organização/.test(x));
-  if (formato === "presencial") ideias = ideias.filter(x => /locais|sob encomenda|manutenção|organização/.test(x));
-  if (!ideias.length) ideias = ["Comece por um serviço simples baseado em algo que você já sabe fazer"];
-  const aviso = investimento === "zero" ? "Priorize serviços, encomendas e validação sem comprar estoque." : investimento === "baixo" ? "Defina um limite de gastos e teste a procura antes de comprar materiais." : "Separe o orçamento em etapas e só aumente o investimento após validar a procura.";
-  const carga = tempo === "pouco" ? "Escolha uma única ideia e reserve 30–60 minutos por dia." : tempo === "medio" ? "Reserve blocos de 1–2 horas para preparar e divulgar a oferta." : "Use parte do tempo para validar a ideia e parte para atender clientes.";
-  document.getElementById("resultadoDiagnostico").innerHTML = "<strong>Ideias para explorar</strong><ul>" + ideias.map(x => "<li>" + escaparHTML(x) + "</li>").join("") + "</ul><p>" + escaparHTML(aviso) + "</p><p>" + escaparHTML(carga) + "</p><p><strong>Próximo passo:</strong> converse com potenciais clientes antes de gastar dinheiro. As sugestões são pontos de partida, não garantia de renda.</p>";
-}
-function calcularGanhos() {
-  const preco = Math.max(0, Number(document.getElementById("precoVenda").value) || 0);
-  const qtd = Math.max(0, Math.floor(Number(document.getElementById("qtdVendas").value) || 0));
-  const custo = Math.max(0, Number(document.getElementById("custoVenda").value) || 0);
-  const fixos = Math.max(0, Number(document.getElementById("custosFixos").value) || 0);
-  const receita = preco * qtd;
-  const variaveis = custo * qtd;
-  const resultado = receita - variaveis - fixos;
-  const moeda = n => n.toLocaleString("pt-BR", {style:"currency",currency:"BRL"});
-  document.getElementById("resultadoGanhos").innerHTML = "<strong>Receita bruta estimada:</strong> " + moeda(receita) + "<br><strong>Custos estimados:</strong> " + moeda(variaveis + fixos) + "<br><strong>Saldo estimado antes de impostos:</strong> " + moeda(resultado) + "<p>Não inclui necessariamente impostos, taxas de plataforma, devoluções ou outros custos não informados.</p>";
-}
-function atualizarChecklistRenda() {
-  let marcadas = [];
-  try { marcadas = JSON.parse(localStorage.getItem(chaveChecklistRenda)) || []; } catch (_) {}
-  const el = document.getElementById("checklistRenda");
-  el.innerHTML = tarefasRenda.map((t,i) => '<label><input type="checkbox" data-tarefa="' + i + '" ' + (marcadas.includes(i) ? "checked" : "") + '> <span>' + escaparHTML(t) + '</span></label>').join("");
-  el.querySelectorAll("input").forEach(input => input.addEventListener("change", () => {
-    const selecionadas = Array.from(el.querySelectorAll("input:checked")).map(x => Number(x.dataset.tarefa));
-    localStorage.setItem(chaveChecklistRenda, JSON.stringify(selecionadas));
-    atualizarProgressoRenda(selecionadas.length);
-  }));
-  atualizarProgressoRenda(marcadas.length);
-}
-function atualizarProgressoRenda(qtd) {
-  const pct = Math.round(qtd / tarefasRenda.length * 100);
-  document.getElementById("barraProgressoRenda").style.width = pct + "%";
-  document.getElementById("textoProgressoRenda").textContent = qtd + " de " + tarefasRenda.length + " tarefas concluídas (" + pct + "%).";
-}
-function exportarPlanoRenda() {
-  let marcadas = [];
-  try { marcadas = JSON.parse(localStorage.getItem(chaveChecklistRenda)) || []; } catch (_) {}
-  const texto = "MEU PLANO DE RENDA EXTRA — DELTA PROMPTS\n\n" + tarefasRenda.map((t,i) => (marcadas.includes(i) ? "[x] " : "[ ] ") + t).join("\n") + "\n\nLembrete: valide a demanda antes de investir e registre receitas e custos reais.";
-  const blob = new Blob([texto], {type:"text/plain;charset=utf-8"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a"); a.href = url; a.download = "meu-plano-renda-extra.txt"; a.click();
-  URL.revokeObjectURL(url);
-}
-function limparPlanoRenda() {
-  if (!confirm("Deseja desmarcar todas as tarefas do plano?")) return;
-  localStorage.removeItem(chaveChecklistRenda);
-  atualizarChecklistRenda();
-}
-const contador = document.getElementById("contador");
-const busca = document.getElementById("busca");
-
 function renderizar(arr) {
   lista.innerHTML = "";
   contador.innerText = "Exibindo " + arr.length + " de " + promptsRenda.length + " ideias";
@@ -544,8 +391,6 @@ function abrirGemini(texto){
 window.open("https://gemini.google.com/app?prompt="+encodeURIComponent(texto),"_blank");
 }
 
-atualizarChecklistRenda();
-calcularGanhos();
 renderizar(promptsRenda);
 
 </script>
