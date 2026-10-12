@@ -16,7 +16,7 @@
 .pasta-config a[aria-current="page"]{color:#5b5ce2}
 [data-theme="dark"] .pasta-config{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .pasta-config a{color:#e2e8f0}
-.sites-salvos{display:grid;gap:10px}.site-salvo{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}.site-salvo-main{min-width:0;flex:1}.site-salvo-main strong,.site-salvo-main small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-salvo-main small{color:#667085;font-size:12px;margin-top:2px}.site-salvo button{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:800}.site-salvo-form{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;margin-top:12px}.site-salvo-form input{padding:11px 12px;border:1px solid #e5e7eb;border-radius:10px;font:inherit}@media(max-width:650px){.site-salvo-form{grid-template-columns:1fr}}</style></head><body id="configuracao-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261012-v67"></script><main>
+.sites-salvos{display:grid;gap:10px}.site-salvo{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}.site-salvo-main{min-width:0;flex:1}.site-salvo-main strong,.site-salvo-main small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-salvo-main small{color:#667085;font-size:12px;margin-top:2px}.site-salvo button{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:800}.site-salvo-form{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;margin-top:12px}.site-salvo-form input{padding:11px 12px;border:1px solid #e5e7eb;border-radius:10px;font:inherit}@media(max-width:650px){.site-salvo-form{grid-template-columns:1fr}}</style></head><body id="configuracao-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261012-v68"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Configuração</p>
 <h1>⚙️ Configuração</h1>
@@ -489,7 +489,8 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
     esconder:'👉 Desmarque o que você nunca usa e o menu fica mais limpo. Dá pra marcar de volta quando quiser.',
     novidades:'👉 Escolha quais avisos aparecem no sininho 🔔 lá em cima.',
     privado:'👉 Usando o computador de outra pessoa? Ligue e nada do que você fizer fica salvo.',
-    historico:'👉 Lista do que você mudou aqui, pra você saber o que foi alterado.'
+    historico:'👉 Lista do que você mudou aqui, pra você saber o que foi alterado.',
+    central:'👉 Ache qualquer página do site, veja suas favoritas e as que você abriu por último.'
   };
   Object.keys(ajuda).forEach(function(k){var s=secoes[k];if(!s)return;var h=s.querySelector('h3');var orig=h.nextElementSibling;if(orig&&orig.tagName==='P'&&!orig.id&&!orig.querySelector('input,button,select,a,span[id]'))orig.hidden=true;var p=document.createElement('p');p.className='cfg-secao-ajuda';p.textContent=ajuda[k];h.insertAdjacentElement('afterend',p)});
 
@@ -501,7 +502,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   /* grupos */
   var grupos=[
     {id:'grupo-voce',titulo:'👤 Sobre você',texto:'Conte ao site quem você é e ele se adapta: menu, sugestões e prompts já preenchidos.',itens:['perfil','auto','sites']},
-    {id:'grupo-menu',titulo:'🧭 Menu e navegação',texto:'Arrume o menu do seu jeito e encontre rápido as páginas que você usa.',itens:['ordem','esconder','nav','central','ultimas']},
+    {id:'grupo-menu',titulo:'🧭 Menu e navegação',texto:'Arrume o menu do seu jeito e encontre rápido as páginas que você usa.',itens:['central','ordem','esconder','nav','ultimas']},
     {id:'grupo-avisos',titulo:'🔔 Avisos, aparência e privacidade',texto:'Escolha o que aparece no sininho, o visual do site e quando nada deve ficar salvo.',itens:['novidades','APARENCIA','privado']},
     {id:'grupo-seguranca',titulo:'🛟 Segurança dos seus dados',texto:'Faça uma cópia das suas configurações e veja o que foi alterado.',itens:['BACKUP','historico']}
   ];
@@ -537,6 +538,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
       pill(idDe('perfil'),'🧑','Seu perfil',PERFIL_NOMES[perfil]||'Ainda não escolhido',!!perfil)+
       pill(idDe('auto'),'🏠','Preenchimento automático',preenchidos+' de 4 campos preenchidos',preenchidos>0)+
       pill(idDe('sites'),'🌐','Sites salvos',sites?sites+' site(s) salvo(s)':'Nenhum ainda',sites>0)+
+      pill(idDe('central'),'🗂️','Minhas páginas',(function(){var f=ler('deltaPageFavorites',[]);return Array.isArray(f)&&f.length?f.length+' favorita(s)':'Nenhuma favorita ainda'})(),Array.isArray(ler('deltaPageFavorites',[]))&&ler('deltaPageFavorites',[]).length>0)+
       pill(idDe('ordem'),'📐','Ordem do menu',ordemManual?'Do seu jeito':'Automática (pelo seu uso)',true)+
       pill(idDe('esconder'),'🙈','Páginas escondidas',escondidas?escondidas+' escondida(s)':'Nenhuma',true)+
       pill('cfgAparencia','🎨','Aparência',tema==='dark'?'Tema escuro 🌙':'Tema claro ☀️',true)+
@@ -560,7 +562,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   var CHAVES=['deltaPerfilAtivo','deltaDadosPadrao','deltaSitesSalvos','deltaGrupoOrdemManual','deltaCategoriasEscondidas','deltaSecoesEscondidas','deltaFiltroNovidades','deltaTheme','deltaLogConfig','deltaHistoricoPaginas'];
   $('#cfgExportar').addEventListener('click',function(){
     var dados={};CHAVES.forEach(function(k){try{var v=localStorage.getItem(k);if(v!==null)dados[k]=v}catch(e){}});
-    var pacote={tipo:'delta-prompts-configuracao',versao:window.DELTA_SITE_VERSION||'V1.67',criadoEm:new Date().toISOString(),dados:dados};
+    var pacote={tipo:'delta-prompts-configuracao',versao:window.DELTA_SITE_VERSION||'V1.68',criadoEm:new Date().toISOString(),dados:dados};
     var url=URL.createObjectURL(new Blob([JSON.stringify(pacote,null,2)],{type:'application/json'}));
     var a=document.createElement('a');a.href=url;a.download='delta-configuracoes-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},3000);
     try{localStorage.setItem('deltaUltimoBackupConfig',new Date().toISOString())}catch(e){}
@@ -587,4 +589,54 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
 })();
 </script>
 
+
+<!-- ===== DELTA V1.68 — "Minhas páginas" dentro da Configuração ===== -->
+<style>
+.cfg-mp-busca{width:100%;padding:12px 14px;border:1px solid #d0d5dd;border-radius:12px;font:inherit;font-size:15px;margin:4px 0 10px;box-sizing:border-box}
+.cfg-mp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:14px}
+.cfg-mp-col h4{margin:0 0 6px;font-size:14px}
+.cfg-mp-col a{display:flex;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:10px;background:#f8fafc;margin-top:6px;text-decoration:none;color:#111827;font-weight:700;font-size:14px}
+.cfg-mp-col a:hover{background:#eef2ff}
+.cfg-mp-col a small{color:#667085;font-weight:600}
+.cfg-mp-col p{margin:0;color:#667085;font-size:13px}
+[data-theme="dark"] .cfg-mp-col a{background:#1f2937;color:#e5e7eb}
+[data-theme="dark"] .cfg-mp-busca{background:#111827;color:#e5e7eb;border-color:#374151}
+</style>
+<script>
+(function(){
+  'use strict';
+  var card=document.getElementById('centralPaginasAtalho');if(!card)return;
+  var h=card.querySelector('h3');if(h)h.textContent='🗂️ Minhas páginas';
+  var box=document.createElement('div');
+  box.innerHTML='<input type="search" class="cfg-mp-busca" id="cfgMpBusca" placeholder="🔎 Procure qualquer página do site (ex.: saúde, currículo…)" aria-label="Procurar página"><div class="cfg-mp-grid"><div class="cfg-mp-col" id="cfgMpA"></div><div class="cfg-mp-col" id="cfgMpB"></div></div>';
+  var botao=card.querySelector('a');if(botao){botao.textContent='🗂️ Ver todas as páginas →';card.insertBefore(box,botao)}else card.appendChild(box);
+  function ler(k,d){try{var v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}}
+  function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
+  var paginas=[];
+  function limpar(t,path){t=String(t||'').replace(/\s+/g,' ').trim().replace(/^[^\p{L}\p{N}]+/u,'').replace(/\s+V\d+(\.\d+)+$/,'').replace(/\s+\d{1,3}$/,'');if(!t||t==='Config.')t=decodeURIComponent(path.split('/').pop().replace(/\.html?$/i,'')).replace(/[-_]/g,' ');var bonito={'configuracao':'Configuração','meus numeros':'Meus números','progresso':'Meu progresso'};return bonito[t.toLowerCase()]||t}
+  function link(p,extra){return '<a href="'+esc(p.path)+'">'+esc(p.titulo)+'<small>'+(extra||'abrir →')+'</small></a>'}
+  function padrao(){
+    var uso=ler('deltaPageUsage',{}),fav=ler('deltaPageFavorites',[]),porPath={};paginas.forEach(function(p){porPath[p.path]=p});
+    var f=(Array.isArray(fav)?fav:[]).map(function(x){return porPath[x]}).filter(Boolean).slice(0,5);
+    var r=paginas.filter(function(p){return uso[p.path]&&uso[p.path].lastSeen}).sort(function(a,b){return uso[b.path].lastSeen-uso[a.path].lastSeen}).slice(0,5);
+    document.getElementById('cfgMpA').innerHTML='<h4>⭐ Suas favoritas</h4>'+(f.length?f.map(function(p){return link(p)}).join(''):'<p>Ainda nenhuma. Em “Ver todas as páginas”, toque na ☆ das que você mais usa.</p>');
+    document.getElementById('cfgMpB').innerHTML='<h4>🕒 Visitadas por último</h4>'+(r.length?r.map(function(p){return link(p,new Date(uso[p.path].lastSeen).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}))}).join(''):'<p>As páginas que você abrir vão aparecer aqui.</p>');
+  }
+  function buscar(q){
+    q=norm(q.trim());if(!q){padrao();return}
+    var achou=paginas.filter(function(p){return norm(p.titulo).indexOf(q)>=0}).slice(0,10);
+    document.getElementById('cfgMpA').innerHTML='<h4>🔎 Resultado</h4>'+(achou.length?achou.slice(0,5).map(function(p){return link(p)}).join(''):'<p>Nada encontrado. Tente outra palavra.</p>');
+    document.getElementById('cfgMpB').innerHTML=achou.length>5?'<h4>&nbsp;</h4>'+achou.slice(5).map(function(p){return link(p)}).join(''):'';
+  }
+  fetch('/delta-prompts/menu.html?v=delta-prompts-menu-v47',{cache:'no-store'}).then(function(r){return r.text()}).then(function(html){
+    var doc=new DOMParser().parseFromString(html,'text/html'),mapa={};
+    doc.querySelectorAll('a[href]').forEach(function(a){var u;try{u=new URL(a.getAttribute('href'),location.origin)}catch(e){return}if(u.origin!==location.origin||!/^\/delta-prompts\/.+\.html$/.test(u.pathname)||/\/(index|menu)\.html$/.test(u.pathname))return;if(!mapa[u.pathname])mapa[u.pathname]={path:u.pathname,titulo:limpar(a.textContent,u.pathname)}});
+    paginas=Object.keys(mapa).map(function(k){return mapa[k]});padrao();
+  }).catch(function(){document.getElementById('cfgMpA').innerHTML='<p>Não consegui carregar a lista agora. Use o botão abaixo.</p>'});
+  document.getElementById('cfgMpBusca').addEventListener('input',function(){buscar(this.value)});
+  padrao();
+})();
+</script>
+<script src="/delta-prompts/js/central-config-nav.js?v=20261012-v68"></script>
 </body></html>
