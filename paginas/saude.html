@@ -198,6 +198,7 @@ pre {
 
 <main>
 
+<small data-delta-version="V1.71" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.71</small>
 <h1>🧠💚 Saúde Inteligente com IA</h1>
 
 <p>
@@ -761,7 +762,22 @@ function mostrarToast(texto = '✓ Prompt copiado!') {
 }
 
 // ===== FAVORITOS (mesmo formato usado em favoritos.html) =====
-function _loadFav(){try{return JSON.parse(localStorage.getItem('deltaFavoritos'))||[]}catch(e){return[]}}
+function _loadFav(){
+  try{
+    const bruto=localStorage.getItem('deltaFavoritos');
+    const dados=bruto?JSON.parse(bruto):[];
+    if(!Array.isArray(dados))return[];
+    const ids=new Set(),titulos=new Set(),resultado=[];
+    dados.forEach(function(item){
+      if(!item||typeof item!=='object')return;
+      const id=item.id===undefined||item.id===null?'':String(item.id);
+      const titulo=String(item.titulo||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+      if((id&&ids.has(id))||(titulo&&titulos.has(titulo)))return;
+      if(id)ids.add(id);if(titulo)titulos.add(titulo);resultado.push(item);
+    });
+    return resultado;
+  }catch(e){console.warn('Favoritos: dados locais inválidos; nenhuma informação foi apagada.',e);return[]}
+}
 function _saveFav(l){try{localStorage.setItem('deltaFavoritos',JSON.stringify(l))}catch(e){}}
 function isFav(id){return _loadFav().some(f=>f.id===id)}
 function atualizarBtnFav(id,btn){if(!btn)return;if(isFav(id)){btn.textContent='⭐ Salvo';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
@@ -769,7 +785,7 @@ function getItem(id){return promptsSaude.find(d=>d.id===id)}
 function favoritar(id,btn){
   const p=getItem(id); if(!p) return;
   let listaFav=_loadFav();
-  const idx=listaFav.findIndex(f=>f.id===id);
+  const tituloNormalizado=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();const idx=listaFav.findIndex(f=>String(f.id)===String(id)||tituloNormalizado(f.titulo)===tituloNormalizado(p.titulo));
   if(idx===-1){listaFav.unshift({id,titulo:p.titulo,texto:p.prompt,categoria:'Saúde',createdAt:Date.now()});_saveFav(listaFav);mostrarToast('💖 Adicionado aos favoritos!')}
   else{listaFav.splice(idx,1);_saveFav(listaFav);mostrarToast('🤍 Removido dos favoritos')}
   atualizarBtnFav(id,btn);
