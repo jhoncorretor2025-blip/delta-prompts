@@ -639,7 +639,7 @@ function infoDaPagina(link){
   return item?{grupo:item.g,novo:!!item.new}:null;
 }
 function pareceResumoEmIngles(texto){
-  const s=' '+String(texto||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'')+' ';
+  const s=' '+String(texto||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')+' ';
   const sinais=[' act as ',' your task ',' create a ',' write a ',' generate a ',' please provide ',' you are a ',' based on the ',' include the following ',' step by step ',' make sure ',' the user ',' analyze the ',' help me to ',' i want you to '];
   let pontos=0;
   sinais.forEach(sinal=>{if(s.includes(sinal))pontos++});
