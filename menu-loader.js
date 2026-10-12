@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.73
-window.DELTA_SITE_VERSION='V1.73';
+// DELTA SITE VERSION: V1.74
+window.DELTA_SITE_VERSION='V1.74';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -665,7 +665,7 @@ window.deltaRegistrarLog=function(texto){
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-menu-v50';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
+(function(){function getMenuCandidates(){const version='delta-prompts-menu-v51';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
   try{
     const link=sidebar&&sidebar.querySelector('a[href*="/paginas/sites-landing-pages.html"]');
     const badge=link&&link.querySelector('.menu-count');
@@ -745,8 +745,20 @@ function destacarPaginaAtual(){
 function ativarBuscaMenu(){
   const input=document.getElementById('buscaMenuPrincipal');
   if(!input)return;
+  input.setAttribute('aria-label','Filtrar categorias e páginas do menu');
+  input.setAttribute('placeholder','Ex.: YouTube, imagens, imóveis...');
   const normalizarTexto=function(valor){
-    return String(valor||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    return String(valor||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/['’]/g,'');
+  };
+  const correspondeTermo=function(texto,termo){
+    if(texto.includes(termo))return true;
+    const palavras=termo.split(/\s+/).filter(Boolean);
+    return palavras.every(function(palavra){
+      if(texto.split(/[^a-z0-9]+/).some(function(p){return p===palavra}))return true;
+      if(palavra.length>=4&&palavra.endsWith('s')&&texto.includes(palavra.slice(0,-1)))return true;
+      if(palavra.length>=4&&!palavra.endsWith('s')&&texto.split(/[^a-z0-9]+/).some(function(p){return p===palavra+'s'||p===palavra+'es'}))return true;
+      return false;
+    });
   };
   input.addEventListener('input',()=>{
     const termo=normalizarTexto(input.value).trim();
@@ -764,19 +776,19 @@ function ativarBuscaMenu(){
       if(normalizarTexto(tituloTexto).includes('criadores de conteudo')||hrefs.includes('criadores_de_conteudo')){
         contexto+=' criadores criador creator creators youtube youtuber youtubers canal canais videos video roteiros thumbnails conteudo audiovisual';
       }
-      contextoSecao.set(sec,normalizarTexto(contexto).includes(termo));
+      contextoSecao.set(sec,correspondeTermo(normalizarTexto(contexto),termo));
     });
 
     sidebar.querySelectorAll('.menu-links a').forEach(a=>{
       const sec=a.closest('.menu-section');
       const texto=normalizarTexto((a.textContent||'')+' '+(a.getAttribute('href')||'')+' '+(a.getAttribute('data-menu-keywords')||''));
-      const mostrar=!termo||texto.includes(termo)||(sec&&contextoSecao.get(sec));
+      const mostrar=!termo||correspondeTermo(texto,termo)||(sec&&contextoSecao.get(sec));
       a.style.display=mostrar?'':'none';
     });
 
     sidebar.querySelectorAll('.menu-item-final').forEach(a=>{
       const texto=normalizarTexto((a.textContent||'')+' '+(a.getAttribute('href')||''));
-      a.style.display=(!termo||texto.includes(termo))?'':'none';
+      a.style.display=(!termo||correspondeTermo(texto,termo))?'':'none';
     });
 
     secoes.forEach(sec=>{
