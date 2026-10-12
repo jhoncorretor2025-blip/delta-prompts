@@ -1639,3 +1639,17 @@ body.category-page .prompt-card p{
 @media(prefers-reduced-motion:reduce){
   .card,.path,.descoberta-card,.quick button,.home-quick-access a,.delta-filter{transition:none}
 }
+
+
+/* ===== CORREÇÃO DE NAVEGAÇÃO — 12/10/2026 ===== */
+/* Reserva espaço ao final da lista para os botões fixos Modo Simples e Modo Leitura. */
+#menu .sidebar{
+  padding-bottom:220px!important;
+  scroll-padding-bottom:220px;
+}
+@media(max-width:900px){
+  #menu .sidebar{
+    padding-bottom:calc(220px + env(safe-area-inset-bottom))!important;
+    scroll-padding-bottom:calc(220px + env(safe-area-inset-bottom));
+  }
+}
