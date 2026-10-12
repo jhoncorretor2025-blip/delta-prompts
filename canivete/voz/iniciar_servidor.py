@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Clonagem de Voz Master — servidor próprio (v1.5.19)
+Clonagem de Voz Master — servidor próprio (v1.5.20)
 Liga o Chatterbox pt-BR no seu computador ou no Google Colab e cria um link
 público temporário (.gradio.live) que a página do Canivete usa para gerar a voz.
 
