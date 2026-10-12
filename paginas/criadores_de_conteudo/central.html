@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="delta-version" content="V1.55">
+<meta name="delta-version" content="V1.56">
 <meta name="description" content="Central do Criador do Delta Prompts: planejamento, ideias, roteiros, títulos, thumbnails, descrições, métricas e edição de vídeos organizados por categoria.">
 <meta name="theme-color" content="#5b5ce2">
-<title>Central do Criador | Delta Prompts V1.55</title>
+<title>Central do Criador | Delta Prompts V1.56</title>
 <link rel="icon" type="image/x-icon" href="/delta-prompts/favicon.ico">
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
@@ -56,6 +56,42 @@
 .creator-filter:focus-visible,.creator-clear:focus-visible,.creator-card:focus-visible,.creator-start a:focus-visible{outline:3px solid #9997ff;outline-offset:3px}
 @media(max-width:650px){.creator-start{grid-template-columns:1fr;gap:8px;margin:14px 0 20px}.creator-start a{padding:12px}.creator-workflow{gap:6px;padding:12px}.creator-workflow-label{width:100%}.creator-step{font-size:11px;padding:7px 9px}}
 
+
+/* V1.56 — fluxo guiado de criação */
+.creator-builder{margin:22px 0;padding:clamp(17px,3vw,26px);border:1px solid #deddfb;border-radius:22px;background:linear-gradient(145deg,#f7f6ff,#fff 72%);box-shadow:0 10px 28px rgba(52,55,130,.06)}
+.creator-builder-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:17px}
+.creator-builder-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#5754be}
+.creator-builder h2{font-size:clamp(21px,3vw,27px);line-height:1.2;margin:5px 0 7px}
+.creator-builder-intro{font-size:13px;color:#667085;margin:0;max-width:650px;line-height:1.55}
+.creator-builder-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.creator-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.creator-field label{font-size:12px;font-weight:850;color:#42445b}
+.creator-field input,.creator-field select,.creator-field textarea{box-sizing:border-box;width:100%;min-width:0;border:1px solid #d8daea;border-radius:11px;padding:11px 12px;background:#fff;color:#24263a;font:inherit;font-size:14px}
+.creator-field textarea{resize:vertical;min-height:78px}
+.creator-field-wide{grid-column:1/-1}
+.creator-builder-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.creator-primary,.creator-secondary{display:inline-flex;justify-content:center;align-items:center;gap:7px;min-height:43px;padding:10px 15px;border-radius:12px;font:inherit;font-size:13px;font-weight:850;cursor:pointer}
+.creator-primary{border:1px solid #514fc9;background:#514fc9;color:#fff}
+.creator-secondary{border:1px solid #d7d9e8;background:#fff;color:#383a50}
+.creator-primary:hover{background:#403eae}
+.creator-secondary:hover{border-color:#aaa8e9}
+.creator-output{margin-top:16px;padding:15px;border:1px solid #e0e2ee;border-radius:14px;background:#fff}
+.creator-output[hidden]{display:none}
+.creator-output-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.creator-output h3{font-size:15px;margin:0}
+.creator-output-text{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.65;color:#3e4054;margin:0}
+.creator-status{font-size:12px;color:#4b4e67;margin-top:9px;min-height:16px}
+.creator-saved{margin-top:17px;padding-top:14px;border-top:1px solid #e5e6f1}
+.creator-saved h3{font-size:14px;margin:0 0 9px}
+.creator-saved-list{display:grid;gap:8px}
+.creator-saved-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid #e5e6ef;border-radius:11px;background:#fff}
+.creator-saved-item strong{display:block;font-size:13px;overflow-wrap:anywhere}
+.creator-saved-item small{display:block;margin-top:3px;color:#667085;font-size:11px}
+.creator-saved-item button{flex:0 0 auto;border:1px solid #dedfee;border-radius:9px;background:#fff;padding:7px 9px;font:inherit;font-size:11px;font-weight:800;cursor:pointer}
+.creator-saved-empty{font-size:12px;color:#73778a;margin:0}
+.creator-start a:active,.creator-card:active{transform:scale(.99)}
+@media(max-width:600px){.creator-builder{margin:16px 0;padding:15px;border-radius:17px}.creator-builder-grid{grid-template-columns:1fr;gap:11px}.creator-field-wide{grid-column:auto}.creator-builder-actions>*{width:100%}.creator-saved-item{align-items:flex-start}.creator-output-head{align-items:flex-start}}
+
 </style>
 </head>
 <body>
@@ -63,10 +99,32 @@
 <script src="/delta-prompts/menu-loader.js?v=20261012-v60"></script>
 <main class="creator-main">
 <section class="creator-hero">
- <div class="creator-hero-top"><span class="creator-eyebrow">Delta Prompts · Área de criação</span><span class="creator-version">V1.55</span></div>
+ <div class="creator-hero-top"><span class="creator-eyebrow">Delta Prompts · Área de criação</span><span class="creator-version">V1.56</span></div>
  <h1>🎬 Central do Criador</h1>
  <p>Encontre a ferramenta certa para cada etapa do seu conteúdo. Os prompts estão organizados por objetivo para você planejar, escrever, publicar e melhorar seus vídeos sem procurar em várias partes do menu.</p>
 </section>
+
+<section class="creator-builder" aria-labelledby="creatorBuilderTitle">
+ <div class="creator-builder-head"><div><div class="creator-builder-kicker">✨ Ferramenta prática · V1.56</div><h2 id="creatorBuilderTitle">Monte seu projeto de vídeo</h2><p class="creator-builder-intro">Preencha os campos e gere um briefing completo para usar na IA de sua preferência. Você também pode salvar seus projetos neste navegador.</p></div></div>
+ <form id="creatorBuilderForm">
+  <div class="creator-builder-grid">
+   <div class="creator-field creator-field-wide"><label for="projectTopic">Tema ou ideia do vídeo *</label><input id="projectTopic" name="topic" required maxlength="240" placeholder="Ex.: 5 ferramentas de IA gratuitas para iniciantes"></div>
+   <div class="creator-field"><label for="projectPlatform">Plataforma</label><select id="projectPlatform" name="platform"><option>YouTube</option><option>YouTube Shorts</option><option>TikTok</option><option>Instagram Reels</option><option>Facebook</option><option>Várias plataformas</option></select></div>
+   <div class="creator-field"><label for="projectDuration">Duração</label><select id="projectDuration" name="duration"><option>15 segundos</option><option selected>30 segundos</option><option>60 segundos</option><option>Até 3 minutos</option><option>Vídeo longo</option></select></div>
+   <div class="creator-field"><label for="projectStyle">Estilo</label><select id="projectStyle" name="style"><option>Educativo</option><option>Motivacional</option><option>Jornalístico</option><option>Comercial</option><option>Humorístico</option><option>Storytelling</option><option>Opinião e análise</option></select></div>
+   <div class="creator-field"><label for="projectGoal">Objetivo principal</label><select id="projectGoal" name="goal"><option>Ensinar algo</option><option>Gerar visualizações</option><option>Conquistar seguidores</option><option>Gerar comentários</option><option>Divulgar produto ou serviço</option><option>Contar uma história</option></select></div>
+   <div class="creator-field creator-field-wide"><label for="projectNotes">Detalhes adicionais (opcional)</label><textarea id="projectNotes" name="notes" maxlength="1200" placeholder="Público, pontos que precisam aparecer, tom de voz, referências ou chamada para ação..."></textarea></div>
+  </div>
+  <div class="creator-builder-actions"><button class="creator-primary" type="submit">✨ Gerar briefing</button><button class="creator-secondary" id="creatorSaveProject" type="button" disabled>💾 Salvar projeto</button><button class="creator-secondary" id="creatorResetProject" type="reset">Limpar campos</button></div>
+ </form>
+ <div class="creator-output" id="creatorProjectOutput" hidden aria-live="polite">
+  <div class="creator-output-head"><h3>Seu briefing pronto para usar</h3><button class="creator-secondary" id="creatorCopyBrief" type="button">📋 Copiar briefing</button></div>
+  <p class="creator-output-text" id="creatorBriefText"></p><p class="creator-status" id="creatorBuilderStatus" role="status"></p>
+ </div>
+ <div class="creator-saved"><h3>📁 Projetos salvos neste navegador</h3><div class="creator-saved-list" id="creatorSavedList"><p class="creator-saved-empty">Seus projetos salvos aparecerão aqui.</p></div></div>
+ <p class="creator-note">Privacidade: os projetos ficam salvos localmente neste navegador. Este recurso prepara um briefing; a geração do vídeo ou do roteiro final acontece na ferramenta de IA que você escolher.</p>
+</section>
+
 <section class="creator-start" aria-label="Atalhos para começar">
  <a href="/delta-prompts/paginas/criadores_de_conteudo/ideias.html"><span class="creator-start-icon" aria-hidden="true">💡</span><span><strong>Preciso de ideias</strong><small>Encontre temas e formatos para o próximo conteúdo</small></span></a>
  <a href="/delta-prompts/paginas/criadores_de_conteudo/roteiros.html"><span class="creator-start-icon" aria-hidden="true">📝</span><span><strong>Quero criar um roteiro</strong><small>Organize o gancho, o desenvolvimento e o final</small></span></a>
@@ -108,6 +166,63 @@
 <div id="creatorEmpty" class="creator-empty" hidden>Nenhuma ferramenta encontrada. Experimente outra busca ou escolha “Todas”.</div>
 <div class="creator-note">Dica: a Central organiza o acesso às ferramentas. As páginas originais continuam disponíveis pelos links diretos e pelos resultados de busca.</div>
 </main>
+
+<script>
+(function(){
+ const form=document.getElementById('creatorBuilderForm');
+ if(!form)return;
+ const output=document.getElementById('creatorProjectOutput');
+ const brief=document.getElementById('creatorBriefText');
+ const saveBtn=document.getElementById('creatorSaveProject');
+ const status=document.getElementById('creatorBuilderStatus');
+ const savedList=document.getElementById('creatorSavedList');
+ const STORAGE_KEY='deltaCreatorProjectsV156';
+ let currentProject=null;
+ function readProjects(){try{const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(data)?data:[]}catch(e){return[]}}
+ function writeProjects(items){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(items));return true}catch(e){status.textContent='Não foi possível salvar. Verifique o armazenamento do navegador.';return false}}
+ function makeBrief(data){
+  const notes=data.notes.trim()||'Nenhum detalhe adicional informado.';
+  return 'PROMPT — PROJETO DE VÍDEO\n\nTema: '+data.topic+'\nPlataforma: '+data.platform+'\nDuração desejada: '+data.duration+'\nEstilo: '+data.style+'\nObjetivo: '+data.goal+'\nDetalhes: '+notes+'\n\nAtue como roteirista, diretor criativo e estrategista de conteúdo. Crie uma proposta adequada à plataforma e à duração informadas. Entregue: (1) conceito e público-alvo; (2) 3 opções de gancho inicial; (3) roteiro com falas e duração aproximada por trecho; (4) lista de cenas com descrição visual e movimentos de câmera; (5) prompts visuais separados por cena, quando úteis; (6) título e texto de capa; (7) descrição e hashtags relevantes; (8) chamada para ação natural; (9) checklist de produção e publicação. Use linguagem clara, evite promessas de viralização e não invente fatos. Se o tema depender de informações atuais, indique o que precisa ser verificado em fontes confiáveis.';
+ }
+ function renderSaved(){
+  const projects=readProjects();savedList.innerHTML='';
+  if(!projects.length){const p=document.createElement('p');p.className='creator-saved-empty';p.textContent='Nenhum projeto salvo ainda. Gere um briefing e clique em “Salvar projeto”.';savedList.appendChild(p);return}
+  projects.slice().reverse().forEach((project)=>{
+   const item=document.createElement('div');item.className='creator-saved-item';
+   const info=document.createElement('div');const title=document.createElement('strong');title.textContent=project.topic;
+   const meta=document.createElement('small');meta.textContent=project.platform+' · '+project.duration+' · '+project.date;
+   info.append(title,meta);
+   const actions=document.createElement('div');
+   const open=document.createElement('button');open.type='button';open.textContent='Abrir';open.addEventListener('click',()=>{currentProject=project;brief.textContent=project.brief;output.hidden=false;saveBtn.disabled=false;status.textContent='Projeto carregado.';output.scrollIntoView({behavior:'smooth',block:'nearest'})});
+   const del=document.createElement('button');del.type='button';del.textContent='Excluir';del.setAttribute('aria-label','Excluir projeto '+project.topic);del.addEventListener('click',()=>{if(!confirm('Excluir este projeto salvo neste navegador?'))return;writeProjects(readProjects().filter(p=>p.id!==project.id));renderSaved()});
+   actions.append(open,del);item.append(info,actions);savedList.appendChild(item);
+  });
+ }
+ form.addEventListener('submit',(event)=>{
+  event.preventDefault();
+  const data={topic:form.elements.topic.value.trim(),platform:form.elements.platform.value,duration:form.elements.duration.value,style:form.elements.style.value,goal:form.elements.goal.value,notes:form.elements.notes.value};
+  if(!data.topic){form.elements.topic.focus();return}
+  const now=new Date();
+  currentProject={id:Date.now().toString(),...data,brief:makeBrief(data),date:now.toLocaleDateString('pt-BR')};
+  brief.textContent=currentProject.brief;output.hidden=false;saveBtn.disabled=false;status.textContent='Briefing criado. Você pode copiar ou salvar o projeto.';output.scrollIntoView({behavior:'smooth',block:'nearest'});
+ });
+ document.getElementById('creatorCopyBrief').addEventListener('click',async()=>{
+  if(!currentProject)return;
+  try{await navigator.clipboard.writeText(brief.textContent);status.textContent='Briefing copiado para a área de transferência.'}
+  catch(e){const range=document.createRange();range.selectNodeContents(brief);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);status.textContent='Selecione o texto e use Ctrl+C para copiar.'}
+ });
+ saveBtn.addEventListener('click',()=>{
+  if(!currentProject)return;
+  const projects=readProjects();
+  if(projects.some(p=>p.id===currentProject.id)){status.textContent='Este projeto já está salvo.';return}
+  projects.push(currentProject);
+  if(writeProjects(projects)){status.textContent='Projeto salvo neste navegador.';renderSaved()}
+ });
+ document.getElementById('creatorResetProject').addEventListener('click',()=>{currentProject=null;output.hidden=true;saveBtn.disabled=true;status.textContent='';});
+ renderSaved();
+})();
+</script>
+
 <script>
 (function(){
  const search=document.getElementById('creatorSearch');
