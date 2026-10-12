@@ -755,8 +755,16 @@ function ativarBuscaMenu(){
     const palavras=termo.split(/\s+/).filter(Boolean);
     return palavras.every(function(palavra){
       if(texto.split(/[^a-z0-9]+/).some(function(p){return p===palavra}))return true;
-      if(palavra.length>=4&&palavra.endsWith('s')&&texto.includes(palavra.slice(0,-1)))return true;
-      if(palavra.length>=4&&!palavra.endsWith('s')&&texto.split(/[^a-z0-9]+/).some(function(p){return p===palavra+'s'||p===palavra+'es'}))return true;
+      const tokens=texto.split(/[^a-z0-9]+/).filter(Boolean);
+      const variantes=[palavra];
+      if(palavra.endsWith('ens')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'em');
+      if(palavra.endsWith('ões')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'ão');
+      if(palavra.endsWith('ais')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'al');
+      if(palavra.endsWith('éis')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'el');
+      if(palavra.endsWith('óis')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'ol');
+      if(palavra.length>=4&&palavra.endsWith('s'))variantes.push(palavra.slice(0,-1));
+      if(palavra.length>=4&&!palavra.endsWith('s'))variantes.push(palavra+'s',palavra+'es');
+      return variantes.some(function(v){return tokens.some(function(t){return t===v||t===v+'s'||t===v+'es'})});
       return false;
     });
   };
