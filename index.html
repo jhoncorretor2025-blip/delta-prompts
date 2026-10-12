@@ -552,11 +552,17 @@ function sugerirCorrecao(v){
 function normBusca(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/['’]/g,'')}
 function contemTolerantePlural(texto,palavra){
   if(texto.includes(palavra))return true;
-  // tenta a palavra sem o "s" do final (plural simples: series->serie, filmes->filme)
-  if(palavra.length>=5&&palavra.endsWith('s')&&texto.includes(palavra.slice(0,-1)))return true;
-  // tenta a palavra COM "s" no final (caso o conteudo esteja no plural e a busca no singular: filme->filmes)
-  if(palavra.length>=4&&!palavra.endsWith('s')&&texto.includes(palavra+'s'))return true;
-  return false;
+  const tokens=texto.split(/[^a-z0-9]+/).filter(Boolean);
+  const variantes=[palavra];
+  // Plurais comuns em português: imagem/imagens, viagem/viagens, ação/ações etc.
+  if(palavra.endsWith('ens')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'em');
+  if(palavra.endsWith('ões')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'ão');
+  if(palavra.endsWith('ais')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'al');
+  if(palavra.endsWith('éis')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'el');
+  if(palavra.endsWith('óis')&&palavra.length>=5)variantes.push(palavra.slice(0,-3)+'ol');
+  if(palavra.length>=4&&palavra.endsWith('s'))variantes.push(palavra.slice(0,-1));
+  if(palavra.length>=4&&!palavra.endsWith('s'))variantes.push(palavra+'s',palavra+'es');
+  return variantes.some(function(v){return tokens.some(function(t){return t===v||t===v+'s'||t===v+'es'})});
 }
 function buscarPrompts(v){
   const idx=window.deltaSearchIndex;
