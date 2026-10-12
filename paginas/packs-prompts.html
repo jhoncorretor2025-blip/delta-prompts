@@ -71,11 +71,25 @@ main{min-width:0;flex:1;max-width:1500px;margin:0 auto;padding:28px clamp(14px,2
 [data-theme="dark"] .packs-hero{background:radial-gradient(circle at 90% 10%,rgba(124,104,230,.2),transparent 35%),linear-gradient(125deg,#141827,#1c1a35 56%,#241d24);border-color:rgba(255,255,255,.12);box-shadow:none}
 [data-theme="dark"] .packs-hero h1{color:#f2f1ff}[data-theme="dark"] .packs-hero-copy>p,[data-theme="dark"] .packs-benefits{color:#b8bad0}[data-theme="dark"] .packs-cta.secondary{background:#20243a;color:#e4e2ff;border-color:#363a55}[data-theme="dark"] .packs-art-card{background:rgba(27,31,51,.92);border-color:rgba(255,255,255,.1)}[data-theme="dark"] .main-card strong{color:#f1efff}[data-theme="dark"] .intro{background:linear-gradient(135deg,#211c32,#201d25);border-color:rgba(255,255,255,.12);color:#e5e7eb}[data-theme="dark"] .intro p{color:#b8bad0}
 
+
+#filtroModelo{min-height:46px;max-width:100%;padding:10px 13px;border:1px solid #ddd;border-radius:12px;background:#fff;color:#344054;font:inherit;font-size:13px;font-weight:700}
+.modelo-hint{margin:-5px 0 17px;padding:11px 14px;border:1px solid #d9e7ff;border-radius:12px;background:#f5f8ff;color:#475467;font-size:12.5px;line-height:1.55}
+.modelo-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px}
+.modelo-tag{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:11px;font-weight:800}
+.modelo-tag.free{background:#dcfce7;color:#166534}
+.acoes-item button[data-acao="copiar-adaptado"]{background:#f0edff;border-color:#d8d0ff;color:#5b45c7}
+[data-theme="dark"] #filtroModelo{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
+[data-theme="dark"] .modelo-hint{background:#151d34;border-color:#303b5a;color:#cbd5e1}
+[data-theme="dark"] .modelo-tag{background:#2b2750;color:#ddd6fe}
+[data-theme="dark"] .modelo-tag.free{background:#163626;color:#bbf7d0}
+[data-theme="dark"] .acoes-item button[data-acao="copiar-adaptado"]{background:#2b2750;border-color:#494078;color:#ddd6fe}
+@media(max-width:600px){#filtroModelo{width:100%;flex:1 1 100%}.modelo-hint{font-size:12px}}
+
 </style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261012a"></script><main>
 
 <section class="packs-hero" aria-labelledby="packsTitle">
 <div class="packs-hero-copy">
-<div class="packs-hero-top"><small class="packs-version">Delta Prompts · V1.71</small><span class="packs-kicker">📦 KITS TEMÁTICOS PRONTOS PARA USAR</span></div>
+<div class="packs-hero-top"><small class="packs-version">Delta Prompts · V1.72</small><span class="packs-kicker">📦 KITS TEMÁTICOS PRONTOS PARA USAR</span></div>
 <h1 id="packsTitle">Packs de Prompts <span>Estruturados</span></h1>
 <p>Transforme uma tarefa grande em etapas simples. Escolha um kit, siga a sequência de prompts e adapte cada etapa ao seu objetivo.</p>
 <div class="packs-hero-actions"><a class="packs-cta primary" href="#lista">🔎 Explorar packs ↓</a><a class="packs-cta secondary" href="/delta-prompts/index.html">🏠 Voltar ao início</a><a class="packs-cta secondary" href="/delta-prompts/biblioteca.html">📚 Minha biblioteca</a></div>
@@ -89,8 +103,15 @@ main{min-width:0;flex:1;max-width:1500px;margin:0 auto;padding:28px clamp(14px,2
 
 <div class="top-bar">
   <input id="busca" type="search" placeholder="🔎 Buscar pack por tema...">
+  <select id="filtroModelo" aria-label="Filtrar por compatibilidade de IA" title="Filtrar por compatibilidade de IA">
+    <option value="todos">🤖 Todas as IAs</option>
+    <option value="kimi">🌙 Kimi</option>
+    <option value="manus">🧭 Manus</option>
+    <option value="gratuitas">🆓 IAs gratuitas em geral</option>
+  </select>
   <span class="contador" id="contador" style="font-weight:700;color:#667085;font-size:13px"></span>
 </div>
+<p class="modelo-hint">💡 Escolha uma IA para filtrar os packs compatíveis e use <strong>“Copiar adaptado”</strong> para ajustar a instrução ao estilo da ferramenta. A disponibilidade gratuita e os limites variam conforme a conta e podem mudar.</p>
 <div class="filtros" id="filtrosCategoria"></div>
 
 <div class="toolbar-extra">
@@ -167,6 +188,28 @@ const packs=dadosBrutos.map((p,i)=>{
 
 const idiomaAtivo={};
 let categoriaAtual='todos';
+let modeloAtual='todos';
+// Compatibilidade prática sugerida; não é garantia oficial de recursos ou de plano gratuito.
+const compatibilidadePacks={
+  'pack-0':['kimi','manus'],
+  'pack-1':['kimi','manus'],
+  'pack-2':['kimi'],
+  'pack-3':['kimi','manus'],
+  'pack-4':['kimi','manus'],
+  'pack-5':['kimi','manus'],
+  'pack-6':['kimi','manus'],
+  'pack-7':['kimi','manus']
+};
+function modelosDoPack(p){return compatibilidadePacks[p.id]||['kimi']}
+function etiquetaModelos(p){return modelosDoPack(p).map(m=>m==='kimi'?'<span class="modelo-tag">🌙 Kimi</span>':'<span class="modelo-tag">🧭 Manus</span>').join('')+'<span class="modelo-tag free">🆓 Adaptável para IAs gratuitas</span>'}
+function adaptarPromptParaModelo(texto,modelo){
+  const instrucoes={
+    kimi:'Adaptação para Kimi: trabalhe com as informações fornecidas, organize a resposta em etapas curtas com títulos e listas. Se a tarefa for extensa, divida em partes e conclua uma parte por vez. Não invente dados; sinalize dúvidas e peça esclarecimentos quando necessário.',
+    manus:'Adaptação para Manus: transforme o pedido em um plano de execução com objetivo, etapas, entregáveis e critérios de conclusão. Antes de ações externas, compras, publicações ou alterações irreversíveis, peça confirmação. Não afirme ter realizado tarefas que não executou; relate limitações e resultados verificáveis.',
+    gratuitas:'Adaptação para uma IA gratuita: priorize uma resposta objetiva e estruturada, evite tarefas excessivamente longas de uma só vez e divida o trabalho em etapas reutilizáveis. Preserve os dados fornecidos, não invente informações e indique claramente o que precisa ser confirmado.'
+  };
+  return (instrucoes[modelo]||instrucoes.gratuitas)+'\\n\\nPEDIDO ORIGINAL (preserve a intenção e os campos preenchidos):\\n'+texto+'\\n\\nEntregue a resposta em formato claro. Se houver limite de contexto, tempo ou ferramentas, informe-o e continue em etapas sem fingir que concluiu o que não foi feito.';
+}
 
 function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function nivelLabel(n){return n==='avancado'?'🔴 Avançado':n==='intermediario'?'🟡 Intermediário':'🟢 Básico'}
@@ -178,6 +221,12 @@ function isFav(id){return _loadFav().some(f=>f.id===id)}
 function textoBase(passo){return idiomaAtivo[passo.id]==='en'?(passo.promptEn||passo.prompt):passo.prompt}
 function textoFinalPasso(passo){let t=textoBase(passo);(passo.placeholders||[]).forEach((ph,idx)=>{const el=document.getElementById('campo-'+passo.id+'-'+idx);const val=el?el.value.trim():'';if(val){const re=new RegExp('\\['+ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]','g');t=t.replace(re,val)}});return t}
 function textoCompletoPack(p){return p.passos.map(s=>s.titulo+'\n'+textoFinalPasso(s)).join('\n\n')}
+async function copiarAdaptado(id){
+  const passo=packs.flatMap(p=>p.passos).find(s=>s.id===id);if(!passo)return;
+  const texto=adaptarPromptParaModelo(textoFinalPasso(passo),modeloAtual==='todos'?'gratuitas':modeloAtual);
+  try{await navigator.clipboard.writeText(texto);registrarUso(id);mostrarToast('✨ Prompt adaptado copiado! Cole na IA escolhida.')}
+  catch(e){mostrarToast('Não foi possível copiar. Verifique a permissão da área de transferência.')}
+}
 function atualizarBtnFav(pack,btn){if(!btn)return;if(isFav(pack.id)){btn.textContent='❤️ Favoritado';btn.classList.add('is-fav')}else{btn.textContent='🤍 Favoritar';btn.classList.remove('is-fav')}}
 function favoritar(id,btn){const pack=packs.find(p=>p.id===id);if(!pack)return;let l=_loadFav();const idx=l.findIndex(f=>f.id===id);if(idx===-1){l.unshift({id,titulo:pack.titulo,texto:textoCompletoPack(pack),categoria:'Packs Prontos',createdAt:Date.now()});_saveFav(l);mostrarToast('💖 Pack adicionado aos favoritos!')}else{l.splice(idx,1);_saveFav(l);mostrarToast('🤍 Removido dos favoritos')}atualizarBtnFav(pack,btn);atualizarStats();window.dispatchEvent(new CustomEvent('delta:favoritos-updated'))}
 
@@ -260,7 +309,9 @@ function render(){
   const termo=norm(document.getElementById('busca').value);
   const filtrados=packs.filter(p=>{
     const texto=norm([p.titulo,p.descricao,p.categoria,p.passos.map(s=>s.titulo+' '+s.prompt).join(' ')].join(' '));
-    return(!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual);
+    const comp=modelosDoPack(p);
+    const atendeModelo=modeloAtual==='todos'||modeloAtual==='gratuitas'||comp.includes(modeloAtual);
+    return(!termo||texto.includes(termo))&&(categoriaAtual==='todos'||p.categoria===categoriaAtual)&&atendeModelo;
   });
   document.getElementById('contador').textContent=filtrados.length+' de '+packs.length+' packs';
   const lista=document.getElementById('lista');
@@ -269,6 +320,7 @@ function render(){
       <span class="tag">${p.categoria}</span><span class="nivel nivel-${p.nivel}">${nivelLabel(p.nivel)}</span>
       <h2>${p.titulo}</h2>
       <p>${p.descricao}</p>
+      <div class="modelo-tags" aria-label="Compatibilidade sugerida de IA">${etiquetaModelos(p)}</div>
       ${p.passos.map(s=>`
         <div class="item">
           <strong>${s.titulo}</strong>
@@ -276,6 +328,7 @@ function render(){
           <div class="prompt-text" id="prompt-${s.id}">${s.prompt}</div>
           <div class="acoes-item">
             <button data-acao="copiar-passo" data-id="${s.id}">📋 Copiar este passo</button>
+            <button data-acao="copiar-adaptado" data-id="${s.id}">✨ Copiar adaptado</button>
             <button data-acao="chat-passo" data-id="${s.id}">🤖 ChatGPT</button>
             <button data-acao="gemini-passo" data-id="${s.id}">✨ Gemini</button>
             <button id="idioma-${s.id}" data-acao="idioma-passo" data-id="${s.id}">🌐 EN</button>
@@ -308,6 +361,7 @@ document.getElementById('lista').addEventListener('click',e=>{
 });
 
 document.getElementById('busca').addEventListener('input',render);
+document.getElementById('filtroModelo').addEventListener('change',e=>{modeloAtual=e.target.value;render()});
 document.getElementById('btnExportar').addEventListener('click',exportarTodos);
 document.getElementById('btnSugerir').addEventListener('click',toggleSugerir);
 document.getElementById('btnCopiarSugestao').addEventListener('click',copiarSugestao);
