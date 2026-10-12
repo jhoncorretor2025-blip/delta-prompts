@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.59
-window.DELTA_SITE_VERSION='V1.59';
+// DELTA SITE VERSION: V1.60
+window.DELTA_SITE_VERSION='V1.60';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
@@ -648,7 +648,7 @@ window.deltaRegistrarLog=function(texto){
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-menu-v45';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
+(function(){function getMenuCandidates(){const version='delta-prompts-menu-v46';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
   try{
     const link=sidebar&&sidebar.querySelector('a[href*="/paginas/sites-landing-pages.html"]');
     const badge=link&&link.querySelector('.menu-count');
@@ -728,18 +728,47 @@ function destacarPaginaAtual(){
 function ativarBuscaMenu(){
   const input=document.getElementById('buscaMenuPrincipal');
   if(!input)return;
+  const normalizarTexto=function(valor){
+    return String(valor||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  };
   input.addEventListener('input',()=>{
-    const termo=input.value.toLowerCase().trim();
+    const termo=normalizarTexto(input.value).trim();
     const sidebar=document.querySelector('#menu .sidebar');
     if(!sidebar)return;
-    sidebar.querySelectorAll('.menu-links a, .menu-item-final').forEach(a=>{
-      const texto=a.textContent.toLowerCase();
+
+    const secoes=[...sidebar.querySelectorAll('.menu-section')];
+    const contextoSecao=new Map();
+    secoes.forEach(sec=>{
+      const titulo=sec.querySelector('.menu-title');
+      const tituloTexto=titulo?titulo.textContent:'';
+      const hrefs=[...sec.querySelectorAll('.menu-links a')].map(a=>a.getAttribute('href')||'').join(' ');
+      let contexto=tituloTexto+' '+hrefs;
+      // Sinônimos para que a categoria de criadores também apareça ao buscar por YouTube.
+      if(normalizarTexto(tituloTexto).includes('criadores de conteudo')||hrefs.includes('criadores_de_conteudo')){
+        contexto+=' criadores criador creator creators youtube youtuber youtubers canal canais videos video roteiros thumbnails conteudo audiovisual';
+      }
+      contextoSecao.set(sec,normalizarTexto(contexto).includes(termo));
+    });
+
+    sidebar.querySelectorAll('.menu-links a').forEach(a=>{
+      const sec=a.closest('.menu-section');
+      const texto=normalizarTexto((a.textContent||'')+' '+(a.getAttribute('href')||''));
+      const mostrar=!termo||texto.includes(termo)||(sec&&contextoSecao.get(sec));
+      a.style.display=mostrar?'':'none';
+    });
+
+    sidebar.querySelectorAll('.menu-item-final').forEach(a=>{
+      const texto=normalizarTexto((a.textContent||'')+' '+(a.getAttribute('href')||''));
       a.style.display=(!termo||texto.includes(termo))?'':'none';
     });
-    sidebar.querySelectorAll('.menu-section').forEach(sec=>{
+
+    secoes.forEach(sec=>{
       const algumVisivel=[...sec.querySelectorAll('.menu-links a')].some(a=>a.style.display!=='none');
       sec.style.display=(!termo||algumVisivel)?'':'none';
+      const links=sec.querySelector('.menu-links');
+      if(termo&&algumVisivel&&links)links.classList.add('active');
     });
+
     sidebar.querySelectorAll('.menu-group-title, .menu-item-final-titulo').forEach(titulo=>{
       let el=titulo.nextElementSibling,algumVisivel=false;
       while(el&&(el.classList.contains('menu-section')||el.classList.contains('menu-item-final'))){
