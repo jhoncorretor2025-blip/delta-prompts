@@ -1792,3 +1792,17 @@ html[data-modo-leitura="true"] main [data-prompt-text] {
 /* ===== V1.74 — busca lateral claramente identificada como filtro do menu ===== */
 #menu .delta-menu-search label{font-weight:850}
 #menu .delta-menu-search small::after{content:" A busca principal de prompts fica no centro da página."}
+
+
+/* ===== V1.75 — cards de busca alinhados e CTA em formato de botão ===== */
+.home-search-result{display:flex;min-width:0;height:100%;border:1px solid var(--delta-border,#e5e7eb);border-radius:16px;overflow:hidden;background:var(--delta-surface,#fff)}
+.home-search-result-main{display:flex;flex:1;min-width:0;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;color:inherit;text-decoration:none}
+.home-search-result-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35;min-height:2.7em}
+.home-search-result-summary,.prompt-leigo-card small{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5;min-height:4.5em}
+.home-search-result-meta{margin-top:auto;color:var(--delta-text-secondary,#667085);font-size:12px}
+.home-search-result-cta,.prompt-leigo-card .usar{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;margin-top:auto;padding:9px 13px;border-radius:10px;background:var(--delta-accent,#5b5ce2);color:#fff!important;font-size:13px;font-weight:800;line-height:1.2;text-decoration:none;transition:background .18s ease,transform .18s ease}
+.home-search-result-main:hover .home-search-result-cta,.prompt-leigo-card:hover .usar{background:var(--delta-accent-dark,#4243bb);transform:translateY(-1px)}
+.prompt-leigo-card{display:flex;flex-direction:column;min-height:100%}
+.prompt-leigo-card small{font-size:11.5px}
+.prompt-leigo-card .usar{margin-top:auto;padding:8px 11px}
+@media(prefers-reduced-motion:reduce){.home-search-result-cta,.prompt-leigo-card .usar{transition:none}}
