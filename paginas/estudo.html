@@ -19,7 +19,7 @@
 <main>
 
   <!-- 1️⃣ TÍTULO FORTE -->
-  <small data-delta-version="V1.71" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.71</small>
+  <small data-delta-version="V1.72" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.72</small>
 <h1>📚 Estudo Estratégico com IA</h1>
 
   <!-- 2️⃣ INTRODUÇÃO -->
@@ -628,7 +628,88 @@ Sua função é:
 
 Comece perguntando meu nível atual e meu objetivo final antes de iniciar a explicação.`
 }
+,
 
+  {
+    id: "notebooklm-notebooklm-resumo-inteligente",
+    categoria: "🤖 IA Avançada",
+    nivel: "intermediario",
+    titulo: "📚 NotebookLM — Resumo Inteligente",
+    quando: "Para transformar as fontes carregadas em uma visão geral clara, estruturada e fiel ao material.",
+    prompt: "Atue como um analista de conhecimento no NotebookLM. Use exclusivamente as fontes adicionadas ao notebook e sinalize quando uma informação não estiver nelas.\n\nCrie um resumo inteligente sobre [TEMA OU PERGUNTA], organizado em:\n1. Ideia central em até 5 linhas.\n2. Principais conceitos e explicações.\n3. Evidências, dados e exemplos relevantes, com referência às fontes quando disponível.\n4. Termos que preciso conhecer.\n5. Dúvidas ou lacunas que merecem investigação.\n6. Resumo final em 10 tópicos.\n\nNão invente fatos. Diferencie claramente o que as fontes afirmam do que for uma inferência."
+  },
+
+  {
+    id: "notebooklm-notebooklm-criar-um-app-no-canvas",
+    categoria: "🤖 IA Avançada",
+    nivel: "intermediario",
+    titulo: "🧩 NotebookLM — Criar um App no Canvas",
+    quando: "Para transformar o conteúdo das fontes em uma ferramenta interativa ou protótipo de estudo.",
+    prompt: "Com base nas fontes deste notebook, ajude-me a criar no Canvas um aplicativo/protótipo interativo para estudar [TEMA OU OBJETIVO].\n\nAntes de montar, proponha uma estrutura simples com:\n- Público-alvo e objetivo principal.\n- Até 5 funcionalidades úteis.\n- Tela inicial e navegação intuitiva.\n- Conteúdo fundamentado nas fontes, com referências quando possível.\n- Exercícios ou interações que ajudem a aplicar o conhecimento.\n\nPriorize clareza, acessibilidade e uso em celular. Não invente informações que não estejam nas fontes. Se o Canvas não puder executar alguma funcionalidade, apresente-a como sugestão de protótipo, sem alegar que já funciona."
+  },
+
+  {
+    id: "notebooklm-notebooklm-extrair-ideias-principais",
+    categoria: "🤖 IA Avançada",
+    nivel: "intermediario",
+    titulo: "🔎 NotebookLM — Extrair Ideias Principais",
+    quando: "Para identificar rapidamente as ideias essenciais de documentos, artigos e materiais extensos.",
+    prompt: "Analise todas as fontes relevantes deste notebook sobre [TEMA]. Extraia as ideias principais e organize-as por importância.\n\nPara cada ideia, apresente:\n1. Ideia em uma frase.\n2. Explicação simples.\n3. Evidência, exemplo ou trecho de apoio e sua fonte, quando disponível.\n4. Relação com outras ideias do material.\n5. Por que isso importa.\n\nAo final, destaque as 5 ideias indispensáveis e indique quais fontes foram usadas. Não confunda repetição com importância e não complete lacunas com suposições."
+  },
+
+  {
+    id: "notebooklm-notebooklm-analisar-contradicoes",
+    categoria: "🤖 IA Avançada",
+    nivel: "intermediario",
+    titulo: "⚖️ NotebookLM — Analisar Contradições",
+    quando: "Para comparar afirmações divergentes, inconsistências e diferenças entre as fontes.",
+    prompt: "Compare as fontes deste notebook sobre [TEMA] e procure contradições, divergências ou diferenças de interpretação.\n\nMonte uma análise com:\n- Afirmação da fonte A e referência.\n- Afirmação divergente da fonte B e referência.\n- Tipo de divergência: factual, definição, interpretação, período, método ou aparente contradição.\n- Contexto que pode explicar a diferença.\n- Evidências disponíveis e o que ainda falta verificar.\n\nNão declare que existe contradição quando as fontes tratam de contextos ou períodos diferentes. Não escolha um lado sem evidências. Se não encontrar divergências relevantes, diga isso claramente."
+  },
+
+  {
+    id: "notebooklm-notebooklm-professor-particular",
+    categoria: "🤖 IA Avançada",
+    nivel: "intermediario",
+    titulo: "👨‍🏫 NotebookLM — Professor Particular",
+    quando: "Para aprender um assunto gradualmente, com explicações adaptadas ao seu nível.",
+    prompt: "Seja meu professor particular de [TEMA], usando as fontes deste notebook como base principal.\n\nEnsine em etapas curtas:\n1. Descubra ou estime meu nível e explique os conceitos essenciais em linguagem simples.\n2. Use analogias e exemplos concretos, indicando quando forem analogias.\n3. Faça uma pergunta de verificação por vez e espere minha resposta.\n4. Corrija meus erros com gentileza e explique o motivo.\n5. Aumente a dificuldade gradualmente e relacione os conceitos.\n6. Cite as fontes usadas quando possível.\n\nNão entregue todas as respostas de uma vez. Se as fontes não cobrirem uma pergunta, avise e não invente conteúdo."
+  },
+
+  {
+    id: "notebooklm-notebooklm-plano-de-acao",
+    categoria: "🤖 IA Avançada",
+    nivel: "intermediario",
+    titulo: "🗓️ NotebookLM — Plano de Ação",
+    quando: "Para converter aprendizados das fontes em próximos passos práticos e mensuráveis.",
+    prompt: "Com base nas fontes deste notebook, transforme o conhecimento sobre [OBJETIVO] em um plano de ação realista.\n\nOrganize em tabela com: ação, motivo apoiado nas fontes, prioridade, esforço estimado, recursos necessários, prazo sugerido, resultado esperado e indicador de conclusão.\n\nDivida o plano em:\n- Primeiras ações simples.\n- Etapas principais.\n- Revisão de progresso.\n- Riscos, dependências e dúvidas a esclarecer.\n\nDiferencie recomendações sustentadas pelas fontes de sugestões práticas suas. Não invente prazos factuais nem trate estimativas como certezas. Termine com as 3 próximas ações mais importantes."
+  },
+
+  {
+    id: "notebooklm-notebooklm-organizacao-inteligente",
+    categoria: "🤖 IA Avançada",
+    nivel: "intermediario",
+    titulo: "🗂️ NotebookLM — Organização Inteligente",
+    quando: "Para organizar uma coleção de fontes em temas, subtemas e relações.",
+    prompt: "Organize as fontes deste notebook sobre [TEMA] em uma estrutura de conhecimento fácil de consultar.\n\nCrie:\n1. Categorias principais e subcategorias.\n2. Lista das fontes relacionadas a cada categoria.\n3. Resumo de cada fonte em 2 a 4 frases.\n4. Conceitos repetidos, complementares ou divergentes.\n5. Relações entre os temas e uma ordem recomendada de leitura.\n6. Lacunas de informação e perguntas para pesquisa futura.\n\nEvite categorias duplicadas e preserve o contexto de cada documento. Use títulos claros e cite as fontes. Não atribua conteúdo a uma fonte sem confirmar que ela realmente o contém."
+  },
+
+  {
+    id: "notebooklm-notebooklm-criar-20-perguntas-e-respostas",
+    categoria: "🤖 IA Avançada",
+    nivel: "intermediario",
+    titulo: "❓ NotebookLM — Criar 20 Perguntas e Respostas",
+    quando: "Para revisar um conteúdo e testar a compreensão com perguntas fundamentadas nas fontes.",
+    prompt: "Crie 20 perguntas e respostas sobre [TEMA], usando as fontes deste notebook.\n\nDistribua as perguntas entre:\n- 5 de compreensão básica.\n- 5 sobre conceitos e relações.\n- 5 de análise e comparação.\n- 5 de aplicação prática.\n\nPara cada item, forneça a pergunta, a resposta correta explicada brevemente, a dificuldade e a fonte de apoio quando disponível. Evite perguntas repetidas, respostas ambíguas e informações externas não verificadas.\n\nPrimeiro mostre apenas as perguntas para eu tentar responder. Depois, quando eu pedir “gabarito”, apresente as respostas e explique os erros mais comuns."
+  },
+
+  {
+    id: "notebooklm-notebooklm-aplicacao-pratica-do-conhecimento",
+    categoria: "🤖 IA Avançada",
+    nivel: "intermediario",
+    titulo: "🚀 NotebookLM — Aplicação Prática do Conhecimento",
+    quando: "Para transformar teoria estudada em exemplos, exercícios e situações do mundo real.",
+    prompt: "Ajude-me a aplicar o conhecimento das fontes deste notebook a uma situação real: [DESCREVA A SITUAÇÃO OU OBJETIVO].\n\nApresente:\n1. Conceitos das fontes relevantes para o caso.\n2. Como cada conceito se aplica, com referências disponíveis.\n3. Um exemplo resolvido passo a passo.\n4. Um exercício semelhante para eu tentar sozinho.\n5. Critérios para avaliar se minha solução está correta.\n6. Limitações, riscos e informações que ainda preciso obter.\n\nSepare fatos extraídos das fontes de hipóteses e recomendações. Se o material não for suficiente para responder, identifique claramente o que está faltando."
+  }
 ];
 
 const instrucoesBase = `
