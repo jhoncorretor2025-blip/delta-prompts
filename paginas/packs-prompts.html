@@ -208,7 +208,7 @@ function adaptarPromptParaModelo(texto,modelo){
     manus:'Adaptação para Manus: transforme o pedido em um plano de execução com objetivo, etapas, entregáveis e critérios de conclusão. Antes de ações externas, compras, publicações ou alterações irreversíveis, peça confirmação. Não afirme ter realizado tarefas que não executou; relate limitações e resultados verificáveis.',
     gratuitas:'Adaptação para uma IA gratuita: priorize uma resposta objetiva e estruturada, evite tarefas excessivamente longas de uma só vez e divida o trabalho em etapas reutilizáveis. Preserve os dados fornecidos, não invente informações e indique claramente o que precisa ser confirmado.'
   };
-  return (instrucoes[modelo]||instrucoes.gratuitas)+'\\n\\nPEDIDO ORIGINAL (preserve a intenção e os campos preenchidos):\\n'+texto+'\\n\\nEntregue a resposta em formato claro. Se houver limite de contexto, tempo ou ferramentas, informe-o e continue em etapas sem fingir que concluiu o que não foi feito.';
+  return (instrucoes[modelo]||instrucoes.gratuitas)+'\n\nPEDIDO ORIGINAL (preserve a intenção e os campos preenchidos):\n'+texto+'\n\nEntregue a resposta em formato claro. Se houver limite de contexto, tempo ou ferramentas, informe-o e continue em etapas sem fingir que concluiu o que não foi feito.';
 }
 
 function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
