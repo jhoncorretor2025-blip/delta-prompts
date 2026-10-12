@@ -1787,3 +1787,8 @@ html[data-modo-leitura="true"] main [data-prompt-text] {
   #deltaAjustesFlutuantesBtn{right:14px!important;bottom:14px!important}
   #deltaAjustesFlutuantesPanel{right:14px!important;bottom:70px!important}
 }
+
+
+/* ===== V1.74 — busca lateral claramente identificada como filtro do menu ===== */
+#menu .delta-menu-search label{font-weight:850}
+#menu .delta-menu-search small::after{content:" A busca principal de prompts fica no centro da página."}
