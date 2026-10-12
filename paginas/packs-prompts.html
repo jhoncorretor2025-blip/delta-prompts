@@ -43,9 +43,28 @@
 [data-theme="dark"] .filtros button,[data-theme="dark"] .toolbar-extra button,[data-theme="dark"] .feedback-row button,[data-theme="dark"] .acoes-item button{background:#0f1424;border-color:rgba(255,255,255,.15);color:#cbd5e1}
 [data-theme="dark"] .sugerir-box,[data-theme="dark"] .campos-preenchimento{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .stats-bar,[data-theme="dark"] .sugerir-dica{color:#a0a0a0}
-</style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
-<h1>📦 Packs de Prompts Prontos</h1>
+.packs-version{display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900}
+main{min-width:0;flex:1;max-width:1500px;margin:0 auto;padding:28px clamp(14px,2.2vw,32px)!important}
+.intro{border:1px solid #fed7aa;box-shadow:0 8px 24px rgba(124,45,18,.05);line-height:1.65}
+.intro h3{margin-top:0;font-size:clamp(18px,2vw,23px)}
+#lista{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+#lista .pack{min-width:0;margin:0;padding:clamp(16px,2vw,24px);border:1px solid #e7e5f4;border-left:5px solid #7a5bff;border-radius:18px;background:var(--bg-card,#fff);box-shadow:0 5px 18px rgba(30,35,70,.05);overflow-wrap:anywhere}
+#lista .pack h2{margin:12px 0 8px;font-size:clamp(18px,1.7vw,22px);line-height:1.35}
+#lista .pack>p{color:#667085;line-height:1.55}
+#lista .prompt-text{max-height:260px;overflow:auto;line-height:1.55;border:1px solid #edf0f5}
+#lista .acoes,#lista .acoes-item{gap:7px}
+#lista button{min-height:38px;transition:transform .15s ease,box-shadow .15s ease}
+#lista button:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(30,35,70,.08)}
+@media(max-width:1000px){#lista{grid-template-columns:1fr}}
+@media(max-width:600px){main{padding:18px 12px 90px!important}.intro{padding:17px}.top-bar{gap:8px}.top-bar input{min-width:0;width:100%}.filtros button{font-size:12px;padding:8px 11px}#lista .pack{padding:15px}#lista .acoes button,#lista .acoes-item button{flex:1 1 auto;min-width:120px}}
+[data-theme="dark"] .packs-version{background:#2e2454;color:#ddd6fe}
+[data-theme="dark"] #lista .pack{border-color:rgba(255,255,255,.12);background:var(--bg-card,#111827)}
+[data-theme="dark"] #lista .pack>p{color:#a0a0a0}
+[data-theme="dark"] #lista .prompt-text{border-color:rgba(255,255,255,.12)}
+</style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261012a"></script><main>
+
+<small class="packs-version">Delta Prompts · V1.70</small><h1>📦 Packs de Prompts Prontos</h1>
 <div class="intro"><h3>Um objetivo, vários prompts em sequência</h3><p>Os packs reúnem prompts que funcionam juntos, um passo de cada vez. Você pode usar apenas um passo ou seguir o kit completo do começo ao fim.</p></div>
 
 <div class="stats-bar" id="statsBar"></div>
