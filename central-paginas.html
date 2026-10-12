@@ -32,10 +32,10 @@ body{margin:0;background:var(--bg,#f5f6fb);color:var(--text,#202236);font-family
 </head>
 <body>
 <div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc)"></div></div>
-<script src="/delta-prompts/menu-loader.js?v=20261012-v68" defer></script>
+<script src="/delta-prompts/menu-loader.js?v=20261012-v69" defer></script>
 <main class="cp-wrap">
 <p style="font-size:13px;margin:0 0 12px"><a href="/delta-prompts/configuracao.html" style="color:var(--cp-accent);font-weight:800;text-decoration:none">⚙️ Configuração</a> / Minhas páginas</p>
-<section class="cp-hero"><span class="cp-version" id="cpVersao">DELTA PROMPTS · V1.68</span><h1>🗂️ Minhas páginas</h1><p>Todas as páginas do Delta num lugar só. Procure pelo nome, marque com ☆ as que você mais usa e volte rapidinho para as que você visitou.</p></section>
+<section class="cp-hero"><span class="cp-version" id="cpVersao">DELTA PROMPTS · V1.69</span><h1>🗂️ Minhas páginas</h1><p>Todas as páginas do Delta num lugar só. Procure pelo nome, marque com ☆ as que você mais usa e volte rapidinho para as que você visitou.</p></section>
 <div class="cp-stats">
 <div class="cp-stat"><span>📚 Páginas no site</span><strong id="statTotal">—</strong></div>
 <div class="cp-stat"><span>👣 Você já visitou</span><strong id="statVisited">—</strong></div>
@@ -73,6 +73,24 @@ function date(ts){if(!ts)return 'Ainda não registrada';try{return new Date(ts).
 function groupFor(path){if(path.indexOf('/criadores_de_conteudo/')>=0)return 'Criadores de conteúdo';if(path.indexOf('/renda_extra/')>=0)return 'Renda extra';if(path.indexOf('/paginas/')>=0)return 'Prompts e categorias';if(path.indexOf('/canivete')>=0)return 'Canivete';if(path.indexOf('/configuracao')>=0||path.indexOf('/meus-numeros')>=0)return 'Configurações';return 'Ferramentas e páginas'}
 function prettyName(t){var m={'configuracao':'Configuração','meus numeros':'Meus números','progresso':'Meu progresso','favoritos':'Favoritos','biblioteca':'Biblioteca'};var k=String(t||'').toLowerCase().trim();return m[k]||t}
 function titleFrom(a,path){var t=(a.textContent||'').replace(/\s+/g,' ').trim();return t.replace(/^[^\p{L}\p{N}]+/u,'')||decodeURIComponent(path.split('/').pop().replace(/\.html?$/i,'')).replace(/[-_]/g,' ')}
+function lerFavsPaginas(){
+  /* V1.69: usa a MESMA lista do coração 🤍 das páginas e da página Favoritos (deltaPaginasFavoritas).
+     A lista antiga desta central (deltaPageFavorites) é juntada uma vez e depois apagada. */
+  var principal=read('deltaPaginasFavoritas',[]);if(!Array.isArray(principal))principal=[];
+  var antiga=read('deltaPageFavorites',[]);
+  if(Array.isArray(antiga)&&antiga.length){antiga.forEach(function(path){var noCat=(pages||[]).filter(function(p){return p.path===path})[0];if(typeof path==='string'&&!principal.some(function(x){return x&&x.path===path}))principal.push({path:path,titulo:noCat?noCat.title:decodeURIComponent(path.split('/').pop().replace(/\.html?$/i,'')).replace(/[-_]/g,' '),data:Date.now()})});write('deltaPaginasFavoritas',principal);try{localStorage.removeItem('deltaPageFavorites')}catch(e){}}
+  var mudou=false;principal.forEach(function(x){var c=x&&(pages||[]).filter(function(p){return p.path===x.path})[0];if(c&&(!x.titulo||x.titulo===x.titulo.toLowerCase())&&x.titulo!==c.title){x.titulo=c.title;mudou=true}});if(mudou)write('deltaPaginasFavoritas',principal);
+  window.cpFavObjs=principal;
+  return principal.map(function(x){return x&&x.path}).filter(Boolean);
+}
+function salvarFavsPaginas(paths){
+  var atual=read('deltaPaginasFavoritas',[]);if(!Array.isArray(atual))atual=[];
+  var porPath={};atual.forEach(function(x){if(x&&x.path)porPath[x.path]=x});
+  var titulos={};pages.forEach(function(p){titulos[p.path]=p.title});
+  var nova=paths.map(function(path){return porPath[path]||{path:path,titulo:titulos[path]||path,data:Date.now()}});
+  write('deltaPaginasFavoritas',nova);window.cpFavObjs=nova;
+  try{window.dispatchEvent(new CustomEvent('delta:paginas-favoritas-updated'))}catch(e){}
+}
 function loadCatalog(){
  return fetch(BASE+'menu.html?v=delta-prompts-menu-v47',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('Não foi possível ler o menu');return r.text()}).then(function(html){
   var doc=new DOMParser().parseFromString(html,'text/html'),map={};
@@ -93,7 +111,7 @@ function loadCatalog(){
   pages.forEach(function(p){if(!known[p.path])known[p.path]=Date.now();p.firstSeen=known[p.path]});
   write('deltaPageCatalogSeen',known);
   usage=read('deltaPageUsage',{});
-  favs=read('deltaPageFavorites',[]);
+  favs=lerFavsPaginas();
   updateStats();render();
  }).catch(function(){
   document.getElementById('cpList').innerHTML='<div class="cp-empty">Não consegui carregar o menu agora. Atualize a página ou tente novamente.</div>';
@@ -125,7 +143,7 @@ document.getElementById('cpSearch').addEventListener('input',render);
 document.getElementById('cpGroup').addEventListener('change',render);
 document.getElementById('cpSort').addEventListener('change',render);
 document.querySelectorAll('[data-view]').forEach(function(b){b.addEventListener('click',function(){view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(function(x){x.classList.toggle('active',x===b)});if(view==='most')document.getElementById('cpSort').value='most';if(view==='least')document.getElementById('cpSort').value='least';render()})});
-document.getElementById('cpList').addEventListener('click',function(e){var b=e.target.closest('[data-fav]');if(!b)return;var p=b.dataset.fav;favs=favs.filter(function(x){return x!==p});if(b.textContent!=='⭐')favs.push(p);write('deltaPageFavorites',favs);updateStats();render()});
+document.getElementById('cpList').addEventListener('click',function(e){var b=e.target.closest('[data-fav]');if(!b)return;var p=b.dataset.fav;favs=favs.filter(function(x){return x!==p});if(b.textContent!=='⭐')favs.push(p);salvarFavsPaginas(favs);updateStats();render()});
 document.getElementById('cpGithubBtn').addEventListener('click',async function(){
  var out=document.getElementById('cpGithubResults');out.innerHTML='<div class="cp-empty">Consultando o histórico recente do GitHub…</div>';this.disabled=true;
  try{
@@ -158,11 +176,13 @@ loadCatalog();
 (function(){
   var v=document.getElementById('cpVersao');if(v&&window.DELTA_SITE_VERSION)v.textContent='DELTA PROMPTS · '+window.DELTA_SITE_VERSION;
   function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  window.addEventListener('storage',function(e){if(e.key==='deltaPaginasFavoritas')location.reload()});
   window.cpRapido=function(pages,usage,favs){
     var box=document.getElementById('cpRapido');if(!box)return;var porPath={};pages.forEach(function(p){porPath[p.path]=p});
-    var fav=favs.map(function(f){return porPath[f]}).filter(Boolean).slice(0,6);
+    var objs={};(window.cpFavObjs||[]).forEach(function(x){if(x&&x.path)objs[x.path]=x});
+    var fav=favs.map(function(f){return porPath[f]||(objs[f]?{path:f,title:objs[f].titulo||f}:null)}).filter(Boolean).slice(0,6);
     var rec=pages.filter(function(p){return usage[p.path]&&usage[p.path].lastSeen}).sort(function(a,b){return usage[b.path].lastSeen-usage[a.path].lastSeen}).slice(0,5);
-    document.getElementById('cpRapFav').innerHTML='<h3>⭐ Suas favoritas</h3>'+(fav.length?fav.map(function(p){return '<a href="'+esc(p.path)+'">'+esc(p.title)+'<small>abrir →</small></a>'}).join(''):'<p>Toque na ☆ de uma página lá embaixo e ela aparece aqui pra você abrir rapidinho.</p>');
+    document.getElementById('cpRapFav').innerHTML='<h3>⭐ Suas favoritas</h3>'+(fav.length?fav.map(function(p){return '<a href="'+esc(p.path)+'">'+esc(p.title)+'<small>abrir →</small></a>'}).join(''):'<p>Toque na ☆ de uma página lá embaixo (ou no 🤍 dentro de qualquer página) e ela aparece aqui.</p>')+(function(){var n=0;try{var x=JSON.parse(localStorage.getItem('deltaFavoritos')||'[]');n=Array.isArray(x)?x.length:0}catch(e){}return n?'<p style="margin-top:10px">📝 Você também tem <b>'+n+' prompt'+(n>1?'s':'')+' favorito'+(n>1?'s':'')+'</b>. <a href="/delta-prompts/favoritos.html" style="display:inline;padding:0;background:none;color:#5b5ce2">Ver meus favoritos →</a></p>':''})();
     document.getElementById('cpRapRec').innerHTML='<h3>🕒 Continue de onde parou</h3>'+(rec.length?rec.map(function(p){var d=new Date(usage[p.path].lastSeen);return '<a href="'+esc(p.path)+'">'+esc(p.title)+'<small>'+d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+'</small></a>'}).join(''):'<p>As páginas que você visitar vão aparecer aqui.</p>');
     box.hidden=false;
   };

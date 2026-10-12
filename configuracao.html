@@ -16,7 +16,7 @@
 .pasta-config a[aria-current="page"]{color:#5b5ce2}
 [data-theme="dark"] .pasta-config{background:var(--bg-card,#16213e);border-color:rgba(255,255,255,.1)}
 [data-theme="dark"] .pasta-config a{color:#e2e8f0}
-.sites-salvos{display:grid;gap:10px}.site-salvo{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}.site-salvo-main{min-width:0;flex:1}.site-salvo-main strong,.site-salvo-main small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-salvo-main small{color:#667085;font-size:12px;margin-top:2px}.site-salvo button{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:800}.site-salvo-form{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;margin-top:12px}.site-salvo-form input{padding:11px 12px;border:1px solid #e5e7eb;border-radius:10px;font:inherit}@media(max-width:650px){.site-salvo-form{grid-template-columns:1fr}}</style></head><body id="configuracao-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261012-v68"></script><main>
+.sites-salvos{display:grid;gap:10px}.site-salvo{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}.site-salvo-main{min-width:0;flex:1}.site-salvo-main strong,.site-salvo-main small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-salvo-main small{color:#667085;font-size:12px;margin-top:2px}.site-salvo button{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:7px 9px;cursor:pointer;font-weight:800}.site-salvo-form{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;margin-top:12px}.site-salvo-form input{padding:11px 12px;border:1px solid #e5e7eb;border-radius:10px;font:inherit}@media(max-width:650px){.site-salvo-form{grid-template-columns:1fr}}</style></head><body id="configuracao-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261012-v69"></script><main>
 
 <p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / Configuração</p>
 <h1>⚙️ Configuração</h1>
@@ -538,7 +538,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
       pill(idDe('perfil'),'🧑','Seu perfil',PERFIL_NOMES[perfil]||'Ainda não escolhido',!!perfil)+
       pill(idDe('auto'),'🏠','Preenchimento automático',preenchidos+' de 4 campos preenchidos',preenchidos>0)+
       pill(idDe('sites'),'🌐','Sites salvos',sites?sites+' site(s) salvo(s)':'Nenhum ainda',sites>0)+
-      pill(idDe('central'),'🗂️','Minhas páginas',(function(){var f=ler('deltaPageFavorites',[]);return Array.isArray(f)&&f.length?f.length+' favorita(s)':'Nenhuma favorita ainda'})(),Array.isArray(ler('deltaPageFavorites',[]))&&ler('deltaPageFavorites',[]).length>0)+
+      pill(idDe('central'),'🗂️','Minhas páginas',(function(){var a=ler('deltaPaginasFavoritas',[]),n=Array.isArray(a)?a.length:0;return n?n+' página(s) favorita(s)':'Nenhuma favorita ainda'})(),(function(){var a=ler('deltaPaginasFavoritas',[]);return Array.isArray(a)&&a.length>0})())+
       pill(idDe('ordem'),'📐','Ordem do menu',ordemManual?'Do seu jeito':'Automática (pelo seu uso)',true)+
       pill(idDe('esconder'),'🙈','Páginas escondidas',escondidas?escondidas+' escondida(s)':'Nenhuma',true)+
       pill('cfgAparencia','🎨','Aparência',tema==='dark'?'Tema escuro 🌙':'Tema claro ☀️',true)+
@@ -562,7 +562,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   var CHAVES=['deltaPerfilAtivo','deltaDadosPadrao','deltaSitesSalvos','deltaGrupoOrdemManual','deltaCategoriasEscondidas','deltaSecoesEscondidas','deltaFiltroNovidades','deltaTheme','deltaLogConfig','deltaHistoricoPaginas'];
   $('#cfgExportar').addEventListener('click',function(){
     var dados={};CHAVES.forEach(function(k){try{var v=localStorage.getItem(k);if(v!==null)dados[k]=v}catch(e){}});
-    var pacote={tipo:'delta-prompts-configuracao',versao:window.DELTA_SITE_VERSION||'V1.68',criadoEm:new Date().toISOString(),dados:dados};
+    var pacote={tipo:'delta-prompts-configuracao',versao:window.DELTA_SITE_VERSION||'V1.69',criadoEm:new Date().toISOString(),dados:dados};
     var url=URL.createObjectURL(new Blob([JSON.stringify(pacote,null,2)],{type:'application/json'}));
     var a=document.createElement('a');a.href=url;a.download='delta-configuracoes-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},3000);
     try{localStorage.setItem('deltaUltimoBackupConfig',new Date().toISOString())}catch(e){}
@@ -614,13 +614,15 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
   function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
   var paginas=[];
+  function favPaginas(){var a=ler('deltaPaginasFavoritas',[]);a=Array.isArray(a)?a.filter(function(x){return x&&x.path}):[];var b=ler('deltaPageFavorites',[]);if(Array.isArray(b))b.forEach(function(path){if(typeof path==='string'&&!a.some(function(x){return x.path===path}))a.push({path:path})});return a}
+  window.cfgFavPaginas=favPaginas;
   function limpar(t,path){t=String(t||'').replace(/\s+/g,' ').trim().replace(/^[^\p{L}\p{N}]+/u,'').replace(/\s+V\d+(\.\d+)+$/,'').replace(/\s+\d{1,3}$/,'');if(!t||t==='Config.')t=decodeURIComponent(path.split('/').pop().replace(/\.html?$/i,'')).replace(/[-_]/g,' ');var bonito={'configuracao':'Configuração','meus numeros':'Meus números','progresso':'Meu progresso'};return bonito[t.toLowerCase()]||t}
   function link(p,extra){return '<a href="'+esc(p.path)+'">'+esc(p.titulo)+'<small>'+(extra||'abrir →')+'</small></a>'}
   function padrao(){
-    var uso=ler('deltaPageUsage',{}),fav=ler('deltaPageFavorites',[]),porPath={};paginas.forEach(function(p){porPath[p.path]=p});
-    var f=(Array.isArray(fav)?fav:[]).map(function(x){return porPath[x]}).filter(Boolean).slice(0,5);
+    var uso=ler('deltaPageUsage',{}),porPath={};paginas.forEach(function(p){porPath[p.path]=p});
+    var f=favPaginas().map(function(x){return porPath[x.path]||{path:x.path,titulo:x.titulo||x.path}}).slice(0,5);
     var r=paginas.filter(function(p){return uso[p.path]&&uso[p.path].lastSeen}).sort(function(a,b){return uso[b.path].lastSeen-uso[a.path].lastSeen}).slice(0,5);
-    document.getElementById('cfgMpA').innerHTML='<h4>⭐ Suas favoritas</h4>'+(f.length?f.map(function(p){return link(p)}).join(''):'<p>Ainda nenhuma. Em “Ver todas as páginas”, toque na ☆ das que você mais usa.</p>');
+    document.getElementById('cfgMpA').innerHTML='<h4>⭐ Suas favoritas</h4>'+(f.length?f.map(function(p){return link(p)}).join(''):'<p>Ainda nenhuma. Toque no 🤍 dentro de uma página (ou na ☆ em “Ver todas as páginas”).</p>');
     document.getElementById('cfgMpB').innerHTML='<h4>🕒 Visitadas por último</h4>'+(r.length?r.map(function(p){return link(p,new Date(uso[p.path].lastSeen).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}))}).join(''):'<p>As páginas que você abrir vão aparecer aqui.</p>');
   }
   function buscar(q){
