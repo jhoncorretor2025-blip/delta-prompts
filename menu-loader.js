@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.64
-window.DELTA_SITE_VERSION='V1.64';
+// DELTA SITE VERSION: V1.65
+window.DELTA_SITE_VERSION='V1.65';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return;
