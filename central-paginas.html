@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Central de páginas | Delta Prompts</title>
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
+<style>
+:root{--cp-accent:var(--delta-accent,#5b5ce2)}
+body{margin:0;background:var(--bg,#f5f6fb);color:var(--text,#202236);font-family:Inter,Arial,sans-serif}
+.cp-wrap{width:min(1100px,calc(100% - 28px));margin:28px auto 90px}
+.cp-hero{padding:24px;border-radius:20px;background:linear-gradient(135deg,#f1f0ff,#fff);border:1px solid #e3e2ff;margin-bottom:18px}
+.cp-hero h1{margin:8px 0;font-size:clamp(26px,4vw,38px)}.cp-hero p{margin:0;color:#667085}
+.cp-version{display:inline-flex;padding:5px 9px;border-radius:999px;background:#e7e7ff;color:#4243bb;font-size:11px;font-weight:900}
+.cp-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.cp-stat{background:var(--bg-card,#fff);border:1px solid var(--border,#e5e7ef);border-radius:14px;padding:14px;min-width:0}
+.cp-stat span{display:block;color:#667085;font-size:12px}.cp-stat strong{display:block;font-size:25px;margin-top:3px}
+.cp-controls{display:grid;grid-template-columns:minmax(180px,2fr) minmax(140px,1fr) minmax(140px,1fr);gap:10px;background:var(--bg-card,#fff);border:1px solid var(--border,#e5e7ef);border-radius:16px;padding:14px;margin:14px 0}
+.cp-controls input,.cp-controls select{width:100%;min-width:0;box-sizing:border-box;padding:11px 12px;border:1px solid #d9dce7;border-radius:10px;background:var(--bg-card,#fff);color:inherit;font:inherit}
+.cp-tabs{display:flex;gap:8px;overflow-x:auto;padding:3px 0 12px}.cp-tabs button,.cp-btn{border:1px solid #dfe1ec;background:var(--bg-card,#fff);color:inherit;border-radius:10px;padding:10px 13px;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}.cp-tabs button.active,.cp-btn.primary{background:var(--cp-accent);border-color:var(--cp-accent);color:white}
+.cp-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cp-item{background:var(--bg-card,#fff);border:1px solid var(--border,#e5e7ef);border-radius:14px;padding:14px;display:flex;gap:11px;align-items:flex-start;min-width:0}
+.cp-item-main{flex:1;min-width:0}.cp-item a{font-weight:850;color:var(--text,#202236);text-decoration:none;overflow-wrap:anywhere}.cp-item a:hover{color:var(--cp-accent);text-decoration:underline}
+.cp-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}.cp-tag{font-size:11px;padding:4px 7px;border-radius:999px;background:#f1f2f8;color:#555b70}.cp-fav{border:0;background:transparent;font-size:21px;cursor:pointer;padding:0 2px}.cp-empty{grid-column:1/-1;text-align:center;padding:28px;color:#667085;background:var(--bg-card,#fff);border:1px dashed #cfd2df;border-radius:14px}
+.cp-section{margin:20px 0}.cp-section h2{font-size:19px;margin:0 0 8px}.cp-section p{color:#667085;font-size:13px;margin:0 0 12px}.cp-github-results{display:grid;gap:8px}.cp-github-item{padding:12px;border:1px solid var(--border,#e5e7ef);border-radius:12px;background:var(--bg-card,#fff)}.cp-github-item a{font-weight:800;color:var(--cp-accent);text-decoration:none}.cp-note{font-size:12px;color:#667085;line-height:1.5;margin-top:12px}
+@media(max-width:720px){.cp-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.cp-controls{grid-template-columns:1fr}.cp-list{grid-template-columns:1fr}.cp-hero{padding:18px}}
+[data-theme="dark"] .cp-hero{background:linear-gradient(135deg,#191b39,#161b2b);border-color:#30344b}
+[data-theme="dark"] .cp-tag{background:#252b40;color:#dbe2f0}
+</style>
+</head>
+<body>
+<div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc)"></div></div>
+<script src="/delta-prompts/menu-loader.js?v=20261012-v64" defer></script>
+<main class="cp-wrap">
+<p style="font-size:13px;margin:0 0 12px"><a href="/delta-prompts/configuracao.html" style="color:var(--cp-accent);font-weight:800;text-decoration:none">⚙️ Configuração</a> / Central de páginas</p>
+<section class="cp-hero"><span class="cp-version">DELTA PROMPTS · V1.64</span><h1>🗂️ Central de páginas</h1><p>Encontre páginas rapidamente, acompanhe seu uso e resgate aquelas que ficaram esquecidas.</p></section>
+<div class="cp-stats">
+<div class="cp-stat"><span>📚 Páginas encontradas</span><strong id="statTotal">—</strong></div>
+<div class="cp-stat"><span>👣 Páginas visitadas</span><strong id="statVisited">—</strong></div>
+<div class="cp-stat"><span>⭐ Favoritas</span><strong id="statFav">—</strong></div>
+<div class="cp-stat"><span>💤 Sem visitas registradas</span><strong id="statUnused">—</strong></div>
+</div>
+<div class="cp-controls">
+<input type="search" id="cpSearch" placeholder="🔎 Buscar por nome ou grupo..." aria-label="Buscar páginas">
+<select id="cpGroup" aria-label="Filtrar por grupo"><option value="all">Todos os grupos</option></select>
+<select id="cpSort" aria-label="Ordenar páginas"><option value="name">Nome (A–Z)</option><option value="most">Mais acessadas</option><option value="least">Menos acessadas</option><option value="recent">Visitadas recentemente</option><option value="old">Há mais tempo sem visitar</option><option value="first">Descobertas neste navegador</option></select>
+</div>
+<div class="cp-tabs" role="group" aria-label="Visualização de páginas">
+<button class="active" data-view="all">📚 Todas</button><button data-view="recent">🕒 Recentes</button><button data-view="most">🔥 Mais usadas</button><button data-view="least">💤 Menos usadas</button><button data-view="fav">⭐ Favoritas</button><button data-view="unused">🆕 Sem visitas</button>
+</div>
+<div id="cpList" class="cp-list" aria-live="polite"><div class="cp-empty">Carregando catálogo de páginas…</div></div>
+<section class="cp-section">
+<h2>🛠️ Páginas adicionadas ou atualizadas no GitHub</h2>
+<p>Consulte os commits recentes do repositório para localizar arquivos de páginas que mudaram. Esta consulta é manual para evitar chamadas desnecessárias à API do GitHub.</p>
+<button type="button" id="cpGithubBtn" class="cp-btn primary">🔄 Consultar alterações recentes</button>
+<div id="cpGithubResults" class="cp-github-results" style="margin-top:12px" aria-live="polite"></div>
+</section>
+<p class="cp-note">Privacidade: os acessos e favoritos são salvos neste navegador. O Modo Privado não registra novas visitas. O histórico começa a contar depois desta atualização; visitas antigas não podem ser reconstruídas retroativamente. A consulta do GitHub depende da disponibilidade da API pública e pode ter limite de requisições.</p>
+</main>
+<script>
+(function(){
+'use strict';
+var BASE='/delta-prompts/',REPO='jhoncorretor2025-blip/delta-prompts';
+var usage={},favs=[],pages=[],view='all';
+function read(k,f){try{var v=JSON.parse(localStorage.getItem(k));return v==null?f:v}catch(e){return f}}
+function write(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
+function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function date(ts){if(!ts)return 'Ainda não registrada';try{return new Date(ts).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'})}catch(e){return '—'}}
+function groupFor(path){if(path.indexOf('/criadores_de_conteudo/')>=0)return 'Criadores de conteúdo';if(path.indexOf('/renda_extra/')>=0)return 'Renda extra';if(path.indexOf('/paginas/')>=0)return 'Prompts e categorias';if(path.indexOf('/canivete')>=0)return 'Canivete';if(path.indexOf('/configuracao')>=0||path.indexOf('/meus-numeros')>=0)return 'Configurações';return 'Ferramentas e páginas'}
+function titleFrom(a,path){var t=(a.textContent||'').replace(/\s+/g,' ').trim();return t.replace(/^[^\p{L}\p{N}]+/u,'')||decodeURIComponent(path.split('/').pop().replace(/\.html?$/i,'')).replace(/[-_]/g,' ')}
+function loadCatalog(){
+ return fetch(BASE+'menu.html?v=20261012-v64',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('Não foi possível ler o menu');return r.text()}).then(function(html){
+  var doc=new DOMParser().parseFromString(html,'text/html'),map={};
+  doc.querySelectorAll('a[href]').forEach(function(a){
+   var raw=a.getAttribute('href')||'',url;
+   try{url=new URL(raw,location.origin)}catch(e){return}
+   if(url.origin!==location.origin||!url.pathname.startsWith(BASE)||!url.pathname.endsWith('.html'))return;
+   var path=url.pathname;
+   if(/\/index\.html$/.test(path)||/\/menu\.html$/.test(path)||/\/central-paginas\.html$/.test(path))return;
+   if(/^(\/delta-prompts\/(?:paginas|canivete|renda_extra|criadores_de_conteudo)\/)/.test(path)===false && path.split('/').length>3)return;
+   if(!map[path])map[path]={path:path,title:titleFrom(a,path),group:groupFor(path)};
+  });
+  pages=Object.keys(map).map(function(p){return map[p]});
+  pages.forEach(function(p){if(!p.title||p.title==='Config.'){p.title=decodeURIComponent(p.path.split('/').pop().replace(/\.html?$/i,'')).replace(/[-_]/g,' ')}});
+  var select=document.getElementById('cpGroup'),groups=Array.from(new Set(pages.map(function(p){return p.group}))).sort();
+  select.innerHTML='<option value="all">Todos os grupos</option>'+groups.map(function(g){return '<option value="'+esc(g)+'">'+esc(g)+'</option>'}).join('');
+  var known=read('deltaPageCatalogSeen',{});
+  pages.forEach(function(p){if(!known[p.path])known[p.path]=Date.now();p.firstSeen=known[p.path]});
+  write('deltaPageCatalogSeen',known);
+  usage=read('deltaPageUsage',{});
+  favs=read('deltaPageFavorites',[]);
+  updateStats();render();
+ }).catch(function(){
+  document.getElementById('cpList').innerHTML='<div class="cp-empty">Não consegui carregar o menu agora. Atualize a página ou tente novamente.</div>';
+ });
+}
+function updateStats(){
+ document.getElementById('statTotal').textContent=pages.length;
+ document.getElementById('statVisited').textContent=pages.filter(function(p){return usage[p.path]&&usage[p.path].count>0}).length;
+ document.getElementById('statFav').textContent=favs.length;
+ document.getElementById('statUnused').textContent=pages.filter(function(p){return !(usage[p.path]&&usage[p.path].count>0)}).length;
+}
+function render(){
+ var q=norm(document.getElementById('cpSearch').value),g=document.getElementById('cpGroup').value,s=document.getElementById('cpSort').value;
+ var list=pages.filter(function(p){var u=usage[p.path]||{};if(g!=='all'&&p.group!==g)return false;if(q&&!norm(p.title+' '+p.path+' '+p.group).includes(q))return false;
+  if(view==='recent'&&!u.lastSeen)return false;if(view==='most'&&!(u.count>0))return false;if(view==='least'&&!(u.count>0))return false;if(view==='fav'&&favs.indexOf(p.path)<0)return false;if(view==='unused'&&(u.count>0))return false;return true});
+ list.sort(function(a,b){var ua=usage[a.path]||{},ub=usage[b.path]||{};
+  if(s==='most'||view==='most')return (ub.count||0)-(ua.count||0)||a.title.localeCompare(b.title,'pt-BR');
+  if(s==='least'||view==='least')return (ua.count||0)-(ub.count||0)||a.title.localeCompare(b.title,'pt-BR');
+  if(s==='recent')return (ub.lastSeen||0)-(ua.lastSeen||0);
+  if(s==='old')return (ua.lastSeen||0)-(ub.lastSeen||0);
+  if(s==='first')return (b.firstSeen||0)-(a.firstSeen||0);
+  return a.title.localeCompare(b.title,'pt-BR');
+ });
+ var root=document.getElementById('cpList');
+ if(!list.length){root.innerHTML='<div class="cp-empty">Nenhuma página encontrada neste filtro. Tente outra busca ou selecione “Todas”.</div>';return}
+ root.innerHTML=list.map(function(p){var u=usage[p.path]||{},fav=favs.indexOf(p.path)>=0;return '<article class="cp-item"><div class="cp-item-main"><a href="'+esc(p.path)+'">'+esc(p.title)+'</a><div class="cp-meta"><span class="cp-tag">'+esc(p.group)+'</span><span class="cp-tag">👣 '+(u.count||0)+' acesso(s)</span><span class="cp-tag">🕒 '+(u.lastSeen?date(u.lastSeen):'Sem visitas registradas')+'</span></div></div><button class="cp-fav" type="button" data-fav="'+esc(p.path)+'" aria-label="'+(fav?'Remover dos favoritos':'Adicionar aos favoritos')+'" title="'+(fav?'Remover dos favoritos':'Adicionar aos favoritos')+'">'+(fav?'⭐':'☆')+'</button></article>'}).join('');
+}
+document.getElementById('cpSearch').addEventListener('input',render);
+document.getElementById('cpGroup').addEventListener('change',render);
+document.getElementById('cpSort').addEventListener('change',render);
+document.querySelectorAll('[data-view]').forEach(function(b){b.addEventListener('click',function(){view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(function(x){x.classList.toggle('active',x===b)});if(view==='most')document.getElementById('cpSort').value='most';if(view==='least')document.getElementById('cpSort').value='least';render()})});
+document.getElementById('cpList').addEventListener('click',function(e){var b=e.target.closest('[data-fav]');if(!b)return;var p=b.dataset.fav;favs=favs.filter(function(x){return x!==p});if(b.textContent!=='⭐')favs.push(p);write('deltaPageFavorites',favs);updateStats();render()});
+document.getElementById('cpGithubBtn').addEventListener('click',async function(){
+ var out=document.getElementById('cpGithubResults');out.innerHTML='<div class="cp-empty">Consultando o histórico recente do GitHub…</div>';this.disabled=true;
+ try{
+  var r=await fetch('https://api.github.com/repos/'+REPO+'/commits?per_page=8',{headers:{Accept:'application/vnd.github+json'}});
+  if(!r.ok)throw new Error(r.status===403?'O GitHub limitou temporariamente as consultas. Tente mais tarde.':'Não consegui consultar o GitHub agora.');
+  var commits=await r.json(),details=await Promise.all(commits.slice(0,8).map(async function(c){try{var x=await fetch(c.url,{headers:{Accept:'application/vnd.github+json'}});if(!x.ok)return null;return await x.json()}catch(e){return null}}));
+  var changes=[];
+  details.filter(Boolean).forEach(function(d){(d.files||[]).forEach(function(f){if(!/\.html?$/i.test(f.filename)||f.status==='removed')return;if(!f.filename.startsWith('paginas/')&&!/^(index|configuracao|menu|central-paginas|meus-numeros|favoritos|biblioteca)\.html$/.test(f.filename))return;var full='/delta-prompts/'+f.filename;var existing=changes.find(function(x){return x.path===full});if(!existing)changes.push({path:full,status:f.status,date:d.commit&&d.commit.author&&d.commit.author.date||c.commit.author.date,sha:d.sha,url:d.html_url});})});
+  changes.sort(function(a,b){return new Date(b.date)-new Date(a.date)});
+  out.innerHTML=changes.length?changes.slice(0,20).map(function(c){var name=pages.find(function(p){return p.path===c.path});var label=c.status==='added'?'Nova página':c.status==='renamed'?'Renomeada':'Atualizada';return '<div class="cp-github-item"><a href="'+esc(c.path)+'">'+esc(name?name.title:c.path.split('/').pop())+'</a><div class="cp-meta"><span class="cp-tag">'+label+'</span><span class="cp-tag">'+date(new Date(c.date).getTime())+'</span><a href="'+esc(c.url)+'" target="_blank" rel="noopener noreferrer" style="font-size:11px">Ver commit ↗</a></div></div>'}).join(''):'<div class="cp-empty">Não encontrei mudanças em páginas HTML nos últimos commits consultados.</div>';
+ }catch(e){out.innerHTML='<div class="cp-empty">'+esc(e.message||'Falha ao consultar o GitHub.')+'</div>'}
+ this.disabled=false;
+});
+loadCatalog();
+})();
+</script>
+</body>
+</html>
