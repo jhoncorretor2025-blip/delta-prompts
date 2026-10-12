@@ -85,7 +85,20 @@ button:focus-visible,a:focus-visible{outline:3px solid rgba(91,92,226,.55);outli
 @media(hover:none){.path:hover,.card:hover,.item:hover,.descoberta-card:hover{transform:none;box-shadow:var(--dp-card-shadow)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
-</style></head><body><div id="deltaMenuBackdrop"></div><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="menu-loader.js?v=20261012-v66" defer></script><a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a><main id="conteudo-principal">
+
+/* V1.70 — Modo Simples: reduzir a exposição a recursos técnicos sem apagar dados */
+html[data-modo-simples="true"] main a[href*="agentes-ia"],
+html[data-modo-simples="true"] main a[href*="codex-chatgpt"],
+html[data-modo-simples="true"] main a[href*="prompts-do-dev"],
+html[data-modo-simples="true"] main a[href*="automacao-ia"],
+html[data-modo-simples="true"] main a[href*="programacao-nocode"],
+html[data-modo-simples="true"] main a[href*="criacao-extensao-chrome"],
+html[data-modo-simples="true"] main a[href*="sistemas-ia"],
+html[data-modo-simples="true"] main a[href*="conectores-ia"],
+html[data-modo-simples="true"] main a[href*="skills.html"],
+html[data-modo-simples="true"] main button[data-search="programação"],
+html[data-modo-simples="true"] main button[data-search="automação"]{display:none!important}
+</style><script>try{document.documentElement.setAttribute("data-modo-simples",localStorage.getItem("deltaModoSimples")==="true"?"true":"false")}catch(e){document.documentElement.setAttribute("data-modo-simples","false")}</script></head><body><div id="deltaMenuBackdrop"></div><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="menu-loader.js?v=20261012-v66" defer></script><a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a><main id="conteudo-principal">
 
 <section class="hero"><div class="container">
 <span class="badge">✨ Sua central prática de IA</span><span class="delta-live-version" aria-label="Versão atual do site">V1.69</span>
