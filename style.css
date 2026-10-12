@@ -1653,3 +1653,112 @@ body.category-page .prompt-card p{
     scroll-padding-bottom:calc(220px + env(safe-area-inset-bottom));
   }
 }
+
+
+/* ===== DELTA PROMPTS V1.72 — Modos de visualização funcionais ===== */
+
+/* Modo Simples: remove a navegação e os recursos técnicos secundários,
+   preservando busca, atalhos de uso cotidiano e sugestões para iniciantes. */
+html[data-modo-simples="true"] #menu,
+html[data-modo-simples="true"] .menu-toggle,
+html[data-modo-simples="true"] .delta-bottom-nav,
+html[data-modo-simples="true"] #deltaModoPrivadoBtn,
+html[data-modo-simples="true"] #deltaCorWrap,
+html[data-modo-simples="true"] #deltaVoltarTopoBtn,
+html[data-modo-simples="true"] .delta-install-fab {
+  display: none !important;
+}
+html[data-modo-simples="true"] body {
+  display: block !important;
+}
+html[data-modo-simples="true"] main {
+  width: 100% !important;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+html[data-modo-simples="true"] main .advanced,
+html[data-modo-simples="true"] main .advanced-title,
+html[data-modo-simples="true"] main #avancado,
+html[data-modo-simples="true"] main #avancado-grid,
+html[data-modo-simples="true"] main [data-complexity="advanced"],
+html[data-modo-simples="true"] main .ia-secondary-panel,
+html[data-modo-simples="true"] main .painel-secundario-ia,
+html[data-modo-simples="true"] main .widgets-secundarios,
+html[data-modo-simples="true"] main .secondary-widgets {
+  display: none !important;
+}
+html[data-modo-simples="true"] main .hero,
+html[data-modo-simples="true"] main #buscar,
+html[data-modo-simples="true"] main #promptsLeigosHome,
+html[data-modo-simples="true"] main .quick-section,
+html[data-modo-simples="true"] main .home-quick-access,
+html[data-modo-simples="true"] main .paths:not(#avancado-grid) {
+  max-width: 1100px;
+  margin-inline: auto;
+}
+html[data-modo-simples="true"] main .path.advanced,
+html[data-modo-simples="true"] main a.path.advanced,
+html[data-modo-simples="true"] main .menu-count {
+  display: none !important;
+}
+
+/* Modo Leitura: elimina navegação e controles flutuantes que distraem,
+   mas mantém o próprio botão de leitura acessível para sair do modo. */
+html[data-modo-leitura="true"] #menu,
+html[data-modo-leitura="true"] .menu-toggle,
+html[data-modo-leitura="true"] .delta-bottom-nav,
+html[data-modo-leitura="true"] #deltaModoPrivadoBtn,
+html[data-modo-leitura="true"] #deltaCorWrap,
+html[data-modo-leitura="true"] #deltaVoltarTopoBtn,
+html[data-modo-leitura="true"] .delta-install-fab,
+html[data-modo-leitura="true"] #deltaModoSimplesBtn,
+html[data-modo-leitura="true"] #deltaProgressBar {
+  display: none !important;
+}
+html[data-modo-leitura="true"] body {
+  display: block !important;
+}
+html[data-modo-leitura="true"] main {
+  width: 100% !important;
+  max-width: 1040px !important;
+  margin: 0 auto !important;
+  padding: 48px 28px 80px !important;
+}
+html[data-modo-leitura="true"] main .prompt-text,
+html[data-modo-leitura="true"] main .prompt-content,
+html[data-modo-leitura="true"] main .prompt-conteudo,
+html[data-modo-leitura="true"] main .prompt-box,
+html[data-modo-leitura="true"] main .prompt-card,
+html[data-modo-leitura="true"] main pre,
+html[data-modo-leitura="true"] main .prompt,
+html[data-modo-leitura="true"] main [data-prompt-text] {
+  font-size: clamp(17px, 1.25rem, 21px) !important;
+  line-height: 1.6 !important;
+  letter-spacing: .01em;
+}
+html[data-modo-leitura="true"] main p,
+html[data-modo-leitura="true"] main li {
+  line-height: 1.6 !important;
+}
+html[data-modo-leitura="true"] main .prompt-text,
+html[data-modo-leitura="true"] main .prompt-content,
+html[data-modo-leitura="true"] main .prompt-conteudo,
+html[data-modo-leitura="true"] main .prompt-box,
+html[data-modo-leitura="true"] main .prompt-card,
+html[data-modo-leitura="true"] main pre,
+html[data-modo-leitura="true"] main .prompt,
+html[data-modo-leitura="true"] main [data-prompt-text] {
+  max-width: 900px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+@media(max-width:700px) {
+  html[data-modo-leitura="true"] main {
+    padding: 68px 16px 90px !important;
+  }
+  html[data-modo-simples="true"] main {
+    padding: 68px 16px 32px !important;
+  }
+}
