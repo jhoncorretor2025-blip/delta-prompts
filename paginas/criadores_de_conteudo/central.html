@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="delta-version" content="V1.54">
+<meta name="delta-version" content="V1.55">
 <meta name="description" content="Central do Criador do Delta Prompts: planejamento, ideias, roteiros, títulos, thumbnails, descrições, métricas e edição de vídeos organizados por categoria.">
 <meta name="theme-color" content="#5b5ce2">
-<title>Central do Criador | Delta Prompts V1.54</title>
+<title>Central do Criador | Delta Prompts V1.55</title>
 <link rel="icon" type="image/x-icon" href="/delta-prompts/favicon.ico">
 <link rel="stylesheet" href="/delta-prompts/style.css">
 <link rel="stylesheet" href="/delta-prompts/css/melhoriaspaginas.css">
@@ -40,6 +40,22 @@
 @media(max-width:850px){.creator-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.creator-main{padding:13px 10px 40px}.creator-grid{grid-template-columns:1fr;gap:9px}.creator-card{min-height:0;padding:16px}.creator-tools{grid-template-columns:1fr}.creator-clear{width:100%}.creator-hero{border-radius:18px}.creator-card p{margin-bottom:12px}}
 @media(prefers-reduced-motion:reduce){.creator-card{transition:none}}
+ 
+.creator-start{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 24px}
+.creator-start a{display:flex;align-items:center;gap:12px;min-width:0;padding:15px;border:1px solid var(--creator-border);border-radius:16px;background:#fff;color:inherit;text-decoration:none;box-shadow:0 5px 16px rgba(16,24,40,.035);transition:transform .15s ease,border-color .15s ease}
+.creator-start a:hover{transform:translateY(-2px);border-color:#b8b6f4}
+.creator-start-icon{display:grid;place-items:center;flex:0 0 42px;height:42px;border-radius:13px;background:#f0efff;font-size:22px}
+.creator-start strong{display:block;font-size:14px;line-height:1.3}
+.creator-start small{display:block;margin-top:4px;color:#667085;font-size:12px;line-height:1.4}
+.creator-workflow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 22px;padding:14px 16px;border:1px solid #e8e9f1;border-radius:15px;background:#fbfbff}
+.creator-workflow-label{font-size:12px;font-weight:850;color:#5553b8;margin-right:3px}
+.creator-step{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:#fff;border:1px solid #e3e4ef;font-size:12px;font-weight:750;color:#44465a}
+.creator-step span{color:#7779a2}
+.creator-section-title{font-size:19px;letter-spacing:-.02em;margin:0 0 5px}
+.creator-section-subtitle{font-size:13px;color:var(--creator-muted);margin:0 0 13px}
+.creator-filter:focus-visible,.creator-clear:focus-visible,.creator-card:focus-visible,.creator-start a:focus-visible{outline:3px solid #9997ff;outline-offset:3px}
+@media(max-width:650px){.creator-start{grid-template-columns:1fr;gap:8px;margin:14px 0 20px}.creator-start a{padding:12px}.creator-workflow{gap:6px;padding:12px}.creator-workflow-label{width:100%}.creator-step{font-size:11px;padding:7px 9px}}
+
 </style>
 </head>
 <body>
@@ -47,10 +63,26 @@
 <script src="/delta-prompts/menu-loader.js?v=20261012-v60"></script>
 <main class="creator-main">
 <section class="creator-hero">
- <div class="creator-hero-top"><span class="creator-eyebrow">Delta Prompts · Área de criação</span><span class="creator-version">V1.54</span></div>
+ <div class="creator-hero-top"><span class="creator-eyebrow">Delta Prompts · Área de criação</span><span class="creator-version">V1.55</span></div>
  <h1>🎬 Central do Criador</h1>
  <p>Encontre a ferramenta certa para cada etapa do seu conteúdo. Os prompts estão organizados por objetivo para você planejar, escrever, publicar e melhorar seus vídeos sem procurar em várias partes do menu.</p>
 </section>
+</section>
+<section class="creator-start" aria-label="Atalhos para começar">
+ <a href="/delta-prompts/paginas/criadores_de_conteudo/ideias.html"><span class="creator-start-icon" aria-hidden="true">💡</span><span><strong>Preciso de ideias</strong><small>Encontre temas e formatos para o próximo conteúdo</small></span></a>
+ <a href="/delta-prompts/paginas/criadores_de_conteudo/roteiros.html"><span class="creator-start-icon" aria-hidden="true">📝</span><span><strong>Quero criar um roteiro</strong><small>Organize o gancho, o desenvolvimento e o final</small></span></a>
+ <a href="/delta-prompts/paginas/criadores_de_conteudo/titulos.html"><span class="creator-start-icon" aria-hidden="true">🚀</span><span><strong>Quero publicar melhor</strong><small>Prepare títulos mais claros e atraentes</small></span></a>
+</section>
+<div class="creator-workflow" aria-label="Etapas de criação de conteúdo">
+ <span class="creator-workflow-label">Seu fluxo de criação</span>
+ <span class="creator-step">💡 <span>Ideia</span></span><span aria-hidden="true">→</span>
+ <span class="creator-step">📝 <span>Roteiro</span></span><span aria-hidden="true">→</span>
+ <span class="creator-step">🎬 <span>Produção</span></span><span aria-hidden="true">→</span>
+ <span class="creator-step">🖼️ <span>Publicação</span></span><span aria-hidden="true">→</span>
+ <span class="creator-step">📊 <span>Análise</span></span>
+</div>
+<h2 class="creator-section-title">Todas as ferramentas</h2>
+<p class="creator-section-subtitle">Filtre por etapa ou pesquise pelo que você precisa fazer.</p>
 <div class="creator-tools" role="search">
  <input id="creatorSearch" type="search" placeholder="🔎 Buscar planejamento, roteiro, título, thumbnail..." aria-label="Buscar ferramentas para criadores">
  <button class="creator-clear" id="creatorClear" type="button">Limpar busca</button>
@@ -66,13 +98,13 @@
 <section class="creator-grid" id="creatorGrid" aria-label="Ferramentas para criadores">
  <a class="creator-card" data-category="estrategia" data-search="planejamento calendário estratégia posicionamento monetização youtube conteúdo" href="/delta-prompts/paginas/criadores_de_conteudo/planejamento.html"><span class="creator-icon">🗓️</span><span class="creator-category">Estratégia e crescimento</span><h2>Planejamento</h2><p>Transforme ideias em um plano de conteúdo com objetivos, frequência e direção.</p><span class="creator-card-footer">Abrir planejamento <span aria-hidden="true">→</span></span></a>
  <a class="creator-card" data-category="estrategia" data-search="ideias brainstorming temas vídeos tendências youtube criatividade" href="/delta-prompts/paginas/criadores_de_conteudo/ideias.html"><span class="creator-icon">💡</span><span class="creator-category">Estratégia e crescimento</span><h2>Ideias para vídeos</h2><p>Descubra temas, ângulos e formatos que podem despertar o interesse do público.</p><span class="creator-card-footer">Gerar ideias <span aria-hidden="true">→</span></span></a>
- <a class="creator-card" data-category="estrategia" data-search="crescimento canal audiência inscritos alcance estratégia youtube" href="/delta-prompts/paginas/criadores_de_conteudo/crescimento.html"><span class="creator-icon">📈</span><span class="creator-category">Estratégia e crescimento</span><h2>Crescimento do canal</h2><p>Explore estratégias para ampliar alcance, consistência e relacionamento com a audiência.</p><span class="creator-card-footer">Melhorar crescimento <span aria-hidden="true">→</span></span></a>
+ <a class="creator-card" data-category="estrategia" data-search="crescimento canal audiência inscritos alcance estratégia youtube" href="/delta-prompts/paginas/criadores_de_conteudo/crescimento.html"><span class="creator-icon">📈</span><span class="creator-category">Estratégia e crescimento</span><h2>Crescimento do canal</h2><p>Explore estratégias para ampliar alcance, consistência e relacionamento com a audiência. Use os resultados para planejar os próximos conteúdos.</p><span class="creator-card-footer">Melhorar crescimento <span aria-hidden="true">→</span></span></a>
  <a class="creator-card" data-category="estrategia" data-search="métricas analytics ctr retenção visualizações tempo exibição desempenho" href="/delta-prompts/paginas/criadores_de_conteudo/metricas.html"><span class="creator-icon">📊</span><span class="creator-category">Estratégia e crescimento</span><h2>Métricas e desempenho</h2><p>Entenda CTR, retenção e tempo de exibição para escolher melhores próximos passos.</p><span class="creator-card-footer">Analisar métricas <span aria-hidden="true">→</span></span></a>
  <a class="creator-card" data-category="producao" data-search="roteiros escrever estrutura gancho retenção narração fala vídeo youtube" href="/delta-prompts/paginas/criadores_de_conteudo/roteiros.html"><span class="creator-icon">📝</span><span class="creator-category">Produção</span><h2>Roteiros</h2><p>Monte o roteiro com abertura, desenvolvimento, exemplos e chamada para ação.</p><span class="creator-card-footer">Criar roteiro <span aria-hidden="true">→</span></span></a>
  <a class="creator-card" data-category="producao" data-search="títulos chamar atenção clique SEO youtube" href="/delta-prompts/paginas/criadores_de_conteudo/titulos.html"><span class="creator-icon">🧲</span><span class="creator-category">Produção</span><h2>Títulos</h2><p>Crie títulos claros e atraentes, alinhados ao conteúdo e à intenção de quem assiste.</p><span class="creator-card-footer">Criar títulos <span aria-hidden="true">→</span></span></a>
  <a class="creator-card" data-category="publicacao" data-search="descrição publicação SEO palavras-chave contexto chamada ação" href="/delta-prompts/paginas/criadores_de_conteudo/descricao.html"><span class="creator-icon">📄</span><span class="creator-category">Publicação</span><h2>Descrição do vídeo</h2><p>Organize resumo, informações úteis, palavras-chave e chamadas para ação.</p><span class="creator-card-footer">Criar descrição <span aria-hidden="true">→</span></span></a>
  <a class="creator-card" data-category="publicacao" data-search="thumbnail capa imagem design visual miniatura clique youtube" href="/delta-prompts/paginas/criadores_de_conteudo/thumbnail.html"><span class="creator-icon">🖼️</span><span class="creator-category">Publicação</span><h2>Thumbnail</h2><p>Planeje uma capa visual legível, com hierarquia clara e boa leitura em telas pequenas.</p><span class="creator-card-footer">Criar thumbnail <span aria-hidden="true">→</span></span></a>
- <a class="creator-card" data-category="edicao" data-search="edição de vídeo cortes legendas áudio iluminação enquadramento TikTok Reels YouTube" href="/delta-prompts/edicao-videos.html"><span class="creator-icon">🎞️</span><span class="creator-category">Edição de vídeo</span><h2>Edição de vídeos com IA</h2><p>Consulte prompts para cortes, enquadramento, áudio, legendas e formatos de publicação.</p><span class="creator-card-footer">Abrir edição de vídeos <span aria-hidden="true">→</span></span></a>
+ <a class="creator-card" data-category="edicao" data-search="edição de vídeo cortes legendas áudio iluminação enquadramento TikTok Reels YouTube" href="/delta-prompts/edicao-videos.html"><span class="creator-icon">🎞️</span><span class="creator-category">Edição de vídeo</span><h2>Edição de vídeos com IA</h2><p>Acesse orientações para melhorar cortes, enquadramento, áudio, legendas e formatos de publicação. Esta área é para editar material existente.</p><span class="creator-card-footer">Abrir edição de vídeos <span aria-hidden="true">→</span></span></a>
 </section>
 <div id="creatorEmpty" class="creator-empty" hidden>Nenhuma ferramenta encontrada. Experimente outra busca ou escolha “Todas”.</div>
 <div class="creator-note">Dica: a Central organiza o acesso às ferramentas. As páginas originais continuam disponíveis pelos links diretos e pelos resultados de busca.</div>
@@ -97,7 +129,7 @@
    card.hidden=!visible;
    if(visible)shown++;
   });
-  count.textContent='Mostrando '+shown+' de '+cards.length+' ferramentas.';
+  count.textContent=shown===cards.length?'Mostrando todas as '+cards.length+' ferramentas.':'Mostrando '+shown+' de '+cards.length+' ferramentas.';
   empty.hidden=shown>0;
  }
  filters.forEach(button=>button.addEventListener('click',()=>{
@@ -107,6 +139,7 @@
  }));
  search.addEventListener('input',filterCards);
  clear.addEventListener('click',()=>{search.value='';active='todas';filters.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.filter==='todas')));filterCards();search.focus()});
+ // Mantém o contador e o estado dos filtros sincronizados em todas as buscas.
  filterCards();
 })();
 </script>
