@@ -1008,8 +1008,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       comIndice.sort(function(a,b){if(b.score!==a.score)return b.score-a.score;return a.i-b.i});
     }else{
       var scores=lerScores();
-      comIndice=blocos.map(function(b,i){return{b:b,i:i,score:b.chave?(scores[b.chave]||0):0}});
-      comIndice.sort(function(a,b){if(b.score!==a.score)return b.score-a.score;return a.i-b.i});
+      var prioridade={pessoal:0,avancado:1,carreira:2,empresa:3,biblioteca:4};
+      comIndice=blocos.map(function(b,i){return {b:b,i:i,prioridade:(b.chave&&prioridade[b.chave]!==undefined)?prioridade[b.chave]:99,score:b.chave?(scores[b.chave]||0):0};});
+      comIndice.sort(function(a,b){if(a.prioridade<2||b.prioridade<2){return a.prioridade-b.prioridade;}if(b.score!==a.score){return b.score-a.score;}return a.i-b.i;});
     }
     comIndice.forEach(function(item){
       item.b.els.forEach(function(el){sidebar.insertBefore(el,null)});
