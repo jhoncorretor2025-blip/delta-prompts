@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="delta-version" content="V1.56">
+<title>UX/UI — 5 Melhorias Gráficas | Delta Prompts V1.56</title>
+<meta name="description" content="Gere um prompt UX/UI para identificar cinco melhorias gráficas fáceis usando a Matriz Esforço x Impacto.">
+<link rel="stylesheet" href="/delta-prompts/style.css">
+<style>
+:root{--ux-primary:#5145e5;--ux-ink:#182230;--ux-muted:#667085;--ux-border:#e4e7ec;--ux-bg:#f8f9fc}
+body{color:var(--ux-ink)}main{max-width:900px;margin:0 auto;padding:24px 18px 56px}.breadcrumb{font-size:13px;color:var(--ux-muted);margin-bottom:18px}.breadcrumb a{color:var(--ux-primary);text-decoration:none;font-weight:700}.hero{padding:26px;border:1px solid #d9dcff;border-radius:20px;background:linear-gradient(135deg,#f4f4ff,#fff)}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.06em;color:var(--ux-primary)}h1{margin:8px 0;font-size:clamp(26px,4vw,36px)}.hero p{color:var(--ux-muted);line-height:1.6;margin-bottom:0}.panel{margin-top:18px;padding:22px;border:1px solid var(--ux-border);border-radius:18px;background:var(--bg-card,#fff)}.panel h2{margin:0 0 6px;font-size:19px}.hint{color:var(--ux-muted);font-size:13px;line-height:1.5;margin:0 0 16px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:6px;font-size:13px;font-weight:800}.field.full{grid-column:1/-1}.field input,.field textarea{box-sizing:border-box;width:100%;padding:12px;border:1px solid var(--ux-border);border-radius:11px;background:var(--bg-card,#fff);color:inherit;font:inherit;font-weight:400}.field textarea{min-height:88px;resize:vertical}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.actions button{border:0;border-radius:11px;padding:12px 16px;font:inherit;font-weight:850;cursor:pointer}.primary{background:var(--ux-primary);color:white}.secondary{background:#eef2ff;color:#3730a3}.result{margin-top:18px}.result textarea{width:100%;min-height:440px;box-sizing:border-box;padding:15px;border:1px solid var(--ux-border);border-radius:12px;background:var(--ux-bg);color:#182230;font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.notice{margin-top:14px;padding:12px 14px;border-radius:12px;background:#f0fdf4;color:#166534;font-size:13px;line-height:1.5}.version{font-size:12px;opacity:.7;margin-left:8px}@media(max-width:600px){main{padding:16px 12px 40px}.hero,.panel{padding:17px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.actions button{width:100%}}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#1e1b4b,#16213e);border-color:#4338ca}[data-theme="dark"] .field input,[data-theme="dark"] .field textarea{border-color:#374151}[data-theme="dark"] .result textarea{background:#0f172a;color:#e5e7eb;border-color:#374151}
+</style>
+</head>
+<body class="category-page">
+<div id="menu"></div><script src="/delta-prompts/menu-loader.js?v=20261013-v1"></script>
+<main>
+<p class="breadcrumb"><a href="/delta-prompts/index.html">🏠 Início</a> / <a href="/delta-prompts/paginas/sites-landing-pages.html">Sites &amp; Landing Pages</a> / UX/UI rápido</p>
+<header class="hero"><span class="eyebrow">PROMPT RÁPIDO • UX/UI <span class="version">V1.56</span></span><h1>🎨 Encontre 5 melhorias gráficas fáceis</h1><p>Preencha o contexto primeiro e gere um prompt pronto para copiar. A análise prioriza melhorias visuais rápidas, sem reconstruir a página nem alterar funcionalidades.</p></header>
+<section class="panel" aria-labelledby="contexto"><h2 id="contexto">🧭 Etapa 0 — Contexto obrigatório</h2><p class="hint">Defina para quem a página existe e o que ela precisa alcançar antes de avaliar a estética.</p>
+<div class="fields">
+<label class="field full">Link da página <input id="link" type="url" placeholder="https://exemplo.com" autocomplete="url"></label>
+<label class="field">Público-alvo <textarea id="publico" placeholder="Ex.: clientes que procuram um imóvel para alugar" required></textarea></label>
+<label class="field">Objetivo da página <textarea id="objetivo" placeholder="Ex.: gerar contatos qualificados pelo WhatsApp" required></textarea></label>
+<label class="field full">Contexto adicional (opcional) <textarea id="contextoExtra" placeholder="Identidade visual, limitações técnicas ou algo que deve ser preservado"></textarea></label>
+</div>
+<div class="actions"><button class="primary" id="gerar" type="button">✨ Gerar prompt completo</button><button class="secondary" id="limpar" type="button">Limpar campos</button></div>
+</section>
+<section class="panel result" aria-labelledby="resultado"><h2 id="resultado">📋 Prompt pronto para usar</h2><p class="hint">O texto gerado usa a tag padrão <strong>[LINK]</strong>, inclui público-alvo e objetivo e pede uma Matriz Esforço × Impacto.</p><textarea id="saida" readonly placeholder="Preencha o público-alvo e o objetivo, depois clique em “Gerar prompt completo”." aria-label="Prompt gerado"></textarea><div class="actions"><button class="primary" id="copiar" type="button">📋 Copiar prompt</button></div><div id="status" class="notice" role="status" hidden></div></section>
+</main>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+function gerar(){
+ const link=$('link').value.trim()||'[LINK]';
+ const publico=$('publico').value.trim();
+ const objetivo=$('objetivo').value.trim();
+ const extra=$('contextoExtra').value.trim();
+ if(!publico||!objetivo){$('status').hidden=false;$('status').textContent='⚠️ Preencha Público-alvo e Objetivo da página para respeitar a Etapa 0.';(!publico?$('publico'):$('objetivo')).focus();return}
+ const p=`# 🎨 PROMPT RÁPIDO • UX/UI — ENCONTRE 5 MELHORIAS GRÁFICAS FÁCEIS
+
+Você é especialista em UX/UI, design visual e interfaces web, com foco em melhorias rápidas, acessíveis e de alto impacto.
+
+## ETAPA 0 — Contexto da página (obrigatório)
+- Link da página: ${link}
+- Público-alvo: ${publico}
+- Objetivo da página: ${objetivo}
+${extra?' - Contexto adicional: '+extra+'\n':''}
+Antes de sugerir mudanças, explique brevemente como o público-alvo e o objetivo influenciam as decisões visuais. Não pule esta etapa.
+
+## ETAPA 1 — Análise baseada em evidências
+Analise a página, se conseguir acessá-la. Se não conseguir, peça capturas de tela ou trechos relevantes do HTML/CSS. Não invente problemas nem afirme ter visto elementos que não conseguiu verificar.
+
+## ETAPA 2 — Exatamente 5 melhorias
+Encontre 5 melhorias gráficas fáceis de implementar. Priorize cores e contraste, tipografia e hierarquia, espaçamento e alinhamento, botões/cartões/campos, bordas/sombras/ícones e legibilidade mobile. Não proponha reconstrução completa nem mudanças de funcionalidades.
+
+## ETAPA 3 — Matriz Esforço × Impacto
+Entregue uma tabela com estas colunas:
+1. Nº
+2. Problema visual observado e local
+3. Solução proposta
+4. Especificação de UI (códigos HEX, tipografia, dimensões, espaçamentos ou CSS aplicável)
+5. Esforço (baixo/médio/alto)
+6. Impacto visual esperado (baixo/médio/alto)
+7. Prioridade de implementação
+
+Use códigos HEX coerentes com a identidade visual existente. Diferencie fatos observados de oportunidades que ainda precisam ser verificadas. Não gere links fictícios de imagens.
+
+## ETAPA 4 — Plano de ação
+- Primeira melhoria a executar
+- Melhoria com maior impacto visual
+- Ordem recomendada para implementar as cinco
+- Funcionalidades, dados, integrações e estilos que precisam ser preservados
+
+## REGRAS
+- Respeite o público-alvo e o objetivo definidos na Etapa 0.
+- Seja específico e orientado à implementação.
+- Prefira pequenas alterações reversíveis.
+- Não invente evidências, imagens, URLs ou componentes.
+- Não altere funcionalidades ou navegação.
+- Se faltar informação para avaliar algo, declare a limitação.
+
+RESULTADO ESPERADO: uma matriz prática com cinco melhorias visuais priorizadas por esforço e impacto, pronta para orientar ajustes rápidos.`;
+ $('saida').value=p;$('status').hidden=false;$('status').textContent='✅ Prompt gerado. Revise o contexto e copie para a IA de sua preferência.';
+}
+$('gerar').addEventListener('click',gerar);
+$('limpar').addEventListener('click',()=>{['link','publico','objetivo','contextoExtra','saida'].forEach(id=>$(id).value='');$('status').hidden=true;$('publico').focus()});
+$('copiar').addEventListener('click',async()=>{const t=$('saida').value;if(!t){$('status').hidden=false;$('status').textContent='Gere o prompt antes de copiar.';return}try{await navigator.clipboard.writeText(t);$('status').hidden=false;$('status').textContent='📋 Prompt copiado para a área de transferência!'}catch(e){$('saida').focus();$('saida').select();$('status').hidden=false;$('status').textContent='Selecione o texto e copie com Ctrl+C.'}});
+try{const u=localStorage.getItem('deltaSiteLinkPadrao');if(u)$('link').value=u}catch(e){}
+try{const tema=localStorage.getItem('deltaTheme');if(tema==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}
+})();
+</script>
+</body></html>
