@@ -1,13 +1,14 @@
 // Motor remoto único: lembretes financeiros do Canivete + lembretes de saúde via GitHub Secret.
 // O JSON de saúde é recebido por MINHA_SAUDE_LEMBRETES_JSON e nunca é gravado no repositório.
-// Estado público contém apenas chaves de deduplicação com hash, sem nomes ou detalhes médicos.
+// As chaves de saúde são hashes; o estado não contém nomes nem detalhes médicos.
+// As chaves financeiras mantêm o formato já usado pelo Canivete.
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const CONFIG_PATH = path.join(process.cwd(), 'canivete-notificacoes-config.json');
 const ESTADO_PATH = path.join(process.cwd(), 'canivete-notificacoes-estado.json');
-const WINDOW_DAILY_MINUTES = 15;
-const WINDOW_ONCE_MINUTES = 20;
+const WINDOW_DAILY_MINUTES = 30;
+const WINDOW_ONCE_MINUTES = 30;
 
 function horaBrasilAgora() {
   const parts = new Intl.DateTimeFormat('en-CA', {
