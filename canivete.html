@@ -1933,33 +1933,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 
 
 
-<!-- Perfil central compartilhado: Canivete v8.35 <script id="perfil-central-canivete">(function(){
-'use strict';
-const KEY='delta_perfil_central_v1',SOURCE='canivete';
-function read(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}}
-function publish(){try{
- const old=read()||{},peso=typeof pesoMaisRecente==='function'?(pesoMaisRecente()||''):'',altura=(d&&d.alturaUsuarioPerfil)||'';
- const profile=Object.assign({},old.profile||{}, {nome:(d&&d.nomeUsuarioPerfil)||'',idade:(d&&d.idadeUsuarioPerfil)||'',nascimento:(d&&d.dataNascimentoPerfil)||'',pesoKg:peso,alturaCm:altura,sexo:(d&&d.generoUsuario)||''});
- const families=Array.isArray(d&&d.perfilFamiliaresCompartilhados)?d.perfilFamiliaresCompartilhados:(Array.isArray(d&&d.familiares)?d.familiares:(old.familiares||[]));
- localStorage.setItem(KEY,JSON.stringify(Object.assign({},old,{schemaVersion:1,source:SOURCE,updatedAt:Date.now(),profile,familiares:families})));
- }catch(e){console.warn('[Canivete] perfil central não sincronizado:',e)}}
-function apply(data){if(!data||!data.profile)return;try{
- const p=data.profile;
- if(p.nome)d.nomeUsuarioPerfil=p.nome;if(p.idade!=='')d.idadeUsuarioPerfil=String(p.idade);if(p.nascimento)d.dataNascimentoPerfil=p.nascimento;
- if(p.alturaCm!=='')d.alturaUsuarioPerfil=String(p.alturaCm);if(p.sexo)d.generoUsuario=p.sexo==='Masculino'?'homem':(p.sexo==='Feminino'?'mulher':p.sexo);
- if(Array.isArray(data.familiares)){d.perfilFamiliaresCompartilhados=data.familiares;d.familiares=data.familiares}
- if(p.pesoKg!==''&&Number(p.pesoKg)>0){const hist=typeof _lerHistoricoPeso==='function'?_lerHistoricoPeso():[];const today=new Date().toISOString().slice(0,10);const existing=hist.findIndex(x=>x.data===today);if(existing>=0)hist[existing].peso=Number(p.pesoKg);else hist.push({data:today,peso:Number(p.pesoKg)});if(typeof _salvarHistoricoPeso==='function')_salvarHistoricoPeso(hist)}
- try{localStorage.setItem('canivete-assistente-v9',JSON.stringify(d))}catch(e){}
- const map={generoUsuario:d.generoUsuario,nomeUsuarioPerfil:d.nomeUsuarioPerfil,idadeUsuarioPerfil:d.idadeUsuarioPerfil,alturaUsuarioPerfil:d.alturaUsuarioPerfil};Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el&&map[id]!==undefined)el.value=map[id]});const weight=document.getElementById('pesoRapidoPerfil');if(weight&&p.pesoKg!=='')weight.value=p.pesoKg;
- try{if(typeof render==='function')render()}catch(e){}try{if(typeof renderImcEPeso==='function')renderImcEPeso()}catch(e){}
- }catch(e){console.warn('[Canivete] falha ao aplicar perfil compartilhado:',e)}}
-function init(){const data=read();if(data&&data.source!=='canivete')apply(data);else if(!data)publish();
- if(typeof window.salvarPerfil==='function'&&!window.salvarPerfil.__sharedWrapped){const original=window.salvarPerfil;const wrapped=function(){const r=original.apply(this,arguments);publish();return r};wrapped.__sharedWrapped=true;window.salvarPerfil=wrapped}
- if(typeof window._salvarHistoricoPeso==='function'&&!window._salvarHistoricoPeso.__sharedWrapped){const originalPeso=window._salvarHistoricoPeso;const wrappedPeso=function(){const r=originalPeso.apply(this,arguments);publish();return r};wrappedPeso.__sharedWrapped=true;window._salvarHistoricoPeso=wrappedPeso}
-}
-window.addEventListener('storage',e=>{if(e.key===KEY){const data=read();if(data&&data.source!=='canivete')apply(data)}});
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-})();</script> -->
+
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const link=document.createElement('a');
@@ -6571,7 +6545,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
 })();
 </script>
 
-<!-- CANIVETE V8.29 — POLIMENTO VISUAL: cards, navegação, estados e gráficos existentes -->
+<!-- CANIVETE V8.35 — POLIMENTO VISUAL: cards, navegação, estados e gráficos existentes -->
 <style id="CANIVETE-V827-VISUAL-POLISH">
 :root{--cv-accent-soft:color-mix(in srgb,var(--blue) 9%,var(--card));--cv-border-strong:color-mix(in srgb,var(--blue) 20%,var(--line));--cv-shadow-hover:0 14px 30px rgba(15,23,42,.09)}
 [data-theme="dark"]{--cv-accent-soft:#1b2740;--cv-border-strong:#334566;--cv-shadow-hover:0 14px 30px rgba(0,0,0,.28)}
@@ -6608,7 +6582,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
 @media(prefers-reduced-motion:reduce){#dashboard>.grid.cards>.card,#dashboard .v98-quick-action,#side .nav button{transition:none}#dashboard>.grid.cards>.card:hover,#dashboard .v98-quick-action:hover{transform:none}}
 </style>
 
-<!-- CANIVETE V8.29 — atalho do Teleprompter dentro de Entretenimento -->
+<!-- CANIVETE V8.35 — atalho do Teleprompter dentro de Entretenimento -->
 <style id="CANIVETE_V829_TELEPROMPTER_LINK_STYLE">
 #nav .canivete-teleprompter-link{
   width:100%;display:flex;align-items:center;gap:9px;
@@ -6706,5 +6680,32 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 <script>setTimeout(function(){try{renderResumoBackup()}catch(e){}},1500)</script>
+<script id="perfil-central-canivete">(function(){
+'use strict';
+const KEY='delta_perfil_central_v1',SOURCE='canivete';
+function read(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}}
+function publish(){try{
+ const old=read()||{},peso=typeof pesoMaisRecente==='function'?(pesoMaisRecente()||''):'',altura=(d&&d.alturaUsuarioPerfil)||'';
+ const profile=Object.assign({},old.profile||{},{nome:(d&&d.nomeUsuarioPerfil)||'',idade:(d&&d.idadeUsuarioPerfil)||'',nascimento:(d&&d.dataNascimentoPerfil)||'',pesoKg:peso,alturaCm:altura,sexo:(d&&d.generoUsuario)||''});
+ const families=Array.isArray(d&&d.perfilFamiliaresCompartilhados)?d.perfilFamiliaresCompartilhados:(Array.isArray(d&&d.familiares)?d.familiares:(old.familiares||[]));
+ localStorage.setItem(KEY,JSON.stringify(Object.assign({},old,{schemaVersion:1,source:SOURCE,updatedAt:Date.now(),profile,familiares:families})));
+ }catch(e){console.warn('[Canivete] perfil central não sincronizado:',e)}}
+function apply(data){if(!data||!data.profile)return;try{
+ const p=data.profile;
+ if(p.nome)d.nomeUsuarioPerfil=p.nome;if(p.idade!=='')d.idadeUsuarioPerfil=String(p.idade);if(p.nascimento)d.dataNascimentoPerfil=p.nascimento;
+ if(p.alturaCm!=='')d.alturaUsuarioPerfil=String(p.alturaCm);if(p.sexo)d.generoUsuario=p.sexo==='Masculino'?'homem':(p.sexo==='Feminino'?'mulher':p.sexo);
+ if(Array.isArray(data.familiares)){d.perfilFamiliaresCompartilhados=data.familiares;d.familiares=data.familiares}
+ if(p.pesoKg!==''&&Number(p.pesoKg)>0){const hist=typeof _lerHistoricoPeso==='function'?_lerHistoricoPeso():[];const today=new Date().toISOString().slice(0,10);const existing=hist.findIndex(x=>x.data===today);if(existing>=0)hist[existing].peso=Number(p.pesoKg);else hist.push({data:today,peso:Number(p.pesoKg)});if(typeof _salvarHistoricoPeso==='function')_salvarHistoricoPeso(hist)}
+ try{localStorage.setItem('canivete-assistente-v9',JSON.stringify(d))}catch(e){}
+ const map={generoUsuario:d.generoUsuario,nomeUsuarioPerfil:d.nomeUsuarioPerfil,idadeUsuarioPerfil:d.idadeUsuarioPerfil,alturaUsuarioPerfil:d.alturaUsuarioPerfil};Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el&&map[id]!==undefined)el.value=map[id]});const weight=document.getElementById('pesoRapidoPerfil');if(weight&&p.pesoKg!=='')weight.value=p.pesoKg;
+ try{if(typeof render==='function')render()}catch(e){}try{if(typeof renderImcEPeso==='function')renderImcEPeso()}catch(e){}
+ }catch(e){console.warn('[Canivete] falha ao aplicar perfil compartilhado:',e)}}
+function init(){const data=read();if(data&&data.source!=='canivete')apply(data);else if(!data)publish();
+ if(typeof window.salvarPerfil==='function'&&!window.salvarPerfil.__sharedWrapped){const original=window.salvarPerfil;const wrapped=function(){const r=original.apply(this,arguments);publish();return r};wrapped.__sharedWrapped=true;window.salvarPerfil=wrapped}
+ if(typeof window._salvarHistoricoPeso==='function'&&!window._salvarHistoricoPeso.__sharedWrapped){const originalPeso=window._salvarHistoricoPeso;const wrappedPeso=function(){const r=originalPeso.apply(this,arguments);publish();return r};wrappedPeso.__sharedWrapped=true;window._salvarHistoricoPeso=wrappedPeso}
+}
+window.addEventListener('storage',e=>{if(e.key===KEY){const data=read();if(data&&data.source!=='canivete')apply(data)}});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();</script>
 </body>
 </html>
