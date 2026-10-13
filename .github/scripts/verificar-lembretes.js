@@ -84,7 +84,7 @@ async function enviarNtfy(topico, titulo, corpo) {
   if (!topico) return { pulado: true, ok: false };
   const resposta = await fetch('https://ntfy.sh/' + encodeURIComponent(topico), {
     method: 'POST',
-    headers: { Title: titulo.normalize('NFD').replace(/[\u0300-\u036f]/g, '') },
+    headers: { Title: titulo.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\x20-\x7E]/g, '') },
     body: corpo,
   });
   return { ok: resposta.ok, status: resposta.status };
