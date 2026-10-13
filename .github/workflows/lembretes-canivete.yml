@@ -1,0 +1,40 @@
+name: Canivete - Notificações Remotas
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: notificacoes-remotas
+  cancel-in-progress: false
+
+jobs:
+  enviar-lembretes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verificar e enviar lembretes
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MINHA_SAUDE_LEMBRETES_JSON: ${{ secrets.MINHA_SAUDE_LEMBRETES_JSON }}
+        run: node .github/scripts/verificar-lembretes.js
+
+      - name: Salvar estado de deduplicação sem dados médicos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add canivete-notificacoes-estado.json
+          git diff --cached --quiet || git commit -m "chore: atualizar estado de notificações"
+          git push
