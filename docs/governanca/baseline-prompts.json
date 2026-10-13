@@ -1,0 +1,969 @@
+{
+  "_comentario": "Lista de prompts de cada página. Gerado por: node scripts/validar-paginas.js --atualizar-baseline. Prompts que estão aqui NÃO podem sumir sem aviso.",
+  "gerado_em": "2026-10-13",
+  "paginas": {
+    "paginas/analise.html": {
+      "total": 4,
+      "titulos": [
+        "📊 Análise Simples de Situação",
+        "⚖️ Matriz de Decisão Estratégica",
+        "📈 Análise SWOT Estratégica",
+        "🔍 Diagnóstico Estratégico Completo"
+      ]
+    },
+    "paginas/aprender-a-cantar.html": {
+      "total": 10,
+      "titulos": [
+        "🎤 Descobrir Minha Voz (Tessitura Simples)",
+        "🎵 Escolher as Primeiras Músicas para Aprender a Cantar",
+        "🫁 Exercícios de Respiração para Cantar",
+        "🎶 Aquecimento Vocal Antes de Cantar",
+        "🎯 Identificar Meus Pontos Fracos ao Cantar",
+        "📅 Plano de Prática Semanal para Iniciantes",
+        "🎼 Entender uma Música Nova Antes de Cantar",
+        "🎙️ Preparar para Gravar e Avaliar Minha Própria Voz",
+        "💪 Superar a Insegurança de Cantar na Frente de Outros",
+        "🎓 Quando Vale a Pena Procurar um Professor de Canto"
+      ]
+    },
+    "paginas/aprender-idiomas.html": {
+      "total": 11,
+      "titulos": [
+        "💬 Praticar Conversação",
+        "📖 Explicar Gramática de Forma Simples",
+        "✍️ Corrigir Meu Texto",
+        "📚 Ampliar Vocabulário por Tema",
+        "🎓 Preparar para Prova de Certificação",
+        "🎤 Simular Entrevista em Outro Idioma",
+        "🔄 Tradução com Explicação",
+        "🎬 Aprender com Séries, Músicas e Filmes",
+        "⚠️ Erros Comuns de Falantes de Português",
+        "🗓️ Frases Práticas do Dia a Dia",
+        "🔊 Dicas de Pronúncia"
+      ]
+    },
+    "paginas/automacao-ia.html": {
+      "total": 16,
+      "titulos": [
+        "🗺️ Mapear Processo Repetitivo",
+        "💬 Fluxo de Atendimento Automático",
+        "📅 Automação de Conteúdo Semanal",
+        "📲 Follow-up Automático de Leads",
+        "✅ Automação de Tarefas Diárias",
+        "🔧 Briefing para Criar Automação no Zapier/Make/n8n",
+        "📧 Automação de Respostas de E-mail",
+        "📊 Automação de Relatórios Periódicos",
+        "🔔 Sistema de Alertas e Notificações Automáticas",
+        "🧾 Automação de Organização de Planilhas/Dados",
+        "👋 Automação de Onboarding",
+        "🔁 Automatizar Reaproveitamento de Conteúdo",
+        "📆 Automação de Agendamento e Lembretes",
+        "🛒 Automação de Recuperação de Carrinho Abandonado",
+        "🧑\\u200d💼 Automação de Triagem de Candidatos",
+        "🔍 Auditoria de Automações Existentes"
+      ]
+    },
+    "paginas/carreira.html": {
+      "total": 8,
+      "titulos": [
+        "🧭 Analisar Minha Carreira",
+        "📄 Melhorar Currículo",
+        "🎤 Preparar Entrevista",
+        "🚀 Plano de Crescimento",
+        "⚖️ Comparar Oportunidades",
+        "🧠 Descobrir Habilidades que Faltam",
+        "💬 Conversa Profissional Difícil",
+        "🔄 Mudar de Área"
+      ]
+    },
+    "paginas/codex-chatgpt.html": {
+      "total": 10,
+      "titulos": [
+        "🧭 Entender um Projeto do Zero",
+        "🐛 Corrigir um Bug Específico",
+        "✨ Criar uma Funcionalidade Nova",
+        "🔍 Revisar um Pull Request",
+        "🧪 Escrever Testes Automatizados",
+        "🔄 Refatorar Código Antigo",
+        "📄 Gerar Documentação",
+        "🌐 Criar um Projeto do Zero",
+        "🔁 Automatizar uma Tarefa Repetitiva",
+        "🔒 Verificar Segurança do Código"
+      ]
+    },
+    "paginas/comunicacao.html": {
+      "total": 15,
+      "titulos": [
+        "❓ Questionador de Texto",
+        "💰 Mensagem de Venda Estratégica",
+        "📧 E-mail Profissional Claro",
+        "💬 Estrutura para Conversa Delicada",
+        "📣 Post Estratégico de Autoridade",
+        "⚖️ Estratégia de Argumentação",
+        "📊 Roteiro de Apresentação Impactante",
+        "🎯 Avaliação Completa de um Discurso",
+        "🙋 Simular uma Plateia Fazendo Perguntas",
+        "🧑‍💼 Simular uma Reunião com Interrupções",
+        "🎓 Simular uma Banca Avaliadora",
+        "🧩 Reorganizar um Discurso Bagunçado",
+        "😰 Reduzir a Ansiedade Antes de Falar em Público",
+        "🎬 Roteiro com Pausas e Ênfases",
+        "⚡ Treinar Respostas Rápidas"
+      ]
+    },
+    "paginas/conectores-ia.html": {
+      "total": 12,
+      "titulos": [
+        "📬 Organizar Minha Caixa de Entrada",
+        "✉️ Encontrar um E-mail Específico",
+        "📄 Resumir um Documento do Drive",
+        "🗂️ Organizar Arquivos por Tema",
+        "🗓️ Resumo da Minha Semana",
+        "⏰ Encontrar um Horário Livre",
+        "🔍 Revisar Pull Requests Pendentes",
+        "🐛 Organizar Issues do Projeto",
+        "📋 Transformar Anotações em Tarefas",
+        "🧭 Atualizar Status de um Projeto",
+        "📌 Resumo de um Canal",
+        "✅ Transformar Conversa em Tarefas"
+      ]
+    },
+    "paginas/culinaria.html": {
+      "total": 10,
+      "titulos": [
+        "🍽️ Receita com o que Tenho em Casa",
+        "♻️ Aproveitar Sobras",
+        "🧊 Substituir um Ingrediente",
+        "🎓 Aprender uma Técnica Culinária",
+        "⬆️ Elevar uma Receita Simples",
+        "🌍 Pratos Autênticos de uma Culinária Específica",
+        "🗓️ Cardápio Semanal com Lista de Compras",
+        "🍱 Marmita Prática pra Semana",
+        "🔄 Adaptar Receita pra Restrição Alimentar",
+        "🎉 Cardápio pra Ocasião Especial"
+      ]
+    },
+    "paginas/decoracao-ambientes.html": {
+      "total": 11,
+      "titulos": [
+        "🎨 Definir Meu Estilo de Decoração",
+        "🖼️ Escolher um Estilo de Decoração (Versão Rápida)",
+        "🛋️ Redecorar a Sala de Estar",
+        "🛏️ Deixar o Quarto Mais Aconchegante",
+        "🍳 Otimizar uma Cozinha Pequena",
+        "💼 Criar um Home Office Funcional",
+        "🎨 Sugerir Paleta de Cores para o Ambiente",
+        "💡 Planejar a Iluminação do Ambiente",
+        "📋 Diagnóstico do Ambiente Atual",
+        "💰 Decorar com Orçamento Limitado",
+        "📐 Aproveitar Melhor um Espaço Pequeno"
+      ]
+    },
+    "paginas/desenvolvimento-profissional.html": {
+      "total": 10,
+      "titulos": [
+        "🎯 Plano de desenvolvimento individual",
+        "🧠 Identificar competências que faltam",
+        "📣 Pedir feedback ao gestor",
+        "🔍 Analisar feedback recebido",
+        "🗣️ Preparar conversa de crescimento",
+        "📊 Demonstrar resultados",
+        "⏱️ Melhorar produtividade no trabalho",
+        "🤝 Melhorar relacionamento profissional",
+        "🚀 Preparar para uma promoção",
+        "📚 Plano de aprendizado profissional"
+      ]
+    },
+    "paginas/empreendedorismo.html": {
+      "total": 11,
+      "titulos": [
+        "💡 Validar uma Ideia de Negócio",
+        "🎯 Encontrar Público-Alvo",
+        "🧪 Criar Teste de Mercado",
+        "💎 Criar Proposta de Valor",
+        "🗺️ Plano de Negócio Enxuto",
+        "🔍 Analisar Concorrentes",
+        "📈 Plano de Crescimento",
+        "🧠 Diagnóstico do Negócio",
+        "🤝 Criar Parcerias Estratégicas",
+        "⚠️ Pré-mortem do Negócio",
+        "🌱 Atividades de Crescimento pra Mim, a Partir da Rotina da Equipe"
+      ]
+    },
+    "paginas/espiritualidade.html": {
+      "total": 11,
+      "titulos": [
+        "🖐️ Entender e Praticar Auto-Reiki",
+        "🧘 Criar Rotina de Mantras Personalizados",
+        "🌅 Meditação Guiada Personalizada",
+        "⛩️ Rotina Inspirada na Vida Monástica",
+        "📓 Diário de Gratidão Espiritual",
+        "🧭 Descobrir Meu Propósito Espiritual",
+        "🌄 Criar um Ritual Matinal Espiritual",
+        "💭 Interpretar um Sonho",
+        "🌀 Refletir sobre Energia e Frequência Pessoal",
+        "⚛️ Física Quântica Explicada de Forma Simples (Sem Misturar com Espiritualidade)",
+        "🗣️ Conselho de 3 Vozes: Lei da Atração + Reiki + Energia/Frequência"
+      ]
+    },
+    "paginas/estrategia.html": {
+      "total": 7,
+      "titulos": [
+        "🎯 Definição de Objetivo Estratégico",
+        "🧩 Organização de Plano Rápido",
+        "📊 Estratégia de Crescimento Inteligente",
+        "🚀 Plano de Execução Estratégica",
+        "📈 Estratégia de Posicionamento",
+        "🧠 Tomada de Decisão com IA",
+        "📅 Planejamento Estratégico Anual"
+      ]
+    },
+    "paginas/filosofia-de-vida.html": {
+      "total": 10,
+      "titulos": [
+        "🎯 Plano de Coaching Pessoal",
+        "💪 Construir um Novo Hábito com Coaching",
+        "🧠 Roteiro de Autossugestão para Relaxamento",
+        "🚭 Autossugestão para Largar um Hábito",
+        "🏛️ Aplicar Filosofia Estoica no Dia a Dia",
+        "🧭 Definir Minha Missão de Vida",
+        "⏳ Refletir Sobre uma Decisão Importante",
+        "🏔️ Encontrar Sentido num Momento Difícil",
+        "🔥 Vencer a Procrastinação com Coaching",
+        "📖 Criar Meus Próprios Princípios de Vida"
+      ]
+    },
+    "paginas/financas-pessoais.html": {
+      "total": 22,
+      "titulos": [
+        "📋 Planejamento Financeiro Mensal",
+        "📊 Orçamento Detalhado (Regra 50/30/20)",
+        "🩺 Diagnóstico de Saúde Financeira",
+        "📱 Escolher App ou Planilha de Controle",
+        "💳 Organizar Dívidas",
+        "💳 Organizar Uso do Cartão de Crédito",
+        "🤝 Negociar Dívida com Credor",
+        "✂️ Redução de Gastos",
+        "🛟 Reserva de Emergência",
+        "📈 Cronograma de Investimentos",
+        "⚖️ Comparar Renda Fixa vs Variável",
+        "💰 Diversificar Além do CDI e da Poupança",
+        "🎯 Realocar Carteira e Dinheiro Parado",
+        "🏠 Financiamento vs Consórcio",
+        "🎯 Metas Financeiras Específicas",
+        "🧳 Planejar uma Grande Compra",
+        "🏡 Planejar Compra de Imóvel",
+        "🧭 Plano Financeiro Estratégico",
+        "🌅 Estratégia de Aposentadoria",
+        "💼 Finanças para Freelancer/Autônomo",
+        "🧾 Organizar Documentos para Imposto de Renda",
+        "👨‍👩‍👧 Educação Financeira para os Filhos"
+      ]
+    },
+    "paginas/fonoaudiologia.html": {
+      "total": 10,
+      "titulos": [
+        "🗣️ Diagnóstico Simples de Como Está Minha Fala Hoje",
+        "👄 Exercícios de Articulação para Falar mais Claro",
+        "🌬️ Exercícios de Respiração para Falar com mais Controle",
+        "🔤 Trava-línguas Personalizados para Praticar",
+        "📖 Treino de Leitura em Voz Alta com Foco em Clareza",
+        "📅 Plano de Prática Diária de Dicção",
+        "🎙️ Preparar para Gravar e se Ouvir Falando",
+        "💬 Praticar Fala para Situações Específicas",
+        "🧑‍⚕️ Organizar Informações Antes de uma Consulta com Fonoaudiólogo",
+        "📈 Acompanhar Minha Evolução na Fala ao Longo do Tempo"
+      ]
+    },
+    "paginas/games.html": {
+      "total": 79,
+      "titulos": [
+        "📖 Explicar Como Esse Jogo Funciona",
+        "🎮📚 Jogo Arcade Educativo (Aprenda Brincando)",
+        "⭕ Jogo da Velha com Variação",
+        "💣 Campo Minado Simples",
+        "🧠 Jogo da Memória",
+        "🎯 Adivinhe o Número",
+        "🐍 Jogo da Cobrinha (Snake)",
+        "🏓 Pong Simples",
+        "🧩 Quebra-Cabeça Deslizante",
+        "🚀 Mini Jogo de Plataforma",
+        "♟️ Damas Completo",
+        "🎮 Jogo com Pontuação e Níveis",
+        "⭕ Jogo da Velha Online (2 Jogadores)",
+        "🚢 Batalha Naval Online",
+        "🔤 Forca Online (2 Jogadores)",
+        "❓ Quiz Online por Turnos",
+        "🎨 Desenhe e Adivinhe Online",
+        "🤖 Aventura Online com IA como Mestre do Jogo",
+        "📰 Atualizador de Jogos",
+        "⚔️ Comparar Personagens",
+        "🗺️ Guia para Iniciantes",
+        "🚀 Melhor Estratégia de Evolução",
+        "🔍 Descobrir Algo no Jogo",
+        "🎯 Build Ideal",
+        "💡 O Que Fazer Agora?",
+        "📊 Tier List Explicada",
+        "🐦 Flappy Bird",
+        "🧱 Breakout / Arkanoid",
+        "👾 Space Invaders",
+        "🏎️ Corrida Infinita",
+        "⚔️ Arena de Sobrevivência",
+        "🔢 2048",
+        "🟢 Genius / Simon",
+        "🚢 Batalha Naval",
+        "🧟 Zumbi: Sobrevivência",
+        "🏰 Tower Defense",
+        "🧙 RPG de Turnos",
+        "🧩 Sokoban",
+        "🧠 Quiz com Campanha",
+        "🏥 Simulador de Hospital",
+        "🌾 Mini Fazenda",
+        "🏙️ Construtor de Cidade",
+        "🕵️ Detetive / Mistério",
+        "🏝️ Sobrevivência na Ilha",
+        "🏠 Banco Imobiliário",
+        "🧱 Tetris — Blocos que Caem",
+        "👻 Labirinto dos Fantasmas",
+        "💣 Bomberman de Arena",
+        "🐸 Travessia da Estrada",
+        "🪐 Asteroides Espaciais",
+        "🦘 Pulo Infinito",
+        "🔴 Conecta 4",
+        "🧩 Sudoku",
+        "🏎️ Corrida de Kart",
+        "🔧 Corrigir Bugs do Jogo Existente",
+        "🎨 Melhorar Interface e Visual do Jogo",
+        "📱 Deixar Jogo Perfeito no Celular",
+        "🎮 Melhorar Controles e Jogabilidade",
+        "⚖️ Ajustar Dificuldade do Jogo",
+        "🤖 Melhorar Inteligência dos Inimigos",
+        "💥 Melhorar Colisões sem Deixar Injusto",
+        "🏆 Melhorar Pontuação, Recorde e Níveis",
+        "💾 Adicionar Salvamento sem Quebrar o Jogo",
+        "🌐 Melhorar Jogo Online com Sala por Link",
+        "🟢 Minhoquinha — Deixar Inimigo Mais Fácil",
+        "🟢 Minhoquinha — Modo Simples e Modo Completo",
+        "🔗 Minhoquinha — Entrar Online pelo Link sem PIN",
+        "📐 Minhoquinha — Melhorar Tela e Orientação no Celular",
+        "⏳ Melhorar Tela Inicial, Carregamento e Game Over",
+        "🧪 Fazer Auditoria Completa antes de Publicar o Jogo",
+        "📱 Melhorar Controles de Toque e Celular",
+        "⚡ Melhorar Desempenho sem Mudar a Mecânica",
+        "♿ Melhorar Acessibilidade do Jogo",
+        "🧪 Teste de Regressão sem Remover Funcionalidades",
+        "🧹 Limpar Código sem Alterar o Jogo",
+        "🟡 Pac-Man",
+        "🃏 UNO",
+        "🥊 Jogo de Luta 1×1",
+        "🧟 Sobrevivência contra Zumbis"
+      ]
+    },
+    "paginas/gestao-negocios.html": {
+      "total": 10,
+      "titulos": [
+        "📊 Diagnóstico de Gestão",
+        "🎯 Definir Metas do Negócio",
+        "📈 Criar Painel de Indicadores",
+        "💰 Analisar Custos e Lucro",
+        "👥 Organizar Responsabilidades",
+        "📅 Reunião de Gestão Eficiente",
+        "⚖️ Comparar Decisões Estratégicas",
+        "🚨 Plano para Negócio em Dificuldade",
+        "📋 Plano de Ação 5W2H",
+        "🔄 Revisão Mensal do Negócio"
+      ]
+    },
+    "paginas/hipnose.html": {
+      "total": 8,
+      "titulos": [
+        "🌀 Roteiro de Indução Hipnótica Clássica",
+        "🔽 Técnica de Aprofundamento (Deepening)",
+        "🔔 Sugestão Pós-Hipnótica",
+        "🔓 Roteiro de Despertar (Emergência do Transe)",
+        "🚬 Sessão de Hipnose Clínica para Cessação do Tabagismo",
+        "😰 Sessão de Hipnose Clínica para Redução de Ansiedade",
+        "😴 Sessão de Hipnose Clínica para Melhora do Sono",
+        "🎯 Anamnese e Plano de Sessões para um Caso Clínico"
+      ]
+    },
+    "paginas/imagens.html": {
+      "total": 27,
+      "titulos": [
+        "🏛️ Império Romano",
+        "📸 Foto LinkedIn Premium",
+        "🏢 Foto Executiva",
+        "🧑‍💼 Retrato Minimalista",
+        "🎨 Pintura Digital",
+        "🎬 Estilo Cinematográfico",
+        "🦸 Versão Super-Herói",
+        "🌃 Retrato Neon Cyberpunk",
+        "📼 Estilo Retrô Anos 80",
+        "💎 Retrato Luxo Premium",
+        "🧙 Fantasia Épica",
+        "📰 Editorial de Revista",
+        "🎮 Avatar Gamer",
+        "📦 Foto de Produto",
+        "🧊 Render 3D Moderno",
+        "📱 Post Impactante",
+        "🎥 Retrato Cinematográfico",
+        "⚡ Antes e Depois Chocante",
+        "📷 Estética 90s Nostálgica",
+        "🧸 Miniatura Hiper-realista",
+        "🌆 Fantasia Urbana",
+        "🌀 Surreal e Absurdo",
+        "☁️ Mood Aesthetic",
+        "🦸 Estilo Action Figure",
+        "🌴 Paraíso Tropical de Luxo",
+        "🤠 Velho Oeste Cinematográfico",
+        "❄️ Reino de Gelo"
+      ]
+    },
+    "paginas/imobiliario.html": {
+      "total": 20,
+      "titulos": [
+        "⚖️ Advogado Imobiliário",
+        "⚖️ Análise Jurídica Imobiliária Completa",
+        "📋 Revisão de Contrato de Locação",
+        "🏡 Descrição Estratégica de Imóvel",
+        "🚶 Roteiro de Visita ao Imóvel",
+        "🛡️ Responder Objeções de Comprador",
+        "🏢 Anúncio Estratégico de Locação",
+        "🔍 Critérios para Selecionar Inquilino",
+        "📈 Estratégia Completa de Venda",
+        "🔎 Plano de Captação de Imóveis",
+        "📊 Análise Comparativa de Mercado (CMA)",
+        "📄 Analisar Matrícula e Pesquisar Valor de Mercado",
+        "📅📲 Planejamento Semanal de Conteúdo para Status",
+        "💵 Anúncio Pago para Redes Sociais",
+        "🎬 Roteiro de Vídeo Tour do Imóvel",
+        "💰 Análise de Investimento Imobiliário",
+        "⚖️ Comparar Compra à Vista vs Financiamento",
+        "📉 Simular Retorno com Aluguel",
+        "💬 Responder Lead pelo WhatsApp",
+        "📱 Instagram + WhatsApp com Limite de Caracteres"
+      ]
+    },
+    "paginas/lei-da-atracao.html": {
+      "total": 13,
+      "titulos": [
+        "🌟 Criar Afirmações de Lei da Atração",
+        "🧲 Plano de Manifestação de um Objetivo",
+        "🎯 Definir com Clareza o que Eu Quero Manifestar",
+        "🧘 Visualização Guiada para Manifestação",
+        "🌈 Criar um Vision Board em Texto",
+        "💭 Identificar Crenças Limitantes que Bloqueiam a Manifestação",
+        "📿 Ritual Semanal de Gratidão e Manifestação",
+        "🔄 Reformular um Pensamento Negativo Recorrente",
+        "🔓 Quebra de Laço Energético",
+        "💌 Carta do Amor",
+        "💢 Carta do Ódio",
+        "🙏 Ho'oponopono",
+        "✨ Ritual Completo de Cura Emocional (Gratidão + Laço + Cartas + Ho'oponopono)"
+      ]
+    },
+    "paginas/marketing-campanha.html": {
+      "total": 54,
+      "titulos": [
+        "📷 Imagem Promocional Simples",
+        "📢 Banner Promocional Separado",
+        "🖼️ Folder Profissional",
+        "📱 Criativo para Instagram Ads",
+        "📘 Post para Facebook",
+        "🚀 Criativo de Alta Conversão",
+        "💳 Cartão de Visita Profissional",
+        "📦 Papelaria Básica da Empresa",
+        "💬 Banner para Status do WhatsApp",
+        "📲 Card para Grupos de WhatsApp",
+        "🎯 Campanha para Atrair Novos Clientes",
+        "💖 Campanha de Fidelização de Clientes",
+        "🎉 Campanha Sazonal",
+        "🎨 Direção de Arte Completa",
+        "🛒 Vitrine Premium para Loja Online",
+        "🧴 Vitrine de Shampoo & Condicionador",
+        "🌸 Anúncio de Perfume Premium",
+        "💄 Post de Maquiagem para Redes Sociais",
+        "🧴 Banner de Creme & Hidratante",
+        "🎁 Kit Promocional de Cosméticos",
+        "✨ Post de Lançamento de Produto de Beleza",
+        "💅 Antes e Depois de Resultado de Beleza",
+        "📣 Atrair Clientes",
+        "🤝 Conquistar Confiança",
+        "📝 Qualificar o Cliente",
+        "🎯 Entender a Necessidade",
+        "🏡 Apresentar os Imóveis Ideais",
+        "💰 Negociar",
+        "✍️ Fechar o Negócio",
+        "🔑 Entregar as Chaves e Acompanhar Documentação",
+        "💬 Fazer o Pós-venda",
+        "❤️ Fidelizar",
+        "🌟 Gerar Indicações",
+        "🏪 Apresentação da Loja",
+        "💭 Nossa História",
+        "🎯 Por que Escolher a Nossa Loja",
+        "👥 Bastidores da Loja",
+        "🏆 Celebrando uma Conquista da Marca",
+        "💬 Convite para Conhecer a Loja",
+        "🌟 Depoimento Institucional de Cliente",
+        "👗 Vitrine de Nova Coleção",
+        "📱 Post de Look do Dia",
+        "🏷️ Banner de Liquidação",
+        "🎁 Combo de Peças (Look Completo)",
+        "✨ Post de Lançamento de Peça",
+        "📏 Guia de Tamanhos / Como Vestir",
+        "💬 Card de Novidades para WhatsApp",
+        "💪 Antes e Depois de Aluno",
+        "🏋️ Divulgação de Aula Experimental Gratuita",
+        "📅 Post de Novo Horário/Turma",
+        "🎯 Card de Plano Promocional",
+        "🥇 Post de Conquista/Resultado da Semana",
+        "💬 Convite para Aula Experimental via WhatsApp",
+        "🛒 Vitrine de Planos da Academia"
+      ]
+    },
+    "paginas/marketing-texto.html": {
+      "total": 34,
+      "titulos": [
+        "📢 Post Simples de Divulgação",
+        "📝 Descrição Comercial Curta",
+        "🚀 Campanha Direta de Venda",
+        "📖 Storytelling Persuasivo",
+        "🏆 Posicionamento de Autoridade",
+        "🎬 Estrutura de VSL",
+        "🚀 Funil de Lançamento Estratégico",
+        "🔍 Análise e Melhoria de Copy",
+        "🧪 Campanha Direta com 3 Variações",
+        "🎭 Storytelling Estratégico com 3 Versões",
+        "🔻 Funil Completo de Alta Conversão",
+        "📲 Sequência Estratégica de WhatsApp",
+        "📝 Descrição de Produto de Beleza",
+        "💬 Legenda de Lançamento de Produto",
+        "🎁 Campanha de Kit Promocional",
+        "📖 Storytelling de Transformação",
+        "📲 WhatsApp para Recompra e Cross-sell",
+        "🏷️ Campanha para Data Comemorativa",
+        "⭐ Posicionamento da Marca de Cosméticos",
+        "📝 Descrição de Peça de Roupa",
+        "💬 Legenda de Lançamento de Coleção",
+        "🎁 Campanha de Combo de Peças",
+        "📖 Storytelling de Estilo",
+        "📲 WhatsApp para Recompra e Cross-sell",
+        "🏷️ Campanha para Liquidação/Data Comemorativa",
+        "⭐ Posicionamento da Marca de Moda",
+        "📝 Descrição de Plano/Modalidade",
+        "💬 Legenda de Divulgação de Aula Experimental",
+        "🎁 Campanha de Plano Promocional",
+        "📖 Storytelling de Transformação de Aluno",
+        "📲 WhatsApp de Acompanhamento de Aluno",
+        "🏷️ Campanha para Início de Ano/Verão",
+        "⭐ Posicionamento da Academia/Personal",
+        "📱 Instagram + WhatsApp com Limite de Caracteres"
+      ]
+    },
+    "paginas/marketing.html": {
+      "total": 15,
+      "titulos": [
+        "🚀 Campanha Direta de Venda",
+        "🗓️ Calendário de Conteúdo de 7 Dias",
+        "✍️ Legenda Persuasiva para Redes Sociais",
+        "👤 Perfil do Cliente Ideal",
+        "💬 Storytelling de Conexão",
+        "📢 Anúncio para Meta Ads",
+        "📲 Sequência de WhatsApp Persuasiva",
+        "🌐 Campanha Multicanal",
+        "🧭 Plano de Marketing de 30 Dias",
+        "🔻 Funil de Vendas Completo",
+        "📊 Auditoria de Marketing",
+        "🎯 Diagnóstico de Conversão de Campanha",
+        "🕵️ Análise de Concorrentes sem Copiar",
+        "🎨 Briefing de Criativo para Campanha",
+        "⭐ Estratégia de Posicionamento"
+      ]
+    },
+    "paginas/negociacao.html": {
+      "total": 8,
+      "titulos": [
+        "🎯 Preparar uma Negociação",
+        "🧠 Simular a Outra Parte",
+        "💬 Responder uma Contraproposta",
+        "⚖️ Avaliar uma Proposta",
+        "🛡️ Lidar com Objeções",
+        "🏠 Negociação Imobiliária",
+        "💰 Negociar Preço",
+        "🤝 Buscar um Acordo"
+      ]
+    },
+    "paginas/o-que-fazer-com-chatgpt-work.html": {
+      "total": 6,
+      "titulos": [
+        "🗺️ Planejar Antes de Executar (Modo Plan)",
+        "📊 Transformar um Objetivo em Planilha/Documento/Apresentação Pronta",
+        "🔗 Automatizar Tarefa que Passa por Vários Apps Conectados",
+        "🔍 Análise de Concorrentes com Entrega Pronta",
+        "🌐 Criar um Site Funcional a partir de uma Descrição",
+        "⏳ Deixar Rodando um Projeto Longo Sem Ficar Supervisionando"
+      ]
+    },
+    "paginas/o-que-fazer-com-chatgpt.html": {
+      "total": 6,
+      "titulos": [
+        "📊 Análise Competitiva e de Mercado",
+        "⏰ Automatizar Rotina e Tarefas Agendadas",
+        "📑 Acelerar Fechamento Financeiro Mensal",
+        "🎯 Qualificação de Leads",
+        "🚀 Resumo de Lançamento e Acompanhamento de Projeto",
+        "🧩 Explicar Conceito Complexo de Forma Simples"
+      ]
+    },
+    "paginas/o-que-fazer-com-claude.html": {
+      "total": 6,
+      "titulos": [
+        "🛠️ Criar Ferramenta Interativa na Conversa",
+        "📚 Analisar Documento ou Contrato Muito Longo",
+        "📄 Gerar Arquivo de Word, Excel ou PowerPoint de Verdade",
+        "🔁 Continuar de Onde Parei em Outra Conversa",
+        "🔌 Conectar com Gmail, Google Drive ou Slack",
+        "🗂️ Criar um Projeto com Contexto Compartilhado"
+      ]
+    },
+    "paginas/o-que-fazer-com-comet.html": {
+      "total": 6,
+      "titulos": [
+        "🛍️ Comparar Preço em Várias Abas Abertas",
+        "✈️ Reservar Passagem ou Fazer Check-in",
+        "📧 Resumir e Responder E-mails Direto do Navegador",
+        "📝 Preencher Formulário Automaticamente",
+        "🔍 Pesquisar Qualquer Trecho Selecionado na Página",
+        "🎫 Caçar Cupom de Desconto no Checkout"
+      ]
+    },
+    "paginas/o-que-fazer-com-gemini.html": {
+      "total": 8,
+      "titulos": [
+        "🎥 Resumir Vídeo do YouTube",
+        "📁 Perguntar Sobre Arquivos do Google Drive",
+        "📧 Resumir e Organizar E-mails do Gmail",
+        "📅 Organizar Agenda e Compromissos",
+        "📝 Exportar Direto pro Google Docs ou Sheets",
+        "✈️ Buscar Passagens Aéreas",
+        "🎬 Agente de Indicação de Filmes e Séries (Sem Repetir o Que Já Vi)",
+        "🎬🔬 Agente de Filmes e Séries HIPER AVANÇADO (Precisão Máxima)"
+      ]
+    },
+    "paginas/o-que-fazer-com-grok.html": {
+      "total": 6,
+      "titulos": [
+        "📊 Analisar Tendências e Conversas no X",
+        "🔍 Pesquisa Profunda com DeepSearch",
+        "🗣️ Debate Entre Múltiplos Agentes de IA",
+        "🎨 Gerar Imagem ou Vídeo Curto",
+        "🧠 Ativar Raciocínio Passo a Passo (Think Mode)",
+        "😄 Resposta Direta e Sem Rodeios"
+      ]
+    },
+    "paginas/o-que-fazer-com-manus.html": {
+      "total": 6,
+      "titulos": [
+        "🌐 Criar Site Completo a partir de uma Descrição",
+        "✈️ Planejar Viagem Completa com Roteiro Otimizado",
+        "📋 Triagem de Currículos Automatizada",
+        "📊 Dashboard Financeiro Automatizado",
+        "🔎 Pesquisar e Comparar Fornecedores",
+        "🔄 Deixar o Manus Trabalhar Sozinho até Entregar o Objetivo"
+      ]
+    },
+    "paginas/outros.html": {
+      "total": 16,
+      "titulos": [
+        "📋 Organizar Ideias Confusas",
+        "🔎 Reflexão Profunda da Fase Atual",
+        "✈️ Planejamento de Viagem Econômica",
+        "🎧 Criação de Playlist Personalizada",
+        "💡 Gerador de Ideias Criativas",
+        "🎨 Brainstorm Estratégico por Categorias",
+        "📊 Análise de Decisão Estratégica",
+        "📈 Análise Estratégica de Problema",
+        "🎯 Planejamento Semanal Estratégico",
+        "🏆 Metas de Curto, Médio e Longo Prazo",
+        "🚀 Plano de Alta Produtividade",
+        "🔋 Recomeçar Quando Está sem Motivação",
+        "🗓️ Reorganizar Minha Rotina Com Base no que Já Faço",
+        "💸 Coisas para Fazer sem Gastar Dinheiro",
+        "🎯 Pequenos Passos Pra Sair da Inércia",
+        "🧘 Dia Mais Leve Quando Está Cansado(a)"
+      ]
+    },
+    "paginas/packs-prompts.html": {
+      "total": 8,
+      "titulos": [
+        "📚 Pack Estudo Inteligente",
+        "🏠 Pack Corretor de Imóveis",
+        "🎨 Pack Criador de Imagens",
+        "📱 Pack Redes Sociais",
+        "🧠 Pack Organização Pessoal",
+        "🤖 Pack Começando com IA",
+        "💼 Pack Currículo & Entrevista",
+        "🛒 Pack Vendas Completo"
+      ]
+    },
+    "paginas/pesquisa-profunda.html": {
+      "total": 13,
+      "titulos": [
+        "🔎 Pesquisa Completa",
+        "🗺️ Plano de Pesquisa",
+        "⚖️ Comparar Fontes",
+        "🧪 Verificar uma Afirmação",
+        "📚 Estado Atual de um Tema",
+        "💡 Descobrir o que Não Estou Perguntando",
+        "📊 Relatório de Pesquisa",
+        "🔄 Atualizar uma Pesquisa Antiga",
+        "🛒 Pesquisar se um Produto Está Barato",
+        "⚖️ Comparar Produtos Parecidos",
+        "🔬 Pesquisa Científica sobre Alimentação e uma Condição de Saúde",
+        "🩺 Perguntas para Levar ao Médico sobre Alimentação",
+        "📋 Entender um Diagnóstico em Linguagem Simples"
+      ]
+    },
+    "paginas/planejamento.html": {
+      "total": 7,
+      "titulos": [
+        "📌 Planejamento Semanal Rápido",
+        "🎯 Definição de Metas Mensais",
+        "📅 Planejamento Anual Estratégico",
+        "🚀 Plano de Execução de Projeto",
+        "📊 Planejamento de Crescimento Pessoal",
+        "🧩 Planejamento Estratégico Empresarial",
+        "📈 Planejamento de Metas de Alta Performance"
+      ]
+    },
+    "paginas/processos-operacoes.html": {
+      "total": 10,
+      "titulos": [
+        "🗺️ Mapear um Processo",
+        "✂️ Simplificar um Processo",
+        "📋 Criar Procedimento Padrão",
+        "✅ Criar Checklist",
+        "🔄 Melhorar Passagem entre Setores",
+        "🤖 Encontrar Automações",
+        "🚨 Plano para Falhas Operacionais",
+        "⏱️ Reduzir Tempo de Execução",
+        "📊 Indicadores Operacionais",
+        "🧠 Análise de Causa Raiz"
+      ]
+    },
+    "paginas/programacao-nocode.html": {
+      "total": 10,
+      "titulos": [
+        "⚙️ Criar fluxo simples",
+        "🔄 Automação completa",
+        "📱 Criar app sem código",
+        "🌐 Landing page rápida",
+        "📊 Dashboard inteligente",
+        "🔗 Integrações",
+        "🤖 Sistema IA + NoCode",
+        "🚀 Criar SaaS No-Code",
+        "🧭 Workflow operacional",
+        "🏁 Criar MVP rápido"
+      ]
+    },
+    "paginas/prompts-do-dev.html": {
+      "total": 9,
+      "titulos": [
+        "🧑‍⚕️ Time Médico Combinado (Clínico + Dermato + Gastro)",
+        "🔎 Agente Pesquisador",
+        "🏠 Corretor Imobiliário IA",
+        "🧴 Meu Agente de Dermatologia",
+        "🏓 Pong Simples",
+        "20 Melhorias para uma Página",
+        "💡 Brainstorm: 10 Ideias de Recursos e Design",
+        "📄🩺 Leitor Inteligente de Laudos e Exames",
+        "🎯 Realocar Carteira e Dinheiro Parado"
+      ]
+    },
+    "paginas/sistemas-ia.html": {
+      "total": 26,
+      "titulos": [
+        "🚀 Criar meu primeiro sistema do zero",
+        "🗺️ Arquitetura completa do sistema",
+        "🤖 Briefing completo para Studio IA",
+        "🧭 Criar menu e navegação do sistema",
+        "🧱 Criar sistema visual e componentes",
+        "🛠️ Melhorar meu sistema atual",
+        "🧩 20 coisas que faltam no meu sistema",
+        "🎨 Auditoria UX/UI de tela",
+        "📂 Organizar menu sem ficar grande",
+        "📱 Melhorar o sistema no celular",
+        "🧩 Padronizar todas as telas",
+        "🔎 Recursos que faltam no sistema",
+        "🔄 Melhorar um fluxo específico",
+        "🏗️ Revisar estrutura antes de continuar",
+        "🗺️ Mapa de jornada e fluxos críticos",
+        "💻 Revisão técnica completa",
+        "🧪 Cenários de teste e bugs escondidos",
+        "♿ Revisão de acessibilidade do sistema",
+        "⚡ Auditoria de desempenho",
+        "📈 Roadmap de evolução do produto",
+        "🔐 Auditoria de segurança do sistema",
+        "🗄️ Revisar arquitetura do banco de dados",
+        "✨ Criar uma funcionalidade completa com IA",
+        "🧠 Projetar um sistema com IA de ponta a ponta",
+        "🧪 Auditoria de qualidade antes da publicação",
+        "♿ Auditoria avançada de acessibilidade"
+      ]
+    },
+    "paginas/sites-landing-pages.html": {
+      "total": 57,
+      "titulos": [
+        "🧭 ETAPA 0 — Definir a identidade do projeto",
+        "🐛 Caçador de Bugs PRO",
+        "Melhorar Meu Site Atual",
+        "Deixar Meu Site Mais Visual e Profissional",
+        "Auditoria Visual Profissional — 10 Melhorias",
+        "🎨 Auditoria Avançada de Design — Diretor de Arte + UX/UI",
+        "Auditoria UX/UI Completa",
+        "Criar Design System do Meu Site",
+        "Melhorar Hierarquia Visual",
+        "Padronizar Botoes, Cards e Componentes",
+        "Revisao Visual Mobile",
+        "Revisao Visual Desktop",
+        "Acessibilidade Visual e Interacao",
+        "Microinteracoes e Estados da Interface",
+        "Checklist Visual Antes de Publicar",
+        "Criar Meu Primeiro Site do Zero",
+        "Planejar Antes de Criar",
+        "Criar a Página Inicial",
+        "Mapa Completo do Site",
+        "Definir Estilo Visual",
+        "Criar o Menu Inicial",
+        "Criar Textos do Site",
+        "Landing Page Simples",
+        "Pensar o Site Primeiro no Celular",
+        "Tenho Só a Index e Travei",
+        "Continuar um Projeto Parcial",
+        "Padronizar Todas as Páginas",
+        "Melhorar Clareza dos Textos",
+        "Melhorar Chamadas para Ação",
+        "Encontrar Páginas que Devem Ser Unidas",
+        "🧠 Consultor Estratégico de Melhorias — Raio-X do Projeto",
+        "🏆 Auditoria com Notas de 0 a 10 + Top 20",
+        "Navegação Avançada Mobile e Desktop",
+        "20 Melhorias para uma Página",
+        "Auditoria de Conversão",
+        "SEO Essencial",
+        "Revisão de Acessibilidade",
+        "Jornada do Usuário",
+        "Comparar Antes e Depois",
+        "Plano de Evolução do Site",
+        "Landing Page de Alta Conversão",
+        "Menu Inteligente com Submenus",
+        "Sugestão de Novas Páginas",
+        "Expandir o Menu com Novos Itens",
+        "Ideias de Sistemas e Funcionalidades Avançadas",
+        "Roadmap de Produtos Avançados",
+        "Consultor de Melhorias para Sites e Sistemas",
+        "💡 Brainstorm: 10 Ideias de Recursos e Design",
+        "🔒 Checklist de Segurança Básica do Site",
+        "🔑 Revisão de Login e Autenticação",
+        "🛡️ Proteção de Dados e Privacidade (LGPD)",
+        "💾 Plano de Backup e Recuperação de Desastres",
+        "🗂️ Auditoria de Pastas e Arquivos do GitHub",
+        "🚚 Plano de Migração de Arquivos",
+        "🏗️ DIA 1 — Organizar a Estrutura do Meu Site Sem Quebrar o Que Já Funciona",
+        "🚀 5 Melhorias Básicas Importantes",
+        "🔎 Auditoria Crítica — Navegue e Encontre os Defeitos"
+      ]
+    },
+    "paginas/testador-ia.html": {
+      "total": 7,
+      "titulos": [
+        "📝 Teste de Escrita com Restrições",
+        "🎨 Teste de Geração de Imagem",
+        "🎬 Teste de Roteiro/Criação de Vídeo",
+        "💻 Teste de Criação de Jogo Funcional",
+        "🧠 Teste de Raciocínio Passo a Passo",
+        "📊 Teste de Análise de Dados",
+        "⚖️ Grade de Comparação Entre IAs"
+      ]
+    },
+    "paginas/tomada-de-decisao.html": {
+      "total": 12,
+      "titulos": [
+        "⚖️ Comparar duas opções",
+        "🎯 Criar critérios de decisão",
+        "🔮 Pensar nas consequências",
+        "🧪 Testar antes de decidir",
+        "⚠️ Pré-mortem",
+        "🪞 Identificar vieses",
+        "🚪 Decisão reversível ou irreversível",
+        "📊 Matriz de decisão",
+        "🤔 Advogado do diabo",
+        "✅ Próximo passo depois da decisão",
+        "🎬 Indicação de Filme ou Série",
+        "🍿 Escolher Série Nova pra Maratonar"
+      ]
+    },
+    "paginas/treino-fitness.html": {
+      "total": 11,
+      "titulos": [
+        "💪 Treino em Casa Sem Equipamento (Peso do Corpo)",
+        "📅 Organizar rotina de treino",
+        "🎯 Definir objetivo de treino",
+        "📊 Acompanhar evolução",
+        "🔄 Revisar divisão de treino",
+        "⏱️ Treino para pouco tempo",
+        "🏠 Adaptar treino para casa",
+        "📈 Criar progressão",
+        "😴 Melhorar recuperação",
+        "📝 Diário de treino",
+        "🧳 Manter rotina em viagem"
+      ]
+    },
+    "paginas/trend.html": {
+      "total": 27,
+      "titulos": [
+        "🎥 Trend Cinematográfica",
+        "🎮 Cinema Gamer Caótico",
+        "🦸 Cinema dos Heróis",
+        "🚀 Cinema Cyberpunk",
+        "🍿 Cinema dos Memes",
+        "🕹️ Arena dos Games",
+        "🏡 Profissão Premium",
+        "🚀 Cidade Cyberpunk",
+        "💑 Casal Elegante",
+        "🎭 Versão Desenho Animado",
+        "🗼 Casal em Paris",
+        "🚀 Casal do Futuro",
+        "🕺 Casal Anos 80",
+        "🏖️ Casal na Praia",
+        "☃️ Casal no Inverno",
+        "👑 Casal Medieval",
+        "🌃 Casal em Nova York",
+        "🛣️ Casal Road Trip",
+        "🎬 Cena de Filme",
+        "📱 Influenciador Premium",
+        "💎 Empresário de Luxo",
+        "🤖 Humano + IA",
+        "🔥 Cena Pós-Apocalíptica",
+        "🚀 Cyberpunk Neon",
+        "⚡ Super-Herói Épico",
+        "🌅 Filme Emocional",
+        "🦸 Super-Herói Personalizado"
+      ]
+    },
+    "paginas/whatsapp-profissional.html": {
+      "total": 10,
+      "titulos": [
+        "👋 Primeira resposta ao cliente",
+        "🔎 Qualificar um cliente",
+        "⏳ Cliente parou de responder",
+        "💰 Responder pedido de desconto",
+        "📅 Confirmar agendamento",
+        "😠 Responder cliente insatisfeito",
+        "📢 Criar mensagem de oferta",
+        "🤝 Pós-venda",
+        "🧹 Melhorar mensagem antes de enviar",
+        "📚 Criar respostas rápidas"
+      ]
+    }
+  }
+}
