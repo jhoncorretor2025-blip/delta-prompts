@@ -552,7 +552,7 @@ body.category-page .prompt-text {
   --delta-surface:#ffffff;
   --delta-text:#202236;
   --delta-text-secondary:#667085;
-  --delta-text-muted:#8a92a6;
+  --delta-text-muted:#667085;
   --delta-border:#e6e8f0;
   --delta-success:#16a34a;
   --delta-warning:#d97706;
@@ -715,7 +715,7 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible{
-  outline:3px solid rgba(91,92,226,.25);
+  outline:3px solid var(--delta-accent,#5b5ce2);
   outline-offset:2px;
 }
 
@@ -1193,7 +1193,7 @@ body.category-page .contador{
 /* ===== DELTA V1.19 — acabamento + acessibilidade ===== */
 .skip-link{position:fixed;left:16px;top:10px;z-index:4000;transform:translateY(-160%);background:#202236;color:#fff;padding:10px 14px;border-radius:10px;font-weight:800;text-decoration:none;box-shadow:0 8px 20px rgba(15,23,42,.2)}
 .skip-link:focus{transform:translateY(0)}
-.home-cta-primary:focus-visible,.home-cta-secondary:focus-visible,.home-cta-tertiary:focus-visible,.home-quick-access a:focus-visible,.quick button:focus-visible,.modo-simples-hero-link:focus-visible,#btnLimparBuscaHome:focus-visible{outline:3px solid rgba(91,92,226,.38);outline-offset:2px}
+.home-cta-primary:focus-visible,.home-cta-secondary:focus-visible,.home-cta-tertiary:focus-visible,.home-quick-access a:focus-visible,.quick button:focus-visible,.modo-simples-hero-link:focus-visible,#btnLimparBuscaHome:focus-visible{outline:3px solid var(--delta-accent,#5b5ce2);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 
 /* ===== DELTA V1.19 — mobile ===== */
@@ -1220,8 +1220,8 @@ body.category-page .contador{
 /* ===== DELTA V1.20 — refinamento #5: acessibilidade e acabamento ===== */
 .skip-link{font-size:13px}
 .skip-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
-#busca-global:focus-visible{outline:3px solid rgba(91,92,226,.45)!important;outline-offset:2px}
-#btnLimparBuscaHome:focus-visible{outline:3px solid rgba(91,92,226,.45);outline-offset:1px;background:rgba(91,92,226,.08)!important}
+#busca-global:focus-visible{outline:3px solid var(--delta-accent,#5b5ce2)!important;outline-offset:2px}
+#btnLimparBuscaHome:focus-visible{outline:3px solid var(--delta-accent,#5b5ce2);outline-offset:1px;background:rgba(91,92,226,.08)!important}
 .home-cta-primary:focus-visible,.home-cta-secondary:focus-visible,.home-cta-tertiary:focus-visible,.home-quick-access a:focus-visible,.quick button:focus-visible,.modo-simples-hero-link:focus-visible{box-shadow:0 0 0 3px rgba(91,92,226,.16)}
 @media(max-width:600px){#btnLimparBuscaHome{width:40px;height:40px;font-size:19px}}
 
@@ -1234,7 +1234,7 @@ body.category-page .contador{
 .item-main-link>span:nth-child(2){min-width:0}
 .item-main-link strong,.item-main-link small{display:block;overflow-wrap:anywhere}
 .item-interactive>.item-actions{margin-left:auto}
-.card-main-link:focus-visible,.item-main-link:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:3px;border-radius:10px}
+.card-main-link:focus-visible,.item-main-link:focus-visible{outline:3px solid var(--delta-accent,#5b5ce2);outline-offset:3px;border-radius:10px}
 
 /* ===== DELTA V1.27 — contraste de textos secundários ===== */
 .small,.muted,.hint,.helper,.sugerir-dica{color:#667085}
@@ -1254,7 +1254,7 @@ body.category-page .contador{
 .home-search-result-summary{font-size:12.5px;line-height:1.45;color:var(--muted);overflow-wrap:anywhere}
 .home-search-result-meta{font-size:11px;color:var(--p);font-weight:800}
 .home-search-result-cta{align-self:flex-start;margin-top:2px;padding:6px 9px;border-radius:9px;background:var(--delta-accent-light,#eef2ff);color:var(--delta-accent-dark,#4338ca);font-size:11.5px;font-weight:900}
-.home-search-result-main:focus-visible{outline:3px solid rgba(91,92,226,.35);outline-offset:-3px}
+.home-search-result-main:focus-visible{outline:3px solid var(--delta-accent,#5b5ce2);outline-offset:-3px}
 
 /* ===== DELTA V1.28 — feedback acessível ===== */
 .search-empty-state p{margin:6px 0 12px;color:var(--muted);font-size:13px}
@@ -1491,7 +1491,7 @@ body.category-page .contador{
   color:var(--p);
 }
 .suggestion-item[role="option"]:focus-visible{
-  outline:3px solid rgba(91,92,226,.28);
+  outline:3px solid var(--delta-accent,#5b5ce2);
   outline-offset:-3px;
 }
 
