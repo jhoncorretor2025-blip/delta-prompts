@@ -1,7 +1,8 @@
 {
-  "academiaHorario": "",
+  "academiaHorario": "18:10",
   "horarioVencimentos": "09:00",
   "ntfyTopic": "",
   "telegramChatId": "",
-  "vencimentos": []
+  "vencimentos": [],
+  "datas": []
 }
