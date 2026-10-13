@@ -17,7 +17,7 @@
 5. **Antes de publicar, rode `node scripts/validar-paginas.js`.** Se aparecer ✖, NÃO publique: corrija primeiro.
 6. **Depois de adicionar prompt**, rode `node scripts/validar-paginas.js --atualizar-baseline` e inclua `docs/governanca/baseline-prompts.json` no mesmo commit.
 7. **Se o dono pediu para remover um prompt**, escreva `[prompts-removidos-ok]` na mensagem do commit e rode o comando do item 6.
-8. **Controle de versão:** sempre que alterar código de uma página, suba a versão visível (ex.: V1.59 → V1.60) em TODOS os lugares onde ela aparece (na página de Sites: `<meta name="delta-version">` e o selo ao lado do título).
+8. **Controle de versão:** sempre que alterar código de uma página, suba a versão visível (ex.: V1.59 → V1.60) em TODOS os lugares onde ela aparece (na página de Sites: `<meta name="delta-version">` e o selo ao lado do título). Na **página inicial**, a versão é a do site inteiro e fica em vários lugares que devem mudar juntos: `index.html` (meta `delta-version`, `<title>` e os 2 selos `delta-live-version`), `menu-loader.js` (comentário e `window.DELTA_SITE_VERSION`) e `sw.js` (comentário no topo). Só suba a versão quando alterar código, nunca só por análise.
 9. **Se você não consegue rodar comandos** (ex.: IA no navegador): avise o dono, entregue o texto pronto e peça para conferir o ✔/✖ na aba **Actions** do GitHub ("Validar páginas") logo depois de publicar.
 
 ---
