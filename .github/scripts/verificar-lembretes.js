@@ -57,6 +57,26 @@ function verificarLembretes(config, agora, jaEnviadosHoje, healthConfig, agoraMs
       }
     }
   });
+  // Datas com dia certo (documentos como CNH, IPVA, seguro e revisão do veículo).
+  // Avisa em dias específicos antes (ex.: 30, 7, 1 e no dia), no mesmo horário dos vencimentos.
+  (config.datas || []).forEach(item => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(item && item.data || ''));
+    if (!m || !config.horarioVencimentos || !dentroDaJanela(config.horarioVencimentos, agora, WINDOW_DAILY_MINUTES)) return;
+    const alvo = Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    const [ah, am, ad] = agora.dataISO.split('-').map(Number);
+    const hoje = Date.UTC(ah, am - 1, ad);
+    const faltam = Math.round((alvo - hoje) / 86400000);
+    const avisos = (Array.isArray(item.avisos) && item.avisos.length ? item.avisos : [30, 7, 1, 0]).map(Number).filter(n => n >= 0 && n <= 365);
+    if (!avisos.includes(faltam)) return;
+    const chave = 'data-' + hashId(String(item.nome) + '|' + item.data) + '-' + agora.dataISO;
+    if (jaEnviadosHoje.includes(chave)) return;
+    const nome = String(item.nome || 'Documento').slice(0, 80);
+    const dataBR = m[3] + '/' + m[2] + '/' + m[1];
+    const titulos = { documento: '📄 Documento vencendo', veiculo: '🚗 Vencimento do veículo', manutencao: '🔧 Revisão do veículo' };
+    const titulo = titulos[item.tipo] || '📅 Data importante';
+    const corpo = faltam === 0 ? '"' + nome + '" vence hoje (' + dataBR + ')!' : '"' + nome + '" vence em ' + faltam + ' dia(s), em ' + dataBR + '.';
+    paraEnviar.push({ chave, titulo, corpo, canal: 'canivete' });
+  });
   const now = Number(agoraMs || Date.now());
   const reminders = Array.isArray(healthConfig && healthConfig.reminders) ? healthConfig.reminders : [];
   reminders.forEach(r => {
