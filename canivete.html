@@ -670,7 +670,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.32';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.33';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();window.d=d;window.APP_VERSION=APP_VERSION;window.__caniveteSetData=function(novo){d=novo||{};window.d=d;};
@@ -1844,6 +1844,62 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
   #dashboard>.grid.cards>.card:hover{transform:none}
 }
 </style>
+
+
+<script id="CANIVETE_V833_MEDICAL_SYNC">
+(function(){
+'use strict';
+const HEALTH_KEY='msa2_consultas';
+const moneyBRL=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function consultasPagas(){
+ try{const rows=JSON.parse(localStorage.getItem(HEALTH_KEY)||'[]');return Array.isArray(rows)?rows.map((r,i)=>({...r,__sourceId:'msa-consulta-'+String(r.id||((r.data||'sem-data')+'-'+(r.esp||'consulta')+'-'+i))})).filter(r=>r.paga===true&&Number(r.valorPago)>0&&Number.isFinite(Number(r.valorPago))):[]}catch(e){return[]}
+}
+function pending(){
+ const imported=new Set((window.d&&Array.isArray(d.expenses)?d.expenses:[]).map(e=>e.sourceId).filter(Boolean));
+ return consultasPagas().filter(r=>!imported.has(r.__sourceId));
+}
+function render(){
+ const box=document.getElementById('caniveteSaudeSync');if(!box)return;
+ const list=pending();const total=list.reduce((s,r)=>s+Number(r.valorPago||0),0);
+ box.innerHTML='<div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap"><div style="font-size:28px">🩺</div><div style="flex:1;min-width:200px"><h2 style="margin:0 0 5px">Minha Saúde IA → Canivete</h2><p class="sub" style="margin:0 0 8px">Importe consultas marcadas como pagas no Minha Saúde IA. Apenas data, especialidade e valor entram no controle financeiro.</p><div class="notice '+(list.length?'':'sucesso')+'" style="margin-bottom:10px">'+(list.length?'<strong>'+list.length+' despesa(s) aguardando importação</strong> · Total: <strong>'+moneyBRL(total)+'</strong>':'Tudo em dia. Nenhuma despesa médica pendente.')+'</div><button type="button" class="btn primary" id="caniveteSaudeImportBtn" '+(list.length?'':'disabled style="opacity:.55;cursor:not-allowed"')+'>📥 Importar despesas médicas'+(list.length?' ('+list.length+')':'')+'</button> <button type="button" class="btn light" id="caniveteSaudeRefreshBtn">↻ Atualizar</button><p class="small" style="margin-top:8px">A importação não apaga o histórico de saúde e não duplica registros já importados. Funciona no mesmo navegador e dispositivo.</p></div></div>';
+ const btn=document.getElementById('caniveteSaudeImportBtn');
+ if(btn)btn.addEventListener('click',function(){
+   const rows=pending();if(!rows.length){render();return}
+   if(!window.d||!Array.isArray(window.d.expenses)){alert('Não foi possível acessar as despesas do Canivete. Recarregue a página e tente novamente.');return}
+   let added=0;
+   rows.forEach(r=>{
+     if(d.expenses.some(e=>e.sourceId===r.__sourceId))return;
+     const data=String(r.data||'').slice(0,10);
+     const esp=String(r.esp||'Consulta médica').trim().slice(0,100);
+     d.expenses.push({name:'🩺 Consulta — '+esp+(data?' ('+data+')':''),icon:'🩺',value:Number(r.valorPago),cat:'saude',fixo:false,tipoDespesa:'ocasional',pago:true,dataPagamento:data,vencimento:data,formaPagamento:'avista',sourceId:r.__sourceId,origem:'Minha Saúde IA',obs:'Despesa importada do Minha Saúde IA. Registro de origem: '+r.__sourceId});
+     added++;
+   });
+   if(!added){render();return}
+   try{
+     if(typeof save==='function')save();
+     if(typeof refresh==='function')refresh();
+     if(typeof renderExpenses==='function')renderExpenses();
+     if(typeof renderFullList==='function')renderFullList();
+     render();
+     if(typeof mostrarToastCanivete==='function')mostrarToastCanivete('✅ '+added+' despesa(s) médica(s) importada(s) do Minha Saúde IA.');
+     else alert('✅ '+added+' despesa(s) médica(s) importada(s) do Minha Saúde IA.');
+   }catch(err){console.error('[Canivete Saúde IA] Falha ao atualizar interface',err);alert('As despesas foram preparadas, mas a interface não confirmou a atualização. Verifique a lista antes de tentar novamente.')}
+ });
+ document.getElementById('caniveteSaudeRefreshBtn')?.addEventListener('click',render);
+}
+function init(){
+ const section=document.getElementById('despesas');
+ if(!section||document.getElementById('caniveteSaudeSync'))return;
+ const hero=section.querySelector('.card.hero');
+ const panel=document.createElement('div');panel.className='card';panel.id='caniveteSaudeSync';panel.style.marginBottom='14px';
+ if(hero&&hero.parentNode)hero.insertAdjacentElement('afterend',panel);else section.prepend(panel);
+ render();
+ window.addEventListener('storage',e=>{if(e.key===HEALTH_KEY||e.key==='canivete-assistente-v9')render()});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
 
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
