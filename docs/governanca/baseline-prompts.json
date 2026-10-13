@@ -812,7 +812,7 @@
       ]
     },
     "paginas/sites-landing-pages.html": {
-      "total": 57,
+      "total": 56,
       "titulos": [
         "🧭 ETAPA 0 — Definir a identidade do projeto",
         "🐛 Caçador de Bugs PRO",
@@ -834,7 +834,6 @@
         "Criar a Página Inicial",
         "Mapa Completo do Site",
         "Definir Estilo Visual",
-        "Criar o Menu Inicial",
         "Criar Textos do Site",
         "Landing Page Simples",
         "Pensar o Site Primeiro no Celular",
@@ -846,7 +845,7 @@
         "Encontrar Páginas que Devem Ser Unidas",
         "🧠 Consultor Estratégico de Melhorias — Raio-X do Projeto",
         "🏆 Auditoria com Notas de 0 a 10 + Top 20",
-        "Navegação Avançada Mobile e Desktop",
+        "Arquitetura de Navegação & Menu (Mobile e Desktop)",
         "20 Melhorias para uma Página",
         "Auditoria de Conversão",
         "SEO Essencial",
