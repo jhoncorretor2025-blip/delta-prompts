@@ -1808,7 +1808,7 @@ html[data-modo-leitura="true"] main [data-prompt-text] {
 @media(prefers-reduced-motion:reduce){.home-search-result-cta,.prompt-leigo-card .usar{transition:none}}
 
 
-/* ===== V1.76 — espaço de rolagem e contraste consistente no tema escuro ===== */
+/* ===== V1.77 — espaço de rolagem e contraste consistente no tema escuro ===== */
 /* Reserva espaço para os controles fixos de Modo Simples e Modo Leitura. */
 #menu .sidebar,
 #menu nav.sidebar,

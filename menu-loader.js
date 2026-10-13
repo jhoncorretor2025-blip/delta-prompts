@@ -1,17 +1,17 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.76
-window.DELTA_SITE_VERSION='V1.76';
+// DELTA SITE VERSION: V1.77
+window.DELTA_SITE_VERSION='V1.77';
 (function(){
   function deltaMostrarVersao(){
-    if(!document.body||document.getElementById('deltaSiteVersion'))return;
+    if(!document.body||document.getElementById('deltaSiteVersion'))return; if(document.querySelector('.delta-live-version')){document.querySelectorAll('.delta-live-version').forEach(function(v){v.textContent=window.DELTA_SITE_VERSION});return;}
     var el=document.createElement('div');
     el.id='deltaSiteVersion';
     el.textContent=window.DELTA_SITE_VERSION;
     el.title='Versão atual do Delta Prompts';
     el.setAttribute('aria-label','Versão atual do Delta Prompts: '+window.DELTA_SITE_VERSION);
-    el.style.cssText='position:fixed;right:16px;top:14px;z-index:99999;padding:7px 11px;border:1px solid #cfd2ff;border-radius:999px;background:#fff;color:#4243bb;font-size:11px;font-weight:900;letter-spacing:.2px;box-shadow:0 5px 16px rgba(20,20,40,.16);pointer-events:none;backdrop-filter:blur(8px);display:block!important;opacity:1!important';
+    el.style.cssText='position:fixed;right:'+(window.innerWidth<=900?'70px':'16px')+';top:14px;z-index:99999;padding:7px 11px;border:1px solid #cfd2ff;border-radius:999px;background:#fff;color:#4243bb;font-size:11px;font-weight:900;letter-spacing:.2px;box-shadow:0 5px 16px rgba(20,20,40,.16);pointer-events:none;backdrop-filter:blur(8px);display:block!important;opacity:1!important';
     document.body.appendChild(el);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',deltaMostrarVersao,{once:true});else deltaMostrarVersao();
@@ -665,7 +665,7 @@ window.deltaRegistrarLog=function(texto){
   }
   if(document.body)anexar();else document.addEventListener('DOMContentLoaded',anexar,{once:true});
 })();
-(function(){function getMenuCandidates(){const version='delta-prompts-menu-v53';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
+(function(){function getMenuCandidates(){const version='delta-prompts-menu-v54';return[`/delta-prompts/menu.html?v=${version}`,`${new URL('/delta-prompts/menu.html',window.location.origin).href}?v=${version}`]}async function fetchMenu(){for(const url of [...new Set(getMenuCandidates())]){try{const res=await fetch(url,{cache:'no-store'});if(res.ok)return res.text()}catch(e){}}throw new Error('Falha ao carregar menu')}async function atualizarContadoresDinamicos(sidebar){
   try{
     const link=sidebar&&sidebar.querySelector('a[href*="/paginas/sites-landing-pages.html"]');
     const badge=link&&link.querySelector('.menu-count');
@@ -1256,16 +1256,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       return '<label style="display:flex;align-items:flex-start;gap:10px;padding:14px;border:1px solid #e5e7eb;border-radius:12px;cursor:pointer;margin-bottom:9px"><input type="checkbox" checked data-onb-grupo="'+g.chave+'" style="width:19px;height:19px;flex:0 0 auto;margin-top:2px"><span><span style="font-size:15px;font-weight:800;display:block">'+g.emoji+' '+g.nome+'</span><span style="font-size:12.5px;color:#667085">'+g.desc+'</span></span></label>';
     }).join('');
 
-    caixa.innerHTML=
-      '<div style="text-align:center;margin-bottom:18px">'+
-        '<div style="font-size:38px;margin-bottom:6px">👋</div>'+
-        '<h2 style="margin:0 0 6px;font-size:20px">Bem-vindo(a) ao Delta Prompts!</h2>'+
-        '<p style="margin:0;color:#667085;font-size:13.5px">Escolha o que você quer ver no menu. Você pode mudar isso depois em Configuração, a qualquer momento.</p>'+
-      '</div>'+
-      '<div id="deltaOnboardingLista">'+listaChecks+'</div>'+
-      '<button type="button" id="deltaOnbEntrarGoogle" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #e5e7eb;background:#fff;border-radius:11px;padding:12px;font-weight:800;font-size:14px;cursor:pointer;margin:8px 0 10px;color:#344055">🔑 Entrar com Google (sincroniza seus dados)</button>'+
-      '<button type="button" id="deltaOnbConcluir" style="width:100%;border:0;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:800;font-size:15px;padding:14px;border-radius:11px;cursor:pointer">🚀 Começar a usar</button>';
-
+    caixa.innerHTML= '<div style="text-align:center;margin-bottom:18px">'+'<div style="font-size:38px;margin-bottom:6px">👋</div>'+'<h2 style="margin:0 0 6px;font-size:21px">Bem-vindo(a) ao Delta Prompts!</h2>'+'<p style="margin:0;color:#667085;font-size:14px">Prompts prontos para você usar com qualquer IA. É só procurar, copiar e colar. 😉</p>'+'</div>'+'<button type="button" id="deltaOnbConcluir" style="width:100%;border:0;background:var(--delta-accent,#5b5ce2);color:#fff;font-weight:800;font-size:16px;padding:15px;border-radius:12px;cursor:pointer">🚀 Começar</button>'+'<details style="margin-top:14px"><summary style="cursor:pointer;font-size:13px;color:#667085;font-weight:700">⚙️ Escolher o que aparece no menu (opcional)</summary><div id="deltaOnboardingLista" style="margin-top:10px">'+listaChecks+'</div></details>'+'<button type="button" id="deltaOnbEntrarGoogle" style="display:block;margin:12px auto 0;border:0;background:none;color:#5b5ce2;font-weight:700;font-size:12.5px;cursor:pointer;text-decoration:underline">Já tem conta? Entrar com Google</button>';
     overlay.appendChild(caixa);
     document.body.appendChild(overlay);
 
@@ -1571,7 +1562,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   side.querySelectorAll('a[href]').forEach(function(a){
    var txt=(a.textContent||'').toLowerCase(),href=(a.getAttribute('href')||'').toLowerCase();
    var termos=['novo prompt','gerador pro','espaço ia','skills','agentes de ia','codex do chatgpt','conectores','prompts do dev','chatgpt work','manus ai','gemini','claude','grok','comet','testador de ia','sites & landing pages','auditoria ux/ui','extensão chrome','programação & no-code','sistemas com ia','canivete assistente','central inteligente','pesquisa profunda','notebook'];
-   var paths=['prompt_pro.html','espaco-ia.html','skills.html','agentes-ia.html','codex-chatgpt.html','conectores-ia.html','prompts-do-dev.html','sites-landing-pages.html','programacao-nocode.html','sistemas-ia.html','canivete.html','central-inteligente.html','pesquisa-profunda.html','notbooklm.html'];
+   var paths=['prompt_pro.html','espaco-ia.html','skills.html','agentes-ia.html','codex-chatgpt.html','conectores-ia.html','prompts-do-dev.html','sites-landing-pages.html','programacao-nocode.html','sistemas-ia.html','canivete.html','central-inteligente.html','pesquisa-profunda.html','notebooklm.html'];
    if(termos.some(function(x){return txt.indexOf(x)>=0})||paths.some(function(x){return href.indexOf(x)>=0}))a.classList.add('delta-idoso-oculto');
   });
  }
@@ -1610,7 +1601,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
 
 // ===== V1.73 — AGRUPAMENTO DOS CONTROLES FLUTUANTES =====
 (function(){
-  var IDS=['deltaModoPrivadoBtn','deltaCorWrap','deltaVoltarTopoBtn','deltaCronometro','deltaInstalarBtn'];
+  var IDS=['deltaModoSimplesBtn','deltaModoLeituraBtn','themeToggle','deltaModoPrivadoBtn','deltaCorWrap','deltaVoltarTopoBtn','deltaCronometro','deltaInstalarBtn'];
   var observer=null;
   function instalar(){
     if(!document.body)return;
@@ -1638,6 +1629,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
       var titulo=document.createElement('strong');titulo.textContent='Ajustes rápidos';titulo.style.cssText='font-size:13px;padding:2px 4px 6px';
       panel.appendChild(titulo);document.body.appendChild(panel);
     }
+    (function(){if(document.getElementById('deltaGearPosCss'))return;var st=document.createElement('style');st.id='deltaGearPosCss';st.textContent='@media(max-width:900px){body:has(.delta-bottom-nav) #deltaAjustesFlutuantesBtn{bottom:88px!important}body:has(.delta-bottom-nav) #deltaAjustesFlutuantesPanel{bottom:146px!important;max-height:calc(100vh - 220px);overflow:auto}}';document.head.appendChild(st)})();
     IDS.forEach(function(id){
       var el=document.getElementById(id);
       if(!el||el===gear||el===panel||panel.contains(el))return;
@@ -1651,6 +1643,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
       el.style.setProperty('margin','0','important');
       el.style.setProperty('box-shadow','none','important');
       el.style.setProperty('max-width','100%','important');
+      if(id==='themeToggle'&&!el.dataset.rotulo){el.dataset.rotulo='1';var atualizarTema=function(){var esc=document.documentElement.getAttribute('data-theme')==='dark';el.setAttribute('aria-label',esc?'Mudar para tema claro':'Mudar para tema escuro');el.innerHTML=esc?'☀️ Tema claro':'🌙 Tema escuro'};atualizarTema();el.addEventListener('click',function(){setTimeout(atualizarTema,30)})}
       if(id==='deltaCorWrap'){
         el.style.setProperty('display','flex','important');
         el.style.setProperty('align-items','center','important');
@@ -1666,7 +1659,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
         el.style.setProperty('font-size','13px','important');
         el.style.setProperty('text-align','left','important');
         el.style.setProperty('padding','9px 12px','important');
-        el.style.setProperty('background','var(--bg-card,#fff)','important');
+        el.style.setProperty('background','var(--bg-card,#fff)','important'); el.style.setProperty('background-image','none','important'); if(id!=='themeToggle'&&el.textContent.trim().length<=3){var rot=el.getAttribute('aria-label')||el.title||'';if(rot&&!el.dataset.rotulo){el.dataset.rotulo='1';el.textContent=el.textContent.trim()+' '+rot.split(/[:(]/)[0].trim().slice(0,32)}}
         el.style.setProperty('color','var(--text-primary,#172033)','important');
         el.style.setProperty('border','1px solid rgba(148,163,184,.35)','important');
       }
