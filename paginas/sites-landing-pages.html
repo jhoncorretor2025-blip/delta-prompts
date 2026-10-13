@@ -956,9 +956,9 @@ function projetoAtivoParaCopia(){
 }
 function valorProjetoParaPlaceholder(ph,projeto){
   if(!projeto)return '';
-  const campo=String(ph||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toUpperCase();
-  if(/\\b(LINK|URL|ENDERECO WEB)\\b/.test(campo))return projeto.link||'';
-  if(/PUBLICO[\\s-]*ALVO|AUDIENCIA|PERSONA|CLIENTE IDEAL/.test(campo))return projeto.audience||'';
+  const campo=String(ph||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
+  if(/\b(LINK|URL|ENDERECO WEB)\b/.test(campo))return projeto.link||'';
+  if(/PUBLICO[\s-]*ALVO|AUDIENCIA|PERSONA|CLIENTE IDEAL/.test(campo))return projeto.audience||'';
   if(/NOME/.test(campo)&&/(PROJETO|SITE|SISTEMA|APP|APLICATIVO|NEGOCIO|EMPRESA|PRODUTO)/.test(campo))return projeto.n||'';
   if(/OBJETIVO|META DO PROJETO/.test(campo))return projeto.objective||'';
   if(/DESCRICAO|CONTEXTO DO PROJETO/.test(campo))return projeto.d||'';
@@ -989,11 +989,11 @@ function contextoProjetoAtivoParaCopia(){
     'Status: '+valor(p.status),
     'Próximo passo: '+valor(p.nextStep),
     'Regra: use estes dados para personalizar o prompt; se algum campo estiver como “Não informado”, sinalize a lacuna sem presumir nem inventar.'
-  ].join('\\n');
+  ].join('\n');
 }
 function incluirContextoProjetoAtivo(texto){
   const contexto=contextoProjetoAtivoParaCopia();
-  return contexto?String(texto||'')+'\\n\\n'+contexto:String(texto||'');
+  return contexto?String(texto||'')+'\n\n'+contexto:String(texto||'');
 }
 function substituirPlaceholders(texto,p){
   let t=String(texto||'');
