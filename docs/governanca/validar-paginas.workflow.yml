@@ -1,0 +1,36 @@
+name: Validar páginas (sintaxe e prompts)
+
+# Roda a cada publicação que mexa em páginas. Se algum script estiver com erro
+# ou se algum prompt sumiu sem aviso, a execução fica com ❌ na hora.
+on:
+  push:
+    paths:
+      - 'paginas/**'
+      - 'ferramentas/**'
+      - '*.html'
+      - 'scripts/validar-paginas.js'
+      - 'docs/governanca/baseline-prompts.json'
+  pull_request:
+    paths:
+      - 'paginas/**'
+      - 'ferramentas/**'
+      - '*.html'
+      - 'scripts/validar-paginas.js'
+      - 'docs/governanca/baseline-prompts.json'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Conferir sintaxe das páginas e se algum prompt sumiu
+        run: node scripts/validar-paginas.js
