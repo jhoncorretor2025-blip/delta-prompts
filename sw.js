@@ -1,4 +1,4 @@
-// DELTA SITE VERSION: V1.87
+// DELTA SITE VERSION: V1.89
 const CACHE_NAME = 'delta-prompts-shell-v73';
 const SHELL_URLS = [
   '/delta-prompts/index.html',
