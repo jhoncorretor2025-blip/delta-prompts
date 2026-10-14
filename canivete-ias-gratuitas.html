@@ -377,7 +377,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v88</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v89</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>203 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
@@ -1689,7 +1689,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v88','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v89','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1702,7 +1702,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v88.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v89.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1721,7 +1721,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v88.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v89.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
@@ -1777,7 +1777,7 @@ try{
 }catch(e){}
 })();
 </script>
-<!-- ===== IAs Gratuitas v88 — compatibilidade com o aparelho e com “Meu computador” ===== -->
+<!-- ===== IAs Gratuitas v89 — compatibilidade com o aparelho e com “Meu computador” ===== -->
 <style>
 .ias-aparelho{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-4px 0 14px}
 .ias-aparelho b{font-size:12.5px;margin-right:2px}
@@ -1806,15 +1806,16 @@ try{
   var LOCAL='local',DESK='desktop',APP='app';
   var MODO={
     'Ollama':LOCAL,'Llama':LOCAL,'Stable Diffusion / Stable Video Diffusion':LOCAL,'Wan':LOCAL,'Mochi 1':LOCAL,'LTX-2':LOCAL,'Z-Image Turbo':LOCAL,
-    'Stable Video Infinity':LOCAL,'LongVie 2':LOCAL,'Coqui XTTS-v2':LOCAL,'Whisper':LOCAL,
+    'Stable Video Infinity':LOCAL,'LongVie 2':LOCAL,'Coqui XTTS-v2':LOCAL,'Whisper':LOCAL,'Chatterbox':LOCAL,'OpenVoice V2':LOCAL,
     'DaVinci Resolve':DESK,'Adobe Premiere Pro':DESK,'Topaz Video':DESK,'Cursor':DESK,'Windsurf':DESK,'Google Antigravity':DESK,'Cline':DESK,
-    'Continue.dev':DESK,'Aider':DESK,'OpenCode':DESK,'Claude Code':DESK,'Flowise':DESK,'Tabnine':DESK,'Gemini Code Assist':DESK,'Amazon Q Developer':DESK,'Qodo':DESK
+    'Continue.dev':DESK,'Aider':DESK,'OpenCode':DESK,'Claude Code':DESK,'Flowise':DESK,'Tabnine':DESK,'Gemini Code Assist':DESK,'Amazon Q Developer':DESK,'Qodo':DESK,
+    'Wondershare Filmora':DESK,'Verdent':DESK,'ChatGPT Audio Saver':DESK
   };
   /* Apps de celular oficiais conhecidos (além do site) */
   var TEM_APP=['ChatGPT','Perplexity','Microsoft Copilot','Canva','CapCut','Character.AI','Poe','Suno','Notion AI','Lensa','Facetune','Captions','Grok','Le Chat','Creati'];
   /* Sistemas suportados (informação oficial e estável) */
   var WMLL=['Windows','macOS','Linux'];
-  var SISTEMAS={'Adobe Premiere Pro':['Windows','macOS'],'Topaz Video':['Windows','macOS']};
+  var SISTEMAS={'Adobe Premiere Pro':['Windows','macOS'],'Topaz Video':['Windows','macOS'],'Wondershare Filmora':['Windows','macOS'],'ChatGPT Audio Saver':['Windows','macOS','Linux','ChromeOS'],'Verdent':null};
   /* Requisitos de hardware conhecidos, com a fonte. Sem número = não verificado. */
   var REQ={
     'Ollama':{fonte:'documentação do Ollama',avaliar:function(p){if(p.ram==null)return null;
@@ -1838,7 +1839,8 @@ try{
     'LTX-2':'LTX Studio','Z-Image Turbo':'Hugging Face Spaces','Stable Video Infinity':'Hugging Face Spaces','LongVie 2':'Hugging Face Spaces','Coqui XTTS-v2':'ElevenLabs ou Hugging Face Spaces',
     'Whisper':'Hugging Face Spaces','DaVinci Resolve':'CapCut ou Kapwing AI','Adobe Premiere Pro':'CapCut ou Kapwing AI','Topaz Video':'',
     'Cursor':'Replit ou Google AI Studio','Windsurf':'Replit ou Google AI Studio','Google Antigravity':'Replit ou Google AI Studio','Cline':'Replit','Continue.dev':'Replit','Aider':'Replit','OpenCode':'Replit','Claude Code':'Replit','Flowise':'Zapier ou Relevance AI',
-    'Tabnine':'Replit','Gemini Code Assist':'Google AI Studio','Amazon Q Developer':'Replit','Qodo':'Replit'};
+    'Tabnine':'Replit','Gemini Code Assist':'Google AI Studio','Amazon Q Developer':'Replit','Qodo':'Replit',
+    'Chatterbox':'Clonagem de Voz Master do Canivete ou Hugging Face Spaces','OpenVoice V2':'Hugging Face Spaces','Wondershare Filmora':'CapCut ou Kapwing AI','Verdent':'Replit'};
   function nome(c){var h=c.querySelector('h2');return h?h.textContent.trim():''}
   function perfil(){var p={};try{p=JSON.parse(localStorage.getItem('canivete_pc_profile_v1')||'{}')||{}}catch(e){}
     var num=function(v){return v===''||v==null||isNaN(Number(v))?null:Number(v)};
@@ -1853,9 +1855,9 @@ try{
       return {st:'ok',t:dev==='desktop'?'✅ Funciona no navegador':'✅ Funciona no '+(dev==='tablet'?'tablet':'celular'),d:app?'Também tem app oficial para celular.':'Não precisa instalar nada.'+(dev!=='desktop'?' Alguns recursos podem ser mais completos no computador.':'')};
     }
     if(dev!=='desktop')return {st:'bad',t:'❌ Não roda no '+(dev==='tablet'?'tablet':'celular'),d:(modo===LOCAL?'Precisa instalar e rodar o modelo num computador.':'Precisa instalar um programa no computador.')+altTxt};
-    var sist=SISTEMAS[n]||WMLL;
+    var sist=(n in SISTEMAS)?SISTEMAS[n]:WMLL;
     if(!p.temAlgo)return {st:'unk',t:'❔ Preencha “Meu computador” para avaliar',d:(modo===LOCAL?'Roda o modelo de IA no seu PC: costuma exigir memória e placa de vídeo.':'Instala um programa no PC; a IA em si roda na nuvem.')+altTxt};
-    if(p.fam==='movel'||p.fam==='ChromeOS')return {st:'bad',t:'❌ Não é compatível com '+p.so,d:'Funciona em: '+sist.join(', ')+'.'+altTxt};
+    if(!sist)return {st:'unk',t:'❔ Programa para PC: sistemas suportados não verificados',d:'Confira na página oficial se há versão para '+(p.so||'o seu sistema')+'.'+altTxt};
     if(p.fam&&p.fam!=='outro'&&sist.indexOf(p.fam)<0)return {st:'bad',t:'❌ Não tem versão para '+p.so,d:'Funciona em: '+sist.join(', ')+'.'+altTxt};
     var r=REQ[n];
     if(r){var res=r.avaliar(p);if(res)return {st:res[0],t:(res[0]==='ok'?'✅ ':res[0]==='warn'?'⚠️ ':'❌ ')+res[1],d:res[2]+' (Fonte: '+r.fonte+'.)'+(res[0]!=='ok'?altTxt:'')};
