@@ -562,6 +562,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   /* backup */
   var msg=$('#cfgBackupMsg');
   var CHAVES_BASE=['deltaPerfilAtivo','deltaDadosPadrao','deltaSitesSalvos','deltaGrupoOrdemManual','deltaCategoriasEscondidas','deltaSecoesEscondidas','deltaFiltroNovidades','deltaTheme','deltaLogConfig','deltaHistoricoPaginas'];
+  var CHAVES=CHAVES_BASE.slice();
   /* Backup ampliado: inclui chaves do Delta no navegador, sem capturar credenciais/sessões. */
   function chavesBackup(){
     var lista=CHAVES_BASE.slice();
