@@ -378,8 +378,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v92</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
-<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>205 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v93</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>206 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
 
@@ -472,6 +472,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 
 <article class="card" data-cat="video criacao trabalho" data-access="limit" data-search="InVideo AI editor criar vídeos prompt cenas roteiro edição InVideo AI InVideo AI Editor" data-video-type="both">
 <div class="head"><div class="icon">🎞️</div><div class="title"><h2>InVideo AI Editor</h2><small>Criação e edição de vídeos por comando</small></div><span class="tag limit">GRÁTIS + LIMITES</span></div><p class="desc">Cria rascunhos de vídeo a partir de instruções e permite ajustar cenas, roteiro, mídia e narração. A disponibilidade de exportação, créditos e recursos gratuitos pode variar.</p><div class="use"><b>💡 Exemplo</b> Monte um primeiro rascunho de vídeo promocional e revise as cenas antes de publicar.</div><div class="footer"><span class="best">Roteiros, cenas e edição assistida</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://invideo.io/pt-br/" target="_blank" rel="noopener">Abrir ↗</a></div>
+</article>
+
+<article class="card" data-specialist="true" data-cat="audio voz criacao trabalho" data-access="free" data-search="VoiceStudio voice cloning clonagem de voz síntese fala text to speech TTS dublagem vídeo transcrição audiobook design voz local código aberto ElevenLabs alternativa" data-video-type="other">
+<div class="head"><div class="icon">🎙️</div><div class="title"><h2>VoiceStudio</h2><small>Clonagem de voz, dublagem e síntese de fala local</small></div><span class="specialist-badge">🎯 Especialista</span><span class="tag">GRÁTIS · CÓDIGO ABERTO</span></div><p class="desc">Aplicativo de desktop de código aberto para clonar uma voz com uma gravação de referência, criar vozes, gerar fala a partir de texto, dublar vídeos, transcrever áudio e produzir audiolivros. O processamento local ajuda a manter os arquivos no próprio computador.</p><div class="use"><b>💡 Exemplo</b> Grave uma amostra da sua própria voz, crie uma narração para um vídeo imobiliário e prepare uma faixa de áudio para edição. O suporte e a qualidade variam conforme o mecanismo de voz instalado.</div><div class="footer"><span class="best">Clonagem de voz e dublagem local</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://voicestudio.sh/" target="_blank" rel="noopener">Abrir VoiceStudio ↗</a></div><p class="help" style="font-size:11px;color:var(--muted);margin-top:10px">A versão aberta é gratuita; versões Pro/comerciais e alguns serviços ou mecanismos externos podem ter condições próprias. Clone vozes somente com consentimento.</p>
 </article>
 
 <article class="card" data-cat="video criacao trabalho" data-access="paid" data-search="Adobe Premiere Pro edição profissional vídeo IA texto áudio máscaras" data-video-type="edit">
@@ -1652,7 +1656,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v92','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v93','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1665,7 +1669,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v92.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v93.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1684,7 +1688,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v92.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v93.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
@@ -1740,7 +1744,7 @@ try{
 }catch(e){}
 })();
 </script>
-<!-- ===== IAs Gratuitas v92 — compatibilidade com o aparelho e com “Meu computador” ===== -->
+<!-- ===== IAs Gratuitas v93 — compatibilidade com o aparelho e com “Meu computador” ===== -->
 <style>
 .ias-aparelho{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-4px 0 14px}
 .ias-aparelho b{font-size:12.5px;margin-right:2px}
