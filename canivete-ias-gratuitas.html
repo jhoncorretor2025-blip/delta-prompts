@@ -350,8 +350,16 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 @media(max-width:680px){.card-number{min-width:35px;height:26px;font-size:10px}.card-number+.icon{width:39px;height:39px}}
 .compat-panel{margin:0 0 14px;padding:12px;border:1px solid #f2d49b;border-radius:12px;background:#fff9eb;color:#754c12;font-size:12px;line-height:1.5}.compat-panel ul{margin:7px 0;padding-left:19px}.compat-panel li{margin:4px 0}.compat-panel p{margin:8px 0 0}.compat-panel .compat-warning{padding-top:8px;border-top:1px solid #f2d49b}[data-theme="dark"] .compat-panel{background:#332a1b;color:#f8dfad;border-color:#70552a}[data-theme="dark"] .compat-panel .compat-warning{border-color:#70552a}
 
-/* v86 — detecção automática do dispositivo e filtro padrão de instalações locais */
+/* v87 — detecção automática do dispositivo e filtro padrão de instalações locais */
 .device-status{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--shadow);font-size:12px}.device-status-icon{font-size:23px;flex:0 0 auto}.device-status strong,.device-status small{display:block}.device-status strong{font-size:12px}.device-status small{margin-top:3px;color:var(--muted);line-height:1.4}.device-show-all{margin-left:auto;flex:0 0 auto;border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:var(--bg);color:var(--ink);font-size:11px;font-weight:850;cursor:pointer}.device-show-all:hover{border-color:var(--blue);color:var(--blue)}@media(max-width:520px){.device-status{align-items:flex-start;flex-wrap:wrap}.device-show-all{margin-left:32px}}
+
+/* v87 — perfil de hardware visível no Catálogo de IAs */
+.pc-profile-panel{margin:0 0 18px;padding:17px;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow)}
+.pc-profile-heading{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}.pc-profile-icon{display:grid;place-items:center;flex:0 0 46px;height:46px;border-radius:13px;background:var(--filter-bg);font-size:24px}.pc-profile-heading h2{margin:0 0 5px;font-size:18px}.pc-profile-heading p{margin:0;color:var(--muted);font-size:12px;line-height:1.5;max-width:850px}
+.pc-profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.pc-profile-grid label{display:flex;flex-direction:column;gap:6px;min-width:0;color:var(--ink);font-size:12px;font-weight:800}.pc-profile-grid label span{display:inline;color:var(--muted);font-weight:500}.pc-profile-grid input,.pc-profile-grid select{width:100%;min-width:0;min-height:42px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:13px;font-weight:500}.pc-profile-grid input:focus,.pc-profile-grid select:focus{outline:2px solid color-mix(in srgb,var(--blue) 40%,transparent);outline-offset:1px}
+.pc-profile-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:13px}.pc-save,.pc-clear{min-height:39px;border:1px solid var(--line);border-radius:10px;padding:9px 13px;font-size:12px;font-weight:850;cursor:pointer}.pc-save{background:var(--blue);border-color:var(--blue);color:#fff}.pc-clear{background:var(--bg);color:var(--ink)}#pcProfileStatus{flex:1 1 220px;color:var(--muted);font-size:11px;line-height:1.4}.pc-profile-privacy{margin:12px 0 0;color:var(--muted);font-size:11px;line-height:1.5}
+@media(max-width:900px){.pc-profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:540px){.pc-profile-panel{padding:13px;border-radius:15px}.pc-profile-heading h2{font-size:16px}.pc-profile-grid{grid-template-columns:minmax(0,1fr);gap:10px}.pc-profile-grid input,.pc-profile-grid select{min-height:44px}.pc-profile-actions{align-items:stretch}.pc-save,.pc-clear{flex:1}.pc-profile-actions #pcProfileStatus{flex-basis:100%}}
+
 </style>
 <style>
 /* v51 — painéis compactos no fim da página */
@@ -369,13 +377,31 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v86</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v87</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>203 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
 
 
-\n<section class="device-status" id="deviceStatus" role="status" aria-live="polite"><span class="device-status-icon" id="deviceStatusIcon">📱</span><span><strong id="deviceStatusTitle">Detectando dispositivo…</strong><small id="deviceStatusDescription">O catálogo ajustará a lista conforme seu dispositivo.</small></span><button type="button" id="showAllDeviceTools" class="device-show-all">Mostrar todas as IAs</button></section>
+<section class="device-status" id="deviceStatus" role="status" aria-live="polite"><span class="device-status-icon" id="deviceStatusIcon">📱</span><span><strong id="deviceStatusTitle">Detectando dispositivo…</strong><small id="deviceStatusDescription">O catálogo ajustará a lista conforme seu dispositivo.</small></span><button type="button" id="showAllDeviceTools" class="device-show-all">Mostrar todas as IAs</button></section>
+<section class="pc-profile-panel" aria-labelledby="pcProfileHeading">
+ <div class="pc-profile-heading">
+  <div class="pc-profile-icon" aria-hidden="true">🖥️</div>
+  <div><h2 id="pcProfileHeading">Meu computador</h2><p>Informe as configurações que souber para guardar seu perfil e facilitar futuras recomendações de IAs compatíveis.</p></div>
+ </div>
+ <form id="pcProfileForm">
+  <div class="pc-profile-grid">
+   <label for="pcProcessor">Processador <span>(opcional)</span><input id="pcProcessor" name="processor" type="text" maxlength="120" placeholder="Ex.: Intel Core i5-8265U"></label>
+   <label for="pcOS">Sistema operacional<select id="pcOS" name="os"><option value="">Selecione se souber</option><option>Windows 11</option><option>Windows 10</option><option>macOS</option><option>Linux</option><option>ChromeOS</option><option>Android</option><option>iOS / iPadOS</option><option>Outro</option></select></label>
+   <label for="pcRam">Memória RAM<select id="pcRam" name="ram"><option value="">Não sei</option><option value="2">2 GB</option><option value="4">4 GB</option><option value="8">8 GB</option><option value="12">12 GB</option><option value="16">16 GB</option><option value="24">24 GB</option><option value="32">32 GB</option><option value="48">48 GB</option><option value="64">64 GB</option><option value="128">128 GB ou mais</option></select></label>
+   <label for="pcGpu">Placa de vídeo / GPU <span>(opcional)</span><input id="pcGpu" name="gpu" type="text" maxlength="120" placeholder="Ex.: NVIDIA GTX 1660 ou integrada"></label>
+   <label for="pcVram">Memória da placa de vídeo (VRAM)<select id="pcVram" name="vram"><option value="">Não sei</option><option value="0">Sem GPU dedicada / integrada</option><option value="2">2 GB</option><option value="4">4 GB</option><option value="6">6 GB</option><option value="8">8 GB</option><option value="12">12 GB</option><option value="16">16 GB</option><option value="24">24 GB ou mais</option></select></label>
+   <label for="pcDisk">Espaço livre em disco (GB) <span>(opcional)</span><input id="pcDisk" name="disk" type="number" min="0" max="10000000" step="1" placeholder="Ex.: 120"></label>
+  </div>
+  <div class="pc-profile-actions"><button type="submit" class="pc-save">💾 Salvar meu computador</button><button type="button" id="pcProfileClear" class="pc-clear">Limpar dados</button><span id="pcProfileStatus" role="status" aria-live="polite">Pode preencher só o que souber.</span></div>
+ </form>
+ <p class="pc-profile-privacy">🔒 Os dados ficam salvos no armazenamento local deste navegador. A página não consegue confirmar automaticamente todos os detalhes do hardware; preencha manualmente o que souber.</p>
+</section>
 <section class="toolbar">
 <div class="search-shell"><svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="search" class="search" type="search" placeholder="Buscar IA, função, categoria ou exemplo..." aria-label="Buscar ferramentas de inteligência artificial"><kbd class="search-shortcut">Ctrl + K</kbd></div>
 <div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters"><button class="filter active" data-cat="all">🗂️ Todas <span class="filter-count" data-count-all>97</span></button><button class="filter" data-cat="criacao">✍️ Texto e conteúdo <span class="filter-count" data-count-cat="criacao">69</span></button><button class="filter" data-cat="imagem">🖼️ Imagem <span class="filter-count" data-count-cat="imagem">26</span></button><button class="filter" data-cat="video">🎥 Todos os vídeos <span class="filter-count" data-count-cat="video">42</span></button><button class="filter" data-cat="codigo">💻 Código <span class="filter-count" data-count-cat="codigo">26</span></button><button class="filter" data-cat="pesquisa">🔎 Pesquisa <span class="filter-count" data-count-cat="pesquisa">21</span></button><button class="filter" data-cat="trabalho">💼 Trabalho <span class="filter-count" data-count-cat="trabalho">51</span></button><button class="filter" data-cat="audio">🎧 Áudio <span class="filter-count" data-count-cat="audio">18</span></button><button class="filter" data-cat="musica">🎵 Criação de música <span class="filter-count" data-count-cat="musica">0</span></button><button class="filter video-create-category" data-cat="video-criacao">🎬 Criação de vídeo <span class="filter-count" data-count-cat="video-criacao">24</span></button><button class="filter video-edit-category" data-cat="video-edicao">✂️ Edição de vídeo <span class="filter-count" data-count-cat="video-edicao">25</span></button><button class="filter" data-cat="estudo">📚 Estudo <span class="filter-count" data-count-cat="estudo">13</span></button><button class="filter" data-cat="automacao">⚙️ Automação <span class="filter-count" data-count-cat="automacao">5</span></button><button class="filter" data-cat="agentes">🤖 Agentes de IA <span class="filter-count" data-count-cat="agentes">0</span></button><button class="filter" data-cat="dados">📊 Dados e planilhas <span class="filter-count" data-count-cat="dados">0</span></button><button class="filter" data-cat="avatar">🧑‍🎤 Avatar <span class="filter-count" data-count-cat="avatar">0</span></button><button class="filter specialist-category" data-cat="especialistas">🎯 Especialistas <span class="filter-count" data-count-cat="especialistas">32</span></button></div></div>
@@ -1320,6 +1346,38 @@ const deviceStatusIcon=document.getElementById('deviceStatusIcon');
 const deviceStatusTitle=document.getElementById('deviceStatusTitle');
 const deviceStatusDescription=document.getElementById('deviceStatusDescription');
 const showAllDeviceTools=document.getElementById('showAllDeviceTools');
+const pcProfileForm=document.getElementById('pcProfileForm');
+const pcProfileStatus=document.getElementById('pcProfileStatus');
+const pcProfileClear=document.getElementById('pcProfileClear');
+const pcProfileStorageKey='canivete_pc_profile_v1';
+const pcProfileFields={processor:document.getElementById('pcProcessor'),os:document.getElementById('pcOS'),ram:document.getElementById('pcRam'),gpu:document.getElementById('pcGpu'),vram:document.getElementById('pcVram'),disk:document.getElementById('pcDisk')};
+function readPcProfile(){
+ try{const value=JSON.parse(localStorage.getItem(pcProfileStorageKey)||'{}');return value&&typeof value==='object'?value:{}}catch(e){return {}}
+}
+function setPcProfileStatus(message){if(pcProfileStatus)pcProfileStatus.textContent=message}
+function loadPcProfile(){
+ const profile=readPcProfile();
+ Object.entries(pcProfileFields).forEach(([key,field])=>{if(field&&profile[key]!==undefined&&profile[key]!==null)field.value=String(profile[key])});
+ if(Object.values(profile).some(value=>String(value??'').trim()!==''))setPcProfileStatus('✅ Perfil do computador carregado neste navegador. Você pode editar e salvar novamente.');
+}
+pcProfileForm?.addEventListener('submit',event=>{
+ event.preventDefault();
+ const profile={};
+ Object.entries(pcProfileFields).forEach(([key,field])=>{profile[key]=(field?.value||'').trim()});
+ if(!Object.values(profile).some(value=>value!=='')){
+  setPcProfileStatus('Preencha pelo menos um campo antes de salvar.');
+  return;
+ }
+ try{
+  localStorage.setItem(pcProfileStorageKey,JSON.stringify(profile));
+  setPcProfileStatus('✅ Configurações salvas neste navegador. O perfil está pronto para ser usado nas próximas melhorias de compatibilidade.');
+ }catch(error){setPcProfileStatus('Não foi possível salvar neste navegador. Verifique as permissões de armazenamento.')}
+});
+pcProfileClear?.addEventListener('click',()=>{
+ Object.values(pcProfileFields).forEach(field=>{if(field)field.value=''});
+ try{localStorage.removeItem(pcProfileStorageKey);setPcProfileStatus('Dados do computador removidos deste navegador.')}catch(e){setPcProfileStatus('Os campos foram limpos, mas não foi possível remover o registro salvo.')}
+});
+loadPcProfile();
 function detectDeviceMode(){
  const ua=navigator.userAgent||'';
  const mobileUA=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
@@ -1626,7 +1684,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v86','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v87','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1639,7 +1697,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v86.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v87.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1658,7 +1716,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v86.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v87.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
