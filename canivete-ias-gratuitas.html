@@ -377,7 +377,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v87</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v88</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>203 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
@@ -387,7 +387,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <section class="pc-profile-panel" aria-labelledby="pcProfileHeading">
  <div class="pc-profile-heading">
   <div class="pc-profile-icon" aria-hidden="true">🖥️</div>
-  <div><h2 id="pcProfileHeading">Meu computador</h2><p>Informe as configurações que souber para guardar seu perfil e facilitar futuras recomendações de IAs compatíveis.</p></div>
+  <div><h2 id="pcProfileHeading">Meu computador</h2><p>Informe as configurações que souber. Cada IA ganha um aviso dizendo se <b>funciona no seu computador</b>, se <b>não é compatível</b> ou se <b>não dá para confirmar</b>.</p></div>
  </div>
  <form id="pcProfileForm">
   <div class="pc-profile-grid">
@@ -1370,7 +1370,7 @@ pcProfileForm?.addEventListener('submit',event=>{
  }
  try{
   localStorage.setItem(pcProfileStorageKey,JSON.stringify(profile));
-  setPcProfileStatus('✅ Configurações salvas neste navegador. O perfil está pronto para ser usado nas próximas melhorias de compatibilidade.');
+  setPcProfileStatus('✅ Configurações salvas neste navegador. A compatibilidade de cada IA foi atualizada logo abaixo.');
  }catch(error){setPcProfileStatus('Não foi possível salvar neste navegador. Verifique as permissões de armazenamento.')}
 });
 pcProfileClear?.addEventListener('click',()=>{
@@ -1379,10 +1379,14 @@ pcProfileClear?.addEventListener('click',()=>{
 });
 loadPcProfile();
 function detectDeviceMode(){
+ /* v88: a pessoa pode escolher o aparelho manualmente (celular, tablet ou computador) */
+ try{const escolhido=localStorage.getItem('canivete_device_override_v1');if(escolhido==='mobile'||escolhido==='tablet'||escolhido==='desktop')return escolhido}catch(e){}
  const ua=navigator.userAgent||'';
  const mobileUA=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
  const narrow=window.matchMedia?window.matchMedia('(max-width: 680px)').matches:window.innerWidth<=680;
  const touchTablet=/iPad|Tablet/i.test(ua)||(navigator.maxTouchPoints>1&&window.innerWidth<=1024);
+ const telefone=/iPhone|iPod|Android.*Mobile|Windows Phone|Mobile/i.test(ua)||narrow;
+ if(touchTablet&&!telefone)return 'tablet';
  return mobileUA||narrow||touchTablet?'mobile':'desktop';
 }
 let deviceMode=detectDeviceMode(),hideLocalInstallCards=false,installPreferenceExplicit=false;
@@ -1390,13 +1394,13 @@ try{
  const savedInstallPreference=localStorage.getItem('canivete_hide_local_cards_v1');
  if(savedInstallPreference==='on'||savedInstallPreference==='off'){
   hideLocalInstallCards=savedInstallPreference==='on';installPreferenceExplicit=true;
- }else{hideLocalInstallCards=deviceMode==='mobile';}
-}catch(e){hideLocalInstallCards=deviceMode==='mobile'}
+ }else{hideLocalInstallCards=deviceMode!=='desktop';}
+}catch(e){hideLocalInstallCards=deviceMode!=='desktop'}
 function syncDeviceStatus(){
  deviceMode=detectDeviceMode();
- if(!installPreferenceExplicit)hideLocalInstallCards=deviceMode==='mobile';
- if(deviceStatusIcon)deviceStatusIcon.textContent=deviceMode==='mobile'?'📱':'💻';
- if(deviceStatusTitle)deviceStatusTitle.textContent=deviceMode==='mobile'?'Modo celular detectado':'Modo computador detectado';
+ if(!installPreferenceExplicit)hideLocalInstallCards=deviceMode!=='desktop';
+ if(deviceStatusIcon)deviceStatusIcon.textContent=deviceMode==='mobile'?'📱':deviceMode==='tablet'?'📲':'💻';
+ if(deviceStatusTitle)deviceStatusTitle.textContent=(deviceMode==='mobile'?'Modo celular':deviceMode==='tablet'?'Modo tablet':'Modo computador')+(function(){try{return localStorage.getItem('canivete_device_override_v1')?' (escolhido por você)':' detectado'}catch(e){return ' detectado'}})();
  if(deviceStatusDescription)deviceStatusDescription.textContent=hideLocalInstallCards?'Ferramentas que exigem instalação local estão ocultas por padrão.':'Ferramentas web e locais estão disponíveis; confira os requisitos antes de instalar.';
  if(showAllDeviceTools){showAllDeviceTools.textContent=hideLocalInstallCards?'Mostrar todas as IAs':'Ocultar IAs locais';showAllDeviceTools.setAttribute('aria-pressed',String(!hideLocalInstallCards));}
  if(installModeToggle){
@@ -1411,6 +1415,7 @@ function setInstallVisibility(hide,remember=true){
  syncDeviceStatus();render();
 }
 syncDeviceStatus();
+window.iasRender=render;window.iasSyncDevice=syncDeviceStatus;window.iasSetInstallVisibility=setInstallVisibility;
 installModeToggle?.addEventListener('click',()=>setInstallVisibility(!hideLocalInstallCards));
 showAllDeviceTools?.addEventListener('click',()=>setInstallVisibility(!hideLocalInstallCards));
 let deviceResizeTimer;
@@ -1609,7 +1614,7 @@ function render(){
  applyCardFeatures();
  applyRankingBadges();
  const q=(search.value||'').toLowerCase().trim();
- const visible=cards.filter(c=>{const cats=c.dataset.cat.split(' '),isVideo=cats.includes('video'),vt=c.dataset.videoType||'other';const categoryMatch=cat==='all'||cats.includes(cat)||(cat==='video-criacao'&&isVideo&&['create','both'].includes(vt))||(cat==='video-edicao'&&isVideo&&['edit','both'].includes(vt))||(cat==='especialistas'&&c.dataset.specialist==='true');const subtypeMatch=cat!=='video'||videoType==='all'||(videoType==='create'&&['create','both'].includes(vt))||(videoType==='edit'&&vt==='edit')||(videoType==='both'&&vt==='both')||(videoType==='other'&&!['create','edit','both'].includes(vt));const requiresLocalInstall=c.dataset.runMode==='local'||!!c.querySelector('[data-run-mode="local"]');return (!hideLocalInstallCards||!requiresLocalInstall)&&(showHidden?hidden.includes(nameOf(c)):!hidden.includes(nameOf(c)))&&categoryMatch&&subtypeMatch&&(access==='all'||c.dataset.access===access)&&(!imageFreeOnly||(cats.includes('imagem')&&['free','limit'].includes(c.dataset.access)))&&(!favoritesOnly||favorites.includes(nameOf(c)))&&(!q||(c.dataset.search||'').toLowerCase().includes(q));});
+ const visible=cards.filter(c=>{const cats=c.dataset.cat.split(' '),isVideo=cats.includes('video'),vt=c.dataset.videoType||'other';const categoryMatch=cat==='all'||cats.includes(cat)||(cat==='video-criacao'&&isVideo&&['create','both'].includes(vt))||(cat==='video-edicao'&&isVideo&&['edit','both'].includes(vt))||(cat==='especialistas'&&c.dataset.specialist==='true');const subtypeMatch=cat!=='video'||videoType==='all'||(videoType==='create'&&['create','both'].includes(vt))||(videoType==='edit'&&vt==='edit')||(videoType==='both'&&vt==='both')||(videoType==='other'&&!['create','edit','both'].includes(vt));const requiresLocalInstall=c.dataset.runMode==='local'||!!c.querySelector('[data-run-mode="local"]');return (!hideLocalInstallCards||!requiresLocalInstall)&&(!window.iasCompatFiltro||window.iasCompatFiltro(c))&&(showHidden?hidden.includes(nameOf(c)):!hidden.includes(nameOf(c)))&&categoryMatch&&subtypeMatch&&(access==='all'||c.dataset.access===access)&&(!imageFreeOnly||(cats.includes('imagem')&&['free','limit'].includes(c.dataset.access)))&&(!favoritesOnly||favorites.includes(nameOf(c)))&&(!q||(c.dataset.search||'').toLowerCase().includes(q));});
  const rankFiltered=visible.filter(rankingCategoryMatch);
  visible.splice(0,visible.length,...rankFiltered);
  visible.sort((a,b)=>{
@@ -1684,7 +1689,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v87','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v88','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1697,7 +1702,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v87.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v88.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1716,7 +1721,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v87.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v88.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
@@ -1770,6 +1775,136 @@ try{
    },250);
  }
 }catch(e){}
+})();
+</script>
+<!-- ===== IAs Gratuitas v88 — compatibilidade com o aparelho e com “Meu computador” ===== -->
+<style>
+.ias-aparelho{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-4px 0 14px}
+.ias-aparelho b{font-size:12.5px;margin-right:2px}
+.ias-aparelho button{border:1px solid var(--line,#e5e7eb);background:var(--card,#fff);color:inherit;border-radius:999px;padding:7px 12px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.ias-aparelho button.on{background:#4f46e5;border-color:#4f46e5;color:#fff}
+.ias-aparelho .sep{width:1px;height:22px;background:var(--line,#e5e7eb);margin:0 4px}
+.compat-line{margin:0 0 10px;padding:8px 10px;border-radius:10px;font-size:12px;line-height:1.45;border:1px solid}
+.compat-line b{display:block;font-size:12.5px}
+.compat-line.ok{background:#ecfdf3;border-color:#abefc6;color:#05603a}
+.compat-line.bad{background:#fef3f2;border-color:#fecdca;color:#912018}
+.compat-line.warn{background:#fffaeb;border-color:#fedf89;color:#93370d}
+.compat-line.unk{background:#f2f4f7;border-color:#e4e7ec;color:#344054}
+.compat-line small{display:block;margin-top:3px;opacity:.9}
+.run-badge{display:inline-flex;align-items:center;margin:0 6px 8px 0;padding:3px 8px;border-radius:999px;font-size:10.5px;font-weight:800;background:#eef2ff;color:#3730a3}
+.ias-compat-resumo{font-size:12.5px;margin:0 0 12px;color:var(--muted,#667085)}
+[data-theme="dark"] .compat-line.ok{background:#05301f;color:#a6f4c5;border-color:#085d3a}
+[data-theme="dark"] .compat-line.bad{background:#3b0c0c;color:#fecdca;border-color:#7a271a}
+[data-theme="dark"] .compat-line.warn{background:#3b2a0c;color:#fedf89;border-color:#7a4a0c}
+[data-theme="dark"] .compat-line.unk{background:#1f2937;color:#d0d5dd;border-color:#374151}
+[data-theme="dark"] .run-badge{background:#1e1b4b;color:#c7d2fe}
+</style>
+<script>
+(function(){
+  'use strict';
+  /* Como cada IA roda. Só entra aqui o que é de conhecimento público e estável. O resto é tratado como web. */
+  var LOCAL='local',DESK='desktop',APP='app';
+  var MODO={
+    'Ollama':LOCAL,'Llama':LOCAL,'Stable Diffusion / Stable Video Diffusion':LOCAL,'Wan':LOCAL,'Mochi 1':LOCAL,'LTX-2':LOCAL,'Z-Image Turbo':LOCAL,
+    'Stable Video Infinity':LOCAL,'LongVie 2':LOCAL,'Coqui XTTS-v2':LOCAL,'Whisper':LOCAL,
+    'DaVinci Resolve':DESK,'Adobe Premiere Pro':DESK,'Topaz Video':DESK,'Cursor':DESK,'Windsurf':DESK,'Google Antigravity':DESK,'Cline':DESK,
+    'Continue.dev':DESK,'Aider':DESK,'OpenCode':DESK,'Claude Code':DESK,'Flowise':DESK,'Tabnine':DESK,'Gemini Code Assist':DESK,'Amazon Q Developer':DESK,'Qodo':DESK
+  };
+  /* Apps de celular oficiais conhecidos (além do site) */
+  var TEM_APP=['ChatGPT','Perplexity','Microsoft Copilot','Canva','CapCut','Character.AI','Poe','Suno','Notion AI','Lensa','Facetune','Captions','Grok','Le Chat','Creati'];
+  /* Sistemas suportados (informação oficial e estável) */
+  var WMLL=['Windows','macOS','Linux'];
+  var SISTEMAS={'Adobe Premiere Pro':['Windows','macOS'],'Topaz Video':['Windows','macOS']};
+  /* Requisitos de hardware conhecidos, com a fonte. Sem número = não verificado. */
+  var REQ={
+    'Ollama':{fonte:'documentação do Ollama',avaliar:function(p){if(p.ram==null)return null;
+      if(p.ram>=32)return ['ok','Memória suficiente até modelos de 33B','A documentação pede 8 GB de RAM para modelos 7B, 16 GB para 13B e 32 GB para 33B.'];
+      if(p.ram>=16)return ['ok','Dá para modelos até 13B','Com '+p.ram+' GB: 7B e 13B. Para 33B, a documentação pede 32 GB.'];
+      if(p.ram>=8)return ['warn','Só modelos pequenos (7B)','Com '+p.ram+' GB de RAM, use modelos 7B. 13B pede 16 GB.'];
+      return ['bad','Pouca memória para os modelos','A documentação pede pelo menos 8 GB de RAM para modelos 7B. Você informou '+p.ram+' GB.']}},
+    'Wan':{fonte:'repositório oficial do Wan2.1',avaliar:function(p){if(p.vram==null)return null;
+      if(p.vram>=12)return ['ok','Placa de vídeo atende o modelo 1.3B','O modelo T2V-1.3B usa cerca de 8,19 GB de VRAM. Os modelos 14B exigem bem mais.'];
+      if(p.vram>=8)return ['warn','No limite para o modelo 1.3B','O modelo 1.3B usa cerca de 8,19 GB de VRAM. Com 8 GB pode não caber.'];
+      return ['bad','Placa de vídeo insuficiente','O modelo mais leve (1.3B) usa cerca de 8,19 GB de VRAM. Você informou '+(p.vram||'sem GPU dedicada')+(p.vram?' GB':'')+'.']}},
+    'Whisper':{fonte:'repositório oficial do Whisper (OpenAI)',avaliar:function(p){if(p.vram==null)return null;
+      if(p.vram===0)return ['warn','Roda no processador, mais devagar','Sem placa de vídeo dedicada, o Whisper funciona, mas demora mais. Modelos menores (tiny/base) são os mais indicados.'];
+      if(p.vram>=10)return ['ok','Atende até o modelo large','Referência oficial: tiny/base ~1 GB, small ~2 GB, medium ~5 GB e large ~10 GB de VRAM.'];
+      if(p.vram>=5)return ['ok','Atende até o modelo medium','Com '+p.vram+' GB: tiny, base, small e medium. O large pede cerca de 10 GB.'];
+      if(p.vram>=2)return ['warn','Atende os modelos tiny, base e small','O medium pede cerca de 5 GB de VRAM, e o large cerca de 10 GB.'];
+      return ['warn','Só os modelos menores','tiny e base pedem cerca de 1 GB de VRAM.']}}
+  };
+  /* Alternativas na nuvem que já estão no catálogo */
+  var ALT={'Ollama':'HuggingChat ou Le Chat','Llama':'HuggingChat','Stable Diffusion / Stable Video Diffusion':'Hugging Face Spaces','Wan':'Hugging Face Spaces','Mochi 1':'Hugging Face Spaces',
+    'LTX-2':'LTX Studio','Z-Image Turbo':'Hugging Face Spaces','Stable Video Infinity':'Hugging Face Spaces','LongVie 2':'Hugging Face Spaces','Coqui XTTS-v2':'ElevenLabs ou Hugging Face Spaces',
+    'Whisper':'Hugging Face Spaces','DaVinci Resolve':'CapCut ou Kapwing AI','Adobe Premiere Pro':'CapCut ou Kapwing AI','Topaz Video':'',
+    'Cursor':'Replit ou Google AI Studio','Windsurf':'Replit ou Google AI Studio','Google Antigravity':'Replit ou Google AI Studio','Cline':'Replit','Continue.dev':'Replit','Aider':'Replit','OpenCode':'Replit','Claude Code':'Replit','Flowise':'Zapier ou Relevance AI',
+    'Tabnine':'Replit','Gemini Code Assist':'Google AI Studio','Amazon Q Developer':'Replit','Qodo':'Replit'};
+  function nome(c){var h=c.querySelector('h2');return h?h.textContent.trim():''}
+  function perfil(){var p={};try{p=JSON.parse(localStorage.getItem('canivete_pc_profile_v1')||'{}')||{}}catch(e){}
+    var num=function(v){return v===''||v==null||isNaN(Number(v))?null:Number(v)};
+    var so=String(p.os||'');var fam=/Windows/.test(so)?'Windows':/macOS/.test(so)?'macOS':/Linux/.test(so)?'Linux':/Android|iOS|iPadOS/.test(so)?'movel':/ChromeOS/.test(so)?'ChromeOS':so?'outro':'';
+    return {ram:num(p.ram),vram:num(p.vram),so:so,fam:fam,temAlgo:Object.keys(p).some(function(k){return String(p[k]||'').trim()})}}
+  function aparelho(){try{var o=localStorage.getItem('canivete_device_override_v1');if(o)return o}catch(e){}var t=(document.getElementById('deviceStatusTitle')||{}).textContent||'';return /celular/i.test(t)?'mobile':/tablet/i.test(t)?'tablet':'desktop'}
+  function avaliar(c){
+    var n=nome(c),modo=MODO[n]||(c.querySelector('[data-run-mode="local"]')?LOCAL:'web'),dev=aparelho(),p=perfil(),alt=ALT[n];
+    var altTxt=alt?' Alternativa na nuvem: '+alt+'.':'';
+    if(modo==='web'){
+      var app=TEM_APP.indexOf(n)>=0;
+      return {st:'ok',t:dev==='desktop'?'✅ Funciona no navegador':'✅ Funciona no '+(dev==='tablet'?'tablet':'celular'),d:app?'Também tem app oficial para celular.':'Não precisa instalar nada.'+(dev!=='desktop'?' Alguns recursos podem ser mais completos no computador.':'')};
+    }
+    if(dev!=='desktop')return {st:'bad',t:'❌ Não roda no '+(dev==='tablet'?'tablet':'celular'),d:(modo===LOCAL?'Precisa instalar e rodar o modelo num computador.':'Precisa instalar um programa no computador.')+altTxt};
+    var sist=SISTEMAS[n]||WMLL;
+    if(!p.temAlgo)return {st:'unk',t:'❔ Preencha “Meu computador” para avaliar',d:(modo===LOCAL?'Roda o modelo de IA no seu PC: costuma exigir memória e placa de vídeo.':'Instala um programa no PC; a IA em si roda na nuvem.')+altTxt};
+    if(p.fam==='movel'||p.fam==='ChromeOS')return {st:'bad',t:'❌ Não é compatível com '+p.so,d:'Funciona em: '+sist.join(', ')+'.'+altTxt};
+    if(p.fam&&p.fam!=='outro'&&sist.indexOf(p.fam)<0)return {st:'bad',t:'❌ Não tem versão para '+p.so,d:'Funciona em: '+sist.join(', ')+'.'+altTxt};
+    var r=REQ[n];
+    if(r){var res=r.avaliar(p);if(res)return {st:res[0],t:(res[0]==='ok'?'✅ ':res[0]==='warn'?'⚠️ ':'❌ ')+res[1],d:res[2]+' (Fonte: '+r.fonte+'.)'+(res[0]!=='ok'?altTxt:'')};
+      return {st:'unk',t:'❔ Informe '+(n==='Ollama'?'a memória RAM':'a memória da placa de vídeo (VRAM)')+' para avaliar',d:altTxt.trim()}}
+    if(modo===DESK)return {st:'ok',t:p.fam?'✅ Tem versão para '+p.fam:'❔ Sistema não informado',d:'Instala no PC e usa a IA na nuvem. Requisitos de hardware não verificados aqui: confira a página oficial.'};
+    return {st:'warn',t:'⚠️ Modelo pesado: requisitos não verificados',d:'Roda a IA no seu PC e costuma exigir placa de vídeo com bastante memória. Confira a VRAM pedida na página oficial antes de instalar.'+altTxt};
+  }
+  /* Correção: alguns cards (Ollama, LongVie 2, Stable Video Infinity) estavam fora da lista principal.
+     Quando o filtro os escondia, eles continuavam aparecendo soltos no fim da página. Agora entram na lista. */
+  var grade=document.getElementById('grid');
+  if(grade)[].slice.call(document.querySelectorAll('article.card')).forEach(function(c){if(!grade.contains(c)&&!c.closest('.compare-panel,#compareModal,[id*=compar]'))grade.appendChild(c)});
+  var cards=[].slice.call(document.querySelectorAll('article.card'));
+  function aplicar(){
+    var cont={ok:0,bad:0,warn:0,unk:0};
+    cards.forEach(function(c){
+      var n=nome(c),modo=MODO[n];
+      if(modo&&!c.dataset.runMode){c.dataset.runMode='local'}
+      if(modo&&!c.querySelector('.install-badge')){var h=c.querySelector('.head .title');if(h){var b=document.createElement('span');b.className='install-badge';b.setAttribute('data-run-mode','local');b.textContent=modo===LOCAL?'🖥️ INSTALAÇÃO NA MÁQUINA':'🖥️ PROGRAMA PARA PC';c.querySelector('.head').insertBefore(b,c.querySelector('.head .tag'))}}
+      var r=avaliar(c);c.dataset.compat=r.st;cont[r.st]++;
+      var el=c.querySelector('.compat-line');if(!el){el=document.createElement('div');el.className='compat-line';var desc=c.querySelector('.desc');(desc||c.querySelector('.head')).insertAdjacentElement('afterend',el)}
+      el.className='compat-line '+r.st;el.innerHTML='';var b2=document.createElement('b');b2.textContent=r.t;el.appendChild(b2);if(r.d){var sm=document.createElement('small');sm.textContent=r.d;el.appendChild(sm)}
+    });
+    var res=document.getElementById('iasCompatResumo');if(res)res.textContent='Para este aparelho: ✅ '+(cont.ok)+' compatíveis · ⚠️ '+cont.warn+' com ressalvas · ❌ '+cont.bad+' incompatíveis · ❔ '+cont.unk+' não verificadas.';
+  }
+  /* filtro de compatibilidade (somado aos filtros que já existem) */
+  var FILTRO_KEY='canivete_ias_compat_filtro_v1',filtro='todas';try{filtro=localStorage.getItem(FILTRO_KEY)||'todas'}catch(e){}
+  window.iasCompatFiltro=function(c){if(filtro==='todas')return true;var st=c.dataset.compat||'unk';if(filtro==='ok')return st==='ok'||st==='warn';if(filtro==='unk')return st==='unk';return true};
+  /* barra: aparelho + compatibilidade */
+  var status=document.getElementById('deviceStatus');
+  if(status){
+    var bar=document.createElement('div');bar.className='ias-aparelho';bar.id='iasAparelho';
+    bar.innerHTML='<b>Estou usando:</b><button type="button" data-dev="">🤖 Automático</button><button type="button" data-dev="mobile">📱 Celular</button><button type="button" data-dev="tablet">📲 Tablet</button><button type="button" data-dev="desktop">💻 Computador</button><span class="sep"></span><b>Mostrar:</b><button type="button" data-f="todas">Todas</button><button type="button" data-f="ok">✅ Que funcionam aqui</button><button type="button" data-f="unk">❔ Não verificadas</button>';
+    status.insertAdjacentElement('afterend',bar);
+    var resumo=document.createElement('p');resumo.className='ias-compat-resumo';resumo.id='iasCompatResumo';resumo.setAttribute('role','status');bar.insertAdjacentElement('afterend',resumo);
+    var marcar=function(){var o='';try{o=localStorage.getItem('canivete_device_override_v1')||''}catch(e){}
+      bar.querySelectorAll('[data-dev]').forEach(function(b){b.classList.toggle('on',b.dataset.dev===o);b.setAttribute('aria-pressed',String(b.dataset.dev===o))});
+      bar.querySelectorAll('[data-f]').forEach(function(b){b.classList.toggle('on',b.dataset.f===filtro);b.setAttribute('aria-pressed',String(b.dataset.f===filtro))})};
+    bar.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+      if(b.hasAttribute('data-dev')){try{b.dataset.dev?localStorage.setItem('canivete_device_override_v1',b.dataset.dev):localStorage.removeItem('canivete_device_override_v1')}catch(x){}if(window.iasSyncDevice)window.iasSyncDevice()}
+      if(b.dataset.f){filtro=b.dataset.f;try{localStorage.setItem(FILTRO_KEY,filtro)}catch(x){}}
+      marcar();aplicar();if(window.iasRender)window.iasRender()});
+    marcar();
+  }
+  aplicar();if(window.iasRender)window.iasRender();
+  /* reavalia quando o perfil do PC é salvo ou limpo */
+  var form=document.getElementById('pcProfileForm');
+  if(form){form.addEventListener('submit',function(){setTimeout(function(){aplicar();if(window.iasRender)window.iasRender()},60)});
+    var lp=document.getElementById('pcProfileClear');if(lp)lp.addEventListener('click',function(){setTimeout(function(){aplicar();if(window.iasRender)window.iasRender()},60)})}
+  window.addEventListener('resize',function(){clearTimeout(window.__iasRz);window.__iasRz=setTimeout(function(){aplicar()},300)});
 })();
 </script>
 </body>
