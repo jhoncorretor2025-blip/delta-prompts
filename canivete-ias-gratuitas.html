@@ -348,6 +348,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 .card-number{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:39px;height:28px;padding:0 7px;border-radius:9px;background:var(--blue);color:#fff;font-size:11px;font-weight:950;letter-spacing:.02em;box-shadow:0 2px 5px rgba(37,99,235,.2)}
 .card .head{gap:9px}.card-number+.icon{width:42px;height:42px;border-radius:12px;font-size:22px}
 @media(max-width:680px){.card-number{min-width:35px;height:26px;font-size:10px}.card-number+.icon{width:39px;height:39px}}
+.compat-panel{margin:0 0 14px;padding:12px;border:1px solid #f2d49b;border-radius:12px;background:#fff9eb;color:#754c12;font-size:12px;line-height:1.5}.compat-panel ul{margin:7px 0;padding-left:19px}.compat-panel li{margin:4px 0}.compat-panel p{margin:8px 0 0}.compat-panel .compat-warning{padding-top:8px;border-top:1px solid #f2d49b}[data-theme="dark"] .compat-panel{background:#332a1b;color:#f8dfad;border-color:#70552a}[data-theme="dark"] .compat-panel .compat-warning{border-color:#70552a}
 </style>
 <style>
 /* v51 — painéis compactos no fim da página */
@@ -540,7 +541,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </article>
 
 <article class="card" data-cat="codigo pesquisa" data-access="free" data-search="Ollama modelos linguagem local computador offline privacidade Llama DeepSeek Gemma">
-<div class="head"><div class="icon">💻</div><div class="title"><h2>Ollama</h2><small>Execute modelos de IA localmente</small></div><span class="install-badge" data-run-mode="local">🖥️ INSTALAÇÃO NA MÁQUINA</span><span class="tag">GRÁTIS</span></div><p class="desc">Permite baixar e executar modelos de linguagem compatíveis no próprio computador. <strong>Precisa instalar o Ollama e baixar pelo menos um modelo.</strong> O uso local pode aumentar a privacidade, mas exige espaço em disco e hardware adequado.</p><div class="use"><b>💡 Exemplo</b> Instale um modelo compatível e teste resumir um texto sem enviar o conteúdo a um chatbot hospedado na nuvem.</div><div class="footer"><span class="best">IA local e privacidade</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://ollama.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
+<div class="head"><div class="icon">💻</div><div class="title"><h2>Ollama</h2><small>Execute modelos de IA localmente</small></div><span class="install-badge" data-run-mode="local">🖥️ INSTALAÇÃO NA MÁQUINA</span><span class="tag">GRÁTIS</span></div><p class="desc">Permite baixar e executar modelos de linguagem compatíveis no próprio computador. <strong>Precisa instalar o Ollama e baixar pelo menos um modelo.</strong> O uso local pode aumentar a privacidade, mas exige espaço em disco e hardware adequado.</p><div class="compat-panel"><b>⚙️ Antes de instalar: confira se seu computador aguenta</b><ul><li><strong>RAM e armazenamento:</strong> modelos maiores precisam de mais memória e espaço em disco.</li><li><strong>Placa de vídeo:</strong> uma GPU compatível pode acelerar a execução; sem ela, alguns modelos ficam lentos.</li><li><strong>Desempenho:</strong> comece por um modelo pequeno e confira os requisitos do modelo escolhido. Não existe um requisito único para todos.</li></ul><p><strong>🌐 Quer evitar exigir muito do computador?</strong> Procure uma opção hospedada na nuvem. Ela não exige baixar o modelo localmente, mas depende de internet, disponibilidade, limites e possíveis custos.</p><p class="compat-warning">⚠️ Este catálogo não testa automaticamente o funcionamento dos serviços. Antes de depender de uma ferramenta, abra o site oficial e confirme se o recurso desejado está funcionando.</p></div><div class="use"><b>💡 Exemplo</b> Instale um modelo compatível e teste resumir um texto sem enviar o conteúdo a um chatbot hospedado na nuvem.</div><div class="footer"><span class="best">IA local e privacidade</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://ollama.com/" target="_blank" rel="noopener">Abrir ↗</a></div>
 </article>
 
 <article class="card" data-specialist="true" data-cat="trabalho audio" data-access="limit" data-search="Fathom AI reuniões gravação transcrição resumo Zoom Google Meet Teams tarefas">
@@ -1589,7 +1590,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v82','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v83','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1602,7 +1603,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v82.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v83.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1621,7 +1622,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v82.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v83.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
