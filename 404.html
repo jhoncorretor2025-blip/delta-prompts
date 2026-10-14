@@ -13,7 +13,7 @@
 [data-theme="dark"] .notfound-box p{color:#a0a0a0}
 [data-theme="dark"] .notfound-box h1{color:#f1f5f9}
 [data-theme="dark"] .notfound-busca input{background:#0f1424;border-color:rgba(255,255,255,.15);color:#eaeaea}
-</style></head><body><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260928c"></script><main>
+</style></head><body><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20261014-audit-v82"></script><main>
 
 <div class="notfound-wrap">
   <div class="notfound-box">
@@ -25,13 +25,13 @@
       <a href="/delta-prompts/ajuda.html" class="notfound-secundaria">❓ Ver a Página de Ajuda</a>
     </div>
     <div class="notfound-busca">
-      <input type="text" id="buscaRapida" placeholder="🔎 Ou digite o que você procura e aperte Enter...">
+      <label for="buscaRapida" class="sr-only">Buscar conteúdo no Delta Prompts</label><input type="search" id="buscaRapida" aria-label="Buscar conteúdo no Delta Prompts" autocomplete="off" placeholder="🔎 Ou digite o que você procura e aperte Enter...">
     </div>
   </div>
 </div>
 
 </main>
-<button class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro">🌙</button>
+<button type="button" class="theme-toggle" id="themeToggle" title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro">🌙</button>
 <script>
 function aplicarTema(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('themeToggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('deltaTheme',t)}catch(e){}}
 document.getElementById('themeToggle').addEventListener('click',()=>{const atual=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';aplicarTema(atual)});
