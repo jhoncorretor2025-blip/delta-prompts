@@ -429,7 +429,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   })();
 })();
 </script>
-<!-- ===== DELTA V1.67 — Configuração mais fácil: resumo, índice, grupos, aparência e backup ===== -->
+<!-- ===== DELTA V1.84 — Backup ampliado e restauração protegida ===== -->
 <style>
 .cfg-resumo{background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #c7d2fe;border-radius:16px;padding:18px;margin:16px 0}
 .cfg-resumo h2{margin:0 0 4px;font-size:18px}
@@ -499,7 +499,7 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
   /* novas seções */
   function card(id,titulo,html){var s=document.createElement('section');s.className='card';s.id=id;s.innerHTML='<h3>'+titulo+'</h3>'+html;return s}
   var aparencia=card('cfgAparencia','🎨 Aparência','<p class="cfg-secao-ajuda">👉 Deixe o site claro ou escuro (o escuro cansa menos a vista à noite).</p><div class="cfg-botoes"><button type="button" data-tema="light">☀️ Claro</button><button type="button" data-tema="dark">🌙 Escuro</button></div>');
-  var backup=card('cfgBackup','💾 Backup das suas configurações','<p class="cfg-secao-ajuda">👉 Suas configurações ficam salvas neste navegador. Baixe uma cópia para não perder nada ao trocar de computador ou limpar o navegador.</p><div class="cfg-botoes"><button type="button" class="primario" id="cfgExportar">⬇️ Baixar meu backup</button><label>⬆️ Restaurar backup<input type="file" id="cfgImportar" accept=".json,application/json" hidden></label><button type="button" class="perigo" id="cfgApagar">🧹 Apagar minhas configurações</button></div><div class="cfg-msg" id="cfgBackupMsg" role="status" aria-live="polite"></div>');
+  var backup=card('cfgBackup','💾 Backup e recuperação do Delta Prompts','<p class="cfg-secao-ajuda">👉 Suas configurações ficam salvas neste navegador. Exporte as configurações e os dados locais do Delta neste navegador. Antes de restaurar, o sistema baixa uma cópia do estado atual. Guarde os arquivos fora deste computador.</p><div class="cfg-botoes"><button type="button" class="primario" id="cfgExportar">⬇️ Baixar meu backup</button><label>⬆️ Restaurar backup<input type="file" id="cfgImportar" accept=".json,application/json" hidden></label><button type="button" class="perigo" id="cfgApagar">🧹 Apagar minhas configurações</button></div><div class="cfg-msg" id="cfgBackupMsg" role="status" aria-live="polite"></div>');
 
   /* grupos */
   var grupos=[
@@ -561,10 +561,17 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
 
   /* backup */
   var msg=$('#cfgBackupMsg');
-  var CHAVES=['deltaPerfilAtivo','deltaDadosPadrao','deltaSitesSalvos','deltaGrupoOrdemManual','deltaCategoriasEscondidas','deltaSecoesEscondidas','deltaFiltroNovidades','deltaTheme','deltaLogConfig','deltaHistoricoPaginas'];
+  var CHAVES_BASE=['deltaPerfilAtivo','deltaDadosPadrao','deltaSitesSalvos','deltaGrupoOrdemManual','deltaCategoriasEscondidas','deltaSecoesEscondidas','deltaFiltroNovidades','deltaTheme','deltaLogConfig','deltaHistoricoPaginas'];
+  /* Backup ampliado: inclui chaves do Delta no navegador, sem capturar credenciais/sessões. */
+  function chavesBackup(){
+    var lista=CHAVES_BASE.slice();
+    try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(!k||!/^(delta|dp|jhon)/i.test(k))continue;if(/token|password|senha|credential|auth|session|secret|api.?key/i.test(k))continue;if(lista.indexOf(k)<0)lista.push(k)}}catch(e){}
+    return lista;
+  }
   $('#cfgExportar').addEventListener('click',function(){
-    var dados={};CHAVES.forEach(function(k){try{var v=localStorage.getItem(k);if(v!==null)dados[k]=v}catch(e){}});
-    var pacote={tipo:'delta-prompts-configuracao',versao:window.DELTA_SITE_VERSION||'V1.69',criadoEm:new Date().toISOString(),dados:dados};
+    var chaves=chavesBackup(),dados={},totalBytes=0;
+    chaves.forEach(function(k){try{var v=localStorage.getItem(k);if(v!==null){dados[k]=v;totalBytes+=k.length+v.length}}catch(e){}});
+    var pacote={tipo:'delta-prompts-configuracao',formato:2,versao:window.DELTA_SITE_VERSION||'V1.83',criadoEm:new Date().toISOString(),origem:location.origin,quantidadeChaves:Object.keys(dados).length,tamanhoCaracteres:totalBytes,dados:dados};
     var url=URL.createObjectURL(new Blob([JSON.stringify(pacote,null,2)],{type:'application/json'}));
     var a=document.createElement('a');a.href=url;a.download='delta-configuracoes-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},3000);
     try{localStorage.setItem('deltaUltimoBackupConfig',new Date().toISOString())}catch(e){}
@@ -575,10 +582,18 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
     leitor.onload=function(){
       try{
         var p=JSON.parse(leitor.result);
-        if(!p||p.tipo!=='delta-prompts-configuracao'||!p.dados)throw new Error('formato');
-        if(!confirm('Restaurar este backup de '+String(p.criadoEm||'').slice(0,10)+'? Suas configurações atuais serão trocadas pelas do arquivo.'))return;
-        Object.keys(p.dados).forEach(function(k){if(CHAVES.indexOf(k)>=0)try{localStorage.setItem(k,String(p.dados[k]))}catch(e){}});
-        msg.textContent='✅ Backup restaurado! Recarregando a página…';setTimeout(function(){location.reload()},1200);
+        if(!p||p.tipo!=='delta-prompts-configuracao'||!p.dados||typeof p.dados!=='object'||Array.isArray(p.dados))throw new Error('formato');
+        var entradas=Object.keys(p.dados).filter(function(k){return /^(delta|dp|jhon)/i.test(k)&&!/token|password|senha|credential|auth|session|secret|api.?key/i.test(k)});
+        if(!entradas.length)throw new Error('vazio');
+        if(entradas.length>1000)throw new Error('limite');
+        if(!confirm('Restaurar backup de '+String(p.criadoEm||'data desconhecida').slice(0,10)+' com '+entradas.length+' registros? Antes de restaurar, será baixada uma cópia de segurança do estado atual.'))return;
+        /* Cria cópia de emergência do estado atual antes de alterar qualquer dado. */
+        var atual={};chavesBackup().forEach(function(k){try{var v=localStorage.getItem(k);if(v!==null)atual[k]=v}catch(e){}});
+        var emergencia={tipo:'delta-prompts-configuracao',formato:2,criadoEm:new Date().toISOString(),origem:location.origin,dados:atual};
+        var blob=URL.createObjectURL(new Blob([JSON.stringify(emergencia,null,2)],{type:'application/json'}));
+        var a=document.createElement('a');a.href=blob;a.download='delta-backup-antes-restauracao-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(blob)},3000);
+        entradas.forEach(function(k){if(typeof p.dados[k]==='string')try{localStorage.setItem(k,p.dados[k])}catch(e){}});
+        msg.textContent='✅ Backup restaurado. Uma cópia do estado anterior foi baixada; recarregando…';setTimeout(function(){location.reload()},1500);
       }catch(e){msg.style.color='#b91c1c';msg.textContent='❌ Esse arquivo não é um backup de configurações do Delta Prompts.'}
     };
     leitor.readAsText(f);this.value='';
