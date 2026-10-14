@@ -349,6 +349,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 .card .head{gap:9px}.card-number+.icon{width:42px;height:42px;border-radius:12px;font-size:22px}
 @media(max-width:680px){.card-number{min-width:35px;height:26px;font-size:10px}.card-number+.icon{width:39px;height:39px}}
 .compat-panel{margin:0 0 14px;padding:12px;border:1px solid #f2d49b;border-radius:12px;background:#fff9eb;color:#754c12;font-size:12px;line-height:1.5}.compat-panel ul{margin:7px 0;padding-left:19px}.compat-panel li{margin:4px 0}.compat-panel p{margin:8px 0 0}.compat-panel .compat-warning{padding-top:8px;border-top:1px solid #f2d49b}[data-theme="dark"] .compat-panel{background:#332a1b;color:#f8dfad;border-color:#70552a}[data-theme="dark"] .compat-panel .compat-warning{border-color:#70552a}
+
+/* v86 — detecção automática do dispositivo e filtro padrão de instalações locais */
+.device-status{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--shadow);font-size:12px}.device-status-icon{font-size:23px;flex:0 0 auto}.device-status strong,.device-status small{display:block}.device-status strong{font-size:12px}.device-status small{margin-top:3px;color:var(--muted);line-height:1.4}.device-show-all{margin-left:auto;flex:0 0 auto;border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:var(--bg);color:var(--ink);font-size:11px;font-weight:850;cursor:pointer}.device-show-all:hover{border-color:var(--blue);color:var(--blue)}@media(max-width:520px){.device-status{align-items:flex-start;flex-wrap:wrap}.device-show-all{margin-left:32px}}
 </style>
 <style>
 /* v51 — painéis compactos no fim da página */
@@ -366,13 +369,14 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v85</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v86</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>203 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
 
 
-\n<section class="toolbar">
+\n<section class="device-status" id="deviceStatus" role="status" aria-live="polite"><span class="device-status-icon" id="deviceStatusIcon">📱</span><span><strong id="deviceStatusTitle">Detectando dispositivo…</strong><small id="deviceStatusDescription">O catálogo ajustará a lista conforme seu dispositivo.</small></span><button type="button" id="showAllDeviceTools" class="device-show-all">Mostrar todas as IAs</button></section>
+<section class="toolbar">
 <div class="search-shell"><svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="search" class="search" type="search" placeholder="Buscar IA, função, categoria ou exemplo..." aria-label="Buscar ferramentas de inteligência artificial"><kbd class="search-shortcut">Ctrl + K</kbd></div>
 <div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters"><button class="filter active" data-cat="all">🗂️ Todas <span class="filter-count" data-count-all>97</span></button><button class="filter" data-cat="criacao">✍️ Texto e conteúdo <span class="filter-count" data-count-cat="criacao">69</span></button><button class="filter" data-cat="imagem">🖼️ Imagem <span class="filter-count" data-count-cat="imagem">26</span></button><button class="filter" data-cat="video">🎥 Todos os vídeos <span class="filter-count" data-count-cat="video">42</span></button><button class="filter" data-cat="codigo">💻 Código <span class="filter-count" data-count-cat="codigo">26</span></button><button class="filter" data-cat="pesquisa">🔎 Pesquisa <span class="filter-count" data-count-cat="pesquisa">21</span></button><button class="filter" data-cat="trabalho">💼 Trabalho <span class="filter-count" data-count-cat="trabalho">51</span></button><button class="filter" data-cat="audio">🎧 Áudio <span class="filter-count" data-count-cat="audio">18</span></button><button class="filter" data-cat="musica">🎵 Criação de música <span class="filter-count" data-count-cat="musica">0</span></button><button class="filter video-create-category" data-cat="video-criacao">🎬 Criação de vídeo <span class="filter-count" data-count-cat="video-criacao">24</span></button><button class="filter video-edit-category" data-cat="video-edicao">✂️ Edição de vídeo <span class="filter-count" data-count-cat="video-edicao">25</span></button><button class="filter" data-cat="estudo">📚 Estudo <span class="filter-count" data-count-cat="estudo">13</span></button><button class="filter" data-cat="automacao">⚙️ Automação <span class="filter-count" data-count-cat="automacao">5</span></button><button class="filter" data-cat="agentes">🤖 Agentes de IA <span class="filter-count" data-count-cat="agentes">0</span></button><button class="filter" data-cat="dados">📊 Dados e planilhas <span class="filter-count" data-count-cat="dados">0</span></button><button class="filter" data-cat="avatar">🧑‍🎤 Avatar <span class="filter-count" data-count-cat="avatar">0</span></button><button class="filter specialist-category" data-cat="especialistas">🎯 Especialistas <span class="filter-count" data-count-cat="especialistas">32</span></button></div></div>
 <div class="video-subfilters-wrap" id="videoSubfilters" aria-label="Tipo de ferramenta de vídeo" hidden><div class="filter-group video-subfilters"><span class="filter-label">Tipo de vídeo</span><div class="filters" id="videoTypeFilters"><button class="filter active" type="button" data-video-type="all">Todos <span class="filter-count" data-count-video="all">42</span></button><button class="filter" type="button" data-video-type="create">🎬 Criam vídeos <span class="filter-count" data-count-video="create">24</span></button><button class="filter" type="button" data-video-type="edit">✂️ Só edição <span class="filter-count" data-count-video="edit">14</span></button><button class="filter" type="button" data-video-type="both">🔄 Criam e editam <span class="filter-count" data-count-video="both">11</span></button><button class="filter" type="button" data-video-type="other">🧰 Plataformas/apoio <span class="filter-count" data-count-video="other">4</span></button></div></div><p class="category-help video-type-help">🎬 <strong>Criam vídeos:</strong> geram clipes, cenas ou vídeos com IA. ✂️ <strong>Só edição:</strong> editam, cortam ou reaproveitam vídeos existentes. 🔄 <strong>Ambas:</strong> criam e também editam. 🧰 <strong>Plataformas/apoio:</strong> reúnem ou apoiam fluxos de trabalho com vídeo.</p></div>
@@ -1312,20 +1316,52 @@ let cat='all',access='all',clicks={},ratings={},selected=[],favorites=[],hidden=
 let videoType='all';
 
 const installModeToggle=document.getElementById('installModeToggle');
-let hideLocalInstallCards=false;
-try{hideLocalInstallCards=localStorage.getItem('canivete_hide_local_cards_v1')==='on'}catch(e){}
-function applyLocalInstallCardVisibility(){
+const deviceStatusIcon=document.getElementById('deviceStatusIcon');
+const deviceStatusTitle=document.getElementById('deviceStatusTitle');
+const deviceStatusDescription=document.getElementById('deviceStatusDescription');
+const showAllDeviceTools=document.getElementById('showAllDeviceTools');
+function detectDeviceMode(){
+ const ua=navigator.userAgent||'';
+ const mobileUA=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+ const narrow=window.matchMedia?window.matchMedia('(max-width: 680px)').matches:window.innerWidth<=680;
+ const touchTablet=/iPad|Tablet/i.test(ua)||(navigator.maxTouchPoints>1&&window.innerWidth<=1024);
+ return mobileUA||narrow||touchTablet?'mobile':'desktop';
+}
+let deviceMode=detectDeviceMode(),hideLocalInstallCards=false,installPreferenceExplicit=false;
+try{
+ const savedInstallPreference=localStorage.getItem('canivete_hide_local_cards_v1');
+ if(savedInstallPreference==='on'||savedInstallPreference==='off'){
+  hideLocalInstallCards=savedInstallPreference==='on';installPreferenceExplicit=true;
+ }else{hideLocalInstallCards=deviceMode==='mobile';}
+}catch(e){hideLocalInstallCards=deviceMode==='mobile'}
+function syncDeviceStatus(){
+ deviceMode=detectDeviceMode();
+ if(!installPreferenceExplicit)hideLocalInstallCards=deviceMode==='mobile';
+ if(deviceStatusIcon)deviceStatusIcon.textContent=deviceMode==='mobile'?'📱':'💻';
+ if(deviceStatusTitle)deviceStatusTitle.textContent=deviceMode==='mobile'?'Modo celular detectado':'Modo computador detectado';
+ if(deviceStatusDescription)deviceStatusDescription.textContent=hideLocalInstallCards?'Ferramentas que exigem instalação local estão ocultas por padrão.':'Ferramentas web e locais estão disponíveis; confira os requisitos antes de instalar.';
+ if(showAllDeviceTools){showAllDeviceTools.textContent=hideLocalInstallCards?'Mostrar todas as IAs':'Ocultar IAs locais';showAllDeviceTools.setAttribute('aria-pressed',String(!hideLocalInstallCards));}
  if(installModeToggle){
   installModeToggle.textContent=hideLocalInstallCards?'🖥️ Mostrar IAs instaladas na máquina':'🖥️ Ocultar IAs instaladas na máquina';
   installModeToggle.classList.toggle('active',hideLocalInstallCards);
   installModeToggle.setAttribute('aria-pressed',String(hideLocalInstallCards));
  }
- render();
 }
-installModeToggle?.addEventListener('click',()=>{
- hideLocalInstallCards=!hideLocalInstallCards;
- try{localStorage.setItem('canivete_hide_local_cards_v1',hideLocalInstallCards?'on':'off')}catch(e){}
- applyLocalInstallCardVisibility();
+function setInstallVisibility(hide,remember=true){
+ hideLocalInstallCards=hide;
+ if(remember){installPreferenceExplicit=true;try{localStorage.setItem('canivete_hide_local_cards_v1',hide?'on':'off')}catch(e){}}
+ syncDeviceStatus();render();
+}
+syncDeviceStatus();
+installModeToggle?.addEventListener('click',()=>setInstallVisibility(!hideLocalInstallCards));
+showAllDeviceTools?.addEventListener('click',()=>setInstallVisibility(!hideLocalInstallCards));
+let deviceResizeTimer;
+window.addEventListener('resize',()=>{
+ clearTimeout(deviceResizeTimer);
+ deviceResizeTimer=window.setTimeout(()=>{
+  const previous=deviceMode;const next=detectDeviceMode();
+  if(next!==previous){deviceMode=next;syncDeviceStatus();render();}
+ },180);
 });
 let rankingSort='free-quality';
 let rankingCategory='current';
@@ -1590,7 +1626,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v83','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v86','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1603,7 +1639,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v83.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v86.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1622,7 +1658,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v83.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v86.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
