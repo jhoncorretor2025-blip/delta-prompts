@@ -1984,3 +1984,11 @@ html,body{overflow-x:hidden;overflow-x:clip}
 @media(max-width:900px){
   #menu .sidebar{padding-top:8px!important;border-top:68px solid transparent!important;background-clip:border-box!important;scroll-padding-top:8px}
 }
+/* ===== V1.83 — o filtro do menu não “desce junto” =====
+   O quadro “Filtrar categorias do menu” (e os atalhos rápidos no celular) estavam com position:sticky:
+   ao rolar o menu eles ficavam grudados no topo, tampando ~160px de itens e, no celular, um por cima do outro.
+   Agora rolam normalmente junto com o resto do menu. */
+#menu .sidebar .delta-menu-search,
+#menu .sidebar .delta-mobile-quick,
+#menu .sidebar > div:first-of-type,
+#menu .sidebar::before{position:static!important;top:auto!important;box-shadow:none!important}
