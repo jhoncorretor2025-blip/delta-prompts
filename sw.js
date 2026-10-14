@@ -1,5 +1,5 @@
-// DELTA SITE VERSION: V1.86
-const CACHE_NAME = 'delta-prompts-shell-v72';
+// DELTA SITE VERSION: V1.87
+const CACHE_NAME = 'delta-prompts-shell-v73';
 const SHELL_URLS = [
   '/delta-prompts/index.html',
   '/delta-prompts/style.css',
