@@ -1966,3 +1966,21 @@ main{min-width:0;flex:1 1 auto}
 @media(max-width:480px){
   #menu .sidebar{width:min(88vw,340px);padding-left:18px;padding-right:18px}
 }
+
+/* ===== V1.82 — menu lateral sempre visível ao rolar a página =====
+   Causa: html e body tinham overflow-x:hidden. Isso transforma o body em uma "caixa de rolagem",
+   e o position:sticky do #menu passava a grudar no body (que não rola) em vez da janela.
+   Resultado: ao rolar a página, o menu subia junto e o topo dele sumia acima da tela.
+   overflow-x:clip corta o que vaza para o lado SEM criar caixa de rolagem, então o sticky volta a funcionar. */
+html,body{overflow-x:hidden;overflow-x:clip}
+@supports (overflow:clip){html,body{overflow-y:visible}}
+@media(min-width:901px){
+  #menu{position:sticky;top:0;align-self:flex-start;height:100vh;height:100dvh}
+  /* os botões Modo Simples/Leitura agora ficam dentro da engrenagem ⚙️: não precisa mais reservar 130px vazios no fim do menu */
+  #menu .sidebar,#menu nav.sidebar{padding-bottom:calc(28px + env(safe-area-inset-bottom))!important;scroll-padding-bottom:28px}
+}
+/* No celular/tablet: o botão ☰ fica por cima do canto do menu. Uma faixa fixa (borda) no topo do menu
+   deixa o conteúdo rolável começar ABAIXO do botão, então nada fica escondido atrás dele. */
+@media(max-width:900px){
+  #menu .sidebar{padding-top:8px!important;border-top:68px solid transparent!important;background-clip:border-box!important;scroll-padding-top:8px}
+}
