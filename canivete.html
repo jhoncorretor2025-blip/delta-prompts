@@ -7373,7 +7373,6 @@ body.canivete-dense-mode .form{gap:8px}
   var MODULES_KEY='canivete-config-hidden-modules-v855';
   var DENSE_KEY='canivete-config-dense-v855';
   var GIST_ID_KEY='canivete-config-gist-id-v855';
-  var CLOUD_TOKEN_KEY='canivete-config-gist-token-v855';
   var tabNames=[
     {id:'visual',label:'🎨 Geral & Visual'},
     {id:'security',label:'🔒 Segurança & PIN'},
@@ -7435,7 +7434,7 @@ body.canivete-dense-mode .form{gap:8px}
       {key:'settings',name:'Configurações / Outros',color:'#f59e0b'}
     ];
     root.innerHTML='<div class="cfg-storage-top"><div><h3>📊 Uso de armazenamento</h3><p>Estimativa do localStorage deste navegador; mídias no IndexedDB podem ficar fora desta conta.</p></div><div class="cfg-storage-total">'+humanBytes(stat.total)+'</div></div>'+
-      '<div class="cfg-storage-bar" role="img" aria-label="Distribuição estimada do armazenamento">'+cats.map(function(cat){var w=stat.total?Math.max(0,v[cat.key]/stat.total*100):0;return '<span title="'+cat.name+': '+humanBytes(v[cat.key])+'" style="width:'+w+'%;background:'+cat.color+'"></span>'}).join('')+'</div>'+
+      '<div class="cfg-storage-bar" role="img" aria-label="Distribuição estimada do armazenamento">'+cats.map(function(cat){var w=Math.min(100,Math.max(0,v[cat.key]/stat.limit*100));return '<span title="'+cat.name+': '+humanBytes(v[cat.key])+'" style="width:'+w+'%;background:'+cat.color+'"></span>'}).join('')+'</div>'+
       '<div class="cfg-storage-legend">'+cats.map(function(cat){return '<div class="cfg-storage-item"><span class="cfg-storage-dot" style="background:'+cat.color+'"></span><span>'+cat.name+'</span><strong>'+humanBytes(v[cat.key])+'</strong></div>'}).join('')+'</div>'+
       '<p class="small" style="margin:12px 0 0">Estimativa de ocupação: <strong>'+stat.percent.toLocaleString('pt-BR',{maximumFractionDigits:1})+'%</strong> de uma referência de 5 MB. O limite real varia por navegador.</p>';
   }
@@ -7493,10 +7492,10 @@ body.canivete-dense-mode .form{gap:8px}
     if(id==='integrations')updateServiceBadges();
     try{localStorage.setItem('canivete-config-active-tab-v855',id)}catch(e){}
   }
-  function statusBadge(id,parentId,message,ok){
+  function statusBadge(id,parentId,message,state){
     var el=byId(id);
     if(!el){el=document.createElement('span');el.id=id;el.className='cfg-status';var p=byId(parentId);if(p)p.appendChild(el)}
-    el.className='cfg-status'+(ok?' ok':'');
+    el.className='cfg-status'+(state==='ok'?' ok':state==='info'?' info':'');
     el.textContent=message;
   }
   function ensureLabelBadge(inputId,badgeId){
@@ -7510,8 +7509,8 @@ body.canivete-dense-mode .form{gap:8px}
     var chat=(byId('notifTelegramChatId')||{}).value||'';
     ensureLabelBadge('notifNtfyTopic','cfgNtfyStatus');
     ensureLabelBadge('notifTelegramChatId','cfgTelegramStatus');
-    statusBadge('cfgNtfyStatus','notifNtfyTopic',topic.trim()?'Canal informado · envio não verificado':'Pendente de configuração',!!topic.trim());
-    statusBadge('cfgTelegramStatus','notifTelegramChatId',chat.trim()?'Chat ID informado · token não verificado':'Pendente de configuração',!!chat.trim());
+    statusBadge('cfgNtfyStatus','notifNtfyTopic',topic.trim()?'Canal informado · envio não verificado':'Pendente de configuração',topic.trim()?'info':false);
+    statusBadge('cfgTelegramStatus','notifTelegramChatId',chat.trim()?'Chat ID informado · token não verificado':'Pendente de configuração',chat.trim()?'info':false);
   }
   function buildTabs(){
     var section=byId('configuracoes');if(!section||section.dataset.cfgV855==='1')return;
@@ -7554,7 +7553,7 @@ body.canivete-dense-mode .form{gap:8px}
     panelMap.security.appendChild(securityCard);
     var auditCard=document.createElement('div');auditCard.className='cfg-audit-card cfg-wide card';auditCard.innerHTML='<div class="row between"><div><h2 style="margin-bottom:4px">🧾 Atividades recentes</h2><p class="small">Histórico local das principais ações de manutenção deste navegador; não registra senhas nem valores.</p></div><button type="button" class="btn light" id="cfgClearAudit">Limpar histórico</button></div><div id="cfgAuditList" class="cfg-audit-list"></div>';
     panelMap.data.appendChild(auditCard);
-    var cloudCard=document.createElement('div');cloudCard.className='card cfg-wide';cloudCard.innerHTML='<h2>☁️ Snapshot no GitHub Gist</h2><p class="small">Envie manualmente um snapshot do localStorage do Canivete com um clique. Ele pode conter informações financeiras. Senhas, PIN, respostas de recuperação, saúde e contatos são excluídos automaticamente.</p><div class="cfg-cloud-warning"><strong>Importante sobre privacidade:</strong> um Gist “secreto” não é privado de verdade. Qualquer pessoa que obtiver o link poderá ler o conteúdo. Use somente se aceitar esse risco. O token é usado apenas nesta sessão e não é salvo no backup.</div><div class="field" style="margin-top:10px"><label for="cfgGistToken">Token pessoal do GitHub (escopo mínimo: gist)</label><input id="cfgGistToken" type="password" autocomplete="off" placeholder="ghp_… ou github_pat_…" style="width:100%;min-height:44px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--card);color:var(--ink)"></div><p class="small" style="margin-top:6px"><a href="https://github.com/settings/tokens/new?scopes=gist&amp;description=Canivete%20Assistente" target="_blank" rel="noopener noreferrer">Criar token clássico com escopo gist no GitHub ↗</a>. Não envie o token em chats nem o inclua em arquivos.</p><label style="display:flex;gap:9px;align-items:flex-start;margin:12px 0;font-size:12px;line-height:1.5"><input id="cfgGistConsent" type="checkbox" style="margin-top:3px;flex:0 0 auto"><span>Entendo que este snapshot pode conter dados financeiros e que qualquer pessoa com o link do Gist secreto pode ler o arquivo.</span></label><button type="button" class="btn primary" id="cfgGistUpload">☁️ Enviar snapshot agora</button><p id="cfgGistStatus" class="cfg-cloud-status">Nenhum envio feito por esta tela ainda. O envio é manual, não diário automático.</p>';
+    var cloudCard=document.createElement('div');cloudCard.className='card cfg-wide';cloudCard.innerHTML='<h2>☁️ Snapshot no GitHub Gist</h2><p class="small">Envie manualmente um snapshot do localStorage do Canivete com um clique. Ele pode conter informações financeiras. Senhas, PIN, respostas de recuperação, saúde, contatos e credenciais de notificação são excluídos automaticamente.</p><div class="cfg-cloud-warning"><strong>Importante sobre privacidade:</strong> um Gist “secreto” não é privado de verdade. Qualquer pessoa que obtiver o link poderá ler o conteúdo. Use somente se aceitar esse risco. O token fica apenas no campo da tela, não é gravado em localStorage nem incluído em backup.</div><div class="field" style="margin-top:10px"><label for="cfgGistToken">Token pessoal do GitHub (escopo mínimo: gist)</label><input id="cfgGistToken" type="password" autocomplete="off" placeholder="ghp_… ou github_pat_…" style="width:100%;min-height:44px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--card);color:var(--ink)"></div><p class="small" style="margin-top:6px"><a href="https://github.com/settings/tokens/new?scopes=gist&amp;description=Canivete%20Assistente" target="_blank" rel="noopener noreferrer">Criar token clássico com escopo gist no GitHub ↗</a>. Não envie o token em chats nem o inclua em arquivos.</p><label style="display:flex;gap:9px;align-items:flex-start;margin:12px 0;font-size:12px;line-height:1.5"><input id="cfgGistConsent" type="checkbox" style="margin-top:3px;flex:0 0 auto"><span>Entendo que este snapshot pode conter dados financeiros e que qualquer pessoa com o link do Gist secreto pode ler o arquivo.</span></label><button type="button" class="btn primary" id="cfgGistUpload">☁️ Enviar snapshot agora</button><p id="cfgGistStatus" class="cfg-cloud-status">Nenhum envio feito por esta tela ainda. O envio é manual, não diário automático.</p>';
     panelMap.data.appendChild(cloudCard);
 
     byId('cfgDenseToggle').checked=localStorage.getItem(DENSE_KEY)==='1';
@@ -7589,9 +7588,6 @@ body.canivete-dense-mode .form{gap:8px}
       renderAudit();toast('Histórico de atividades limpo.');
     });
     byId('cfgGistUpload').addEventListener('click',uploadGistSnapshot);
-    byId('cfgGistToken').addEventListener('input',function(){try{sessionStorage.setItem(CLOUD_TOKEN_KEY,this.value)}catch(e){}});
-    var priorToken='';try{priorToken=sessionStorage.getItem(CLOUD_TOKEN_KEY)||''}catch(e){}
-    byId('cfgGistToken').value=priorToken;
     var oldGist='';try{oldGist=localStorage.getItem(GIST_ID_KEY)||''}catch(e){}
     if(oldGist)byId('cfgGistStatus').textContent='Gist vinculado nesta instalação: '+oldGist+'. Informe o token novamente se esta sessão foi reiniciada.';
     renderModuleList();renderAudit();refreshPinStatus();renderStorageMeter();
@@ -7608,7 +7604,7 @@ body.canivete-dense-mode .form{gap:8px}
   }
 
   function sanitizeObject(value){
-    var sensitive=/senha|password|\bpin\b|secret|token|credential|resposta|health|saude|medic|vitamin|remed|contato|contact|telefone|celular|e-?mail|cpf|documento|passaporte|identidade|\brg\b/i;
+    var sensitive=/senha|password|\bpin\b|secret|token|credential|resposta|health|saude|medic|vitamin|remed|contato|contact|telefone|phone|celular|e-?mail|cpf|documento|passaporte|identidade|\brg\b|endereco|address|nascimento|birth|notif|telegram|ntfy|chatid/i;
     if(Array.isArray(value))return value.map(sanitizeObject);
     if(value&&typeof value==='object'){
       var out={};
@@ -7628,7 +7624,7 @@ body.canivete-dense-mode .form{gap:8px}
     for(var i=0;i<localStorage.length;i++){
       var key=localStorage.key(i)||'',value=localStorage.getItem(key)||'';
       if(!/canivete/i.test(key))continue;
-      if(/senha|password|\bpin\b|secret|token|credential|resposta|health|saude|medic|vitamin|remed|contato|contact|telefone|celular|e-?mail|cpf|documento|passaporte|identidade|\brg\b/i.test(key))continue;
+      if(/senha|password|\bpin\b|secret|token|credential|resposta|health|saude|medic|vitamin|remed|contato|contact|telefone|phone|celular|e-?mail|cpf|documento|passaporte|identidade|\brg\b|endereco|address|nascimento|birth|notif|telegram|ntfy|chatid/i.test(key))continue;
       try{snapshot[key]=sanitizeObject(JSON.parse(value))}catch(e){snapshot[key]=value}
     }
     var data=JSON.stringify({formato:'canivete-safe-snapshot-v1',versao:VERSION,geradoEm:new Date().toISOString(),aviso:'Snapshot filtrado: senhas, PIN, respostas de recuperação, saúde e contatos excluídos. Os demais dados podem ser pessoais e financeiros.',dados:snapshot},null,2);
@@ -7656,7 +7652,7 @@ body.canivete-dense-mode .form{gap:8px}
       button.disabled=false;button.textContent='☁️ Enviar snapshot agora';
       // Não manter o token depois da chamada; requer novo fornecimento para cada envio.
       byId('cfgGistToken').value='';
-      try{sessionStorage.removeItem(CLOUD_TOKEN_KEY)}catch(e){}
+      
     }
   }
 
@@ -7686,8 +7682,8 @@ body.canivete-dense-mode .form{gap:8px}
       tema.dataset.cfgV855='1';tema.addEventListener('click',function(){var dark=document.documentElement.getAttribute('data-theme')==='dark';logActivity(dark?'Modo escuro ativado':'Modo claro ativado');toast('✅ Aparência atualizada.')});
     }
     var ntfy=byId('notifNtfyTopic'),telegram=byId('notifTelegramChatId');
-    if(ntfy)ntfy.addEventListener('input',updateServiceBadges);
-    if(telegram)telegram.addEventListener('input',updateServiceBadges);
+    if(ntfy){ntfy.addEventListener('input',updateServiceBadges);ntfy.addEventListener('change',function(){updateServiceBadges();logActivity('Canal ntfy atualizado');toast('✅ Configuração de notificação salva neste navegador.')})}
+    if(telegram){telegram.addEventListener('input',updateServiceBadges);telegram.addEventListener('change',function(){updateServiceBadges();logActivity('Chat ID do Telegram atualizado');toast('✅ Configuração de notificação salva neste navegador.')})}
     window.addEventListener('storage',function(){renderStorageMeter();renderAudit();updateServiceBadges()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
