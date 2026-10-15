@@ -382,13 +382,92 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 .bottom-mini-panels .stats-line{gap:8px;flex-wrap:wrap}
 .bottom-mini-panels .recent-usage{gap:6px}
 @media(max-width:680px){.bottom-mini-panels{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:16px}.bottom-mini-panels .feature-panel{padding:14px}}
+
+/* CANIVETE V97 — menu lateral compartilhado e experiência integrada */
+.catalog-sidebar{position:fixed;inset:0 auto 0 0;width:250px;z-index:80;display:flex;flex-direction:column;gap:0;overflow-y:auto;overscroll-behavior:contain;background:var(--card);color:var(--ink);border-right:1px solid var(--line);padding:18px 13px 16px;box-shadow:4px 0 22px rgba(15,23,42,.045);transition:transform .22s ease}
+.catalog-sidebar-brand{display:flex;align-items:center;gap:10px;padding:7px 8px 16px;text-decoration:none;min-width:0}
+.catalog-brand-icon{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:13px;background:linear-gradient(135deg,#eff6ff,#e0e7ff);font-size:23px}
+.catalog-sidebar-brand strong{display:block;font-size:15px;letter-spacing:-.025em;line-height:1.25}
+.catalog-sidebar-brand small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.catalog-back-link{display:block;text-decoration:none;color:var(--blue);font-size:11px;font-weight:800;padding:12px 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:13px}
+.catalog-menu-search{display:flex;align-items:center;gap:7px;margin:0 0 13px;padding:0 10px;border:1px solid var(--line);background:var(--bg);border-radius:10px;min-height:42px;color:var(--muted)}
+.catalog-menu-search input{min-width:0;width:100%;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;color:var(--ink);font:inherit;font-size:12px;padding:8px 0}
+.catalog-sidebar-nav{display:flex;flex-direction:column;gap:3px;flex:1;min-height:0}
+.catalog-nav-label{font-size:9px;font-weight:900;letter-spacing:.1em;color:var(--muted);padding:8px 10px 5px}
+.catalog-nav-link{display:flex;align-items:center;gap:9px;min-height:42px;padding:10px 11px;border:1px solid transparent;border-radius:10px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:700;line-height:1.3;transition:background .15s,border-color .15s,color .15s}
+.catalog-nav-link span:first-of-type{flex:1;min-width:0}
+.catalog-nav-link:hover{background:color-mix(in srgb,var(--blue) 7%,var(--card));border-color:var(--line);color:var(--blue)}
+.catalog-nav-link.active{background:#eef2ff;border-color:#dbe4ff;color:#1d4ed8;font-weight:850;box-shadow:inset 3px 0 0 var(--blue)}
+[data-theme="dark"] .catalog-nav-link.active{background:#202b49;border-color:#334a78;color:#dbeafe}
+.catalog-current-dot{font-size:8px;color:var(--blue);margin-left:auto;flex:0 0 auto}
+.catalog-nav-group{margin:9px 0 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:color-mix(in srgb,var(--bg) 36%,var(--card))}
+.catalog-nav-group summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:7px;padding:12px 11px;color:var(--muted);font-size:10px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+.catalog-nav-group summary::-webkit-details-marker{display:none}
+.catalog-nav-group summary:after{content:"⌄";margin-left:auto;font-size:15px;transition:transform .15s}
+.catalog-nav-group:not([open]) summary:after{transform:rotate(-90deg)}
+.catalog-nav-group-body{display:grid;gap:2px;padding:0 5px 6px}
+.catalog-nav-group .catalog-nav-link{font-size:11px;min-height:39px;padding:9px 8px}
+.catalog-sidebar-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:16px;padding:12px 9px 0;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}
+.catalog-sidebar-foot strong{background:color-mix(in srgb,var(--blue) 12%,var(--card));color:var(--blue);padding:4px 7px;border-radius:999px;font-size:10px}
+.catalog-menu-toggle{display:none;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 12px;min-height:40px;font-size:12px;font-weight:850;cursor:pointer}
+.catalog-menu-overlay{display:none}
+.wrap{margin:0 0 0 250px;width:calc(100% - 250px);max-width:1550px;padding:26px 30px}
+.top{align-items:center}
+.top-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+@media(min-width:1600px){.wrap{margin-left:250px;margin-right:auto;padding-left:38px;padding-right:38px}}
+@media(max-width:900px){.wrap{padding:21px 18px;width:calc(100% - 250px)}.grid{gap:13px}}
+@media(max-width:760px){
+ .catalog-sidebar{width:min(300px,86vw);max-width:86vw;transform:translateX(-105%);box-shadow:12px 0 35px rgba(15,23,42,.2);padding-bottom:22px}
+ .catalog-sidebar.open{transform:translateX(0)}
+ .catalog-menu-overlay.open{display:block;position:fixed;inset:0;z-index:75;background:rgba(15,23,42,.5);backdrop-filter:blur(2px)}
+ .catalog-menu-toggle{display:inline-flex}
+ .wrap{margin:0;width:100%;max-width:100%;padding:14px 13px 28px}
+ .top{align-items:flex-start;gap:12px;flex-wrap:wrap;padding-bottom:13px}
+ .top .brand{min-width:0}
+ .top-actions{width:auto!important;margin-left:auto;justify-content:flex-end;gap:7px}
+ .theme-toggle{min-height:40px;padding:8px 11px}
+ .hero{margin-bottom:14px}
+}
+@media(max-width:420px){.catalog-menu-toggle{padding:8px 10px;font-size:11px}.theme-toggle{padding:8px 10px;font-size:11px}.catalog-version{display:block;margin-top:3px}.top-actions{width:100%!important;justify-content:space-between}.top-actions .catalog-menu-toggle{flex:1}}
+@media(prefers-reduced-motion:reduce){.catalog-sidebar{transition:none}}
 </style>
 
 </head>
 <body>
+
+<aside class="catalog-sidebar" id="catalogSidebar" aria-label="Menu principal do Canivete">
+  <a class="catalog-sidebar-brand" href="canivete.html"><span class="catalog-brand-icon">🧰</span><span><strong>Canivete Assistente</strong><small>Seu hub de produtividade</small></span></a>
+  <a class="catalog-back-link" href="/delta-prompts/index.html">← Voltar ao Delta Prompts</a>
+  <label class="catalog-menu-search"><span aria-hidden="true">🔎</span><input id="catalogMenuSearch" type="search" placeholder="Buscar no menu..." aria-label="Buscar página no menu"></label>
+  <nav class="catalog-sidebar-nav" aria-label="Navegação do Canivete">
+    <div class="catalog-nav-label">PRINCIPAL</div>
+    <a class="catalog-nav-link" href="canivete.html" data-menu-item data-search="início home painel financeiro canivete">📊 <span>Início do Canivete</span></a>
+    <a class="catalog-nav-link active" href="canivete-ias-gratuitas.html" aria-current="page" data-menu-item data-search="catálogo ia ias inteligência artificial ferramentas">🤖 <span>Catálogo de IAs</span><span class="catalog-current-dot">●</span></a>
+    <a class="catalog-nav-link" href="canivete-configuracoes.html" data-menu-item data-search="configurações perfil computador preferências">⚙️ <span>Configurações</span></a>
+    <details class="catalog-nav-group" open>
+      <summary>🧰 Ferramentas</summary>
+      <div class="catalog-nav-group-body">
+        <a class="catalog-nav-link" href="canivete-avancado.html" data-menu-item data-search="canivete avançado ferramentas produtividade">🧠 <span>Canivete Avançado</span></a>
+        <a class="catalog-nav-link" href="canivete/teleprompter.html" data-menu-item data-search="teleprompter roteiro leitura gravação">🎙️ <span>Teleprompter</span></a>
+        <a class="catalog-nav-link" href="canivete/criar-videos-ia.html" data-menu-item data-search="criar vídeos video ia roteiro prompt">🎬 <span>Criar Vídeos com IA</span></a>
+        <a class="catalog-nav-link" href="canivete/clonagem-de-voz-master.html" data-menu-item data-search="clonagem voz áudio audio">🗣️ <span>Clonagem de Voz</span></a>
+      </div>
+    </details>
+    <details class="catalog-nav-group" open>
+      <summary>📌 Utilitários</summary>
+      <div class="catalog-nav-group-body">
+        <a class="catalog-nav-link" href="ferramentas/mapa-vendas.html" data-menu-item data-search="mapa vendas imóveis imobiliária">🔥 <span>Mapa de Vendas</span></a>
+        <a class="catalog-nav-link" href="ferramentas/comparador-demonstrativos.html" data-menu-item data-search="comparador demonstrativos documentos">🧾 <span>Comparador de Demonstrativos</span></a>
+        <a class="catalog-nav-link" href="https://jhoncorretor2025-blip.github.io/minha-saude-ia/" target="_blank" rel="noopener noreferrer" data-menu-item data-search="minha saúde saude saúde ia">🩺 <span>Minha Saúde IA ↗</span></a>
+      </div>
+    </details>
+  </nav>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v97</strong></div>
+</aside>
+<div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
+
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v96</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
-<nav class="canivete-nav" aria-label="Menu do Canivete"><a href="canivete.html">🏠 <span>Início do Canivete</span></a><a class="active" href="canivete-ias-gratuitas.html" aria-current="page">🤖 <span>Catálogo de IAs</span></a><a href="canivete-configuracoes.html">⚙️ <span>Configurações</span></a><a href="canivete/teleprompter.html">🎙️ <span>Teleprompter</span></a></nav>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v97</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>224 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
@@ -1694,7 +1773,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v95','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v97','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1914,5 +1993,44 @@ try{
   window.addEventListener('resize',function(){clearTimeout(window.__iasRz);window.__iasRz=setTimeout(function(){aplicar()},300)});
 })();
 </script>
+
+/* CANIVETE V97 — controles acessíveis do menu lateral */
+(function(){
+ const side=document.getElementById('catalogSidebar');
+ const toggle=document.getElementById('catalogMenuToggle');
+ const overlay=document.getElementById('catalogMenuOverlay');
+ const search=document.getElementById('catalogMenuSearch');
+ if(!side||!toggle||!overlay)return;
+ function setMenu(open){
+   side.classList.toggle('open',open);
+   overlay.classList.toggle('open',open);
+   toggle.setAttribute('aria-expanded',String(open));
+   overlay.setAttribute('aria-hidden',String(!open));
+   document.body.classList.toggle('catalog-menu-open',open);
+ }
+ toggle.addEventListener('click',()=>setMenu(!side.classList.contains('open')));
+ overlay.addEventListener('click',()=>setMenu(false));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+ side.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+ if(search){
+  search.addEventListener('input',()=>{
+   const q=search.value.trim().toLocaleLowerCase('pt-BR');
+   side.querySelectorAll('[data-menu-item]').forEach(a=>{
+    const hay=(a.innerText+' '+(a.dataset.search||'')).toLocaleLowerCase('pt-BR');
+    a.style.display=(!q||hay.includes(q))?'flex':'none';
+   });
+   side.querySelectorAll('.catalog-nav-group').forEach(group=>{
+    const visible=[...group.querySelectorAll('[data-menu-item]')].some(a=>a.style.display!=='none');
+    group.style.display=(!q||visible)?'':'none';
+    if(q&&visible)group.open=true;
+   });
+   side.querySelectorAll('.catalog-nav-label').forEach(label=>{
+    const visible=[...label.parentElement.querySelectorAll(':scope > [data-menu-item]')].some(a=>a.style.display!=='none');
+    label.style.display=(!q||visible)?'':'none';
+   });
+  });
+ }
+})();
+
 </body>
 </html>
