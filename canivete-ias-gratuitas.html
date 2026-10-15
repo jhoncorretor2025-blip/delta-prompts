@@ -371,7 +371,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 [data-theme="dark"] .canivete-nav a.active{color:#fff}
 @media(max-width:680px){.canivete-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:7px;margin-bottom:14px;border-radius:14px}.canivete-nav a{justify-content:flex-start;padding:10px 11px;min-width:0;font-size:11px}.canivete-nav a span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.top-actions{width:auto}.catalog-version{display:block;margin-top:4px}}
 
-/* v99: correção do cabeçalho dos cards — evita títulos espremidos entre número, ícone e selo */
+/* v100: correção do cabeçalho dos cards — evita títulos espremidos entre número, ícone e selo */
 .card .head{
   display:grid;
   grid-template-columns:auto auto minmax(0,1fr);
@@ -477,7 +477,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 
 <style>
 
-/* CANIVETE V99 — legibilidade dos cards, filtros compactos e navegação do catálogo */
+/* CANIVETE V100 — legibilidade dos cards, filtros compactos e navegação do catálogo */
 .card{display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;height:100%;min-width:0}
 .grid{align-items:stretch}
 .card .head{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;min-width:0}
@@ -579,12 +579,12 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
       </div>
     </details>
   </nav>
-  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v99</strong></div>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v100</strong></div>
 </aside>
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v99</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v100</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>224 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
@@ -1825,20 +1825,34 @@ function rankingCategoryMatch(card){
 function applyRankingBadges(){
  cards.forEach(card=>{
   const footer=card.querySelector('.footer');
-  if(!footer||card.querySelector('.rank-chip'))return;
-  const n=nameOf(card);
-  const chip=document.createElement('div');chip.className='rank-chip';
-  chip.style.cssText='display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 8px;font-size:11px';
-  const quality=document.createElement('span');quality.style.cssText='display:inline-flex;align-items:center;gap:4px;color:var(--muted);font-weight:800';
-  const stars=document.createElement('span');stars.textContent='☆☆☆☆☆';stars.style.cssText='letter-spacing:1px;color:#cbd5e1;font-size:15px';
-  const pending=document.createElement('span');pending.textContent='Qualidade: sem nota verificada';
-  quality.append(stars,pending);
-  const recognized=['ChatGPT','Claude','Gemini','Microsoft Copilot','Perplexity','Canva','Runway','Kling AI','CapCut','Sora','Veo 3 (Google)','Midjourney','Adobe Firefly','ElevenLabs','Suno','GitHub Copilot','DeepSeek','Meta AI','NotebookLM','Cursor','Gamma','HeyGen','Pika','Luma Dream Machine','Replit'];
-  const pop=document.createElement('span');pop.style.cssText='display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 7px;background:var(--bg);color:var(--muted);font-size:10px;font-weight:850';
-  pop.textContent=recognized.includes(n)?'🔥 Ferramenta conhecida':'📌 Popularidade não verificada';
-  pop.title=recognized.includes(n)?'Destaque editorial por reconhecimento geral; não é estatística de usuários.':'Não há dados externos de popularidade confirmados.';
-  chip.append(quality,pop);
-  footer.insertAdjacentElement('beforebegin',chip);
+  if(!footer)return;
+  let chip=card.querySelector('.rank-chip');
+  if(!chip){
+   const n=nameOf(card);
+   chip=document.createElement('div');chip.className='rank-chip';
+   chip.style.cssText='display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 8px;font-size:11px';
+   const quality=document.createElement('span');quality.className='personal-quality';quality.style.cssText='display:inline-flex;align-items:center;gap:4px;color:var(--muted);font-weight:800;flex-wrap:wrap';
+   const stars=document.createElement('span');stars.className='quality-stars';stars.style.cssText='display:inline-flex;align-items:center;gap:1px';
+   const pending=document.createElement('span');pending.className='quality-label';
+   quality.append(stars,pending);
+   const recognized=['ChatGPT','Claude','Gemini','Microsoft Copilot','Perplexity','Canva','Runway','Kling AI','CapCut','Sora','Veo 3 (Google)','Midjourney','Adobe Firefly','ElevenLabs','Suno','GitHub Copilot','DeepSeek','Meta AI','NotebookLM','Cursor','Gamma','HeyGen','Pika','Luma Dream Machine','Replit'];
+   const pop=document.createElement('span');pop.className='popularity-chip';pop.style.cssText='display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 7px;background:var(--bg);color:var(--muted);font-size:10px;font-weight:850';
+   pop.textContent=recognized.includes(n)?'🔥 Ferramenta conhecida':'📌 Popularidade não verificada';
+   pop.title=recognized.includes(n)?'Destaque editorial por reconhecimento geral; não é estatística de usuários.':'Não há dados externos de popularidade confirmados.';
+   chip.append(quality,pop);
+   footer.insertAdjacentElement('beforebegin',chip);
+  }
+  const n=nameOf(card),stars=chip.querySelector('.quality-stars'),label=chip.querySelector('.quality-label');
+  if(!stars||!label)return;
+  const current=getRating(card);
+  stars.replaceChildren();
+  for(let i=1;i<=5;i++){
+   const b=document.createElement('button');b.type='button';b.className='star'+(i<=current?' on':'');b.textContent=i<=current?'★':'☆';b.setAttribute('aria-label','Avaliar '+n+' com '+i+' de 5 estrelas');b.title='Registrar sua nota: '+i+'/5';b.style.cssText='border:0;background:transparent;padding:0 1px;cursor:pointer;font-size:16px;line-height:1;color:'+(i<=current?'#f59e0b':'#cbd5e1');
+   b.addEventListener('click',()=>{ratings[n]=i;try{localStorage.setItem(RATING,JSON.stringify(ratings))}catch(e){};applyRankingBadges();});
+   stars.appendChild(b);
+  }
+  label.textContent=current?'Sua qualidade: '+current+'/5':'Avalie a qualidade';
+  label.title='Nota pessoal salva neste navegador; não é uma avaliação pública verificada.';
  });
 }
 function render(){
@@ -1928,7 +1942,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v99','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v100','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1941,7 +1955,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v99.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v100.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1960,7 +1974,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v99.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v100.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
