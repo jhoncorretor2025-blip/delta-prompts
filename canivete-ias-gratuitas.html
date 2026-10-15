@@ -370,6 +370,49 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 .canivete-nav a.active{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 4px 12px rgba(37,99,235,.18)}
 [data-theme="dark"] .canivete-nav a.active{color:#fff}
 @media(max-width:680px){.canivete-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:7px;margin-bottom:14px;border-radius:14px}.canivete-nav a{justify-content:flex-start;padding:10px 11px;min-width:0;font-size:11px}.canivete-nav a span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.top-actions{width:auto}.catalog-version{display:block;margin-top:4px}}
+
+/* v99: correção do cabeçalho dos cards — evita títulos espremidos entre número, ícone e selo */
+.card .head{
+  display:grid;
+  grid-template-columns:auto auto minmax(0,1fr);
+  align-items:start;
+  column-gap:9px;
+  row-gap:8px;
+  min-width:0;
+}
+.card .head .card-number{grid-column:1;grid-row:1;align-self:start}
+.card .head .icon{grid-column:2;grid-row:1;flex:none;width:42px;height:42px;min-width:42px}
+.card .head .title{
+  grid-column:3;grid-row:1;
+  min-width:0;width:auto;max-width:none;
+  flex:none;
+  overflow-wrap:normal;
+  word-break:normal;
+}
+.card .head .title h2{
+  min-width:0;margin:2px 0 5px;
+  white-space:normal;
+  overflow-wrap:break-word;
+  word-break:normal;
+  hyphens:auto;
+  line-height:1.25;
+}
+.card .head .title small{display:block;line-height:1.45;overflow-wrap:break-word}
+.card .head>.tag,
+.card .head>.specialist-badge,
+.card .head>.install-badge{
+  grid-column:1/-1;grid-row:auto;
+  justify-self:start;align-self:start;
+  max-width:100%;min-width:0;
+  white-space:normal;overflow-wrap:break-word;
+  line-height:1.35;
+}
+@media(max-width:680px){
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .card .head{grid-template-columns:auto auto minmax(0,1fr)}
+  .card .head .title{grid-column:3;min-width:0}
+}
+
 </style>
 <style>
 /* v51 — painéis compactos no fim da página */
@@ -434,7 +477,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 
 <style>
 
-/* CANIVETE V98 — legibilidade dos cards, filtros compactos e navegação do catálogo */
+/* CANIVETE V99 — legibilidade dos cards, filtros compactos e navegação do catálogo */
 .card{display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;height:100%;min-width:0}
 .grid{align-items:stretch}
 .card .head{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;min-width:0}
@@ -536,12 +579,12 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
       </div>
     </details>
   </nav>
-  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v98</strong></div>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v99</strong></div>
 </aside>
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v98</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v99</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>224 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
@@ -1885,7 +1928,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v98','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v99','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1898,7 +1941,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v98.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v99.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1917,7 +1960,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v98.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v99.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
