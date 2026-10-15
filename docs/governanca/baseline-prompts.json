@@ -812,7 +812,7 @@
       ]
     },
     "paginas/sites-landing-pages.html": {
-      "total": 56,
+      "total": 57,
       "titulos": [
         "🧭 ETAPA 0 — Definir a identidade do projeto",
         "🐛 Caçador de Bugs PRO",
@@ -869,7 +869,8 @@
         "🚚 Plano de Migração de Arquivos",
         "🏗️ DIA 1 — Organizar a Estrutura do Meu Site Sem Quebrar o Que Já Funciona",
         "🚀 5 Melhorias Básicas Importantes",
-        "🔎 Auditoria Crítica — Navegue e Encontre os Defeitos"
+        "🔎 Auditoria Crítica — Navegue e Encontre os Defeitos",
+        "🧰 Padrão Universal para Novos Projetos"
       ]
     },
     "paginas/testador-ia.html": {
