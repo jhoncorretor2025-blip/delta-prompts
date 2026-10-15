@@ -266,4 +266,10 @@ aplicarFiltros();
 window.addEventListener('delta:favoritos-updated',atualizarStats);
 if(window.deltaLoadAuth){window.deltaLoadAuth().then(()=>{document.querySelectorAll('[id^="fbup-"]').forEach(b=>atualizarFeedbackUI(b.id.replace('fbup-','')))})}
 if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
-</script></body></html>
+</script><script>
+/* V1.90 — abre já filtrado quando vem da Central Google (ex.: ?busca=Gmail) */
+(function(){try{var q=new URLSearchParams(location.search).get('busca');if(!q)return;var b=document.getElementById('busca');if(!b)return;
+  var ir=function(){b.value=q;b.dispatchEvent(new Event('input',{bubbles:true}));var l=document.getElementById('lista-prompts');if(l)setTimeout(function(){l.scrollIntoView({behavior:'smooth',block:'start'})},250)};
+  if(document.readyState==='complete')setTimeout(ir,300);else window.addEventListener('load',function(){setTimeout(ir,300)})}catch(e){}})();
+</script>
+</body></html>

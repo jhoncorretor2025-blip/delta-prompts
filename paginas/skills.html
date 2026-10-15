@@ -422,4 +422,9 @@ if(location.hash){setTimeout(()=>destacarCard(location.hash.slice(1)),400)}
       if(alvo){alvo.scrollIntoView({behavior:'smooth',block:'center'});alvo.classList.add('skill-destaque');setTimeout(function(){alvo.classList.remove('skill-destaque')},2200)}},150)});
 })();
 </script>
+<script>
+/* V1.90 — abre já filtrado quando vem de outra página (ex.: ?busca=/planilha) */
+(function(){try{var q=new URLSearchParams(location.search).get('busca');if(!q)return;var b=document.getElementById('busca');if(!b)return;
+  setTimeout(function(){b.value=q;b.dispatchEvent(new Event('input',{bubbles:true}));var g=document.getElementById('guiaDetalhes');if(g)g.open=false;var l=document.getElementById('lista');if(l)l.scrollIntoView({behavior:'smooth',block:'start'})},400)}catch(e){}})();
+</script>
 </body></html>

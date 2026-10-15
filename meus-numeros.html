@@ -652,7 +652,7 @@ iniciar();
     $('#mnResumo').innerHTML=frase;
     /* primeiros passos */
     var passos=[
-      {ok:foiHoje,t:'Abrir o site hoje',s:'Pronto! Só de abrir, o dia já conta.',link:'/delta-prompts/index.html',ir:'Abrir'},
+      {ok:true,t:'Abrir o site hoje',s:'Pronto! Só de abrir, o dia já conta.',link:'/delta-prompts/index.html',ir:'Abrir'},
       {ok:d.fav>0,t:'Favoritar 1 prompt ⭐',s:'Clique na estrela de um prompt que você gostou.',link:'/delta-prompts/index.html',ir:'Escolher'},
       {ok:d.usos>0||d.ativ7>0,t:'Copiar 1 prompt 📋',s:'Copie um prompt e cole na sua IA favorita.',link:'/delta-prompts/index.html',ir:'Copiar'}
     ];
@@ -693,4 +693,34 @@ iniciar();
 </script>
 
 <script src="/delta-prompts/js/central-config-nav.js?v=20261012-v68"></script>
+<style>
+/* V1.90 — para quem está começando: um aviso só no lugar de 3 quadros vazios */
+.mn-vazio-unico{margin:14px 0;padding:18px;border-radius:16px;border:1px dashed #c7d2fe;background:#f8f9ff;text-align:center;color:#475467;font-size:14.5px;line-height:1.6}
+.mn-vazio-unico b{display:block;font-size:16px;color:#1f2937;margin-bottom:4px}
+[data-theme="dark"] .mn-vazio-unico{background:#111827;border-color:#3730a3;color:#cbd5e1}
+[data-theme="dark"] .mn-vazio-unico b{color:#f3f4f6}
+</style>
+<script>
+(function(){
+  'use strict';
+  function ler(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}}
+  function temDados(){
+    var a=ler('deltaAtividadeDiaria',{})||{},soma=0;Object.keys(a).forEach(function(k){soma+=Number(a[k])||0});
+    var f=ler('deltaFavoritos',[]);var usos=0;try{Object.keys(localStorage).forEach(function(k){if(/^delta.*Usos$/.test(k)){try{var v=JSON.parse(localStorage.getItem(k));if(typeof v==='number')usos+=v;else if(v&&typeof v==='object')Object.keys(v).forEach(function(x){usos+=Number(v[x])||0})}catch(e){}}})}catch(e){}
+    return soma>0||(Array.isArray(f)&&f.length>0)||usos>0;
+  }
+  function arrumar(){
+    var caixas=[].slice.call(document.querySelectorAll('.grafico-box, .top5-box'));
+    var vazio=document.getElementById('vazioAviso');
+    var aviso=document.getElementById('mnVazioUnico');
+    if(temDados()){caixas.forEach(function(c){c.style.display=''});if(aviso)aviso.remove();return}
+    caixas.forEach(function(c){c.style.display='none'});if(vazio)vazio.style.display='none';
+    if(!aviso&&caixas.length){aviso=document.createElement('div');aviso.className='mn-vazio-unico';aviso.id='mnVazioUnico';
+      aviso.innerHTML='<b>📊 Seus gráficos aparecem aqui</b>Assim que você copiar ou favoritar alguns prompts, esta parte mostra sua atividade da semana, o calendário de uso e os seus 5 prompts mais usados.';
+      caixas[0].parentNode.insertBefore(aviso,caixas[0])}
+  }
+  setTimeout(arrumar,200);setTimeout(arrumar,1200);
+  var at=document.getElementById('btnAtualizarNumeros');if(at)at.addEventListener('click',function(){setTimeout(arrumar,150)});
+})();
+</script>
 </body></html>
