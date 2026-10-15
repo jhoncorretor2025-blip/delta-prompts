@@ -124,7 +124,7 @@
 .hub-kicker{font-size:11px;font-weight:900;letter-spacing:.12em;color:var(--blue);margin-bottom:10px}
 .hub-welcome h2{font-size:clamp(27px,5vw,38px);line-height:1.12;letter-spacing:-.03em;margin:0 0 10px;color:var(--ink)}
 .hub-welcome p{font-size:15px;line-height:1.6;color:var(--muted);margin:0;max-width:620px}
-.hub-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.hub-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch}
 .hub-tool{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:10px;min-width:0;min-height:210px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);text-decoration:none;font:inherit;cursor:pointer;transition:transform .16s,border-color .16s,box-shadow .16s}
 .hub-tool:hover{transform:translateY(-2px);border-color:var(--blue);box-shadow:0 10px 28px rgba(37,99,235,.09)}
 .hub-tool:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
@@ -136,7 +136,7 @@
 .hub-footnote{margin:18px 0 0;font-size:12px;line-height:1.5;color:var(--muted)}
 #conteudoPrincipal:has(#hub.active) .top .actions{display:none}
 #conteudoPrincipal:has(#hub.active) .top{border-bottom:0;margin-bottom:0}
-@media(max-width:680px){.hub-welcome{padding:18px 0}.hub-tools{grid-template-columns:minmax(0,1fr);gap:11px}.hub-tool{min-height:0;padding:17px}.hub-tool-title{font-size:17px}.hub-tool-icon{width:44px;height:44px}}
+@media(max-width:680px){.hub-welcome{padding:18px 0}.hub-tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.hub-tool{min-height:190px;padding:13px;gap:8px;border-radius:15px}.hub-tool-title{font-size:15px;line-height:1.25}.hub-tool-desc{font-size:12px;line-height:1.4}.hub-tool-cta{font-size:11px;align-items:flex-start}.hub-tool-icon{width:40px;height:40px;font-size:22px}.hub-footnote{font-size:11px}}
 
 </style><style>
 /* CANIVETE V8.14 - UX/UI polish */
@@ -498,9 +498,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 <a href="/delta-prompts/canivete/clonagem-de-voz-master.html?v=1.5.31" style="display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border-radius:9px;background:var(--bg);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:750;font-size:13px">🎙️ Clonagem de voz</a>
 </nav></details>
 <section id="hub" class="section active">
-<div class="hub-welcome"><div class="hub-kicker">🧰 CANIVETE ASSISTENTE</div><h2>O que você quer fazer hoje?</h2><p>Escolha uma ferramenta para começar. Você pode voltar a esta tela quando quiser.</p></div>
+<div class="hub-welcome"><div class="hub-kicker">🧰 CANIVETE ASSISTENTE</div><h2>Escolha a ferramenta que você deseja usar</h2><p>O que você quer fazer hoje? Toque em um dos quadradinhos abaixo para abrir a ferramenta. Novos projetos poderão ser adicionados aqui, organizados automaticamente em novas linhas.</p></div>
 <div class="hub-tools">
-<button class="hub-tool hub-finance" type="button" data-hub-action="finance"><span class="hub-tool-icon">💰</span><span class="hub-tool-title">Organizar minhas finanças</span><span class="hub-tool-desc">Renda, despesas, dívidas, metas e dinheiro guardado.</span><span class="hub-tool-cta">Abrir painel financeiro <b>→</b></span></button>
+<button class="hub-tool hub-finance" type="button" data-hub-action="finance"><span class="hub-tool-icon">💰</span><span class="hub-tool-title">Financeiro pessoal</span><span class="hub-tool-desc">Organize sua renda, despesas, dívidas, metas e dinheiro guardado.</span><span class="hub-tool-cta">Organizar minhas finanças <b>→</b></span></button>
 <a class="hub-tool" href="/delta-prompts/index.html"><span class="hub-tool-icon">🤖</span><span class="hub-tool-title">Prompts para IAs</span><span class="hub-tool-desc">Encontre prompts e recursos para usar melhor ChatGPT, Gemini e outras IAs.</span><span class="hub-tool-cta">Abrir Delta Prompts <b>→</b></span></a>
 <a class="hub-tool" href="/delta-prompts/canivete/teleprompter.html?v=1.5.38"><span class="hub-tool-icon">🎬</span><span class="hub-tool-title">Gravar vídeos</span><span class="hub-tool-desc">Use o teleprompter para preparar e gravar seus vídeos.</span><span class="hub-tool-cta">Abrir gravação <b>→</b></span></a>
 <a class="hub-tool" href="/delta-prompts/canivete/clonagem-de-voz-master.html?v=1.5.31"><span class="hub-tool-icon">🎙️</span><span class="hub-tool-title">Clonar voz</span><span class="hub-tool-desc">Acesse as ferramentas de voz e áudio.</span><span class="hub-tool-cta">Abrir clonagem de voz <b>→</b></span></a>
@@ -738,7 +738,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.45';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.46';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();window.d=d;window.APP_VERSION=APP_VERSION;window.__caniveteSetData=function(novo){d=novo||{};window.d=d;};
