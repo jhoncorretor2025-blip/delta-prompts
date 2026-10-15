@@ -758,7 +758,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.49';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.50';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();window.d=d;window.APP_VERSION=APP_VERSION;window.__caniveteSetData=function(novo){d=novo||{};window.d=d;};
@@ -2078,6 +2078,102 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 
 
 
+
+
+<!-- CANIVETE V8.50 — recuperação dos quatro atalhos principais do menu -->
+<script id="CANIVETE_V850_PRINCIPAL_NAV_FIX">
+(function () {
+  'use strict';
+
+  var pages = {
+    perfil: ['Meu Perfil', 'Informações centrais usadas por vários recursos do Canivete.'],
+    calendario: ['Calendário', 'Vencimentos, datas importantes e consultas médicas em um só lugar.'],
+    buscaglobal: ['Busca', 'Procure informações em todas as seções do Canivete.'],
+    configuracoes: ['Configurações', 'Backup dos seus dados e configurações do Canivete.']
+  };
+
+  function activePage() {
+    var active = document.querySelector('.section.active');
+    return active ? active.id : '';
+  }
+
+  function fallbackNavigation(id, button) {
+    var section = document.getElementById(id);
+    if (!section) return;
+
+    document.querySelectorAll('.section').forEach(function (item) {
+      item.classList.toggle('active', item === section);
+    });
+
+    document.querySelectorAll('#nav button[data-page]').forEach(function (item) {
+      var selected = item.dataset.page === id;
+      item.classList.toggle('active', selected);
+      item.setAttribute('aria-selected', selected ? 'true' : 'false');
+    });
+
+    document.querySelectorAll('.bn-item[data-page]').forEach(function (item) {
+      var selected = item.dataset.page === id;
+      item.classList.toggle('active', selected);
+      item.setAttribute('aria-current', selected ? 'page' : 'false');
+    });
+
+    var title = document.getElementById('title');
+    var subtitle = document.getElementById('subtitle');
+    if (title) title.textContent = pages[id][0];
+    if (subtitle) subtitle.textContent = pages[id][1];
+
+    try {
+      if (typeof window.closeMenu === 'function' && window.innerWidth <= 760) {
+        window.closeMenu();
+      }
+      if (typeof window.renderAvisoArmazenamento === 'function') {
+        window.renderAvisoArmazenamento();
+      }
+      if (id === 'calendario' && typeof window.renderCalendarioUnificado === 'function') {
+        window.renderCalendarioUnificado();
+      }
+      if (id === 'configuracoes') {
+        if (typeof window.renderDetalheArmazenamento === 'function') window.renderDetalheArmazenamento();
+        if (typeof window.renderSeletorCorTema === 'function') window.renderSeletorCorTema();
+      }
+    } catch (error) {
+      console.warn('Canivete: navegação de segurança aplicada com aviso.', error);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /*
+   * Usa delegação no documento porque o menu é recriado por scripts de
+   * organização visual. Se o clique original não navegar, aplica um fallback.
+   */
+  document.addEventListener('click', function (event) {
+    var button = event.target && event.target.closest
+      ? event.target.closest('#nav button[data-page]')
+      : null;
+    if (!button) return;
+
+    var id = button.dataset.page;
+    if (!Object.prototype.hasOwnProperty.call(pages, id)) return;
+
+    window.setTimeout(function () {
+      if (activePage() === id) return;
+
+      var navigated = false;
+      try {
+        if (typeof window.showPage === 'function') {
+          window.showPage(id);
+          navigated = activePage() === id;
+        }
+      } catch (error) {
+        console.warn('Canivete: usando navegação alternativa para ' + id + '.', error);
+      }
+
+      if (!navigated) fallbackNavigation(id, button);
+    }, 0);
+  }, true);
+})();
+</script>
 
 </body></html>`;
   const blob=new Blob([html],{type:'text/html'});
