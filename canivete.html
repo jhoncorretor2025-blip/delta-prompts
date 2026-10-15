@@ -2226,7 +2226,9 @@ function configurarPin(){
       localStorage.removeItem('canivete-pin');
       localStorage.removeItem('canivete-pin-pergunta');
       localStorage.removeItem('canivete-pin-resposta');
+      if(typeof window.registrarAtividadeConfiguracoes==='function')window.registrarAtividadeConfiguracoes('Proteção por PIN removida');
       mostrarToastCanivete('🔓 Proteção por PIN removida.');
+      setTimeout(function(){var x=document.getElementById('cfgPinDescription'),b=document.getElementById('cfgPinButton');if(x)x.textContent='Sem PIN configurado neste dispositivo.';if(b)b.textContent='🔐 Configurar PIN'},150);
     });
     return;
   }
@@ -2239,6 +2241,7 @@ function configurarPin(){
   localStorage.setItem('canivete-pin',novo);
   localStorage.setItem('canivete-pin-pergunta',pergunta);
   localStorage.setItem('canivete-pin-resposta',resposta.trim().toLowerCase());
+  if(typeof window.registrarAtividadeConfiguracoes==='function')window.registrarAtividadeConfiguracoes('Proteção por PIN configurada');
   mostrarToastCanivete('🔒 PIN configurado! Vai ser pedido na próxima vez que abrir o Canivete.');
 }
 function recuperarPin(){
@@ -7577,11 +7580,9 @@ body.canivete-dense-mode .form{gap:8px}
       toast(input.checked?'✅ Ferramenta exibida no menu.':'✅ Ferramenta ocultada do menu.');
     });
     byId('cfgPinButton').addEventListener('click',function(){
-      var before=localStorage.getItem('canivete-pin');
       if(typeof window.configurarPin==='function')window.configurarPin();
-      var after=localStorage.getItem('canivete-pin');
-      if(before!==after){logActivity(after?'Proteção por PIN configurada':'Proteção por PIN removida');}
       refreshPinStatus();
+      setTimeout(refreshPinStatus,180);
     });
     byId('cfgClearAudit').addEventListener('click',function(){
       try{localStorage.removeItem(AUDIT_KEY)}catch(e){}
