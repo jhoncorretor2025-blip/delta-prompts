@@ -413,7 +413,11 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
   .card .head .title{grid-column:3;min-width:0}
 }
 
-/* v105 — filtro de plataforma */\n.platform-filter-hidden{display:none!important}\n</style>
+/* v105 — filtro de plataforma */\n.platform-filter-hidden{display:none!important}\n
+/* v107 — performance do catálogo */
+#grid>.card{content-visibility:auto;contain-intrinsic-size:auto 330px}
+@media(prefers-reduced-motion:reduce){#grid>.card{content-visibility:visible}}
+</style>
 <style>
 /* v51 — painéis compactos no fim da página */
 .bottom-mini-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0 10px;align-items:start}
@@ -579,13 +583,13 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
       </div>
     </details>
   </nav>
-  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v103</strong></div>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v107</strong></div>
 </aside>
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v106</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
-<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>240 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho. <strong>Atenção:</strong> ferramentas de vídeo com créditos gratuitos limitados estão identificadas como testes, não como opções para gerar vídeos ilimitados sem pagar.</p></section>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v107</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
+<section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>241 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho. <strong>Atenção:</strong> ferramentas de vídeo com créditos gratuitos limitados estão identificadas como testes, não como opções para gerar vídeos ilimitados sem pagar.</p></section>
 
 
 
@@ -1996,7 +2000,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v106','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v107','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -2009,7 +2013,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v106.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v107.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -2028,7 +2032,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v106.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v107.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
@@ -2257,5 +2261,36 @@ try{
 })();
 
 </script>
+
+<script>
+/* CANIVETE v107 — correções de persistência, atalhos, fallback e links externos */
+(function(){
+ 'use strict';
+ var KEY='canivete_ias_clicks_v2';
+ var search=document.getElementById('search'),grid=document.getElementById('grid');
+ function readCounts(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){return {}}}
+ function writeCounts(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}}
+ function cards(){return Array.prototype.slice.call(document.querySelectorAll('#grid article.card'))}
+ function name(card){var h=card.querySelector('h2');return h?h.textContent.trim():''}
+ function syncCounts(){var saved=readCounts();cards().forEach(function(card){var n=name(card),el=card.querySelector('.click-count');if(!el)return;var value=Number(saved[n]||0);el.textContent=String(Number.isFinite(value)&&value>=0?value:0)})}
+ function record(card){var n=name(card);if(!n)return;var saved=readCounts();saved[n]=Math.max(0,Number(saved[n]||0))+1;writeCounts(saved);var el=card.querySelector('.click-count');if(el)el.textContent=String(saved[n])}
+ if(grid){grid.addEventListener('click',function(e){var link=e.target.closest('a.open');if(link){var card=link.closest('article.card');if(card)record(card)}});syncCounts();if(window.MutationObserver){var observer=new MutationObserver(syncCounts);observer.observe(grid,{childList:true,subtree:true})}}
+ var reset=document.getElementById('resetClicks');if(reset)reset.addEventListener('click',function(){writeCounts({});window.setTimeout(syncCounts,0)});
+ document.addEventListener('keydown',function(e){
+   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){if(!search)return;e.preventDefault();search.focus();if(search.select)search.select();return}
+   if(e.key==='Escape'){
+     var modal=document.getElementById('compareModal');if(modal)modal.classList.remove('show');
+     var side=document.getElementById('catalogSidebar'),overlay=document.getElementById('catalogMenuOverlay'),toggle=document.getElementById('catalogMenuToggle');
+     if(side)side.classList.remove('open');if(overlay){overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true')}
+     if(toggle)toggle.setAttribute('aria-expanded','false');document.body.classList.remove('catalog-menu-open');
+     if(search&&document.activeElement===search&&search.value){search.value='';search.dispatchEvent(new Event('input',{bubbles:true}))}
+   }
+ });
+ function deviceFallback(){var title=document.getElementById('deviceStatusTitle'),icon=document.getElementById('deviceStatusIcon'),desc=document.getElementById('deviceStatusDescription');if(!title||!/detectando dispositivo/i.test(title.textContent))return;var ua=navigator.userAgent||'',mobile=/Android|iPhone|iPod/i.test(ua),tablet=/iPad|Tablet/i.test(ua)||(/Android/i.test(ua)&&!/Mobile/i.test(ua)),label=mobile?'celular':tablet?'tablet':'computador';if(icon)icon.textContent=mobile?'📱':tablet?'📲':'💻';title.textContent='Dispositivo identificado: '+label;if(desc)desc.textContent='Detecção automática de segurança ativada. Se necessário, escolha manualmente o aparelho abaixo.'}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',deviceFallback);else deviceFallback();window.setTimeout(deviceFallback,1800);
+ document.querySelectorAll('a[href]').forEach(function(a){try{var u=new URL(a.href,window.location.href);if((u.protocol==='http:'||u.protocol==='https:')&&u.origin!==window.location.origin){a.target='_blank';var rel=(a.getAttribute('rel')||'').split(/\s+/).filter(Boolean);if(rel.indexOf('noopener')<0)rel.push('noopener');if(rel.indexOf('noreferrer')<0)rel.push('noreferrer');a.setAttribute('rel',rel.join(' '))}}catch(e){}});
+})();
+</script>
+
 </body>
 </html>
