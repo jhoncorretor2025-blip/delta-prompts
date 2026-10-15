@@ -432,6 +432,79 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 @media(prefers-reduced-motion:reduce){.catalog-sidebar{transition:none}}
 </style>
 
+<style>
+
+/* CANIVETE V98 — legibilidade dos cards, filtros compactos e navegação do catálogo */
+.card{display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;height:100%;min-width:0}
+.grid{align-items:stretch}
+.card .head{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;min-width:0}
+.card .head .icon{flex:0 0 46px}
+.card .head .title{flex:1 0 180px;min-width:180px;max-width:100%;overflow-wrap:anywhere}
+.card .head .title h2{white-space:normal;overflow-wrap:anywhere;word-break:normal;min-width:0}
+.card .head>.tag,.card .head>.specialist-badge,.card .head>.install-badge{flex:0 1 auto;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.card .desc{flex:0 0 auto;overflow-wrap:anywhere}
+.card .capabilities{flex:0 0 auto}
+.card .use{flex:0 0 auto}
+.card .card-tools{flex:0 0 auto}
+.card .footer{margin-top:auto;flex-wrap:wrap;align-items:center}
+.card .footer .best{flex:1 1 100px;min-width:0}
+.card .footer .open{flex:0 0 auto;white-space:normal;text-align:center}
+.card .open{background:linear-gradient(135deg,var(--blue),#4f46e5);box-shadow:0 5px 14px rgba(37,99,235,.22);font-weight:900;padding:11px 14px;min-height:42px}
+.card .open:hover{filter:brightness(1.07);transform:translateY(-1px);color:#fff}
+.search-shell{position:sticky;top:8px;z-index:24;width:100%;margin:0 0 12px;padding:8px;background:color-mix(in srgb,var(--card) 94%,transparent);border:1px solid var(--line);border-radius:17px;box-shadow:0 8px 24px rgba(15,23,42,.10);backdrop-filter:blur(14px)}
+.search-shell .search{min-width:0}
+.hardware-details{margin:0 0 14px;border:1px solid var(--line);background:var(--card);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.hardware-details>summary{display:flex;align-items:center;gap:10px;flex-wrap:wrap;list-style:none;cursor:pointer;padding:13px 15px;font-size:12px;font-weight:900;color:var(--ink)}
+.hardware-details>summary::-webkit-details-marker{display:none}
+.hardware-details>summary:after{content:"⌄";margin-left:auto;color:var(--muted);font-size:17px}
+.hardware-details:not([open])>summary:after{transform:rotate(-90deg)}
+.hardware-details>summary small{font-size:10px;color:var(--muted);font-weight:600}
+.hardware-details[open]>summary{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 65%,var(--card))}
+.hardware-details .device-status,.hardware-details .pc-profile-settings-link,.hardware-details .ias-aparelho,.hardware-details .ias-compat-resumo{margin:12px}
+.hardware-details .pc-profile-settings-link{margin-top:0;margin-bottom:12px}
+.toolbar{gap:11px}
+.filter-group{margin:0}
+.filter-group>.filter-label{flex:0 0 auto}
+.filters{display:flex;flex-wrap:nowrap;gap:7px;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:2px 2px 7px;scrollbar-width:thin;scrollbar-color:var(--line) transparent;overscroll-behavior-x:contain}
+.filters::-webkit-scrollbar{height:5px}
+.filters::-webkit-scrollbar-thumb{background:var(--line);border-radius:999px}
+.filters .filter{flex:0 0 auto;white-space:nowrap;min-width:max-content}
+.filter-group{min-width:0}
+.global-actions{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.global-actions-label{flex:0 0 auto}
+.global-actions-list{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0;flex:1}
+.catalog-tools-menu{position:relative;flex:0 0 auto;margin-left:auto}
+.catalog-tools-menu>summary{display:flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font-size:11px;font-weight:900;cursor:pointer;list-style:none;white-space:nowrap}
+.catalog-tools-menu>summary::-webkit-details-marker{display:none}
+.catalog-tools-menu[open]>summary{border-color:var(--blue);color:var(--blue)}
+.catalog-tools-panel{position:absolute;right:0;top:calc(100% + 8px);z-index:40;display:grid;gap:7px;min-width:220px;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 35px rgba(15,23,42,.18)}
+.catalog-tools-panel .filter{width:100%;text-align:left;justify-content:flex-start;border-radius:10px}
+.empty{display:none;margin:20px 0;padding:28px 18px;border:1px dashed var(--line);border-radius:18px;background:var(--card);text-align:center;color:var(--muted)}
+.empty .empty-icon{font-size:30px;margin-bottom:8px}
+.empty strong{display:block;color:var(--ink);font-size:16px}
+.empty p{margin:7px auto 14px;max-width:440px;line-height:1.55}
+.empty-reset{border:0;border-radius:11px;background:var(--blue);color:white;font-weight:900;padding:11px 16px;min-height:42px;cursor:pointer}
+.load-more-tools{display:block;margin:18px auto 24px;border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#eef2ff);color:#1d4ed8;border-radius:13px;padding:12px 18px;min-height:46px;font-size:13px;font-weight:900;cursor:pointer;box-shadow:0 6px 18px rgba(37,99,235,.10)}
+.load-more-tools:hover{border-color:var(--blue);transform:translateY(-1px)}
+[data-theme="dark"] .load-more-tools{background:#1d2945;border-color:#334a78;color:#dbeafe}
+@media(max-width:760px){
+ .card .head{gap:8px}
+ .card .head .title{flex:1 0 155px;min-width:155px}
+ .search-shell{top:5px;padding:6px;border-radius:14px}
+ .hardware-details>summary{padding:12px}
+ .hardware-details>summary small{flex:1 0 100%;margin-left:0}
+ .global-actions{display:block}
+ .global-actions-label{display:block;margin-bottom:7px}
+ .global-actions-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .global-actions-list .filter{min-width:0;white-space:normal;line-height:1.25}
+ .catalog-tools-menu{display:block;margin:9px 0 0;width:100%}
+ .catalog-tools-menu>summary{width:100%;border-radius:11px}
+ .catalog-tools-panel{position:static;margin-top:7px;min-width:0}
+ .load-more-tools{width:100%}
+}
+@media(max-width:390px){.card .head .title{flex-basis:100%;min-width:0}.card .head .icon{flex-basis:42px;width:42px;height:42px}}
+
+</style>
 </head>
 <body>
 
@@ -462,21 +535,24 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
       </div>
     </details>
   </nav>
-  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v97</strong></div>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v98</strong></div>
 </aside>
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v97</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v98</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>224 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
 
 
+<details class="hardware-details"><summary><span>🖥️ Compatibilidade com seu dispositivo</span><small>Perfil do aparelho, requisitos e filtros de compatibilidade</small></summary>
 <section class="device-status" id="deviceStatus" role="status" aria-live="polite"><span class="device-status-icon" id="deviceStatusIcon">📱</span><span><strong id="deviceStatusTitle">Detectando dispositivo…</strong><small id="deviceStatusDescription">O catálogo ajustará a lista conforme seu dispositivo.</small></span><button type="button" id="showAllDeviceTools" class="device-show-all">Mostrar todas as IAs</button></section>
 <p class="pc-profile-settings-link">🖥️ Perfil do computador configurado em <a href="canivete-configuracoes.html#pcCompatibility">Configurações → Meu computador</a>.</p>
-<section class="toolbar">
+</details>
+
 <div class="search-shell"><svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="search" class="search" type="search" placeholder="Buscar IA, função, categoria ou exemplo..." aria-label="Buscar ferramentas de inteligência artificial"><kbd class="search-shortcut">Ctrl + K</kbd></div>
+<section class="toolbar">
 <div class="filter-group"><span class="filter-label">Categoria</span><div class="filters" id="catFilters"><button class="filter active" data-cat="all">🗂️ Todas <span class="filter-count" data-count-all>97</span></button><button class="filter" data-cat="criacao">✍️ Texto e conteúdo <span class="filter-count" data-count-cat="criacao">69</span></button><button class="filter" data-cat="imagem">🖼️ Imagem <span class="filter-count" data-count-cat="imagem">26</span></button><button class="filter" data-cat="video">🎥 Todos os vídeos <span class="filter-count" data-count-cat="video">44</span></button><button class="filter" data-cat="codigo">💻 Código <span class="filter-count" data-count-cat="codigo">26</span></button><button class="filter" data-cat="pesquisa">🔎 Pesquisa <span class="filter-count" data-count-cat="pesquisa">21</span></button><button class="filter" data-cat="trabalho">💼 Trabalho <span class="filter-count" data-count-cat="trabalho">51</span></button><button class="filter" data-cat="audio">🎧 Áudio <span class="filter-count" data-count-cat="audio">18</span></button><button class="filter" data-cat="musica">🎵 Criação de música <span class="filter-count" data-count-cat="musica">0</span></button><button class="filter video-create-category" data-cat="video-criacao">🎬 Criação de vídeo <span class="filter-count" data-count-cat="video-criacao">24</span></button><button class="filter video-edit-category" data-cat="video-edicao">✂️ Edição de vídeo <span class="filter-count" data-count-cat="video-edicao">27</span></button><button class="filter" data-cat="estudo">📚 Estudo <span class="filter-count" data-count-cat="estudo">13</span></button><button class="filter" data-cat="automacao">⚙️ Automação <span class="filter-count" data-count-cat="automacao">5</span></button><button class="filter" data-cat="agentes">🤖 Agentes de IA <span class="filter-count" data-count-cat="agentes">0</span></button><button class="filter" data-cat="dados">📊 Dados e planilhas <span class="filter-count" data-count-cat="dados">0</span></button><button class="filter" data-cat="avatar">🧑‍🎤 Avatar <span class="filter-count" data-count-cat="avatar">0</span></button><button class="filter specialist-category" data-cat="especialistas">🎯 Especialistas <span class="filter-count" data-count-cat="especialistas">32</span></button></div></div>
 <div class="video-subfilters-wrap" id="videoSubfilters" aria-label="Tipo de ferramenta de vídeo" hidden><div class="filter-group video-subfilters"><span class="filter-label">Tipo de vídeo</span><div class="filters" id="videoTypeFilters"><button class="filter active" type="button" data-video-type="all">Todos <span class="filter-count" data-count-video="all">44</span></button><button class="filter" type="button" data-video-type="create">🎬 Criam vídeos <span class="filter-count" data-count-video="create">24</span></button><button class="filter" type="button" data-video-type="edit">✂️ Só edição <span class="filter-count" data-count-video="edit">16</span></button><button class="filter" type="button" data-video-type="both">🔄 Criam e editam <span class="filter-count" data-count-video="both">11</span></button><button class="filter" type="button" data-video-type="other">🧰 Plataformas/apoio <span class="filter-count" data-count-video="other">4</span></button></div></div><p class="category-help video-type-help">🎬 <strong>Criam vídeos:</strong> geram clipes, cenas ou vídeos com IA. ✂️ <strong>Só edição:</strong> editam, cortam ou reaproveitam vídeos existentes. 🔄 <strong>Ambas:</strong> criam e também editam. 🧰 <strong>Plataformas/apoio:</strong> reúnem ou apoiam fluxos de trabalho com vídeo.</p></div>
 <div class="ranking-controls" aria-label="Ordenação e classificação das IAs">
@@ -1308,7 +1384,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <div class="head"><div class="icon">🅰️</div><div class="title"><h2>Adobe Express</h2><small>Criação e edição de vídeos para redes sociais</small></div><span class="tag limit">GRÁTIS + RECURSOS PAGOS*</span></div>
 <p class="desc">Editor online para criar conteúdo visual, vídeos curtos e peças para redes sociais com modelos e recursos de IA. Alguns recursos e créditos generativos podem exigir plano pago.</p><div class="use"><b>💡 Exemplo</b> Monte um vídeo promocional vertical usando um modelo e personalize textos, imagens e identidade visual.</div><div class="footer"><span class="best">Vídeos e conteúdo social</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.adobe.com/express/" target="_blank" rel="noopener">Abrir ↗</a></div></article>
 </section>
-<div id="empty" class="empty">😕 Nenhuma IA encontrada. Tente outra palavra ou categoria.</div>
+<div id="empty" class="empty"><div class="empty-icon" aria-hidden="true">🔎</div><strong>Nenhuma ferramenta encontrada com esses filtros</strong><p>Tente outro termo ou limpe a pesquisa e os filtros para ver mais opções.</p><button type="button" class="empty-reset" id="clearCatalogFilters">✨ Limpar filtros</button></div>
 <div class="note"><strong>ℹ️ Importante sobre “grátis”</strong><br>“GRÁTIS” indica uma modalidade sem assinatura. “GRÁTIS + LIMITE” indica que existe uso gratuito, mas com limites de mensagens, créditos, recursos ou velocidade. “*” indica que disponibilidade e limites podem variar por região, conta e mudanças do serviço. Antes de usar dados sensíveis ou comercialmente, confira as regras da própria ferramenta. As ofertas podem mudar com o tempo.</div>
 <section class="bottom-mini-panels" aria-label="Resumo e painel de uso">
 <section class="feature-panel" id="usageDashboard">
@@ -1332,6 +1408,18 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <script>
 (function(){
 const cards=[...document.querySelectorAll('.card')];
+/* Exportação e ajustes ficam num menu próprio; os IDs e handlers originais são preservados. */
+const globalActions=document.querySelector('.global-actions');
+const quickActions=document.querySelector('.global-actions-list');
+if(globalActions&&quickActions&&!document.querySelector('.catalog-tools-menu')){
+ const toolsMenu=document.createElement('details');toolsMenu.className='catalog-tools-menu';
+ const toolsSummary=document.createElement('summary');toolsSummary.textContent='⚙️ Exportar / Configurar';
+ const toolsPanel=document.createElement('div');toolsPanel.className='catalog-tools-panel';
+ toolsMenu.append(toolsSummary,toolsPanel);globalActions.appendChild(toolsMenu);
+ ['exportTextTools','exportAllTools','resetClicks','installModeToggle'].forEach(id=>{const b=document.getElementById(id);if(b)toolsPanel.appendChild(b)});
+ toolsSummary.addEventListener('click',()=>{});
+ document.addEventListener('click',e=>{if(!toolsMenu.contains(e.target))toolsMenu.open=false});
+}
 const searchInput=document.getElementById('search');
 const configPanel=new URLSearchParams(window.location.search).get('configPanel');
 if(configPanel==='free'||configPanel==='audit'){
@@ -1450,6 +1538,21 @@ document.getElementById('showAuditIssues')?.addEventListener('click',()=>{
  if(first){first.scrollIntoView({behavior:'smooth',block:'center'});first.style.outline='3px solid #f59e0b';setTimeout(()=>first.style.outline='',2500)}
 });
 const search=document.getElementById('search'),count=document.getElementById('count'),empty=document.getElementById('empty'),grid=document.getElementById('grid'),reset=document.getElementById('resetClicks');
+const PAGE_SIZE=36;
+let visibleLimit=PAGE_SIZE;
+const loadMore=document.createElement('button');
+loadMore.type='button';loadMore.className='load-more-tools';loadMore.id='loadMoreTools';
+loadMore.addEventListener('click',()=>{visibleLimit+=PAGE_SIZE;render()});
+empty.insertAdjacentElement('afterend',loadMore);
+document.getElementById('clearCatalogFilters')?.addEventListener('click',()=>{
+ cat='all';access='all';videoType='all';favoritesOnly=false;imageFreeOnly=false;showHidden=false;rankingCategory='current';rankingSort='free-quality';visibleLimit=PAGE_SIZE;
+ search.value='';
+ document.querySelectorAll('#catFilters .filter').forEach(b=>b.classList.toggle('active',b.dataset.cat==='all'));
+ document.querySelectorAll('#accessFilters .filter').forEach(b=>b.classList.toggle('active',b.dataset.access==='all'));
+ document.querySelectorAll('#videoTypeFilters .filter').forEach(b=>b.classList.toggle('active',b.dataset.videoType==='all'));
+ const sort=document.getElementById('rankingSort'),rankCat=document.getElementById('rankingCategory');if(sort)sort.value=rankingSort;if(rankCat)rankCat.value=rankingCategory;
+ render();
+});
 const STORAGE='canivete_ias_cliques_v1', RATING='canivete_ias_avaliacoes_v1', CAPMAP='canivete_ias_caps_v1', FAVORITES_STORAGE='canivete_ias_favoritas_v1', HISTORY_STORAGE='canivete_ias_historico_v1', HIDDEN_STORAGE='canivete_ias_ocultas_v1', BOTTOM_STORAGE='canivete_ias_por_ultimo_v1';
 let cat='all',access='all',clicks={},ratings={},selected=[],favorites=[],hidden=[],bottom=[],favoritesOnly=false,imageFreeOnly=false,showHidden=false,recent=[];
 let videoType='all';
@@ -1713,9 +1816,11 @@ function render(){
   if(rankingSort==='free-quality')return freeIndexSort(a)-freeIndexSort(b)||getRating(b)-getRating(a)||rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a);
   return rankingAccess(a)-rankingAccess(b)||rankingScore(b)-rankingScore(a)||getRating(b)-getRating(a)||getCount(b)-getCount(a);
  });
- // Renderiza somente os cartões correspondentes; os demais ficam fora do grid, sem depender de estilos de ocultação.
- grid.replaceChildren(...visible);
- visible.forEach((card,index)=>{let number=card.querySelector('.card-number');if(!number){number=document.createElement('span');number.className='card-number';number.setAttribute('aria-label','Número do cartão');const head=card.querySelector('.head');if(head)head.insertAdjacentElement('afterbegin',number)}number.textContent='#'+String(index+1).padStart(3,'0');number.title='Posição '+(index+1)+' entre os resultados exibidos';});
+ // Paginação visual: só o lote atual fica montado no grid; os filtros continuam considerando o catálogo inteiro.
+ const totalMatches=visible.length;
+ const pageCards=visible.slice(0,visibleLimit);
+ grid.replaceChildren(...pageCards);
+ pageCards.forEach((card,index)=>{let number=card.querySelector('.card-number');if(!number){number=document.createElement('span');number.className='card-number';number.setAttribute('aria-label','Número do cartão');const head=card.querySelector('.head');if(head)head.insertAdjacentElement('afterbegin',number)}number.textContent='#'+String(index+1).padStart(3,'0');number.title='Posição '+(index+1)+' entre os resultados exibidos';});
  cards.forEach(c=>{
    const badge=c.querySelector('.click-count');if(badge)badge.textContent=getCount(c);
    c.querySelectorAll('.star').forEach((s,i)=>s.classList.toggle('on',i<getRating(c)));
@@ -1723,11 +1828,13 @@ function render(){
    const hide=c.querySelector('.card-tools .card-action-btn');if(hide){const on=hidden.includes(n);hide.classList.toggle('active',on);hide.textContent=on?'↩️ Restaurar':'🙈 Ocultar';hide.title=on?'Mostrar esta IA novamente':'Ocultar esta IA da lista principal'}
    const actions=c.querySelectorAll('.card-tools .card-action-btn');const last=actions[1];if(last){const on=bottom.includes(n);last.classList.toggle('active',on);last.textContent=on?'↩️ Ordem normal':'⬇️ Por último';last.title=on?'Remover prioridade de fim da lista':'Mover esta IA para o fim da lista'}
  });
- count.textContent=visible.length+' de '+cards.length+' IAs exibidas • '+(rankingSort==='free-quality'?'melhores gratuitas primeiro':rankingSort==='popular'?'mais conhecidas primeiro':rankingSort==='quality'?'maior qualidade avaliada':rankingSort==='access'?'por modalidade de acesso':rankingSort==='az'?'ordem alfabética':'recomendadas primeiro');
- empty.style.display=visible.length?'none':'block';
+ count.textContent=pageCards.length+' de '+totalMatches+' resultados • '+cards.length+' ferramentas no catálogo • '+(rankingSort==='free-quality'?'melhores gratuitas primeiro':rankingSort==='popular'?'mais conhecidas primeiro':rankingSort==='quality'?'maior qualidade avaliada':rankingSort==='access'?'por modalidade de acesso':rankingSort==='az'?'ordem alfabética':'recomendadas primeiro');
+ empty.style.display=totalMatches?'none':'block';
+ loadMore.hidden=totalMatches<=pageCards.length;
+ if(!loadMore.hidden)loadMore.textContent='⬇️ Carregar mais '+Math.min(PAGE_SIZE,totalMatches-pageCards.length)+' ferramentas ('+(totalMatches-pageCards.length)+' restantes)';
  renderDashboard();syncCompareChecks();syncCompareBar();
 }
-cards.forEach(c=>{const btn=c.querySelector('.open');if(!btn)return;btn.addEventListener('click',()=>{
+cards.forEach(c=>{const btn=c.querySelector('.open');if(!btn)return;btn.textContent=c.dataset.access==='free'||c.dataset.access==='limit'?'Testar grátis ↗':'Acessar ferramenta ↗';btn.setAttribute('aria-label',(c.dataset.access==='free'||c.dataset.access==='limit'?'Testar grátis: ':'Acessar ferramenta: ')+nameOf(c));btn.addEventListener('click',()=>{
  const n=nameOf(c);clicks[n]=getCount(c)+1;localStorage.setItem(STORAGE,JSON.stringify(clicks));
  recent=[{name:n,time:Date.now()},...recent.filter(item=>item&&item.name!==n)].slice(0,8);localStorage.setItem(HISTORY_STORAGE,JSON.stringify(recent));render();
 })});
@@ -1743,6 +1850,10 @@ function setup(id,type){document.querySelectorAll('#'+id+' .filter').forEach(b=>
  render();
 }))}
 setup('catFilters','cat');setup('accessFilters','access');
+/* Ao alterar filtros ou ordenação, volta ao primeiro lote da paginação. */
+const toolbar=document.querySelector('.toolbar');
+toolbar?.addEventListener('click',e=>{if(e.target.closest('#exportTextTools,#exportAllTools,#resetClicks,#installModeToggle'))return;visibleLimit=PAGE_SIZE},true);
+toolbar?.addEventListener('change',()=>{visibleLimit=PAGE_SIZE},true);
 document.getElementById('rankingSort')?.addEventListener('change',e=>{rankingSort=e.target.value;render()});
 document.getElementById('rankingCategory')?.addEventListener('change',e=>{
  rankingCategory=e.target.value;
@@ -1761,7 +1872,7 @@ const videoSubfilters=document.getElementById('videoSubfilters');
 document.querySelectorAll('#videoTypeFilters .filter').forEach(b=>b.addEventListener('click',()=>{videoType=b.dataset.videoType;document.querySelectorAll('#videoTypeFilters .filter').forEach(x=>x.classList.toggle('active',x===b));render()}));
 const originalRender=render;
 render=function(){videoSubfilters.hidden=cat!=='video';originalRender()};
-search.addEventListener('input',render);
+search.addEventListener('input',()=>{visibleLimit=PAGE_SIZE;render()});
 document.getElementById('favoritesToggle').addEventListener('click',()=>{favoritesOnly=!favoritesOnly;render()});
 document.getElementById('hiddenToggle').addEventListener('click',()=>{showHidden=!showHidden;favoritesOnly=false;render()});
 document.getElementById('imageFreeToggle').addEventListener('click',()=>{
@@ -1773,7 +1884,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v97','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v98','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -1786,7 +1897,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v95.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v98.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -1805,7 +1916,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v95.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v98.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
