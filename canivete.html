@@ -517,8 +517,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
   </div>
 </div>
 
-<aside class="side" id="side"><div class="brand">🧰 Canivete Assistente<small>Seu painel financeiro pessoal</small></div><a class="back" href="/delta-prompts/index.html">← Voltar ao Delta Prompts</a><div style="padding:0 12px 10px"><input type="text" id="buscaMenuInput" aria-label="Buscar no menu" placeholder="🔍 Buscar no menu..." oninput="buscarNoMenu(this.value)" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"></div><div id="versaoTexto" style="padding:0 12px 10px;font-size:10px;color:#8a92a6">v8.52</div><button type="button" id="btnTemaCanivete" aria-label="Alternar entre modo claro e escuro" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🌙 Modo Escuro</button><button type="button" id="btnConfigurarPin" onclick="configurarPin()" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔒 Proteger com PIN</button><button type="button" id="btnAtualizarSistema" aria-label="Atualizar sistema" title="Atualizar sistema" style="width:42px;height:42px;margin:0;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;padding:0;border-radius:50%;font-size:0;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;position:absolute;right:14px;bottom:66px;z-index:70;box-shadow:0 6px 16px rgba(37,99,235,.18)">🔄</button><a id="btnMinhaSaudeIA" href="https://jhoncorretor2025-blip.github.io/minha-saude-ia/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Minha Saúde IA" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid #bbf7d0;background:#f0fdf4;color:#166534;padding:10px;border-radius:9px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;box-sizing:border-box">🩺 Minha Saúde IA ↗</a><div id="syncBox" style="padding:0 12px 16px;border-bottom:1px solid var(--line);margin-bottom:12px"><div id="syncStatusText" style="font-size:11px;color:#8a92a6;margin-bottom:8px;display:flex;align-items:center;gap:6px"><span id="syncBadgeDot" style="width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block"></span><span id="syncStatusLabel">🔒 Dados salvos só neste aparelho</span></div><button type="button" id="btnLoginCanivete" style="width:100%;border:1px solid var(--line);background:var(--card);color:var(--blue);padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔑 Entrar com Google</button><button type="button" id="btnLogoutCanivete" style="display:none;width:100%;border:1px solid #fecaca;background:var(--card);color:#dc2626;padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🚪 Sair</button></div><nav class="nav" id="nav" role="tablist" aria-label="Seções do Canivete"><button type="button" class="active" data-page="dashboard">📊 Financeiro</button><button type="button" data-page="perfil">👤 Meu Perfil</button><button type="button" data-page="calendario">📅 Calendário</button><button type="button" data-page="buscaglobal">🔍 Busca</button><button type="button" data-page="configuracoes">⚙️ Configurações</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">PLANEJAMENTO</div><button type="button" data-page="renda">💼 Renda & benefícios</button><button type="button" data-page="despesas">💸 Despesas</button><button type="button" data-page="dividas">💳 Dívidas <span class="badge" id="debtBadge">0</span></button><button type="button" data-page="patrimonio">🏦 Patrimônio</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">ACOMPANHAMENTO</div><button type="button" data-page="metas">🎯 Metas <span class="badge" id="goalBadge">0</span></button><button type="button" data-page="projecoes">📈 Projeções</button><button type="button" data-page="analise">🧠 Análise</button><button type="button" data-page="historico">📅 Histórico</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">EXTRAS</div><button type="button" data-page="compras">🛒 Lista de Compras <span class="badge" id="comprasBadge">0</span></button><button type="button" data-page="senhas">🔐 Senhas</button><button type="button" data-page="contatos">📇 Contatos Importantes</button><button type="button" data-page="datas">🎂 Datas Importantes <span class="badge" id="datasBadge">0</span></button><button type="button" data-page="academia">🏋️ Academia</button><button type="button" data-page="meutime">⚽ Meu Time</button><button type="button" data-page="habitos">🔁 Hábitos</button><button type="button" data-page="veiculo">🚗 Manutenção do Veículo</button><button type="button" data-page="estudos">🎓 Cursos & Estudos</button><button type="button" data-page="jogos">🎮 Jogos</button><button type="button" data-page="mapavendas">🔥 Mapa de Vendas</button><button type="button" data-page="comparador">🔍 Comparador de Demonstrativos</button><button type="button" data-page="links">🔗 Links Importantes</button><button type="button" data-page="saude">💊 Medicamentos & Vitaminas</button><button type="button" onclick="window.location.href='canivete/teleprompter.html'" title="Abrir o teleprompter em uma página separada">🎬 Teleprompter IA</button></nav></aside>
-<main class="main" id="conteudoPrincipal"><p style="font-size:12.5px;color:var(--muted);margin:0 0 10px"><button type="button" onclick="abrirHubFerramentas()" style="border:0;background:transparent;padding:0;color:var(--blue);font:inherit;font-weight:800;cursor:pointer">🧰 Início do Canivete</button> / <span id="breadcrumbCurrent">Escolha uma ferramenta</span></p><header class="top"><div><h1 id="title">Painel Financeiro</h1><span class="canivete-version-visible" data-canivete-version>v8.53</span><p class="sub" id="subtitle">Veja quanto entra, quanto sai e quanto pode sobrar.</p></div><div class="actions"><a href="canivete-avancado.html" class="btn light v89-advanced-link">🧠 Visão Avançada</a><details class="finance-utility-menu"><summary>⚙️ Ferramentas e backup</summary><div class="finance-utility-panel"><button class="btn light" type="button" onclick="exportarPDF()">📄 Relatório PDF</button><button class="btn light" type="button" onclick="exportarTXT()">📋 Copiar como Texto</button><button class="btn light" type="button" onclick="exportarCSV()">📊 Exportar CSV</button><button class="btn light" type="button" onclick="exportData()">⬇️ Backup / Exportar</button><button class="btn danger" type="button" onclick="resetData()">🗑️ Limpar dados</button></div></details></div></header>
+<aside class="side" id="side"><div class="brand">🧰 Canivete Assistente<small>Seu painel financeiro pessoal</small></div><a class="back" href="/delta-prompts/index.html">← Voltar ao Delta Prompts</a><div style="padding:0 12px 10px"><input type="text" id="buscaMenuInput" aria-label="Buscar no menu" placeholder="🔍 Buscar no menu..." oninput="buscarNoMenu(this.value)" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"></div><div id="versaoTexto" style="padding:0 12px 10px;font-size:10px;color:#8a92a6">v8.54</div><button type="button" id="btnTemaCanivete" aria-label="Alternar entre modo claro e escuro" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🌙 Modo Escuro</button><button type="button" id="btnConfigurarPin" onclick="configurarPin()" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔒 Proteger com PIN</button><button type="button" id="btnAtualizarSistema" aria-label="Atualizar sistema" title="Atualizar sistema" style="width:42px;height:42px;margin:0;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;padding:0;border-radius:50%;font-size:0;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;position:absolute;right:14px;bottom:66px;z-index:70;box-shadow:0 6px 16px rgba(37,99,235,.18)">🔄</button><a id="btnMinhaSaudeIA" href="https://jhoncorretor2025-blip.github.io/minha-saude-ia/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Minha Saúde IA" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid #bbf7d0;background:#f0fdf4;color:#166534;padding:10px;border-radius:9px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;box-sizing:border-box">🩺 Minha Saúde IA ↗</a><div id="syncBox" style="padding:0 12px 16px;border-bottom:1px solid var(--line);margin-bottom:12px"><div id="syncStatusText" style="font-size:11px;color:#8a92a6;margin-bottom:8px;display:flex;align-items:center;gap:6px"><span id="syncBadgeDot" style="width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block"></span><span id="syncStatusLabel">🔒 Dados salvos só neste aparelho</span></div><button type="button" id="btnLoginCanivete" style="width:100%;border:1px solid var(--line);background:var(--card);color:var(--blue);padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔑 Entrar com Google</button><button type="button" id="btnLogoutCanivete" style="display:none;width:100%;border:1px solid #fecaca;background:var(--card);color:#dc2626;padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🚪 Sair</button></div><nav class="nav" id="nav" role="tablist" aria-label="Seções do Canivete"><button type="button" class="active" data-page="dashboard">📊 Financeiro</button><button type="button" data-page="perfil">👤 Meu Perfil</button><button type="button" data-page="calendario">📅 Calendário</button><button type="button" data-page="buscaglobal">🔍 Busca</button><button type="button" data-page="configuracoes">⚙️ Configurações</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">PLANEJAMENTO</div><button type="button" data-page="renda">💼 Renda & benefícios</button><button type="button" data-page="despesas">💸 Despesas</button><button type="button" data-page="dividas">💳 Dívidas <span class="badge" id="debtBadge">0</span></button><button type="button" data-page="patrimonio">🏦 Patrimônio</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">ACOMPANHAMENTO</div><button type="button" data-page="metas">🎯 Metas <span class="badge" id="goalBadge">0</span></button><button type="button" data-page="projecoes">📈 Projeções</button><button type="button" data-page="analise">🧠 Análise</button><button type="button" data-page="historico">📅 Histórico</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">EXTRAS</div><button type="button" data-page="compras">🛒 Lista de Compras <span class="badge" id="comprasBadge">0</span></button><button type="button" data-page="senhas">🔐 Senhas</button><button type="button" data-page="contatos">📇 Contatos Importantes</button><button type="button" data-page="datas">🎂 Datas Importantes <span class="badge" id="datasBadge">0</span></button><button type="button" data-page="academia">🏋️ Academia</button><button type="button" data-page="meutime">⚽ Meu Time</button><button type="button" data-page="habitos">🔁 Hábitos</button><button type="button" data-page="veiculo">🚗 Manutenção do Veículo</button><button type="button" data-page="estudos">🎓 Cursos & Estudos</button><button type="button" data-page="jogos">🎮 Jogos</button><button type="button" data-page="mapavendas">🔥 Mapa de Vendas</button><button type="button" data-page="comparador">🔍 Comparador de Demonstrativos</button><button type="button" data-page="links">🔗 Links Importantes</button><button type="button" data-page="saude">💊 Medicamentos & Vitaminas</button><button type="button" onclick="window.location.href='canivete/teleprompter.html'" title="Abrir o teleprompter em uma página separada">🎬 Teleprompter IA</button></nav></aside>
+<main class="main" id="conteudoPrincipal"><p style="font-size:12.5px;color:var(--muted);margin:0 0 10px"><button type="button" onclick="abrirHubFerramentas()" style="border:0;background:transparent;padding:0;color:var(--blue);font:inherit;font-weight:800;cursor:pointer">🧰 Início do Canivete</button> / <span id="breadcrumbCurrent">Escolha uma ferramenta</span></p><header class="top"><div><h1 id="title">Painel Financeiro</h1><span class="canivete-version-visible" data-canivete-version>v8.54</span><p class="sub" id="subtitle">Veja quanto entra, quanto sai e quanto pode sobrar.</p></div><div class="actions"><a href="canivete-avancado.html" class="btn light v89-advanced-link">🧠 Visão Avançada</a><details class="finance-utility-menu"><summary>⚙️ Ferramentas e backup</summary><div class="finance-utility-panel"><button class="btn light" type="button" onclick="exportarPDF()">📄 Relatório PDF</button><button class="btn light" type="button" onclick="exportarTXT()">📋 Copiar como Texto</button><button class="btn light" type="button" onclick="exportarCSV()">📊 Exportar CSV</button><button class="btn light" type="button" onclick="exportData()">⬇️ Backup / Exportar</button><button class="btn danger" type="button" onclick="resetData()">🗑️ Limpar dados</button></div></details></div></header>
 <details class="creation-tools-details"><summary>🎬 Outras ferramentas (opcional)</summary><nav aria-label="Ferramentas de criação" class="creation-tools-nav">
 <strong style="align-self:center;margin-right:4px">🎬 Central de criação:</strong>
 <a href="/delta-prompts/canivete/teleprompter.html?v=1.5.38" style="display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border-radius:9px;background:var(--bg);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:750;font-size:13px">🎬 Teleprompter</a>
@@ -785,7 +785,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.52';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.54';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();window.d=d;window.APP_VERSION=APP_VERSION;window.__caniveteSetData=function(novo){d=novo||{};window.d=d;};
@@ -7194,11 +7194,17 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
-<!-- CANIVETE_V8.53_CENTER_NAV_FIX: sincroniza menu, título e conteúdo central -->
-<script id="CANIVETE_V853_CENTER_NAV_FIX">
+<!-- CANIVETE_V8.54_NAV_FIX: navegação central única e bloqueio de conflito entre listeners -->
+<style id="CANIVETE_V854_NAV_VISIBILITY">
+#conteudoPrincipal .section[hidden],
+#conteudoPrincipal .section:not(.active){display:none!important}
+#conteudoPrincipal .section.active:not([hidden]){display:block!important}
+</style>
+<script id="CANIVETE_V854_NAV_FIX">
 (function(){
   'use strict';
-  var descriptions = {
+  var legacyShowPage = window.showPage;
+  var names = {
     hub:['Canivete Assistente','Escolha a ferramenta que você quer usar.'],
     dashboard:['Painel Financeiro','Veja quanto entra, quanto sai e quanto pode sobrar.'],
     perfil:['Meu Perfil','Informações centrais usadas por vários recursos do Canivete.'],
@@ -7214,8 +7220,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     analise:['Análise financeira','Descubra onde pode economizar e o impacto no futuro.'],
     historico:['Histórico mensal','Compare sua evolução financeira mês a mês.'],
     compras:['Lista de Compras','Marque o que já comprou e o que ainda falta.'],
-    senhas:['Senhas','Guarde seus acessos de forma organizada.'],
-    contatos:['Contatos Importantes','Guarde contatos úteis em um só lugar.'],
+    senhas:['Senhas','Guarde login e senha de sites e aplicativos.'],
+    contatos:['Contatos Importantes','Mantenha contatos úteis em um só lugar.'],
     datas:['Datas Importantes','Aniversários, documentos e garantias.'],
     links:['Links Importantes','Seus links mais usados.'],
     saude:['Medicamentos & Vitaminas','Controle seus medicamentos e vitaminas.'],
@@ -7228,54 +7234,76 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     mapavendas:['Mapa de Vendas','Dashboard comercial com filtros e ranking.'],
     comparador:['Comparador de Demonstrativos','Compare dois PDFs de demonstrativos.']
   };
-  function navigate(id){
-    var target=document.getElementById(id);
+
+  function navigate(id, runLegacy){
+    var target = document.getElementById(id);
     if(!target || !target.classList.contains('section')) return false;
+
+    // Mantém inicializações e atualizações específicas já existentes no sistema.
+    if(runLegacy && typeof legacyShowPage === 'function'){
+      try{ legacyShowPage.call(window,id); }
+      catch(error){ console.warn('Canivete: rotina antiga de navegação falhou; aplicando correção central.',error); }
+    }
+
+    // Estado único: só a seção escolhida pode estar visível.
     document.querySelectorAll('#conteudoPrincipal .section').forEach(function(section){
-      var selected=section===target;
+      var selected = section === target;
       section.classList.toggle('active',selected);
-      section.style.display=selected?'block':'none';
+      section.hidden = !selected;
+      section.style.setProperty('display',selected?'block':'none','important');
       section.setAttribute('aria-hidden',selected?'false':'true');
     });
-    document.querySelectorAll('#nav button[data-page],.bn-item[data-page]').forEach(function(button){
-      var selected=button.dataset.page===id;
+
+    document.querySelectorAll('#nav button[data-page], .bn-item[data-page]').forEach(function(button){
+      var selected = button.dataset.page === id;
       button.classList.toggle('active',selected);
+      button.setAttribute('aria-current',selected?'page':'false');
       if(button.hasAttribute('aria-selected')) button.setAttribute('aria-selected',selected?'true':'false');
-      if(button.classList.contains('bn-item')) button.setAttribute('aria-current',selected?'page':'false');
     });
-    var info=descriptions[id];
-    var navButton=document.querySelector('#nav button[data-page="'+id+'"]');
-    if(!info && navButton) info=[navButton.innerText.trim().replace(/^\S+\s*/,''),'Conteúdo do módulo selecionado.'];
-    var title=document.getElementById('title'),subtitle=document.getElementById('subtitle'),crumb=document.getElementById('breadcrumbCurrent');
-    if(info){if(title)title.textContent=info[0];if(subtitle)subtitle.textContent=info[1];if(crumb)crumb.textContent=info[0];}
-    document.body.classList.toggle('canivete-no-hub',id==='hub');
-    if(window.innerWidth<=760 && typeof window.closeMenu==='function'){try{window.closeMenu()}catch(e){}}
-    window.scrollTo({top:0,behavior:'smooth'});
-    try{
-      if(typeof window.renderAvisoArmazenamento==='function')window.renderAvisoArmazenamento();
-      if(id==='calendario'&&typeof window.renderCalendarioUnificado==='function')window.renderCalendarioUnificado();
-      if(id==='configuracoes'){
-        if(typeof window.renderDetalheArmazenamento==='function')window.renderDetalheArmazenamento();
-        if(typeof window.renderSeletorCorTema==='function')window.renderSeletorCorTema();
-      }
-    }catch(e){console.warn('Canivete: atualização do módulo selecionado.',e)}
+
+    var info = names[id];
+    if(!info){
+      var navButton = document.querySelector('#nav button[data-page="' + id + '"]');
+      info = [navButton ? navButton.textContent.trim() : id,'Conteúdo do módulo selecionado.'];
+    }
+    var title = document.getElementById('title');
+    var subtitle = document.getElementById('subtitle');
+    var breadcrumb = document.getElementById('breadcrumbCurrent');
+    if(title) title.textContent = info[0];
+    if(subtitle) subtitle.textContent = info[1];
+    if(breadcrumb) breadcrumb.textContent = id === 'hub' ? 'Escolha uma ferramenta' : info[0];
+
+    document.body.classList.toggle('canivete-no-hub',id === 'hub');
+
+    var activeButton = document.querySelector('#nav button[data-page="' + id + '"]');
+    var group = activeButton && activeButton.closest('.v90-menu-group');
+    if(group && window.innerWidth <= 760) group.open = true;
+    if(window.innerWidth <= 760 && typeof window.closeMenu === 'function'){
+      try{ window.closeMenu(); }catch(error){}
+    }
+    try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(error){}
     return true;
   }
-  window.showPage=function(id){return navigate(id)};
+
+  // Todas as chamadas diretas (cards, atalhos e menus) passam pela mesma rotina.
+  window.showPage = function(id){ return navigate(id,true); };
+
+  // Assume o controle do clique antes de listeners antigos para evitar que
+  // um segundo handler altere apenas o título sem trocar a seção central.
   document.addEventListener('click',function(event){
-    var button=event.target.closest('#nav button[data-page],.bn-item[data-page]');
-    if(!button)return;
-    var id=button.dataset.page;
-    if(!id)return;
+    var button = event.target && event.target.closest
+      ? event.target.closest('#nav button[data-page], .bn-item[data-page]')
+      : null;
+    if(!button) return;
+    var id = button.dataset.page;
+    if(!id || !navigate(id,true)) return;
     event.preventDefault();
-    navigate(id);
+    event.stopPropagation();
+    event.stopImmediatePropagation();
   },true);
-  document.addEventListener('DOMContentLoaded',function(){
-    var active=document.querySelector('#conteudoPrincipal .section.active')||document.getElementById('hub');
-    if(active)navigate(active.id);
-  });
-  var current=document.querySelector('#conteudoPrincipal .section.active')||document.getElementById('hub');
-  if(current)navigate(current.id);
+
+  var current = document.querySelector('#conteudoPrincipal .section.active') || document.getElementById('hub');
+  if(current) navigate(current.id,false);
 })();
 </script>
 
