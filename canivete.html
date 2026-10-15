@@ -518,7 +518,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 </div>
 
 <aside class="side" id="side"><div class="brand">🧰 Canivete Assistente<small>Seu painel financeiro pessoal</small></div><a class="back" href="/delta-prompts/index.html">← Voltar ao Delta Prompts</a><div style="padding:0 12px 10px"><input type="text" id="buscaMenuInput" aria-label="Buscar no menu" placeholder="🔍 Buscar no menu..." oninput="buscarNoMenu(this.value)" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;background:var(--card);color:var(--ink)"></div><div id="versaoTexto" style="padding:0 12px 10px;font-size:10px;color:#8a92a6">v8.52</div><button type="button" id="btnTemaCanivete" aria-label="Alternar entre modo claro e escuro" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🌙 Modo Escuro</button><button type="button" id="btnConfigurarPin" onclick="configurarPin()" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔒 Proteger com PIN</button><button type="button" id="btnAtualizarSistema" aria-label="Atualizar sistema" title="Atualizar sistema" style="width:42px;height:42px;margin:0;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;padding:0;border-radius:50%;font-size:0;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;position:absolute;right:14px;bottom:66px;z-index:70;box-shadow:0 6px 16px rgba(37,99,235,.18)">🔄</button><a id="btnMinhaSaudeIA" href="https://jhoncorretor2025-blip.github.io/minha-saude-ia/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Minha Saúde IA" style="width:calc(100% - 24px);margin:0 12px 14px;border:1px solid #bbf7d0;background:#f0fdf4;color:#166534;padding:10px;border-radius:9px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;box-sizing:border-box">🩺 Minha Saúde IA ↗</a><div id="syncBox" style="padding:0 12px 16px;border-bottom:1px solid var(--line);margin-bottom:12px"><div id="syncStatusText" style="font-size:11px;color:#8a92a6;margin-bottom:8px;display:flex;align-items:center;gap:6px"><span id="syncBadgeDot" style="width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block"></span><span id="syncStatusLabel">🔒 Dados salvos só neste aparelho</span></div><button type="button" id="btnLoginCanivete" style="width:100%;border:1px solid var(--line);background:var(--card);color:var(--blue);padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🔑 Entrar com Google</button><button type="button" id="btnLogoutCanivete" style="display:none;width:100%;border:1px solid #fecaca;background:var(--card);color:#dc2626;padding:9px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer">🚪 Sair</button></div><nav class="nav" id="nav" role="tablist" aria-label="Seções do Canivete"><button type="button" class="active" data-page="dashboard">📊 Financeiro</button><button type="button" data-page="perfil">👤 Meu Perfil</button><button type="button" data-page="calendario">📅 Calendário</button><button type="button" data-page="buscaglobal">🔍 Busca</button><button type="button" data-page="configuracoes">⚙️ Configurações</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">PLANEJAMENTO</div><button type="button" data-page="renda">💼 Renda & benefícios</button><button type="button" data-page="despesas">💸 Despesas</button><button type="button" data-page="dividas">💳 Dívidas <span class="badge" id="debtBadge">0</span></button><button type="button" data-page="patrimonio">🏦 Patrimônio</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">ACOMPANHAMENTO</div><button type="button" data-page="metas">🎯 Metas <span class="badge" id="goalBadge">0</span></button><button type="button" data-page="projecoes">📈 Projeções</button><button type="button" data-page="analise">🧠 Análise</button><button type="button" data-page="historico">📅 Histórico</button><div style="padding:14px 14px 4px;margin-top:6px;font-size:10.5px;font-weight:800;color:#64748b;letter-spacing:.04em;border-top:1px solid var(--line)">EXTRAS</div><button type="button" data-page="compras">🛒 Lista de Compras <span class="badge" id="comprasBadge">0</span></button><button type="button" data-page="senhas">🔐 Senhas</button><button type="button" data-page="contatos">📇 Contatos Importantes</button><button type="button" data-page="datas">🎂 Datas Importantes <span class="badge" id="datasBadge">0</span></button><button type="button" data-page="academia">🏋️ Academia</button><button type="button" data-page="meutime">⚽ Meu Time</button><button type="button" data-page="habitos">🔁 Hábitos</button><button type="button" data-page="veiculo">🚗 Manutenção do Veículo</button><button type="button" data-page="estudos">🎓 Cursos & Estudos</button><button type="button" data-page="jogos">🎮 Jogos</button><button type="button" data-page="mapavendas">🔥 Mapa de Vendas</button><button type="button" data-page="comparador">🔍 Comparador de Demonstrativos</button><button type="button" data-page="links">🔗 Links Importantes</button><button type="button" data-page="saude">💊 Medicamentos & Vitaminas</button><button type="button" onclick="window.location.href='canivete/teleprompter.html'" title="Abrir o teleprompter em uma página separada">🎬 Teleprompter IA</button></nav></aside>
-<main class="main" id="conteudoPrincipal"><p style="font-size:12.5px;color:var(--muted);margin:0 0 10px"><button type="button" onclick="abrirHubFerramentas()" style="border:0;background:transparent;padding:0;color:var(--blue);font:inherit;font-weight:800;cursor:pointer">🧰 Início do Canivete</button> / <span id="breadcrumbCurrent">Escolha uma ferramenta</span></p><header class="top"><div><h1 id="title">Painel Financeiro</h1><span class="canivete-version-visible" data-canivete-version>v8.52</span><p class="sub" id="subtitle">Veja quanto entra, quanto sai e quanto pode sobrar.</p></div><div class="actions"><a href="canivete-avancado.html" class="btn light v89-advanced-link">🧠 Visão Avançada</a><details class="finance-utility-menu"><summary>⚙️ Ferramentas e backup</summary><div class="finance-utility-panel"><button class="btn light" type="button" onclick="exportarPDF()">📄 Relatório PDF</button><button class="btn light" type="button" onclick="exportarTXT()">📋 Copiar como Texto</button><button class="btn light" type="button" onclick="exportarCSV()">📊 Exportar CSV</button><button class="btn light" type="button" onclick="exportData()">⬇️ Backup / Exportar</button><button class="btn danger" type="button" onclick="resetData()">🗑️ Limpar dados</button></div></details></div></header>
+<main class="main" id="conteudoPrincipal"><p style="font-size:12.5px;color:var(--muted);margin:0 0 10px"><button type="button" onclick="abrirHubFerramentas()" style="border:0;background:transparent;padding:0;color:var(--blue);font:inherit;font-weight:800;cursor:pointer">🧰 Início do Canivete</button> / <span id="breadcrumbCurrent">Escolha uma ferramenta</span></p><header class="top"><div><h1 id="title">Painel Financeiro</h1><span class="canivete-version-visible" data-canivete-version>v8.53</span><p class="sub" id="subtitle">Veja quanto entra, quanto sai e quanto pode sobrar.</p></div><div class="actions"><a href="canivete-avancado.html" class="btn light v89-advanced-link">🧠 Visão Avançada</a><details class="finance-utility-menu"><summary>⚙️ Ferramentas e backup</summary><div class="finance-utility-panel"><button class="btn light" type="button" onclick="exportarPDF()">📄 Relatório PDF</button><button class="btn light" type="button" onclick="exportarTXT()">📋 Copiar como Texto</button><button class="btn light" type="button" onclick="exportarCSV()">📊 Exportar CSV</button><button class="btn light" type="button" onclick="exportData()">⬇️ Backup / Exportar</button><button class="btn danger" type="button" onclick="resetData()">🗑️ Limpar dados</button></div></details></div></header>
 <details class="creation-tools-details"><summary>🎬 Outras ferramentas (opcional)</summary><nav aria-label="Ferramentas de criação" class="creation-tools-nav">
 <strong style="align-self:center;margin-right:4px">🎬 Central de criação:</strong>
 <a href="/delta-prompts/canivete/teleprompter.html?v=1.5.38" style="display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border-radius:9px;background:var(--bg);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:750;font-size:13px">🎬 Teleprompter</a>
@@ -7193,5 +7193,91 @@ document.getElementById('hubResetCustomize')?.addEventListener('click',()=>{writ
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderCustomize);else renderCustomize();
 })();
 </script>
+
+<!-- CANIVETE_V8.53_CENTER_NAV_FIX: sincroniza menu, título e conteúdo central -->
+<script id="CANIVETE_V853_CENTER_NAV_FIX">
+(function(){
+  'use strict';
+  var descriptions = {
+    hub:['Canivete Assistente','Escolha a ferramenta que você quer usar.'],
+    dashboard:['Painel Financeiro','Veja quanto entra, quanto sai e quanto pode sobrar.'],
+    perfil:['Meu Perfil','Informações centrais usadas por vários recursos do Canivete.'],
+    calendario:['Calendário','Vencimentos, datas importantes e consultas médicas em um só lugar.'],
+    buscaglobal:['Busca','Procure informações em todas as seções do Canivete.'],
+    configuracoes:['Configurações','Backup dos seus dados e configurações do Canivete.'],
+    renda:['Renda & benefícios','Informe como você recebe e seus benefícios.'],
+    despesas:['Despesas','Cadastre e organize seus gastos mensais.'],
+    dividas:['Dívidas','Acompanhe quanto falta pagar e quando você termina de pagar.'],
+    patrimonio:['Patrimônio','Veja quanto você já possui.'],
+    metas:['Metas','Transforme planos em objetivos.'],
+    projecoes:['Projeções','Veja o crescimento estimado.'],
+    analise:['Análise financeira','Descubra onde pode economizar e o impacto no futuro.'],
+    historico:['Histórico mensal','Compare sua evolução financeira mês a mês.'],
+    compras:['Lista de Compras','Marque o que já comprou e o que ainda falta.'],
+    senhas:['Senhas','Guarde seus acessos de forma organizada.'],
+    contatos:['Contatos Importantes','Guarde contatos úteis em um só lugar.'],
+    datas:['Datas Importantes','Aniversários, documentos e garantias.'],
+    links:['Links Importantes','Seus links mais usados.'],
+    saude:['Medicamentos & Vitaminas','Controle seus medicamentos e vitaminas.'],
+    academia:['Academia','Acompanhe seus treinos e sua matrícula.'],
+    meutime:['Meu Time','Acesse informações do seu time.'],
+    habitos:['Hábitos','Acompanhe seus hábitos do dia a dia.'],
+    veiculo:['Manutenção do Veículo','Registre revisões, trocas e documentos.'],
+    estudos:['Cursos & Estudos','Acompanhe seus cursos e progresso.'],
+    jogos:['Jogos','Acesso rápido aos seus jogos.'],
+    mapavendas:['Mapa de Vendas','Dashboard comercial com filtros e ranking.'],
+    comparador:['Comparador de Demonstrativos','Compare dois PDFs de demonstrativos.']
+  };
+  function navigate(id){
+    var target=document.getElementById(id);
+    if(!target || !target.classList.contains('section')) return false;
+    document.querySelectorAll('#conteudoPrincipal .section').forEach(function(section){
+      var selected=section===target;
+      section.classList.toggle('active',selected);
+      section.style.display=selected?'block':'none';
+      section.setAttribute('aria-hidden',selected?'false':'true');
+    });
+    document.querySelectorAll('#nav button[data-page],.bn-item[data-page]').forEach(function(button){
+      var selected=button.dataset.page===id;
+      button.classList.toggle('active',selected);
+      if(button.hasAttribute('aria-selected')) button.setAttribute('aria-selected',selected?'true':'false');
+      if(button.classList.contains('bn-item')) button.setAttribute('aria-current',selected?'page':'false');
+    });
+    var info=descriptions[id];
+    var navButton=document.querySelector('#nav button[data-page="'+id+'"]');
+    if(!info && navButton) info=[navButton.innerText.trim().replace(/^\S+\s*/,''),'Conteúdo do módulo selecionado.'];
+    var title=document.getElementById('title'),subtitle=document.getElementById('subtitle'),crumb=document.getElementById('breadcrumbCurrent');
+    if(info){if(title)title.textContent=info[0];if(subtitle)subtitle.textContent=info[1];if(crumb)crumb.textContent=info[0];}
+    document.body.classList.toggle('canivete-no-hub',id==='hub');
+    if(window.innerWidth<=760 && typeof window.closeMenu==='function'){try{window.closeMenu()}catch(e){}}
+    window.scrollTo({top:0,behavior:'smooth'});
+    try{
+      if(typeof window.renderAvisoArmazenamento==='function')window.renderAvisoArmazenamento();
+      if(id==='calendario'&&typeof window.renderCalendarioUnificado==='function')window.renderCalendarioUnificado();
+      if(id==='configuracoes'){
+        if(typeof window.renderDetalheArmazenamento==='function')window.renderDetalheArmazenamento();
+        if(typeof window.renderSeletorCorTema==='function')window.renderSeletorCorTema();
+      }
+    }catch(e){console.warn('Canivete: atualização do módulo selecionado.',e)}
+    return true;
+  }
+  window.showPage=function(id){return navigate(id)};
+  document.addEventListener('click',function(event){
+    var button=event.target.closest('#nav button[data-page],.bn-item[data-page]');
+    if(!button)return;
+    var id=button.dataset.page;
+    if(!id)return;
+    event.preventDefault();
+    navigate(id);
+  },true);
+  document.addEventListener('DOMContentLoaded',function(){
+    var active=document.querySelector('#conteudoPrincipal .section.active')||document.getElementById('hub');
+    if(active)navigate(active.id);
+  });
+  var current=document.querySelector('#conteudoPrincipal .section.active')||document.getElementById('hub');
+  if(current)navigate(current.id);
+})();
+</script>
+
 </body>
 </html>
