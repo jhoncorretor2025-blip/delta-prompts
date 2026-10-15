@@ -413,7 +413,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
   .card .head .title{grid-column:3;min-width:0}
 }
 
-/* v104 — filtro de plataforma */\n.platform-filter-hidden{display:none!important}\n</style>
+/* v105 — filtro de plataforma */\n.platform-filter-hidden{display:none!important}\n</style>
 <style>
 /* v51 — painéis compactos no fim da página */
 .bottom-mini-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0 10px;align-items:start}
@@ -584,7 +584,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v104</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v105</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>240 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho. <strong>Atenção:</strong> ferramentas de vídeo com créditos gratuitos limitados estão identificadas como testes, não como opções para gerar vídeos ilimitados sem pagar.</p></section>
 
 
@@ -1496,7 +1496,7 @@ if(globalActions&&quickActions&&!document.querySelector('.catalog-tools-menu')){
  toolsSummary.addEventListener('click',()=>{});
  document.addEventListener('click',e=>{if(!toolsMenu.contains(e.target))toolsMenu.open=false});
 }
-let activePlatform='all';
+let activePlatform=window.catalogActivePlatform||'all';
 const platformButtons=[...document.querySelectorAll('#platformFilters [data-platform]')];
 function isGithubOrInstall(card){
  const link=card.querySelector('.footer a.open, .footer a[href]');
@@ -1505,7 +1505,9 @@ function isGithubOrInstall(card){
 }
 function applyPlatformFilter(){
  cards.forEach(card=>{const github=isGithubOrInstall(card);card.dataset.platformType=github?'github':'browser';card.classList.toggle('platform-filter-hidden',activePlatform!=='all'&&((activePlatform==='github'&&!github)||(activePlatform==='browser'&&github)));});
+ window.catalogActivePlatform=activePlatform;
  platformButtons.forEach(b=>b.classList.toggle('active',b.dataset.platform===activePlatform));
+ if(typeof window.iasRender==='function')window.iasRender();
 }
 platformButtons.forEach(b=>b.addEventListener('click',()=>{activePlatform=b.dataset.platform;applyPlatformFilter()}));
 applyPlatformFilter();
@@ -1904,7 +1906,7 @@ function render(){
  applyCardFeatures();
  applyRankingBadges();
  const q=(search.value||'').toLowerCase().trim();
- const visible=cards.filter(c=>{const cats=c.dataset.cat.split(' '),isVideo=cats.includes('video'),vt=c.dataset.videoType||'other';const categoryMatch=cat==='all'||cats.includes(cat)||(cat==='video-criacao'&&isVideo&&['create','both'].includes(vt))||(cat==='video-edicao'&&isVideo&&['edit','both'].includes(vt))||(cat==='especialistas'&&c.dataset.specialist==='true');const subtypeMatch=cat!=='video'||videoType==='all'||(videoType==='create'&&['create','both'].includes(vt))||(videoType==='edit'&&vt==='edit')||(videoType==='both'&&vt==='both')||(videoType==='other'&&!['create','edit','both'].includes(vt));const requiresLocalInstall=c.dataset.runMode==='local'||!!c.querySelector('[data-run-mode="local"]');return (!hideLocalInstallCards||!requiresLocalInstall)&&(!window.iasCompatFiltro||window.iasCompatFiltro(c))&&(showHidden?hidden.includes(nameOf(c)):!hidden.includes(nameOf(c)))&&categoryMatch&&subtypeMatch&&(access==='all'||c.dataset.access===access)&&(!imageFreeOnly||(cats.includes('imagem')&&['free','limit'].includes(c.dataset.access)))&&(!favoritesOnly||favorites.includes(nameOf(c)))&&(!q||(c.dataset.search||'').toLowerCase().includes(q));});
+ const visible=cards.filter(c=>{const cats=c.dataset.cat.split(' '),isVideo=cats.includes('video'),vt=c.dataset.videoType||'other';const categoryMatch=cat==='all'||cats.includes(cat)||(cat==='video-criacao'&&isVideo&&['create','both'].includes(vt))||(cat==='video-edicao'&&isVideo&&['edit','both'].includes(vt))||(cat==='especialistas'&&c.dataset.specialist==='true');const subtypeMatch=cat!=='video'||videoType==='all'||(videoType==='create'&&['create','both'].includes(vt))||(videoType==='edit'&&vt==='edit')||(videoType==='both'&&vt==='both')||(videoType==='other'&&!['create','edit','both'].includes(vt));const requiresLocalInstall=c.dataset.runMode==='local'||!!c.querySelector('[data-run-mode="local"]');return (!hideLocalInstallCards||!requiresLocalInstall)&&(!window.iasCompatFiltro||window.iasCompatFiltro(c))&&(showHidden?hidden.includes(nameOf(c)):!hidden.includes(nameOf(c)))&&categoryMatch&&subtypeMatch&&(access==='all'||c.dataset.access===access)&&(!imageFreeOnly||(cats.includes('imagem')&&['free','limit'].includes(c.dataset.access)))&&(!favoritesOnly||favorites.includes(nameOf(c)))&&((window.catalogActivePlatform||'all')==='all'||c.dataset.platformType===(window.catalogActivePlatform||'all'))&&(!q||(c.dataset.search||'').toLowerCase().includes(q));});
  const rankFiltered=visible.filter(rankingCategoryMatch);
  visible.splice(0,visible.length,...rankFiltered);
  visible.sort((a,b)=>{
@@ -1987,7 +1989,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v104','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v105','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
