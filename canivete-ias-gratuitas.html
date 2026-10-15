@@ -361,6 +361,15 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 @media(max-width:900px){.pc-profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:540px){.pc-profile-panel{padding:13px;border-radius:15px}.pc-profile-heading h2{font-size:16px}.pc-profile-grid{grid-template-columns:minmax(0,1fr);gap:10px}.pc-profile-grid input,.pc-profile-grid select{min-height:44px}.pc-profile-actions{align-items:stretch}.pc-save,.pc-clear{flex:1}.pc-profile-actions #pcProfileStatus{flex-basis:100%}}
 
  .pc-profile-settings-link{margin:0 0 14px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--muted);font-size:12px}.pc-profile-settings-link a{color:var(--blue);font-weight:700;text-decoration:none}
+
+/* v96 — integração visual do catálogo com o menu principal do Canivete */
+.catalog-version{color:var(--muted);font-size:11px;font-weight:750}
+.canivete-nav{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:8px;margin:-4px 0 20px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.canivete-nav a{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:10px 14px;border:1px solid transparent;border-radius:11px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:800;transition:background .16s,border-color .16s,color .16s}
+.canivete-nav a:hover{background:color-mix(in srgb,var(--blue) 7%,var(--card));border-color:var(--line);color:var(--blue)}
+.canivete-nav a.active{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 4px 12px rgba(37,99,235,.18)}
+[data-theme="dark"] .canivete-nav a.active{color:#fff}
+@media(max-width:680px){.canivete-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:7px;margin-bottom:14px;border-radius:14px}.canivete-nav a{justify-content:flex-start;padding:10px 11px;min-width:0;font-size:11px}.canivete-nav a span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.top-actions{width:auto}.catalog-version{display:block;margin-top:4px}}
 </style>
 <style>
 /* v51 — painéis compactos no fim da página */
@@ -378,7 +387,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 </head>
 <body>
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span style="color:var(--muted);font-size:11px">• IAs Gratuitas • v90</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button><a class="back" href="canivete-configuracoes.html">⚙️ Configurações</a><a class="back" href="canivete.html">← Voltar ao Canivete</a></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v96</span></div><div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
+<nav class="canivete-nav" aria-label="Menu do Canivete"><a href="canivete.html">🏠 <span>Início do Canivete</span></a><a class="active" href="canivete-ias-gratuitas.html" aria-current="page">🤖 <span>Catálogo de IAs</span></a><a href="canivete-configuracoes.html">⚙️ <span>Configurações</span></a><a href="canivete/teleprompter.html">🎙️ <span>Teleprompter</span></a></nav>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>224 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho.</p></section>
 
 
