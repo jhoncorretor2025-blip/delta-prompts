@@ -2010,3 +2010,15 @@ html,body{overflow-x:hidden;overflow-x:clip}
 .atalho-busca-home kbd{display:inline-block;padding:2px 6px;border:1px solid #d5d7e5;border-bottom-width:2px;border-radius:5px;background:#fff;color:#3730a3;font:600 11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}
 @media(max-width:600px){.atalho-busca-home{display:block;margin:7px 0 0}.search input{min-height:54px}.quick button,.onboarding-opcoes button,.delta-filter{min-height:40px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* V1.96 — hierarquia de conversão da primeira dobra */
+.home-cta-priority{margin:18px 0 20px;display:grid;grid-template-columns:minmax(0,1.35fr) repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}
+.home-cta-priority a{min-width:0;text-decoration:none;display:flex;flex-direction:column;justify-content:center;gap:4px;border-radius:14px;padding:15px 16px;font-weight:850;line-height:1.3;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.home-cta-priority a small{font-size:12px;font-weight:500;line-height:1.45;opacity:.92}
+.home-cta-primary{background:var(--grad);color:#fff;box-shadow:0 8px 20px rgba(91,92,226,.2)}
+.home-cta-secondary,.home-cta-tertiary{background:rgba(255,255,255,.82);color:var(--text);border:1px solid var(--border)}
+.home-cta-priority a:hover{transform:translateY(-1px)}
+.home-cta-primary:hover{box-shadow:0 12px 26px rgba(91,92,226,.26)}
+.home-cta-secondary:hover,.home-cta-tertiary:hover{border-color:#aaaaf0}
+@media(max-width:760px){.home-cta-priority{grid-template-columns:1fr;gap:8px;margin:14px 0 18px}.home-cta-priority a{padding:13px 15px}.home-cta-primary{min-height:58px}}
