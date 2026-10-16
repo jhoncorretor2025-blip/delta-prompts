@@ -1,0 +1,25 @@
+name: Auditoria UX e acessibilidade da página inicial
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-home:
+    name: Verificar versão e fundamentos de UX
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Auditar versão, busca e acessibilidade básica
+        run: node .github/scripts/auditar-home-ux.js
