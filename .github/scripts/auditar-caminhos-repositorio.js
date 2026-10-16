@@ -58,9 +58,17 @@ function resolveLocal(sourceFile, raw) {
 const missing = [];
 const files = walk(ROOT);
 for (const file of files) {
-  const text = fs.readFileSync(file, 'utf8');
+  let text = fs.readFileSync(file, 'utf8');
   const ext = path.extname(file).toLowerCase();
   const refs = [];
+  // Ignore links embedded in inline JS strings; they are generated content, not static attributes.
+  // Preserve external script tags so their src paths are still validated.
+  if (ext !== '.css') {
+    text = text.replace(/<script\b([^>]*)>[\s\S]*?<\/script>/gi, (_match, attrs) =>
+      /\bsrc\s*=/.test(attrs) ? '<script ' + attrs + '></script>' : ''
+    );
+    text = text.replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
+  }
   const regex = ext === '.css' ? CSS_URL_RE : ATTR_RE;
   for (const match of text.matchAll(regex)) {
     refs.push(match[1] ?? match[2] ?? match[3] ?? '');
