@@ -812,7 +812,7 @@
       ]
     },
     "paginas/sites-landing-pages.html": {
-      "total": 57,
+      "total": 59,
       "titulos": [
         "🧭 ETAPA 0 — Definir a identidade do projeto",
         "🐛 Caçador de Bugs PRO",
@@ -864,13 +864,15 @@
         "🔒 Checklist de Segurança Básica do Site",
         "🔑 Revisão de Login e Autenticação",
         "🛡️ Proteção de Dados e Privacidade (LGPD)",
-        "💾 Plano de Backup e Recuperação de Desastres",
+        "🛡️ Especialista em Backup, Segurança e Recuperação de Sistemas",
         "🗂️ Auditoria de Pastas e Arquivos do GitHub",
         "🚚 Plano de Migração de Arquivos",
         "🏗️ DIA 1 — Organizar a Estrutura do Meu Site Sem Quebrar o Que Já Funciona",
         "🚀 5 Melhorias Básicas Importantes",
         "🔎 Auditoria Crítica — Navegue e Encontre os Defeitos",
-        "🧰 Padrão Universal para Novos Projetos"
+        "🧰 Padrão Universal para Novos Projetos",
+        "🧪 Testes Funcionais e Validação",
+        "📈 Monitoramento e Manutenção Contínua"
       ]
     },
     "paginas/testador-ia.html": {
