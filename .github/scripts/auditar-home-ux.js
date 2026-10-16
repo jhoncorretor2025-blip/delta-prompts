@@ -8,15 +8,20 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '../..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
+const menuLoader = fs.readFileSync(path.join(root, 'menu-loader.js'), 'utf8');
+const serviceWorker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
 
 const version = (html.match(/<meta name="delta-version" content="(V\d+\.\d+)"/) || [])[1];
 const checks = [
-  ['versão atual declarada', version === 'V1.97'],
+  ['versão atual declarada', version === 'V1.98'],
   ['versão atual no título', Boolean(version) && html.includes('Delta Prompts - Sua central prática de IA | ' + version)],
   ['versão visível no cabeçalho', Boolean(version) && html.includes('aria-label="Versão atual do site">' + version + '</span>')],
   ['versão visível no rodapé', Boolean(version) && html.includes('class="delta-live-version">' + version + '</span></footer>')],
   ['cache bust do CSS', Boolean(version) && html.includes('href="style.css?v=' + version + '"')],
-  ['sem referências principais à versão anterior', !/content="V1\.95"|style\.css\?v=V1\.95|class="delta-live-version">V1\.95/.test(html)],
+  ['versão sincronizada no menu-loader', menuLoader.includes('// DELTA SITE VERSION: ' + version) && menuLoader.includes("window.DELTA_SITE_VERSION='" + version + "';")],
+  ['versão sincronizada no service worker', serviceWorker.startsWith('// DELTA SITE VERSION: ' + version)],
+  ['cache-busting do menu-loader atualizado', html.includes('menu-loader.js?v=20261016-qa-v83') && serviceWorker.includes('menu-loader.js?v=20261016-qa-v83')],
+  ['sem referências principais à versão anterior', !/content="V1\\.97"|style\\.css\\?v=V1\\.97|class="delta-live-version">V1\\.97/.test(html)],
   ['link para pular ao conteúdo', /class="skip-link" href="#conteudo-principal"/.test(html)],
   ['marco principal da página', /<main id="conteudo-principal">/.test(html)],
   ['busca com nome acessível', /id="busca-global"[^>]*aria-label="Buscar no Delta Prompts"/.test(html)],
