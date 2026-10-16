@@ -11,7 +11,7 @@ const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
 
 const version = (html.match(/<meta name="delta-version" content="(V\\d+\\.\\d+)"/) || [])[1];
 const checks = [
-  ['versão atual declarada', version === 'V1.95'],
+  ['versão atual declarada', version === 'V1.96'],
   ['versão atual no título', html.includes('Delta Prompts - Sua central prática de IA | ' + version)],
   ['versão visível no cabeçalho', html.includes('aria-label="Versão atual do site">' + version + '</span>')],
   ['versão visível no rodapé', html.includes('class="delta-live-version">' + version + '</span></footer>')],
