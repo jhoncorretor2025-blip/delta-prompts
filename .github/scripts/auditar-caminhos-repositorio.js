@@ -13,7 +13,7 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '../..');
 const SKIP_DIRS = new Set(['.git', 'node_modules', '.next', 'dist', 'build']);
 const SOURCE_EXTENSIONS = new Set(['.html', '.htm', '.css']);
-const ATTR_RE = /\b(?:href|src|action|poster|data-src)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>\x60]+))/gi;
+const ATTR_RE = /(?<![\w:-])(?:href|src|action|poster|data-src)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>\x60]+))/gi;
 const CSS_URL_RE = /url\(\s*(?:"([^"]*)"|'([^']*)'|([^)'"]+))\s*\)/gi;
 
 function walk(dir, files = []) {
