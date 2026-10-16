@@ -895,7 +895,8 @@ const installButton=$('installApp');
 window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;installButton.hidden=false;});
 installButton.addEventListener('click',async()=>{if(!installPrompt){setStatus('Abra o menu do Chrome e escolha Instalar página como app, se disponível.');return;}installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installButton.hidden=true;});
 window.addEventListener('appinstalled',()=>{installButton.hidden=true;setStatus('Teleprompter instalado como aplicativo web.');});
-if(window.electronAPI){const back=document.getElementById('backToCanivete');if(back)back.hidden=true;}\n  if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js?v=1.5.39').catch(()=>{});
+if(window.electronAPI){const back=document.getElementById('backToCanivete');if(back)back.hidden=true};
+  if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js?v=1.5.39').catch(()=>{});
 })();
 </script>
 <style>
