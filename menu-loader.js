@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.91
-window.DELTA_SITE_VERSION='V1.91';
+// DELTA SITE VERSION: V1.92
+window.DELTA_SITE_VERSION='V1.92';
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return; if(document.querySelector('.delta-live-version')){document.querySelectorAll('.delta-live-version').forEach(function(v){v.textContent=window.DELTA_SITE_VERSION});return;}
@@ -1464,7 +1464,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
     };
     var seletores='button,a';
     raiz.querySelectorAll(seletores).forEach(function(el){
-      var atual=(el.textContent||'').replace(/\\s+/g,' ').trim();
+      var atual=(el.textContent||'').replace(/\s+/g,' ').trim();
       if(!mapa[atual]||el.dataset.deltaPadraoV11==='1')return;
       el.textContent=mapa[atual];
       el.dataset.deltaPadraoV11='1';
@@ -1571,7 +1571,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   // Corrige e fixa o destino do atalho rápido "Biblioteca", mesmo se um menu antigo tiver sido armazenado em cache.
   side.querySelectorAll('.delta-menu-shortcuts a').forEach(function(a){
    var b=a.querySelector('b');
-   var nome=(b?b.textContent:a.textContent||'').replace(/\\s+/g,' ').replace(/^📦\\s*/,'').trim().toLowerCase();
+   var nome=(b?b.textContent:a.textContent||'').replace(/\s+/g,' ').replace(/^📦\s*/,'').trim().toLowerCase();
    if(nome==='biblioteca'){
     a.setAttribute('href','/delta-prompts/biblioteca.html');
     a.setAttribute('aria-label','Abrir Biblioteca de prompts');
@@ -1579,7 +1579,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   });
   // O link final fica na área "Minha Biblioteca" e também sempre usa a página dedicada.
   side.querySelectorAll('.menu-item-final').forEach(function(a){
-   var nome=(a.textContent||'').replace(/\\s+/g,' ').replace(/^📦\\s*/,'').trim().toLowerCase();
+   var nome=(a.textContent||'').replace(/\s+/g,' ').replace(/^📦\s*/,'').trim().toLowerCase();
    if(nome==='biblioteca')a.setAttribute('href','/delta-prompts/biblioteca.html');
   });
   side.querySelectorAll('.menu-item-final-titulo').forEach(function(t){
