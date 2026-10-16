@@ -11,7 +11,7 @@ const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
 
 const version = (html.match(/<meta name="delta-version" content="(V\d+\.\d+)"/) || [])[1];
 const checks = [
-  ['versão atual declarada', version === 'V1.96'],
+  ['versão atual declarada', version === 'V1.97'],
   ['versão atual no título', Boolean(version) && html.includes('Delta Prompts - Sua central prática de IA | ' + version)],
   ['versão visível no cabeçalho', Boolean(version) && html.includes('aria-label="Versão atual do site">' + version + '</span>')],
   ['versão visível no rodapé', Boolean(version) && html.includes('class="delta-live-version">' + version + '</span></footer>')],
@@ -28,6 +28,8 @@ const checks = [
   ['headline orientada à tarefa', html.includes('Encontre a IA certa <span>para o que você precisa fazer</span>')],
   ['CTA principal aponta para a busca', /class="home-cta-primary" href="#buscar"/.test(html)],
   ['CTA principal precede atalhos de apps', html.indexOf('class="home-cta-priority"') < html.indexOf('class="apps-bar"')],
+  ['grupos de navegação por tarefa', (html.match(/class="home-nav-group"/g) || []).length === 4],
+  ['links de favoritos e categorias preservados', html.includes('href="favoritos.html">Meus Favoritos</a>') && html.includes('href="#trabalho">Trabalho e carreira</a')],
 ];
 
 let failed = 0;
