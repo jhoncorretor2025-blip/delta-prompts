@@ -2000,3 +2000,13 @@ html,body{overflow-x:hidden;overflow-x:clip}
 #menu .delta-menu-apps a b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
 #menu .delta-menu-apps a span{flex:0 0 auto}
 @media(min-width:901px){#menu .delta-menu-apps{grid-template-columns:1fr;gap:4px}#menu .delta-menu-apps a{padding:6px 8px!important}}
+
+
+/* V1.95 — acessibilidade, foco e conforto de navegação */
+.skip-link{position:fixed;top:10px;left:10px;z-index:99999;transform:translateY(-160%);padding:12px 16px;border-radius:10px;background:#202236;color:#fff;font-weight:800;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.skip-link:focus,.skip-link:focus-visible{transform:translateY(0);outline:3px solid #fbbf24;outline-offset:3px}
+:where(a,button,input,select,textarea,[role="button"],[tabindex]):focus-visible{outline:3px solid #4f46e5!important;outline-offset:3px!important}
+.atalho-busca-home{display:inline-block;margin-left:6px;font-size:12px;color:var(--muted)}
+.atalho-busca-home kbd{display:inline-block;padding:2px 6px;border:1px solid #d5d7e5;border-bottom-width:2px;border-radius:5px;background:#fff;color:#3730a3;font:600 11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}
+@media(max-width:600px){.atalho-busca-home{display:block;margin:7px 0 0}.search input{min-height:54px}.quick button,.onboarding-opcoes button,.delta-filter{min-height:40px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
