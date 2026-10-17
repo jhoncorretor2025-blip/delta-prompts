@@ -26,27 +26,46 @@ function getNivelLabel(nivel){
 // ==============================
 // RENDERIZAR CARDS
 // ==============================
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  })[char]);
+}
+
+// ==============================
+// RENDERIZAR CARDS
+// ==============================
 function renderizarCards(prompts, containerId){
   const container = document.getElementById(containerId);
-  if(!container || !prompts) return;
+  if(!container) return;
+  if(!Array.isArray(prompts)){
+    console.error('renderizarCards esperava uma lista de prompts:', containerId);
+    container.textContent = 'Não foi possível carregar os prompts. Atualize a página e tente novamente.';
+    return;
+  }
 
-  container.innerHTML = prompts.map(p => `
-    <div class="card" data-nivel="${p.nivel}" data-id="${p.id}">
-      <span class="nivel nivel-${p.nivel}">${getNivelLabel(p.nivel)}</span>
-      <h3>${p.titulo}</h3>
-      <p class="quando-usar">💡 <strong>Quando usar:</strong> ${p.quandoUsar}</p>
-      <p class="prompt-text">${p.prompt}</p>
-      <div class="tags">
-        ${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+  container.innerHTML = prompts.map(p => {
+    if(!p || typeof p !== 'object') return '';
+    const nivel = escapeHtml(p.nivel || 'basico');
+    const tags = Array.isArray(p.tags) ? p.tags : [];
+    return `
+      <div class="card" data-nivel="${nivel}" data-id="${escapeHtml(p.id || '')}">
+        <span class="nivel nivel-${nivel}">${escapeHtml(getNivelLabel(p.nivel || ''))}</span>
+        <h3>${escapeHtml(p.titulo || 'Prompt sem título')}</h3>
+        <p class="quando-usar">💡 <strong>Quando usar:</strong> ${escapeHtml(p.quandoUsar || 'Não informado')}</p>
+        <p class="prompt-text">${escapeHtml(p.prompt || '')}</p>
+        <div class="tags">
+          ${tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
+        </div>
+        <div class="acoes">
+          <button class="btn-copy" type="button">📋 Copiar</button>
+          <button class="btn-chat" type="button">🤖 ChatGPT</button>
+          <button class="btn-gemini" type="button">✨ Gemini</button>
+          <button class="btn-favorito" type="button">🤍 Favoritar</button>
+        </div>
       </div>
-      <div class="acoes">
-        <button class="btn-copy">📋 Copiar</button>
-        <button class="btn-chat">🤖 ChatGPT</button>
-        <button class="btn-gemini">✨ Gemini</button>
-        <button class="btn-favorito">🤍 Favoritar</button>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
   setTimeout(inicializarEventos, 100);
 }
