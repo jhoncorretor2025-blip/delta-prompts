@@ -18,3 +18,8 @@ Esta versão prioriza consistência de versão, integridade de links estáticos 
 - Sincroniza a versão da home, do menu-loader e do service worker; atualiza a invalidação de cache.
 - Amplia a auditoria automática da home para verificar a ligação entre os dois cards e a função de retomada.
 - Limitação: a validação estática e a execução dos workflows não substituem testes manuais em navegador real.
+
+## Sites & Landing Pages V1.91 — Correção da skill Auditor Sênior
+- Corrige o separador JavaScript da nova entrada, que estava impedindo a execução do script da página.
+- Move a skill Auditor Sênior para o final da lista, preservando a posição/ID dos prompts existentes.
+- Atualiza as seis referências de versão da página de Sites de V1.90 para V1.91.
