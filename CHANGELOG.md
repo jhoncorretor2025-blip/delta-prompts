@@ -10,3 +10,11 @@
 
 ### Escopo desta versão
 Esta versão prioriza consistência de versão, integridade de links estáticos e repetibilidade das verificações. Não representa certificação manual de todos os fluxos interativos do site.
+
+
+## V1.99 — Continuação da navegação na página inicial
+- Corrige a função de retomada para atualizar os dois cards de “Continuar de onde parei”, incluindo o atalho da área de descoberta.
+- Mantém os cards ocultos quando não há uma última página válida salva e preserva a navegação existente.
+- Sincroniza a versão da home, do menu-loader e do service worker; atualiza a invalidação de cache.
+- Amplia a auditoria automática da home para verificar a ligação entre os dois cards e a função de retomada.
+- Limitação: a validação estática e a execução dos workflows não substituem testes manuais em navegador real.
