@@ -925,13 +925,13 @@ async function copiarPrompt(texto){
 }
 async function abrirChatGPT(texto){
   const copiou=await copiarTextoSaude(texto);
-  const janela=window.open('https://chatgpt.com/','_blank','noopener');
+  const janela=window.open('https://chatgpt.com/','_blank');
   mostrarToast(copiou?'📋 Prompt copiado! Cole no ChatGPT.':'⚠️ ChatGPT aberto. Copie o prompt manualmente.');
   if(!janela) mostrarToast('O navegador bloqueou a nova aba. Permita pop-ups para abrir o ChatGPT.');
 }
 async function abrirGemini(texto){
   const copiou=await copiarTextoSaude(texto);
-  const janela=window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank','noopener');
+  const janela=window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank');
   mostrarToast(copiou?'📋 Prompt copiado! Abrindo o Gemini.':'⚠️ Gemini aberto. Se o texto não aparecer, cole o prompt copiado manualmente.');
   if(!janela) mostrarToast('O navegador bloqueou a nova aba. Permita pop-ups para abrir o Gemini.');
 }
