@@ -198,12 +198,16 @@ pre {
 
 <main>
 
-<small data-delta-version="V1.71" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.71</small>
+<small data-delta-version="V1.72" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.72</small>
 <h1>🧠💚 Saúde Inteligente com IA</h1>
 
 <p>
-Prompts estratégicos para organizar saúde física, mental e hábitos com clareza e consciência.
+Prompts práticos para organizar informações de saúde, preparar consultas e entender hábitos com mais clareza.
 </p>
+<div role="note" aria-label="Orientação importante sobre saúde" style="display:flex;gap:12px;align-items:flex-start;margin:14px 0 20px;padding:14px 16px;border:1px solid #bfdbfe;border-left:5px solid #2563eb;border-radius:12px;background:#eff6ff;color:#1e3a8a;line-height:1.55">
+  <span aria-hidden="true" style="font-size:22px">🩺</span>
+  <div><strong>Use a IA como apoio, não como diagnóstico.</strong><br><span style="font-size:14px">Confira informações importantes com um profissional de saúde. Não altere medicamentos nem adie atendimento com base apenas numa resposta da IA. Em sintomas intensos ou emergência, procure atendimento imediatamente.</span></div>
+</div>
 
 <section class="card" id="condicaoPadraoCard">
   <h3>📌 Cole a condição/doença que você quer entender aqui uma vez</h3>
@@ -891,9 +895,46 @@ function textoFinal(id){
   return t;
 }
 // ===== AÇÕES =====
-async function copiarPrompt(texto){try{await navigator.clipboard.writeText(texto);mostrarToast('📋 Prompt copiado!')}catch(e){mostrarToast('Não foi possível copiar automaticamente')}}
-async function abrirChatGPT(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o ChatGPT...');setTimeout(()=>window.open('https://chatgpt.com/','_blank'),300)}
-async function abrirGemini(texto){try{await navigator.clipboard.writeText(texto)}catch(e){}mostrarToast('✓ Copiado! Abrindo o Gemini...');setTimeout(()=>window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank'),300)}
+async function copiarTextoSaude(texto){
+  const conteudo=String(texto||'');
+  if(!conteudo.trim()) return false;
+  try{
+    if(navigator.clipboard&&window.isSecureContext){
+      await navigator.clipboard.writeText(conteudo);
+      return true;
+    }
+    const campo=document.createElement('textarea');
+    campo.value=conteudo;
+    campo.setAttribute('readonly','');
+    campo.style.position='fixed';
+    campo.style.left='-9999px';
+    document.body.appendChild(campo);
+    campo.select();
+    const ok=document.execCommand('copy');
+    campo.remove();
+    if(!ok) throw new Error('Cópia não autorizada pelo navegador');
+    return true;
+  }catch(e){
+    console.warn('Não foi possível copiar o prompt de saúde:',e);
+    return false;
+  }
+}
+async function copiarPrompt(texto){
+  if(await copiarTextoSaude(texto)) mostrarToast('📋 Prompt copiado!');
+  else mostrarToast('⚠️ Cópia automática indisponível. Selecione e copie o texto manualmente.');
+}
+async function abrirChatGPT(texto){
+  const copiou=await copiarTextoSaude(texto);
+  const janela=window.open('https://chatgpt.com/','_blank','noopener');
+  mostrarToast(copiou?'📋 Prompt copiado! Cole no ChatGPT.':'⚠️ ChatGPT aberto. Copie o prompt manualmente.');
+  if(!janela) mostrarToast('O navegador bloqueou a nova aba. Permita pop-ups para abrir o ChatGPT.');
+}
+async function abrirGemini(texto){
+  const copiou=await copiarTextoSaude(texto);
+  const janela=window.open('https://gemini.google.com/app?prompt='+encodeURIComponent(texto),'_blank','noopener');
+  mostrarToast(copiou?'📋 Prompt copiado! Abrindo o Gemini.':'⚠️ Gemini aberto. Se o texto não aparecer, cole o prompt copiado manualmente.');
+  if(!janela) mostrarToast('O navegador bloqueou a nova aba. Permita pop-ups para abrir o Gemini.');
+}
 
 function copiarPorId(id){registrarUso(id);copiarPrompt(textoFinal(id))}
 function chatPorId(id){registrarUso(id);abrirChatGPT(textoFinal(id))}
