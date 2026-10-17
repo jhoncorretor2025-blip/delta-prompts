@@ -348,9 +348,30 @@ function filtrarNivel(event, nivel) {
     atualizarFiltros();
 }
 
-function copiarPrompt(texto){
-    navigator.clipboard.writeText(texto);
-    alert("📋 Prompt copiado!");
+async function copiarPrompt(texto){
+    const conteudo=String(texto||'');
+    if(!conteudo.trim()){alert("⚠️ Não há texto para copiar.");return;}
+    try{
+        if(navigator.clipboard&&window.isSecureContext){
+            await navigator.clipboard.writeText(conteudo);
+        }else{
+            const campo=document.createElement('textarea');
+            campo.value=conteudo;
+            campo.setAttribute('readonly','');
+            campo.style.position='fixed';
+            campo.style.opacity='0';
+            campo.style.pointerEvents='none';
+            document.body.appendChild(campo);
+            campo.select();
+            const copiou=document.execCommand('copy');
+            campo.remove();
+            if(!copiou)throw new Error('Cópia não autorizada pelo navegador');
+        }
+        alert("📋 Prompt copiado!");
+    }catch(e){
+        console.error('Falha ao copiar prompt:',e);
+        alert("⚠️ Não foi possível copiar automaticamente. Selecione o texto do prompt e copie manualmente.");
+    }
 }
 
 function favoritarPrompt(titulo, conteudo){
