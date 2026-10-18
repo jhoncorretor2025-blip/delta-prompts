@@ -583,7 +583,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
       </div>
     </details>
   </nav>
-  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v110</strong></div>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v111</strong></div>
 </aside>
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
@@ -606,8 +606,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <div class="ranking-controls" aria-label="Ordenação e classificação das IAs">
 <label for="rankingSort">⭐ Ordenar catálogo
 <select id="rankingSort">
+<option value="priority" selected>🆓 Gratuitas → 📣 recomendadas → 🔥 conhecidas</option>
 <option value="recommended">Recomendadas primeiro</option>
-<option value="free-quality" selected>🆓 Melhores gratuitas primeiro</option>
+<option value="free-quality">🆓 Melhores gratuitas primeiro</option>
 <option value="popular">Mais conhecidas primeiro</option>
 <option value="quality">Maior qualidade avaliada</option>
 <option value="access">Gratuitas, freemium e pagas</option>
@@ -2140,7 +2141,7 @@ loadMore.type='button';loadMore.className='load-more-tools';loadMore.id='loadMor
 loadMore.addEventListener('click',()=>{visibleLimit+=PAGE_SIZE;render()});
 empty.insertAdjacentElement('afterend',loadMore);
 document.getElementById('clearCatalogFilters')?.addEventListener('click',()=>{
- cat='all';access='all';videoType='all';favoritesOnly=false;imageFreeOnly=false;showHidden=false;rankingCategory='current';rankingSort='free-quality';visibleLimit=PAGE_SIZE;
+ cat='all';access='all';videoType='all';favoritesOnly=false;imageFreeOnly=false;showHidden=false;rankingCategory='current';rankingSort='priority';visibleLimit=PAGE_SIZE;
  search.value='';
  document.querySelectorAll('#catFilters .filter').forEach(b=>b.classList.toggle('active',b.dataset.cat==='all'));
  document.querySelectorAll('#accessFilters .filter').forEach(b=>b.classList.toggle('active',b.dataset.access==='all'));
@@ -2208,7 +2209,7 @@ window.addEventListener('resize',()=>{
   if(next!==previous){deviceMode=next;syncDeviceStatus();render();}
  },180);
 });
-let rankingSort='free-quality';
+let rankingSort='priority';
 let rankingCategory='current';
 
 try{clicks=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch(e){clicks={}}
@@ -2360,6 +2361,14 @@ function rankingScore(card){
  const known=['ChatGPT','Claude','Gemini','Microsoft Copilot','Perplexity','Canva','Runway','Kling AI','CapCut','Sora','Veo 3 (Google)','Midjourney','Adobe Firefly','ElevenLabs','Suno','GitHub Copilot','DeepSeek','Meta AI','NotebookLM','Cursor','Gamma','HeyGen','Pika','Luma Dream Machine','Replit'];
  return known.includes(n)?2:0;
 }
+function isCreatorRecommended(card){
+ const names=(card.dataset.youtubers||'').trim();
+ return !!names || !!card.querySelector('.creator-recommendation');
+}
+function isKnownTool(card){
+ const chip=card.querySelector('.popularity-chip');
+ return !!chip && chip.textContent.indexOf('Ferramenta conhecida')>=0;
+}
 function rankingAccess(card){return ({free:0,limit:1,paid:2})[card.dataset.access]??3}
 function freeIndexSort(card){const a=String(card.dataset.access||'').toLowerCase();return a==='free'?0:a==='limit'?1:a==='paid'?2:3}
 function rankingCategoryMatch(card){
@@ -2418,6 +2427,16 @@ function render(){
   const runwayA=nameOf(a).toLowerCase()==='runway',runwayB=nameOf(b).toLowerCase()==='runway';
   if(runwayA!==runwayB)return runwayA?1:-1;
   if(bottom.includes(nameOf(a))!==bottom.includes(nameOf(b)))return Number(bottom.includes(nameOf(a)))-Number(bottom.includes(nameOf(b)));
+  if(rankingSort==='priority'){
+   // Ordem padrão em três critérios: acesso gratuito, recomendação de criadores e reconhecimento.
+   const accessDiff=rankingAccess(a)-rankingAccess(b);
+   if(accessDiff!==0)return accessDiff;
+   const recDiff=Number(isCreatorRecommended(b))-Number(isCreatorRecommended(a));
+   if(recDiff!==0)return recDiff;
+   const knownDiff=Number(isKnownTool(b))-Number(isKnownTool(a));
+   if(knownDiff!==0)return knownDiff;
+   return rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a)||nameOf(a).localeCompare(nameOf(b),'pt-BR');
+  }
   if(rankingSort==='az')return nameOf(a).localeCompare(nameOf(b),'pt-BR');
   if(rankingSort==='access')return rankingAccess(a)-rankingAccess(b)||rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a);
   if(rankingSort==='popular')return rankingScore(b)-rankingScore(a)||getCount(b)-getCount(a)||rankingAccess(a)-rankingAccess(b);
@@ -2437,7 +2456,7 @@ function render(){
    const hide=c.querySelector('.card-tools .card-action-btn');if(hide){const on=hidden.includes(n);hide.classList.toggle('active',on);hide.textContent=on?'↩️ Restaurar':'🙈 Ocultar';hide.title=on?'Mostrar esta IA novamente':'Ocultar esta IA da lista principal'}
    const actions=c.querySelectorAll('.card-tools .card-action-btn');const last=actions[1];if(last){const on=bottom.includes(n);last.classList.toggle('active',on);last.textContent=on?'↩️ Ordem normal':'⬇️ Por último';last.title=on?'Remover prioridade de fim da lista':'Mover esta IA para o fim da lista'}
  });
- count.textContent=pageCards.length+' de '+totalMatches+' resultados • '+cards.length+' ferramentas no catálogo • '+(rankingSort==='free-quality'?'melhores gratuitas primeiro':rankingSort==='popular'?'mais conhecidas primeiro':rankingSort==='quality'?'maior qualidade avaliada':rankingSort==='access'?'por modalidade de acesso':rankingSort==='az'?'ordem alfabética':'recomendadas primeiro');
+ count.textContent=pageCards.length+' de '+totalMatches+' resultados • '+cards.length+' ferramentas no catálogo • '+(rankingSort==='priority'?'gratuitas, recomendadas e conhecidas':rankingSort==='free-quality'?'melhores gratuitas primeiro':rankingSort==='popular'?'mais conhecidas primeiro':rankingSort==='quality'?'maior qualidade avaliada':rankingSort==='access'?'por modalidade de acesso':rankingSort==='az'?'ordem alfabética':'recomendadas primeiro');
  empty.style.display=totalMatches?'none':'block';
  loadMore.hidden=totalMatches<=pageCards.length;
  if(!loadMore.hidden)loadMore.textContent='⬇️ Carregar mais '+Math.min(PAGE_SIZE,totalMatches-pageCards.length)+' ferramentas ('+(totalMatches-pageCards.length)+' restantes)';
@@ -2756,7 +2775,7 @@ try{
 </script>
 
 <script>
-/* CANIVETE v110 — catálogo de recomendações de criadores e novas ferramentas */
+/* CANIVETE v111 — catálogo de recomendações de criadores e novas ferramentas */
 (function(){
  'use strict';
  var KEY='canivete_ias_clicks_v2';
@@ -2787,7 +2806,7 @@ try{
 
 
 <script>
-/* CANIVETE v110 — atribuição transparente de recomendações de criadores */
+/* CANIVETE v111 — atribuição transparente de recomendações de criadores */
 (function(){
  'use strict';
  var creators={
