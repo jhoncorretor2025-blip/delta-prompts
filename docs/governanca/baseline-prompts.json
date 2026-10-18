@@ -1,6 +1,6 @@
 {
   "_comentario": "Lista de prompts de cada página. Gerado por: node scripts/validar-paginas.js --atualizar-baseline. Prompts que estão aqui NÃO podem sumir sem aviso.",
-  "gerado_em": "2026-10-13",
+  "gerado_em": "2026-10-18",
   "paginas": {
     "paginas/analise.html": {
       "total": 4,
@@ -388,7 +388,7 @@
       ]
     },
     "paginas/imagens.html": {
-      "total": 27,
+      "total": 28,
       "titulos": [
         "🏛️ Império Romano",
         "📸 Foto LinkedIn Premium",
@@ -416,7 +416,8 @@
         "🦸 Estilo Action Figure",
         "🌴 Paraíso Tropical de Luxo",
         "🤠 Velho Oeste Cinematográfico",
-        "❄️ Reino de Gelo"
+        "❄️ Reino de Gelo",
+        "🧍 Model Sheet Realista de Personagem"
       ]
     },
     "paginas/imobiliario.html": {
