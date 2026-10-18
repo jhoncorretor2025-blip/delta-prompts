@@ -583,7 +583,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
       </div>
     </details>
   </nav>
-  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v114</strong></div>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v115</strong></div>
 </aside>
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
@@ -2680,7 +2680,7 @@ try{
 </script>
 
 <script>
-/* CANIVETE v114 — catálogo de recomendações de criadores e novas ferramentas */
+/* CANIVETE v115 — catálogo de recomendações de criadores e novas ferramentas */
 (function(){
  'use strict';
  var KEY='canivete_ias_clicks_v2';
@@ -2712,7 +2712,7 @@ try{
 
 
 <script>
-/* CANIVETE v114 — recomendações consolidadas para todo o catálogo */
+/* CANIVETE v115 — recomendações em contador clicável */
 (function(){
  'use strict';
  var allCards=Array.isArray(window.__catalogAllCards)?window.__catalogAllCards.slice():Array.prototype.slice.call(document.querySelectorAll('article.card'));
@@ -2759,10 +2759,43 @@ try{
     if(footer)card.insertBefore(badge,footer);else card.appendChild(badge);
    }
    badge.setAttribute('data-youtubers',matched.join(', '));
-   badge.textContent='📣 Recomendado por: '+matched.join(', ');
+   badge.classList.add('creator-recommendation-count');
+   badge.setAttribute('role','button');
+   badge.setAttribute('tabindex','0');
+   badge.setAttribute('aria-label','Ver '+matched.length+' recomendações de YouTubers');
+   badge.setAttribute('aria-expanded','false');
+   badge.style.cursor='pointer';
+   badge.style.display='inline-flex';
+   badge.style.alignItems='center';
+   badge.style.justifyContent='center';
+   badge.style.width='34px';
+   badge.style.height='34px';
+   badge.style.padding='0';
+   badge.style.margin='0 0 12px';
+   badge.style.borderRadius='50%';
+   badge.style.fontSize='14px';
+   badge.style.fontWeight='900';
+   badge.style.background='var(--bg)';
+   badge.style.color='var(--ink)';
+   badge.style.border='1px solid var(--line)';
+   badge.style.position='relative';
+   badge.title=matched.join(', ');
+   badge.textContent=String(matched.length);
    existing.slice(1).forEach(function(el){el.remove()});
+   if(!badge.dataset.namesPanel){
+    var panel=document.createElement('div');
+    panel.className='creator-recommendation-names';
+    panel.hidden=true;
+    panel.style.cssText='margin:-5px 0 12px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font-size:12px;line-height:1.6;background:var(--bg)';
+    panel.textContent=matched.join(' · ');
+    badge.insertAdjacentElement('afterend',panel);
+    badge.dataset.namesPanel='true';
+   } else {
+    var panel=badge.nextElementSibling;
+    if(panel&&panel.classList.contains('creator-recommendation-names'))panel.textContent=matched.join(' · ');
+   }
   }else{
-   existing.forEach(function(el){el.remove()});
+   existing.forEach(function(el){var panel=el.nextElementSibling;if(panel&&panel.classList.contains('creator-recommendation-names'))panel.remove();el.remove()});
   }
   function countsForCard(names){
    names.forEach(function(name){
