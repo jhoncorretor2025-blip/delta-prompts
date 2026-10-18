@@ -583,12 +583,12 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
       </div>
     </details>
   </nav>
-  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v117</strong></div>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v118</strong></div>
 </aside>
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
 <main class="wrap">
-<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v117</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
+<header class="top"><div class="brand">🧰 Canivete Assistente <span class="catalog-version">• Catálogo de IAs • v118</span></div><div class="top-actions"><button class="catalog-menu-toggle" id="catalogMenuToggle" type="button" aria-controls="catalogSidebar" aria-expanded="false">☰ Menu</button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">🌙 Modo escuro</button></div></header>
 <section class="hero"><h1>🤖 IAs gratuitas que vale a pena conhecer</h1><p>Agora com <strong>241 ferramentas</strong> para conversar, pesquisar, estudar, criar imagens, vídeos, áudio, apresentações, automatizar tarefas e programar. Use os filtros para encontrar a IA certa para cada trabalho. <strong>Atenção:</strong> ferramentas de vídeo com créditos gratuitos limitados estão identificadas como testes, não como opções para gerar vídeos ilimitados sem pagar.</p></section>
 
 
@@ -633,7 +633,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <div class="count" id="count"></div>
 </section>
 
-<article class="card" data-cat="imagem criacao" data-access="free" data-search="muse image geração e edição de imagens no ecossistema meta.">
+<article class="card" data-youtubers="Vive de lo tuyo" data-cat="imagem criacao" data-access="free" data-search="muse image geração e edição de imagens no ecossistema meta.">
 <div class="head"><div class="icon">✨</div><div class="title"><h2>Muse Image</h2><small>Ferramenta indicada por Vive de lo tuyo</small></div><span class="tag">GRÁTIS</span></div><p class="desc">Geração e edição de imagens no ecossistema Meta.</p><div class="use"><b>💡 Exemplo</b> Confira o site oficial, os limites gratuitos e teste com um projeto simples antes de depender da ferramenta.</div><div class="footer"><span class="best">Recomendação do canal</span><span class="clicks" aria-label="Cliques">👆 <b class="click-count">0</b></span><a class="open" href="https://www.meta.ai/" target="_blank" rel="noopener noreferrer">Abrir ↗</a></div>
 </article>
 
@@ -2366,7 +2366,7 @@ function rankingScore(card){
  const known=['ChatGPT','Claude','Gemini','Microsoft Copilot','Perplexity','Canva','Runway','Kling AI','CapCut','Sora','Veo 3 (Google)','Midjourney','Adobe Firefly','ElevenLabs','Suno','GitHub Copilot','DeepSeek','Meta AI','NotebookLM','Cursor','Gamma','HeyGen','Pika','Luma Dream Machine','Replit'];
  return known.includes(n)?2:0;
 }
-/* v117: quantos YouTubers diferentes recomendam esta IA (junta o que está no card e nos selos de recomendação) */
+/* v118: quantos YouTubers diferentes recomendam esta IA (junta o que está no card e nos selos de recomendação) */
  function youtuberCount(card){const nomes=new Set();const add=v=>String(v||'').split(/\s*[,;|]\s*/).map(x=>x.trim()).filter(Boolean).forEach(x=>nomes.add(x));add(card.dataset.youtubers);card.querySelectorAll('.creator-recommendation').forEach(el=>add(el.dataset.youtubers));return nomes.size}
  function isCreatorRecommended(card){
  const names=(card.dataset.youtubers||'').trim();
@@ -2435,7 +2435,7 @@ function render(){
   if(runwayA!==runwayB)return runwayA?1:-1;
   if(bottom.includes(nameOf(a))!==bottom.includes(nameOf(b)))return Number(bottom.includes(nameOf(a)))-Number(bottom.includes(nameOf(b)));
   if(rankingSort==='priority'){
-   // v117: primeiro as recomendadas pelo MAIOR número de YouTubers (3 → 2 → 1); as não recomendadas vêm depois.
+   // v118: primeiro as recomendadas pelo MAIOR número de YouTubers (3 → 2 → 1); as não recomendadas vêm depois.
    // Empatou? Desempata por acesso gratuito e depois por ferramenta conhecida.
    const recDiff=youtuberCount(b)-youtuberCount(a);
    if(recDiff!==0)return recDiff;
@@ -2521,7 +2521,7 @@ document.getElementById('imageFreeToggle').addEventListener('click',()=>{
  render();
 });
 document.getElementById('exportTextTools').addEventListener('click',()=>{
- const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v117','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
+ const lines=['CANIVETE ASSISTENTE — LISTA COMPLETA DE IAs','Versão v118','Total de ferramentas: '+cards.length,'','Observação: os planos gratuitos e limites podem mudar. Confira o site oficial de cada ferramenta.',''];
  cards.forEach((card,index)=>{
    const name=nameOf(card);
    const categories=card.dataset.cat.split(' ').join(', ');
@@ -2534,7 +2534,7 @@ document.getElementById('exportTextTools').addEventListener('click',()=>{
  });
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v117.txt';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v118.txt';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.getElementById('exportAllTools').addEventListener('click',()=>{
@@ -2553,7 +2553,7 @@ document.getElementById('exportAllTools').addEventListener('click',()=>{
  const csv=String.fromCharCode(65279)+rows.map(row=>row.map(quote).join(';')).join(String.fromCharCode(13,10));
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);const a=document.createElement('a');
- a.href=url;a.download='canivete-lista-completa-ias-v117.csv';document.body.appendChild(a);a.click();a.remove();
+ a.href=url;a.download='canivete-lista-completa-ias-v118.csv';document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 document.querySelectorAll('[data-radar-access]').forEach(b=>b.addEventListener('click',()=>{
@@ -2784,7 +2784,7 @@ try{
 </script>
 
 <script>
-/* CANIVETE v117 — catálogo de recomendações de criadores e novas ferramentas */
+/* CANIVETE v118 — catálogo de recomendações de criadores e novas ferramentas */
 (function(){
  'use strict';
  var KEY='canivete_ias_clicks_v2';
@@ -2793,7 +2793,7 @@ try{
  function writeCounts(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}}
  function cards(){return Array.prototype.slice.call(document.querySelectorAll('#grid article.card'))}
  function name(card){var h=card.querySelector('h2');return h?h.textContent.trim():''}
- /* v117: só escreve quando o número muda. Antes ele reescrevia sempre, o “vigia” (MutationObserver) via a mudança e chamava de novo — sem fim — e a página travava. */
+ /* v118: só escreve quando o número muda. Antes ele reescrevia sempre, o “vigia” (MutationObserver) via a mudança e chamava de novo — sem fim — e a página travava. */
  function syncCounts(){var saved=readCounts();cards().forEach(function(card){var n=name(card),el=card.querySelector('.click-count');if(!el)return;var value=Number(saved[n]||0);var txt=String(Number.isFinite(value)&&value>=0?value:0);if(el.textContent!==txt)el.textContent=txt})}
  function record(card){var n=name(card);if(!n)return;var saved=readCounts();saved[n]=Math.max(0,Number(saved[n]||0))+1;writeCounts(saved);var el=card.querySelector('.click-count');if(el)el.textContent=String(saved[n])}
  if(grid){grid.addEventListener('click',function(e){var link=e.target.closest('a.open');if(link){var card=link.closest('article.card');if(card)record(card)}});syncCounts();if(window.MutationObserver){var observer=new MutationObserver(syncCounts);observer.observe(grid,{childList:true,subtree:true})}}
@@ -2816,7 +2816,7 @@ try{
 
 
 <script>
-/* CANIVETE v117 — recomendações em contador clicável */
+/* CANIVETE v118 — recomendações em contador clicável */
 (function(){
  'use strict';
  var allCards=Array.isArray(window.__catalogAllCards)?window.__catalogAllCards.slice():Array.prototype.slice.call(document.querySelectorAll('article.card'));
@@ -2934,7 +2934,7 @@ try{
 </script>
 
 <script>
-/* v117: as recomendações de vários YouTubers são juntadas depois da primeira montagem da lista.
+/* v118: as recomendações de vários YouTubers são juntadas depois da primeira montagem da lista.
    Reordena assim que terminar, para que as IAs com mais recomendações apareçam primeiro já na primeira tela. */
 (function(){function reordenar(){try{if(typeof window.iasRender==='function')window.iasRender()}catch(e){}}
  if(document.readyState==='complete')setTimeout(reordenar,0);else window.addEventListener('load',function(){setTimeout(reordenar,0)});
