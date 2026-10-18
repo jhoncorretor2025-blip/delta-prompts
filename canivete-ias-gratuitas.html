@@ -1474,7 +1474,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <section class="feature-panel" id="creatorRecommendations" aria-label="Recomendações de criadores">
 <h3>📣 Recomendações de YouTubers</h3>
 <p>As indicações abaixo foram atribuídas à <strong>Jessica Freire</strong>, conforme a lista enviada por você. O contador representa criadores identificados na sua lista, não uma contagem independente de vídeos verificados. Novas recomendações podem ser somadas quando houver fonte identificável.</p>
-<div class="dashboard-stats"><span class="stat-pill">👩‍💻 Criadoras identificadas nesta lista: <strong>1</strong></span><span class="stat-pill">🏷️ Ferramentas atribuídas à Jessica Freire: <strong>28</strong></span></div>
+<div class="dashboard-stats"><span class="stat-pill">👩‍💻 Criadoras identificadas nesta lista: <strong>1</strong></span><span class="stat-pill">🏷️ Ferramentas atribuídas à Jessica Freire: <strong id="jessicaToolCount">0</strong></span></div>
 </section>
 <article class="card" data-cat="video audio imagem pesquisa mercado produtividade" data-access="limit" data-search="programacao ia agente codigo automacao" data-video-type="both" data-youtubers="Jessica Freire">
 <div class="head"><div class="icon">🧑‍💻</div><div class="title"><h2>MiniMax Code</h2><small>Agente de programação e automação</small></div><span class="tag limit">VERIFICAR PLANO*</span></div>
@@ -2394,6 +2394,42 @@ try{
  function deviceFallback(){var title=document.getElementById('deviceStatusTitle'),icon=document.getElementById('deviceStatusIcon'),desc=document.getElementById('deviceStatusDescription');if(!title||!/detectando dispositivo/i.test(title.textContent))return;var ua=navigator.userAgent||'',mobile=/Android|iPhone|iPod/i.test(ua),tablet=/iPad|Tablet/i.test(ua)||(/Android/i.test(ua)&&!/Mobile/i.test(ua)),label=mobile?'celular':tablet?'tablet':'computador';if(icon)icon.textContent=mobile?'📱':tablet?'📲':'💻';title.textContent='Dispositivo identificado: '+label;if(desc)desc.textContent='Detecção automática de segurança ativada. Se necessário, escolha manualmente o aparelho abaixo.'}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',deviceFallback);else deviceFallback();window.setTimeout(deviceFallback,1800);
  document.querySelectorAll('a[href]').forEach(function(a){try{var u=new URL(a.href,window.location.href);if((u.protocol==='http:'||u.protocol==='https:')&&u.origin!==window.location.origin){a.target='_blank';var rel=(a.getAttribute('rel')||'').split(/\s+/).filter(Boolean);if(rel.indexOf('noopener')<0)rel.push('noopener');if(rel.indexOf('noreferrer')<0)rel.push('noreferrer');a.setAttribute('rel',rel.join(' '))}}catch(e){}});
+})();
+</script>
+
+
+<script>
+/* CANIVETE v108 — atribuição transparente de recomendações de criadores */
+(function(){
+ 'use strict';
+ var aliases=[
+  ['Google Flow','Flow'],['Google Whisk','Whisk'],['Gemini Omni','Gemini'],['Vibes','Vibes AI'],
+  ['Meta Muse','Muse'],['Grok Imagine','Grok'],['Higgsfield','Higgsfield'],['ElevenLabs','ElevenLabs'],
+  ['MiniMax Audio','MiniMax'],['Fish Audio','Fish Audio'],['Calodata','Calodata'],['FatMalls','FatMalls'],
+  ['SocialVault','SocialVault'],['Submic','Submic'],['SSSTik','SSSTik'],['CapCut','CapCut'],
+  ['Video Downloader Helper','Video Downloader Helper'],['Google Skills Boost','Google Skills Boost'],
+  ['MiniMax Code','MiniMax Code'],['Dolar AI','Dolar AI'],['Pavo AI','Pavo AI'],['Astory','Astory'],
+  ['Pruna AI','Pruna AI'],['Queen AI','Queen AI']
+ ];
+ var cards=[].slice.call(document.querySelectorAll('#grid article.card'));
+ var count=0;
+ cards.forEach(function(card){
+  var h=card.querySelector('h2'); if(!h)return;
+  var name=(h.textContent||'').trim().toLocaleLowerCase('pt-BR');
+  var match=aliases.some(function(pair){return name===pair[0].toLocaleLowerCase('pt-BR')||name===pair[1].toLocaleLowerCase('pt-BR')});
+  if(!match)return;
+  var existing=card.querySelector('.creator-recommendation');
+  if(!existing){
+   existing=document.createElement('div');existing.className='creator-recommendation';
+   existing.setAttribute('data-youtubers','Jessica Freire');
+   existing.style.cssText='margin:0 0 12px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font-size:12px;background:var(--bg)';
+   existing.innerHTML='📣 <strong>1 criadora indicada:</strong> Jessica Freire';
+   var footer=card.querySelector('.footer');
+   if(footer)card.insertBefore(existing,footer);
+  }
+  count++;
+ });
+ var counter=document.getElementById('jessicaToolCount');if(counter)counter.textContent=String(count);
 })();
 </script>
 
