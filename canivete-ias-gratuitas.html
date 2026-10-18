@@ -583,7 +583,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
       </div>
     </details>
   </nav>
-  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v111</strong></div>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v112</strong></div>
 </aside>
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
@@ -1989,6 +1989,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
 <script>
 (function(){
 const cards=[...document.querySelectorAll('.card')];
+window.__catalogAllCards=cards;
 /* Exportação e ajustes ficam num menu próprio; os IDs e handlers originais são preservados. */
 const globalActions=document.querySelector('.global-actions');
 const quickActions=document.querySelector('.global-actions-list');
@@ -2775,7 +2776,7 @@ try{
 </script>
 
 <script>
-/* CANIVETE v111 — catálogo de recomendações de criadores e novas ferramentas */
+/* CANIVETE v112 — catálogo de recomendações de criadores e novas ferramentas */
 (function(){
  'use strict';
  var KEY='canivete_ias_clicks_v2';
@@ -2806,7 +2807,7 @@ try{
 
 
 <script>
-/* CANIVETE v111 — atribuição transparente de recomendações de criadores */
+/* CANIVETE v112 — atribuição transparente de recomendações de criadores */
 (function(){
  'use strict';
  var creators={
@@ -2814,7 +2815,7 @@ try{
   'Freddy Borges':['chatgpt','elevenlabs','adobe express','youtube create','google gemini','gemini','google flow','flow','gemini gen','google whisk','whisk','meta ai','vibes ai','vibes','flow music'],
   'Jornada Digital':['agnes ai','agnes video','ai videomaker','art player','astorie','atoms','chatgpt','claude','kling','crea','creen ai','decart ai','dola ai','elevenlabs','every jane ai','every pixel','fal ai','filmora','flaque','flick','google flow','flux 3','gemini','gpt image','grok','happy horse','happy oyster','happy shrimp','higgsfield','hilo','h2o ai','hunyuan image','loremotion','ltx','mage','magic hour','magic light','meta ai','metamusic','meta video','midjourney','minimax design','minimax h3','miora','motion 16','nano banana','newtake ai','offline ai','omni flash','one video','orbs','pavo ai','pavo','pippit','pixazo','pruna ai','qwen','reactor','seedance','sgin','sjot','snapgen ai','storyboard studio','theres an ai for that','tom kit','topaz video','topaz','topview ai','veo 3','veo','video.ai','video ai','vigle ai','vibes ai','vir','youtube create','zsky']
  };
- var cards=[].slice.call(document.querySelectorAll('#grid article.card'));
+ var cards=Array.isArray(window.__catalogAllCards)?window.__catalogAllCards.slice():[].slice.call(document.querySelectorAll('article.card'));
  var counts={'Jessica Freire':0,'Freddy Borges':0,'Jornada Digital':0};
  cards.forEach(function(card){
   var h=card.querySelector('h2');if(!h)return;
