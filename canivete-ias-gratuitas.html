@@ -583,7 +583,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(-
       </div>
     </details>
   </nav>
-  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v112</strong></div>
+  <div class="catalog-sidebar-foot"><span>Catálogo de IAs</span><strong>v113</strong></div>
 </aside>
 <div class="catalog-menu-overlay" id="catalogMenuOverlay" aria-hidden="true"></div>
 
@@ -2776,7 +2776,7 @@ try{
 </script>
 
 <script>
-/* CANIVETE v112 — catálogo de recomendações de criadores e novas ferramentas */
+/* CANIVETE v113 — catálogo de recomendações de criadores e novas ferramentas */
 (function(){
  'use strict';
  var KEY='canivete_ias_clicks_v2';
@@ -2807,36 +2807,29 @@ try{
 
 
 <script>
-/* CANIVETE v112 — atribuição transparente de recomendações de criadores */
+/* CANIVETE v113 — atribuição consistente de recomendações no catálogo completo */
 (function(){
  'use strict';
- var creators={
-  'Jessica Freire':['minimax code','google flow','flow music','google whisk','gemini omni','meta ai','vibes','meta muse','dolar ai','pavo ai','astory','pruna ai','queen ai','grok imagine','higgsfield','elevenlabs','fish audio','minimax audio','calodata','fatmalls','socialvault','submic','ssstik','capcut','video downloader helper','google skills boost'],
-  'Freddy Borges':['chatgpt','elevenlabs','adobe express','youtube create','google gemini','gemini','google flow','flow','gemini gen','google whisk','whisk','meta ai','vibes ai','vibes','flow music'],
-  'Jornada Digital':['agnes ai','agnes video','ai videomaker','art player','astorie','atoms','chatgpt','claude','kling','crea','creen ai','decart ai','dola ai','elevenlabs','every jane ai','every pixel','fal ai','filmora','flaque','flick','google flow','flux 3','gemini','gpt image','grok','happy horse','happy oyster','happy shrimp','higgsfield','hilo','h2o ai','hunyuan image','loremotion','ltx','mage','magic hour','magic light','meta ai','metamusic','meta video','midjourney','minimax design','minimax h3','miora','motion 16','nano banana','newtake ai','offline ai','omni flash','one video','orbs','pavo ai','pavo','pippit','pixazo','pruna ai','qwen','reactor','seedance','sgin','sjot','snapgen ai','storyboard studio','theres an ai for that','tom kit','topaz video','topaz','topview ai','veo 3','veo','video.ai','video ai','vigle ai','vibes ai','vir','youtube create','zsky']
- };
  var cards=Array.isArray(window.__catalogAllCards)?window.__catalogAllCards.slice():[].slice.call(document.querySelectorAll('article.card'));
+ var creators={
+ 'Jessica Freire':['minimax code','google flow','flow music','google whisk','gemini omni','meta ai','vibes','meta muse','dolar ai','pavo ai','astory','pruna ai','queen ai','grok imagine','higgsfield','elevenlabs','fish audio','minimax audio','calodata','fatmalls','socialvault','submic','ssstik','capcut','video downloader helper','google skills boost'],
+ 'Freddy Borges':['chatgpt','elevenlabs','adobe express','youtube create','google gemini','gemini','google flow','flow','gemini gen','google whisk','whisk','meta ai','vibes ai','vibes','flow music'],
+ 'Jornada Digital':['agnes ai','agnes video','ai videomaker','art player','astorie','atoms','chatgpt','claude','kling','crea','creen ai','decart ai','dola ai','elevenlabs','every jane ai','every pixel','fal ai','filmora','flaque','flick','google flow','flux 3','gemini','gpt image','grok','happy horse','happy oyster','happy shrimp','higgsfield','hilo','h2o ai','hunyuan image','loremotion','ltx','mage','magic hour','magic light','meta ai','metamusic','meta video','midjourney','minimax design','minimax h3','miora','motion 16','nano banana','newtake ai','offline ai','omni flash','one video','orbs','pavo ai','pavo','pippit','pixazo','pruna ai','qwen','reactor','seedance','sgin','sjot','snapgen ai','storyboard studio','theres an ai for that','tom kit','topaz video','topaz','topview ai','veo 3','veo','video.ai','video ai','vigle ai','vibes ai','vir','youtube create','zsky']
+ };
+ function normalize(s){return (s||'').trim().toLocaleLowerCase('pt-BR');}
  var counts={'Jessica Freire':0,'Freddy Borges':0,'Jornada Digital':0};
  cards.forEach(function(card){
-  var h=card.querySelector('h2');if(!h)return;
-  var name=(h.textContent||'').trim().toLocaleLowerCase('pt-BR');
+  var h=card.querySelector('h2');if(!h)return;var name=normalize(h.textContent);
   Object.keys(creators).forEach(function(creator){
-   var matched=creators[creator].some(function(alias){return name===alias||(alias.length>=7&&name.indexOf(alias)>=0)});
-   if(!matched)return;
-   counts[creator]++;
-   var marked=[].slice.call(card.querySelectorAll('.creator-recommendation')).some(function(el){return (el.getAttribute('data-youtubers')||'').split(',').map(function(x){return x.trim()}).indexOf(creator)>=0});
-   if(!marked){
-    var footer=card.querySelector('.footer');if(!footer)return;
-    var badge=document.createElement('div');badge.className='creator-recommendation';badge.setAttribute('data-youtubers',creator);
-    badge.style.cssText='margin:0 0 12px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font-size:12px;background:var(--bg)';
-    badge.innerHTML='📣 <strong>Recomendado por:</strong> '+creator;
-    card.insertBefore(badge,footer);
-   }
+   var matched=creators[creator].some(function(alias){return name===alias||(alias.length>=7&&name.indexOf(alias)>=0);});
+   if(!matched)return;counts[creator]++;
+   var badges=[].slice.call(card.querySelectorAll('.creator-recommendation'));
+   var marked=badges.some(function(el){return (el.getAttribute('data-youtubers')||'').split(',').map(function(x){return normalize(x);}).indexOf(creator)>=0;});
+   if(!marked){var footer=card.querySelector('.footer');if(!footer)return;var badge=document.createElement('div');badge.className='creator-recommendation';badge.setAttribute('data-youtubers',creator);badge.style.cssText='margin:0 0 12px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font-size:12px;background:var(--bg)';badge.innerHTML='📣 <strong>Recomendado por:</strong> '+creator;card.insertBefore(badge,footer);}
   });
  });
- var j=document.getElementById('jessicaToolCount');if(j)j.textContent=String(counts['Jessica Freire']);
- var f=document.getElementById('freddyToolCount');if(f)f.textContent=String(counts['Freddy Borges']);
- var d=document.getElementById('jornadaToolCount');if(d)d.textContent=String(counts['Jornada Digital']);
+ var ids={'Jessica Freire':'jessicaToolCount','Freddy Borges':'freddyToolCount','Jornada Digital':'jornadaToolCount'};
+ Object.keys(ids).forEach(function(creator){var el=document.getElementById(ids[creator]);if(el)el.textContent=String(counts[creator]);});
 })();
 </script>
 
