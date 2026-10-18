@@ -35,7 +35,7 @@
 [data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#f1f5f9}
 @media(max-width:700px){.preview{height:190px}.preview-wrap,.erro-preview{min-height:190px;height:190px}.card{overflow:visible}.acoes button{flex:1 1 120px}.theme-toggle{bottom:90px}}</style></head><body class="category-page"><div id="menu"><div style="width:240px;min-height:100vh;background:linear-gradient(90deg,#fafbfc,#f2f3f5,#fafbfc);background-size:200% 100%"></div></div><script src="/delta-prompts/menu-loader.js?v=20260908d"></script><main>
 
-<small data-delta-version="V1.72" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.72</small>
+<small data-delta-version="V1.73" style="display:inline-flex;margin:0 0 8px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:900">Delta Prompts · V1.73</small>
 <h1>🎨 Prompts para Transformação de Imagens</h1>
 <p>Escolha um estilo, veja a prévia e copie o prompt para transformar sua imagem.</p>
 
@@ -124,8 +124,8 @@ const dadosBrutos=[
 ];
 
 const prompts=dadosBrutos.map((p,i)=>{
-  const promptCompleto = p[2].includes('Model Sheet Realista') ? p[4] : p[4] + instrucaoManterRosto();
-  const promptEn = p[2].includes('Model Sheet Realista') ? p[6] : p[6] + instrucaoManterRostoEN();
+  const promptCompleto = p[4] + instrucaoManterRosto();
+  const promptEn = p[6] + instrucaoManterRostoEN();
   const obj={id:'img-'+i,nivel:p[0],categoria:p[1],titulo:p[2],quando:p[3],prompt:promptCompleto,promptEn:promptEn,imagemId:p[5],novo:i===0};
   obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
   return obj;
