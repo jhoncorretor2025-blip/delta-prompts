@@ -2762,7 +2762,7 @@ function addHabito(){
  const nome=(document.getElementById('novoHabitoNome').value||'').trim(),icone=document.getElementById('novoHabitoIcone').value;
  if(!nome){mostrarToastCanivete('Digite um nome para o hábito.');return}
  let agua={};if(icone==='💧'){const meta=Number(document.getElementById('habitosMetaAgua')?.value)||0,ml=obterCapacidadeAguaHabitos();if(meta<.25||meta>10){mostrarToastCanivete('Defina uma meta entre 0,25 e 10 litros.');return}if(ml<50||ml>3000){mostrarToastCanivete('Capacidade válida: 50 a 3.000 ml.');return}agua={metaLitros:meta,recipienteMl:ml}}
- const l=_lerHabitos();l.push({nome,icone,dias:[],categoria:(icone==='📖'?'Estudos':(['💧','🏋️','💊','🌙','🧘','🥗'].includes(icone)?'Saúde':'Rotina'),frequencia:7,horario:'',...agua});
+ const l=_lerHabitos();l.push({nome,icone,dias:[],categoria:(icone==='📖'?'Estudos':(['💧','🏋️','💊','🌙','🧘','🥗'].includes(icone)?'Saúde':'Rotina')),frequencia:7,horario:'',...agua});
  _salvarHabitos(l);document.getElementById('novoHabitoNome').value='';renderListaHabitos();mostrarToastCanivete('✅ '+nome+' adicionado!');
 }
 function toggleHabitoHoje(i,data){
@@ -2798,6 +2798,7 @@ function _habitoPeriodo(dias){const l=_lerHabitos(),inicio=new Date();inicio.set
  l.forEach(h=>{const freq=Math.max(1,Math.min(7,Number(h.frequencia)||7));const ds=(h.dias||[]).filter(x=>x>=ini&&x<=fim);alvo+=Math.min(freq,dias===7?freq:Math.round(freq*dias/7));feito+=ds.length});
  return {alvo,feito,pct:alvo?Math.min(100,Math.round(feito/alvo*100)):0}}
 function renderListaHabitos(){
+ const dateInput=document.getElementById('habitosDataRegistro');if(dateInput&&!dateInput.value)dateInput.value=_hojeHabitos();
  const el=document.getElementById('listaHabitos');if(!el)return;const l=_lerHabitos(),hoje=_hojeHabitos(),data=_dataHabitos();
  const feitosHoje=l.filter(h=>(h.dias||[]).includes(hoje)).length,streakGeral=l.length?Math.max(...l.map(h=>calcularStreakHabito(h.dias||[]))):0;
  const semana=_habitoPeriodo(7);const setText=(id,v)=>{const n=document.getElementById(id);if(n)n.textContent=v};
@@ -2838,7 +2839,7 @@ function ativarNotificacoesHabitos(){
  Notification.requestPermission().then(p=>mostrarToastCanivete(p==='granted'?'🔔 Notificações autorizadas. Defina o horário ao editar cada hábito.':'Permissão não concedida. Autorize notificações nas configurações do navegador.'));
 }
 function verificarLembretesHabitos(){
- if(!('Notification' in window)||Notification.permission!=='granted'||document.visibilityState==='hidden')return;
+ if(!('Notification' in window)||Notification.permission!=='granted')return;
  const now=new Date(),hora=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0'),hoje=_hojeHabitos(),key='canivete-habitos-notif-'+hoje+'-'+hora;
  const l=_lerHabitos(),vistos=(()=>{try{return JSON.parse(sessionStorage.getItem(key)||'[]')}catch(e){return[]}})();
  l.forEach((h,i)=>{if(h.horario===hora&&!(h.dias||[]).includes(hoje)&&!vistos.includes(i)){try{new Notification('🔔 Hábito: '+h.nome,{body:'Está na hora do seu hábito planejado.',tag:'habito-'+i+'-'+hoje+'-'+hora})}catch(e){}vistos.push(i)}});
