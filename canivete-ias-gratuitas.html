@@ -3063,5 +3063,41 @@ if(document.readyState==='complete')setTimeout(aplicarTudo,50);else window.addEv
 setTimeout(aplicarTudo,600);
 })();
 </script>
+
+<!-- v122 — sincroniza os contadores de Categoria com o filtro de Acesso -->
+<script>
+(function(){
+ 'use strict';
+ function atualizarContadoresCategoria(){
+  const cards=window.__catalogAllCards||Array.from(document.querySelectorAll('article.card,.card'));
+  const ativo=document.querySelector('#accessFilters [data-access].active');
+  const acesso=ativo?ativo.dataset.access:'all';
+  const base=cards.filter(c=>acesso==='all'||String(c.dataset.access||'').toLowerCase()===acesso);
+  const total=document.querySelector('[data-count-all]');
+  if(total)total.textContent=String(base.length);
+  document.querySelectorAll('#catFilters [data-count-cat]').forEach(el=>{
+   const categoria=el.getAttribute('data-count-cat');
+   const quantidade=base.filter(c=>{
+    const cats=String(c.dataset.cat||'').split(/\\s+/).filter(Boolean);
+    const video=cats.includes('video');
+    const tipo=c.dataset.videoType||'other';
+    if(categoria==='video-criacao')return video&&['create','both'].includes(tipo);
+    if(categoria==='video-edicao')return video&&['edit','both'].includes(tipo);
+    if(categoria==='video')return video;
+    if(categoria==='especialistas')return c.dataset.specialist==='true';
+    return cats.includes(categoria);
+   }).length;
+   el.textContent=String(quantidade);
+  });
+ }
+ document.addEventListener('click',function(e){
+  if(e.target.closest('#accessFilters [data-access]'))setTimeout(atualizarContadoresCategoria,0);
+ });
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(atualizarContadoresCategoria,0));
+ else setTimeout(atualizarContadoresCategoria,0);
+ window.addEventListener('load',()=>setTimeout(atualizarContadoresCategoria,100));
+})();
+</script>
+
 </body>
 </html>
