@@ -2836,17 +2836,18 @@ function atualizarSugestaoAguaPerfil(){
  const out=document.getElementById('habitosAguaSugestao');if(!out)return;
  try{
   const x=metaAguaSugeridaPerfil();
-  if(!x.litros){out.textContent='Não encontrei um peso válido no perfil. Registre seu peso em Meu Perfil para receber uma sugestão; a meta pode ser editada manualmente.';return}
+  if(!x.litros){out.innerHTML='Não encontrei seu peso. <a href="#" id="habitosLinkPerfilPeso" style="color:var(--blue);font-weight:800;text-decoration:underline">Preencher peso no perfil ↗</a> para calcular a meta. Você também pode definir a meta manualmente.';return}
   const alturaTxt=x.altura>0?' Altura cadastrada: '+x.altura+' cm.':'';
   out.textContent='Com '+String(x.peso).replace('.',',')+' kg, a estimativa inicial é '+String(x.litros).replace('.',',')+' L/dia (35 ml/kg).'+alturaTxt+' A altura é complementar; não determina sozinha a necessidade de água.';
  }catch(e){out.textContent='Não consegui ler o peso do perfil. Confira os dados em Meu Perfil e tente novamente.';console.error('Sugestão de água:',e)}
 }
+document.addEventListener('click',function(e){const a=e.target.closest('#habitosLinkPerfilPeso');if(!a)return;e.preventDefault();if(typeof showPage==='function')showPage('perfil');setTimeout(function(){const f=document.getElementById('pesoRapidoPerfil');if(f){f.scrollIntoView({behavior:'smooth',block:'center'});try{f.focus({preventScroll:true})}catch(err){f.focus()}}},250)});
 function aplicarMetaAguaPerfil(){
  const out=document.getElementById('habitosAguaSugestao');
  try{
   const x=metaAguaSugeridaPerfil();
   if(!x.litros){
-   if(out)out.textContent='Ainda não há peso válido para calcular. Abra Meu Perfil, registre seu peso na área de peso/IMC e volte aqui para tentar novamente.';
+   if(out)out.innerHTML='Para calcular sua sugestão, falta o peso do perfil. <a href="#" id="habitosLinkPerfilPeso" style="color:var(--blue);font-weight:800;text-decoration:underline">Preencher peso no perfil ↗</a>. Você pode ajustar a meta manualmente enquanto isso.';
    if(typeof mostrarToastCanivete==='function')mostrarToastCanivete('Informe seu peso no Meu Perfil para calcular a meta de água.');
    return;
   }
