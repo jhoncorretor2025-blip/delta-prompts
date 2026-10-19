@@ -215,7 +215,7 @@
 #habitos .habits-water-progress-fill{height:100%;background:#3b82f6;border-radius:99px;transition:width .2s}
 @media(max-width:640px){#habitos .habits-water-fields{grid-template-columns:1fr 1fr}#habitos .habits-water-fields .field:last-child{grid-column:1/-1}}
 
-/* HÁBITOS — painéis recolhíveis V8.63 */
+/* HÁBITOS — painéis recolhíveis V8.64 */
 .habits-collapsible{overflow:hidden}
 .habits-collapsible-summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;cursor:pointer;min-height:62px}
 .habits-collapsible-summary::-webkit-details-marker{display:none}
@@ -879,7 +879,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.63';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.64';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();window.d=d;window.APP_VERSION=APP_VERSION;window.__caniveteSetData=function(novo){d=novo||{};window.d=d;};
@@ -2745,7 +2745,7 @@ function renderListaFamiliares(){
   if(!el)return;
   const l=_lerFamiliares();
   if(!l.length){el.innerHTML='<div class="empty">Nenhum familiar cadastrado ainda. Por padrão, tudo fica marcado como "Titular".</div>';return}
-  el.innerHTML=l.map((nome,i)=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><span>👤 ${safe(nome)}</span><button class="btn da// ============ HÁBITOS V8.63 ============
+  el.innerHTML=l.map((nome,i)=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><span>👤 ${safe(nome)}</span><button class="btn da// ============ HÁBITOS V8.64 ============
 function _lerHabitos(){
   try{const a=JSON.parse(localStorage.getItem('canivete-habitos'))||[];return Array.isArray(a)?a:[]}catch(e){return[]}
 }
@@ -5041,7 +5041,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 (function(){
   'use strict';
   const SCHEMA_VERSION='1.1';
-  const VERSION=(typeof APP_VERSION!=='undefined'?String(APP_VERSION):(typeof window.APP_VERSION!=='undefined'?String(window.APP_VERSION):'8.63'));
+  const VERSION=(typeof APP_VERSION!=='undefined'?String(APP_VERSION):(typeof window.APP_VERSION!=='undefined'?String(window.APP_VERSION):'8.64'));
 
   function safeJson(v,fallback){
     try{return JSON.parse(v)}catch(e){return fallback}
@@ -5376,7 +5376,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V92_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.63'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.64'));
 
   function sincronizarVersoes(){
     const side=document.getElementById('versaoTexto');
@@ -5474,7 +5474,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V93_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.63'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.64'));
 
   function organizarMenu(){
     const side=document.getElementById('side');
@@ -5542,7 +5542,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V94_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.63'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.64'));
   const MERGES=[
     {key:'perfilSaude',icon:'👤',label:'Perfil & Saúde',members:['perfil','saude'],defaultPage:'perfil',titles:{perfil:['👤 Perfil & Saúde','Dados pessoais, família e informações de saúde.'],saude:['👤 Perfil & Saúde','Medicamentos, suplementos, consultas e condições de saúde.']}},
     {key:'agendaDatas',icon:'📅',label:'Agenda & Datas',members:['calendario','datas'],defaultPage:'calendario',titles:{calendario:['📅 Agenda & Datas','Calendário, vencimentos e datas importantes.'],datas:['📅 Agenda & Datas','Aniversários, documentos, garantias e outras datas.']}},
@@ -5638,7 +5638,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V95_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.63'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.64'));
 
   function escapeHtml(v){
     return String(v??'').replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]});
@@ -5754,7 +5754,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V96_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.63'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.64'));
 
   const GROUPS=[
     {key:'financeiro',icon:'💰',label:'Financeiro',items:[
@@ -6005,7 +6005,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V97_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.63'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.64'));
 
   function prepararAcoesDesktop(){
     const actions=document.querySelector('.top .actions');
@@ -6150,7 +6150,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V98_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.63'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.64'));
   function syncQuickActions(){
     const dashboard=document.getElementById('dashboard');
     const focus=dashboard&&dashboard.querySelector('.focus');
@@ -6531,7 +6531,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V105_VERSION_VISIBLE_SCRIPT">
 (function(){
   'use strict';
-  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.63');
+  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.64');
   function garantirVersao(){
     const title=document.querySelector('.top h1');
     if(!title||!title.parentElement)return;
@@ -6747,7 +6747,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
 <script id="CANIVETE_V108_CONSOLIDATION_SCRIPT">
 (function(){
   'use strict';
-  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.63');
+  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.64');
   function ensureVersion(){
     const top=document.querySelector('.top h1');
     if(top){
@@ -7577,7 +7577,7 @@ body.canivete-dense-mode .form{gap:8px}
 <script id="CANIVETE_V855_SETTINGS_UX">
 (function(){
   'use strict';
-  var VERSION='8.63';
+  var VERSION='8.64';
   var AUDIT_KEY='canivete-config-audit-v855';
   var MODULES_KEY='canivete-config-hidden-modules-v855';
   var DENSE_KEY='canivete-config-dense-v855';
@@ -7986,6 +7986,58 @@ body.canivete-dense-mode .form{gap:8px}
     render();start();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+
+
+<script id="CANIVETE_V864_WATER_BUTTON_FALLBACK">
+(function(){
+  'use strict';
+  function aplicarMetaAguaFallback(event){
+    var btn=event.target&&event.target.closest?event.target.closest('#btnAplicarMetaAguaPerfil'):null;
+    if(!btn)return;
+    event.preventDefault();
+    try{
+      var peso=0, historico=[];
+      try{historico=JSON.parse(localStorage.getItem('canivete-historico-peso')||'[]')}catch(e){}
+      if(Array.isArray(historico)){
+        historico=historico.filter(function(x){return x&&Number(x.peso)>=20&&Number(x.peso)<=300;});
+        historico.sort(function(a,b){return String(b.data||'').localeCompare(String(a.data||''));});
+        if(historico.length)peso=Number(historico[0].peso)||0;
+      }
+      if(!peso){
+        var perfil={};
+        try{perfil=JSON.parse(localStorage.getItem('canivete-assistente-v9')||'{}')}catch(e){}
+        peso=Number(perfil.pesoRapidoPerfil)||Number(perfil.pesoAtualPerfil)||0;
+      }
+      var info=document.getElementById('habitosAguaSugestao');
+      var campo=document.getElementById('habitosMetaAgua');
+      if(peso<20||peso>300){
+        var msg='Não encontrei um peso válido salvo. Abra Meu Perfil, informe seu peso atual e salve; depois volte aqui.';
+        if(info)info.textContent=msg;
+        if(typeof window.mostrarToastCanivete==='function')window.mostrarToastCanivete(msg);
+        else alert(msg);
+        return;
+      }
+      var litros=Math.max(1,Math.round((peso*0.035)*4)/4);
+      if(!campo){if(info)info.textContent='Não encontrei o campo da meta de água. Recarregue a página e tente novamente.';return;}
+      campo.value=String(litros);
+      campo.dispatchEvent(new Event('input',{bubbles:true}));
+      var mlSelect=document.getElementById('habitosRecipienteAgua');
+      var ml=mlSelect?(mlSelect.value==='custom'?Number(document.getElementById('habitosRecipienteCustom')&&document.getElementById('habitosRecipienteCustom').value)||0:Number(mlSelect.value)||200):200;
+      var calc=document.getElementById('habitosAguaCalculo');
+      if(typeof window.atualizarCalculoAguaHabitos==='function')window.atualizarCalculoAguaHabitos();
+      else if(calc&&ml>=50){var n=Math.round(litros*1000/ml*10)/10;calc.textContent='Para '+String(litros).replace('.',',')+' L por dia, são aproximadamente '+String(n).replace('.',',')+' '+(ml<=300?'copos':'garrafas')+' de '+ml+' ml.';}
+      var texto='✅ Sugestão aplicada: '+String(litros).replace('.',',')+' L/dia com base em '+String(peso).replace('.',',')+' kg. É uma estimativa inicial; ajuste conforme sua rotina e orientação profissional.';
+      if(info)info.textContent=texto;
+      if(typeof window.mostrarToastCanivete==='function')window.mostrarToastCanivete('💧 Meta sugerida aplicada: '+String(litros).replace('.',',')+' L/dia.');
+    }catch(err){
+      console.error('Erro no botão de meta de água:',err);
+      var out=document.getElementById('habitosAguaSugestao');
+      if(out)out.textContent='Ocorreu um erro ao aplicar a sugestão. Recarregue a página e tente novamente.';
+    }
+  }
+  document.addEventListener('click',aplicarMetaAguaFallback,true);
 })();
 </script>
 
