@@ -4976,7 +4976,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 (function(){
   'use strict';
   const SCHEMA_VERSION='1.1';
-  const VERSION=(typeof APP_VERSION!=='undefined'?String(APP_VERSION):(typeof window.APP_VERSION!=='undefined'?String(window.APP_VERSION):'8.59'));
+  const VERSION=(typeof APP_VERSION!=='undefined'?String(APP_VERSION):(typeof window.APP_VERSION!=='undefined'?String(window.APP_VERSION):'8.60'));
 
   function safeJson(v,fallback){
     try{return JSON.parse(v)}catch(e){return fallback}
@@ -5311,7 +5311,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V92_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.59'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
 
   function sincronizarVersoes(){
     const side=document.getElementById('versaoTexto');
@@ -5409,7 +5409,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V93_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.59'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
 
   function organizarMenu(){
     const side=document.getElementById('side');
@@ -5477,7 +5477,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V94_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.59'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
   const MERGES=[
     {key:'perfilSaude',icon:'👤',label:'Perfil & Saúde',members:['perfil','saude'],defaultPage:'perfil',titles:{perfil:['👤 Perfil & Saúde','Dados pessoais, família e informações de saúde.'],saude:['👤 Perfil & Saúde','Medicamentos, suplementos, consultas e condições de saúde.']}},
     {key:'agendaDatas',icon:'📅',label:'Agenda & Datas',members:['calendario','datas'],defaultPage:'calendario',titles:{calendario:['📅 Agenda & Datas','Calendário, vencimentos e datas importantes.'],datas:['📅 Agenda & Datas','Aniversários, documentos, garantias e outras datas.']}},
@@ -5573,7 +5573,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V95_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.59'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
 
   function escapeHtml(v){
     return String(v??'').replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]});
@@ -5689,7 +5689,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V96_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.59'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
 
   const GROUPS=[
     {key:'financeiro',icon:'💰',label:'Financeiro',items:[
@@ -5940,7 +5940,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V97_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.59'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
 
   function prepararAcoesDesktop(){
     const actions=document.querySelector('.top .actions');
@@ -6085,7 +6085,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V98_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.59'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
   function syncQuickActions(){
     const dashboard=document.getElementById('dashboard');
     const focus=dashboard&&dashboard.querySelector('.focus');
@@ -6466,7 +6466,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V105_VERSION_VISIBLE_SCRIPT">
 (function(){
   'use strict';
-  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.59');
+  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60');
   function garantirVersao(){
     const title=document.querySelector('.top h1');
     if(!title||!title.parentElement)return;
@@ -6682,7 +6682,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
 <script id="CANIVETE_V108_CONSOLIDATION_SCRIPT">
 (function(){
   'use strict';
-  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.59');
+  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60');
   function ensureVersion(){
     const top=document.querySelector('.top h1');
     if(top){
@@ -7512,7 +7512,7 @@ body.canivete-dense-mode .form{gap:8px}
 <script id="CANIVETE_V855_SETTINGS_UX">
 (function(){
   'use strict';
-  var VERSION='8.59';
+  var VERSION='8.60';
   var AUDIT_KEY='canivete-config-audit-v855';
   var MODULES_KEY='canivete-config-hidden-modules-v855';
   var DENSE_KEY='canivete-config-dense-v855';
