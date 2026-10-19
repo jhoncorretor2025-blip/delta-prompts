@@ -843,6 +843,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
   <div style="display:flex;gap:9px;margin-top:18px;justify-content:flex-end;flex-wrap:wrap"><button type="button" class="btn light" onclick="fecharCadastroVitamina()">Cancelar</button><button type="button" class="btn primary" onclick="salvarCadastroVitamina()">＋ Salvar vitamina</button></div>
  </div>
 </div>
+<div class="card" style="margin:0 0 16px;padding:16px">
+ <div class="row between" style="align-items:flex-start;gap:12px;flex-wrap:wrap"><div><h3 style="margin:0 0 4px">🕒 Minha rotina de hoje</h3><p class="small" style="margin:0">Hábitos organizados por horário. Defina o horário ao editar cada hábito.</p></div><button type="button" class="btn light" onclick="ativarNotificacoesHabitos()">🔔 Configurar lembretes</button></div>
+ <div id="habitosRotinaTimeline" style="margin-top:12px"></div>
+ <div style="border-top:1px solid var(--line);margin-top:14px;padding-top:12px"><strong style="font-size:14px">🔔 Lembretes programados</strong><div id="habitosLembretesResumo" class="small" style="margin-top:6px" aria-live="polite"></div><p class="small" style="margin:8px 0 0">Os avisos do navegador dependem da permissão concedida e podem exigir que o Canivete permaneça aberto. Para definir ou alterar o horário, clique no nome do hábito e edite o lembrete.</p></div>
+</div>
 <div id="listaHabitos" class="habits-list"></div></div>
 </section>
 
@@ -2950,9 +2955,18 @@ function _habitoDiaISO(offset){const d=new Date();d.setDate(d.getDate()+offset);
 function _habitoPeriodo(dias){const l=_lerHabitos(),inicio=new Date();inicio.setDate(inicio.getDate()-dias+1);const ini=_isoHabitos(inicio),fim=_hojeHabitos();let alvo=0,feito=0;
  l.forEach(h=>{const freq=Math.max(1,Math.min(7,Number(h.frequencia)||7));const ds=(h.dias||[]).filter(x=>x>=ini&&x<=fim);alvo+=Math.min(freq,dias===7?freq:Math.round(freq*dias/7));feito+=ds.length});
  return {alvo,feito,pct:alvo?Math.min(100,Math.round(feito/alvo*100)):0}}
+function renderRotinaHabitos(l){
+ const timeline=document.getElementById('habitosRotinaTimeline'),resumo=document.getElementById('habitosLembretesResumo');if(!timeline)return;
+ const agendados=(l||_lerHabitos()).filter(h=>h.horario&&/^([01]\d|2[0-3]):[0-5]\d$/.test(h.horario)).sort((a,b)=>a.horario.localeCompare(b.horario));
+ if(resumo){const perm=('Notification' in window)?Notification.permission:'unsupported';resumo.textContent=agendados.length?agendados.length+' hábito(s) com horário definido'+(perm==='granted'?' · notificações autorizadas':perm==='denied'?' · notificações bloqueadas no navegador':perm==='unsupported'?' · navegador sem suporte':' · autorize as notificações para receber avisos'):'Nenhum horário definido. Clique no nome de um hábito para adicionar um horário.'}
+ if(!agendados.length){timeline.innerHTML='<div class="empty" style="padding:14px">📅 Sua rotina aparecerá aqui quando você definir horários nos hábitos.</div>';return}
+ const grupos=[{nome:'Manhã',emoji:'🌅',min:0,max:11*60+59},{nome:'Tarde',emoji:'☀️',min:12*60,max:17*60+59},{nome:'Noite',emoji:'🌙',min:18*60,max:1439}];
+ timeline.innerHTML=grupos.map(g=>{const itens=agendados.filter(h=>{const p=h.horario.split(':').map(Number),m=p[0]*60+p[1];return m>=g.min&&m<=g.max});if(!itens.length)return '';return '<div style="margin-top:10px"><div style="font-weight:800;font-size:13px;margin-bottom:6px">'+g.emoji+' '+g.nome+'</div>'+itens.map(h=>'<div style="display:flex;align-items:center;gap:10px;padding:9px 10px;margin-bottom:5px;border:1px solid var(--line);border-radius:10px"><span style="font-weight:850;font-variant-numeric:tabular-nums;min-width:48px">'+h.horario+'</span><span>'+safe(h.icone||'🔁')+'</span><span style="flex:1;min-width:0">'+safe(h.nome)+'</span><span class="small">'+((h.dias||[]).includes(_hojeHabitos())?'✅ Feito':'○ Pendente')+'</span></div>').join('')+'</div>'}).join('');
+}
 function renderListaHabitos(){
  const dateInput=document.getElementById('habitosDataRegistro');if(dateInput&&!dateInput.value)dateInput.value=_hojeHabitos();
  const el=document.getElementById('listaHabitos');if(!el)return;const l=_lerHabitos(),hoje=_hojeHabitos(),data=_dataHabitos();
+ renderRotinaHabitos(l);
  const feitosHoje=l.filter(h=>(h.dias||[]).includes(hoje)).length,streakGeral=l.length?Math.max(...l.map(h=>calcularStreakHabito(h.dias||[]))):0;
  const semana=_habitoPeriodo(7);const setText=(id,v)=>{const n=document.getElementById(id);if(n)n.textContent=v};
  setText('habitosTotal',l.length);setText('habitosHoje',feitosHoje);setText('habitosStreak',streakGeral+' '+(streakGeral===1?'dia':'dias'));setText('habitosSemana',semana.pct+'%');
