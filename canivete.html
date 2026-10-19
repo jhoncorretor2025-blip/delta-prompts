@@ -7787,7 +7787,7 @@ body.canivete-dense-mode .form{gap:8px}
   }
   function check(){
     var s=read();if(!s.enabled)return;
-    var now=Date.now();if(s.snoozeUntil && now<s.snoozeUntil)return;
+    var now=Date.now();if(s.snoozeUntil){if(now<s.snoozeUntil)return;s.snoozeUntil=0;s.lastShownAt=now;save(s);showReminder();return}
     if(now-(s.lastShownAt||now)>=s.intervalMinutes*60000){s.lastShownAt=now;s.snoozeUntil=0;save(s);showReminder()}
   }
   function start(){if(timer)clearInterval(timer);timer=setInterval(check,15000);check()}
