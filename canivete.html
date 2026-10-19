@@ -214,6 +214,19 @@
 #habitos .habits-water-progress-track{height:7px;background:#dbeafe;border-radius:99px;overflow:hidden;margin-top:8px}
 #habitos .habits-water-progress-fill{height:100%;background:#3b82f6;border-radius:99px;transition:width .2s}
 @media(max-width:640px){#habitos .habits-water-fields{grid-template-columns:1fr 1fr}#habitos .habits-water-fields .field:last-child{grid-column:1/-1}}
+
+/* HÁBITOS — painéis recolhíveis V8.61 */
+.habits-collapsible{overflow:hidden}
+.habits-collapsible-summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;cursor:pointer;min-height:62px}
+.habits-collapsible-summary::-webkit-details-marker{display:none}
+.habits-collapsible-summary>span:first-child{display:flex;flex-direction:column;gap:4px;min-width:0}
+.habits-collapsible-summary strong{font-size:14px;color:var(--text,#182238)}
+.habits-collapsible-summary small{font-size:12px;color:var(--muted,#64748b);font-weight:400}
+.habits-chevron{font-size:22px;line-height:1;transition:transform .18s ease;color:var(--muted,#64748b)}
+.habits-collapsible[open] .habits-chevron{transform:rotate(180deg)}
+.habits-collapsible-content{padding:0 16px 16px}
+.habits-collapsible-content>.small:first-child{margin-top:0}
+@media(max-width:600px){.habits-collapsible-summary{padding:12px;min-height:58px}.habits-collapsible-content{padding:0 12px 12px}}
 </style><style>
 /* CANIVETE V8.14 - UX/UI polish */
 :root{--ux-space:16px;--ux-radius:16px;--ux-focus:rgba(37,99,235,.16)}
@@ -793,9 +806,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 <div class="habits-stat"><span class="habits-stat-icon purple">▥</span><div><small>Conclusão semanal</small><strong id="habitosSemana">0%</strong><span>dos hábitos por dia</span></div></div>
 </div>
 <div class="habits-banner"><span class="habits-banner-icon">☑</span><div><h3>Pequenos hábitos, grandes resultados</h3><p>Beber água, movimentar o corpo, tomar vitaminas conforme orientação, ler ou dormir melhor — um passo de cada vez.</p></div><span class="habits-quote">💡 Consistência vale mais que perfeição.</span></div>
-<div class="card" style="margin:0 0 16px;padding:16px">
+<details class="card habits-collapsible" style="margin:0 0 16px;padding:0"><summary class="habits-collapsible-summary"><span><strong>📅 Período de acompanhamento</strong><small>Escolher período, data, categoria, exportação e lembretes</small></span><span class="habits-chevron" aria-hidden="true">⌄</span></summary><div class="habits-collapsible-content">
  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-  <div><strong>📅 Período de acompanhamento</strong><div class="small">Veja a rotina por dia, semana ou mês e registre datas anteriores.</div></div>
+  
   <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn light" type="button" data-habitos-view="dia" onclick="definirVisaoHabitos('dia')">Diária</button><button class="btn light" type="button" data-habitos-view="semana" onclick="definirVisaoHabitos('semana')">Semanal</button><button class="btn light" type="button" data-habitos-view="mes" onclick="definirVisaoHabitos('mes')">Mensal</button></div>
  </div>
  <div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-top:12px">
@@ -808,7 +821,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
  </div>
  <div id="habitosImportStatus" class="small" role="status" aria-live="polite" style="margin-top:8px"></div>
 </div>
-<div class="card" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><div><h3 style="margin:0">🏆 Pontos e constância</h3><div class="small">1 ponto por conclusão registrada; sequência de dias dá bônus.</div></div><div style="text-align:right"><strong id="habitosPontos" style="font-size:25px">0 pts</strong><div id="habitosNivel" class="small">Nível 1 · Iniciante</div></div></div><div id="habitosGrafico" style="margin-top:16px"></div></div>
+</div></details>
+<details class="card habits-collapsible" style="margin-bottom:16px;padding:0"><summary class="habits-collapsible-summary"><span><strong>🏆 Pontos e constância</strong><small><span id="habitosPontos">0 pts</span> · <span id="habitosNivel">Nível 1 · Iniciante</span></small></span><span class="habits-chevron" aria-hidden="true">⌄</span></summary><div class="habits-collapsible-content"><p class="small">1 ponto por conclusão registrada; sequência de dias dá bônus.</p><div id="habitosGrafico" style="margin-top:12px"></div></div></details>
 <div class="card habits-add-card"><h3>＋ Adicionar novo hábito</h3>
 <div class="habits-add-row"><div class="field"><label for="novoHabitoNome">Nome do hábito</label><input id="novoHabitoNome" type="text" maxlength="80" placeholder="Ex.: Beber água" aria-label="Nome do hábito" onkeydown="if(event.key==='Enter'){event.preventDefault();addHabito()}"></div><div class="field"><label for="novoHabitoIcone">Ícone</label><select id="novoHabitoIcone" aria-label="Ícone do hábito" onchange="atualizarCamposAguaHabitos()"><option value="💧">💧 Água</option><option value="🏋️">🏋️ Exercícios</option><option value="💊">💊 Vitaminas / medicamentos</option><option value="📖">📖 Leitura</option><option value="🌙">🌙 Sono</option><option value="🧘">🧘 Meditação</option><option value="🥗">🥗 Alimentação</option><option value="🚭">🚭 Sem cigarro</option><option value="✅">✅ Outro</option></select></div><button class="btn primary habits-add-button" type="button" onclick="addHabito()">＋ Adicionar hábito</button></div>
 <div id="habitosAguaConfig" class="habits-water-config"><div class="habits-water-intro"><span>💧</span><div><strong>Meta diária de água</strong><small>Defina quantos litros deseja beber e o tamanho do seu copo ou garrafa.</small></div></div><div class="habits-water-fields"><div class="field"><label for="habitosMetaAgua">Meta por dia (litros)</label><input id="habitosMetaAgua" type="number" min="0.25" max="10" step="0.25" value="2" inputmode="decimal"></div><div class="field"><label for="habitosRecipienteAgua">Meu copo / garrafa</label><select id="habitosRecipienteAgua" onchange="atualizarRecipienteAguaHabitos()"><option value="200">Copo de água — 200 ml</option><option value="300">Copo grande — 300 ml</option><option value="473">Stanley — 473 ml</option><option value="591">Stanley — 591 ml</option><option value="887">Stanley — 887 ml</option><option value="1180">Stanley — 1,18 litro</option><option value="custom">Outro tamanho...</option></select></div><div class="field" id="habitosRecipienteCustomWrap" hidden><label for="habitosRecipienteCustom">Capacidade (ml)</label><input id="habitosRecipienteCustom" type="number" min="50" max="3000" step="10" placeholder="Ex.: 750"></div></div><p id="habitosAguaCalculo" class="habits-water-calc" aria-live="polite">Para 2 L por dia, são 10 copos de 200 ml.</p></div>
@@ -865,7 +879,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 </nav>
 <button class="mobile" type="button" onclick="toggleMenu()" aria-label="Abrir menu">☰ Menu</button>
 <script>
-const APP_VERSION='8.60';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
+const APP_VERSION='8.61';const KEY='canivete-assistente-v9';let expenseView=localStorage.getItem('canivete-expense-view')||'category';
 const defaults=[['Moradia','🏠','moradia'],['Alimentação','🍔','alimentacao'],['Transporte','🚗','transporte'],['Água','💧','moradia'],['Energia','⚡','moradia'],['Uber','🚕','transporte'],['Besteiras','🍫','lazer'],['Telefone','📱','tecnologia'],['Internet','🌐','tecnologia'],['Netflix','🎬','tecnologia'],['Aluguel / Financiamento','🏠','moradia'],['Condomínio','🏢','moradia'],['Saúde / Farmácia','💊','saude'],['Academia','🏋️','saude'],['Roupas e Calçados','👕','pessoal'],['Higiene e Cuidados Pessoais','🧴','pessoal'],['Lazer e Entretenimento','🎮','lazer'],['Bares e Restaurantes','🍻','lazer'],['Compras para Casa','🛒','casa'],['Pets / Animais','🐶','pets'],['Manutenção do Veículo','🔧','transporte'],['Combustível','⛽','transporte'],['Educação / Cursos','📚','educacao'],['Cartão de Crédito / Parcelamentos','💳','financeiro'],['Seguros','🛡️','financeiro'],['Impostos e Taxas','🧾','financeiro'],['Investimentos','💰','financeiro'],['Empréstimos / Financiamentos','🏦','financeiro'],['Presentes','🎁','lazer'],['Viagens','✈️','lazer'],['Barbearia / Salão','💇','pessoal'],['Aplicativos e Assinaturas','📱','tecnologia'],['Manutenção da Casa','🔧','casa'],['Emergências / Imprevistos','🆘','emergencias'],['Médico / Consultas','🩺','saude'],['Exames','🔬','saude'],['Remédios','💉','saude'],['Assinaturas de IA (ChatGPT, Claude, etc)','🤖','tecnologia'],['IPTU (Imposto do Imóvel)','🏠','moradia'],['IPVA (Imposto do Veículo)','🚗','transporte'],['Troca de Óleo da Moto','🛠️','transporte']];
 const cats={moradia:['🏠','Moradia'],alimentacao:['🍔','Alimentação'],transporte:['🚗','Transporte'],saude:['❤️','Saúde e Bem-estar'],pessoal:['👤','Pessoal'],lazer:['🎮','Lazer e Entretenimento'],casa:['🏡','Casa'],pets:['🐶','Pets / Animais'],tecnologia:['📱','Tecnologia e Assinaturas'],educacao:['📚','Educação'],financeiro:['💳','Financeiro'],emergencias:['🆘','Emergências / Imprevistos']};
 let d=load();window.d=d;window.APP_VERSION=APP_VERSION;window.__caniveteSetData=function(novo){d=novo||{};window.d=d;};
@@ -2731,7 +2745,7 @@ function renderListaFamiliares(){
   if(!el)return;
   const l=_lerFamiliares();
   if(!l.length){el.innerHTML='<div class="empty">Nenhum familiar cadastrado ainda. Por padrão, tudo fica marcado como "Titular".</div>';return}
-  el.innerHTML=l.map((nome,i)=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><span>👤 ${safe(nome)}</span><button class="btn da// ============ HÁBITOS V8.60 ============
+  el.innerHTML=l.map((nome,i)=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><span>👤 ${safe(nome)}</span><button class="btn da// ============ HÁBITOS V8.61 ============
 function _lerHabitos(){
   try{const a=JSON.parse(localStorage.getItem('canivete-habitos'))||[];return Array.isArray(a)?a:[]}catch(e){return[]}
 }
@@ -4976,7 +4990,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 (function(){
   'use strict';
   const SCHEMA_VERSION='1.1';
-  const VERSION=(typeof APP_VERSION!=='undefined'?String(APP_VERSION):(typeof window.APP_VERSION!=='undefined'?String(window.APP_VERSION):'8.60'));
+  const VERSION=(typeof APP_VERSION!=='undefined'?String(APP_VERSION):(typeof window.APP_VERSION!=='undefined'?String(window.APP_VERSION):'8.61'));
 
   function safeJson(v,fallback){
     try{return JSON.parse(v)}catch(e){return fallback}
@@ -5311,7 +5325,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V92_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.61'));
 
   function sincronizarVersoes(){
     const side=document.getElementById('versaoTexto');
@@ -5409,7 +5423,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V93_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.61'));
 
   function organizarMenu(){
     const side=document.getElementById('side');
@@ -5477,7 +5491,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V94_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.61'));
   const MERGES=[
     {key:'perfilSaude',icon:'👤',label:'Perfil & Saúde',members:['perfil','saude'],defaultPage:'perfil',titles:{perfil:['👤 Perfil & Saúde','Dados pessoais, família e informações de saúde.'],saude:['👤 Perfil & Saúde','Medicamentos, suplementos, consultas e condições de saúde.']}},
     {key:'agendaDatas',icon:'📅',label:'Agenda & Datas',members:['calendario','datas'],defaultPage:'calendario',titles:{calendario:['📅 Agenda & Datas','Calendário, vencimentos e datas importantes.'],datas:['📅 Agenda & Datas','Aniversários, documentos, garantias e outras datas.']}},
@@ -5573,7 +5587,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V95_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.61'));
 
   function escapeHtml(v){
     return String(v??'').replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]});
@@ -5689,7 +5703,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V96_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.61'));
 
   const GROUPS=[
     {key:'financeiro',icon:'💰',label:'Financeiro',items:[
@@ -5940,7 +5954,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V97_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.61'));
 
   function prepararAcoesDesktop(){
     const actions=document.querySelector('.top .actions');
@@ -6085,7 +6099,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V98_SCRIPT">
 (function(){
   'use strict';
-  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60'));
+  const VERSION=String(window.APP_VERSION||window.CANIVETE_RELEASE_VERSION||(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.61'));
   function syncQuickActions(){
     const dashboard=document.getElementById('dashboard');
     const focus=dashboard&&dashboard.querySelector('.focus');
@@ -6466,7 +6480,7 @@ Ex.: vou dar um tempo, estou sem suplemento, viagem, orientação profissional.'
 <script id="CANIVETE_V105_VERSION_VISIBLE_SCRIPT">
 (function(){
   'use strict';
-  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60');
+  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.61');
   function garantirVersao(){
     const title=document.querySelector('.top h1');
     if(!title||!title.parentElement)return;
@@ -6682,7 +6696,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
 <script id="CANIVETE_V108_CONSOLIDATION_SCRIPT">
 (function(){
   'use strict';
-  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.60');
+  const RELEASE=(typeof APP_VERSION!=='undefined'?APP_VERSION:'8.61');
   function ensureVersion(){
     const top=document.querySelector('.top h1');
     if(top){
@@ -7512,7 +7526,7 @@ body.canivete-dense-mode .form{gap:8px}
 <script id="CANIVETE_V855_SETTINGS_UX">
 (function(){
   'use strict';
-  var VERSION='8.60';
+  var VERSION='8.61';
   var AUDIT_KEY='canivete-config-audit-v855';
   var MODULES_KEY='canivete-config-hidden-modules-v855';
   var DENSE_KEY='canivete-config-dense-v855';
