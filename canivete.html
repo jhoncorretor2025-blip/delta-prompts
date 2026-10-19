@@ -7731,5 +7731,96 @@ body.canivete-dense-mode .form{gap:8px}
 })();
 </script>
 
+
+<!-- CANIVETE V856 — Lembretes de hidratação -->
+<style id="canivete-water-reminder-styles">
+#caniveteWaterPanel{position:fixed;right:18px;bottom:18px;z-index:99990;width:min(340px,calc(100vw - 28px));padding:16px;background:var(--card,#fff);color:var(--ink,#172033);border:1px solid var(--line,#dbe2ea);border-radius:16px;box-shadow:0 14px 45px rgba(15,23,42,.22);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+#caniveteWaterPanel[hidden],#caniveteWaterToast[hidden]{display:none}
+#caniveteWaterPanel h2{font-size:16px;margin:0 0 6px}#caniveteWaterPanel p{margin:0 0 12px;color:var(--muted,#64748b)}
+#caniveteWaterPanel .water-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#caniveteWaterPanel button{min-height:40px;border:1px solid var(--line,#dbe2ea);border-radius:10px;padding:8px 11px;background:var(--bg,#f8fafc);color:var(--ink,#172033);font:inherit;font-weight:700}
+#caniveteWaterPanel button.primary{background:var(--blue,#2563eb);color:#fff;border-color:transparent}
+#caniveteWaterPanel label{display:block;font-weight:700;margin:12px 0 5px}
+#caniveteWaterInterval{width:100%;min-height:40px;border:1px solid var(--line,#dbe2ea);border-radius:9px;padding:7px;background:var(--bg,#fff);color:var(--ink,#172033)}
+#caniveteWaterStatus{display:block;margin-top:9px;font-size:12px;color:var(--muted,#64748b)}
+#caniveteWaterToast{position:fixed;right:18px;bottom:18px;z-index:99999;width:min(360px,calc(100vw - 28px));padding:16px;background:#eff6ff;color:#172033;border:1px solid #bfdbfe;border-radius:16px;box-shadow:0 14px 45px rgba(15,23,42,.25);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+#caniveteWaterToast strong{display:block;font-size:16px;margin-bottom:5px}#caniveteWaterToast p{margin:0 0 12px}
+#caniveteWaterToast .water-row{display:flex;gap:8px;flex-wrap:wrap}#caniveteWaterToast button{min-height:40px;border:1px solid #bfdbfe;border-radius:9px;padding:8px 11px;background:#fff;color:#172033;font:inherit;font-weight:700}#caniveteWaterToast button.primary{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+@media(max-width:600px){#caniveteWaterPanel,#caniveteWaterToast{right:10px;bottom:10px}}
+@media(prefers-reduced-motion:reduce){#caniveteWaterPanel *,#caniveteWaterToast *{transition:none!important;animation:none!important}}
+</style>
+<section id="caniveteWaterPanel" role="region" aria-labelledby="caniveteWaterTitle" hidden>
+  <h2 id="caniveteWaterTitle">💧 Lembretes de hidratação</h2>
+  <p>Receba um lembrete para fazer uma pausa e beber água. O padrão é a cada 1 hora.</p>
+  <label for="caniveteWaterInterval">Intervalo dos lembretes</label>
+  <select id="caniveteWaterInterval">
+    <option value="30">A cada 30 minutos</option><option value="60" selected>A cada 1 hora</option><option value="90">A cada 1 hora e meia</option><option value="120">A cada 2 horas</option>
+  </select>
+  <div class="water-row" style="margin-top:12px">
+    <button type="button" class="primary" id="caniveteWaterEnable">Ativar lembretes</button>
+    <button type="button" id="caniveteWaterClose">Fechar</button>
+  </div>
+  <span id="caniveteWaterStatus" role="status" aria-live="polite">Os lembretes estão desativados.</span>
+</section>
+<div id="caniveteWaterToast" role="status" aria-live="polite" hidden>
+  <strong>💧 Hora de beber água!</strong>
+  <p>Faça uma pequena pausa e lembre-se de se hidratar.</p>
+  <div class="water-row"><button type="button" class="primary" id="caniveteWaterDone">Já bebi água ✓</button><button type="button" id="caniveteWaterSnooze">Lembrar em 10 min</button><button type="button" id="caniveteWaterDismiss" aria-label="Dispensar lembrete">Dispensar</button></div>
+</div>
+<script id="CANIVETE_V856_WATER_REMINDERS">
+(function(){
+  'use strict';
+  var KEY='caniveteWaterReminderV856';
+  var panel,toast,intervalSelect,status,enabledButton,timer=null;
+  var defaults={enabled:false,intervalMinutes:60,lastShownAt:Date.now(),snoozeUntil:0};
+  function read(){try{return Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return Object.assign({},defaults)}}
+  function save(s){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+  function say(message){if(status)status.textContent=message}
+  function render(){var s=read();if(intervalSelect)intervalSelect.value=String(s.intervalMinutes);if(enabledButton)enabledButton.textContent=s.enabled?'Desativar lembretes':'Ativar lembretes';say(s.enabled?'Lembretes ativados. O navegador precisa permitir notificações para avisar quando a página estiver em segundo plano.':'Os lembretes estão desativados.')}
+  function showReminder(){
+    var s=read();if(!s.enabled)return;
+    if(document.visibilityState==='visible'){toast.hidden=false;return}
+    if('Notification' in window && Notification.permission==='granted'){
+      try{var n=new Notification('💧 Hora de beber água!',{body:'Faça uma pausa e lembre-se de se hidratar.',tag:'canivete-water-reminder',renotify:true});n.onclick=function(){window.focus();toast.hidden=false;n.close()}}catch(e){}
+    }
+    // If the browser suppresses notifications, the next visible page check displays the in-page reminder.
+  }
+  function check(){
+    var s=read();if(!s.enabled)return;
+    var now=Date.now();if(s.snoozeUntil && now<s.snoozeUntil)return;
+    if(now-(s.lastShownAt||now)>=s.intervalMinutes*60000){s.lastShownAt=now;s.snoozeUntil=0;save(s);showReminder()}
+  }
+  function start(){if(timer)clearInterval(timer);timer=setInterval(check,15000);check()}
+  function enable(){
+    var s=read();s.intervalMinutes=parseInt(intervalSelect.value,10)||60;
+    if(s.enabled){s.enabled=false;save(s);render();start();return}
+    if(!('Notification' in window)){say('Este navegador não oferece notificações. O lembrete só poderá aparecer enquanto o Canivete estiver aberto.');s.enabled=true;s.lastShownAt=Date.now();save(s);render();start();return}
+    function finish(permission){if(permission==='granted'){s.enabled=true;s.lastShownAt=Date.now();s.snoozeUntil=0;save(s);render();say('✅ Lembretes ativados! Você será avisado a cada '+s.intervalMinutes+' min.');start()}else{say('Permissão não concedida. Autorize notificações nas configurações do navegador e tente novamente.');}}
+    if(Notification.permission==='granted'){finish('granted')}
+    else if(Notification.permission==='denied'){say('Notificações bloqueadas. Clique no ícone ao lado do endereço do site e permita notificações.');}
+    else{Notification.requestPermission().then(finish).catch(function(){say('Não foi possível solicitar permissão. Verifique as configurações do navegador.')})}
+  }
+  function dismiss(done){toast.hidden=true;var s=read();s.snoozeUntil=0;if(done)s.lastShownAt=Date.now();save(s)}
+  function snooze(){var s=read();s.snoozeUntil=Date.now()+10*60000;toast.hidden=true;save(s);say('Tudo certo! Vou lembrar novamente em 10 minutos.');}
+  function init(){
+    panel=document.getElementById('caniveteWaterPanel');toast=document.getElementById('caniveteWaterToast');intervalSelect=document.getElementById('caniveteWaterInterval');status=document.getElementById('caniveteWaterStatus');enabledButton=document.getElementById('caniveteWaterEnable');
+    if(!panel||!toast)return;
+    var open=document.createElement('button');open.type='button';open.id='caniveteWaterOpen';open.textContent='💧 Hidratação';open.setAttribute('aria-controls','caniveteWaterPanel');open.setAttribute('aria-expanded','false');
+    open.style.cssText='position:fixed;right:18px;bottom:18px;z-index:99980;min-height:42px;padding:10px 14px;border:1px solid #bfdbfe;border-radius:999px;background:#eff6ff;color:#1d4ed8;font:700 13px system-ui;box-shadow:0 5px 18px rgba(15,23,42,.15);cursor:pointer';
+    document.body.appendChild(open);
+    open.addEventListener('click',function(){panel.hidden=!panel.hidden;open.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)render()});
+    document.getElementById('caniveteWaterClose').addEventListener('click',function(){panel.hidden=true;open.setAttribute('aria-expanded','false')});
+    enabledButton.addEventListener('click',enable);
+    intervalSelect.addEventListener('change',function(){var s=read();s.intervalMinutes=parseInt(intervalSelect.value,10)||60;save(s);render()});
+    document.getElementById('caniveteWaterDone').addEventListener('click',function(){dismiss(true);say('✅ Registrado! Próximo lembrete no intervalo escolhido.')});
+    document.getElementById('caniveteWaterSnooze').addEventListener('click',snooze);
+    document.getElementById('caniveteWaterDismiss').addEventListener('click',function(){dismiss(false)});
+    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'){var s=read();if(s.enabled&&s.snoozeUntil&&Date.now()>=s.snoozeUntil){s.snoozeUntil=0;save(s);toast.hidden=false}}});
+    render();start();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+
 </body>
 </html>
