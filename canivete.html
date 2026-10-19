@@ -7732,7 +7732,7 @@ body.canivete-dense-mode .form{gap:8px}
 </script>
 
 
-<!-- CANIVETE V856 — Lembretes de hidratação -->
+<!-- CANIVETE V857 — Lembretes de hidratação + atalho para medicamentos e vitaminas -->
 <style id="canivete-water-reminder-styles">
 #caniveteWaterPanel{position:fixed;right:18px;bottom:18px;z-index:99990;width:min(340px,calc(100vw - 28px));padding:16px;background:var(--card,#fff);color:var(--ink,#172033);border:1px solid var(--line,#dbe2ea);border-radius:16px;box-shadow:0 14px 45px rgba(15,23,42,.22);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
 #caniveteWaterPanel[hidden],#caniveteWaterToast[hidden]{display:none}
@@ -7765,7 +7765,7 @@ body.canivete-dense-mode .form{gap:8px}
 <div id="caniveteWaterToast" role="status" aria-live="polite" hidden>
   <strong>💧 Hora de beber água!</strong>
   <p>Faça uma pequena pausa e lembre-se de se hidratar.</p>
-  <div class="water-row"><button type="button" class="primary" id="caniveteWaterDone">Já bebi água ✓</button><button type="button" id="caniveteWaterSnooze">Lembrar em 10 min</button><button type="button" id="caniveteWaterDismiss" aria-label="Dispensar lembrete">Dispensar</button></div>
+  <div class="water-row"><button type="button" class="primary" id="caniveteWaterDone">Já bebi água ✓</button><button type="button" id="caniveteWaterSnooze">Lembrar em 10 min</button><button type="button" id="caniveteWaterDismiss" aria-label="Dispensar lembrete">Dispensar</button></div><div style="border-top:1px solid #bfdbfe;margin-top:12px;padding-top:10px"><button type="button" id="caniveteWaterMeds" style="width:100%;text-align:left">💊 Quer que eu lembre de um remédio ou vitamina?</button></div>
 </div>
 <script id="CANIVETE_V856_WATER_REMINDERS">
 (function(){
@@ -7815,6 +7815,7 @@ body.canivete-dense-mode .form{gap:8px}
     document.getElementById('caniveteWaterDone').addEventListener('click',function(){dismiss(true);say('✅ Registrado! Próximo lembrete no intervalo escolhido.')});
     document.getElementById('caniveteWaterSnooze').addEventListener('click',snooze);
     document.getElementById('caniveteWaterDismiss').addEventListener('click',function(){dismiss(false)});
+    document.getElementById('caniveteWaterMeds').addEventListener('click',function(){toast.hidden=true;panel.hidden=true;var nav=document.querySelector('[data-page="saude"]');if(nav)nav.click();setTimeout(function(){var tab=document.querySelector('#saude .health-tab81[data-health-tab="medicamento"]');if(tab)tab.click();var section=document.getElementById('saude');if(section)section.scrollIntoView({behavior:'smooth',block:'start'});},250)});
     document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'){var s=read();if(s.enabled&&s.snoozeUntil&&Date.now()>=s.snoozeUntil){s.snoozeUntil=0;save(s);toast.hidden=false}}});
     render();start();
   }
