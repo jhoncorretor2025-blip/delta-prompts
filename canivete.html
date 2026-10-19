@@ -830,10 +830,20 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
 <div class="card habits-popular"><h3>💡 Hábitos populares</h3><p class="small">Selecione um exemplo para adicioná-lo rapidamente.</p><div class="habits-presets">
 <button type="button" onclick="adicionarHabitoRapido('Beber água','💧','2 L por dia')"><span>💧</span><b>Beber água</b><small>Meta diária</small><i>＋</i></button>
 <button type="button" onclick="adicionarHabitoRapido('Fazer exercícios','🏋️','Treino diário')"><span>🏋️</span><b>Exercícios</b><small>Movimente-se</small><i>＋</i></button>
-<button type="button" onclick="adicionarHabitoRapido('Tomar vitaminas','💊','Conforme orientação')"><span>💊</span><b>Vitaminas</b><small>Conforme orientação</small><i>＋</i></button>
+<button type="button" onclick="abrirCadastroVitamina()"><span>💊</span><b>Vitaminas</b><small>Cadastre nome e horário</small><i>＋</i></button>
 <button type="button" onclick="adicionarHabitoRapido('Ler','📖','15 min por dia')"><span>📖</span><b>Leitura</b><small>15 min por dia</small><i>＋</i></button>
 <button type="button" onclick="adicionarHabitoRapido('Dormir bem','🌙','Rotina de sono')"><span>🌙</span><b>Dormir bem</b><small>Rotina noturna</small><i>＋</i></button>
-</div><div id="listaHabitos" class="habits-list"></div></div>
+</div><div id="modalCadastroVitamina" hidden role="dialog" aria-modal="true" aria-labelledby="tituloCadastroVitamina" style="position:fixed;inset:0;z-index:10050;background:rgba(15,23,42,.55);padding:18px;display:none;align-items:center;justify-content:center">
+ <div style="width:min(100%,460px);background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.25)">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px"><div><h3 id="tituloCadastroVitamina" style="margin:0 0 5px">💊 Cadastrar vitamina</h3><p class="small" style="margin:0">Informe o nome e o horário em que costuma tomar.</p></div><button type="button" class="btn light" onclick="fecharCadastroVitamina()" aria-label="Fechar cadastro" style="padding:5px 10px">✕</button></div>
+  <div class="field" style="margin-top:18px"><label for="nomeVitaminaHabito">Nome da vitamina ou suplemento</label><input id="nomeVitaminaHabito" type="text" maxlength="100" placeholder="Ex.: Vitamina D, magnésio, creatina" autocomplete="off"></div>
+  <div class="field" style="margin-top:12px"><label for="horarioVitaminaHabito">Horário habitual</label><input id="horarioVitaminaHabito" type="time" value="08:00"></div>
+  <div class="field" style="margin-top:12px"><label for="detalheVitaminaHabito">Observação (opcional)</label><input id="detalheVitaminaHabito" type="text" maxlength="120" placeholder="Ex.: após o café da manhã"></div>
+  <p class="small" style="margin:12px 0 0">Cadastre apenas o horário da sua rotina; siga a dose e a frequência orientadas pelo profissional de saúde ou pela embalagem.</p>
+  <div style="display:flex;gap:9px;margin-top:18px;justify-content:flex-end;flex-wrap:wrap"><button type="button" class="btn light" onclick="fecharCadastroVitamina()">Cancelar</button><button type="button" class="btn primary" onclick="salvarCadastroVitamina()">＋ Salvar vitamina</button></div>
+ </div>
+</div>
+<div id="listaHabitos" class="habits-list"></div></div>
 </section>
 
 <section id="veiculo" class="section"><div class="card hero"><div><h2>🚗 Manutenção do Veículo</h2><p class="sub">Registre trocas, revisões e documentos do seu veículo.</p></div></div>
@@ -2903,6 +2913,26 @@ function _removerHabito(i){confirmarCanivete('Remover esse hábito?',()=>{const 
 function calcularStreakHabito(dias){
  const set=new Set(dias||[]);let streak=0,dt=new Date();if(!set.has(_isoHabitos(dt)))dt.setDate(dt.getDate()-1);
  while(set.has(_isoHabitos(dt))&&streak<366){streak++;dt.setDate(dt.getDate()-1)}return streak;
+}
+function abrirCadastroVitamina(){
+ const modal=document.getElementById('modalCadastroVitamina');if(!modal)return;
+ modal.hidden=false;modal.style.display='flex';
+ const nome=document.getElementById('nomeVitaminaHabito');if(nome){nome.value='';setTimeout(()=>nome.focus(),50)}
+ const horario=document.getElementById('horarioVitaminaHabito');if(horario&&!horario.value)horario.value='08:00';
+ const detalhe=document.getElementById('detalheVitaminaHabito');if(detalhe)detalhe.value='';
+}
+function fecharCadastroVitamina(){const modal=document.getElementById('modalCadastroVitamina');if(modal){modal.hidden=true;modal.style.display='none'}}
+function salvarCadastroVitamina(){
+ const nome=(document.getElementById('nomeVitaminaHabito')?.value||'').trim();
+ const horario=document.getElementById('horarioVitaminaHabito')?.value||'';
+ const detalhe=(document.getElementById('detalheVitaminaHabito')?.value||'').trim();
+ if(!nome){mostrarToastCanivete('Informe o nome da vitamina ou suplemento.');document.getElementById('nomeVitaminaHabito')?.focus();return}
+ if(!horario){mostrarToastCanivete('Escolha o horário habitual.');document.getElementById('horarioVitaminaHabito')?.focus();return}
+ const nomeHabito='Tomar '+nome;
+ const l=_lerHabitos();
+ if(l.some(h=>(h.nome||'').trim().toLocaleLowerCase('pt-BR')===nomeHabito.toLocaleLowerCase('pt-BR'))){mostrarToastCanivete('Essa vitamina já está cadastrada. Edite o hábito existente para alterar o horário.');return}
+ l.push({nome:nomeHabito,icone:'💊',dias:[],categoria:'Saúde',frequencia:7,horario,detalhe:(detalhe?detalhe+' · ':'')+'Horário habitual: '+horario,tipoSuplemento:nome});
+ _salvarHabitos(l);fecharCadastroVitamina();renderListaHabitos();mostrarToastCanivete('✅ '+nome+' cadastrado para '+horario+'.');
 }
 function adicionarHabitoRapido(nome,icone,detalhe){
  const l=_lerHabitos();if(l.some(h=>(h.nome||'').trim().toLocaleLowerCase('pt-BR')===nome.toLocaleLowerCase('pt-BR'))){mostrarToastCanivete('Esse hábito já está na sua lista.');return}
