@@ -3066,5 +3066,29 @@ setTimeout(aplicarTudo,600);
 
 
 
+
+<!-- v123 — sincroniza contador da categoria Vídeos com o total do filtro de vídeo -->
+<script>
+(function(){
+ 'use strict';
+ function sincronizarContadorVideos(){
+  const categoria=document.querySelector('#catFilters [data-count-cat="video"]');
+  const totalVideos=document.querySelector('#videoTypeFilters [data-count-video="all"]');
+  if(!categoria||!totalVideos)return;
+  categoria.textContent=totalVideos.textContent.trim()||'0';
+ }
+ if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',sincronizarContadorVideos);
+ }else sincronizarContadorVideos();
+ window.addEventListener('load',sincronizarContadorVideos);
+ const observar=document.querySelector('#videoTypeFilters [data-count-video="all"]');
+ if(observar&&'MutationObserver'in window){
+  new MutationObserver(sincronizarContadorVideos).observe(observar,{childList:true,characterData:true,subtree:true});
+ }
+ setTimeout(sincronizarContadorVideos,300);
+ setTimeout(sincronizarContadorVideos,1000);
+})();
+</script>
+
 </body>
 </html>
