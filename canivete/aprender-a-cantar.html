@@ -36,8 +36,20 @@ body{padding-bottom:40px}.singing-page{max-width:1100px;margin:0 auto;padding:24
 @media(max-width:700px){.canto-tools-grid{grid-template-columns:minmax(0,1fr)}.canto-tool-card{padding:14px}.canto-output-actions>*{width:100%}.voice-note-pair{grid-template-columns:repeat(2,minmax(0,1fr))}.canto-practice-actions button{flex-basis:100%}.canto-history-actions button{flex:1}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
-</style></head><body class="category-page"><main class="singing-page">
-<header class="singing-head"><a href="/delta-prompts/canivete.html">← Voltar ao Canivete Assistente</a><h1>🎤 Aprender a Cantar</h1><p>Treine com exercícios guiados, teste vocal aproximado, monte uma aula com IA e acompanhe seu progresso.</p><span class="singing-version">Canivete · Módulo de canto · Versão 1.0</span></header>
+</style><style id="canto-v17">
+/* v1.7 — aviso “Pronto!” só aparece quando algo acontece (antes ficava fixo no fim da página) */
+#toast.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;visibility:hidden;pointer-events:none;z-index:9999;background:#111827;color:#fff;padding:10px 16px;border-radius:999px;font-weight:800;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:opacity .2s,transform .2s,visibility .2s;max-width:calc(100% - 32px);text-align:center}
+#toast.toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.canto-mais-prompts{display:flex;align-items:center;gap:10px;margin:14px 0 0;padding:12px 14px;border-radius:14px;border:1px dashed #f9a8d4;background:#fdf2f8;color:#831843;text-decoration:none;font-weight:800;font-size:14px}
+.canto-mais-prompts small{display:block;font-weight:600;color:#9d174d;font-size:12px}
+.canto-timer{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.canto-timer button{min-height:40px;padding:8px 14px;border-radius:12px;border:0;background:#be185d;color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.canto-timer button.parar{background:#e5e7eb;color:#111827}
+.canto-timer b{font-size:22px;font-variant-numeric:tabular-nums}
+@media(prefers-reduced-motion:reduce){#toast.toast{transition:none}}
+</style>
+</head><body class="category-page"><main class="singing-page">
+<header class="singing-head"><a href="/delta-prompts/canivete.html">← Voltar ao Canivete Assistente</a><h1>🎤 Aprender a Cantar</h1><p>Treine com exercícios guiados, teste vocal aproximado, monte uma aula com IA e acompanhe seu progresso.</p><span class="singing-version">Canivete · Módulo de canto · Versão 1.7</span></header>
 <section class="canto-tools" aria-label="Ferramentas para aprender a cantar">
   <div class="canto-tools-intro"><span>✨ CENTRAL DE TREINO VOCAL</span><h2>Comece pela sua voz</h2><p>Descubra sua faixa vocal aproximada, monte um treino e encontre músicas para praticar.</p></div>
   <div class="canto-tools-grid">
@@ -107,4 +119,24 @@ document.getElementById('voiceNextReading').addEventListener('click',nextVoiceRe
 
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 renderVoiceHistory();
-</script></body></html>
+</script><script>
+/* v1.7 — cronômetro de 1 minuto nos exercícios rápidos e atalho para os prompts de canto */
+(function(){
+ var res=document.getElementById('practiceResult');
+ if(res){var timer=null;
+  function montar(){if(!res.querySelector('.canto-timer')&&!/Selecione uma atividade/.test(res.textContent)){var t=document.createElement('div');t.className='canto-timer';t.innerHTML='<button type="button" class="iniciar">▶️ Começar 1 minuto</button><b aria-live="polite">01:00</b>';res.appendChild(t)}}
+  new MutationObserver(function(){if(timer&&!res.querySelector('.canto-timer')){clearInterval(timer);timer=null}montar()}).observe(res,{childList:true});
+  res.addEventListener('click',function(e){var b=e.target.closest('.canto-timer button');if(!b)return;var box=b.parentNode,mostrador=box.querySelector('b');
+   if(timer){clearInterval(timer);timer=null;b.textContent='▶️ Começar 1 minuto';b.classList.remove('parar');mostrador.textContent='01:00';return}
+   var fim=Date.now()+60000;b.textContent='⏹️ Parar';b.classList.add('parar');
+   timer=setInterval(function(){var r=Math.max(0,Math.ceil((fim-Date.now())/1000));mostrador.textContent='00:'+String(r).padStart(2,'0').replace(/^60$/,'01:00');if(r===60)mostrador.textContent='01:00';
+    if(r<=0){clearInterval(timer);timer=null;b.textContent='🔁 Fazer de novo';b.classList.remove('parar');mostrador.textContent='✅ Feito!';if(typeof mostrarToast==='function')mostrarToast('🎉 Exercício concluído! Muito bem.');try{navigator.vibrate&&navigator.vibrate(200)}catch(x){}}},250);
+  });
+ }
+ /* atalho para os prompts de canto no Delta Prompts */
+ var alvo=document.querySelector('.canto-practice')||document.getElementById('practiceResult');
+ var sec=alvo&&alvo.closest('section');
+ if(sec&&!document.querySelector('.canto-mais-prompts')){var a=document.createElement('a');a.className='canto-mais-prompts';a.href='/delta-prompts/paginas/aprender-a-cantar.html';a.innerHTML='<span>💡</span><span>Quer mais? Veja os 11 prompts de canto no Delta Prompts<small>Respiração, aquecimento, músicas para iniciantes, plano semanal e mais</small></span>';sec.appendChild(a)}
+})();
+</script>
+</body></html>
