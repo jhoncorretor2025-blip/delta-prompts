@@ -397,7 +397,6 @@ document.getElementById('themeToggle').addEventListener('click',()=>{const atual
 aplicarTema((function(){try{return localStorage.getItem('deltaTheme')||'light'}catch(e){return'light'}})());
 montarFiltroCategoria();
 atualizarStats();
-renderVoiceHistory();
 render();
 window.addEventListener('delta:favoritos-updated',atualizarStats);
 </script></body></html>
