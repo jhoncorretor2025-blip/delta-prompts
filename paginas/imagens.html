@@ -153,7 +153,7 @@ const dadosBrutos=[
 const prompts=dadosBrutos.map((p,i)=>{
   const promptCompleto = p[4] + instrucaoManterRosto();
   const promptEn = p[6] + instrucaoManterRostoEN();
-  const obj={id:'img-'+i,nivel:p[0],categoria:p[1],titulo:p[2],quando:p[3],prompt:promptCompleto,promptEn:promptEn,imagemId:p[5],novo:i===0};
+  const obj={id:'img-'+i,nivel:p[0],categoria:p[1],titulo:p[2],quando:p[3],prompt:promptCompleto,promptEn:promptEn,imagemId:p[5],novo:i>=40};
   obj.placeholders=[...new Set((obj.prompt.match(/\[([^\]]+)\]/g)||[]).map(s=>s.slice(1,-1)))];
   return obj;
 });
