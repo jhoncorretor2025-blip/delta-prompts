@@ -1,5 +1,9 @@
 # Changelog — Delta Prompts
 
+## V2.03 — Auditoria automatizada sincronizada
+- Atualiza a auditoria de UX para validar a versão atual declarada e o cache-busting real do carregador, sem exigir identificadores antigos.
+
+
 ## V2.02 — Correção na validação de chaves de backup
 - Corrige a expressão de validação de nomes de chaves para aceitar letras, números e separadores permitidos durante a restauração.
 - Mantém os limites de tamanho, namespace permitido e bloqueio de credenciais da V2.01.
