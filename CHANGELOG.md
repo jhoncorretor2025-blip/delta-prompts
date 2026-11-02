@@ -1,5 +1,12 @@
 # Changelog — Delta Prompts
 
+## V2.01 — Acessibilidade, restauração segura e cache
+- Unifica a versão visível da home, carregador do menu e Service Worker.
+- Adiciona preferências globais de tamanho do texto, alto contraste e redução de movimento, salvas localmente.
+- Reforça a restauração de backups com limite de tamanho, validação de formato/chaves/conteúdo e reversão em caso de falha.
+- Atualiza o cache offline para garantir a instalação dos arquivos atuais.
+
+
 ## V1.98 — QA, consistência de versão e links
 - Sincroniza a versão visível da home, o menu-loader.js e o sw.js.
 - Atualiza o cache-busting do menu-loader e a versão do cache do service worker.

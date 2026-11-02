@@ -1,8 +1,34 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V1.99
-window.DELTA_SITE_VERSION='V1.99';
+// DELTA SITE VERSION: V2.01
+window.DELTA_SITE_VERSION='V2.01';
+// ===== PREFERÊNCIAS DE ACESSIBILIDADE GLOBAIS V2.01 =====
+(function(){
+  var KEY='deltaA11yPreferences';
+  function apply(){
+    try{
+      var p=JSON.parse(localStorage.getItem(KEY)||'{}')||{};
+      var scale=[100,110,120,130].indexOf(Number(p.fontScale))>=0?Number(p.fontScale):100;
+      document.documentElement.style.fontSize=scale+'%';
+      document.documentElement.setAttribute('data-contrast',p.highContrast?'high':'normal');
+      document.documentElement.setAttribute('data-reduce-motion',p.reduceMotion?'true':'false');
+    }catch(e){
+      document.documentElement.style.fontSize='100%';
+      document.documentElement.setAttribute('data-contrast','normal');
+      document.documentElement.setAttribute('data-reduce-motion','false');
+    }
+  }
+  window.deltaAplicarAcessibilidade=apply;
+  apply();
+  window.addEventListener('storage',function(e){if(e.key===KEY)apply()});
+  if(!document.getElementById('deltaA11yGlobalStyles')){
+    var style=document.createElement('style');style.id='deltaA11yGlobalStyles';
+    style.textContent='html[data-reduce-motion="true"] *,html[data-reduce-motion="true"] *::before,html[data-reduce-motion="true"] *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html[data-contrast="high"] :is(button,a,input,select,textarea,[tabindex]):focus-visible{outline:3px solid currentColor!important;outline-offset:3px!important}html[data-contrast="high"] :is(button,input,select,textarea){border-width:2px!important}';
+    (document.head||document.documentElement).appendChild(style);
+  }
+})();
+
 (function(){
   function deltaMostrarVersao(){
     if(!document.body||document.getElementById('deltaSiteVersion'))return; if(document.querySelector('.delta-live-version')){document.querySelectorAll('.delta-live-version').forEach(function(v){v.textContent=window.DELTA_SITE_VERSION});return;}
