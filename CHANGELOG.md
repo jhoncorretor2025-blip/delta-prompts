@@ -1,5 +1,10 @@
 # Changelog — Delta Prompts
 
+## V2.04 — Ajuste final da auditoria de cache
+- Faz a auditoria conferir o mesmo cache-busting do carregador tanto na home quanto no Service Worker.
+- Simplifica a validação da versão para evitar falso negativo da expressão regular.
+
+
 ## V2.03 — Auditoria automatizada sincronizada
 - Atualiza a auditoria de UX para validar a versão atual declarada e o cache-busting real do carregador, sem exigir identificadores antigos.
 

@@ -1,9 +1,9 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V2.03
-window.DELTA_SITE_VERSION='V2.03';
-// ===== PREFERÊNCIAS DE ACESSIBILIDADE GLOBAIS V2.03 =====
+// DELTA SITE VERSION: V2.04
+window.DELTA_SITE_VERSION='V2.04';
+// ===== PREFERÊNCIAS DE ACESSIBILIDADE GLOBAIS V2.04 =====
 (function(){
   var KEY='deltaA11yPreferences';
   function apply(){
