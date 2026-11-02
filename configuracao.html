@@ -612,13 +612,13 @@ function mostrarToast(texto){const t=document.getElementById('toastConfig');if(!
         var total=0;
         chaves.forEach(function(k){
           var v=p.dados[k];
-          if(typeof k!=='string'||k.length>160||!/^(delta|dp|jhon)[\\w:.-]*$/i.test(k)||/(token|password|senha|credential|auth|session|secret|api.?key)/i.test(k)||typeof v!=='string')throw new Error('conteudo');
+          if(typeof k!=='string'||k.length>160||!/^(delta|dp|jhon)[\w:.-]*$/i.test(k)||/(token|password|senha|credential|auth|session|secret|api.?key)/i.test(k)||typeof v!=='string')throw new Error('conteudo');
           total+=k.length+v.length;
           if(total>4.5*1024*1024)throw new Error('tamanho');
         });
         if(!confirm('Restaurar backup de '+String(p.criadoEm||'data desconhecida').slice(0,10)+' com '+chaves.length+' registros? Antes de restaurar, será baixada uma cópia de segurança do estado atual.'))return;
         var atual={};chavesBackup().forEach(function(k){try{var v=localStorage.getItem(k);if(v!==null)atual[k]=v}catch(e){}});
-        var emergencia={tipo:'delta-prompts-configuracao',formato:2,versao:window.DELTA_SITE_VERSION||'V2.01',criadoEm:new Date().toISOString(),origem:location.origin,dados:atual};
+        var emergencia={tipo:'delta-prompts-configuracao',formato:2,versao:window.DELTA_SITE_VERSION||'V2.02',criadoEm:new Date().toISOString(),origem:location.origin,dados:atual};
         var blob=URL.createObjectURL(new Blob([JSON.stringify(emergencia,null,2)],{type:'application/json'}));
         var a=document.createElement('a');a.href=blob;a.download='delta-backup-antes-restauracao-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(blob)},3000);
         var anteriores={};chaves.forEach(function(k){anteriores[k]=localStorage.getItem(k)});

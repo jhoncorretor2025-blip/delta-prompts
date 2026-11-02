@@ -1,5 +1,10 @@
 # Changelog — Delta Prompts
 
+## V2.02 — Correção na validação de chaves de backup
+- Corrige a expressão de validação de nomes de chaves para aceitar letras, números e separadores permitidos durante a restauração.
+- Mantém os limites de tamanho, namespace permitido e bloqueio de credenciais da V2.01.
+
+
 ## V2.01 — Acessibilidade, restauração segura e cache
 - Unifica a versão visível da home, carregador do menu e Service Worker.
 - Adiciona preferências globais de tamanho do texto, alto contraste e redução de movimento, salvas localmente.
