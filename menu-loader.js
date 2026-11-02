@@ -1709,7 +1709,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   var MAX_AGE=7*24*60*60*1000;
   var observer=null,aplicando=false;
   function normalizar(path){
-    try{return new URL(path,location.origin).pathname.split('/').filter(Boolean).join('/')}catch(e){return String(path||'').split('?')[0].split('#')[0].split('/').filter(Boolean).join('/')}
+    try{var p=new URL(path,location.origin).pathname.split('/').filter(Boolean).join('/');return p.indexOf('delta-prompts/')===0?p.slice(14):p}catch(e){var p=String(path||'').split('?')[0].split('#')[0].split('/').filter(Boolean).join('/');return p.indexOf('delta-prompts/')===0?p.slice(14):p}
   }
   function lerCache(){
     try{var c=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');if(c&&Date.now()-c.ts<CACHE_TTL&&Array.isArray(c.paths))return c.paths}catch(e){}
