@@ -1709,7 +1709,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
   var MAX_AGE=7*24*60*60*1000;
   var observer=null,aplicando=false;
   function normalizar(path){
-    try{return new URL(path,location.origin).pathname.replace(/^\\/+|\\/+$/g,'')}catch(e){return String(path||'').replace(/^\\/+|\\/+$/g,'')}
+    try{return new URL(path,location.origin).pathname.split('/').filter(Boolean).join('/')}catch(e){return String(path||'').split('?')[0].split('#')[0].split('/').filter(Boolean).join('/')}
   }
   function lerCache(){
     try{var c=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');if(c&&Date.now()-c.ts<CACHE_TTL&&Array.isArray(c.paths))return c.paths}catch(e){}
@@ -1745,7 +1745,7 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
       var paths=[];
       detalhes.filter(Boolean).forEach(function(d){
         (d.files||[]).forEach(function(f){
-          if(f.status==='added'&&/\\.html?$/i.test(f.filename)&&f.filename!=='index.html'&&f.filename!=='novidades.html'&&paths.indexOf(f.filename)===-1)paths.push(f.filename);
+          if(f.status==='added'&&f.filename.toLowerCase().endsWith('.html')&&f.filename!=='index.html'&&f.filename!=='novidades.html'&&paths.indexOf(f.filename)===-1)paths.push(f.filename);
         });
       });
       salvarCache(paths);aplicar(paths);
