@@ -1,5 +1,9 @@
 # Changelog — Delta Prompts
 
+## V2.05 — Teste de integração do Canivete alinhado
+- Atualiza as versões esperadas pelo CI do Canivete para os valores que já estão presentes nos dois arquivos atuais (8.69 e 8.22), eliminando falha falsa de validação.
+
+
 ## V2.04 — Ajuste final da auditoria de cache
 - Faz a auditoria conferir o mesmo cache-busting do carregador tanto na home quanto no Service Worker.
 - Simplifica a validação da versão para evitar falso negativo da expressão regular.

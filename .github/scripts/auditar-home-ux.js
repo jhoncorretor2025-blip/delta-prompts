@@ -13,14 +13,14 @@ const serviceWorker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
 
 const version = (html.match(/<meta name="delta-version" content="(V\d+\.\d+)"/) || [])[1];
 const checks = [
-  ['versão atual declarada', Boolean(version) && version === 'V2.04'],
+  ['versão atual declarada', Boolean(version) && version === 'V2.05'],
   ['versão atual no título', Boolean(version) && html.includes('Delta Prompts - Sua central prática de IA | ' + version)],
   ['versão visível no cabeçalho', Boolean(version) && html.includes('aria-label="Versão atual do site">' + version + '</span>')],
   ['versão visível no rodapé', Boolean(version) && html.includes('class="delta-live-version">' + version + '</span></footer>')],
   ['cache bust do CSS', Boolean(version) && html.includes('href="style.css?v=' + version + '"')],
   ['versão sincronizada no menu-loader', menuLoader.includes('// DELTA SITE VERSION: ' + version) && menuLoader.includes("window.DELTA_SITE_VERSION='" + version + "';")],
   ['versão sincronizada no service worker', serviceWorker.startsWith('// DELTA SITE VERSION: ' + version)],
-  ['cache-busting do menu-loader atualizado', html.includes('menu-loader.js?v=V2.04') && serviceWorker.includes('menu-loader.js?v=V2.04')],
+  ['cache-busting do menu-loader atualizado', html.includes('menu-loader.js?v=V2.05') && serviceWorker.includes('menu-loader.js?v=V2.05')],
   ['sem referências principais à versão anterior', !/content="V1\\.97"|style\\.css\\?v=V1\\.97|class="delta-live-version">V1\\.97/.test(html)],
   ['link para pular ao conteúdo', /class="skip-link" href="#conteudo-principal"/.test(html)],
   ['marco principal da página', /<main id="conteudo-principal">/.test(html)],
