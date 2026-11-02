@@ -1,8 +1,8 @@
 // ==============================
 // MENU LOADER + CONTROLES
 // ==============================
-// DELTA SITE VERSION: V2.06
-window.DELTA_SITE_VERSION='V2.06';
+// DELTA SITE VERSION: V2.07
+window.DELTA_SITE_VERSION='V2.07';
 // ===== PREFERÊNCIAS DE ACESSIBILIDADE GLOBAIS V2.05 =====
 (function(){
   var KEY='deltaA11yPreferences';
@@ -1697,4 +1697,68 @@ function iniciar(){const container=document.getElementById('lista-prompts');if(!
     observer.observe(document.body,{childList:true,subtree:true});
   }
   window.addEventListener('keydown',function(e){if(e.key==='Escape'){var p=document.getElementById('deltaAjustesFlutuantesPanel'),b=document.getElementById('deltaAjustesFlutuantesBtn');if(p&&p.style.display!=='none'){p.style.display='none';if(b)b.setAttribute('aria-expanded','false')}}});
+})();
+
+
+// ===== DELTA NOVO 7 DIAS: SELO AUTOMÁTICO EM PÁGINAS RECÉM-CRIADAS =====
+(function(){
+  'use strict';
+  var REPO='jhoncorretor2025-blip/delta-prompts';
+  var CACHE_KEY='deltaPaginasCriadas7DiasV1';
+  var CACHE_TTL=6*60*60*1000;
+  var MAX_AGE=7*24*60*60*1000;
+  var observer=null,aplicando=false;
+  function normalizar(path){
+    try{return new URL(path,location.origin).pathname.replace(/^\\/+|\\/+$/g,'')}catch(e){return String(path||'').replace(/^\\/+|\\/+$/g,'')}
+  }
+  function lerCache(){
+    try{var c=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');if(c&&Date.now()-c.ts<CACHE_TTL&&Array.isArray(c.paths))return c.paths}catch(e){}
+    return null;
+  }
+  function salvarCache(paths){try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),paths:paths}))}catch(e){}}
+  function aplicar(paths){
+    if(aplicando)return;aplicando=true;
+    try{
+      var recentes=new Set(paths.map(normalizar));
+      var links=document.querySelectorAll('.sidebar a[href],#menu a[href]');
+      links.forEach(function(a){
+        var path=normalizar(a.getAttribute('href'));
+        if(!recentes.has(path)||a.querySelector('.delta-novo-7d'))return;
+        if(a.querySelector('.menu-hot')&&/NOVO/i.test(a.querySelector('.menu-hot').textContent))return;
+        var selo=document.createElement('span');
+        selo.className='delta-novo-7d';
+        selo.textContent='NOVO';
+        selo.setAttribute('aria-label','Página criada nos últimos 7 dias');
+        selo.style.cssText='display:inline-flex;align-items:center;margin-left:5px;padding:2px 6px;border-radius:999px;background:#dcfce7;color:#166534;font-size:9px;font-weight:900;line-height:1.4;letter-spacing:.25px;white-space:nowrap;vertical-align:middle';
+        a.appendChild(selo);
+      });
+    }finally{aplicando=false}
+  }
+  async function buscar(){
+    var cache=lerCache();if(cache){aplicar(cache);return}
+    try{
+      var r=await fetch('https://api.github.com/repos/'+REPO+'/commits?per_page=25',{headers:{'Accept':'application/vnd.github+json'}});
+      if(!r.ok)throw new Error('GitHub API indisponível');
+      var commits=await r.json();
+      var recentes=commits.filter(function(c){var d=c.commit&&c.commit.author&&c.commit.author.date;return d&&Date.now()-new Date(d).getTime()<=MAX_AGE}).slice(0,15);
+      var detalhes=await Promise.all(recentes.map(async function(c){try{var x=await fetch(c.url,{headers:{'Accept':'application/vnd.github+json'}});return x.ok?await x.json():null}catch(e){return null}}));
+      var paths=[];
+      detalhes.filter(Boolean).forEach(function(d){
+        (d.files||[]).forEach(function(f){
+          if(f.status==='added'&&/\\.html?$/i.test(f.filename)&&f.filename!=='index.html'&&f.filename!=='novidades.html'&&paths.indexOf(f.filename)===-1)paths.push(f.filename);
+        });
+      });
+      salvarCache(paths);aplicar(paths);
+    }catch(e){console.warn('Delta Prompts: não foi possível atualizar os selos de novidades.',e)}
+  }
+  function iniciar(){
+    var root=document.querySelector('#menu')||document.body;
+    if(!root)return;
+    if(window.MutationObserver){
+      observer=new MutationObserver(function(){var c=lerCache();if(c)aplicar(c)});
+      observer.observe(root,{childList:true,subtree:true});
+    }
+    buscar();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar,{once:true});else iniciar();
 })();
